@@ -92,9 +92,10 @@ def call_llm_with_tools(
     system_prompt: str,
     user_prompt: str,
     temperature: float,
-    max_tokens: int = 500,
+    max_tokens: int = None,
     max_retries: int = 3,
-    tools: List[Dict] = None
+    tools: List[Dict] = None,
+    tool_choice: str = "auto"
 ) -> Union[str, Dict]:
     client = OpenAI(base_url=base_url, api_key=api_key)
     
@@ -109,7 +110,8 @@ def call_llm_with_tools(
             messages=messages,
             temperature=temperature,
             tools=tools,
-            tool_choice="auto"# if tools else None
+            tool_choice=tool_choice if tools else None,
+            max_tokens=max_tokens
         )
 
         message = response.choices[0].message
@@ -146,7 +148,7 @@ def extract_function_calls_to_tool_calls(llm_text: str) -> SimpleNamespace:
     Scan the LLM's text output for a <function=NAME>{...}</function> pattern,
     and convert to appropriate format for tool calls
     """
-    pattern = r"<function=([^>]+)>(.*?})(?:</?\s*function>)?"
+    pattern = r"<function=([^>]+)>(.*?)(?:</function>|<function>|<function/>|></function>)"
     matches = re.findall(pattern, llm_text)
     
     # If we find at least one match

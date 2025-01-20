@@ -67,7 +67,16 @@ class CoreAgent:
     def register_interface(self, name, interface):
         with self._lock:
             self.interfaces[name] = interface
-        
+    def basic_personality_settings(self) -> str:
+        system_prompt = "Use the following settings as part of your personality and voice if applicable in the conversation context: "
+        basic_options = random.sample(
+            self.prompt_config.get_basic_settings(), 2)
+        style_options = random.sample(
+            self.prompt_config.get_interaction_styles(), 2)
+        system_prompt = system_prompt + ' '.join(
+            basic_options) + ' ' + ' '.join(style_options)
+        return system_prompt
+    
     async def pre_validation(self, message: str) -> bool:
         """
         Pre-validation of the message
@@ -214,12 +223,20 @@ class CoreAgent:
 
     async def handle_message(self, 
                              message: str, 
+                             message_type: str = "user_message",
                              source_interface: str = None, 
                              chat_id: str = None, 
-                             system_prompt_fixed: str = None, 
+                             system_prompt: str = None, 
                              skip_embedding: bool = False, 
+                             skip_similar: bool = True,
                              skip_tools: bool = False,
-                             external_tools: List[str] = []
+                             skip_conversation_context: bool = True,
+                             external_tools: List[str] = [],
+                             max_tokens: int = None,
+                             model_id: str = LARGE_MODEL_ID,
+                             temperature: float = 0.4,
+                             skip_pre_validation: bool = False,
+                             tool_choice: str = "auto"
                              ):
         """
         Handle message and optionally notify other interfaces.        
@@ -237,90 +254,48 @@ class CoreAgent:
         logger.info(f"Handling message from {source_interface}")
         logger.info(f"registered interfaces: {self.interfaces}")
 
-        do_pre_validation = False if source_interface in ["api", "twitter", "twitter_reply", "farcaster", "farcaster_reply", "terminal"] else True
-        if do_pre_validation and not await self.pre_validation(message):
+        chat_id = str(chat_id)
+        self.current_message = message
+
+        system_prompt_context = ""
+        system_prompt_conversation_context = ""
+
+        if system_prompt is None:
+            system_prompt = self.basic_personality_settings()
+            
+        system_prompt = self.prompt_config.get_system_prompt() + system_prompt
+
+        do_pre_validation = False if source_interface in [
+            "api", "twitter", "twitter_reply", "farcaster", "farcaster_reply", "telegram",
+            "terminal"
+        ] else True
+        if not skip_pre_validation and do_pre_validation and not await self.pre_validation(message):
             logger.debug(f"Message failed pre-validation: {message[:100]}...")
             return None, None, None
         
         try:
-            similar_messages = []
-            message_embedding = None
-            if not skip_embedding:
-                # Generate embedding for the incoming message
-                message_embedding = get_embedding(message)
-                logger.info(f"Generated embedding for message: {message[:50]}...")
+            message_embedding = get_embedding(message)
+            logger.info(f"Generated embedding for message: {message[:50]}...")
+            system_prompt_context = self.get_knowledge_base(message, message_embedding)
             
-                # First find messages similar to the incoming user message
-                similar_messages = self.message_store.find_similar_messages(
-                    message_embedding, 
-                    threshold=0.9            
-                )
-                logger.info(f"Found {len(similar_messages)} similar messages")
-            
-            # Build context from similar conversations and responses
-            if system_prompt_fixed is None:
-                system_prompt_fixed = "Use the following settings as part of your personality and voice if applicable in the conversation context: "
-                basic_options = random.sample(self.prompt_config.get_basic_settings(), 2)
-                style_options = random.sample(self.prompt_config.get_interaction_styles(), 2)
-                system_prompt_fixed = system_prompt_fixed + ' '.join(basic_options) + ' ' + ' '.join(style_options)
-            
-            system_prompt_context = ""
-            if similar_messages:
-                context = "\n\nRelated previous conversations and responses\nNOTE: Please provide a response that differs from these recent replies, don't use the same words:\n"
-                seen_responses = set()  # Track unique responses
-                message_count = 0
-                
-                for similar_msg in similar_messages:
-                    # Find the agent's response where this similar message was the original_query
-                    agent_responses = self.message_store.find_messages(
-                        message_type='agent_response',
-                        original_query=similar_msg['message']
-                    )
-                    
-                    for response in agent_responses:
-                        if response['message'] in seen_responses:
-                            continue
-                        seen_responses.add(response['message'])
-                        context += f"""
-                            Previous similar question: {similar_msg['message']}
-                            My response: {response['message']}
-                            Similarity score: {similar_msg.get('similarity', 0):.2f}
-                            """
-                        message_count += 1
-                        if message_count >= 60:  # Check limit after adding each message
-                            break
+            if not skip_conversation_context:
+                system_prompt += self.get_conversation_context(chat_id)
 
-                context += "\nConsider the above responses for context, but provide a fresh perspective that adds value to the conversation, don't repeat the same responses.\n"
-                system_prompt_context += context
-                
-                logger.info("Added context from similar conversations")
+            if not skip_similar:
+                system_prompt_context += self.get_similar_messages(message, message_embedding, message_type, chat_id)
+                    
+            system_prompt += system_prompt_context
             
-            print("system_prompt_context: ", system_prompt_context)
-            print("system_prompt_fixed: ", system_prompt_fixed)
-            print("message: ", message)
-            # Call LLM with tools and enhanced context
-            system_prompt = self.prompt_config.get_system_prompt() + system_prompt_fixed + system_prompt_context
-            if skip_tools:
-                response_content = call_llm(
-                    HEURIST_BASE_URL,
-                    HEURIST_API_KEY,
-                    LARGE_MODEL_ID,
-                    system_prompt,
-                    message,
-                    temperature=0.4,
-                )
-                response = {
-                    "content": response_content
-                }
-            else:
-                response = call_llm_with_tools(
-                    HEURIST_BASE_URL,
-                    HEURIST_API_KEY,
-                    LARGE_MODEL_ID,
-                    system_prompt,
-                    message,
-                temperature=0.4,
-                tools=self.tools.get_tools_config() + external_tools
+            response = call_llm_with_tools(
+                HEURIST_BASE_URL,
+                HEURIST_API_KEY,
+                model_id,
+                system_prompt,
+                message,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                tools=self.tools.get_tools_config() + external_tools if not skip_tools else None,
+                tool_choice=tool_choice if not skip_tools else None
             )
             
             # Process response and handle tools
@@ -353,8 +328,8 @@ class CoreAgent:
                         print("tool_result: ", tool_result)
                         if 'image_url' in tool_result:
                             image_url = tool_result['image_url']
-                        if 'message' in tool_result:
-                            text_response += f"\n{tool_result['message']}"
+                        if 'result' in tool_result:
+                            text_response += f"\n{tool_result['result']}"
                         if 'tool_call' in tool_result:
                             tool_back = tool_result['tool_call']
                 else:
@@ -372,7 +347,7 @@ class CoreAgent:
                     message=message,
                     embedding=message_embedding,
                     timestamp=datetime.now().isoformat(),
-                    message_type="user_message",
+                    message_type=message_type,
                     chat_id=chat_id,
                     source_interface=source_interface,
                     original_query=None,
@@ -404,16 +379,16 @@ class CoreAgent:
                 self.message_store.add_message(response_data)
             
             # Notify other interfaces if needed
-            if source_interface and chat_id:
-                for interface_name, interface in self.interfaces.items():
-                    if interface_name != source_interface:
-                        await self.send_to_interface(interface_name, {
-                            'type': 'message',
-                            'content': text_response,
-                            'image_url': image_url,
-                            'source': source_interface,
-                            'chat_id': chat_id
-                        })
+            # if source_interface and chat_id:
+            #     for interface_name, interface in self.interfaces.items():
+            #         if interface_name != source_interface:
+            #             await self.send_to_interface(interface_name, {
+            #                 'type': 'message',
+            #                 'content': text_response,
+            #                 'image_url': image_url,
+            #                 'source': source_interface,
+            #                 'chat_id': chat_id
+            #             })
             
             return text_response, image_url, tool_back
             
@@ -423,6 +398,245 @@ class CoreAgent:
         except Exception as e:
             logger.error(f"Message handling failed: {str(e)}")
             return "Sorry, something went wrong.", None, None
+        
+    async def agent_cot(self, message: str, user: str = "User", display_name: str = None, chat_id: str = "General", source_interface: str = "None", final_format_prompt: str = "") -> str:
+        message_info = message,
+        username = user or "Unknown"
+        display_name = display_name or username
+        message_data = message
+        chat_id = chat_id
+        message_info = f"User: {display_name}, Username: {username}, \nMessage: {message_data}"
+        image_url_final = None
+
+        steps_responses = []
+        prompt_final = ""
+        text_response = ""
+        try:
+            print("USING COT")
+            prompt = f"""<SYSTEM_PROMPT> I want you to give analyze the question {message_info}. 
+                    IMPORTANT: DON'T USE TOOLS RIGHT NOW. ANALYZE AND Give me a list of steps with the tools you'd use in each step, if the step is not a specific tool you have to use, just put the tool name as "None". 
+                    The most important thing to tell me is what different calls you'd do or processes as a list. Your answer should be a valid JSON and ONLY the JSON.
+                    Make sure you analyze what outputs from previous steps you'd need to use in the next step if applicable.
+                    IMPORTANT: RETURN THE JSON ONLY.
+                    IMPORTANT: DO NOT USE TOOLS.
+                    IMPORTANT: ONLY USE VALID TOOLS."""
+            
+            prompt += """
+                    EXAMPLE:
+                    [
+                        {
+                            "step": "Step one of the process thought for the question",
+                            "tool": "tool to call",
+                            "parameters": {
+                                "arg1": "value1",
+                                "arg2": "value2"
+                            }
+                        },
+                        {
+                            "step": "Step two of the process thought for the question",
+                            "tool": "tool to call",
+                            "parameters": {
+                                "arg1": "value1",
+                                "arg2": "value2"
+                            }
+                        }
+                    ]
+                    </SYSTEM_PROMPT>"""
+            text_response, _, _ = await self.handle_message(
+                message=message_info,
+                system_prompt=prompt,
+                source_interface=source_interface,
+                chat_id=chat_id,
+                skip_pre_validation=True,
+                skip_conversation_context=False,
+                skip_tools=False
+            )
+
+            json_response = json.loads(text_response)
+            print("json_response: ", json_response)
+            thinking_text = "Thinking...\n\n"
+            for step in json_response:
+                if step['step'] != "None":
+                    thinking_text = f"Step: {step['step']}\n"
+                    print("\nthinking_text: ", thinking_text)
+
+            for step in json_response:
+                print("step: ", step)
+                system_prompt = f"""CONTEXT: YOU ARE RUNNING STEPS FOR THE ORIGINAL QUESTION: {message_data}.
+                PREVIOUS STEP RESPONSES: {steps_responses}"""
+                skip_tools = False
+                skip_conversation_context = True
+                if step['tool'] == "None":
+                    skip_tools = True
+                    skip_conversation_context = False
+
+                text_response, image_url, tool_calls = await self.handle_message(
+                    system_prompt=system_prompt,
+                    message=str(step),
+                    message_type="REASONING_STEP",
+                    source_interface=source_interface,
+                    skip_conversation_context=skip_conversation_context,
+                    skip_embedding=True,
+                    skip_pre_validation=True,
+                    skip_tools=skip_tools,
+                    tool_choice="required" if not skip_tools else None
+                )
+                retries = 5
+                while retries > 0:
+                    if "<function" in text_response or (not tool_calls and step['tool'] != "None"):
+                        print("Found function in text_response or failed to call tool")
+                        text_response, image_url, tool_calls = await self.handle_message(
+                            system_prompt=text_response,
+                            message=str(text_response),
+                            message_type="REASONING_STEP",
+                            source_interface=source_interface,
+                            skip_conversation_context=True,
+                            skip_similar=True,
+                            skip_embedding=True,
+                            skip_pre_validation=True,
+                            skip_tools=False,
+                            tool_choice="required"
+                        )
+                        retries -= 1
+                        await asyncio.sleep(5)
+                    else:
+                        break
+                step_response = {
+                    "step": step,
+                    "response": text_response
+                }
+                print("image_url: ", image_url)
+                if image_url:
+                    image_url_final = image_url
+                steps_responses.append(step_response)
+                
+            print("steps_responses: ", steps_responses)
+            print("image_url_final: ", image_url_final)
+            prompt_final = f""" <REASONING_CONTEXT> {message_data}\n
+                                    ONLY USE THE REASONING CONTEXT IF YOU NEED TO.
+                                    <STEPS_RESPONSES> 
+                                        {steps_responses}
+                                    </STEPS_RESPONSES>
+                                </REASONING_CONTEXT>"""
+        except Exception as e:
+            logger.error(f"Error processing reply: {str(e)}")
+            text_response, image_url, _ = await self.handle_message(
+                message_info,
+                source_interface=source_interface,
+                chat_id=chat_id,
+                skip_conversation_context=False,
+                skip_pre_validation=True
+            )
+        try:
+            message_final = f"User: {display_name}, Username: {username}, \nMessage: {message_data}"
+            prompt_final += f"Generate the final response for the user. Given the context of your reasoning, and the steps you've taken, generate a final response for the user. {text_response}"
+            if final_format_prompt:
+                prompt_final += final_format_prompt
+            else:
+                prompt_final += self.basic_personality_settings()
+            response, _, _ = await self.handle_message(
+                message=message_final,
+                system_prompt=prompt_final,
+                source_interface=source_interface,
+                chat_id=chat_id,
+                skip_embedding=False,
+                skip_conversation_context=False,
+                skip_pre_validation=True,
+                skip_tools=True #skip tools as tools should have been called already
+            )
+            return response, image_url_final, None
+        except Exception as e:
+            logger.error(f"Error processing reply: {str(e)}")
+            return None, None
+    def get_knowledge_base(self, message: str, message_embedding: List[float]) -> str:
+        """
+        Get knowledge base data from the message embedding
+        """
+        if message_embedding is None:
+            message_embedding = get_embedding(message)
+        system_prompt_context = ""
+        knowledge_base_data = self.message_store.find_similar_messages(
+                message_embedding, 
+                threshold=0.6,
+                message_type="knowledge_base"            
+            )
+        logger.info(f"Found {len(knowledge_base_data)} relavant items from knowledge base")
+        if knowledge_base_data:
+            system_prompt_context = "\n\nConsider the Following As Facts and use them to answer the question if applicable and relevant:\nKnowledge base data:\n"
+            for data in knowledge_base_data:
+                system_prompt_context += f"{data['message']}\n"
+        return system_prompt_context
+    
+    
+    def get_conversation_context(self, chat_id: str) -> str:
+        """
+        Get conversation context from the chat ID
+        """
+        if chat_id is None:
+            return ""
+        system_prompt_conversation_context = "\n\nPrevious conversation history (in chronological order):\n"
+        # Get last 10 messages (will be in DESC order)
+        conversation_messages = self.message_store.find_messages(
+            message_type="agent_response",
+            chat_id=chat_id,
+            limit=10
+        )
+        
+        # Sort by timestamp and reverse to get chronological order
+        conversation_messages.sort(key=lambda x: x['timestamp'], reverse=True)
+        conversation_messages.reverse()
+        
+        # Build conversation history
+        for msg in conversation_messages:
+            if msg.get('original_query'):  # Ensure we have both question and answer
+                system_prompt_conversation_context += f"User: {msg['original_query']}\n"
+                system_prompt_conversation_context += f"Assistant: {msg['message']}\n\n"
+        #print("system_prompt_conversation_context: ", system_prompt_conversation_context)
+        return system_prompt_conversation_context
+
+    def get_similar_messages(self, message: str, message_embedding: List[float], message_type: str = None, chat_id: str = None) -> List[Dict[str, Any]]:
+        """
+        Get similar messages from the message embedding
+        """
+        if message_embedding is None:
+            message_embedding = get_embedding(message)
+        similar_messages = self.message_store.find_similar_messages(
+                    message_embedding, 
+                    threshold=0.9,
+                    message_type=message_type,
+                    chat_id=chat_id        
+                )
+        logger.info(f"Found {len(similar_messages)} similar messages")
+        if similar_messages:
+            context = "\n\nRelated previous conversations and responses\nNOTE: Please provide a response that differs from these recent replies, don't use the same words:\n"
+            seen_responses = set()  # Track unique responses
+            message_count = 0
+            for similar_msg in similar_messages:
+                # Find the agent's response where this similar message was the original_query
+                agent_responses = self.message_store.find_messages(
+                    message_type='agent_response',
+                    original_query=similar_msg['message'])
+
+                for response in agent_responses:
+                    if response['message'] in seen_responses:
+                        continue
+                    seen_responses.add(response['message'])
+                    context += f"""
+                        Previous similar question: {similar_msg['message']}
+                        My response: {response['message']}
+                        Similarity score: {similar_msg.get('similarity', 0):.2f}
+                        """
+                    message_count += 1
+                    if message_count >= 10:  # Check limit after adding each message
+                        break
+            context += "\nConsider the above responses for context, but provide a fresh perspective that adds value to the conversation, don't repeat the same responses.\n"
+            return context
+        else:
+            return ""
+
+
+
+    logger.info("Added context from similar conversations")
 
     async def _classify_response_type(self, response: str) -> str:
         """Classify the type of response (factual, opinion, question, etc.)"""

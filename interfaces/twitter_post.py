@@ -21,7 +21,7 @@ dotenv.load_dotenv(override=True)
 logger.info("Environment variables reloaded")
 
 # Constants
-TWEET_WORD_LIMITS = [15, 25, 36, 50]
+TWEET_WORD_LIMITS = [30, 50, 100, 200]
 IMAGE_GENERATION_PROBABILITY = 0.75
 TWEET_HISTORY_FILE = "tweet_history.json"
 
@@ -123,56 +123,61 @@ class TwitterAgent(CoreAgent):
         try:
             # Get recent tweets for context
             past_tweets = self.history_manager.get_recent_tweets()
-            
+            generate_image = random.random() < IMAGE_GENERATION_PROBABILITY
+            image_instructions = ""
+            if generate_image:
+                image_instructions = "Generate an image for the post, create a prompt for the image generation model."
             # Generate randomized prompt
             basic_options = random.sample(self.prompt_config.get_basic_settings(), 2)
             style_options = random.sample(self.prompt_config.get_interaction_styles(), 2)
+            instruction_tweet_idea = random.choice(self.prompt_config.get_tweet_ideas())
+            tweet_instruction = (self.format_tweet_instruction(basic_options, style_options, "<Your Ideas from previoues steps>"))
+
+            tweet_prompt = F"""
+                You are going to generate a tweet post for a social media platform.
+                Think of the following and generate new ideas:
+                {instruction_tweet_idea}
+                Then use the ideas from from the previous steps to generate a tweet, considering the following rules:
+                {tweet_instruction}
+                Once you have a final tweet, making sure you check the rules and make sure it is not too long or too short.
+                {image_instructions}
+                Then generate the image and final tweet.
+                MAKE SURE THE FINAL TWEET IS LESS THAN 250 CHARACTERS.
+                IMPORTANT: ADD A FINAL STEP TO MAKE SURE THE TWEET IS LESS THAN 250 CHARACTERS.
+            """
+            tweet_system_prompt = F"""
+                Consider the following rules:
+                {self.prompt_config.get_twitter_rules()}
+                Consider the following style and basic options:
+                {self.fill_basic_prompt(basic_options, style_options)}
+                Consider your previous tweets:
+                {past_tweets}
+            """
+
+            tweet, image_url, _ = await self.agent_cot(
+                tweet_prompt, 
+                user="agent", 
+                display_name="agent", 
+                chat_id="twitter_post", 
+                source_interface="twitter", 
+                final_format_prompt=tweet_system_prompt,
+            )
+            
+            print("Tweet: ", tweet)
+            tweet = tweet.replace('"', '')
+            tweet_data['tweet'] = tweet
             tweet_data['metadata'].update({
                 'basic_options': basic_options,
                 'style_options': style_options
             })
-            
-            prompt = self.fill_basic_prompt(basic_options, style_options)
-            
-            # Generate ideas
-            instruction_tweet_idea = random.choice(self.prompt_config.get_tweet_ideas())
-            system_prompt = (prompt + self.prompt_config.get_twitter_rules() + 
-                          self.format_context(past_tweets))
-
-            ideas = None
             tweet_data['metadata']['ideas_instruction'] = instruction_tweet_idea
-            ideas_text, _, _ = await self.handle_message(
-                instruction_tweet_idea, 
-                system_prompt_fixed=system_prompt, 
-                source_interface='twitter'
-            )
-            tweet_data['metadata']['ideas'] = ideas_text
+            tweet_data['metadata']['ideas'] = instruction_tweet_idea
+            if image_url:
+                tweet_data['metadata']['image_prompt'] = ""
+                tweet_data['metadata']['image_url'] = image_url
 
-            # Generate final tweet
-            system_prompt = (prompt + self.prompt_config.get_twitter_rules() + 
-                          self.format_context(past_tweets) + 
-                          self.format_tweet_instruction(basic_options, style_options, ideas_text))
-
-            tweet, _, _ = await self.handle_message(
-                ideas_text, 
-                system_prompt_fixed=system_prompt, 
-                source_interface='twitter'
-            )
-            print("Tweet: ", tweet)
-            tweet = tweet.replace('"', '')
-            tweet_data['tweet'] = tweet
-
-            # Image generation
-            image_url = None
-            if random.random() < IMAGE_GENERATION_PROBABILITY:
-                logger.info("Generating image")
-                try:
-                    image_prompt = await self.generate_image_prompt(tweet)
-                    image_url = await self.handle_image_generation(image_prompt)
-                    tweet_data['metadata']['image_prompt'] = image_prompt
-                    tweet_data['metadata']['image_url'] = image_url
-                except Exception as e:
-                    logger.warning(f"Failed to generate image: {str(e)}")
+            if tweet == "Sorry, I encountered an error processing your message.":
+                raise Exception("Error generating tweet")
             
             return tweet, image_url, tweet_data
 

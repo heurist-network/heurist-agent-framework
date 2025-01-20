@@ -90,10 +90,25 @@ class TelegramAgent(CoreAgent):
 
     async def message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle incoming messages."""
-        text_response, image_url, _ = await self.handle_message(
-            update.message.text,
-            source_interface='telegram'
-        )
+        COT = True
+        user = update.effective_user
+        username = user.username or "Unknown"
+        display_name = user.full_name or username
+        message_data = update.message.text
+        chat_id = update.message.chat_id
+        if not COT:
+            text_response, image_url, _ = await self.handle_message(
+                update.message.text,
+                source_interface='telegram'
+            )
+        else:
+            text_response, image_url, _ = await self.agent_cot(
+                message_data, 
+                user=username, 
+                display_name=display_name, 
+                chat_id=chat_id, 
+                source_interface='telegram'
+            )
         logger.info(f"Telegram message: {update.message.text}")
         if self._parent != self:
             logger.info("Operating in shared mode with core agent")

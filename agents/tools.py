@@ -61,7 +61,8 @@ class Tools(ToolBox):
                         "tool_call": tool_name,
                         "processed": True,
                         "args": args,
-                        "result": result
+                        "result": result["result"] if "result" in result else None,
+                        "data": result["data"] if "data" in result else None
                     }, default=str)
         return result
 

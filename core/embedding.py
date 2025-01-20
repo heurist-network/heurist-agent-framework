@@ -69,13 +69,28 @@ class VectorStorageProvider(ABC):
         pass
     
     @abstractmethod
-    def find_similar(self, embedding: List[float], threshold: float = 0.8) -> List[Dict[str, Any]]:
+    def find_similar(self, embedding: List[float], threshold: float = 0.8, message_type: str = None, chat_id: str = None) -> List[Dict[str, Any]]:
         """Find similar messages based on embedding similarity"""
         pass
     
     @abstractmethod
     def close(self) -> None:
         """Clean up resources"""
+        pass
+
+    @abstractmethod
+    def find_messages(self, message_type: str = None, original_query: str = None, chat_id: str = None, limit: int = None) -> List[Dict[str, Any]]:
+        """Find messages matching the given criteria
+        
+        Args:
+            message_type (str, optional): Type of message to find (e.g., 'agent_response')
+            original_query (str, optional): The original query to match against
+            chat_id (str, optional): The chat ID to filter by
+            limit (int, optional): Maximum number of messages to return, ordered by most recent
+            
+        Returns:
+            List[Dict]: List of matching messages with their metadata
+        """
         pass
 
 class PostgresVectorStorage(VectorStorageProvider):
@@ -153,16 +168,29 @@ class PostgresVectorStorage(VectorStorageProvider):
             logger.error(f"Failed to store message: {str(e)}")
             raise
 
-    def find_similar(self, embedding: List[float], threshold: float = 0.8) -> List[Dict[str, Any]]:
+    def find_similar(self, embedding: List[float], threshold: float = 0.8, message_type: str = None, chat_id: str = None) -> List[Dict[str, Any]]:
         """Find similar messages using vector similarity search"""
         try:
             with self.conn.cursor() as cur:
+                query_conditions = ["1 - (embedding <=> %s::vector) >= %s"]
+                query_params = [embedding, embedding, threshold]
+                
+                if message_type:
+                    query_conditions.append("message_type = %s")
+                    query_params.append(message_type)
+                
+                if chat_id:
+                    query_conditions.append("chat_id = %s")
+                    query_params.append(chat_id)
+                
+                where_clause = " AND ".join(query_conditions)
+                
                 cur.execute(f"""
                     SELECT message, 1 - (embedding <=> %s::vector) as similarity
                     FROM {self.config.table_name}
-                    WHERE 1 - (embedding <=> %s::vector) >= %s
+                    WHERE {where_clause}
                     ORDER BY similarity DESC
-                """, (embedding, embedding, threshold))
+                """, tuple(query_params))
                 
                 results = []
                 for message, similarity in cur.fetchall():
@@ -180,25 +208,47 @@ class PostgresVectorStorage(VectorStorageProvider):
         if self.conn:
             self.conn.close()
 
-    def find_messages(self, message_type: str, original_query: str) -> List[Dict[str, Any]]:
-        """Find messages matching the given type and original query"""
+    def find_messages(self, message_type: str = None, original_query: str = None, chat_id: str = None, limit: int = None) -> List[Dict[str, Any]]:
+        """Find messages matching the given criteria"""
         try:
             with self.conn.cursor() as cur:
+                query_conditions = []
+                query_params = []
+                
+                if message_type:
+                    query_conditions.append("message_type = %s")
+                    query_params.append(message_type)
+                
+                if original_query:
+                    query_conditions.append("original_query = %s")
+                    query_params.append(original_query)
+                    
+                if chat_id:
+                    query_conditions.append("chat_id = %s")
+                    query_params.append(chat_id)
+                
+                where_clause = " AND ".join(query_conditions) if query_conditions else "1=1"
+                limit_clause = f" LIMIT {limit}" if limit else ""
+                
                 cur.execute(f"""
-                    SELECT message, timestamp, source_interface, response_type, key_topics
+                    SELECT message, timestamp, source_interface, response_type, key_topics, original_query, original_embedding, tool_call
                     FROM {self.config.table_name}
-                    WHERE message_type = %s AND original_query = %s
+                    WHERE {where_clause}
                     ORDER BY timestamp DESC
-                """, (message_type, original_query))
+                    {limit_clause}
+                """, tuple(query_params))
                 
                 results = []
-                for message, timestamp, source_interface, response_type, key_topics in cur.fetchall():
+                for message, timestamp, source_interface, response_type, key_topics, orig_query, orig_embedding, tool_call in cur.fetchall():
                     results.append({
                         'message': message,
                         'timestamp': timestamp,
                         'source_interface': source_interface,
                         'response_type': response_type,
-                        'key_topics': key_topics
+                        'key_topics': key_topics,
+                        'original_query': orig_query,
+                        'original_embedding': orig_embedding,
+                        'tool_call': tool_call
                     })
                 return results
         except Exception as e:
@@ -254,19 +304,33 @@ class SQLiteVectorStorage(VectorStorageProvider):
                     (message_data.message, embedding_json, message_data.timestamp,
                      message_data.message_type, message_data.chat_id,
                      message_data.source_interface, message_data.original_query,
-                     original_embedding_json, message_data.response_type, key_topics_json, message_data.tool_call)
+                     original_embedding_json, message_data.response_type,
+                     key_topics_json, message_data.tool_call)
                 )
             logger.info("Successfully stored message with metadata in database")
         except Exception as e:
             logger.error(f"Failed to store message: {str(e)}")
             raise
 
-    def find_similar(self, embedding: List[float], threshold: float = 0.8) -> List[Dict[str, Any]]:
+    def find_similar(self, embedding: List[float], threshold: float = 0.8, message_type: str = None, chat_id: str = None) -> List[Dict[str, Any]]:
         """Find similar messages using cosine similarity"""
         try:
             with self.conn:
                 cur = self.conn.cursor()
-                cur.execute(f"SELECT message, embedding FROM {self.config.table_name}")
+                query_conditions = []
+                query_params = []
+                
+                if message_type:
+                    query_conditions.append("message_type = ?")
+                    query_params.append(message_type)
+                
+                if chat_id:
+                    query_conditions.append("chat_id = ?")
+                    query_params.append(chat_id)
+                
+                where_clause = " AND ".join(query_conditions) if query_conditions else "1=1"
+                
+                cur.execute(f"SELECT message, embedding FROM {self.config.table_name} WHERE {where_clause}", tuple(query_params))
                 results = []
                 for message, embedding_json in cur.fetchall():
                     stored_embedding = json.loads(embedding_json)
@@ -287,27 +351,50 @@ class SQLiteVectorStorage(VectorStorageProvider):
         if self.conn:
             self.conn.close()
 
-    def find_messages(self, message_type: str, original_query: str) -> List[Dict[str, Any]]:
-        """Find messages matching the given type and original query"""
+    def find_messages(self, message_type: str = None, original_query: str = None, chat_id: str = None, limit: int = None) -> List[Dict[str, Any]]:
+        """Find messages matching the given criteria"""
         try:
             with self.conn:
                 cur = self.conn.cursor()
+                query_conditions = []
+                query_params = []
+                
+                if message_type:
+                    query_conditions.append("message_type = ?")
+                    query_params.append(message_type)
+                
+                if original_query:
+                    query_conditions.append("original_query = ?")
+                    query_params.append(original_query)
+                    
+                if chat_id:
+                    query_conditions.append("chat_id = ?")
+                    query_params.append(chat_id)
+                
+                where_clause = " AND ".join(query_conditions) if query_conditions else "1=1"
+                limit_clause = f" LIMIT {limit}" if limit else ""
+                
                 cur.execute(f"""
-                    SELECT message, timestamp, source_interface, response_type, key_topics
+                    SELECT message, timestamp, source_interface, response_type, key_topics, original_query, original_embedding, tool_call
                     FROM {self.config.table_name}
-                    WHERE message_type = ? AND original_query = ?
+                    WHERE {where_clause}
                     ORDER BY timestamp DESC
-                """, (message_type, original_query))
+                    {limit_clause}
+                """, tuple(query_params))
                 
                 results = []
-                for message, timestamp, source_interface, response_type, key_topics in cur.fetchall():
+                for message, timestamp, source_interface, response_type, key_topics, orig_query, orig_embedding, tool_call in cur.fetchall():
                     key_topics_list = json.loads(key_topics) if key_topics else None
+                    original_embedding_list = json.loads(orig_embedding) if orig_embedding else None
                     results.append({
                         'message': message,
                         'timestamp': timestamp,
                         'source_interface': source_interface,
                         'response_type': response_type,
-                        'key_topics': key_topics_list
+                        'key_topics': key_topics_list,
+                        'original_query': orig_query,
+                        'original_embedding': original_embedding_list,
+                        'tool_call': tool_call
                     })
                 return results
         except Exception as e:
@@ -371,37 +458,40 @@ class MessageStore:
         Add a message and its embedding to the store.
         
         Args:
-            message (str): The message text
-            embedding (list): The embedding vector for the message
+            message_data (MessageData): The message data to store
         """
         self.storage_provider.store_embedding(message_data)
 
-    def find_similar_messages(self, embedding: List[float], threshold: float = 0.8) -> List[Dict[str, Any]]:
+    def find_similar_messages(self, embedding: List[float], threshold: float = 0.8, message_type: str = None, chat_id: str = None) -> List[Dict[str, Any]]:
         """
         Find messages similar to the given embedding.
         
         Args:
-            new_embedding (list): The embedding vector to compare against
+            embedding (list): The embedding vector to compare against
             threshold (float): Similarity threshold (0-1) to consider a message as similar
+            message_type (str, optional): Filter by message type
+            chat_id (str, optional): Filter by chat ID
             
         Returns:
             list: List of dictionaries containing similar messages and their similarity scores
         """
-        return self.storage_provider.find_similar(embedding, threshold)
+        return self.storage_provider.find_similar(embedding, threshold, message_type, chat_id)
 
     def __del__(self):
         """Cleanup resources when the store is destroyed"""
         self.storage_provider.close()
 
-    def find_messages(self, message_type: str, original_query: str) -> List[Dict]:
+    def find_messages(self, message_type: str = None, original_query: str = None, chat_id: str = None, limit: int = None) -> List[Dict]:
         """
-        Find messages matching the given type and original query.
+        Find messages matching the given criteria.
         
         Args:
-            message_type (str): Type of message to find (e.g., 'agent_response')
-            original_query (str): The original query to match against
+            message_type (str, optional): Type of message to find (e.g., 'agent_response')
+            original_query (str, optional): The original query to match against
+            chat_id (str, optional): The chat ID to filter by
+            limit (int, optional): Maximum number of messages to return, ordered by most recent
             
         Returns:
             List[Dict]: List of matching messages with their metadata
         """
-        return self.storage_provider.find_messages(message_type, original_query)
+        return self.storage_provider.find_messages(message_type, original_query, chat_id, limit)
