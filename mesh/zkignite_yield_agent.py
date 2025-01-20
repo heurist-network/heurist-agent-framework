@@ -1,6 +1,6 @@
 from typing import Dict, Any
 from .mesh_agent import MeshAgent, monitor_execution, with_retry, with_cache
-from core.llm import call_llm
+from core.llm import call_llm_async
 from clients.merkl_client import MerklClient
 import os
 from dotenv import load_dotenv
@@ -120,7 +120,7 @@ class ZkIgniteYieldAgent(MeshAgent):
                 'tokens': tokens
             })
 
-        analysis_result = call_llm(
+        analysis_result = await call_llm_async(
             base_url=base_url,
             api_key=api_key,
             model_id=MODEL_ID,
