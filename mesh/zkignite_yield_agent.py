@@ -49,9 +49,24 @@ class ZkIgniteYieldAgent(MeshAgent):
     def __init__(self):
         super().__init__()
         self.metadata.update({
+            'name': 'ZKsync Ignite Yield Analyst',
             'version': '1.0.0',
             'author': 'Heurist Team',
-            'description': 'Analyze ZKsync Ignite yield opportunities',
+            'author_address': '0x7d9d1821d15B9e0b8Ab98A058361233E255E405D',
+            'description': 'Analyze yield opportunities of ZKsync Ignite program.',
+            'inputs': [],
+            'outputs': [
+                {
+                    'name': 'response',
+                    'description': 'The analysis result of the yield opportunities, describing the top pools, their APR, and how to earn yield',
+                    'type': 'string'
+                },
+                {
+                    'name': 'data',
+                    'description': 'The data of the yield opportunities, including the protocol name, opportunity name, APR, and the specific tokens to be provided',
+                    'type': 'list'
+                }
+            ],
             'external_apis': ['merkl']
         })
         self._api_clients['merkl'] = MerklClient()
@@ -114,6 +129,6 @@ class ZkIgniteYieldAgent(MeshAgent):
             temperature=0.1
         )
         return {
-            'analysis': analysis_result,
+            'response': analysis_result,
             'data': data_to_return
         }

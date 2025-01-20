@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 from decorators import with_cache, with_retry, monitor_execution
+import asyncio
 
 class MeshAgent(ABC):
     """Base class for all mesh agents"""
@@ -25,3 +26,14 @@ class MeshAgent(ABC):
         for client in self._api_clients.values():
             await client.close()
         self._api_clients.clear()
+
+    def __del__(self):
+        """Destructor to ensure cleanup of resources"""
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                loop.create_task(self.cleanup())
+            else:
+                loop.run_until_complete(self.cleanup())
+        except Exception:
+            pass
