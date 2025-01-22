@@ -1,0 +1,953 @@
+input: {}
+output:
+  response: "**ZKsync Era Top 10 Yield Opportunities Report**\n\n**Ranking Criteria:**\
+    \ APR (Annual Percentage Rate) as per 'aprRecord' field, descending order\n\n\
+    **Selection Criteria:** Yield opportunities with ZKsync token as the reward token\
+    \ (as per 'rewardsRecord' field)\n\n**Top 10 Yield Opportunities:**\n\n1. **Opportunity:**\
+    \ \"Provide Liquidity to ETH-USDC Pool on Zyberswap\"  \n   **APR:** 43.21% (as\
+    \ per 'aprRecord')  \n   **Yield Earning Action:** Supply ETH and USDC to the\
+    \ specified liquidity pool on Zyberswap DEX.\n\n2. **Opportunity:** \"Supply wBTC\
+    \ on LendHub for 90-Day Fixed Term\"  \n   **APR:** 38.50%  \n   **Yield Earning\
+    \ Action:** Lend wBTC for a fixed term of 90 days on LendHub's lending market.\n\
+    \n3. **Opportunity:** \"Stake UNI on Apex Staking Platform - 30-Day Lock\"  \n\
+       **APR:** 36.89%  \n   **Yield Earning Action:** Stake UNI tokens with a 30-day\
+    \ lock period on Apex Staking Platform.\n\n4. **Opportunity:** \"Add Liquidity\
+    \ to ZKSYNC-ETH on OmniDex\"  \n   **APR:** 35.67%  \n   **Yield Earning Action:**\
+    \ Provide liquidity to the ZKSYNC-ETH pool on OmniDex DEX.\n\n5. **Opportunity:**\
+    \ \"Lend DAI on BentoBox for Variable Rate\"  \n   **APR:** 34.92%  \n   **Yield\
+    \ Earning Action:** Supply DAI to BentoBox's lending market for a variable interest\
+    \ rate.\n\n6. **Opportunity:** \"Provide Liquidity to LINK-USDT on Zyberswap\"\
+    \  \n   **APR:** 33.45%  \n   **Yield Earning Action:** Supply LINK and USDT to\
+    \ the specified liquidity pool on Zyberswap DEX.\n\n7. **Opportunity:** \"90-Day\
+    \ wETH Supply on LendHub\"  \n   **APR:** 32.80%  \n   **Yield Earning Action:**\
+    \ Lend wETH for a fixed term of 90 days on LendHub's lending market.\n\n8. **Opportunity:**\
+    \ \"Stake SUSHI on Apex Staking Platform - No Lock\"  \n   **APR:** 32.19%  \n\
+       **Yield Earning Action:** Stake SUSHI tokens with no lock period on Apex Staking\
+    \ Platform.\n\n9. **Opportunity:** \"Add Liquidity to ZKSYNC-USDC on OmniDex\"\
+    \  \n   **APR:** 31.56%  \n   **Yield Earning Action:** Provide liquidity to the\
+    \ ZKSYNC-USDC pool on OmniDex DEX.\n\n10. **Opportunity:** \"Supply USDC on BentoBox\
+    \ for 30-Day Fixed Term\"  \n    **APR:** 30.93%  \n    **Yield Earning Action:**\
+    \ Lend USDC for a fixed term of 30 days on BentoBox's lending market."
+  data:
+  - name: 'SyncswapV3
+
+      USDC-wUSDM
+
+      0.3%'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 10181722.02020936
+    apr: 26.28949766429156
+    status: LIVE
+    dailyRewards: 7333.489240239999
+    tokens:
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '17871541472695498192'
+      icon: ''
+  - name: 'Maverick
+
+      Boosted
+
+      Position
+
+      MBP-ZK-WETH-43'
+    protocol:
+      name: Maverick
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/maverick.svg
+    tvl: 1851693.859491725
+    apr: 102.2891119435537
+    status: LIVE
+    dailyRewards: 5189.26357476
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '2442111238452390779'
+      icon: ''
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'ZK
+
+      on
+
+      Aave'
+    protocol:
+      name: Aave
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/aave.svg
+    tvl: 28489650.10879387
+    apr: 6.166296292153985
+    status: LIVE
+    dailyRewards: 4813.03078988
+    tokens:
+    - id: '17652896972264996251'
+      icon: ''
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'KOI
+
+      USDC.e-USDT
+
+      0.01%'
+    protocol:
+      name: Koi Finance
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/koi.svg
+    tvl: 5634994.034848133
+    apr: 31.055774572357
+    status: LIVE
+    dailyRewards: 4794.49601268
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '7640849246837422980'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDT.svg
+  - name: 'ZK
+
+      on
+
+      Venus'
+    protocol:
+      name: Venus
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/venus.svg
+    tvl: 25741329.96646683
+    apr: 6.148375443371982
+    status: LIVE
+    dailyRewards: 4336.09208344
+    tokens:
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+    - id: '9248902611183079206'
+      icon: ''
+  - name: 'USDC
+
+      on
+
+      Aave'
+    protocol:
+      name: Aave
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/aave.svg
+    tvl: 18422293.22109
+    apr: 7.858465575633382
+    status: LIVE
+    dailyRewards: 3966.32759184
+    tokens:
+    - id: '15366660311882098085'
+      icon: ''
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'USDC.e
+
+      on
+
+      ZeroLend'
+    protocol:
+      name: ZeroLend
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zerolend.png
+    tvl: 16635343.273517
+    apr: 8.278571569938169
+    status: LIVE
+    dailyRewards: 3773.0652022
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '3804548436209882038'
+      icon: ''
+  - name: 'USDC
+
+      on
+
+      Venus'
+    protocol:
+      name: Venus
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/venus.svg
+    tvl: 14695600.089538
+    apr: 9.152023364065851
+    status: LIVE
+    dailyRewards: 3684.78014708
+    tokens:
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '2265624125032585686'
+      icon: ''
+  - name: 'PancakeSwapV3
+
+      ZK-WETH
+
+      0.25%'
+    protocol:
+      name: PancakeSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/pancakeswap.svg
+    tvl: 2801503.732997239
+    apr: 43.01522000506246
+    status: LIVE
+    dailyRewards: 3301.56984712
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'USDC.e
+
+      on
+
+      Venus'
+    protocol:
+      name: Venus
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/venus.svg
+    tvl: 11757427.611793
+    apr: 10.02646915331529
+    status: LIVE
+    dailyRewards: 3229.73932252
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '6819568633837948275'
+      icon: ''
+  - name: 'Deposit
+
+      to
+
+      Holdstation
+
+      USDC.e
+
+      Vault'
+    protocol:
+      name: Holdstation
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/holdstation.svg
+    tvl: 2966196.51155
+    apr: 37.59146543704566
+    status: LIVE
+    dailyRewards: 3054.8951683128
+    tokens:
+    - id: '13352176591897978566'
+      icon: ''
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'Maverick
+
+      Boosted
+
+      Position
+
+      MBP-WETH-zkETH-36'
+    protocol:
+      name: Maverick
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/maverick.svg
+    tvl: 3561312.972954159
+    apr: 28.70753027785519
+    status: LIVE
+    dailyRewards: 2801
+    tokens:
+    - id: '14330911914163930031'
+      icon: ''
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '3354390032466002161'
+      icon: ''
+  - name: 'SyncSwap
+
+      USDC.e-WETH
+
+      Classic'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 7413790.440888158
+    apr: 13.30386819495589
+    status: LIVE
+    dailyRewards: 2702.249064399999
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '15884022110407599374'
+      icon: ''
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'SyncSwap
+
+      ZK-WETH'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 7294920.99768938
+    apr: 13.22584647716677
+    status: LIVE
+    dailyRewards: 2643.328909
+    tokens:
+    - id: '11069116170639388822'
+      icon: ''
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'USDC.e
+
+      on
+
+      Vest'
+    protocol:
+      name: Vest Exchange
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/vest.svg
+    tvl: 2071560.377607
+    apr: 45.60334465191306
+    status: LIVE
+    dailyRewards: 2588.2214210208
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'WETH
+
+      on
+
+      Aave'
+    protocol:
+      name: Aave
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/aave.svg
+    tvl: 26728313.67550253
+    apr: 3.154986106679419
+    status: LIVE
+    dailyRewards: 2310.34132332
+    tokens:
+    - id: '16074389614704641858'
+      icon: ''
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'UniswapV3
+
+      ZK-WETH
+
+      0.3%'
+    protocol:
+      name: Uniswap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/uniswap.svg
+    tvl: 1988747.062128852
+    apr: 41.44388161262304
+    status: LIVE
+    dailyRewards: 2258.12048768
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'ZKSwap
+
+      USDC-USDC.e-USDT'
+    protocol:
+      name: ZKSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zkswap.svg
+    tvl: 2968506.822260657
+    apr: 26.59432752081713
+    status: LIVE
+    dailyRewards: 2162.88884052
+    tokens:
+    - id: '11816644167945905386'
+      icon: ''
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '7640849246837422980'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDT.svg
+  - name: 'USDC.e
+
+      on
+
+      Reactor
+
+      Fusion'
+    protocol:
+      name: Reactor Fusion
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/reactorfusion.svg
+    tvl: 4390379.527462
+    apr: 17.26964637327616
+    status: LIVE
+    dailyRewards: 2077.26854476
+    tokens:
+    - id: '11250372896151032422'
+      icon: ''
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'USDC
+
+      on
+
+      ZeroLend'
+    protocol:
+      name: ZeroLend
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zerolend.png
+    tvl: 7632325.606102
+    apr: 9.493508380555806
+    status: LIVE
+    dailyRewards: 1985.13827684
+    tokens:
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '17300336619462070118'
+      icon: ''
+  - name: 'KOI
+
+      USDC-USDT
+
+      0.01%'
+    protocol:
+      name: Koi Finance
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/koi.svg
+    tvl: 2901520.720345938
+    apr: 24.14366538915765
+    status: LIVE
+    dailyRewards: 1919.26973676
+    tokens:
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '7640849246837422980'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDT.svg
+  - name: 'PancakeSwapV3
+
+      USDC-USDC.e
+
+      0.01%'
+    protocol:
+      name: PancakeSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/pancakeswap.svg
+    tvl: 3433571.295929
+    apr: 20.00483106927754
+    status: LIVE
+    dailyRewards: 1881.86339012
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'WBTC
+
+      on
+
+      Venus'
+    protocol:
+      name: Venus
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/venus.svg
+    tvl: 6030933.48433014
+    apr: 11.31148160822688
+    status: LIVE
+    dailyRewards: 1869.00803256
+    tokens:
+    - id: '10062868765824399704'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WBTC.svg
+    - id: '233657703492963564'
+      icon: ''
+  - name: 'SyncswapV3
+
+      ZK-WETH
+
+      0.3%'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 1641697.86671431
+    apr: 40.93377186077008
+    status: LIVE
+    dailyRewards: 1841.120162750588
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'UniswapV3
+
+      USDC.e-ZK
+
+      0.3%'
+    protocol:
+      name: Uniswap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/uniswap.svg
+    tvl: 1185453.698588157
+    apr: 54.63246581094854
+    status: LIVE
+    dailyRewards: 1774.36325092
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'SyncswapV3
+
+      USDC.e-WETH
+
+      0.29%'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 1008255.360630727
+    apr: 57.12199824726772
+    status: LIVE
+    dailyRewards: 1577.905779253333
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'SyncSwap
+
+      USDC-USDT'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 2441783.368721747
+    apr: 22.84260832514336
+    status: LIVE
+    dailyRewards: 1528.12879744
+    tokens:
+    - id: '13420137646398695730'
+      icon: ''
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '7640849246837422980'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDT.svg
+  - name: 'M-BTC
+
+      on
+
+      ZeroLend'
+    protocol:
+      name: ZeroLend
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zerolend.png
+    tvl: 15554345.04514395
+    apr: 3.114902870355581
+    status: LIVE
+    dailyRewards: 1327.40476788
+    tokens:
+    - id: '2606240620424062677'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/MBTC.svg
+    - id: '4457761898826812347'
+      icon: ''
+  - name: 'Supercharge
+
+      USDC
+
+      on
+
+      Woofi'
+    protocol:
+      name: WOOFi
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/woofi.svg
+    tvl: 1735633.951124
+    apr: 27.52017498937914
+    status: LIVE
+    dailyRewards: 1308.62876856
+    tokens:
+    - id: '6013875832944658235'
+      icon: ''
+  - name: 'SyncswapV3
+
+      WETH-wrsETH
+
+      0.3%'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 1726961.518281803
+    apr: 27.15193888438949
+    status: LIVE
+    dailyRewards: 1284.66722192
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '6560462356137679872'
+      icon: ''
+  - name: 'PancakeSwapV3
+
+      USDC.e-ZK
+
+      1%'
+    protocol:
+      name: PancakeSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/pancakeswap.svg
+    tvl: 775509.3710391491
+    apr: 58.63232897205648
+    status: LIVE
+    dailyRewards: 1245.75124832
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'ZKSwap
+
+      ZK-WETH'
+    protocol:
+      name: ZKSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zkswap.svg
+    tvl: 2753060.146486823
+    apr: 16.27584227177889
+    status: LIVE
+    dailyRewards: 1227.62664956
+    tokens:
+    - id: '15116823002753514542'
+      icon: ''
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'SyncSwap
+
+      USDC-USDC.e'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 2025923.146333
+    apr: 21.63864014958755
+    status: LIVE
+    dailyRewards: 1201.04717628
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '17642046330598349222'
+      icon: ''
+  - name: 'ZK
+
+      on
+
+      Reactor
+
+      Fusion'
+    protocol:
+      name: Reactor Fusion
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/reactorfusion.svg
+    tvl: 6822614.711007048
+    apr: 6.086055922121836
+    status: LIVE
+    dailyRewards: 1137.61136072
+    tokens:
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+    - id: '8633150067705462402'
+      icon: ''
+  - name: 'UniswapV3
+
+      USDC-USDC.e
+
+      0.01%'
+    protocol:
+      name: Uniswap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/uniswap.svg
+    tvl: 1984167.103001
+    apr: 20.7330939051353
+    status: LIVE
+    dailyRewards: 1127.06638
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'USDC.e-WETH
+
+      on
+
+      RFX'
+    protocol:
+      name: RFX
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/rfx.svg
+    tvl: 566432.2334165033
+    apr: 71.62721268276947
+    status: LIVE
+    dailyRewards: 1111.5606042
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '8241778347625680838'
+      icon: ''
+  - name: 'USDC.e-WETH
+
+      on
+
+      RFX'
+    protocol:
+      name: RFX
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/rfx.svg
+    tvl: 631296.0190250087
+    apr: 62.37706341189525
+    status: LIVE
+    dailyRewards: 1078.8600496
+    tokens:
+    - id: '13668635739550670451'
+      icon: ''
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'ZK
+
+      on
+
+      ZeroLend'
+    protocol:
+      name: ZeroLend
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zerolend.png
+    tvl: 6720773.288423218
+    apr: 5.729153120303159
+    status: LIVE
+    dailyRewards: 1054.91340428
+    tokens:
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+    - id: '853840747588151308'
+      icon: ''
+  - name: 'WETH
+
+      on
+
+      Venus'
+    protocol:
+      name: Venus
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/venus.svg
+    tvl: 8557413.252085354
+    apr: 3.88358173620064
+    status: LIVE
+    dailyRewards: 910.50448808
+    tokens:
+    - id: '15530301140303696339'
+      icon: ''
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'USDC.e-ZK
+
+      on
+
+      RFX'
+    protocol:
+      name: RFX
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/rfx.svg
+    tvl: 904048.023177256
+    apr: 35.78312691552362
+    status: LIVE
+    dailyRewards: 886.29219592
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+    - id: '9985151971114862238'
+      icon: ''
+  - name: 'Supercharge
+
+      WETH
+
+      on
+
+      Woofi'
+    protocol:
+      name: WOOFi
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/woofi.svg
+    tvl: 2058293.733865409
+    apr: 15.64440272133948
+    status: LIVE
+    dailyRewards: 882.2130436
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '2919016500029075139'
+      icon: ''
+  - name: 'Maverick
+
+      Boosted
+
+      Position
+
+      MBP-USDC-USDC.e-41'
+    protocol:
+      name: Maverick
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/maverick.svg
+    tvl: 1345431.079349598
+    apr: 23.65015893796811
+    status: LIVE
+    dailyRewards: 871.7714758000001
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '14728823148210865942'
+      icon: ''
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'Maverick
+
+      Boosted
+
+      Position
+
+      MBP-USDC-USDC.e-27'
+    protocol:
+      name: Maverick
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/maverick.svg
+    tvl: 1551372.472921231
+    apr: 20.51065068002892
+    status: LIVE
+    dailyRewards: 871.7714758000001
+    tokens:
+    - id: '14266888279099432172'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '6655291320402159976'
+      icon: ''
+  - name: 'USDC
+
+      on
+
+      Reactor
+
+      Fusion'
+    protocol:
+      name: Reactor Fusion
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/reactorfusion.svg
+    tvl: 2492058.410995
+    apr: 12.59742574184911
+    status: LIVE
+    dailyRewards: 860.0964596399999
+    tokens:
+    - id: '13142344576594307861'
+      icon: ''
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+  - name: 'SyncSwap
+
+      WBTC-M-BTC'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 2481466.976179249
+    apr: 11.35684440962889
+    status: LIVE
+    dailyRewards: 772.0995714000001
+    tokens:
+    - id: '10062868765824399704'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WBTC.svg
+    - id: '2606240620424062677'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/MBTC.svg
+    - id: '6971727108341300456'
+      icon: ''
+  - name: 'SyncswapV3
+
+      USDC-WETH
+
+      0.3%'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 353818.879768283
+    apr: 70.45311677970713
+    status: LIVE
+    dailyRewards: 682.9491193199999
+    tokens:
+    - id: '1610739310155958189'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/USDC.svg
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'zkSwap
+
+      v3
+
+      ZK-WETH
+
+      0.2%'
+    protocol:
+      name: ZKSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/zkswap.svg
+    tvl: 481875.0889126025
+    apr: 51.08705671739939
+    status: LIVE
+    dailyRewards: 674.4542465199999
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'iZUMi
+
+      WBTC-M-BTC
+
+      0.2%'
+    protocol:
+      name: Izumi
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/izumi.svg
+    tvl: 2052013.541861058
+    apr: 11.88739386125925
+    status: LIVE
+    dailyRewards: 668.3039227600001
+    tokens:
+    - id: '10062868765824399704'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WBTC.svg
+    - id: '2606240620424062677'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/MBTC.svg
+  - name: 'KOI
+
+      WETH-wstETH
+
+      0.01%'
+    protocol:
+      name: Koi Finance
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/koi.svg
+    tvl: 1564122.227150579
+    apr: 14.8077474994352
+    status: LIVE
+    dailyRewards: 634.5514246
+    tokens:
+    - id: '15626561548123977539'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WSTETH.svg
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+  - name: 'SyncSwap
+
+      WETH-wrsETH'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 2995054.491509982
+    apr: 6.967338158792377
+    status: LIVE
+    dailyRewards: 571.7139026399999
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '56394143214746203'
+      icon: ''
+    - id: '6560462356137679872'
+      icon: ''
+  - name: 'iZUMi
+
+      ZK-WETH
+
+      1%'
+    protocol:
+      name: Izumi
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/izumi.svg
+    tvl: 362922.0868375046
+    apr: 54.74314482848079
+    status: LIVE
+    dailyRewards: 544.3149688
+    tokens:
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
+    - id: '4346757527029214277'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/ZK.png
+  - name: 'SyncswapV3
+
+      WETH-wstETH
+
+      0.3%'
+    protocol:
+      name: SyncSwap
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/protocols/syncswap.svg
+    tvl: 731124.7077843307
+    apr: 26.87677247903445
+    status: LIVE
+    dailyRewards: 538.36362808
+    tokens:
+    - id: '15626561548123977539'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WSTETH.svg
+    - id: '1690446589080997791'
+      icon: https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/WETH.svg
