@@ -158,4 +158,4 @@ Example structure for finalized tweet flow on the works:
 
 *"_eval" param indicates requires agent to evaluate if it should respond*
 
-*"_HITL" param indicates requirment to activate Human In The Loop flow*
+*"_HITL" param indicates requirement to activate Human In The Loop flow*
