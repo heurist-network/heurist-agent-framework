@@ -7,7 +7,7 @@
 
 A flexible multi-interface AI agent framework that can interact through various platforms including Telegram, Discord, Twitter, Farcaster, and REST API.
 
-Grab a Heurist API Key instantly for free by using the code 'agent' while submitting the form on https://heurist.ai/dev-access
+Grab a Heurist API Key instantly for free by using the code 'agent' while submitting the form at https://heurist.ai/dev-access
 ## Overview
 
 The Heurist Agent Framework is built on a modular architecture that allows an AI agent to:
@@ -148,7 +148,7 @@ For support, please open an issue in the GitHub repository or contact the mainta
 
 ## WIP
 
-More features and refinement on the way!
+More features and refinement are on the way!
 
 Example structure for finalized tweet flow on the works:
 
