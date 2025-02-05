@@ -560,7 +560,7 @@ class CoreAgent:
                 threshold=0.6,
                 message_type="knowledge_base"            
             )
-        logger.info(f"Found {len(knowledge_base_data)} relavant items from knowledge base")
+        logger.info(f"Found {len(knowledge_base_data)} relevant items from knowledge base")
         if knowledge_base_data:
             system_prompt_context = "\n\nConsider the Following As Facts and use them to answer the question if applicable and relevant:\nKnowledge base data:\n"
             for data in knowledge_base_data:
