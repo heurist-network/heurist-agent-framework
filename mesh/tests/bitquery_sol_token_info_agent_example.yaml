@@ -1,0 +1,482 @@
+input_by_token_address:
+  query: Get token info for HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC
+output_by_token_address:
+  response: "**Token Information for HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC**\n\
+    \n### **Summary**\n\n* **Current Price**: $0.2880025022022892\n* **1-Hour Price\
+    \ Change**: -$0.007396203087409958 (-2.5038034882910067%)\n* **Highest Price (1h)**:\
+    \ $0.2968683505896479\n* **Lowest Price (1h)**: $0.28609520086320117\n* **Total\
+    \ Volume (1h)**: 451,506.59255444485\n* **Last Updated**: 2025-02-07T06:58:58.069037\n\
+    \n### **Detailed Time-Series Data (5-minute intervals)**\n\nDue to the extensive\
+    \ nature of the time-series data, a condensed version is provided below, highlighting\
+    \ key intervals. For a full, detailed list, please refer to the original output.\n\
+    \n| **Time** | **Open** | **High** | **Low** | **Close** | **Volume** |\n| ---\
+    \ | --- | --- | --- | --- | --- |\n| 2025-02-07T05:55:00Z | $0.29539870528969914\
+    \ | $0.2968683505896479 | $0.29539870528969914 | $0.29539870528969914 | 20,311.50977106244\
+    \ |\n| 2025-02-07T06:00:00Z | $0.29493090289179236 | $0.29639822081662714 | $0.29346358496695757\
+    \ | $0.29493090289179236 | 32,869.32476974528 |\n| 2025-02-07T06:20:00Z | $0.29182813273109787\
+    \ | $0.29182813273109787 | $0.28992075931455474 | $0.29182813273109787 | 143.87248042775238\
+    \ |\n| 2025-02-07T06:40:00Z | $0.2880025022022892 | $0.2880025022022892 | $0.2880025022022892\
+    \ | $0.2880025022022892 | 153.31104847669602 |\n| 2025-02-07T06:55:00Z (Latest)\
+    \ | $0.2899821053724736 | $0.29144666146021336 | $0.2899821053724736 | $0.2899821053724736\
+    \ | 9,233.637678004041 |\n\n**Note**: \n- The detailed data section is truncated\
+    \ for brevity. If you need the full list of 5-minute intervals, please let me\
+    \ know.\n- All prices are in USD.\n- Volumes are aggregated for each time interval.\n\
+    \nIf you'd like to:\n1. **Explore another token**, please provide its Solana token\
+    \ mint address.\n2. **See trending tokens on Solana**, simply request 'Trending\
+    \ Solana Tokens'."
+  data:
+    summary:
+      current_price: 0.2880025022022892
+      price_change_1h: -0.007396203087409958
+      price_change_percentage_1h: -2.5038034882910067
+      highest_price_1h: 0.2968683505896479
+      lowest_price_1h: 0.28609520086320117
+      total_volume_1h: 451506.59255444485
+      last_updated: '2025-02-07T06:58:58.069037'
+    detailed_data:
+    - time: '2025-02-07T05:55:00Z'
+      open: 0.29539870528969914
+      high: 0.2968683505896479
+      low: 0.29539870528969914
+      close: 0.29539870528969914
+      volume: 20311.50977106244
+    - time: '2025-02-07T05:55:00Z'
+      open: 0.29563859754944133
+      high: 0.29563859754944133
+      low: 0.29563859754944133
+      close: 0.29563859754944133
+      volume: 181.00471228155865
+    - time: '2025-02-07T06:00:00Z'
+      open: 0.29493090289179236
+      high: 0.29639822081662714
+      low: 0.29346358496695757
+      close: 0.29493090289179236
+      volume: 32869.32476974528
+    - time: '2025-02-07T06:00:00Z'
+      open: 0.293735506147641
+      high: 0.2956428795641841
+      low: 0.29182813273109787
+      close: 0.293735506147641
+      volume: 369.7758647358441
+    - time: '2025-02-07T06:05:00Z'
+      open: 0.293735506147641
+      high: 0.293735506147641
+      low: 0.29182813273109787
+      close: 0.293735506147641
+      volume: 394.29976139062
+    - time: '2025-02-07T06:05:00Z'
+      open: 0.29346358496695757
+      high: 0.29346358496695757
+      low: 0.2919962670421228
+      close: 0.29346358496695757
+      volume: 45467.281962114495
+    - time: '2025-02-07T06:10:00Z'
+      open: 0.29346358496695757
+      high: 0.29346358496695757
+      low: 0.2919962670421228
+      close: 0.29346358496695757
+      volume: 25797.61640484906
+    - time: '2025-02-07T06:10:00Z'
+      open: 0.293735506147641
+      high: 0.293735506147641
+      low: 0.29182813273109787
+      close: 0.293735506147641
+      volume: 244.54307350557232
+    - time: '2025-02-07T06:15:00Z'
+      open: 0.29346358496695757
+      high: 0.29346358496695757
+      low: 0.2919962670421228
+      close: 0.29346358496695757
+      volume: 26877.522972393246
+    - time: '2025-02-07T06:15:00Z'
+      open: 0.29182813273109787
+      high: 0.293735506147641
+      low: 0.29182813273109787
+      close: 0.29182813273109787
+      volume: 168.6430302874521
+    - time: '2025-02-07T06:20:00Z'
+      open: 0.29182813273109787
+      high: 0.29182813273109787
+      low: 0.28992075931455474
+      close: 0.29182813273109787
+      volume: 143.87248042775238
+    - time: '2025-02-07T06:20:00Z'
+      open: 0.29346358496695757
+      high: 0.29346358496695757
+      low: 0.2919962670421228
+      close: 0.29346358496695757
+      volume: 19499.305833736747
+    - time: '2025-02-07T06:25:00Z'
+      open: 0.29493090289179236
+      high: 0.29493090289179236
+      low: 0.29346358496695757
+      close: 0.29493090289179236
+      volume: 22924.223298510347
+    - time: '2025-02-07T06:25:00Z'
+      open: 0.29182813273109787
+      high: 0.29182813273109787
+      low: 0.28992075931455474
+      close: 0.29182813273109787
+      volume: 94.26931590190493
+    - time: '2025-02-07T06:30:00Z'
+      open: 0.2899098035413772
+      high: 0.2918171048804652
+      low: 0.2899098035413772
+      close: 0.2899098035413772
+      volume: 123.12302602334023
+    - time: '2025-02-07T06:30:00Z'
+      open: 0.29291121754795313
+      high: 0.2943757736356929
+      low: 0.29291121754795313
+      close: 0.29291121754795313
+      volume: 15579.10071231798
+    - time: '2025-02-07T06:35:00Z'
+      open: 0.29291121754795313
+      high: 0.29291121754795313
+      low: 0.29144666146021336
+      close: 0.29291121754795313
+      volume: 56861.627661030885
+    - time: '2025-02-07T06:35:00Z'
+      open: 0.2899098035413772
+      high: 0.2899098035413772
+      low: 0.2880025022022892
+      close: 0.2899098035413772
+      volume: 623.5087313858032
+    - time: '2025-02-07T06:40:00Z'
+      open: 0.2880025022022892
+      high: 0.2880025022022892
+      low: 0.2880025022022892
+      close: 0.2880025022022892
+      volume: 153.31104847669602
+    - time: '2025-02-07T06:40:00Z'
+      open: 0.29144666146021336
+      high: 0.29144666146021336
+      low: 0.2899821053724736
+      close: 0.29144666146021336
+      volume: 21814.429842501715
+    - time: '2025-02-07T06:45:00Z'
+      open: 0.2899821053724736
+      high: 0.29291121754795313
+      low: 0.2899821053724736
+      close: 0.2899821053724736
+      volume: 130714.96525941092
+    - time: '2025-02-07T06:45:00Z'
+      open: 0.2880025022022892
+      high: 0.2899098035413772
+      low: 0.28609520086320117
+      close: 0.2880025022022892
+      volume: 604.8295125584602
+    - time: '2025-02-07T06:50:00Z'
+      open: 0.2899098035413772
+      high: 0.2899098035413772
+      low: 0.2880025022022892
+      close: 0.2899098035413772
+      volume: 21.651616123342514
+    - time: '2025-02-07T06:50:00Z'
+      open: 0.29144666146021336
+      high: 0.29144666146021336
+      low: 0.2899821053724736
+      close: 0.29144666146021336
+      volume: 20423.61861260336
+    - time: '2025-02-07T06:55:00Z'
+      open: 0.2899821053724736
+      high: 0.29144666146021336
+      low: 0.2899821053724736
+      close: 0.2899821053724736
+      volume: 9233.637678004041
+    - time: '2025-02-07T06:55:00Z'
+      open: 0.2880025022022892
+      high: 0.2880025022022892
+      low: 0.2880025022022892
+      close: 0.2880025022022892
+      volume: 9.595603066015244
+input_trending:
+  query: Get trending tokens
+output_trending:
+  response: "**Trending Tokens on Solana Network**\n\nBelow is a summarized list of\
+    \ trending tokens on the Solana network, based on the provided data. Each token's\
+    \ information includes its **Name**, **Symbol**, **Mint Address**, **Price Range\
+    \ (Start - End)**, and **Total Traded Volume**.\n\n1. **Open Thoughts**\n\t* **Symbol:**\
+    \ Thoughts\n\t* **Mint Address:** 6wuy6T2va2kMWyeXmoCa15coVjMHysd9cvnqLMCDpump\n\
+    \t* **Price Range:** 8.066445481295672e-05 - 1.5943265056223368e-05\n\t* **Total\
+    \ Traded Volume:** 139,598.0209811703\n\n2. **YODA**\n\t* **Symbol:** YODA\n\t\
+    * **Mint Address:** J3TqbUgHurQGNxWtT88UQPcMNVmrL875pToQZdrkpump\n\t* **Price\
+    \ Range:** 0.0008939047046761098 - 0.0008854570903401472\n\t* **Total Traded Volume:**\
+    \ 11,470.692070836249\n\n3. **TYGA**\n\t* **Symbol:** TYGA\n\t* **Mint Address:**\
+    \ ATDLXn41q6ySnVDMrye1wcEnFrqMGD82tfEBnhYapump\n\t* **Price Range:** 0.0031478885084478855\
+    \ - 0.018614206647078153\n\t* **Total Traded Volume:** 12,909,945.796761177\n\n\
+    4. **Smuggled Baby Gorilla**\n\t* **Symbol:** SBG\n\t* **Mint Address:** 5qJokMm1JEBMG1PVu9AXEW7XPofAStZcfa8WygRbpump\n\
+    \t* **Price Range:** 6.516853679194043e-05 - 3.4782468546085406e-06\n\t* **Total\
+    \ Traded Volume:** 197,453.33690148912\n\n5. **PEZ Boys Club**\n\t* **Symbol:**\
+    \ PEZBC\n\t* **Mint Address:** Ag5ywpyS5t4k5sgFUL4ZXxHTZ53js7o5DSWYuS9ypump\n\t\
+    * **Price Range:** 5.58845405602781e-06 - 0.000139489180715934\n\t* **Total Traded\
+    \ Volume:** 126,089.10621392204\n\n6. **[Unnamed Token]**\n\t* **Mint Address:**\
+    \ GBAFGbVYsGxr9CscqYdFwCLktZ5nMYM77iSw1rkAtc7S\n\t* **Price Range:** 0.0003734642671620521\
+    \ - 2.4974192488324663e-08\n\t* **Total Traded Volume:** 550,428.8800558049\n\n\
+    7. **[Unnamed Token]**\n\t* **Mint Address:** 94Cxhczu1QpsH8sbpvVd1NTRgbCGHwhYE24ajBWENBFL\n\
+    \t* **Price Range:** 0.00021511084262016187 - 0.0007027670182721064\n\t* **Total\
+    \ Traded Volume:** 1,026,018.5335524577\n\n8. **Dogcoin**\n\t* **Symbol:** DCOIN\n\
+    \t* **Mint Address:** FupVnjj4oq36F7YrBfGPW1PaazXTtHdQfPY4R5fapump\n\t* **Price\
+    \ Range:** 0.0001512152754958355 - 0.00018590853229160897\n\t* **Total Traded\
+    \ Volume:** 84,936.52126507252\n\n9. **GachaAI**\n\t* **Symbol:** GACHA\n\t* **Mint\
+    \ Address:** GaCHaZegh7omdqwN27YkTWeSVeUJ7GdgkW4gCz1nzcWX\n\t* **Price Range:**\
+    \ 8.29949707357354e-05 - 0.0002542160613174262\n\t* **Total Traded Volume:** 1,608,853.8890517245\n\
+    \n10. **[Unnamed Token]**\n\t* **Mint Address:** 71toFriesNLo78XDzQqzkLWS6q71nMBcQTeaRgJDKRT1\n\
+    \t* **Price Range:** 0.0006469269371549419 - 8.337000081153982e-07\n\t* **Total\
+    \ Traded Volume:** 1,703,085.043216995\n\n**Note:** Tokens without a provided\
+    \ name in the data are listed with their Mint Address for identification purposes.\n\
+    \nIf you'd like to see **detailed trading information (Price Information, Trading\
+    \ Volume, Time-series data in 5-minute intervals)** for any of these tokens, please\
+    \ provide the **Mint Address** of the token you're interested in."
+  data:
+    trending_tokens:
+    - currency:
+        Name: 'Open Thoughts '
+        MintAddress: 6wuy6T2va2kMWyeXmoCa15coVjMHysd9cvnqLMCDpump
+        Symbol: Thoughts
+      price:
+        start: 8.066445481295672e-05
+        min5: 8.066445481295672e-05
+        end: 1.5943265056223368e-05
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: D8z7KxFJWPs16bKE6AJGk9qJ9HymH1VyWJ9SiMkcn2yN
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 133
+      total_trades: 34598
+      total_traded_volume: 139598.0209811703
+      total_buy_volume: 65504.89550052666
+      total_sell_volume: 74093.12548064365
+      total_buys: 24820
+      total_sells: 9778
+    - currency:
+        Name: YODA
+        MintAddress: J3TqbUgHurQGNxWtT88UQPcMNVmrL875pToQZdrkpump
+        Symbol: YODA
+      price:
+        start: 0.0008939047046761098
+        min5: 0.0008939047046761098
+        end: 0.0008854570903401472
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: 5XH29cos3LeqrTg33xMWjcqSdxmnpe1mKDjrPt7ZcCi8
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 31
+      total_trades: 32828
+      total_traded_volume: 11470.692070836249
+      total_buy_volume: 5652.448491271817
+      total_sell_volume: 5818.243579564429
+      total_buys: 16409
+      total_sells: 16419
+    - currency:
+        Name: TYGA
+        MintAddress: ATDLXn41q6ySnVDMrye1wcEnFrqMGD82tfEBnhYapump
+        Symbol: TYGA
+      price:
+        start: 0.0031478885084478855
+        min5: 0.0031478885084478855
+        end: 0.018614206647078153
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: HczjAUPotGPYXSkmmzLPRTWjcgZ218zgx9znwXJLTGty
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 7316
+      total_trades: 26888
+      total_traded_volume: 12909945.796761177
+      total_buy_volume: 6537684.859212673
+      total_sell_volume: 6372260.93754851
+      total_buys: 15069
+      total_sells: 11819
+    - currency:
+        Name: Smuggled Baby Gorilla
+        MintAddress: 5qJokMm1JEBMG1PVu9AXEW7XPofAStZcfa8WygRbpump
+        Symbol: SBG
+      price:
+        start: 6.516853679194043e-05
+        min5: 6.516853679194043e-05
+        end: 3.4782468546085406e-06
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: GFnaUhSwjdNBg1hbnE21GqN8Nv5pLR9PR2E6GdFfZzrS
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 121
+      total_trades: 25171
+      total_traded_volume: 197453.33690148912
+      total_buy_volume: 93153.77333490583
+      total_sell_volume: 104299.5635665833
+      total_buys: 13305
+      total_sells: 11866
+    - currency:
+        Name: PEZ Boys Club
+        MintAddress: Ag5ywpyS5t4k5sgFUL4ZXxHTZ53js7o5DSWYuS9ypump
+        Symbol: PEZBC
+      price:
+        start: 5.58845405602781e-06
+        min5: 5.58845405602781e-06
+        end: 0.000139489180715934
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: DEtAvyQxuop7SY6avHyDTmKcB8k9vAKmHxnEzKQFk167
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 121
+      total_trades: 24127
+      total_traded_volume: 126089.10621392204
+      total_buy_volume: 72125.60654669073
+      total_sell_volume: 53963.499667231314
+      total_buys: 12475
+      total_sells: 11652
+    - currency:
+        Name: ''
+        MintAddress: GBAFGbVYsGxr9CscqYdFwCLktZ5nMYM77iSw1rkAtc7S
+        Symbol: ''
+      price:
+        start: 0.0003734642671620521
+        min5: 0.0003734642671620521
+        end: 2.4974192488324663e-08
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: 2Buw8DC39g4ydjankDL8GLk1k4tUcqRxsbGEoUggyo1P
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 266
+      total_trades: 20837
+      total_traded_volume: 550428.8800558049
+      total_buy_volume: 274951.5971753652
+      total_sell_volume: 275477.2828804399
+      total_buys: 10368
+      total_sells: 10469
+    - currency:
+        Name: ''
+        MintAddress: 94Cxhczu1QpsH8sbpvVd1NTRgbCGHwhYE24ajBWENBFL
+        Symbol: ''
+      price:
+        start: 0.00021511084262016187
+        min5: 0.00021511084262016187
+        end: 0.0007027670182721064
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: kAWuT3tjW8PbUW5ZBPgHdoAPBkaKbXwiXEvTFFufHZz
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 251
+      total_trades: 16545
+      total_traded_volume: 1026018.5335524577
+      total_buy_volume: 514236.40647401713
+      total_sell_volume: 511782.12707844045
+      total_buys: 8221
+      total_sells: 8324
+    - currency:
+        Name: Dogcoin
+        MintAddress: FupVnjj4oq36F7YrBfGPW1PaazXTtHdQfPY4R5fapump
+        Symbol: DCOIN
+      price:
+        start: 0.0001512152754958355
+        min5: 0.0001512152754958355
+        end: 0.00018590853229160897
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: CoHozVxAiDrL276fDdhg7wYFmSkkBPDA1jmsk2RghDDk
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 14262
+      total_trades: 14725
+      total_traded_volume: 84936.52126507252
+      total_buy_volume: 43801.881102581116
+      total_sell_volume: 41134.64016249147
+      total_buys: 14448
+      total_sells: 277
+    - currency:
+        Name: GachaAI
+        MintAddress: GaCHaZegh7omdqwN27YkTWeSVeUJ7GdgkW4gCz1nzcWX
+        Symbol: GACHA
+      price:
+        start: 8.29949707357354e-05
+        min5: 8.29949707357354e-05
+        end: 0.0002542160613174262
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: CzrZrWUnVn4x5u9ETCU7gRs9dhb2QmvsVzjNeRn8AUHT
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 4029
+      total_trades: 13488
+      total_traded_volume: 1608853.8890517245
+      total_buy_volume: 811594.968153197
+      total_sell_volume: 797258.920898527
+      total_buys: 7044
+      total_sells: 6444
+    - currency:
+        Name: ''
+        MintAddress: 71toFriesNLo78XDzQqzkLWS6q71nMBcQTeaRgJDKRT1
+        Symbol: ''
+      price:
+        start: 0.0006469269371549419
+        min5: 0.0006469269371549419
+        end: 8.337000081153982e-07
+      dex:
+        ProtocolName: raydium_amm
+        ProtocolFamily: Raydium
+        ProgramAddress: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      market:
+        MarketAddress: 2HzGKL1EGD7ng8DCZwZ92GwPhwbgdS59EP6eg8St9NiH
+      side_currency:
+        Name: Wrapped Solana
+        MintAddress: So11111111111111111111111111111111111111112
+        Symbol: WSOL
+      makers: 419
+      total_trades: 12779
+      total_traded_volume: 1703085.043216995
+      total_buy_volume: 837001.7859167536
+      total_sell_volume: 866083.2573002412
+      total_buys: 6782
+      total_sells: 5997
