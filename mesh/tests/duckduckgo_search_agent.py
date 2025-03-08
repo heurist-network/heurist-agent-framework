@@ -19,7 +19,7 @@ async def run_agent():
             "query": "What are the latest developments in artificial intelligence?",
             "tool": "search_web",  # Specify the tool name
             "tool_arguments": {  # Provide tool-specific arguments
-                "query": "What are the latest developments in artificial intelligence?",
+                "search_term": "What are the latest developments in artificial intelligence?",  # Changed from "query" to "search_term"
                 "max_results": 3,
             },
             "raw_data_only": False,  # Set to True if you only want the raw data without LLM analysis

@@ -2,64 +2,48 @@ input:
   query: What are the latest developments in artificial intelligence?
   tool: search_web
   tool_arguments:
-    query: What are the latest developments in artificial intelligence?
+    search_term: What are the latest developments in artificial intelligence?
     max_results: 3
   raw_data_only: false
 output:
-  response: "**Analysis of Search Results**\n\n### **1. Content Relevance to the Query**\n\
-    * **Relevance Score:** 9/10\n* **Insight:** The search results are highly relevant\
-    \ to the query, focusing on the latest developments and trends in Artificial Intelligence\
-    \ (AI), specifically highlighting key breakthroughs, regulatory updates, and future\
-    \ trends for 2024 and 2025.\n\n### **2. Source Credibility and Diversity**\n*\
-    \ **Credibility Score:** 8.5/10\n* **Diversity Score:** 6/10\n* **Insight:** \n\
-    \t+ **Credibility:** The sources are from reputable online publications, notably\
-    \ Forbes, which is well-known for its business and technology insights, and Stanford\
-    \ Emerging Technology Review, associated with a prestigious academic institution.\
-    \ This lends credibility to the information provided.\n\t+ **Diversity:** While\
-    \ the sources are credible, the diversity is somewhat limited, with two out of\
-    \ three results from Forbes. Incorporating more varied sources (e.g., academic\
-    \ journals, other news outlets, or industry reports) could enhance the diversity\
-    \ of perspectives.\n\n### **3. Information Completeness and Potential Gaps**\n\
-    * **Completeness Score:** 7.5/10\n* **Identified Gaps:**\n\t+ **Depth of Technical\
-    \ Detail:** The snippets suggest a more strategic or trend-focused approach rather\
-    \ than in-depth technical analysis of the latest AI developments.\n\t+ **Industry-Specific\
-    \ Applications:** There's a potential gap in information regarding how these AI\
-    \ developments and trends apply to specific industries (e.g., healthcare, finance,\
-    \ education).\n\t+ **Global Perspectives:** While there's mention of EU regulations\
-    \ and a US Executive Order, a more comprehensive global outlook (including developments\
-    \ in Asia, Africa, etc.) might be beneficial.\n\n### **4. Key Themes and Findings**\n\
-    * **Regulatory Frameworks:** The implementation of the EU's Artificial Intelligence\
-    \ Act and the US Executive Order on AI development and use highlight a growing\
-    \ focus on regulation.\n* **Future Trends:** Augmented working, real-time decision-making,\
-    \ advanced AI legislation, and sustainable AI initiatives are pinpointed as key\
-    \ trends for 2025.\n* **International Cooperation:** There's an emphasis on collective\
-    \ efforts to manage AI-associated risks, indicating a shift towards global cooperation\
-    \ in AI governance.\n\n### **5. Any Conflicting Information or Biases**\n* **Conflict/Bias\
-    \ Score:** 2/10\n* **Insight:** No overt conflicting information or biases are\
-    \ evident in the provided snippets. However, the consistent mention of regulatory\
-    \ efforts might subtly suggest a leaning towards the importance of governance\
-    \ in AI development, which could be seen as a mild bias towards emphasizing control\
-    \ measures over innovation aspects."
+  response: 'Here is the answer in a straightforward, conversational manner, following
+    the strict formatting rules:
+
+
+    The latest developments in artificial intelligence include a new research program
+    focused on indigenizing AI, challenging its current direction. In 2025, AI technology
+    is becoming more refined, agile, and secure, with notable advancements in:
+
+
+    Generative AI, particularly in improved models for generating text, images, and
+    audio.
+
+    Healthcare, where AI enhances accurate diagnoses, clinical decision-making, and
+    patient care.
+
+    Telemedicine, with AI-driven adoption in healthcare institutions, and integration
+    into wearable devices for real-time patient data analysis.'
   data:
     status: success
     data:
-      query: What are the latest developments in artificial intelligence?
+      search_term: What are the latest developments in artificial intelligence?
       results:
-      - title: 6 Game-Changing AI Breakthroughs That Defined 2024 - Forbes
-        link: https://www.forbes.com/sites/bernardmarr/2024/12/16/6-game-changing-ai-breakthroughs-that-defined-2024/
-        snippet: In August 2024, the EU's Artificial Intelligence Act came into force,
-          marking a significant step by an international regulator to implement a
-          framework and safeguards around AI. Rather than ...
-      - title: Artificial Intelligence | Stanford Emerging Technology Review
-        link: https://setr.stanford.edu/technology/artificial-intelligence/2025
-        snippet: In the United States, the president's Executive Order on the Safe,
-          Secure, and Trustworthy Development and Use of Artificial Intelligence was
-          issued on October 30, 2023. In November 2023 and May 2024, the European
-          Union and twenty-eight nations collectively endorsed international cooperation
-          to manage risks associated with highly capable ...
-      - title: The 10 Biggest AI Trends Of 2025 Everyone Must Be Ready For Today -
-          Forbes
-        link: https://www.forbes.com/sites/bernardmarr/2024/09/24/the-10-biggest-ai-trends-of-2025-everyone-must-be-ready-for-today/
-        snippet: 'Discover the 10 major AI trends set to reshape 2025: from augmented
-          working and real-time decision-making to advanced AI legislation and sustainable
-          AI initiatives.'
+      - title: Artificial Intelligence News -- ScienceDaily
+        link: https://www.sciencedaily.com/news/computers_math/artificial_intelligence/
+        snippet: A New Research Program Is Indigenizing Artificial Intelligence Jan.
+          15, 2025 — A new initiative is challenging the conversation around the direction
+          of artificial intelligence (AI).
+      - title: Future of AI in 2025 [Top Trends and Predictions] - GeeksforGeeks
+        link: https://www.geeksforgeeks.org/future-of-ai/
+        snippet: 'Latest Developments in Artificial Intelligence. AI technology is
+          becoming more adult, nimble, and safe, with wonderful new features that
+          truly extend its use in everyday living. Here are a few buzzwords to note
+          in these updates: Progress In Generative AI: Generative AI is riding high
+          on improved models for the generation of text, images, audio ...'
+      - title: Latest Development of Artificial Intelligence | InData Labs
+        link: https://indatalabs.com/blog/ai-latest-developments
+        snippet: The latest development of artificial intelligence in the healthcare
+          world is enabling improvements in accurate diagnoses, clinical decision-making,
+          and optimal patient care. AI research is driving the widespread adoption
+          of telemedicine at healthcare institutions. It's incorporated into wearable
+          devices that offer real-time patient data and ...

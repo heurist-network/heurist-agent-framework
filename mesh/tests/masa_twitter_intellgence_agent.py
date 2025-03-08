@@ -15,7 +15,7 @@ load_dotenv()
 # DEBUG Mode:
 # Set DEBUG=True to run the script normally (blocking execution until completion).
 # Set DEBUG=False to execute processing in the background and exit early to avoid long wait times.
-DEBUG = False
+DEBUG = True
 
 
 def save_results(output_file, yaml_content):
@@ -30,15 +30,18 @@ def save_results(output_file, yaml_content):
 async def run_agent():
     agent = MasaTwitterSearchAgent()
     try:
+        # Natural language query
         agent_input = {"query": "@heurist_ai", "max_results": 100}
         agent_output = await agent.handle_message(agent_input)
 
-        agent_input_specific = {"query": "$HEU", "max_results": 100}
+        # Another natural language query
+        agent_input_specific = {"query": "$BTC", "max_results": 100}
         agent_output_specific = await agent.handle_message(agent_input_specific)
 
+        # Direct tool call
         agent_input_direct = {
             "tool": "search_twitter",
-            "tool_arguments": {"query": "Heurist crypto", "max_results": 30},
+            "tool_arguments": {"search_term": "Elon musk", "max_results": 30},  # Changed from "query" to "search_term"
             "raw_data_only": True,
         }
         agent_output_direct = await agent.handle_message(agent_input_direct)

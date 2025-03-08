@@ -19,7 +19,7 @@ async def run_agent():
         # Test search_pairs tool
         agent_input = {
             "tool": "search_pairs",
-            "tool_arguments": {"query": "ETH"},
+            "tool_arguments": {"search_term": "ETH"},  # Changed from "query" to "search_term"
             "raw_data_only": False,  # Set to True if you only want raw data without LLM analysis
         }
         agent_output = await agent.handle_message(agent_input)

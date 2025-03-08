@@ -97,13 +97,13 @@ class ExaSearchAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": "The search query"},
+                            "search_term": {"type": "string", "description": "The search term"},
                             "limit": {
                                 "type": "integer",
                                 "description": "Maximum number of results to return (default: 10)",
                             },
                         },
-                        "required": ["query"],
+                        "required": ["search_term"],
                     },
                 },
             },
@@ -114,8 +114,8 @@ class ExaSearchAgent(MeshAgent):
                     "description": "Get a direct answer to a question using Exa's answer API",
                     "parameters": {
                         "type": "object",
-                        "properties": {"query": {"type": "string", "description": "The question to answer"}},
-                        "required": ["query"],
+                        "properties": {"question": {"type": "string", "description": "The question to answer"}},
+                        "required": ["question"],
                     },
                 },
             },
@@ -127,9 +127,9 @@ class ExaSearchAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": "The query to search for and answer"}
+                            "topic": {"type": "string", "description": "The topic to search for and answer"}
                         },
-                        "required": ["query"],
+                        "required": ["topic"],
                     },
                 },
             },
@@ -168,13 +168,13 @@ class ExaSearchAgent(MeshAgent):
     #                      EXA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
-    async def search(self, query: str, limit: int = 10) -> dict:
+    async def search(self, search_term: str, limit: int = 10) -> dict:
         """
-        Uses Exa's /search endpoint to find webpages related to the query.
+        Uses Exa's /search endpoint to find webpages related to the search term.
         """
         try:
             url = f"{self.base_url}/search"
-            payload = {"query": query, "limit": limit}
+            payload = {"query": search_term, "limit": limit}  # API still uses 'query'
 
             response = requests.post(url, json=payload, headers=self.headers)
             response.raise_for_status()
@@ -201,13 +201,13 @@ class ExaSearchAgent(MeshAgent):
             return {"error": f"Failed to execute search: {str(e)}"}
 
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
-    async def answer(self, query: str) -> dict:
+    async def answer(self, question: str) -> dict:
         """
-        Uses Exa's /answer endpoint to generate a direct answer based on the query.
+        Uses Exa's /answer endpoint to generate a direct answer based on the question.
         """
         try:
             url = f"{self.base_url}/answer"
-            payload = {"query": query}
+            payload = {"query": question}  # API still uses 'query'
 
             response = requests.post(url, json=payload, headers=self.headers)
             response.raise_for_status()
@@ -227,16 +227,16 @@ class ExaSearchAgent(MeshAgent):
             return {"error": f"Failed to get answer: {str(e)}"}
 
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
-    async def search_and_answer(self, query: str) -> dict:
+    async def search_and_answer(self, topic: str) -> dict:
         """
         Combines both search and answer functionalities.
         """
-        search_results = await self.search(query)
+        search_results = await self.search(topic)
         search_error = self._handle_error(search_results)
         if search_error:
             return search_error
 
-        answer_results = await self.answer(query)
+        answer_results = await self.answer(topic)
         answer_error = self._handle_error(answer_results)
         if answer_error:
             return answer_error
@@ -262,14 +262,14 @@ class ExaSearchAgent(MeshAgent):
         temp_for_explanation = 0.7
 
         if tool_name == "search":
-            query_text = function_args.get("query")
+            search_term = function_args.get("search_term")
             limit = function_args.get("limit", 10)
 
-            if not query_text:
-                return {"error": "Missing 'query' in tool_arguments"}
+            if not search_term:
+                return {"error": "Missing 'search_term' in tool_arguments"}
 
-            logger.info(f"Executing search for '{query_text}'")
-            result = await self.search(query_text, limit)
+            logger.info(f"Executing search for '{search_term}'")
+            result = await self.search(search_term, limit)
             errors = self._handle_error(result)
             if errors:
                 return errors
@@ -278,18 +278,18 @@ class ExaSearchAgent(MeshAgent):
                 return {"response": "", "data": result}
 
             explanation = await self._respond_with_llm(
-                query=query_text, tool_call_id=tool_call_id, data=result, temperature=temp_for_explanation
+                query=query, tool_call_id=tool_call_id, data=result, temperature=temp_for_explanation
             )
             return {"response": explanation, "data": result}
 
         elif tool_name == "answer":
-            query_text = function_args.get("query")
+            question = function_args.get("question")
 
-            if not query_text:
-                return {"error": "Missing 'query' in tool_arguments"}
+            if not question:
+                return {"error": "Missing 'question' in tool_arguments"}
 
-            logger.info(f"Getting direct answer for '{query_text}'")
-            result = await self.answer(query_text)
+            logger.info(f"Getting direct answer for '{question}'")
+            result = await self.answer(question)
             errors = self._handle_error(result)
             if errors:
                 return errors
@@ -298,18 +298,18 @@ class ExaSearchAgent(MeshAgent):
                 return {"response": "", "data": result}
 
             explanation = await self._respond_with_llm(
-                query=query_text, tool_call_id=tool_call_id, data=result, temperature=temp_for_explanation
+                query=query, tool_call_id=tool_call_id, data=result, temperature=temp_for_explanation
             )
             return {"response": explanation, "data": result}
 
         elif tool_name == "search_and_answer":
-            query_text = function_args.get("query")
+            topic = function_args.get("topic")
 
-            if not query_text:
-                return {"error": "Missing 'query' in tool_arguments"}
+            if not topic:
+                return {"error": "Missing 'topic' in tool_arguments"}
 
-            logger.info(f"Performing search and answer for '{query_text}'")
-            result = await self.search_and_answer(query_text)
+            logger.info(f"Performing search and answer for '{topic}'")
+            result = await self.search_and_answer(topic)
             errors = self._handle_error(result)
             if errors:
                 return errors
@@ -318,7 +318,7 @@ class ExaSearchAgent(MeshAgent):
                 return {"response": "", "data": result}
 
             explanation = await self._respond_with_llm(
-                query=query_text, tool_call_id=tool_call_id, data=result, temperature=temp_for_explanation
+                query=query, tool_call_id=tool_call_id, data=result, temperature=temp_for_explanation
             )
             return {"response": explanation, "data": result}
 

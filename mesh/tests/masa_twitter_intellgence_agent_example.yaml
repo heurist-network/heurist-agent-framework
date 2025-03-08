@@ -1,102 +1,113 @@
 input_basic:
-  query: '#go_green'
+  query: '@heurist_ai'
   max_results: 100
 output_basic:
-  response: "**Query Analysis: #go_green**\n\n**Search Stats:**\n\n* **Total Results:**\
-    \ 10\n* **Time Frame:** Recent (all tweets from March 5, 2025, within a short\
-    \ time span)\n* **Languages:** Primarily Indonesian (in) and English (en), with\
-    \ one tweet in Turkish (tr)\n\n**Key Insights:**\n\n1. **Volume and Engagement:**\n\
-    \t* Low engagement across all tweets, with most having 0 likes, retweets, replies,\
-    \ quotes, and bookmarks.\n\t* One exception is a retweeted post (ID: 1897216024904392776)\
-    \ with 36 retweets, discussing banks and environmental impact.\n2. **Common Themes:**\n\
-    \t* **Selling Accounts:** Many tweets (6 out of 10) are selling various types\
-    \ of accounts (e.g., kosongan, BA F1K, acc bekas ba) with features like \"go green,\"\
-    \ verification, and access to certain platforms (MT, HT). These appear to be related\
-    \ to online gaming or digital services.\n\t* **Environmental/Green Themes:** \n\
-    \t\t+ One tweet promotes an electric vehicle fair in Turkey (\"Go Green Türkiye\"\
-    ).\n\t\t+ Another discusses market trends possibly \"going green\" again, in a\
-    \ financial context.\n\t\t+ A single retweet mentions banks fueling environmental\
-    \ degradation, using \"go green\" in a call to action for environmental responsibility.\n\
-    3. **Notable Users or Accounts:**\n\t* None prominently stand out for influential\
-    \ engagement or content related to \"#go_green\" beyond the usual account selling\
-    \ activities.\n4. **Sentiment Trends:**\n\t* **Neutral:** The majority, as they\
-    \ are sales posts without emotional tone.\n\t* **Positive (Implicit):** The environmental\
-    \ and financial recovery contexts imply a positive outlook when \"going green.\"\
-    \n\t* **Negative (Implicit):** The critique of banks' environmental impact carries\
-    \ a negative sentiment, though \"go green\" is used as a positive action within\
-    \ this criticism.\n\n**Conclusion:**\nThe \"#go_green\" query yields a diverse\
-    \ set of results, with a significant portion dedicated to selling digital accounts,\
-    \ a smaller segment touching on environmental and financial themes, and minimal\
-    \ engagement across the board, except for a singular retweeted post on environmental\
-    \ responsibility."
+  response: "**Analysis of Twitter Search Results for `@heurist_ai`**\n\n**Search\
+    \ Context:**\n* **Total Results:** 1 tweet\n* **Time Frame:** The single result\
+    \ is from March 8, 2025 (recent)\n* **Language:** English\n\n**Key Insights from\
+    \ the Tweet:**\n\n1. **Volume & Engagement:**\n\t* **Total Mentions:** 1 (of `@heurist_ai`,\
+    \ but indirectly as the handle wasn't the main subject)\n\t* **Engagement Metrics:**\n\
+    \t\t+ Likes: 0\n\t\t+ Retweets: 19 (indicating moderate engagement)\n\t\t+ Replies:\
+    \ 0\n\t\t+ Quotes: 0\n\t\t+ Bookmarks: 0\n\n2. **Common Themes/Topics:**\n\t*\
+    \ **Primary Topic:** The intersection of AI and Web3, and its implications for\
+    \ traders and investors.\n\t* **Secondary Topic:** An event or discussion titled\
+    \ \"Mind AI\" hosted by `@InferiumAI`.\n\n3. **Notable Users/Accounts:**\n\t*\
+    \ **`@InferiumAI`**: The original tweeter, discussing AI, Web3, and finance.\n\
+    \t* **`@heurist_ai`**: Although not the main subject, the search query was for\
+    \ this handle. The account's direct involvement or mention in the context of AI,\
+    \ Web3, or the discussed event is not present in this result.\n\n4. **Sentiment\
+    \ Trends:**\n\t* **Apparent Sentiment:** Neutral/Curiosity-driven, indicated by\
+    \ the use of \"\U0001F440\" (eyes symbol), suggesting an invitation to explore\
+    \ or learn about the topic rather than expressing a clear positive or negative\
+    \ sentiment towards `@heurist_ai` or the discussed intersection of AI and Web3.\n\
+    \n**Conclusion:**\nGiven the single result does not directly engage with `@heurist_ai`\
+    \ but rather falls within a broader AI-related discussion, the insights are more\
+    \ contextual to the AI/Web3 intersection than the specified handle. To gather\
+    \ more targeted information about `@heurist_ai`, a more specific search query\
+    \ or a broader data set might be necessary."
+  data:
+    search_stats:
+      total_results: 1
+      has_results: true
+    tweets:
+    - id: '1898272505837523001'
+      content: 'RT @InferiumAI: We’re entering a new era where AI &amp; Web3 collide—what
+        does that mean for traders &amp; investors? 👀
+
+
+        Join us in today’s Mind AI…'
+      created_at: '2025-03-08T07:20:08Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 19
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '2308680740'
+      conversation_id: '1898272505837523001'
+input_specific:
+  query: $BTC
+  max_results: 100
+output_specific:
+  response: "**Twitter Search Results for $BTC (Bitcoin)**\n\n**Search Stats:**\n\n\
+    * **Total Results:** 10\n* **Has Results:** True\n* **Time Frame:** All tweets\
+    \ are from **2025-03-08T07:21:30Z** (indicating a very narrow, nearly simultaneous\
+    \ time frame for these results)\n\n**Key Insights and Patterns:**\n\n1. **Volume\
+    \ and Engagement:**\n\t* The majority of tweets (8 out of 10) have **0 likes,\
+    \ retweets, replies, quotes, and bookmarks**, suggesting low engagement with these\
+    \ specific tweets at the time of data collection.\n\t* One tweet (**ID: 1898272852920713409**)\
+    \ stands out with **39,900 retweets**, indicating significant engagement with\
+    \ content related to \"BlueCorn\" and its association with BTCFi and a gas token.\n\
+    2. **Common Themes or Topics:**\n\t* **BTC (Bitcoin) Mentions:** All tweets mention\
+    \ $BTC, with some also referencing other cryptocurrencies like ETH, SOL, and MEMECoin.\n\
+    \t* **Investment and Market Speculation:** Tweets touch on investment opportunities,\
+    \ market speculation (e.g., \"buy before it goes viral\"), and notable events\
+    \ (e.g., a proposal for the US to buy a significant portion of the Bitcoin supply).\n\
+    \t* **Project and Product Promotions:** Some tweets promote specific projects\
+    \ or tokens (e.g., BlueCorn, CatiCorn, BTCFi on Sui).\n3. **Notable Users or Accounts:**\n\
+    \t* No extremely influential or widely recognized users/accounts are identified\
+    \ within these specific search results, aside from the content of the tweets themselves\
+    \ which mention known entities like Saylor (presumably Michael Saylor, known for\
+    \ his Bitcoin advocacy).\n4. **Sentiment Trends:**\n\t* **Neutral to Positive:**\
+    \ The overall sentiment appears neutral to positive, with tweets focusing on investment\
+    \ opportunities, growth, and significant events rather than expressing negativity\
+    \ towards Bitcoin or associated projects.\n\n**Limitations of Current Analysis:**\n\
+    - **Time Frame:** The extremely narrow time frame of the tweets may not provide\
+    \ a comprehensive view of ongoing discussions or broader sentiment trends.\n-\
+    \ **Engagement Metrics:** The low engagement metrics for most tweets might not\
+    \ accurately reflect the broader interest or sentiment around $BTC at the time,\
+    \ highlighting the need for a more extensive data set for deeper insights."
   data:
     search_stats:
       total_results: 10
       has_results: true
     tweets:
-    - id: '1897216305759125874'
-      content: "͏\n\nkosongan v all dom gmail 9k/each go green \n\n#zonauang #zonaba\
-        \ https://t.co/NjvM0vd77g"
-      created_at: '2025-03-05T09:23:10Z'
-      language: en
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '2990889107'
-      conversation_id: '1897216305759125874'
-    - id: '1897216301212557804'
-      content: '@AdamSchefter Yeah um, it''s March.  March Madness.  Go Green!!'
-      created_at: '2025-03-05T09:23:09Z'
-      language: en
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '274368706'
-      conversation_id: '1897215946814841275'
-    - id: '1897216225337597974'
-      content: "@x_anmdcjo5m wts 6 akun acc kosongan y15 \n\n\U0001F423 6,000/ea,\
-        \ take 3 only  15k\n\n\U0001F42C v email only (get all pass)\n\U0001F42C go\
-        \ green, sehat \n\U0001F42C masuk mt + (ht dimainin dulu) \n\U0001F42C @ random,\
-        \ bisa langsung ganti usn\n\U0001F42C Qris\n\n☎: @kzteu / https://t.co/hQ3boHEWuF\
-        \ \n\nBisa kak yuk! take all 30k aja\U0001F490"
-      created_at: '2025-03-05T09:22:51Z'
-      language: in
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1719029199724593152'
-      conversation_id: '1897214902403785008'
-    - id: '1897216024904392776'
-      content: 'RT @MMMoneyMatter: Our planet is burning and our banks are fuelling
-        the fire. ​
+    - id: '1898272852920713409'
+      content: 'RT @use_corn: 🟦🌽 BlueCorn is:
 
 
-        @BarclaysUK @HSBC_UK  @bancosantander  @NatWestGroup and @…'
-      created_at: '2025-03-05T09:22:03Z'
+        1️⃣ The BTCFi Education Hub
+
+        2️⃣ BTCFi Opportunity Aggregator
+
+        3️⃣ $cbBTC is now Corn''s gas token''s 1st backin…'
+      created_at: '2025-03-08T07:21:30Z'
       language: en
       metrics:
         likes: 0
-        retweets: 36
+        retweets: 39900
         replies: 0
         quotes: 0
         bookmarks: 0
-      author_id: '941992894482845696'
-      conversation_id: '1897216024904392776'
-    - id: '1897215914929799622'
-      content: "It looks like there is chance for market do reversal and we go green/\
-        \ back on track. \nHowever, do not forget market can easily fool us and continue\
-        \ to drop even more. \n\nDCA slowly and keep on building your positions for\
-        \ long term!"
-      created_at: '2025-03-05T09:21:37Z'
+      author_id: '1748960811417247745'
+      conversation_id: '1898272852920713409'
+    - id: '1898272852258038092'
+      content: 'Breaking: Saylor proposes the US should buy 5-25% of the entire Bitcoin
+        supply
+
+        #BTC #ETH #SOL #MEMECoin #Memecoins #USCryptoReserve #AVAX #Kudos https://t.co/weKLBzlREs'
+      created_at: '2025-03-08T07:21:30Z'
       language: en
       metrics:
         likes: 0
@@ -104,44 +115,45 @@ output_basic:
         replies: 0
         quotes: 0
         bookmarks: 0
-      author_id: '1822287077901221888'
-      conversation_id: '1897215914929799622'
-    - id: '1897215875775914305'
-      content: "WTS ACC BA F1K MASUK HTMT\n\n99k\n\nhttps://t.co/NUoY5BCezd \n\n-\
-        \ go green\n- masuk htmt deres\n- vemail\n- masih dimainin sampe sold \n-\
-        \ acc bekas ba pribadi spess apk prem\n- no selective buyer \n\n#zonauang\
-        \ #zonaba https://t.co/yIgGO020Bi"
-      created_at: '2025-03-05T09:21:28Z'
-      language: in
+      author_id: '1878427277891125248'
+      conversation_id: '1898272852258038092'
+    - id: '1898272852144750921'
+      content: 'Bitcoin Game Theory unloading
+
+        #BTC #ETH #SOL #MEMECoin #Memecoins #USCryptoReserve #AVAX #Kudos https://t.co/9PrwqNrNVO'
+      created_at: '2025-03-08T07:21:30Z'
+      language: en
       metrics:
         likes: 0
         retweets: 0
         replies: 0
         quotes: 0
         bookmarks: 0
-      author_id: '1485902466730586119'
-      conversation_id: '1897215875775914305'
-    - id: '1897215783895498781'
-      content: "wts akun  kosongan  y13  dan  y15  \n\n\U0001F4B8 10,500 / each\n\n\
-        \U000168B7. @  mulchar  cantik\n\U000168B7. verif  email  only  (gmail) \n\
-        \U000168B7. masuk  mt   non  moots\n\U000168B7. go  green,  min  ssb  ganti\
-        \  usn\n\U000168B7. dapat  data  acc  lengkap\n\n#zonauang https://t.co/7Wc6iRS5T7"
-      created_at: '2025-03-05T09:21:06Z'
-      language: in
+      author_id: '1878912272707522560'
+      conversation_id: '1898272852144750921'
+    - id: '1898272851930890512'
+      content: "BREAKING: THE WHITE HOUSE JUST SENT ITs 1st EVER #BITCOIN TWEET \n\
+        \nHISTORY \U0001F525\n#BTC #ETH #SOL #MEMECoin #Memecoins #USCryptoReserve\
+        \ #AVAX #Kudos https://t.co/1lXtJNRhZ1"
+      created_at: '2025-03-08T07:21:30Z'
+      language: en
       metrics:
         likes: 0
         retweets: 0
         replies: 0
         quotes: 0
         bookmarks: 0
-      author_id: '1872657387603238913'
-      conversation_id: '1897215783895498781'
-    - id: '1897215689661751506'
-      content: Otomotiv endüstrisinde değişimin öncüsü olan elektriklileşme hareketi,
-        devlet destekleri ve çevresel bilincin artmasıyla hızla büyümeye devam ediyor.
-        Sektörün tüm paydaşlarını bir araya getirecek Türkiye’nin öncü elektrikli
-        araç fuarı Go Green Türkiye, bu yıl 2’nci kez… https://t.co/7qxjJ3Tu5s https://t.co/mN7W47NTfz
-      created_at: '2025-03-05T09:20:43Z'
+      author_id: '1843135950349897728'
+      conversation_id: '1898272851930890512'
+    - id: '1898272851276288499'
+      content: '@sadeceebirkull @ProfesorTurkmen Vadeli işlemler (kripto) ve spot
+        işlemleriyle günlük karlı sinyallerimizle %100-%1000 kar elde edin
+
+        Telegram''daki ücretsiz grubumuza katılmak için biyografideki bağlantıya tıklayın...@nocklevs
+
+
+        #bitcoin #kriptopara #btc #bnb'
+      created_at: '2025-03-08T07:21:30Z'
       language: tr
       metrics:
         likes: 0
@@ -149,225 +161,17 @@ output_basic:
         replies: 0
         quotes: 0
         bookmarks: 0
-      author_id: '335753836'
-      conversation_id: '1897215689661751506'
-    - id: '1897215568228540561'
-      content: '*wts acc bekas ba f300+*
+      author_id: '933843858781233152'
+      conversation_id: '1898260100785086537'
+    - id: '1898272851125571699'
+      content: 'Buy CatiCorn Today, Thank Yourself Tomorrow! 🚀🐱
 
+        The best investments are the ones you make before they go viral!
 
-        - verif email dom gmail
+        🔥 Don’t miss out: https://t.co/n7abkJaBwT
 
-        - masuk mt + ht deres
-
-        - go green, reply gak showmore
-
-        - selective buyer (❌ akun pijet, 18+, nipu, etc)
-
-        - ⁠set up rapi
-
-
-        💸41k
-
-
-        ☎️ https://t.co/yc6GTC6zE3 https://t.co/YPwF5IUmuK'
-      created_at: '2025-03-05T09:20:14Z'
-      language: in
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 1
-        bookmarks: 0
-      author_id: '1092776550947155969'
-      conversation_id: '1897215568228540561'
-    - id: '1897215538042167465'
-      content: "AKUN KOSONGAN Y13 &amp; Y15\n\nᏪ verif email only (Gmail)\nᏪ go green\
-        \ \nᏪ masuk mt only, ht sambil dimainin \nᏪ bisa langsung ganti usn\nᏪ dapat\
-        \ data lengkap\n\nY13 &amp; Y15 : 10.500/each\n\n#zonauang https://t.co/gHg8YL0Hew"
-      created_at: '2025-03-05T09:20:07Z'
-      language: in
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1872657387603238913'
-      conversation_id: '1897215538042167465'
-input_specific:
-  query: $HEU
-  max_results: 100
-output_specific:
-  response: "**Search Query Analysis: $HEU**\n\n**Search Stats:**\n\n* **Total Results:**\
-    \ 10\n* **Has Results:** True\n* **Time Frame:** Recent tweets from March 5, 2025\
-    \ (within a few minutes, between 09:20 and 09:23 UTC)\n\n**Key Insights:**\n\n\
-    1. **Language Diversity:** Tweets are in multiple languages, including:\n\t* French\
-    \ (fr): 3 tweets\n\t* Catalan (ca): 3 tweets\n\t* German (de): 1 tweet\n\t* Portuguese\
-    \ (pt): 1 tweet\n\t* English (en): 1 tweet\n\t* Undetermined (und): 1 tweet (appears\
-    \ to be a mix of characters and symbols)\n2. **Content Themes:**\n\t* **Conversations\
-    \ and Reactions:**\n\t\t+ Expressions of surprise or disbelief (e.g., \"Heu non?\"\
-    , \"Heu si on m'enlève un tiers de salaire...\")\n\t\t+ Criticism or strong opinions\
-    \ (e.g., \"@enricvd @gabrielrufian Ara tenim una Catalunya que vosaltres heu trinxat...\"\
-    )\n\t* **Retweeted Content:**\n\t\t+ Immigration resources in Catalonia (14 retweets)\n\
-    \t\t+ Update on a pet's health (2 retweets)\n\t\t+ Emotional or fandom-related\
-    \ content (4 retweets, in Portuguese)\n3. **Engagement Metrics:**\n\t* **Low Engagement:**\
-    \ Most tweets have 0 likes, retweets, replies, quotes, or bookmarks, except for\
-    \ a few retweeted posts.\n\t* **Notable Exceptions:**\n\t\t+ 14 retweets for the\
-    \ tweet about immigration resources in Catalonia\n\t\t+ 2 retweets for the update\
-    \ on a pet's health\n\t\t+ 4 retweets for the emotional/fandom content in Portuguese\n\
-    \t\t+ 1 like for a tweet discussing salary reduction\n4. **Sentiment Trends:**\n\
-    \t* **Predominantly Negative:** Criticism, disappointment, and strong negative\
-    \ opinions are prevalent in the tweets analyzed.\n\t* **Neutral/Miscellaneous:**\
-    \ Updates, expressions of surprise, and undetermined content also present.\n\n\
-    **Limitations and Future Searches:**\nGiven the small sample size and diverse\
-    \ language set, focusing future searches on specific languages or themes might\
-    \ yield more targeted insights. Additionally, expanding the time frame could provide\
-    \ a more comprehensive understanding of the topics"
-  data:
-    search_stats:
-      total_results: 10
-      has_results: true
-    tweets:
-    - id: '1897216454304653638'
-      content: Pas ma RH qui a demander mon insta ptdrrrr, heu non ????
-      created_at: '2025-03-05T09:23:45Z'
-      language: fr
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '953469997'
-      conversation_id: '1897216454304653638'
-    - id: '1897216332426567877'
-      content: '@enricvd @gabrielrufian Ara tenim una Catalunya que vosaltres heu
-        trinxat, la que vivim  amb por fins i tot estan a casa amb la porta tancada,
-        últims en educació, llengua fatal, sanitat,.. ..... A veure qui ho arregla
-        tot el merder que heu fet, no entenc com algú encara us vota, diu destrales
-        !!!!'
-      created_at: '2025-03-05T09:23:16Z'
-      language: ca
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1612821008032976896'
-      conversation_id: '1896845736471658549'
-    - id: '1897216247559021055'
-      content: '@jordisalvia @Holaiquetal Heu exposat dones racialitzades i amb les
-        llibertats retallades pel patriarcat. I això és just contra el que lluita
-        la Orriols. Sou uns feixistes antifeministes.'
-      created_at: '2025-03-05T09:22:56Z'
-      language: ca
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1179403252510724100'
-      conversation_id: '1897199235025567938'
-    - id: '1897216201413288360'
-      content: '@VirginiePerez15 De la démocrate ? Heu, 🤔 tu es sûr ? Parce que, honnêtement,
-        on dirait plutôt un mec avec une perruque de Gifi sur la tête. 🤣'
-      created_at: '2025-03-05T09:22:45Z'
-      language: fr
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1592894673059823623'
-      conversation_id: '1897143333765435457'
-    - id: '1897216154671964425'
-      content: '@HummelClement Heu si on m''enlève un tiers de salaire, je passe au
-        smig .
-
-        Ça va pas?'
-      created_at: '2025-03-05T09:22:34Z'
-      language: fr
-      metrics:
-        likes: 1
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '904029906450997248'
-      conversation_id: '1897187164737429749'
-    - id: '1897215983846359179'
-      content: "RT @ushiusb: @324cat No hi ha prou recursos per tanta immigració.\
-        \ \nSi amb prou penes ens queden recursos pels autòctons davant de l'expoli…"
-      created_at: '2025-03-05T09:21:53Z'
-      language: ca
-      metrics:
-        likes: 0
-        retweets: 14
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1213859496713310208'
-      conversation_id: '1897215983846359179'
-    - id: '1897215973461254578'
-      content: 'RT @A_Girl_Insane: Der kleinen (großen) Bademaus geht es etwas besser.
-        Sie hält den Kopf selbst hoch und die Augen sind offen. Sogar ein bi…'
-      created_at: '2025-03-05T09:21:51Z'
-      language: de
-      metrics:
-        likes: 0
-        retweets: 2
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1030406933512167424'
-      conversation_id: '1897215973461254578'
-    - id: '1897215681231548758'
-      content: 'RT @dearmiracles: XIAO DE JUNNNNNNN 😭 EU😭💧💧🥺 Uu E u😭💧🥺 UE😭 EU 🥺💧💧EE
-        u 😭UUEH🥺🥺 E 😭U EE 💧U EU🥺💧EU😭💧HEu😭 UEUE😭u💧 😭 UE e u🥺💧EU uu😭U 😭eE E😭🥺 e E…'
-      created_at: '2025-03-05T09:20:41Z'
-      language: pt
-      metrics:
-        likes: 0
-        retweets: 4
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '1278784948447690753'
-      conversation_id: '1897215681231548758'
-    - id: '1897215651875578027'
-      content: 'Wuye kambil mbejiro wuye ragǝkǝna
-
-
-        ⎐فؤغٱ▬كلؤسىت⎐
-
-        ⊵RRGG⊴
-
-
-        ╝لُفيُل▬شوُز▬لُيفُل▬لُيُفيُل╚
-
-        ▤VEL33▤
-
-        heu'
-      created_at: '2025-03-05T09:20:34Z'
-      language: und
-      metrics:
-        likes: 0
-        retweets: 0
-        replies: 0
-        quotes: 0
-        bookmarks: 0
-      author_id: '361453545'
-      conversation_id: '1897215651875578027'
-    - id: '1897215534976131316'
-      content: '@DrScratch "Good fucking service medal".
-
-        - Heu on pourrait pas trouver moins vulgaire ?
-
-        - No, sir, he was actually fucking'
-      created_at: '2025-03-05T09:20:06Z'
+        #BTC #ETH #SOL #MEMECoin https://t.co/W9mMi9EO4U'
+      created_at: '2025-03-08T07:21:30Z'
       language: en
       metrics:
         likes: 0
@@ -375,18 +179,236 @@ output_specific:
         replies: 0
         quotes: 0
         bookmarks: 0
-      author_id: '402911521'
-      conversation_id: '1897213717454184873'
+      author_id: '1879039389885693952'
+      conversation_id: '1898272851125571699'
+    - id: '1898272849678459200'
+      content: 'The momentum of #BTCfi on Sui continues to build — as of today, there''''s
+        more than 1,000 BTC on Sui! 🎉
+
+        #BTC #ETH #SOL #MEMECoin #Memecoins #USCryptoReserve #AVAX #Kudos https://t.co/w0rIG3p8SW'
+      created_at: '2025-03-08T07:21:30Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 0
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1842071710398660608'
+      conversation_id: '1898272849678459200'
+    - id: '1898272848960975058'
+      content: '@iammattiex @ParallelFi @PrototypeBTC @relics_btc @DemonzBtc @adderrels
+        @idiotsbtc @JeetsOnBTC @Mylo_Verse I want'
+      created_at: '2025-03-08T07:21:30Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 0
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '856094557351682048'
+      conversation_id: '1898261090041020433'
+    - id: '1898272843562971473'
+      content: 'Breaking: Saylor proposes the US should buy 5-25% of the entire Bitcoin
+        supply
+
+        #BTC #ETH #SOL #MEMECoin #Memecoins #USCryptoReserve #AVAX #Kudos https://t.co/jIW6vwcte6'
+      created_at: '2025-03-08T07:21:28Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 0
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1879267678344642560'
+      conversation_id: '1898272843562971473'
+    - id: '1898272842963468578'
+      content: 'RT @bit_kiyoshi: メタプラネット
+
+        リミックスポイント
+
+
+        サミットの失望で来週は絶好の買い場だ！
+
+
+        とは思いますが、
+
+
+        昨日までが買い場だと思って買っていたので、
+
+
+        もうお金がない笑
+
+
+        #メタプラネット #リミックス #リミックスポイント #ビットコイン #BTC'
+      created_at: '2025-03-08T07:21:28Z'
+      language: ja
+      metrics:
+        likes: 0
+        retweets: 3
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1580972922629259266'
+      conversation_id: '1898272842963468578'
 input_direct:
   tool: search_twitter
   tool_arguments:
-    query: Heurist crypto
+    search_term: Elon musk
     max_results: 30
   raw_data_only: true
 output_direct:
   response: ''
   data:
     search_stats:
-      total_results: 0
-      has_results: false
-    tweets: []
+      total_results: 10
+      has_results: true
+    tweets:
+    - id: '1898273015558771041'
+      content: 'RT @sara_qureshi87: @cb_doge Donald Trump has praised Elon Musk''s
+        acquisition of Twitter, saying he''s done a great job and brought back a c…'
+      created_at: '2025-03-08T07:22:09Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 1
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1895026976815226880'
+      conversation_id: '1898273015558771041'
+    - id: '1898273015453917585'
+      content: 'RT @cb_doge: Donald Trump on Elon Musk buying Twitter:
+
+
+        "I love the job he''s done and he''s brought a certain voice back into play.
+        The prev…'
+      created_at: '2025-03-08T07:22:09Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 159
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1561255983443222528'
+      conversation_id: '1898273015453917585'
+    - id: '1898273015227445414'
+      content: 'RT @CollinRugg: JUST IN: Bill Nye apparently does a “Nazi salute”
+        while rallying up an anti-Trump crowd.
+
+
+        The salute was almost identical t…'
+      created_at: '2025-03-08T07:22:09Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 3897
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '2793081933'
+      conversation_id: '1898273015227445414'
+    - id: '1898273011209293964'
+      content: '@tahirbhatt33998 Elon Musk 💖🔙'
+      created_at: '2025-03-08T07:22:08Z'
+      language: et
+      metrics:
+        likes: 0
+        retweets: 0
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1318819945535463425'
+      conversation_id: '1898267260759728190'
+    - id: '1898273011075018834'
+      content: '@zerohedge All MAGA patriots who owned RAM,  Chevy and Fords trucks
+        must flip to CyberTrucks now to save petriot of all USA Elon Musk!!!'
+      created_at: '2025-03-08T07:22:08Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 0
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1664499195665948672'
+      conversation_id: '1898054323965510109'
+    - id: '1898273007799349473'
+      content: 'RT @astraiaintel: NEW
+
+
+        Elon Musk is rumoured to have lost over $151 Billion in worth as a result
+        of Tesla''s stock price crash.
+
+
+        This effect…'
+      created_at: '2025-03-08T07:22:07Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 6363
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '557802988'
+      conversation_id: '1898273007799349473'
+    - id: '1898273007220453568'
+      content: 'RT @XXxav969: @ElonMuskOde I agree I would respect Elon Musk I would
+        never disrespect him and I would always obey him I would never cheat o…'
+      created_at: '2025-03-08T07:22:07Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 1
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1896717797331460096'
+      conversation_id: '1898273007220453568'
+    - id: '1898273006910116263'
+      content: 'RT @TrumpRealDaily: 🚨EXCLUSIVE: Let''s stand together with Elon Musk
+        in the fight against corruption and show him our support. He mustn’t fa…'
+      created_at: '2025-03-08T07:22:07Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 1398
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1463306984019484673'
+      conversation_id: '1898273006910116263'
+    - id: '1898273003080675731'
+      content: 'RT @WallStreetApes: Let me get this straight, Democrats lost their
+        mind over Elon Musk and DOGE having access to American’s data
+
+
+        BUT
+
+
+        A PR…'
+      created_at: '2025-03-08T07:22:06Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 885
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '1590044605646622723'
+      conversation_id: '1898273003080675731'
+    - id: '1898273001780453598'
+      content: '@DefiantLs @grok does Elon Musk get along great with Marco Rubio?'
+      created_at: '2025-03-08T07:22:06Z'
+      language: en
+      metrics:
+        likes: 0
+        retweets: 0
+        replies: 0
+        quotes: 0
+        bookmarks: 0
+      author_id: '12452472'
+      conversation_id: '1898144322312196122'

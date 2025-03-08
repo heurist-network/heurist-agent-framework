@@ -72,7 +72,7 @@ class DuckDuckGoSearchAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": "The search query to look up"},
+                            "search_term": {"type": "string", "description": "The search term to look up"},
                             "max_results": {
                                 "type": "integer",
                                 "description": "Maximum number of results to return (default: 5)",
@@ -80,7 +80,7 @@ class DuckDuckGoSearchAgent(MeshAgent):
                                 "maximum": 10,
                             },
                         },
-                        "required": ["query"],
+                        "required": ["search_term"],
                     },
                 },
             }
@@ -99,15 +99,15 @@ class DuckDuckGoSearchAgent(MeshAgent):
     #                      API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
-    async def search_web(self, query: str, max_results: int = 5) -> Dict:
+    async def search_web(self, search_term: str, max_results: int = 5) -> Dict:
         """Search the web using DuckDuckGo"""
         try:
             with DDGS() as ddgs:
                 results = []
-                for r in ddgs.text(query, max_results=max_results):
+                for r in ddgs.text(search_term, max_results=max_results):
                     results.append({"title": r["title"], "link": r["href"], "snippet": r["body"]})
 
-                return {"status": "success", "data": {"query": query, "results": results}}
+                return {"status": "success", "data": {"search_term": search_term, "results": results}}
 
         except Exception as e:
             return {"status": "error", "error": f"Failed to fetch search results: {str(e)}", "data": None}
@@ -116,12 +116,12 @@ class DuckDuckGoSearchAgent(MeshAgent):
     #                      COMMON HANDLER LOGIC
     # ------------------------------------------------------------------------
     async def _handle_tool_logic(
-        self, tool_name: str, function_args: dict, query: str, tool_call_id: str, raw_data_only: bool
-    ) -> Dict[str, Any]:
+    self, tool_name: str, function_args: dict, query: str, tool_call_id: str, raw_data_only: bool
+) -> Dict[str, Any]:
         """Handle tool execution and optional LLM explanation"""
         if tool_name == "search_web":
             result = await self.search_web(
-                query=function_args["query"], max_results=function_args.get("max_results", 5)
+                search_term=function_args["search_term"], max_results=function_args.get("max_results", 5)
             )
         else:
             return {"error": f"Unsupported tool: {tool_name}"}
@@ -150,14 +150,23 @@ class DuckDuckGoSearchAgent(MeshAgent):
     @monitor_execution()
     @with_retry(max_retries=3)
     async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Handle both direct tool calls and natural language queries"""
         query = params.get("query")
+        if not query:
+            raise ValueError("Query parameter is required")
+
         tool_name = params.get("tool")
         tool_args = params.get("tool_arguments", {})
         raw_data_only = params.get("raw_data_only", False)
+        max_results = params.get("max_results", 5)
+
         # ---------------------
         # 1) DIRECT TOOL CALL
         # ---------------------
         if tool_name:
+            if "max_results" not in tool_args:
+                tool_args["max_results"] = max_results
+
             return await self._handle_tool_logic(
                 tool_name=tool_name,
                 function_args=tool_args,
@@ -165,37 +174,46 @@ class DuckDuckGoSearchAgent(MeshAgent):
                 tool_call_id="direct_tool",
                 raw_data_only=raw_data_only,
             )
+
         # ---------------------
         # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
         # ---------------------
-        if query:
-            response = await call_llm_with_tools_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                user_prompt=query,
-                temperature=0.1,
-                tools=self.get_tool_schemas(),
-            )
+        response = await call_llm_with_tools_async(
+            base_url=self.heurist_base_url,
+            api_key=self.heurist_api_key,
+            model_id=self.metadata["large_model_id"],
+            system_prompt=self.get_system_prompt(),
+            user_prompt=query,
+            temperature=0.1,
+            tools=self.get_tool_schemas(),
+        )
 
-            if not response:
-                return {"error": "Failed to process query"}
-            if not response.get("tool_calls"):
-                return {"response": response["content"], "data": {}}
+        if not response:
+            return {"error": "Failed to process query"}
 
-            tool_call = response["tool_calls"]
+        tool_calls = response.get("tool_calls", [])
+        if not tool_calls:
+            return {"response": response.get("content", ""), "data": {}}
+
+        # Get the first tool call
+        tool_call = tool_calls[0] if isinstance(tool_calls, list) else tool_calls
+
+        # Handle both function call formats
+        if hasattr(tool_call, "function"):
             tool_call_name = tool_call.function.name
-            tool_call_args = json.loads(tool_call.function.arguments)
+            try:
+                tool_call_args = json.loads(tool_call.function.arguments)
+            except Exception:
+                # Fallback for string format
+                tool_call_args = {"query": query, "max_results": max_results}
 
-            return await self._handle_tool_logic(
-                tool_name=tool_call_name,
-                function_args=tool_call_args,
-                query=query,
-                tool_call_id=tool_call.id,
-                raw_data_only=raw_data_only,
-            )
-        # ---------------------
-        # 3) NEITHER query NOR tool
-        # ---------------------
-        return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
+        if "max_results" not in tool_call_args:
+            tool_call_args["max_results"] = max_results
+
+        return await self._handle_tool_logic(
+            tool_name=tool_call_name,
+            function_args=tool_call_args,
+            query=query,
+            tool_call_id=tool_call.id,
+            raw_data_only=raw_data_only,
+        )

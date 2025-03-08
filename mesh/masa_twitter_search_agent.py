@@ -100,13 +100,13 @@ class MasaTwitterSearchAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": "The search query to find tweets"},
+                            "search_term": {"type": "string", "description": "The search term to find tweets"},
                             "max_results": {
                                 "type": "integer",
                                 "description": "Maximum number of results to return (default: 100)",
                             },
                         },
-                        "required": ["query"],
+                        "required": ["search_term"],
                     },
                 },
             }
@@ -145,13 +145,15 @@ class MasaTwitterSearchAgent(MeshAgent):
     #                      MASA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=3600)
-    async def search_twitter(self, query: str, max_results: int = 100) -> dict:
+    async def search_twitter(self, search_term: str, max_results: int = 100) -> dict:
         try:
-            payload = {"query": query, "max_results": max_results}
+            # Note: The API still expects 'query' as the parameter name
+            payload = {"query": search_term, "max_results": max_results}
 
             response = requests.post(f"{self.api_url}/search/live/twitter", headers=self.headers, json=payload)
             response.raise_for_status()
 
+            # Rest of the method remains unchanged
             search_data = response.json()
             uuid = search_data.get("uuid")
 
@@ -228,15 +230,15 @@ class MasaTwitterSearchAgent(MeshAgent):
         temp_for_explanation = 0.7
 
         if tool_name == "search_twitter":
-            search_query = function_args.get("query")
+            search_term = function_args.get("search_term")
             max_results = function_args.get("max_results", 100)
 
-            if not search_query:
-                return {"error": "Missing 'query' in tool_arguments"}
+            if not search_term:
+                return {"error": "Missing 'search_term' in tool_arguments"}
 
-            logger.info(f"Searching Twitter for: '{search_query}' with max_results={max_results}")
+            logger.info(f"Searching Twitter for: '{search_term}' with max_results={max_results}")
 
-            result = await self.search_twitter(search_query, max_results)
+            result = await self.search_twitter(search_term, max_results)
             errors = self._handle_error(result)
             if errors:
                 return errors
@@ -254,8 +256,8 @@ class MasaTwitterSearchAgent(MeshAgent):
     async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """
         Either 'query' or 'tool' is required in params.
-          - If 'tool' is provided, call that tool directly with 'tool_arguments' (bypassing the LLM).
-          - If 'query' is provided, route via LLM for dynamic tool selection.
+        - If 'tool' is provided, call that tool directly with 'tool_arguments' (bypassing the LLM).
+        - If 'query' is provided, route via LLM for dynamic tool selection.
         """
         query = params.get("query")
         tool_name = params.get("tool")
@@ -282,7 +284,7 @@ class MasaTwitterSearchAgent(MeshAgent):
         if query:
             # For Twitter search, we'll directly map the query to the search_twitter tool
             # without requiring LLM to decide, since this is a specialized agent
-            search_args = {"query": query, "max_results": params.get("max_results", 100)}
+            search_args = {"search_term": query, "max_results": params.get("max_results", 100)}
 
             return await self._handle_tool_logic(
                 tool_name="search_twitter",

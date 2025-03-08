@@ -2,52 +2,38 @@ search_pairs_test:
   input:
     tool: search_pairs
     tool_arguments:
-      query: ETH
+      search_term: ETH
     raw_data_only: false
   output:
-    response: '**Token/Pairs Information**
+    response: '**Multi-Token Comparison (Tabular Format)**
 
 
-      ### **Core Token Information**
+      **Core Token Information**
 
 
-      | **Chain/DEX** | **Pair Address** | **Base Token** | **Quote Token** |
-
-      | --- | --- | --- | --- |
-
-      | **Osmosis/Osmosis** | [1948](https://dexscreener.com/osmosis/1948) | **ETH**
-      (Ethereum) | **USDC** (USDC) |
-
-      | ‣ **Contract Addresses** | ‣ **factory/osmo1k6c8jln7ejuqwtqmay3yvzrg3kueaczl96pk067ldg8u835w0yhsw27twm/alloyed/allETH**
-      | ‣ **ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4**
+      | **Chain/DEX** | **Pair Address** | **Base Token** | **Quote Token** | **URL**
       |
 
-      | **BSC/PancakeSwap** | [0x62Fcb3C1794FB95BD8B1A97f6Ad5D8a7e4943a1e](https://dexscreener.com/bsc/0x62Fcb3C1794FB95BD8B1A97f6Ad5D8a7e4943a1e)
-      | **ETH** (Ethereum Token) | **WBNB** (Wrapped BNB) |
+      | --- | --- | --- | --- | --- |
 
-      | ‣ **Contract Addresses** | ‣ **0x2170Ed0880ac9A755fd29B2688956BD959F933F8**
-      | ‣ **0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c** |
+      | **Osmosis/Osmosis** | 1948 | Ethereum (ETH) | USDC (USDC) | [https://dexscreener.com/osmosis/1948](https://dexscreener.com/osmosis/1948)
+      |
 
-      | **BSC/PancakeSwap** | [0x9F599F3D64a9D99eA21e68127Bb6CE99f893DA61](https://dexscreener.com/bsc/0x9F599F3D64a9D99eA21e68127Bb6CE99f893DA61)
-      | **ETH** (Ethereum Token) | **USDT** (Tether USD) |
+      | **StarkNet/Ekubo** |... | Ether (ETH) | USD Coin (USDC) | [https://dexscreener.com/starknet/...](https://dexscreener.com/starknet/...)
+      |
 
-      | ‣ **Contract Addresses** | ‣ **0x2170Ed0880ac9A755fd29B2688956BD959F933F8**
-      | ‣ **0x55d398326f99059fF775485246999027B3197955** |
+      | **Solana/Raydium** | 9FA29... | ETH (ETH) | Wrapped SOL (SOL) | [https://dexscreener.com/solana/9fa29os48yhdim2qgt51c18dpsn16xgc3q6jgmek3gft](https://dexscreener.com/solana/9fa29os48yhdim2qgt51c18dpsn16xgc3q6jgmek3gft)
+      |
 
-      | **Solana/Raydium** | [9FA29os48YhDim2qgT51c18dPsN16xgc3q6jGMEk3GfT](https://dexscreener.com/solana/9fa29os48yhdim2qgt51c18dpsn16xgc3q6jgmek3gft)
-      | **ETH** | **SOL** (Wrapped SOL) |
+      | **BSC/PancakeSwap** | 0x62Fc... | Ethereum Token (ETH) | Wrapped BNB (WBNB)
+      | [https://dexscreener.com/bsc/0x62fcb3c1794fb95bd8b1a97f6ad5d8a7e4943a1e](https://dexscreener.com/bsc/0x62fcb3c1794fb95bd8b1a97f6ad5d8a7e4943a1e)
+      |
 
-      | ‣ **Contract Addresses** | ‣ **2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump**
-      | ‣ **So11111111111111111111111111111111111111112** |
-
-      | **PulseChain/PulsX** | [0x77E4e36E9aB013E6d48B34836b61441C328B1738](https://dexscreener.com/pulsechain/0x77e4e36e9ab013e6d48b34836b61441c328b1738)
-      | **ETH** | **WPLS** (Wrapped Pulse) |
-
-      | ‣ **Contract Addresses** | ‣ **0xBFcfA52225Baa5feec5fbb54E6458957D53ddD94**
-      | ‣ **0xA1077a294dDE1B09bB078844df40758a5D0f9a27** |
+      | **Osmosis/Osmosis** | 1982 | Ethereum (ETH) | Bitcoin (BTC) | [https://dexscreener.com/osmosis/1982](https://dexscreener.com/osmosis/1982)
+      |
 
 
-      ### **Market Metrics**
+      **Market Metrics**
 
 
       | **Chain/DEX** | **Price (USD)** | **24h Volume** | **Liquidity (USD)** | **Market
@@ -55,59 +41,7 @@ search_pairs_test:
 
       | --- | --- | --- | --- | --- |
 
-      | **Osmosis/Osmosis** | $2692.24 | 1,830,545.70 | 265,744 | 2,576,801 |
-
-      | **BSC/PancakeSwap** | $2693.76 | 12,352,404.89 | 1,039,439.49 | 1,629,867,320
-      |
-
-      | ‣ *(ETH/WBNB)* |  |  |  |  |
-
-      | **BSC/PancakeSwap** | $2694.41 | 12,835,463.31 | 641,594.56 | 1,630,075,270
-      |
-
-      | ‣ *(ETH/USDT)* |  |  |  |  |
-
-      | **Solana/Raydium** | $0.0002268 | 643.86 | 78,718.90 | 226,800 |
-
-      | **PulseChain/PulsX** | $0.0003081 | 5,280.59 | 50,123.95 | 308,161 |
-
-
-      ### **Trading Activity**
-
-
-      | **Chain/DEX** | **Price Change (24h)** | **24h Buy/Sell Transactions** |
-
-      | --- | --- | --- |
-
-      | **Osmosis/Osmosis** | -2.29% | 3,857 / 4,123 |
-
-      | **BSC/PancakeSwap** | -2.11% | 6,969 / 6,798 |
-
-      | ‣ *(ETH/WBNB)* |  |  |
-
-      | **BSC/PancakeSwap** | -2.10% | 7,083 / 7,485 |
-
-      | ‣ *(ETH/USDT)* |  |  |
-
-      | **Solana/Raydium** | -2.20% | 21 / 13 |
-
-      | **PulseChain/PulsX** | 8.34% | 57 / 56 |
-
-
-      ### **Project Links**
-
-
-      | **Chain/DEX** | **Token** | **Website** | **Social Media** |
-
-      | --- | --- | --- | --- |
-
-      | **Solana/Raydium** | **ETH** | [https://thetickeriseth.xyz/](https://thetickeriseth.xyz/)
-      | Twitter: [@TheTickerIs_ETH](https://x.com/TheTickerIs_ETH), Telegram: [t.me/thetickeris_eth](https://t.me/thetickeris_eth)
-      |
-
-      | **PulseChain/PulsX** | **ETH** | [https://gopulse.com/token/0xbfcfa52225baa5feec5fbb54e6458957d53ddd94](https://gopulse.com/token/0xbfcfa52225baa5feec5fbb54e6458957d53ddd94)
-      | Twitter: [@RichardHeartWin](https://x.com/RichardHeartWin), Telegram: [t.me/rhcoins](https://t.me/rhcoins)
-      |'
+      | **Osmosis/Osmosis ('
     data:
       status: success
       data:
@@ -124,37 +58,136 @@ search_pairs_test:
             address: ibc/498A0751C798A0D9A389AA3691123DADA57DAA4FE165D5C75894505B876BA6E4
             name: USDC
             symbol: USDC
-          priceNative: '2692.2413'
-          priceUsd: '2692.24'
+          priceNative: '2142.4126'
+          priceUsd: '2142.41'
           txns:
             m5:
-              buys: 8
-              sells: 11
+              buys: 19
+              sells: 2
             h1:
-              buys: 92
-              sells: 62
+              buys: 95
+              sells: 95
             h6:
-              buys: 305
-              sells: 315
+              buys: 537
+              sells: 604
             h24:
-              buys: 3857
-              sells: 4123
+              buys: 3444
+              sells: 3575
           volume:
-            h24: 1830545.7
-            h6: 81105.3
-            h1: 25326.25
-            m5: 3513.01
+            h24: 713269.92
+            h6: 86502.83
+            h1: 20780.16
+            m5: 1021.3
           priceChange:
-            m5: 0.1
-            h1: 0.15
-            h6: 0.44
-            h24: -2.29
+            m5: 0.15
+            h1: 0.11
+            h6: -0.25
+            h24: -2.16
           liquidity:
-            usd: 265744
-            base: 56.1572
-            quote: 114555
-          fdv: 2576801
-          marketCap: 2576801
+            usd: 358858.93
+            base: 143.6696
+            quote: 51059
+          fdv: 2067119
+          marketCap: 2067119
+        - chainId: starknet
+          dexId: ekubo
+          url: https://dexscreener.com/starknet/0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7-0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8-170141183460469235273462165868118016-1000-0x0
+          pairAddress: 0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7-0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8-170141183460469235273462165868118016-1000-0x0
+          baseToken:
+            address: '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7'
+            name: Ether
+            symbol: ETH
+          quoteToken:
+            address: '0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8'
+            name: USD Coin
+            symbol: USDC
+          priceNative: '2141.3465'
+          priceUsd: '2141.34'
+          txns:
+            m5:
+              buys: 2
+              sells: 10
+            h1:
+              buys: 68
+              sells: 68
+            h6:
+              buys: 497
+              sells: 624
+            h24:
+              buys: 4921
+              sells: 4830
+          volume:
+            h24: 1960119.35
+            h6: 144401.07
+            h1: 17867.2
+            m5: 1264.44
+          priceChange:
+            m5: -0.01
+            h1: 0.01
+            h6: -0.19
+            h24: -2.08
+          liquidity:
+            usd: 843907.97
+            base: 303.9991
+            quote: 192940
+          fdv: 103042922
+          marketCap: 103042922
+          pairCreatedAt: 1693052952000
+        - chainId: solana
+          dexId: raydium
+          url: https://dexscreener.com/solana/9fa29os48yhdim2qgt51c18dpsn16xgc3q6jgmek3gft
+          pairAddress: 9FA29os48YhDim2qgT51c18dPsN16xgc3q6jGMEk3GfT
+          baseToken:
+            address: 2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump
+            name: ETH
+            symbol: ETH
+          quoteToken:
+            address: So11111111111111111111111111111111111111112
+            name: Wrapped SOL
+            symbol: SOL
+          priceNative: '0.000001595'
+          priceUsd: '0.0002225'
+          txns:
+            m5:
+              buys: 0
+              sells: 0
+            h1:
+              buys: 1
+              sells: 2
+            h6:
+              buys: 2
+              sells: 3
+            h24:
+              buys: 14
+              sells: 17
+          volume:
+            h24: 4105.77
+            h6: 1040.48
+            h1: 546.61
+            m5: 0
+          priceChange:
+            h1: -2
+            h6: 0.2
+            h24: 7.64
+          liquidity:
+            usd: 70230.71
+            base: 157984066
+            quote: 251.4618
+          fdv: 222533
+          marketCap: 222533
+          pairCreatedAt: 1729904248000
+          info:
+            imageUrl: https://dd.dexscreener.com/ds-data/tokens/solana/2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump.png?key=d50ef7
+            header: https://dd.dexscreener.com/ds-data/tokens/solana/2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump/header.png?key=d50ef7
+            openGraph: https://cdn.dexscreener.com/token-images/og/solana/2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump?timestamp=1741417800000
+            websites:
+            - label: Website
+              url: https://thetickeriseth.xyz/
+            socials:
+            - type: twitter
+              url: https://x.com/TheTickerIs_ETH
+            - type: telegram
+              url: https://t.me/thetickeris_eth
         - chainId: bsc
           dexId: pancakeswap
           url: https://dexscreener.com/bsc/0x62fcb3c1794fb95bd8b1a97f6ad5d8a7e4943a1e
@@ -169,195 +202,81 @@ search_pairs_test:
             address: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
             name: Wrapped BNB
             symbol: WBNB
-          priceNative: '4.09613'
-          priceUsd: '2693.76'
+          priceNative: '3.5869'
+          priceUsd: '2143.96'
           txns:
             m5:
-              buys: 6
-              sells: 18
+              buys: 5
+              sells: 26
             h1:
-              buys: 167
-              sells: 154
+              buys: 198
+              sells: 225
             h6:
-              buys: 1163
-              sells: 1059
+              buys: 1120
+              sells: 1178
             h24:
-              buys: 6969
-              sells: 6798
+              buys: 4710
+              sells: 5704
           volume:
-            h24: 12352404.89
-            h6: 2182138.95
-            h1: 94488.13
-            m5: 9296.72
-          priceChange:
-            m5: 0.07
-            h1: 0.25
-            h6: 0.53
-            h24: -2.11
-          liquidity:
-            usd: 1039439.49
-            base: 280.4433
-            quote: 431.8346
-          fdv: 1629686732
-          marketCap: 1629686732
-          pairCreatedAt: 1681625414000
-        - chainId: solana
-          dexId: raydium
-          url: https://dexscreener.com/solana/9fa29os48yhdim2qgt51c18dpsn16xgc3q6jgmek3gft
-          pairAddress: 9FA29os48YhDim2qgT51c18dPsN16xgc3q6jGMEk3GfT
-          baseToken:
-            address: 2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump
-            name: ETH
-            symbol: ETH
-          quoteToken:
-            address: So11111111111111111111111111111111111111112
-            name: Wrapped SOL
-            symbol: SOL
-          priceNative: '0.000001316'
-          priceUsd: '0.0002268'
-          txns:
-            m5:
-              buys: 0
-              sells: 0
-            h1:
-              buys: 0
-              sells: 0
-            h6:
-              buys: 7
-              sells: 1
-            h24:
-              buys: 21
-              sells: 13
-          volume:
-            h24: 643.86
-            h6: 169.43
-            h1: 0
-            m5: 0
-          priceChange:
-            h6: 1.61
-            h24: -2.2
-          liquidity:
-            usd: 78718.9
-            base: 173405917
-            quote: 228.6979
-          fdv: 226800
-          marketCap: 226800
-          pairCreatedAt: 1729904248000
-          info:
-            imageUrl: https://dd.dexscreener.com/ds-data/tokens/solana/2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump.png?key=d50ef7
-            header: https://dd.dexscreener.com/ds-data/tokens/solana/2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump/header.png?key=d50ef7
-            openGraph: https://cdn.dexscreener.com/token-images/og/solana/2kaRSuDcz1V1kqq1sDmP23Wy98jutHQQgr5fGDWRpump?timestamp=1740215100000
-            websites:
-            - label: Website
-              url: https://thetickeriseth.xyz/
-            socials:
-            - type: twitter
-              url: https://x.com/TheTickerIs_ETH
-            - type: telegram
-              url: https://t.me/thetickeris_eth
-        - chainId: bsc
-          dexId: pancakeswap
-          url: https://dexscreener.com/bsc/0x9f599f3d64a9d99ea21e68127bb6ce99f893da61
-          pairAddress: '0x9F599F3D64a9D99eA21e68127Bb6CE99f893DA61'
-          labels:
-          - v3
-          baseToken:
-            address: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8'
-            name: Ethereum Token
-            symbol: ETH
-          quoteToken:
-            address: '0x55d398326f99059fF775485246999027B3197955'
-            name: Tether USD
-            symbol: USDT
-          priceNative: '2694.4109'
-          priceUsd: '2694.41'
-          txns:
-            m5:
-              buys: 8
-              sells: 24
-            h1:
-              buys: 159
-              sells: 168
-            h6:
-              buys: 878
-              sells: 896
-            h24:
-              buys: 7083
-              sells: 7485
-          volume:
-            h24: 12835463.31
-            h6: 1433251.06
-            h1: 107115.47
-            m5: 10515.13
+            h24: 2934122.16
+            h6: 550368.24
+            h1: 73812.23
+            m5: 1280.8
           priceChange:
             m5: 0.11
-            h1: 0.29
-            h6: 0.6
-            h24: -2.1
+            h1: -0.05
+            h6: -0.14
+            h24: -2.12
           liquidity:
-            usd: 641594.56
-            base: 172.3499
-            quote: 177212
-          fdv: 1630075527
-          marketCap: 1630075527
-          pairCreatedAt: 1683365205000
-        - chainId: pulsechain
-          dexId: pulsex
-          url: https://dexscreener.com/pulsechain/0x77e4e36e9ab013e6d48b34836b61441c328b1738
-          pairAddress: '0x77E4e36E9aB013E6d48B34836b61441C328B1738'
-          labels:
-          - v2
+            usd: 787652.33
+            base: 358.006507
+            quote: 33.6289
+          fdv: 1297061750
+          marketCap: 1297061750
+          pairCreatedAt: 1681625414000
+        - chainId: osmosis
+          dexId: osmosis
+          url: https://dexscreener.com/osmosis/1982
+          pairAddress: '1982'
           baseToken:
-            address: '0xBFcfA52225Baa5feec5fbb54E6458957D53ddD94'
-            name: ETH
+            address: factory/osmo1k6c8jln7ejuqwtqmay3yvzrg3kueaczl96pk067ldg8u835w0yhsw27twm/alloyed/allETH
+            name: Ethereum
             symbol: ETH
           quoteToken:
-            address: '0xA1077a294dDE1B09bB078844df40758a5D0f9a27'
-            name: Wrapped Pulse
-            symbol: WPLS
-          priceNative: '6.7869'
-          priceUsd: '0.0003081'
+            address: factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC
+            name: Bitcoin
+            symbol: BTC
+          priceNative: '0.02482'
+          priceUsd: '2141.58'
           txns:
             m5:
-              buys: 0
-              sells: 0
+              buys: 20
+              sells: 1
             h1:
-              buys: 2
-              sells: 0
+              buys: 43
+              sells: 53
             h6:
-              buys: 9
-              sells: 4
+              buys: 391
+              sells: 293
             h24:
-              buys: 57
-              sells: 56
+              buys: 1892
+              sells: 1597
           volume:
-            h24: 5280.59
-            h6: 656.72
-            h1: 15.33
-            m5: 0
+            h24: 386153.42
+            h6: 49472.48
+            h1: 10304.16
+            m5: 1642.28
           priceChange:
-            h1: 0.12
-            h6: 4.36
-            h24: 8.34
+            m5: 0.13
+            h1: -0.08
+            h6: -0.26
+            h24: -2.18
           liquidity:
-            usd: 50123.95
-            base: 81327605
-            quote: 551968305
-          fdv: 308161
-          marketCap: 308161
-          pairCreatedAt: 1738481605000
-          info:
-            imageUrl: https://dd.dexscreener.com/ds-data/tokens/pulsechain/0xbfcfa52225baa5feec5fbb54e6458957d53ddd94.png?key=11d6a8
-            header: https://dd.dexscreener.com/ds-data/tokens/pulsechain/0xbfcfa52225baa5feec5fbb54e6458957d53ddd94/header.png?key=11d6a8
-            openGraph: https://cdn.dexscreener.com/token-images/og/pulsechain/0xbfcfa52225baa5feec5fbb54e6458957d53ddd94?timestamp=1740215100000
-            websites:
-            - label: Website
-              url: https://gopulse.com/token/0xbfcfa52225baa5feec5fbb54e6458957d53ddd94
-            socials:
-            - type: twitter
-              url: https://x.com/RichardHeartWin
-            - type: telegram
-              url: https://t.me/rhcoins
+            usd: 123932.28
+            base: 33.9566
+            quote: 0.5935
+          fdv: 2066319
+          marketCap: 2066319
 specific_pair_info_test:
   input:
     tool: get_specific_pair_info
@@ -365,81 +284,7 @@ specific_pair_info_test:
       chain: solana
       pair_address: 7qsdv1yr4yra9fjazccrwhbjpykvpcbi3158u1qcjuxp
   output:
-    response: "**Core Token Information**\n\n* **Chain/DEX Platform:** Solana / Raydium\n\
-      * **Pair Address:** 7QsDV1YR4yra9FjAZCCRwhBjPYkVPCBi3158U1QcjuXp\n* **Pair URL:**\
-      \ https://dexscreener.com/solana/7qsdv1yr4yra9fjazccrwhbjpykvpcbi3158u1qcjuxp\n\
-      * **Base Token:**\n\t+ **Name:** Elyra\n\t+ **Symbol:** Elyra\n\t+ **Address:**\
-      \ 8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump\n* **Quote Token:**\n\t+ **Name:**\
-      \ Wrapped SOL\n\t+ **Symbol:** SOL\n\t+ **Address:** So11111111111111111111111111111111111111112\n\
-      \n**Market Metrics**\n\n* **Price:**\n\t+ **Native:** 0.0000002897\n\t+ **USD:**\
-      \ $0.00005019\n* **24h Volume:** 11.83\n* **Liquidity:**\n\t+ **USD:** $27,354.60\n\
-      \t+ **Base:** 272,256,184\n\t+ **Quote:** 79.01473\n* **Market Cap/FDV:** $50,194\n\
-      \n**Trading Activity**\n\n* **Price Change (24h):** -3.68%\n* **Transaction\
-      \ Ratio (24h):** \n\t+ **Buys:** 0\n\t+ **Sells:** 2\n\n**Project Links**\n\n\
-      * **Website:** https://elyra.fun/\n* **Documentation:** https://docs.elyra.fun/\n\
-      * **Social Media:**\n\t+ **Twitter:** https://x.com/elyrafun\n\t+ **Telegram:**\
-      \ https://t.me/scatteringlabs\n\t+ **Discord:** https://discord.com/invite/tNnKAMBftq"
-    data:
-      status: success
-      data:
-        pair:
-          chainId: solana
-          dexId: raydium
-          url: https://dexscreener.com/solana/7qsdv1yr4yra9fjazccrwhbjpykvpcbi3158u1qcjuxp
-          pairAddress: 7QsDV1YR4yra9FjAZCCRwhBjPYkVPCBi3158U1QcjuXp
-          baseToken:
-            address: 8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump
-            name: Elyra
-            symbol: Elyra
-          quoteToken:
-            address: So11111111111111111111111111111111111111112
-            name: Wrapped SOL
-            symbol: SOL
-          priceNative: '0.0000002897'
-          priceUsd: '0.00005019'
-          txns:
-            m5:
-              buys: 0
-              sells: 0
-            h1:
-              buys: 0
-              sells: 0
-            h6:
-              buys: 0
-              sells: 0
-            h24:
-              buys: 0
-              sells: 2
-          volume:
-            h24: 11.83
-            h6: 0
-            h1: 0
-            m5: 0
-          priceChange:
-            h24: -3.68
-          liquidity:
-            usd: 27354.6
-            base: 272256184
-            quote: 79.01473
-          fdv: 50194
-          marketCap: 50194
-          pairCreatedAt: 1737036564000
-          info:
-            imageUrl: https://dd.dexscreener.com/ds-data/tokens/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump.png?key=946663
-            header: https://dd.dexscreener.com/ds-data/tokens/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump/header.png?key=946663
-            openGraph: https://cdn.dexscreener.com/token-images/og/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump?timestamp=1740215100000
-            websites:
-            - label: Website
-              url: https://elyra.fun/
-            - label: Docs
-              url: https://docs.elyra.fun/
-            socials:
-            - type: twitter
-              url: https://x.com/elyrafun
-            - type: telegram
-              url: https://t.me/scatteringlabs
-            - type: discord
-              url: https://discord.com/invite/tNnKAMBftq
+    error: '''NoneType'' object is not iterable'
 token_pairs_test:
   input:
     tool: get_token_pairs
@@ -447,234 +292,110 @@ token_pairs_test:
       chain: solana
       token_address: 8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump
   output:
-    response: "**Token/Pair Information for Elyra (Elyra) on Solana (Raydium DEX)**\n\
-      \n**Core Token Information:**\n* **Base Token:**\n\t+ **Name:** Elyra\n\t+ **Symbol:**\
-      \ Elyra\n\t+ **Address:** 8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump\n* **Quote\
-      \ Token:**\n\t+ **Name:** Wrapped SOL\n\t+ **Symbol:** SOL\n\t+ **Address:**\
-      \ So11111111111111111111111111111111111111112\n* **Chain/DEX Platform:** Solana\
-      \ (Raydium)\n* **Contract Address (Pair):** 7QsDV1YR4yra9FjAZCCRwhBjPYkVPCBi3158U1QcjuXp\n\
-      * **DEX Screener URL:** https://dexscreener.com/solana/7QsDV1YR4yra9FjAZCCRwhBjPYkVPCBi3158U1QcjuXp\n\
-      \n**Market Metrics:**\n* **Price:**\n\t+ **USD:** $0.00005019\n\t+ **Native\
-      \ (SOL):** 0.0000002897\n* **24h Volume:** 11.83\n* **Liquidity:**\n\t+ **USD:**\
-      \ $27,354.60\n\t+ **Base (Elyra):** 272,256,184\n\t+ **Quote (SOL):** 79.01473\n\
-      * **Market Cap/FDV:** $50,194\n\n**Trading Activity:**\n* **Price Change (24h):**\
-      \ -3.68%\n* **Transaction Ratio (24h Buy/Sell):** \n\t+ **Buys:** 0\n\t+ **Sells:**\
-      \ 2\n* **Volume Distribution:**\n\t+ **h24:** 11.83\n\t+ **h6, h1, m5:** 0 (each)\n\
-      \n**Project Links:**\n* **Website:** https://elyra.fun/\n* **Documentation:**\
-      \ https://docs.elyra.fun/\n* **Social Media:**\n\t+ **Twitter:** https://x.com/elyrafun\n\
-      \t+ **Telegram:** https://t.me/scatteringlabs\n\t+ **Discord:** https://discord.com/invite/tNnKAMBftq"
-    data:
-      status: success
-      data:
-        pairs:
-        - chainId: solana
-          dexId: raydium
-          url: https://dexscreener.com/solana/7qsdv1yr4yra9fjazccrwhbjpykvpcbi3158u1qcjuxp
-          pairAddress: 7QsDV1YR4yra9FjAZCCRwhBjPYkVPCBi3158U1QcjuXp
-          baseToken:
-            address: 8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump
-            name: Elyra
-            symbol: Elyra
-          quoteToken:
-            address: So11111111111111111111111111111111111111112
-            name: Wrapped SOL
-            symbol: SOL
-          priceNative: '0.0000002897'
-          priceUsd: '0.00005019'
-          txns:
-            m5:
-              buys: 0
-              sells: 0
-            h1:
-              buys: 0
-              sells: 0
-            h6:
-              buys: 0
-              sells: 0
-            h24:
-              buys: 0
-              sells: 2
-          volume:
-            h24: 11.83
-            h6: 0
-            h1: 0
-            m5: 0
-          priceChange:
-            h24: -3.68
-          liquidity:
-            usd: 27354.6
-            base: 272256184
-            quote: 79.01473
-          fdv: 50194
-          marketCap: 50194
-          pairCreatedAt: 1737036564000
-          info:
-            imageUrl: https://dd.dexscreener.com/ds-data/tokens/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump.png?key=946663
-            header: https://dd.dexscreener.com/ds-data/tokens/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump/header.png?key=946663
-            openGraph: https://cdn.dexscreener.com/token-images/og/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump?timestamp=1740215100000
-            websites:
-            - label: Website
-              url: https://elyra.fun/
-            - label: Docs
-              url: https://docs.elyra.fun/
-            socials:
-            - type: twitter
-              url: https://x.com/elyrafun
-            - type: telegram
-              url: https://t.me/scatteringlabs
-            - type: discord
-              url: https://discord.com/invite/tNnKAMBftq
-        dex_url: https://dexscreener.com/solana/8TE8oxirpnriy9CKCd6dyjtff2vvP3n6hrSMqX58pump
+    error: No pairs found for this token
 token_profiles_test:
   input:
     tool: get_token_profiles
     tool_arguments: {}
   output:
-    response: 'Given the provided data, I''ll structure the response according to
-      the specified rules, omitting empty sections and focusing on available data.
-      Since multiple tokens are provided, I''ll present the information in a comparative
-      table format where applicable, and detailed text for sections that don''t lend
-      themselves to tabular comparison.
+    response: '**Token Information Summary**
 
 
-      ### Core Token Information
+      Below is a structured summary of the provided token data, adhering to the specified
+      presentation rules.
 
 
-      | **Token** | **Chain/DEX Platform** | **Contract Address** | **Description**
+      ### **Core Token Information**
+
+
+      | **Token** | **Chain/DEX** | **Contract Address** | **Description** | **Links**
       |
 
-      | --- | --- | --- | --- |
+      | --- | --- | --- | --- | --- |
 
-      | **ChainSaw Gold** | Solana | LhWehDFghQCeptiLd1ymXHLwEK4t2TwyXR5nXnjmG9K |
-      ChainSaw Gold is more than just a name—it''s a statement. |
+      | **1. Unknown (No Symbol Provided)** | Solana | `7thn5t23XeQTu8viLn8d4NvGzn98ezjhEqdv37ryZKaG`
+      | A time-warped sanctuary where the golden age of gaming collides with the intelligence
+      of tomorrow | Twitter: `https://x.com/braiden_gr97348` |
 
-      | **ENYMAX** | Solana | ydPNyX2a7QQwdi6QRFG1WekBSYs2earcUjx7RHWJ2W7 | Enhancing
-      Data Security with AI. |
+      | **2. AstroCoin (ASTC) - Suggested** | Solana | `2YLhF3dwX4oWbQHbsfvQSWyvJc5G2ibteaipn87Apump`
+      | For a unique cryptocurrency name and ticker, consider "AstroCoin" (ASTC)...
+      | Twitter: `https://x.com/Godgemscrypto/status/1897994337306202205` |
 
-      | **DOFOO** | BSC | 0x5B8FDCA95eC0A407A6Dd79A7C4e64E56a8D5e76A | The world''s
-      first crypto-based dog food brand. |
+      | **3. Unknown (No Symbol Provided)** | Solana | `Em7WNeXZZi6xs4ume3pZW5SCQFyE3xa8tk5fb8vopump`
+      |  | Twitter: `https://x.com/unusual_whales/status/1894396182442476024` |
 
-      | **Unnamed (AwP98...)** | Solana | AwP98HrnEArUNZUxm19MhSay2BgDxjB1kcFpX6twfrep
-      | *No description provided.* |
-
-      | **Unnamed (DbGx1...)** | Solana | DbGx1U47uLwF99nevachibeCtUqDia9vyJ7dKUNjpump
-      | *No description provided.* |
-
-
-      ### Project Links
-
-
-      | **Token** | **Website** | **Twitter** | **Telegram** |
-
-      | --- | --- | --- | --- |
-
-      | **ChainSaw Gold** | https://chainsawgold.xyz/ | https://twitter.com/ChainSaw_Gold
-      | https://t.me/ChainSaw_Gold |
-
-      | **ENYMAX** | https://enymax.xyz/ | https://x.com/enymax | https://t.me/enymax
+      | **4. StarCoin/AstroToken - Suggested** | Solana | `AQbR5yeUyjQkSrZRGmmmJfZyvy4gwPPZahX1SSLJpump`
+      | Hey, if SpaceX were to create a crypto coin, it might be named something like
+      "StarCoin" or "AstroToken"... | Twitter: `https://x.com/grok/status/1898029980937748487`
       |
 
-      | **DOFOO** | https://dogefood.online | - | https://t.me/DOFOOBSC |
-
-      | **Unnamed (AwP98...)** | *Not Provided* | - | - |
-
-      | **Unnamed (DbGx1...)** | https://pepkipsol.fun/ | https://x.com/PepkipOnSol
-      | https://t.me/pepandkip |
+      | **5. Shiba Inu by GROK** | Base | `0x2b5059a501bD67BB41Bc1fBe91B00E88dA38edA2`
+      | The first Shiba Inu created by GROK | Twitter: `https://x.com/donna7734865658`,
+      Telegram: `https://t.me/KuroCoinKuroCoin` |
 
 
-      ### Notes:
-
-      - **Market Metrics** and **Trading Activity** sections are omitted due to the
-      absence of relevant data in the provided response.
-
-      - Tokens without names (AwP98..., DbGx1...) are presented with their contract
-      address prefixes for identification, as no token names were provided in the
-      data.'
+      ### **'
     data:
       status: success
       data:
         profiles:
-        - url: https://dexscreener.com/solana/lhwehdfghqceptild1ymxhlwek4t2twyxr5nxnjmg9k
+        - url: https://dexscreener.com/solana/7thn5t23xeqtu8viln8d4nvgzn98ezjheqdv37ryzkag
           chainId: solana
-          tokenAddress: LhWehDFghQCeptiLd1ymXHLwEK4t2TwyXR5nXnjmG9K
-          icon: https://dd.dexscreener.com/ds-data/tokens/solana/LhWehDFghQCeptiLd1ymXHLwEK4t2TwyXR5nXnjmG9K.png
-          header: https://dd.dexscreener.com/ds-data/tokens/solana/LhWehDFghQCeptiLd1ymXHLwEK4t2TwyXR5nXnjmG9K/header.png
-          openGraph: https://cdn.dexscreener.com/token-images/og/solana/LhWehDFghQCeptiLd1ymXHLwEK4t2TwyXR5nXnjmG9K?timestamp=1740215100000
-          description: ChainSaw Gold is more than just a name—it's a statement.
+          tokenAddress: 7thn5t23XeQTu8viLn8d4NvGzn98ezjhEqdv37ryZKaG
+          icon: https://dd.dexscreener.com/ds-data/tokens/solana/7thn5t23XeQTu8viLn8d4NvGzn98ezjhEqdv37ryZKaG.png
+          header: https://dd.dexscreener.com/ds-data/tokens/solana/7thn5t23XeQTu8viLn8d4NvGzn98ezjhEqdv37ryZKaG/header.png
+          openGraph: https://cdn.dexscreener.com/token-images/og/solana/7thn5t23XeQTu8viLn8d4NvGzn98ezjhEqdv37ryZKaG?timestamp=1741417800000
+          description: A time-warped sanctuary where the golden age of gaming collides
+            with the intelligence of tomorrow
           links:
-          - label: Website
-            url: https://chainsawgold.xyz/
           - type: twitter
-            url: https://twitter.com/ChainSaw_Gold
-          - type: telegram
-            url: https://t.me/ChainSaw_Gold
-        - url: https://dexscreener.com/solana/ydpnyx2a7qqwdi6qrfg1wekbsys2earcujx7rhwj2w7
+            url: https://x.com/braiden_gr97348
+        - url: https://dexscreener.com/solana/2ylhf3dwx4owbqhbsfvqswyvjc5g2ibteaipn87apump
           chainId: solana
-          tokenAddress: ydPNyX2a7QQwdi6QRFG1WekBSYs2earcUjx7RHWJ2W7
-          icon: https://dd.dexscreener.com/ds-data/tokens/solana/ydPNyX2a7QQwdi6QRFG1WekBSYs2earcUjx7RHWJ2W7.png
-          header: https://dd.dexscreener.com/ds-data/tokens/solana/ydPNyX2a7QQwdi6QRFG1WekBSYs2earcUjx7RHWJ2W7/header.png
-          openGraph: https://cdn.dexscreener.com/token-images/og/solana/ydPNyX2a7QQwdi6QRFG1WekBSYs2earcUjx7RHWJ2W7?timestamp=1740215100000
-          description: 'Enymax Enhancing Data Security with the Power of Artificial
-            Intelligence Our Commitment to Excellence in Data Security👨‍💻🚀
-
-            At ENYMAX, we lead with innovation, providing adaptive, AI-driven protection.
-            Reliability, security, and customer-centric solutions are at our core.
-            We prioritize integrity, adaptability, and collaboration, ensuring we
-            exceed expectations and stay ahead of emerging threats.
-
-
-            👨‍💻Our Vision
-
-            To be the leading provider of intelligent and adaptive data security solutions,
-            empowering individuals and businesses to confidently navigate the digital
-            world with peace of mind.
-
-
-            👨‍💻Our Mission
-
-            ENYMAX is committed to delivering cutting-edge, AI-powered security solutions
-            that proactively protect data from evolving cyber threats. Our mission
-            is to provide fast, efficient, and scalable protection for all, ensuring
-            that data security is both accessible and future-proof for businesses
-            and individuals alike.'
+          tokenAddress: 2YLhF3dwX4oWbQHbsfvQSWyvJc5G2ibteaipn87Apump
+          icon: https://dd.dexscreener.com/ds-data/tokens/solana/2YLhF3dwX4oWbQHbsfvQSWyvJc5G2ibteaipn87Apump.png
+          header: https://dd.dexscreener.com/ds-data/tokens/solana/2YLhF3dwX4oWbQHbsfvQSWyvJc5G2ibteaipn87Apump/header.png
+          openGraph: https://cdn.dexscreener.com/token-images/og/solana/2YLhF3dwX4oWbQHbsfvQSWyvJc5G2ibteaipn87Apump?timestamp=1741417800000
+          description: "For a unique cryptocurrency name and ticker, consider \"AstroCoin\"\
+            \ (ASTC). Here's ASCII art for it:\n\n```\n  /\\\n /  \\\n\\   / AstroCoin\n\
+            \ \\ /\n  * \n```\n\nASTC represents a cosmic, futuristic vibe, appealing\
+            \ to crypto enthusiasts."
           links:
-          - label: Website
-            url: https://enymax.xyz/
           - type: twitter
-            url: https://x.com/enymax
-          - type: telegram
-            url: https://t.me/enymax
-        - url: https://dexscreener.com/bsc/0x5b8fdca95ec0a407a6dd79a7c4e64e56a8d5e76a
-          chainId: bsc
-          tokenAddress: '0x5B8FDCA95eC0A407A6Dd79A7C4e64E56a8D5e76A'
-          icon: https://dd.dexscreener.com/ds-data/tokens/bsc/0x5b8fdca95ec0a407a6dd79a7c4e64e56a8d5e76a.png
-          header: https://dd.dexscreener.com/ds-data/tokens/bsc/0x5b8fdca95ec0a407a6dd79a7c4e64e56a8d5e76a/header.png
-          openGraph: https://cdn.dexscreener.com/token-images/og/bsc/0x5b8fdca95ec0a407a6dd79a7c4e64e56a8d5e76a?timestamp=1740215100000
-          description: 'The world''s first crypto based dog food brand.
-
-            The shift is happening. A new era on BSC is upon us.'
-          links:
-          - label: Website
-            url: https://dogefood.online
-          - type: telegram
-            url: https://t.me/DOFOOBSC
-        - url: https://dexscreener.com/solana/awp98hrnearunzuxm19mhsay2bgdxjb1kcfpx6twfrep
+            url: https://x.com/Godgemscrypto/status/1897994337306202205
+        - url: https://dexscreener.com/solana/em7wnexzzi6xs4ume3pzw5scqfye3xa8tk5fb8vopump
           chainId: solana
-          tokenAddress: AwP98HrnEArUNZUxm19MhSay2BgDxjB1kcFpX6twfrep
-          icon: https://dd.dexscreener.com/ds-data/tokens/solana/AwP98HrnEArUNZUxm19MhSay2BgDxjB1kcFpX6twfrep.png
-          header: https://dd.dexscreener.com/ds-data/tokens/solana/AwP98HrnEArUNZUxm19MhSay2BgDxjB1kcFpX6twfrep/header.png
-          openGraph: https://cdn.dexscreener.com/token-images/og/solana/AwP98HrnEArUNZUxm19MhSay2BgDxjB1kcFpX6twfrep?timestamp=1740215100000
-        - url: https://dexscreener.com/solana/dbgx1u47ulwf99nevachibectuqdia9vyj7dkunjpump
-          chainId: solana
-          tokenAddress: DbGx1U47uLwF99nevachibeCtUqDia9vyJ7dKUNjpump
-          icon: https://dd.dexscreener.com/ds-data/tokens/solana/DbGx1U47uLwF99nevachibeCtUqDia9vyJ7dKUNjpump.png
-          header: https://dd.dexscreener.com/ds-data/tokens/solana/DbGx1U47uLwF99nevachibeCtUqDia9vyJ7dKUNjpump/header.png
-          openGraph: https://cdn.dexscreener.com/token-images/og/solana/DbGx1U47uLwF99nevachibeCtUqDia9vyJ7dKUNjpump?timestamp=1740215100000
+          tokenAddress: Em7WNeXZZi6xs4ume3pZW5SCQFyE3xa8tk5fb8vopump
+          icon: https://dd.dexscreener.com/ds-data/tokens/solana/Em7WNeXZZi6xs4ume3pZW5SCQFyE3xa8tk5fb8vopump.png
+          header: https://dd.dexscreener.com/ds-data/tokens/solana/Em7WNeXZZi6xs4ume3pZW5SCQFyE3xa8tk5fb8vopump/header.png
+          openGraph: https://cdn.dexscreener.com/token-images/og/solana/Em7WNeXZZi6xs4ume3pZW5SCQFyE3xa8tk5fb8vopump?timestamp=1741417800000
           description: ''
           links:
-          - label: Website
-            url: https://pepkipsol.fun/
           - type: twitter
-            url: https://x.com/PepkipOnSol
+            url: https://x.com/unusual_whales/status/1894396182442476024
+        - url: https://dexscreener.com/solana/aqbr5yeuyjqksrzrgmmmjfzyvy4gwppzahx1ssljpump
+          chainId: solana
+          tokenAddress: AQbR5yeUyjQkSrZRGmmmJfZyvy4gwPPZahX1SSLJpump
+          icon: https://dd.dexscreener.com/ds-data/tokens/solana/AQbR5yeUyjQkSrZRGmmmJfZyvy4gwPPZahX1SSLJpump.png
+          header: https://dd.dexscreener.com/ds-data/tokens/solana/AQbR5yeUyjQkSrZRGmmmJfZyvy4gwPPZahX1SSLJpump/header.png
+          openGraph: https://cdn.dexscreener.com/token-images/og/solana/AQbR5yeUyjQkSrZRGmmmJfZyvy4gwPPZahX1SSLJpump?timestamp=1741417800000
+          description: Hey, if SpaceX were to create a crypto coin, it might be named
+            something like "StarCoin" or "AstroToken," reflecting its space exploration
+            focus. These names align with SpaceX's mission to Mars and beyond, as
+            seen in projects like Starship. Check out AI-powered crypto name generators
+            for more ideas.
+          links:
+          - type: twitter
+            url: https://x.com/grok/status/1898029980937748487
+        - url: https://dexscreener.com/base/0x2b5059a501bd67bb41bc1fbe91b00e88da38eda2
+          chainId: base
+          tokenAddress: '0x2b5059a501bD67BB41Bc1fBe91B00E88dA38edA2'
+          icon: https://dd.dexscreener.com/ds-data/tokens/base/0x2b5059a501bd67bb41bc1fbe91b00e88da38eda2.png
+          header: https://dd.dexscreener.com/ds-data/tokens/base/0x2b5059a501bd67bb41bc1fbe91b00e88da38eda2/header.png
+          openGraph: https://cdn.dexscreener.com/token-images/og/base/0x2b5059a501bd67bb41bc1fbe91b00e88da38eda2?timestamp=1741417800000
+          description: The first Shiba Inu created by GROK |
+          links:
+          - type: twitter
+            url: https://x.com/donna7734865658
           - type: telegram
-            url: https://t.me/pepandkip
+            url: https://t.me/KuroCoinKuroCoin
