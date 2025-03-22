@@ -26,3 +26,6 @@ web3-ethereum-defi>=0.28.1
 
 # for duckduckgo_search_agent
 duckduckgo-search>=4.1.1
+
+# for sol_wallet_agent
+pydash>=8.0.5
