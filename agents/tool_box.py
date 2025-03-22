@@ -3,6 +3,8 @@ from typing import Any, Dict, Optional
 
 import aiohttp
 
+from core.imgen import generate_image_with_retry_smartgen
+
 from .tool_decorator import tool
 
 logger = logging.getLogger(__name__)
@@ -48,13 +50,11 @@ class ToolBox:
     @staticmethod
     @tool("Generate an image based on a text prompt")
     # async def handle_image_generation(self, args: Dict[str, Any], agent_context: Any) -> Dict[str, Any]: #example for explicitly defined schema
-    async def handle_image_generation(prompt: str, agent_context: Any) -> Dict[str, Any]:
+    async def handle_image_generation(prompt: str) -> Dict[str, Any]:
         """Generate an image based on a text prompt. Use this tool only when the user explicitly requests to create an image."""
         logger.info(prompt)
         try:
-            image_url = await agent_context.handle_image_generation(
-                prompt
-            )  # args['prompt'] for explicitly defined schema
+            image_url = await generate_image_with_retry_smartgen(prompt=prompt)
             return {"image_url": image_url, "result": image_url}
         except Exception as e:
             logger.error(f"Image generation failed: {str(e)}")
