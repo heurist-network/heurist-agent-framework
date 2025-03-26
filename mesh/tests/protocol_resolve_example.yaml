@@ -1,0 +1,37 @@
+examples:
+- input:
+    query: Tell me about ZKSync
+  output:
+    response: 'Could not resolve protocol from query: Tell me about ZKSync'
+    data: null
+- input:
+    protocol_id: aave-v3
+  output:
+    response: "Here is a concise yet informative description of the protocol based\
+      \ on the provided data:\n\n**Protocol Overview: Aave V3**\n\n* **Category:**\
+      \ **Lending** (Decentralized Finance - DeFi)\n* **Supported Blockchains:**\n\
+      \t+ Ethereum (ETH)\n\t+ Polygon (MATIC)\n\t+ Avalanche (AVAX)\n\t+ Arbitrum\n\
+      \n**Key Features:**\n\n* **Decentralized Lending**: Enables users to lend and\
+      \ borrow various cryptocurrencies in a trustless, peer-to-peer manner.\n* **Multi-Chain\
+      \ Support**: Offers interoperability across four major blockchain ecosystems,\
+      \ enhancing accessibility and liquidity.\n* **Version 3 (V3) Upgrades**: Likely\
+      \ includes enhanced features such as improved liquidity provisioning, more efficient\
+      \ collateral usage, and refined risk management compared to its predecessors\
+      \ (exact upgrades may vary, refer to official Aave documentation for specifics).\n\
+      \n**Note:** For a more detailed understanding of Aave V3's specific features,\
+      \ interest rates, supported assets, and any recent updates, it is recommended\
+      \ to consult the official Aave website or documentation."
+    data:
+      name: Aave V3
+      category: Lending
+      chains:
+      - ethereum
+      - polygon
+      - avalanche
+      - arbitrum
+      description: Decentralized lending protocol
+- input:
+    query: Information about HEU
+  output:
+    response: 'Could not resolve protocol from query: Information about HEU'
+    data: null
