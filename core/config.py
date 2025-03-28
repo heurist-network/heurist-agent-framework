@@ -29,7 +29,7 @@ class PromptConfig:
         if config_path is None:
             # Get the project root directory (2 levels up from the current file)
             project_root = Path(__file__).parent.parent
-            config_path = project_root / "config" / CONFIG_PROMPTS
+            config_path = project_root / "agents/config" / CONFIG_PROMPTS
             logger.info(f"Using config file: {config_path}")
 
         self.config_path = Path(config_path)

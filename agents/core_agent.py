@@ -11,8 +11,6 @@ from typing import Any, Dict, List, Optional
 
 import dotenv
 
-from agents.tools import Tools
-from agents.tools_mcp import Tools as ToolsMCP
 from core.config import PromptConfig
 from core.embedding import (
     EmbeddingError,
@@ -26,7 +24,11 @@ from core.embedding import (
 )
 from core.imgen import generate_image_with_retry_smartgen
 from core.llm import LLMError, call_llm, call_llm_with_tools
+from core.tools.tools import Tools
 from core.voice import speak_text, transcribe_audio
+
+from .tools.default_tool_box import DefaultToolBox
+from .tools.tools_mcp import Tools as ToolsMCP
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -51,7 +53,7 @@ BASE_IMAGE_PROMPT = ""
 class CoreAgent:
     def __init__(self):
         self.prompt_config = PromptConfig()
-        self.tools = Tools()
+        self.tools = Tools(DefaultToolBox)
         self.tools_mcp = ToolsMCP()
         self.tools_mcp_initialized = False
         self.interfaces = {}

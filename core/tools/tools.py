@@ -1,26 +1,49 @@
 import json
 import logging
-from typing import Any, Callable, Dict, List, Optional
+from abc import ABC
+from typing import Any, Callable, Dict, List, Optional, Type
 
-from .tool_box import ToolBox
+# from .tool_box import ToolBox
 from .tool_decorator import get_tool_schemas
-from .tool_decorator_example import DECORATED_TOOLS_EXAMPLES
 
 logger = logging.getLogger(__name__)
 
 
-class Tools(ToolBox):
-    def __init__(self):
-        # Initialize the base class
-        super().__init__()
+class ToolBox(ABC):
+    """Abstract base class for tool configurations and handlers"""
 
-        # Store decorated tools
-        # Not necessary to as it is already stored in the ToolBox class
-        # But explicitly storing it here for clarity
-        self._decorated_tools: List[Callable] = self.decorated_tools
+    def __init__(self):
+        # Base tools configuration
+        # Can be used to add tools by defining a function schema explicitly if needed
+        self.tools_config = []
+
+        # Base handlers
+        # Can be used to add handlers for schemas that were defined explicitly
+        self.tool_handlers = {}
+
+        # List to store decorated tools
+        self.decorated_tools = []
+
+
+class Tools:
+    def __init__(self, tool_box: Type[ToolBox]):
+        # Initialize the base class
+        try:
+            self.tool_box = tool_box()
+        except Exception as e:
+            logger.error(f"Error initializing tool box: {e}")
+            raise e
+        # Base tools configuration
+        # Can be used to add tools by defining a function schema explicitly if needed
+        self.tools_config = self.tool_box.tools_config
+        # Base handlers
+        # Can be used to add handlers for schemas that were defined explicitly
+        self.tool_handlers = self.tool_box.tool_handlers
+
+        self._decorated_tools: List[Callable] = []
 
         # Register the decorated tools
-        self.register_decorated_tools(DECORATED_TOOLS_EXAMPLES + self._decorated_tools)
+        self.register_decorated_tools(self.tool_box.decorated_tools)
 
     def register_decorated_tool(self, tool_func: Callable) -> None:
         """Register a decorated tool function"""
@@ -31,6 +54,7 @@ class Tools(ToolBox):
             logger.warning(f"Tool {tool_func.__name__} is not properly decorated")
 
     def register_decorated_tools(self, tools: List[Callable]) -> None:
+        print(len(tools))
         """Register multiple decorated tools at once"""
         for tool in tools:
             self.register_decorated_tool(tool)

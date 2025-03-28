@@ -3,17 +3,22 @@ from typing import Any, Dict, Optional
 
 import aiohttp
 
-from .tool_decorator import tool
+from core.imgen import generate_image_with_retry_smartgen
+from core.tools.tool_decorator import tool
+from core.tools.tools import ToolBox
+
+from .tool_decorator_example import DECORATED_TOOLS_EXAMPLES
 
 logger = logging.getLogger(__name__)
 ## YOUR TOOLS GO HERE
 
 
-class ToolBox:
+class DefaultToolBox(ToolBox):
     """Base class containing tool configurations and handlers"""
 
     def __init__(self):
         # Base tools configuration
+        super().__init__()
         # Can be used to add tools by defining a function schema explicitly if needed
         self.tools_config = [
             # {
@@ -45,16 +50,16 @@ class ToolBox:
             self.get_current_time,
         ]
 
+        self.decorated_tools.extend(DECORATED_TOOLS_EXAMPLES)
+
     @staticmethod
     @tool("Generate an image based on a text prompt")
     # async def handle_image_generation(self, args: Dict[str, Any], agent_context: Any) -> Dict[str, Any]: #example for explicitly defined schema
-    async def handle_image_generation(prompt: str, agent_context: Any) -> Dict[str, Any]:
+    async def handle_image_generation(prompt: str) -> Dict[str, Any]:
         """Generate an image based on a text prompt. Use this tool only when the user explicitly requests to create an image."""
         logger.info(prompt)
         try:
-            image_url = await agent_context.handle_image_generation(
-                prompt
-            )  # args['prompt'] for explicitly defined schema
+            image_url = await generate_image_with_retry_smartgen(prompt=prompt)
             return {"image_url": image_url, "result": image_url}
         except Exception as e:
             logger.error(f"Image generation failed: {str(e)}")

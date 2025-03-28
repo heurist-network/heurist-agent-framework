@@ -9,12 +9,10 @@ logger = logging.getLogger(__name__)
 
 class Tools:
     def __init__(self, mcp_server_url="http://localhost:8000/sse"):
-        """Initialize the MCP client and fetch available tools"""
         self.mcp_url = mcp_server_url
         self.mcp_client = MCPClient()
         self.available_tools = []
         self.tools_config = []
-        print(f"Initialized MCP client with URL: {self.mcp_url}")
 
     async def initialize(self, server_url: str = "http://localhost:8000/sse"):
         """Initialize the MCP client and fetch available tools"""

@@ -167,3 +167,4 @@ tweet_history.json
 embeddings.db
 *.DS_Store
 .DS_Store
+agents/config/test.prompts.yaml

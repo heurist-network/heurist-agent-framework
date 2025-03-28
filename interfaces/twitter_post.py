@@ -9,7 +9,7 @@ from typing import Any, Dict
 import dotenv
 
 from agents.core_agent import CoreAgent
-from platforms.twitter_api import tweet_text_only, tweet_with_image
+from clients.twitter_api import tweet_text_only, tweet_with_image
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)

@@ -21,7 +21,7 @@ from typing import Dict, List
 import dotenv
 import requests
 
-import platforms.twitter_api as twitter_api
+import clients.twitter_api as twitter_api
 from agents.core_agent import CoreAgent
 from core.config import PromptConfig
 from utils.llm_utils import should_ignore_message
