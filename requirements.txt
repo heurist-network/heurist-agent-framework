@@ -71,7 +71,7 @@ Pygments==2.19.1
 python-dateutil==2.9.0.post0
 python-dotenv>=1.0.0
 python-telegram-bot>=22.0
-pytz==2025.1
+pytz>=2024.2,<2025.0
 PyYAML>=6.0.2
 regex==2024.11.6
 requests>=2.32.3
