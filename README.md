@@ -68,6 +68,7 @@ Head to [heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mes
 | ZkIgniteAnalystAgent | This agent analyzes zkSync Era DeFi opportunities in the zkIgnite program and has access to real-time yield and TVL data | - | [Source](./mesh/zkignite_analyst_agent.py) | Merkl, DefiLlama |
 | MoniTwitterProfileAgent | This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity. | • get_smart_profile<br>• get_smart_followers_history<br>• get_smart_mentions_history<br>• get_smart_followers_categories<br>• get_smart_followers_full<br>• get_smart_mentions_feed<br>• get_account_full_info | [Source](./mesh/twitter_insight_agent.py) | Moni |
 | TwitterInsightAgent | This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity. | • get_smart_followers_history<br>• get_smart_followers_categories<br>• get_smart_mentions_feed | [Source](./mesh/twitter_insight_agent.py) | Moni |
+| GmailAgent | This agent responds to the unread email of users by analyzing the content of email. It also provides the parameter of window size to check the unread emails of those day range. | • automatic respond to emails<br>• analyze the content of email<br>• provides parameter of window size | [Source](./mesh/gmail_agent.py) | CryptoCoders |   
 
 ### Usage
 
