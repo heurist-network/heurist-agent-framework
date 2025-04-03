@@ -211,10 +211,12 @@ class MetadataManager:
                 if "greeting_message" in existing_agent.get("metadata", {}):
                     agent_data["metadata"]["greeting_message"] = existing_agent["metadata"]["greeting_message"]
 
+        sorted_agents_dict = {k: agents_dict[k] for k in sorted(agents_dict.keys())}
+
         metadata = {
             "last_updated": datetime.now(UTC).isoformat(),
             "commit_sha": os.environ.get("GITHUB_SHA", ""),
-            "agents": agents_dict,
+            "agents": sorted_agents_dict,
         }
         return metadata
 
