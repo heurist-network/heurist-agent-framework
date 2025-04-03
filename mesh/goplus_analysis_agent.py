@@ -129,8 +129,8 @@ class GoplusAnalysisAgent(MeshAgent):
                             "contract_address": {"type": "string", "description": "The token contract address"},
                             "chain_id": {
                                 "type": "string",
-                                "description": "The blockchain chain ID or 'solana' for Solana tokens. Supported chains: "
-                                + ", ".join([f"{name} ({id})" for id, name in self.supported_blockchains.items()]),
+                                # hardcoding it so it can be easily picked up by the github action metadata generator
+                                "description": "The blockchain chain ID or 'solana' for Solana tokens. Supported chains: Ethereum (1), Optimism (10), Cronos (25), BSC (56), Gnosis (100), HECO (128), Polygon (137), Fantom (250), KCC (321), zkSync Era (324), ETHW (10001), FON (201022), Arbitrum (42161), Avalanche (43114), Linea Mainnet (59144), Base (8453), Tron (tron), Scroll (534352), opBNB (204), Mantle (5000), ZKFair (42766), Blast (81457), Manta Pacific (169), Berachain Artio Testnet (80085), Merlin (4200), Bitlayer Mainnet (200901), zkLink Nova (810180), X Layer Mainnet (196), Solana (solana)",
                                 "default": 1,
                             },
                         },
