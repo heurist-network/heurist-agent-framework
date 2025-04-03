@@ -6,13 +6,13 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.twitter_insight_agent import TwitterInsightAgent  # noqa: E402
+from mesh.moni_twitter_insight_agent import MoniTwitterInsightAgent  # noqa: E402
 
 load_dotenv()
 
 
 async def run_agent():
-    agent = TwitterInsightAgent()
+    agent = MoniTwitterInsightAgent()
     try:
         # Test with a query for smart followers history
         agent_input_followers_history = {

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 
-class TwitterInsightAgent(MeshAgent):
+class MoniTwitterInsightAgent(MeshAgent):
     def __init__(self):
         super().__init__()
         self.session = None

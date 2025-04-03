@@ -36,7 +36,7 @@ class SpaceTimeAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent can generate and execute SQL queries from natural language using Space and Time APIs. It's particularly useful for blockchain data analysis.",
+                "description": "This agent can analyze blockchain data by executing SQL queries from natural language using Space and Time, a database with ZK proofs.",
                 "inputs": [
                     {
                         "name": "query",
@@ -65,12 +65,11 @@ class SpaceTimeAgent(MeshAgent):
                     },
                 ],
                 "external_apis": ["Space and Time"],
-                "tags": ["Blockchain", "SQL", "Data Analysis"],
+                "tags": ["SQL", "ZK"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/SpacenTime.png",
                 "examples": [
                     "Get the number of blocks created on Ethereum per day over the last month",
-                    "What's the average transactions in past week for Ethereum?",
                     "Tell me top 10 GPUs from HEURIST",
                     "How many transactions occurred on Ethereum yesterday?",
                     "What's the largest transaction value on Ethereum in the past 24 hours?",
@@ -113,7 +112,7 @@ class SpaceTimeAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "generate_and_execute_sql",
-                    "description": "Generate a SQL query from natural language and execute it against blockchain data. Use this to analyze blockchain data including transactions, blocks, and wallet activities across major networks like Ethereum, Bitcoin, etc.",
+                    "description": "Use this to analyze blockchain data including transactions, blocks, and wallet activities. Internally, this tool generates a SQL query from natural language and execute it against blockchain data. Supported chains: Ethereum, Bitcoin, Polygon, Avalanche, Sui, ZKsync Era.",
                     "parameters": {
                         "type": "object",
                         "properties": {
