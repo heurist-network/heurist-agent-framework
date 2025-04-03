@@ -213,6 +213,7 @@ class MetadataManager:
 
         metadata = {
             "last_updated": datetime.now(UTC).isoformat(),
+            "commit_sha": os.environ.get("GITHUB_SHA", ""),
             "agents": agents_dict,
         }
         return metadata
