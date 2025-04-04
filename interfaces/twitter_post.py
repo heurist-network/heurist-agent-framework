@@ -8,7 +8,7 @@ from typing import Any, Dict
 
 import dotenv
 
-from agents.core_agent import CoreAgent
+from agents.base_agent import BaseAgent
 from clients.twitter_api import tweet_text_only, tweet_with_image
 
 # Set up logging
@@ -65,8 +65,12 @@ class TweetHistoryManager:
         return [entry["tweet"]["tweet"] for entry in self.history[-n:]]
 
 
-class TwitterAgent(CoreAgent):
+class TwitterAgent:
     def __init__(self, core_agent=None):
+        # Type check if core_agent is provided
+        if core_agent is not None and not isinstance(core_agent, BaseAgent):
+            raise TypeError(f"core_agent must be an instance of BaseAgent, got {type(core_agent).__name__}")
+
         if core_agent:
             super().__setattr__("_parent", core_agent)
         else:

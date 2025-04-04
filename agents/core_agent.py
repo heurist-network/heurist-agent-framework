@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Optional
 
 import dotenv
 
+from agents.base_agent import BaseAgent
 from core.config import PromptConfig
 from core.embedding import (
     EmbeddingError,
@@ -25,10 +26,10 @@ from core.embedding import (
 from core.imgen import generate_image_with_retry_smartgen
 from core.llm import LLMError, call_llm, call_llm_with_tools
 from core.tools.tools import Tools
+from core.tools.tools_mcp import Tools as ToolsMCP
 from core.voice import speak_text, transcribe_audio
 
 from .tools.default_tool_box import DefaultToolBox
-from .tools.tools_mcp import Tools as ToolsMCP
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -50,8 +51,9 @@ IMAGE_GENERATION_PROBABILITY = 0.3
 BASE_IMAGE_PROMPT = ""
 
 
-class CoreAgent:
+class CoreAgent(BaseAgent):
     def __init__(self):
+        super().__init__()
         self.prompt_config = PromptConfig()
         self.tools = Tools(DefaultToolBox)
         self.tools_mcp = ToolsMCP()
@@ -436,20 +438,18 @@ class CoreAgent:
                 tool_name = tool_call.function.name
                 available_tools = [t["function"]["name"] for t in self.tools.get_tools_config()]
                 mcp_tools = [t["function"]["name"] for t in self.tools_mcp.get_tools_config()]
+
+                # Determine which tool handler to use
+                tool_handler = None
                 if tool_name in available_tools:
-                    logger.info(f"Executing tool {tool_name} with args {args}")
-                    tool_result = await self.tools.execute_tool(tool_name, args, self)
-                    if tool_result:
-                        print("tool_result: ", tool_result)
-                        if "image_url" in tool_result:
-                            image_url = tool_result["image_url"]
-                        if "result" in tool_result:
-                            text_response += f"\n{tool_result['result']}"
-                        if "tool_call" in tool_result:
-                            tool_back = tool_result["tool_call"]
+                    tool_handler = self.tools
                 elif self.tools_mcp_initialized and tool_name in mcp_tools:
+                    tool_handler = self.tools_mcp
+
+                # Execute the tool if a handler was found
+                if tool_handler:
                     logger.info(f"Executing tool {tool_name} with args {args}")
-                    tool_result = await self.tools_mcp.execute_tool(tool_name, args, self)
+                    tool_result = await tool_handler.execute_tool(tool_name, args, self)
                     if tool_result:
                         print("tool_result: ", tool_result)
                         if "image_url" in tool_result:

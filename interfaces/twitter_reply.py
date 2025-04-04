@@ -22,7 +22,7 @@ import dotenv
 import requests
 
 import clients.twitter_api as twitter_api
-from agents.core_agent import CoreAgent
+from agents.base_agent import BaseAgent
 from core.config import PromptConfig
 from utils.llm_utils import should_ignore_message
 from utils.text_utils import strip_tweet_text
@@ -278,8 +278,12 @@ class TwitterSearchMonitor:
         return all_candidates
 
 
-class TwitterReplyAgent(CoreAgent):
+class TwitterReplyAgent:
     def __init__(self, core_agent=None):
+        # Type check if core_agent is provided
+        if core_agent is not None and not isinstance(core_agent, BaseAgent):
+            raise TypeError(f"core_agent must be an instance of BaseAgent, got {type(core_agent).__name__}")
+
         if core_agent:
             super().__setattr__("_parent", core_agent)
         else:

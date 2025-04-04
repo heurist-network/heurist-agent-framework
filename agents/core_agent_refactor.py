@@ -9,7 +9,7 @@ from typing import Dict, Optional, Tuple
 import dotenv
 
 from agents.base_agent import BaseAgent
-from core.clients.search import SearchClient
+from core.clients.search_client import SearchClient
 from core.components.conversation_manager import ConversationManager
 from core.components.knowledge_provider import KnowledgeProvider
 from core.components.llm_provider import LLMProvider
@@ -50,6 +50,7 @@ class CoreAgent(BaseAgent):
         self.message_store = self._initialize_vector_storage()
 
         self.personality_provider = PersonalityProvider()
+        self.prompt_config = self.personality_provider.prompt_config
         self.knowledge_provider = KnowledgeProvider(self.message_store)
         self.conversation_manager = ConversationManager(self.message_store)
 

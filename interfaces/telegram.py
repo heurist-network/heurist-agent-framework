@@ -6,7 +6,7 @@ import dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
-from agents.core_agent import CoreAgent
+from agents.base_agent import BaseAgent
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -21,8 +21,12 @@ if not TELEGRAM_API_TOKEN:
     raise ValueError("TELEGRAM_API_TOKEN not found in environment variables")
 
 
-class TelegramAgent(CoreAgent):
+class TelegramAgent:
     def __init__(self, core_agent=None):
+        # Type check if core_agent is provided
+        if core_agent is not None and not isinstance(core_agent, BaseAgent):
+            raise TypeError(f"core_agent must be an instance of BaseAgent, got {type(core_agent).__name__}")
+
         if core_agent:
             super().__setattr__("_parent", core_agent)
         else:
