@@ -1,0 +1,628 @@
+username_extraction_tests:
+  heurist_ai: heurist_ai
+  Give me details of heurist_ai: heurist_ai
+  Show the latest updates from elonmusk: elonmusk
+  What vitalikbuterin has been posting about?: vitalikbuterin
+  can you get me info about @jack: jack
+  twitter.com/naval: naval
+  x.com/pmarca: pmarca
+  I want to see realdonaldtrump's tweets: realdonaldtrump
+  Check out the profile for naval's account: naval
+  Look at the latest from username karpathy: username
+  Tweets by chamath: chamath
+  Find the recent activity of handle balajis: handle
+  user_id:12345678: '12345678'
+  userid:12345678: '12345678'
+  Check twitter ID 12345678: '12345678'
+  Show me tweets from user:12345678: '12345678'
+  What's happening with twitter_id:12345678: '12345678'
+  'Get twitter_id: 12345678': '12345678'
+  '12345678': '12345678'
+  Get me information about blockchain: blockchain
+  What's happening on Twitter?: happening
+  Show me the latest tech news on Twitter: tech
+id_pattern_recognition:
+  user_id:123456789: '123456789'
+  userid:123456789: '123456789'
+  id:123456789: '123456789'
+  user:123456789: '123456789'
+  twitter id 123456789: '123456789'
+  twitter_id 123456789: '123456789'
+  'twitter id: 123456789': '123456789'
+  'twitter_id: 123456789': '123456789'
+  '123456789': '123456789'
+  Show me tweets from user_id:123456789: '123456789'
+  'Get info about twitter id: 123456789': '123456789'
+api_call_tests:
+  case_1:
+    input:
+      query: Give me details of heurist_ai
+      limit: 5
+    output:
+      response: 'Error: Failed to fetch tweets: 429 Client Error: Too Many Requests
+        for url: https://api.apidance.pro/sapi/UserTweets?user_id=1736748346566459392&count=5'
+      data:
+        error: 'Failed to fetch tweets: 429 Client Error: Too Many Requests for url:
+          https://api.apidance.pro/sapi/UserTweets?user_id=1736748346566459392&count=5'
+  case_2:
+    input:
+      query: What realdonaldtrump has been tweeting?
+      limit: 5
+    output:
+      response: "**Twitter Profile Analysis: @realDonaldTrump**\n\n**1. Brief Overview\
+        \ of the Account:**\n\n* **Name:** Donald J. Trump\n* **Screen Name:** @realDonaldTrump\n\
+        * **Bio:** 45th & 47th President of the United States of America\U0001F1FA\
+        \U0001F1F8\n* **Follower Count:** 102,803,304\n* **Verified:** False (Note:\
+        \ Despite being a public figure, this account is not verified by Twitter)\n\
+        \n**2. Summary of Recent Tweet Activity (Last ~2 weeks, as per data):**\n\n\
+        * **Frequency:** Approximately 1-3 tweets per day\n* **Topics:**\n\t+ Politics\
+        \ and Governance (criticisms of opponents, policy endorsements)\n\t+ Endorsements\
+        \ for Republican candidates (e.g., Randy Fine, Jimmy Patronis)\n\t+ Economic\
+        \ achievements and investments in the U.S.\n\t+ Criticisms of media outlets\
+        \ (e.g., NPR, PBS)\n\t+ International relations and military actions (e.g.,\
+        \ actions against Houthi Terrorists)\n\t+ Interactions with other public figures\
+        \ (e.g., Elon Musk)\n\n**3. Notable Tweets with High Engagement (Top 3 by\
+        \ total engagement - likes + retweets + replies):**\n\n1. **Tweet:** \"There\
+        \ will never have been a transformation of a Country like the transformation\
+        \ that is happening, for all to see, in the United States of America. Companies\
+        \ are pouring into our Country at levels never seen before, with Jobs (and\
+        \ Money!) to follow. It is a beautiful thing to watch!\"\n\t* **Engagement:**\
+        \ 51579 (retweets) + 365129 (likes) + 35567 (replies) = **441,375**\n\t* **Date:**\
+        \ Mon Mar 31 18:49:06 +0000 2025\n\n2. **Tweet:** \"The Iran-backed Houthi\
+        \ Terrorists have been decimated by the relentless strikes over the past two\
+        \ weeks. Many of their Fighters and Leaders are no longer with us. ... Our\
+        \ attacks will continue until they are no longer a threat to Freedom of Navigation.\"\
+        \n\t* **Engagement:** 39793 (retweets) + 264290 (likes) + 23140 (replies)\
+        \ = **327,223**\n\t* **Date:** Mon Mar 31 18:49:47 +0000 2025\n\n3. **Tweet:**\
+        \ \"Elon Musk: “As a function of"
+      data:
+        profile:
+          id_str: '25073877'
+          name: Donald J. Trump
+          screen_name: realDonaldTrump
+          description: 45th & 47th President of the United States of America🇺🇸
+          followers_count: 102803304
+          friends_count: 53
+          statuses_count: 59732
+          profile_image_url: https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_normal.jpg
+          verified: false
+          created_at: Wed Mar 18 13:46:38 +0000 2009
+        tweets:
+        - text: https://t.co/ZoSf5TdLqo
+          created_at: Thu Apr 03 13:08:29 +0000 2025
+          engagement:
+            retweets: 23267
+            likes: 133262
+            replies: 14252
+        - text: https://t.co/CdTzF2sfMZ
+          created_at: Wed Apr 02 20:07:22 +0000 2025
+          engagement:
+            retweets: 21614
+            likes: 107347
+            replies: 10587
+        - text: https://t.co/k8Eh7B8fq3
+          created_at: Wed Apr 02 15:47:38 +0000 2025
+          engagement:
+            retweets: 27349
+            likes: 145309
+            replies: 10292
+        - text: https://t.co/RPXb6Y9E6y
+          created_at: Wed Apr 02 13:42:29 +0000 2025
+          engagement:
+            retweets: 46350
+            likes: 367932
+            replies: 33999
+        - text: REPUBLICANS MUST DEFUND AND TOTALLY DISASSOCIATE THEMSELVES FROM NPR
+            &amp; PBS, THE RADICAL LEFT “MONSTERS” THAT SO BADLY HURT OUR COUNTRY!
+          created_at: Tue Apr 01 20:53:05 +0000 2025
+          engagement:
+            retweets: 38317
+            likes: 257610
+            replies: 19911
+        - text: 'The Iran-backed Houthi Terrorists have been decimated by the relentless
+            strikes over the past two weeks. Many of their Fighters and Leaders are
+            no longer with us. We hit them every day and night — Harder and harder.
+            Their capabilities that threaten Shipping and the Region are rapidly being
+            destroyed. Our attacks will continue until they are no longer a threat
+            to Freedom of Navigation. The choice for the Houthis is clear: Stop shooting
+            at U.S. ships, and we will stop shooting at you. Otherwise, we have only
+            just begun, and the real pain is yet to come, for both the Houthis and
+            their sponsors in Iran.'
+          created_at: Mon Mar 31 18:49:47 +0000 2025
+          engagement:
+            retweets: 39793
+            likes: 264290
+            replies: 23140
+        - text: There will never have been a transformation of a Country like the
+            transformation that is happening, for all to see, in the United States
+            of America. Companies are pouring into our Country at levels never seen
+            before, with Jobs (and Money!) to follow. It is a beautiful thing to watch!
+          created_at: Mon Mar 31 18:49:06 +0000 2025
+          engagement:
+            retweets: 51579
+            likes: 365129
+            replies: 35567
+        - text: In two months, there has been more Private Investment spoken for,
+            and/or committed to, than in four years of the Sleepy Joe Biden Administration
+            — A fact that the Fake News hates talking about!
+          created_at: Mon Mar 31 18:48:06 +0000 2025
+          engagement:
+            retweets: 24299
+            likes: 174365
+            replies: 9354
+        - text: Thank you President Bukele, of El Salvador, for taking the criminals
+            that were so stupidly allowed, by the Crooked Joe Biden Administration,
+            to enter our Country, and giving them such a wonderful place to live!
+          created_at: Mon Mar 31 18:16:47 +0000 2025
+          engagement:
+            retweets: 58991
+            likes: 360953
+            replies: 12250
+        - text: https://t.co/PRHm1dTtSX
+          created_at: Mon Mar 31 13:33:55 +0000 2025
+          engagement:
+            retweets: 22538
+            likes: 123194
+            replies: 11538
+        - text: 'America First Patriot Randy Fine is running to represent the Wonderful
+            People of Florida’s 6th Congressional District! A highly successful, Harvard
+            educated businessman, and greatly respected State Legislator, Randy has
+            been a tremendous Voice for MAGA. In Congress, Randy will be an incredible
+            fighter, who will work tirelessly with me to Strengthen our Economy, Lower
+            Taxes, Secure the Border, Champion our Military/Vets, Ensure American
+            Energy DOMINANCE, Protect our always under siege Second Amendment, and
+            Advance PEACE THROUGH STRENGTH.
+
+             
+
+            Randy Fine has my Complete and Total Endorsement! Election Day is this
+            Tuesday, April 1st. GET OUT AND VOTE FOR RANDY — HE WILL NOT LET YOU DOWN!
+            https://t.co/3Bnn5ZweH2'
+          created_at: Mon Mar 31 13:30:28 +0000 2025
+          engagement:
+            retweets: 21199
+            likes: 104287
+            replies: 9868
+        - text: 'Jimmy Patronis, Chief Financial Officer and Fire Marshall for the
+            Great State of Florida, is running an incredible Campaign for Congress
+            in Florida’s 1st Congressional District! A fourth generation Floridian
+            from the beautiful Panhandle, and owner of an iconic seafood restaurant,
+            Jimmy has been a wonderful friend to me, and to MAGA. As your next Congressman,
+            Jimmy will fight hard alongside of me to Grow our Economy, Cut Taxes,
+            Secure our Border, Stop Migrant Crime, Strengthen our Brave Military/Vets,
+            Restore American Energy DOMINANCE, and Defend our always under siege Second
+            Amendment.
+
+             
+
+            Florida, Election Day is this Tuesday, April 1st. GET OUT AND VOTE FOR
+            JIMMY PATRONIS. Jimmy has my Complete and Total Endorsement — HE WILL
+            NEVER LET YOU DOWN! https://t.co/xP3nBIgOep'
+          created_at: Mon Mar 31 13:30:06 +0000 2025
+          engagement:
+            retweets: 18532
+            likes: 90640
+            replies: 2900
+        - text: 'RT @OcrazioCornPop: 🚨 SIGNAL SCANDAL:  Katherine Maher, the leftist
+            NPR CEO, is currently the Chair of the Board of Signal!
+
+
+            WHAT ARE THE O…'
+          created_at: Sun Mar 30 20:39:21 +0000 2025
+          engagement:
+            retweets: 23771
+            likes: 0
+            replies: 0
+        - text: https://t.co/i1rW9HroWn
+          created_at: Fri Mar 28 18:31:34 +0000 2025
+          engagement:
+            retweets: 53919
+            likes: 315198
+            replies: 26432
+        - text: FIGHT, FIGHT, FIGHT!!! https://t.co/irQ5B6TRE2
+          created_at: Tue Mar 25 02:40:12 +0000 2025
+          engagement:
+            retweets: 49014
+            likes: 267329
+            replies: 25031
+        - text: https://t.co/6TBzTaF8iM
+          created_at: Fri Mar 21 22:39:57 +0000 2025
+          engagement:
+            retweets: 67673
+            likes: 315707
+            replies: 44410
+        - text: 'RT @mrddmia: 🚨 Newly Filed Motion To Disqualify Radical Obama Judge
+            Beryl Howell From Trump Case
+
+
+            Read More: https://t.co/CyEILbUhyq https:…'
+          created_at: Fri Mar 21 22:39:42 +0000 2025
+          engagement:
+            retweets: 9427
+            likes: 0
+            replies: 0
+        - text: https://t.co/7l5mGYjROe
+          created_at: Thu Mar 20 20:23:52 +0000 2025
+          engagement:
+            retweets: 21216
+            likes: 106663
+            replies: 11297
+        - text: 'Elon Musk: “As a function of the great policies of President Trump
+            and his administration, and as an act of faith in America, Tesla is going
+            to DOUBLE vehicle output in the United States within the next two years…”
+            https://t.co/g8jY77yxtP'
+          created_at: Wed Mar 12 01:44:49 +0000 2025
+          engagement:
+            retweets: 45844
+            likes: 328645
+            replies: 46148
+        - text: Number one, it's a great product, as good as it gets—and number two,
+            because @ElonMusk has devoted his energy and his life to doing this and
+            I think he has been treated very unfairly… https://t.co/6qrfwrbT0f
+          created_at: Wed Mar 12 01:41:44 +0000 2025
+          engagement:
+            retweets: 49342
+            likes: 396503
+            replies: 30534
+  case_3:
+    input:
+      tool: get_user_tweets
+      tool_arguments:
+        username: elonmusk
+        limit: 5
+    output:
+      response: ''
+      data:
+        profile:
+          id_str: '44196397'
+          name: Elon Musk
+          screen_name: elonmusk
+          description: ''
+          followers_count: 218694817
+          friends_count: 1101
+          statuses_count: 76419
+          profile_image_url: https://pbs.twimg.com/profile_images/1893803697185910784/Na5lOWi5_normal.jpg
+          verified: false
+          created_at: Tue Jun 02 20:12:29 +0000 2009
+        tweets:
+        - text: 💯
+          created_at: Fri Apr 04 06:42:36 +0000 2025
+          engagement:
+            retweets: 3266
+            likes: 18510
+            replies: 1617
+        - text: Yeah, his logic makes no sense at all.
+          created_at: Fri Apr 04 06:36:46 +0000 2025
+          engagement:
+            retweets: 1785
+            likes: 13630
+            replies: 1084
+        - text: 💯
+          created_at: Fri Apr 04 05:48:37 +0000 2025
+          engagement:
+            retweets: 2813
+            likes: 23595
+            replies: 1267
+        - text: 'RT @MarioNawfal: 🇺🇸 THOUSANDS OF NON-CITIZENS FOUND ON VOTER ROLLS
+
+
+            Valor CEO and DOGE volunteer, Antonio Gracias:
+
+
+            “We found that there we…'
+          created_at: Fri Apr 04 05:20:59 +0000 2025
+          engagement:
+            retweets: 1486
+            likes: 0
+            replies: 0
+        - text: "RT @MarioNawfal: WHY YOUR GAMING OBSESSION IS ACTUALLY GENIUS\n\n\
+            Surgeons who game are slicing faster with fewer mistakes. \n\nPreschoolers\
+            \ are…"
+          created_at: Fri Apr 04 05:19:58 +0000 2025
+          engagement:
+            retweets: 716
+            likes: 0
+            replies: 0
+        - text: 'RT @Nuketonian: @elonmusk The evolution of Schumer https://t.co/rpslKK15DG'
+          created_at: Fri Apr 04 05:15:41 +0000 2025
+          engagement:
+            retweets: 577
+            likes: 0
+            replies: 0
+        - text: 'Remember when you could get canceled for not using the right pronouns?
+
+
+            That was dumb.'
+          created_at: Fri Apr 04 05:11:33 +0000 2025
+          engagement:
+            retweets: 4549
+            likes: 47110
+            replies: 3888
+        - text: 'RT @AdrianDittmann: The celestial chariot https://t.co/jP3lULNf4x'
+          created_at: Fri Apr 04 05:05:03 +0000 2025
+          engagement:
+            retweets: 446
+            likes: 0
+            replies: 0
+        - text: "RT @america: President Trump on Elon Musk and @DOGE: “I want Elon\
+            \ to stay as long as possible”\n\n https://t.co/K0tqdz8OfP"
+          created_at: Fri Apr 04 05:04:22 +0000 2025
+          engagement:
+            retweets: 1460
+            likes: 0
+            replies: 0
+        - text: I just FaceTimed the @framonauts via @Starlink!
+          created_at: Fri Apr 04 05:00:55 +0000 2025
+          engagement:
+            retweets: 2187
+            likes: 16133
+            replies: 1312
+        - text: 🔥😂
+          created_at: Fri Apr 04 04:58:26 +0000 2025
+          engagement:
+            retweets: 1668
+            likes: 17963
+            replies: 1201
+        - text: Free Le Pen! https://t.co/mtx3ndQ10r
+          created_at: Fri Apr 04 04:29:09 +0000 2025
+          engagement:
+            retweets: 31929
+            likes: 174221
+            replies: 10319
+        - text: 'RT @SpaceX: While orbiting Earth every ~90 minutes at a 90° inclination,
+            the @framonauts opened the cupola to take in 360° views of space'
+          created_at: Fri Apr 04 04:24:40 +0000 2025
+          engagement:
+            retweets: 1344
+            likes: 0
+            replies: 0
+        - text: 'RT @SpaceX: Nearly four days after the @framonauts launched to a
+            polar orbit, Dragon and the Fram2 crew are set to return to Earth on Frida…'
+          created_at: Fri Apr 04 04:22:33 +0000 2025
+          engagement:
+            retweets: 660
+            likes: 0
+            replies: 0
+        - text: 'RT @SpaceX: Views of SpaceX''s two Florida launch pads from space'
+          created_at: Fri Apr 04 04:19:23 +0000 2025
+          engagement:
+            retweets: 1734
+            likes: 0
+            replies: 0
+        - text: 'RT @SpaceX: Falcon 9 lifts off from pad 4E in California, delivering
+            27 @Starlink satellites to the constellation. This single booster has…'
+          created_at: Fri Apr 04 04:18:04 +0000 2025
+          engagement:
+            retweets: 1071
+            likes: 0
+            replies: 0
+        - text: https://t.co/fnCy3r5LB1
+          created_at: Fri Apr 04 04:18:02 +0000 2025
+          engagement:
+            retweets: 7098
+            likes: 77921
+            replies: 3556
+        - text: Where is Roadster?
+          created_at: Fri Apr 04 02:42:55 +0000 2025
+          engagement:
+            retweets: 3838
+            likes: 53282
+            replies: 3801
+        - text: 'RT @DefiyantlyFree: Truth 💣 https://t.co/Kx6XhEsIJO'
+          created_at: Fri Apr 04 02:35:37 +0000 2025
+          engagement:
+            retweets: 1838
+            likes: 0
+            replies: 0
+  case_4:
+    input:
+      query: Get tweets from user_id:778764142412984320
+      limit: 5
+    output:
+      response: "**Twitter Profile Overview:**\n\n* **Name:** Hugging Face\n* **Screen\
+        \ Name:** @huggingface\n* **Bio:** The AI community building the future. https://t.co/VkRPD0Vclr\n\
+        * **Follower Count:** 489,162\n* **Friend Count:** 201\n* **Total Tweets:**\
+        \ 10,527\n* **Verified:** No\n* **Account Creation Date:** Thu Sep 22 01:13:35\
+        \ +0000 2016\n\n**Recent Tweet Activity (last 2 days):**\n\n* **Frequency:**\
+        \ 20 tweets in the last 48 hours (approximately 1 tweet every 2.4 hours)\n\
+        * **Topics:**\n\t+ AI model releases and updates (e.g., Gemma 3 QAT, Qwen\
+        \ 2.5-Omni-7B, Notbad v1.0 Mistral 24B)\n\t+ Community achievements and milestones\
+        \ (e.g., 1 million monthly developers on Gradio)\n\t+ New features and tools\
+        \ (e.g., meshgen v0.7, One-liners for creating datasets)\n\t+ Shoutouts to\
+        \ contributors and researchers in the AI community\n\n**Notable Tweets with\
+        \ High Engagement:**\n\n1. **RT @osanseviero:** \"I'm very excited to announce\
+        \ the release of Quantization-Aware Trained (QAT) Gemma 3 \"\n\t* **Engagement:**\
+        \ 103 retweets, 0 likes, 0 replies\n\t* **Created At:** Thu Apr 03 18:35:58\
+        \ +0000 2025\n2. **RT @dylan_ebert_:** \" Introducing meshgen v0.7 Control\
+        \ Blender with AI Agents - entirely locally \"\n\t* **Engagement:** 62 retweets,\
+        \ 0 likes, 0 replies\n\t* **Created At:** Tue Apr 01 21:33:56 +0000 2025\n\
+        3. **RT @ggerganov:** \"Google is taking local AI to the next level with Gemma\
+        \ 3 QAT GGUF models \"\n\t* **Engagement:** 91 retweets, 0 likes, 0 replies\n\
+        \t* **Created At:** Thu Apr 03 18:35:06 +0000 2025"
+      data:
+        profile:
+          id_str: '778764142412984320'
+          name: Hugging Face
+          screen_name: huggingface
+          description: The AI community building the future. https://t.co/VkRPD0Vclr
+          followers_count: 489162
+          friends_count: 201
+          statuses_count: 10527
+          profile_image_url: https://pbs.twimg.com/profile_images/1348748676282388482/nr8ZuLBE_normal.jpg
+          verified: false
+          created_at: Thu Sep 22 01:13:35 +0000 2016
+        tweets:
+        - text: 'RT @osanseviero: I''m very excited to announce the release of Quantization-Aware
+            Trained (QAT) Gemma 3🚀
+
+
+            🤏3x less VRAM
+
+            🔥while retaining almo…'
+          created_at: Thu Apr 03 18:35:58 +0000 2025
+          engagement:
+            retweets: 103
+            likes: 0
+            replies: 0
+        - text: 'RT @ggerganov: Google is taking local AI to the next level with Gemma
+            3 QAT GGUF models
+
+
+            Uncompromised quality with quantization-aware trai…'
+          created_at: Thu Apr 03 18:35:06 +0000 2025
+          engagement:
+            retweets: 91
+            likes: 0
+            replies: 0
+        - text: 'RT @ben_burtenshaw: Welcome to the LLM Course!
+
+
+            Education has always been at the heart of Hugging Face’s mission to democratize
+            AI and we’r…'
+          created_at: Thu Apr 03 14:53:53 +0000 2025
+          engagement:
+            retweets: 14
+            likes: 0
+            replies: 0
+        - text: 'RT @vanstriendaniel: MegaMath: Pushing the Limits of Open Math Corpora
+
+
+            - 213.1B tokens across specialized math content domains
+
+            - Largest m…'
+          created_at: Thu Apr 03 08:08:24 +0000 2025
+          engagement:
+            retweets: 28
+            likes: 0
+            replies: 0
+        - text: 'RT @tomaarsen: I''m very happy with my new Reranker (i.e. CrossEncoder)
+            training docs, including an overview on how to train, which loss fun…'
+          created_at: Thu Apr 03 08:06:31 +0000 2025
+          engagement:
+            retweets: 22
+            likes: 0
+            replies: 0
+        - text: 'RT @jandotai: Tessa-T1: A dedicated React reasoning model.
+
+
+            Built on Qwen2.5-Coder-3B-Instruct but specifically fine-tuned to understand
+            we…'
+          created_at: Thu Apr 03 08:06:11 +0000 2025
+          engagement:
+            retweets: 41
+            likes: 0
+            replies: 0
+        - text: "RT @PatronusAI: We're excited to introduce the BLUR Leaderboard on\
+            \ @huggingface \U0001F525 \n\nEarlier today, we open sourced BLUR: the\
+            \ first agent be…"
+          created_at: Wed Apr 02 23:31:19 +0000 2025
+          engagement:
+            retweets: 11
+            likes: 0
+            replies: 0
+        - text: 'RT @abidlabs: To celebrate 1 million developers, we are launching
+            a new Gradio YouTube  channel where we will be posting tutorials (initial…'
+          created_at: Wed Apr 02 19:36:26 +0000 2025
+          engagement:
+            retweets: 8
+            likes: 0
+            replies: 0
+        - text: 'RT @jonasgeiping: To make it easier to experiment with our recurrent-depth
+            model, Huginn-0125 (see below), and to analyze training behavior…'
+          created_at: Wed Apr 02 16:14:53 +0000 2025
+          engagement:
+            retweets: 9
+            likes: 0
+            replies: 0
+        - text: "RT @LabTongyi96898: \U0001F525 Today, Qwen 2.5-Omni-7B topped the\
+            \ trending charts on both Hugging Face and ModelScope communities.  \n\
+            ✨ Within one we…"
+          created_at: Wed Apr 02 13:57:23 +0000 2025
+          engagement:
+            retweets: 20
+            likes: 0
+            replies: 0
+        - text: 'RT @NielsRogge: Dear AI researchers,
+
+
+            Please stop using Google Drive to share your datasets or weights. Consider
+            the @huggingface hub which…'
+          created_at: Wed Apr 02 13:54:38 +0000 2025
+          engagement:
+            retweets: 15
+            likes: 0
+            replies: 0
+        - text: 'RT @vpj: Uploaded the dataset of 270k math reasoning samples that
+            we used to finetune Notbad v1.0 Mistral 24B (MATH-500=77.52% GSM8k Platin…'
+          created_at: Wed Apr 02 13:54:20 +0000 2025
+          engagement:
+            retweets: 13
+            likes: 0
+            replies: 0
+        - text: 'RT @eliebakouch: Research team at @huggingface going Xet 👀 https://t.co/nVUUJAkSJF'
+          created_at: Wed Apr 02 13:54:13 +0000 2025
+          engagement:
+            retweets: 4
+            likes: 0
+            replies: 0
+        - text: 'RT @AdinaYakup: Dolphin 🐬 an open ASR model released by
+
+            @DataOceanAI, one of the biggest AI data provider in China 🔥
+
+
+            ✨ Supports 40 Eastern…'
+          created_at: Wed Apr 02 13:54:12 +0000 2025
+          engagement:
+            retweets: 33
+            likes: 0
+            replies: 0
+        - text: 'RT @allhands_ai: It''s great to see OpenHands LM on the top 10 trending
+            models on Hugging Face along with so many other big names we respect…'
+          created_at: Wed Apr 02 13:54:08 +0000 2025
+          engagement:
+            retweets: 20
+            likes: 0
+            replies: 0
+        - text: 'RT @dylan_ebert_: 🚀 Introducing meshgen v0.7
+
+
+            Control Blender with AI Agents - entirely locally
+
+
+            ☁️ Like Blender-MCP  entirely within Blend…'
+          created_at: Tue Apr 01 21:33:56 +0000 2025
+          engagement:
+            retweets: 62
+            likes: 0
+            replies: 0
+        - text: "RT @abidlabs: I'm BEYOND EXCITED to announce that after 5 years,\
+            \ we crossed 1 million monthly developers in March. \n\nWe couldn't have\
+            \ done…"
+          created_at: Tue Apr 01 20:14:16 +0000 2025
+          engagement:
+            retweets: 25
+            likes: 0
+            replies: 0
+        - text: 'RT @reach_vb: Hello local LLM enjoyers, starting today you should
+            be able to find if you can run a GGUF directly from the Hugging Face page…'
+          created_at: Tue Apr 01 19:16:32 +0000 2025
+          engagement:
+            retweets: 28
+            likes: 0
+            replies: 0
+        - text: "RT @vanstriendaniel: The latest terrible idea from my ADHD-addled\
+            \ brain: One-liners for creating datasets! \n\n@astral_sh's UV makes it\
+            \ very…"
+          created_at: Tue Apr 01 17:05:33 +0000 2025
+          engagement:
+            retweets: 4
+            likes: 0
+            replies: 0
+        - text: 'RT @bartowski1182: Such an awesome new feature on @huggingface ..
+            if you have your hardware entered and browse a GGUF repo, it''ll show
+            the…'
+          created_at: Tue Apr 01 17:00:25 +0000 2025
+          engagement:
+            retweets: 18
+            likes: 0
+            replies: 0

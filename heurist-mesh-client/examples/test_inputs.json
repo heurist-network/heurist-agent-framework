@@ -1,0 +1,199 @@
+{
+  "AaveAgent": {
+    "get_aave_reserves": {
+      "chain_id": 137
+    }
+  },
+  "AlloraPricePredictionAgent": {
+    "get_allora_prediction": {
+      "timeframe": "5m",
+      "token": "ETH"
+    }
+  },
+  "BitquerySolanaTokenInfoAgent": {
+    "get_top_trending_tokens": {},
+    "query_holder_status": {
+      "buyer_addresses": [
+        "ApRJBQEKfmcrViQkH94BkzRFUGWtA8uC71DXu6USdd3n",
+        "9nG4zw1jVJFpEtSLmbGQpTnpG2TiKfLXWkkTyyRvxTt6"
+      ],
+      "token_address": "So11111111111111111111111111111111111111112"
+    },
+    "query_token_buyers": {
+      "limit": 30,
+      "token_address": "So11111111111111111111111111111111111111112"
+    },
+    "query_token_holders": {
+      "token_address": "So11111111111111111111111111111111111111112"
+    },
+    "query_token_metrics": {
+      "quote_token": "sol",
+      "token_address": "So11111111111111111111111111111111111111112"
+    },
+    "query_top_traders": {
+      "limit": 30,
+      "token_address": "So11111111111111111111111111111111111111112"
+    }
+  },
+  "CarvOnchainDataAgent": {
+    "query_onchain_data": {
+      "blockchain": "bitcoin",
+      "query": "How many Bitcoins have been mined since the beginning of 2025?"
+    }
+  },
+  "CoinGeckoTokenInfoAgent": {
+    "get_categories_list": {},
+    "get_category_data": {
+      "order": "market_cap_desc"
+    },
+    "get_coingecko_id": {
+      "token_name": "ethereum"
+    },
+    "get_token_info": {
+      "coingecko_id": "ethereum"
+    },
+    "get_token_price_multi": {
+      "ids": "bitcoin,ethereum,solana",
+      "include_24hr_change": true,
+      "include_24hr_vol": true,
+      "include_market_cap": true,
+      "vs_currencies": "usd"
+    },
+    "get_tokens_by_category": {
+      "category_id": "layer-1",
+      "order": "market_cap_desc",
+      "page": 1,
+      "per_page": 10,
+      "vs_currency": "usd"
+    },
+    "get_trending_coins": {}
+  },
+  "DeepResearchAgent": {
+    "deep_research": {
+      "query": "What is the total value locked in Aave v3?"
+    }
+  },
+  "DexScreenerTokenInfoAgent": {
+    "get_specific_pair_info": {
+      "chain": "base",
+      "pair_address": "0x96d4b53a38337a5733179751781178a2613306063c511b78cd02684739288c0a"
+    },
+    "get_token_pairs": {
+      "chain": "solana",
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    "search_pairs": {
+      "search_term": "ETH"
+    }
+  },
+  "DuckDuckGoSearchAgent": {
+    "search_web": {
+      "search_term": "latest crypto regulations"
+    }
+  },
+  "ElfaTwitterIntelligenceAgent": {
+    "get_trending_tokens": {},
+    "search_account": {
+      "username": "aave"
+    },
+    "search_mentions": {
+      "keywords": [
+        "aave"
+      ]
+    }
+  },
+  "ExaSearchAgent": {
+    "exa_answer_question": {
+      "question": "What is the current state of DeFi?"
+    },
+    "exa_web_search": {
+      "search_term": "latest defi trends"
+    }
+  },
+  "FirecrawlSearchAgent": {
+    "firecrawl_extract_web_data": {
+      "extraction_prompt": "Extract information about how zero knowledge proofs are being used in blockchain technology",
+      "urls": [
+        "https://ethereum.org/en/zero-knowledge-proofs/"
+      ]
+    },
+    "firecrawl_web_search": {
+      "search_term": "What are the latest developments in zero knowledge proofs?"
+    }
+  },
+  "FundingRateAgent": {
+    "find_cross_exchange_opportunities": {},
+    "find_spot_futures_opportunities": {},
+    "get_all_funding_rates": {},
+    "get_symbol_funding_rates": {
+      "symbol": "BTC"
+    }
+  },
+  "GoplusAnalysisAgent": {
+    "fetch_security_details": {
+      "contract_address": "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0"
+    }
+  },
+  "MasaTwitterSearchAgent": {
+    "search_twitter": {
+      "search_term": "defi"
+    }
+  },
+  "MetaSleuthSolTokenWalletClusterAgent": {
+    "fetch_cluster_details": {
+      "cluster_uuid": "13axGrDoFlaj8E0ruhYfi1"
+    },
+    "fetch_token_clusters": {
+      "address": "tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump"
+    }
+  },
+  "MoniTwitterInsightAgent": {
+    "get_smart_followers_categories": {
+      "username": "heurist_ai"
+    },
+    "get_smart_followers_history": {
+      "timeframe": "D7",
+      "username": "heurist_ai"
+    },
+    "get_smart_mentions_feed": {
+      "limit": 100,
+      "username": "heurist_ai"
+    }
+  },
+  "PumpFunTokenAgent": {
+    "query_latest_graduated_tokens": {
+      "timeframe": 48
+    },
+    "query_recent_token_creation": {}
+  },
+  "SolWalletAgent": {
+    "analyze_common_holdings_of_top_holders": {
+      "token_address": "J7tYmq2JnQPvxyhcXpCDrvJnc9R5ts8rv7tgVHDPsw7U"
+    },
+    "get_tx_history": {
+      "owner_address": "DbDi7soBXALYRMZSyJMEAfpaK3rD1hr5HuCYzuDrcEEN"
+    },
+    "get_wallet_assets": {
+      "owner_address": "DbDi7soBXALYRMZSyJMEAfpaK3rD1hr5HuCYzuDrcEEN"
+    }
+  },
+  "SpaceTimeAgent": {
+    "generate_and_execute_sql": {
+      "nl_query": "What's the average transactions in past week for Ethereum"
+    }
+  },
+  "TwitterProfileAgent": {
+    "get_user_tweets": {
+      "username": "elonmusk",
+      "limit": 5
+    }
+  },
+  "ZerionWalletAnalysisAgent": {
+    "fetch_wallet_nfts": {
+      "wallet_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D"
+    },
+    "fetch_wallet_tokens": {
+      "wallet_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D"
+    }
+  }
+}

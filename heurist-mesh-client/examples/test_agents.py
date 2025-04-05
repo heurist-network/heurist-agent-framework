@@ -10,10 +10,10 @@ from heurist_mesh_client.client import MeshClient
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-from test_inputs import TOOL_TEST_INPUTS
 
 load_dotenv()
 MESH_METADATA_URL = "https://mesh.heurist.ai/mesh_agents_metadata.json"
+TEST_INPUTS_FILE = "test_inputs.json"
 
 DISABLED_AGENTS = {"DeepResearchAgent"}  # slow and times out frequently
 
@@ -174,6 +174,25 @@ def display_test_summary(
         console.print(f"\n[green]Test results written to {json_output}[/green]")
 
 
+def load_test_inputs() -> Dict:
+    if not os.path.exists(TEST_INPUTS_FILE):
+        return {}
+    with open(TEST_INPUTS_FILE, "r") as f:
+        return json.load(f)
+
+
+def save_test_inputs(data: Dict) -> None:
+    with open(TEST_INPUTS_FILE, "w") as f:
+        json.dump(data, f, indent=2, sort_keys=True)
+
+
+def generate_sample_inputs(agent_id: str, tools: set) -> Dict:
+    sample_inputs = {}
+    for tool in tools:
+        sample_inputs[tool] = {}
+    return sample_inputs
+
+
 @click.group()
 def cli():
     """Heurist Mesh Agents Testing Suite"""
@@ -184,14 +203,32 @@ def cli():
 def list_agents():
     """List all available agents and their test status"""
     agents_metadata = fetch_agents_metadata()
+    test_inputs = load_test_inputs()
 
     table = Table(show_header=True)
     table.add_column("Agent Name", style="cyan")
     table.add_column("Tools", style="green")
     table.add_column("Test Data", justify="center")
 
-    orphaned_test_agents = set(TOOL_TEST_INPUTS.keys()) - set(agents_metadata["agents"].keys())
+    orphaned_test_agents = set(test_inputs.keys()) - set(agents_metadata["agents"].keys())
     orphaned_tools = {}
+    agents_needing_samples = set()
+
+    for agent_id, agent_data in agents_metadata["agents"].items():
+        tools = {tool["function"]["name"] for tool in agent_data.get("tools", [])}
+        if not tools:
+            continue
+
+        if agent_id in test_inputs:
+            test_tools = set(test_inputs[agent_id].keys())
+            missing_tools = test_tools - tools
+            if missing_tools:
+                orphaned_tools[agent_id] = missing_tools
+        elif tools:  # agent has tools but no test inputs
+            agents_needing_samples.add(agent_id)
+
+    if agents_needing_samples or orphaned_test_agents or orphaned_tools:
+        table.add_column("Actions", justify="center")
 
     for agent_id, agent_data in agents_metadata["agents"].items():
         tools = {tool["function"]["name"] for tool in agent_data.get("tools", [])}
@@ -201,21 +238,19 @@ def list_agents():
             styled_name = f"[dim]{agent_id} [red](disabled)[/]"
 
         if not tools:
-            table.add_row(styled_name, "[dim italic]No tools[/]", "[dim]-[/]")
+            row = [styled_name, "[dim italic]No tools[/]", "[dim]-[/]"]
+            if agents_needing_samples or orphaned_test_agents or orphaned_tools:
+                row.append("[dim]-[/]")
+            table.add_row(*row)
             continue
 
         tool_names = []
         has_any_test = False
         tool_test_status = []
-
-        if agent_id in TOOL_TEST_INPUTS:
-            test_tools = set(TOOL_TEST_INPUTS[agent_id].keys())
-            missing_tools = test_tools - tools
-            if missing_tools:
-                orphaned_tools[agent_id] = missing_tools
+        actions = []
 
         for tool in sorted(tools):
-            has_test = agent_id in TOOL_TEST_INPUTS and tool in TOOL_TEST_INPUTS[agent_id]
+            has_test = agent_id in test_inputs and tool in test_inputs[agent_id]
             if has_test:
                 has_any_test = True
                 tool_names.append(f"[green]{tool}[/]")
@@ -224,30 +259,66 @@ def list_agents():
                 tool_names.append(f"[dim]{tool}[/]")
                 tool_test_status.append("[red]✗[/]")
 
-        table.add_row(
-            styled_name if has_any_test else f"[dim]{agent_id}[/]", "\n".join(tool_names), "\n".join(tool_test_status)
-        )
+        if agent_id in agents_needing_samples:
+            actions.append("[yellow]Generate Sample[/]")
+        else:
+            actions.append("[dim]-[/]")
+
+        row = [
+            styled_name if has_any_test else f"[dim]{agent_id}[/]",
+            "\n".join(tool_names),
+            "\n".join(tool_test_status),
+        ]
+        if agents_needing_samples or orphaned_test_agents or orphaned_tools:
+            row.append("\n".join(actions))
+        table.add_row(*row)
 
     if orphaned_test_agents:
         table.add_section()
         for agent_id in sorted(orphaned_test_agents):
-            tools = list(TOOL_TEST_INPUTS[agent_id].keys())
-            table.add_row(
+            tools = list(test_inputs[agent_id].keys())
+            row = [
                 f"[yellow]{agent_id} [red](missing agent)[/]",
                 "\n".join(f"[yellow]{tool}[/]" for tool in tools),
                 "[yellow]![/]",
-            )
+            ]
+            if agents_needing_samples or orphaned_test_agents or orphaned_tools:
+                row.append("[red]Remove[/]")
+            table.add_row(*row)
 
     if orphaned_tools:
         table.add_section()
         for agent_id, missing_tools in sorted(orphaned_tools.items()):
-            table.add_row(
+            row = [
                 f"[yellow]{agent_id} [red](has orphaned tools)[/]",
                 "\n".join(f"[yellow]{tool} [red](missing tool)[/]" for tool in sorted(missing_tools)),
                 "[yellow]![/]",
-            )
+            ]
+            if agents_needing_samples or orphaned_test_agents or orphaned_tools:
+                row.append("[red]Remove[/]")
+            table.add_row(*row)
 
-    Console().print(table)
+    console = Console()
+    console.print(table)
+
+    if agents_needing_samples:
+        if click.confirm("\nWould you like to generate sample test inputs for any agents?"):
+            for agent_id in sorted(agents_needing_samples):
+                if click.confirm(f"Generate sample inputs for {agent_id}?"):
+                    tools = {tool["function"]["name"] for tool in agents_metadata["agents"][agent_id].get("tools", [])}
+                    test_inputs[agent_id] = generate_sample_inputs(agent_id, tools)
+                    save_test_inputs(test_inputs)
+                    console.print(f"[green]Generated sample inputs for {agent_id}[/green]")
+
+    if orphaned_test_agents or orphaned_tools:
+        if click.confirm("\nWould you like to clean up orphaned entries?"):
+            for agent_id in orphaned_test_agents:
+                del test_inputs[agent_id]
+            for agent_id, missing_tools in orphaned_tools.items():
+                for tool in missing_tools:
+                    del test_inputs[agent_id][tool]
+            save_test_inputs(test_inputs)
+            console.print("[green]Cleaned up orphaned entries[/green]")
 
 
 @cli.command()
@@ -259,7 +330,7 @@ def list_agents():
     is_flag=False,
     flag_value="test_results.json",
     default=None,
-    help="Path to save test results as JSON",
+    help="Path to save test results as JSON (default: test_results.json when no specific tools are provided)",
 )
 def test_agent(
     agent_tool_pairs: Optional[str] = None,
@@ -272,8 +343,13 @@ def test_agent(
         click.echo("Error: HEURIST_API_KEY environment variable not set")
         return
 
+    # enable json output by default when no specific tools are provided
+    if not agent_tool_pairs and json is None:
+        json = "test_results.json"
+
     try:
         agents_metadata = fetch_agents_metadata()
+        test_inputs = load_test_inputs()
         client = MeshClient()
         console = Console()
         test_results = []
@@ -284,7 +360,7 @@ def test_agent(
 
         if not agent_tool_pairs:
             console.print("\n[bold yellow]Testing all agents with available test inputs[/bold yellow]")
-            for test_agent_id, test_tools in TOOL_TEST_INPUTS.items():
+            for test_agent_id, test_tools in test_inputs.items():
                 if test_agent_id not in agents_metadata["agents"]:
                     console.print(f"[red]Skipping {test_agent_id} - not found in metadata[/red]")
                     continue
@@ -320,12 +396,12 @@ def test_agent(
                         console.print(f"[red]Error: Tool {tool} not found in agent {agent_id}[/red]")
                         continue
 
-                    if agent_id in TOOL_TEST_INPUTS and tool in TOOL_TEST_INPUTS[agent_id]:
+                    if agent_id in test_inputs and tool in test_inputs[agent_id]:
                         test_tool(
                             client,
                             agent_id,
                             tool,
-                            TOOL_TEST_INPUTS[agent_id][tool],
+                            test_inputs[agent_id][tool],
                             console,
                             format_output,
                             test_results,
@@ -333,8 +409,8 @@ def test_agent(
                     else:
                         console.print(f"[yellow]No test inputs defined for {agent_id} - {tool}[/yellow]")
                 else:
-                    if agent_id in TOOL_TEST_INPUTS:
-                        for tool_name, inputs in TOOL_TEST_INPUTS[agent_id].items():
+                    if agent_id in test_inputs:
+                        for tool_name, inputs in test_inputs[agent_id].items():
                             if tool_name in agent_tools:
                                 test_tool(client, agent_id, tool_name, inputs, console, format_output, test_results)
                     else:
