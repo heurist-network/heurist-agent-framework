@@ -409,6 +409,7 @@ Thank you for contributing to **Heurist Mesh** and helping build a diverse ecosy
 
 | Agent ID | Description | Available Tools | Source Code | External APIs |
 |----------|-------------|-----------------|-------------|---------------|
+| AaveAgent | This agent can report the status of Aave v3 protocols deployed on Ethereum, Polygon, Avalanche, and Arbitrum with details on liquidity, borrowing rates, and more | • get_aave_reserves | [Source](./aave_agent.py) | Aave |
 | AlloraPricePredictionAgent | This agent can predict the price of ETH/BTC with confidence intervals using Allora price prediction API | • get_allora_prediction | [Source](./allora_price_prediction_agent.py) | Allora |
 | BitquerySolanaTokenInfoAgent | This agent provides comprehensive analysis of Solana tokens using Bitquery API. It can analyze token metrics (volume, price, liquidity), track holders and buyers, monitor trading activity, and identify trending tokens. The agent supports both specific token analysis and market-wide trend discovery. | • query_token_metrics<br>• query_token_holders<br>• query_token_buyers<br>• query_top_traders<br>• query_holder_status<br>• get_top_trending_tokens | [Source](./bitquery_solana_token_info_agent.py) | Bitquery |
 | CarvOnchainDataAgent | This agent can query blockchain metrics of Ethereum, Base, Bitcoin, or Solana using natural language through the CARV API. | • query_onchain_data | [Source](./carv_onchain_data_agent.py) | CARV |
@@ -423,13 +424,12 @@ Thank you for contributing to **Heurist Mesh** and helping build a diverse ecosy
 | GoplusAnalysisAgent | This agent can fetch and analyze security details of blockchain token contracts using GoPlus API. | • fetch_security_details | [Source](./goplus_analysis_agent.py) | GoPlus |
 | MasaTwitterSearchAgent | This agent can search on Twitter through Masa API and analyze the results by identifying trending topics and sentiment related to a topic. | • search_twitter | [Source](./masa_twitter_search_agent.py) | Masa |
 | MetaSleuthSolTokenWalletClusterAgent | This agent can analyze the wallet clusters holding a specific Solana token, and identify top holder behavior, concentration, and potential market manipulation. | • fetch_token_clusters<br>• fetch_cluster_details | [Source](./metasleuth_sol_token_wallet_cluster_agent.py) | MetaSleuth |
+| MoniTwitterInsightAgent | This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity. | • get_smart_followers_history<br>• get_smart_followers_categories<br>• get_smart_mentions_feed | [Source](./moni_twitter_insight_agent.py) | Moni |
 | PumpFunTokenAgent | This agent analyzes Pump.fun token on Solana using Bitquery API. It tracks token creation and graduation events on Pump.fun. | • query_recent_token_creation<br>• query_latest_graduated_tokens | [Source](./pumpfun_token_agent.py) | Bitquery |
+| SolWalletAgent | This agent can query Solana wallet assets and recent swap transactions using Helius API. | • get_wallet_assets<br>• analyze_common_holdings_of_top_holders<br>• get_tx_history | [Source](./sol_wallet_agent.py) | Helius |
+| SpaceTimeAgent | This agent can analyze blockchain data by executing SQL queries from natural language using Space and Time, a database with ZK proofs. | • generate_and_execute_sql | [Source](./space_and_time_agent.py) | Space and Time |
 | ZerionWalletAnalysisAgent | This agent can fetch and analyze the token and NFT holdings of a crypto wallet (must be EVM chain) | • fetch_wallet_tokens<br>• fetch_wallet_nfts | [Source](./zerion_wallet_analysis_agent.py) | Zerion |
 | ZkIgniteAnalystAgent | This agent analyzes zkSync Era DeFi opportunities in the zkIgnite program and has access to real-time yield and TVL data | - | [Source](./zkignite_analyst_agent.py) | Merkl, DefiLlama |
-| MoniTwitterInsightAgent | This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity. | • get_smart_followers_history<br>• get_smart_followers_categories<br>• get_smart_mentions_feed | [Source](./moni_twitter_insight_agent.py) | Moni |
-| AaveAgent | This agent can report the status of Aave v3 protocols deployed on Ethereum, Polygon, Avalanche, and Arbitrum with details on liquidity, borrowing rates, and more | • get_aave_reserves | [Source](./aave_agent.py) | Aave |
-| SolWalletAgent | This agent can query Solana wallet assets and recent swap transactions using Helius API. | • get_wallet_assets<br>• analyze_common_holdings_of_top_holders<br>• get_tx_history | [Source](./sol_wallet_agent.py) | Helius |
-| SpaceTimeAgent | This agent can generate and execute SQL queries from natural language using Space and Time APIs. It's particularly useful for blockchain data analysis. | • generate_and_execute_sql | [Source](./space_and_time_agent.py) | Space and Time |
 ---  
 
 *This document is a work-in-progress. Please feel free to update and improve it as the system evolves.*

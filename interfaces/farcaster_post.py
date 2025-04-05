@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional, Tuple
 import dotenv
 import requests
 
-from agents.core_agent import CoreAgent
+from agents.base_agent import BaseAgent
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -107,12 +107,17 @@ class CastHistoryManager:
         return [entry["cast"]["cast"] for entry in self.history[-n:]]
 
 
-class FarcasterAgent(CoreAgent):
+class FarcasterAgent:
     def __init__(self, core_agent=None):
+        # Type check if core_agent is provided
+        if core_agent is not None and not isinstance(core_agent, BaseAgent):
+            raise TypeError(f"core_agent must be an instance of BaseAgent, got {type(core_agent).__name__}")
+
         if core_agent:
             super().__setattr__("_parent", core_agent)
         else:
-            super().__setattr__("_parent", self)
+            # Need to set _parent = self first before super().__init__()
+            super().__setattr__("_parent", self)  # Bypass normal __setattr__
             super().__init__()
 
         # Initialize Farcaster specific components

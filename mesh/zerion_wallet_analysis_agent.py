@@ -23,6 +23,7 @@ class ZerionWalletAnalysisAgent(MeshAgent):
                 "name": "Zerion Agent",
                 "version": "1.0.0",
                 "author": "Heurist Team",
+                "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can fetch and analyze the token and NFT holdings of a crypto wallet (must be EVM chain)",
                 "inputs": [
                     {

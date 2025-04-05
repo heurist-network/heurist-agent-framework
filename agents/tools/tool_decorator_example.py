@@ -9,7 +9,7 @@ dotenv.load_dotenv()
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
-from agents.tool_decorator import tool  # noqa: E402
+from core.tools.tool_decorator import tool  # noqa: E402
 
 
 @tool("Add two integers together")

@@ -15,7 +15,7 @@ import dotenv
 import requests
 from tenacity import retry, stop_after_attempt, wait_exponential
 
-from agents.core_agent import CoreAgent
+from agents.base_agent import BaseAgent
 from core.config import PromptConfig
 
 # Set up logging
@@ -215,8 +215,12 @@ class FarcasterReplyMonitor:
         return filtered_mentions
 
 
-class FarcasterReplyAgent(CoreAgent):
+class FarcasterReplyAgent:
     def __init__(self, core_agent=None):
+        # Type check if core_agent is provided
+        if core_agent is not None and not isinstance(core_agent, BaseAgent):
+            raise TypeError(f"core_agent must be an instance of BaseAgent, got {type(core_agent).__name__}")
+
         if core_agent:
             super().__setattr__("_parent", core_agent)
         else:
@@ -231,6 +235,21 @@ class FarcasterReplyAgent(CoreAgent):
             queue_manager=self.queue_manager,
         )
         self.register_interface("farcaster_reply", self)
+
+    def __getattr__(self, name):
+        # Delegate to the parent instance for missing attributes/methods
+        return getattr(self._parent, name)
+
+    def __setattr__(self, name, value):
+        if not hasattr(self, "_parent"):
+            # During initialization, before _parent is set
+            super().__setattr__(name, value)
+        elif name == "_parent" or self is self._parent or name in self.__dict__:
+            # Set local attributes (like _parent or already existing attributes)
+            super().__setattr__(name, value)
+        else:
+            # Delegate attribute setting to the parent instance
+            setattr(self._parent, name, value)
 
     async def send_message(self, chat_id: str, message: str, image_url: str = None):
         """Interface method called by CoreAgent's send_to_interface"""

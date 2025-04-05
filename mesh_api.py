@@ -1,5 +1,6 @@
 import logging
 import os
+import subprocess
 from typing import Any, Dict, Optional
 
 import aiohttp
@@ -31,6 +32,17 @@ app.add_middleware(
 
 config = Config()
 agents_dict = AgentLoader(config).load_agents()
+
+try:
+    result = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    current_commit = result.stdout.strip() if result.returncode == 0 else "unknown"
+except Exception:
+    current_commit = "unknown"
 
 
 class MeshRequest(BaseModel):
@@ -124,6 +136,15 @@ async def list_agents():
         logger.info(f"Agent {agent_id} has tools: {tools}")
 
     return agents_info
+
+
+@app.get("/mesh_health")
+async def health_check():
+    return {
+        "status": "ok",
+        "commit": current_commit,
+        "agents_loaded": len(agents_dict),
+    }
 
 
 if __name__ == "__main__":

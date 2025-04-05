@@ -1,23 +1,13 @@
 import asyncio
-import json
 import os
-import re
 import sys
 import time
-
-try:
-    from datetime import UTC, datetime
-except ImportError:
-    from datetime import datetime, timezone
-
-    UTC = timezone.utc
 from importlib import import_module
 from pathlib import Path
 from pkgutil import iter_modules
 from typing import Dict, Type
 
 import aiohttp
-import boto3
 from dotenv import load_dotenv
 from loguru import logger
 
@@ -45,195 +35,12 @@ class Config:
         self.auth_token = os.getenv("PROTOCOL_V2_AUTH_TOKEN", "test_key")
         self.agent_type = "AGENT"
 
-        # S3 configuration
-        self.s3_endpoint = os.getenv("S3_ENDPOINT")
-        self.s3_access_key = os.getenv("ACCESS_KEY")
-        self.s3_secret_key = os.getenv("SECRET_KEY")
-        self.s3_bucket = os.getenv("S3_BUCKET", "mesh")
-        self.s3_region = "enam"
-
 
 class AgentLoader:
-    """Handles dynamic loading of agent modules and metadata management"""
+    """Handles dynamic loading of agent modules"""
 
     def __init__(self, config: Config):
         self.config = config
-        self.s3_client = self._init_s3_client()
-
-    def _init_s3_client(self) -> boto3.client:
-        """Initialize S3 client"""
-        return boto3.client(
-            "s3",
-            region_name=self.config.s3_region,
-            endpoint_url=self.config.s3_endpoint,
-            aws_access_key_id=self.config.s3_access_key,
-            aws_secret_access_key=self.config.s3_secret_key,
-        )
-
-    def _download_existing_metadata(self) -> Dict:
-        """Download existing metadata from S3"""
-        try:
-            response = self.s3_client.get_object(Bucket=self.config.s3_bucket, Key="mesh_agents_metadata.json")
-            metadata_json = response["Body"].read().decode("utf-8")
-            metadata = json.loads(metadata_json)
-            logger.info("Successfully downloaded existing agents metadata from S3")
-            return metadata
-        except self.s3_client.exceptions.NoSuchKey:
-            logger.info("No existing metadata found, will create new metadata")
-            return {"last_updated": datetime.now(UTC).isoformat(), "agents": {}}
-        except Exception as e:
-            logger.error(f"Failed to download metadata from S3: {e}")
-            return {"last_updated": datetime.now(UTC).isoformat(), "agents": {}}
-
-    def _create_metadata(self, agents_dict: Dict[str, Type[MeshAgent]]) -> Dict:
-        """Update metadata for discovered agents"""
-        # First download existing metadata
-        metadata = self._download_existing_metadata()
-
-        # Update the timestamp
-        metadata["last_updated"] = datetime.now(UTC).isoformat()
-        metadata["last_updated_by"] = "mesh_manager.py"
-
-        # Ensure agents key exists
-        if "agents" not in metadata:
-            metadata["agents"] = {}
-
-        # track current agent ids for cleanup
-        current_agent_ids = set()
-
-        for agent_id, agent_cls in agents_dict.items():
-            # Skip EchoAgent
-            if "EchoAgent" in agent_id:
-                continue
-
-            current_agent_ids.add(agent_id)
-            logger.info(f"Updating metadata for agent {agent_id}")
-            agent = agent_cls()
-
-            # Get base inputs from agent metadata
-            inputs = agent.metadata.get("inputs", [])
-            tools = []
-
-            # Add tool-related inputs if tools exist
-            if hasattr(agent, "get_tool_schemas") and callable(agent.get_tool_schemas):
-                tools = agent.get_tool_schemas()
-            elif hasattr(agent, "get_tool_schema") and callable(agent.get_tool_schema):
-                tool = agent.get_tool_schema()
-                tools = tool if isinstance(tool, list) else [tool] if tool else []  # Handle both list and single tool
-            if tools:
-                inputs.extend(
-                    [
-                        {
-                            "name": "tool",
-                            "description": f"Directly specify which tool to call: {', '.join(t['function']['name'] for t in tools)}. Bypasses LLM.",
-                            "type": "str",
-                            "required": False,
-                        },
-                        {
-                            "name": "tool_arguments",
-                            "description": "Arguments for the tool call as a dictionary",
-                            "type": "dict",
-                            "required": False,
-                            "default": {},
-                        },
-                    ]
-                )
-
-            # Update agent metadata with tool-derived inputs
-            agent.metadata["inputs"] = inputs
-
-            # Create new agent entry or update existing one
-            if agent_id not in metadata["agents"]:
-                metadata["agents"][agent_id] = {
-                    "metadata": agent.metadata,
-                    "module": agent_cls.__module__.split(".")[-1],
-                    "tools": tools,
-                }
-            else:
-                # Update only the fields from the agent class, preserving other fields
-                existing_metadata = metadata["agents"][agent_id].get("metadata", {})
-                for key, value in agent.metadata.items():
-                    existing_metadata[key] = value
-
-                metadata["agents"][agent_id]["metadata"] = existing_metadata
-                metadata["agents"][agent_id]["module"] = agent_cls.__module__.split(".")[-1]
-                metadata["agents"][agent_id]["tools"] = tools
-
-        # remove any old agents that no longer exist
-        old_agent_ids = set(metadata["agents"].keys()) - current_agent_ids
-        for old_id in old_agent_ids:
-            logger.info(f"Removing metadata for deleted/renamed agent {old_id}")
-            del metadata["agents"][old_id]
-
-        return metadata
-
-    def _upload_metadata(self, metadata: Dict) -> None:
-        """Upload metadata to S3"""
-        metadata_json = json.dumps(metadata, indent=2)
-        self.s3_client.put_object(
-            Bucket=self.config.s3_bucket,
-            Key="mesh_agents_metadata.json",
-            Body=metadata_json,
-            ContentType="application/json",
-        )
-        logger.info("Successfully uploaded agents metadata to S3")
-
-    def _generate_agent_table(self, metadata: Dict) -> str:
-        """Generate markdown table from agent metadata"""
-        table_header = """| Agent ID | Description | Available Tools | Source Code | External APIs |
-|----------|-------------|-----------------|-------------|---------------|"""
-
-        table_rows = []
-        for agent_id, agent_data in metadata["agents"].items():
-            # Get tools if available
-            tools = agent_data.get("tools", [])
-            tool_names = [f"• {tool['function']['name']}" for tool in tools] if tools else []
-            tools_text = "<br>".join(tool_names) if tool_names else "-"
-
-            # Get external APIs
-            apis = agent_data["metadata"].get("external_apis", [])
-            apis_text = ", ".join(apis) if apis else "-"
-
-            # Create source code link
-            module_name = agent_data.get("module", "")
-            source_link = f"[Source](./{module_name}.py)" if module_name else "-"
-
-            # Create table row
-            description = agent_data["metadata"].get("description", "").replace("\n", " ")
-            row = f"| {agent_id} | {description} | {tools_text} | {source_link} | {apis_text} |"
-            table_rows.append(row)
-
-        return f"{table_header}\n" + "\n".join(table_rows)
-
-    def _update_readme_with_agents(self, table_content: str) -> None:
-        """Update the README file with new agent table"""
-        readme_path = Path(__file__).parent / "mesh" / "README.md"
-
-        try:
-            with open(readme_path, "r", encoding="utf-8") as f:
-                content = f.read()
-
-            # Find the section
-            section_pattern = r"(## Appendix: All Available Mesh Agents\n)(.*?)(\n---)"
-            if not re.search(section_pattern, content, re.DOTALL):
-                logger.warning("Could not find '## Appendix: All Available Mesh Agents' section in README")
-                return
-
-            # Replace content between headers
-            updated_content = re.sub(
-                section_pattern,
-                f"## Appendix: All Available Mesh Agents\n\n{table_content}\n---",
-                content,
-                flags=re.DOTALL,
-            )
-
-            with open(readme_path, "w", encoding="utf-8") as f:
-                f.write(updated_content)
-
-            logger.info("Successfully updated README with new agent table")
-
-        except Exception as e:
-            logger.error(f"Failed to update README: {e}")
 
     def load_agents(self) -> Dict[str, Type[MeshAgent]]:
         agents_dict = {}
@@ -270,15 +77,6 @@ class AgentLoader:
                 logger.info(f"Found agents: {', '.join(found_agents)}")
             if import_errors:
                 logger.warning(f"Import errors: {', '.join(import_errors)}")
-
-            try:
-                metadata = self._create_metadata(agents_dict)
-                self._upload_metadata(metadata)
-
-                table_content = self._generate_agent_table(metadata)
-                self._update_readme_with_agents(table_content)
-            except Exception as e:
-                logger.error(f"Failed to upload metadata to S3: {e}")
 
             return agents_dict
 

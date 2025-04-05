@@ -8,8 +8,7 @@ import dotenv
 import requests
 from requests.exceptions import Timeout
 
-from core.heurist_image.SmartGen import SmartGen
-
+from .heurist_image.SmartGen import SmartGen
 from .llm import call_llm
 
 # Set up logging
@@ -27,7 +26,7 @@ HEURIST_API_KEY = os.getenv("HEURIST_API_KEY")
 SEQUENCER_API_ENDPOINT = "http://sequencer.heurist.xyz/submit_job"
 PROMPT_MODEL_ID = "mistralai/mixtral-8x7b-instruct"
 
-AVAILABLE_IMAGE_MODELS = ["AnimagineXL", "BrainDance", "BluePencilRealistic", "ArthemyComics", "AAMXLAnimeMix"]
+AVAILABLE_IMAGE_MODELS = ["AnimagineXL", "BrainDance", "ArthemyComics", "AAMXLAnimeMix"]
 
 IMAGE_MODEL_ID = os.getenv("IMAGE_MODEL_ID") or random.choice(AVAILABLE_IMAGE_MODELS)
 

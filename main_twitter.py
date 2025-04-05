@@ -2,6 +2,7 @@ import logging
 
 import dotenv
 
+from agents.core_agent_refactor import CoreAgent
 from interfaces.twitter_post import TwitterAgent
 
 # Set up logging
@@ -20,7 +21,8 @@ def main():
 
         # Initialize and run Twitter agent
         logger.info("Starting Twitter agent...")
-        agent = TwitterAgent()
+        core_agent = CoreAgent()
+        agent = TwitterAgent(core_agent)
         agent.run()
 
     except KeyboardInterrupt:

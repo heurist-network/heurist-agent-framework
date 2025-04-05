@@ -6,8 +6,8 @@ from datetime import datetime
 from typing import Dict, List, Optional, TypedDict
 
 import dotenv
-from firecrawl import FirecrawlApp
 
+from core.clients.search_client import SearchClient
 from core.llm import call_llm
 from core.utils.text_splitter import trim_prompt
 
@@ -73,7 +73,8 @@ async def generate_feedback(query: str) -> List[str]:
 
     else:  # Add null check
         try:
-            result = json.loads(response)
+            result = response["content"].replace("```json", "").replace("```", "").strip()
+            result = json.loads(result)
             questions = result.get("questions", [])
             return questions
         except json.JSONDecodeError as e:
@@ -82,68 +83,8 @@ async def generate_feedback(query: str) -> List[str]:
             return []
 
 
-class Firecrawl:
-    """Simple wrapper for Firecrawl SDK."""
-
-    def __init__(self, api_key: str = "", api_url: Optional[str] = None):
-        self.app = FirecrawlApp(api_key=api_key, api_url=api_url)
-        self._last_request_time = 0  # Track the last request time
-
-    async def search(self, query: str, timeout: int = 15000, limit: int = 5) -> SearchResponse:
-        """Search using Firecrawl SDK in a thread pool to keep it async."""
-        try:
-            # Add rate limiting delay
-            current_time = asyncio.get_event_loop().time()
-            time_since_last_request = current_time - self._last_request_time
-            if time_since_last_request < 6:
-                await asyncio.sleep(6 - time_since_last_request)
-
-            # Update last request time
-            self._last_request_time = asyncio.get_event_loop().time()
-
-            # Run the synchronous SDK call in a thread pool
-            response = await asyncio.get_event_loop().run_in_executor(
-                None,
-                lambda: self.app.search(query=query, params={"scrapeOptions": {"formats": ["markdown"]}}),
-            )
-            # Handle the response format from the SDK
-            if isinstance(response, dict) and "data" in response:
-                # Response is already in the right format
-                return response
-            elif isinstance(response, dict) and "success" in response:
-                # Response is in the documented format
-                return {"data": response.get("data", [])}
-            elif isinstance(response, list):
-                # Response is a list of results
-                formatted_data = []
-                for item in response:
-                    if isinstance(item, dict):
-                        formatted_data.append(item)
-                    else:
-                        # Handle non-dict items (like objects)
-                        formatted_data.append(
-                            {
-                                "url": getattr(item, "url", ""),
-                                "markdown": getattr(item, "markdown", "") or getattr(item, "content", ""),
-                                "title": getattr(item, "title", "") or getattr(item, "metadata", {}).get("title", ""),
-                            }
-                        )
-                return {"data": formatted_data}
-            else:
-                print(f"Unexpected response format from Firecrawl: {type(response)}")
-                return {"data": []}
-
-        except Exception as e:
-            print(f"Error searching with Firecrawl: {e}")
-            print(f"Response type: {type(response) if 'response' in locals() else 'N/A'}")
-            return {"data": []}
-
-
-# Initialize Firecrawl
-firecrawl = Firecrawl(
-    api_key=os.environ.get("FIRECRAWL_KEY", ""),
-    api_url=os.environ.get("FIRECRAWL_BASE_URL"),
-)
+# Initialize SearchClient
+search_client = SearchClient(client_type="firecrawl", api_key=os.environ.get("FIRECRAWL_KEY", ""), rate_limit=1)
 
 
 async def generate_serp_queries(
@@ -190,7 +131,8 @@ async def generate_serp_queries(
 
     else:
         try:
-            result = json.loads(response)
+            result = response["content"].replace("```json", "").replace("```", "").strip()
+            result = json.loads(result)
             queries = result.get("queries", [])
             return [SerpQuery(**q) for q in queries][:num_queries]
         except json.JSONDecodeError as e:
@@ -250,7 +192,9 @@ async def process_serp_result(
 
     else:
         try:
-            result = json.loads(response)
+            result = response["content"].replace("```json", "").replace("```", "").strip()
+            result = json.loads(result)
+
             return {
                 "learnings": result.get("learnings", [])[:num_learnings],
                 "followUpQuestions": result.get("followUpQuestions", [])[:num_follow_up_questions],
@@ -292,7 +236,8 @@ async def write_final_report(prompt: str, learnings: List[str], visited_urls: Li
 
     else:
         try:
-            result = json.loads(response)
+            result = response["content"].replace("```json", "").replace("```", "").strip()
+            result = json.loads(result)
             report = result.get("reportMarkdown", "")
 
             # Append sources
@@ -335,7 +280,7 @@ async def deep_research(
         async with semaphore:
             try:
                 # Search for content
-                result = await firecrawl.search(serp_query.query, timeout=15000, limit=5)
+                result = await search_client.search(serp_query.query, timeout=15000)
 
                 # Collect new URLs
                 new_urls = [item.get("url") for item in result["data"] if item.get("url")]

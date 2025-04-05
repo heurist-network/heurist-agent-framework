@@ -19,17 +19,46 @@ The Heurist Agent Framework is built on a modular architecture that allows an AI
 - Fetch and store information in a knowledge base (Postgres and SQLite supported)
 - Access external APIs, tools, and a wide range of [Mesh Agents](./mesh/README.md) to compose complex workflows
 
+## Table of Contents
+
+- [Features](#features)
+- [Heurist Mesh](#heurist-mesh)
+  - [MCP Support](#mcp-support)
+  - [Recommended Mesh Agents](#recommended-mesh-agents)
+  - [Full List of Mesh Agents](#full-list-of-mesh-agents)
+  - [Usage and Development Guide](#usage-and-development-guide)
+- [Heurist Agent Framework Architecture](#heurist-agent-framework-architecture)
+  - [Agent Structure](#agent-structure)
+  - [Agent Interfaces](#agent-interfaces)
+  - [Heurist Core](#heurist-core)
+    - [Components](#components)
+    - [Workflows](#workflows)
+    - [Tool Management](#tool-management)
+    - [External Clients](#external-clients)
+  - [Agent Usage and Development Guide](#agent-usage-and-development-guide)
+- [How to Use GitHub Issues](#how-to-use-github-issues)
+- [License](#license)
+- [Contributing](#contributing)
+- [Support](#support)
+- [Star History](#star-history)
+
 ## Features
 
-- 🤖 Core Agent functionality with LLM integration
-- 🖼️ Image generation capabilities
-- 🎤 Voice processing (transcription and TTS)
-- 🔌 Multiple interface support:
+- 🤖 **Core Agent** - Modular framework with advanced LLM integration
+- 🧩 **Component Architecture** - Plug-and-play components for flexible agent or agentic application design
+- 🔄 **Workflow System** - RAG, Chain of Thought, and Research workflows
+- 🖼️ **Media Generation** - Image creation and processing capabilities
+- 🎤 **Voice Processing** - Audio transcription and text-to-speech
+- 💾 **Vector Storage** - Knowledge retrieval with PostgreSQL/SQLite support
+- 🛠️ **Tool Integration** - Extensible tool framework with MCP support
+- 🌐 **Mesh Agent Access** - Connect to community-contributed specialized agents via API or MCP
+- 🔌 **Multi-platform Support**:
   - Telegram bot
   - Discord bot
   - Twitter automation
   - Farcaster integration
   - REST API
+  - MCP integration
 
 ## Heurist Mesh
 ![mesh](https://github.com/user-attachments/assets/77a2ab3b-e35c-4313-8a5b-a0e751cac879)
@@ -71,108 +100,77 @@ Head to [heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mes
 
 [Read the Mesh documentation](./mesh/README.md)
 
-## Installation
 
-1. Clone the repository:
+## Heurist Agent Framework Architecture
 
-```bash
-git clone https://github.com/heurist-network/heurist-agent-framework.git
-cd heurist-agent-framework
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-3. Set up environment variables in `.env`:
-see `.env.example`
-
-
-## Usage
-
-### Running Different Interfaces
-
-1. Telegram Agent:
-```bash
-python main_telegram.py
-```
-
-2. Discord Agent:
-```bash
-python main_discord.py
-```
-
-3. REST API:
-```bash
-python main_api.py
-```
-
-4. Twitter Bot (Posting):
-```bash
-python main_twitter.py
-```
-
-### API Endpoints
-
-The REST API provides the following endpoints:
-
-- POST `/message`
-  - Request body: `{"message": "Your message here"}`
-  - Response: `{"text": "Response text", "image_url": "Optional image URL"}`
-
-Example:
-```bash
-curl -X POST http://localhost:5005/message \
-  -H "Content-Type: application/json" \
-  -d '{"message": "Tell me about artificial intelligence"}'
-```
-
-## Architecture
-
-The framework follows a modular design:
-
-1. Core Agent (`core_agent.py`)
-   - Handles core functionality
-   - Manages LLM interactions
-   - Processes images and voice
-
-2. Interfaces
-   - Telegram (`interfaces/telegram_agent.py`)
-   - Discord (`interfaces/discord_agent.py`)
-   - API (`interfaces/flask_agent.py`)
-   - Twitter (`interfaces/twitter_agent.py`)
-   - Farcaster (`interfaces/farcaster_agent.py`)
-
-Each interface inherits from the CoreAgent and implements platform-specific handling.
+The framework follows a modular, component-based architecture:
 
 <div align="center">
-<img src="./docs/img/HFA_1.png" alt="Heurist Agent Framework" width="500">
+<img src="./docs/img/agent_hl.png" alt="Heurist Agent Framework" width="75%">
 </div>
 
-### Main Loop
+### Agent Structure
 
-<div align="center">
-<img src="./docs/img/HFA_2.png" alt="Heurist Agent Framework" width="500">
-</div>
+1. **BaseAgent** (Abstract Base Class)
+   - Defines the interface and common functionality
+   - Manages component initialization and lifecycle
+   - Implements core messaging patterns
 
-## Configuration
+2. **CoreAgent** (Concrete Implementation)
+   - Implements BaseAgent functionality
+   - Orchestrates components and workflows
+   - Handles decision-making for workflow selection
 
-The framework uses YAML configuration for prompts and agent behavior. Configure these in:
-```
-config/prompts.yaml
-```
+### Agent Interfaces
 
-## Development
+Each interface inherits from BaseAgent and implements platform-specific handling:
 
-To add a new interface:
+- **Telegram** (`interfaces/telegram_agent.py`)
+- **Discord** (`interfaces/discord_agent.py`)
+- **API** (`interfaces/flask_agent.py`)
+- **Twitter** (`interfaces/twitter_agent.py`)
+- **Farcaster** (`interfaces/farcaster_agent.py`)
 
-1. Create a new class inheriting from `CoreAgent`
-2. Implement platform-specific handlers
-3. Use core agent methods for processing:
-   - `handle_message()`
-   - `handle_image_generation()`
-   - `transcribe_audio()`
+### Heurist Core
+
+Heurist Core provides a set of core components, tools, and workflows for building LLM-powered agents or agentic applications. It can be used as a standalone package or as part of the Heurist Agent Framework.
+
+[Read the Heurist Core documentation](./core/README.md)
+
+#### Components
+
+The framework uses a modular component system:
+
+- **PersonalityProvider**: Manages agent personality and system prompts
+- **KnowledgeProvider**: Handles knowledge retrieval from vector database
+- **ConversationManager**: Manages conversation history and context
+- **ValidationManager**: Validates inputs and outputs
+- **MediaHandler**: Processes images, audio, and other media
+- **LLMProvider**: Interfaces with language models
+- **MessageStore**: Stores and retrieves messages with vector search
+
+#### Workflows
+
+Workflows provide higher-level reasoning patterns:
+
+- **AugmentedLLMCall**: Standard RAG + tools pattern for context-aware responses
+- **ChainOfThoughtReasoning**: Multi-step reasoning with planning and execution phases
+- **ResearchWorkflow**: Deep web search and analysis with hierarchical exploration
+
+#### Tool Management
+
+- **ToolBox**: Base framework for tool definition and registration
+- **Tools**: Tool management and execution layer
+- **ToolsMCP**: Integration with MCP Protocol for tool execution
+
+#### External Clients
+
+- **SearchClient**: Unified client for web search (Firecrawl/Exa)
+- **MCPClient**: Client for MCP Protocol for local or remote servers.
+
+### Agent Usage and Development Guide
+Read the [Agent Usage and Development Guide](./agents/README.md)  
+
 
 ## How to Use GitHub Issues
 
@@ -223,19 +221,6 @@ For Heurist Mesh agents or to learn about contributing specialized community age
 
 For support, please open an issue in the GitHub repository or contact the maintainers. Join the Heurist Ecosystem Builder telegram https://t.me/heuristsupport
 
-## WIP
-
-More features and refinement on the way!
-
-Example structure for finalized tweet flow on the works:
-
-<div align="center">
-<img src="./docs/img/TwitterFinalFLow.png" alt="Heurist Agent Framework" width="500">
-</div>
-
-*"_eval" param indicates requires agent to evaluate if it should respond*
-
-*"_HITL" param indicates requirement to activate Human In The Loop flow*
 
 ## Star History
 

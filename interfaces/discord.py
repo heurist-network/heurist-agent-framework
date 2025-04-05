@@ -5,7 +5,7 @@ import discord
 import dotenv
 from discord.ext import commands
 
-from agents.core_agent import CoreAgent
+from agents.base_agent import BaseAgent
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -14,9 +14,19 @@ logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
 
 
-class DiscordAgent(CoreAgent):
-    def __init__(self):
-        super().__init__()
+class DiscordAgent:
+    def __init__(self, core_agent=None):
+        # Type check if core_agent is provided
+        if core_agent is not None and not isinstance(core_agent, BaseAgent):
+            raise TypeError(f"core_agent must be an instance of BaseAgent, got {type(core_agent).__name__}")
+
+        if core_agent:
+            super().__setattr__("_parent", core_agent)
+        else:
+            # Need to set _parent = self first before super().__init__()
+            super().__setattr__("_parent", self)  # Bypass normal __setattr__
+            super().__init__()
+
         # Define intents to allow the bot to read message content
         intents = discord.Intents.default()
         intents.messages = True
