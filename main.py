@@ -4,9 +4,8 @@ import threading
 
 import dotenv
 
-from agents.core_agent import CoreAgent
+from agents.core_agent_refactor import CoreAgent
 from interfaces.api import FlaskAgent
-from interfaces.farcaster_post import FarcasterAgent
 from interfaces.telegram import TelegramAgent
 from interfaces.twitter_post import TwitterAgent
 
@@ -60,7 +59,7 @@ def main():
         flask_agent = FlaskAgent(core_agent)
         telegram_agent = TelegramAgent(core_agent)
         twitter_agent = TwitterAgent(core_agent)
-        farcaster_agent = FarcasterAgent(core_agent)  # noqa: F841
+        # farcaster_agent = FarcasterAgent(core_agent)  # noqa: F841
 
         # Start Flask in a separate thread
         flask_thread = threading.Thread(target=run_flask, args=(flask_agent,), daemon=True)

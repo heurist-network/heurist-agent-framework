@@ -9,6 +9,7 @@ from typing import Dict, Optional, Tuple
 import dotenv
 
 from agents.base_agent import BaseAgent
+from agents.tools.default_tool_box import DefaultToolBox
 from core.clients.search_client import SearchClient
 from core.components.conversation_manager import ConversationManager
 from core.components.knowledge_provider import KnowledgeProvider
@@ -17,7 +18,7 @@ from core.components.media_handler import MediaHandler
 from core.components.personality_provider import PersonalityProvider
 from core.components.validation_manager import ValidationManager
 from core.embedding import MessageStore, PostgresConfig, PostgresVectorStorage, SQLiteConfig, SQLiteVectorStorage
-from core.tools.tools_mcp import Tools
+from core.tools.tools import Tools
 from core.workflows.augmented_llm import AugmentedLLMCall
 from core.workflows.chain_of_thought import ChainOfThoughtReasoning
 from core.workflows.deep_research import ResearchWorkflow
@@ -55,7 +56,7 @@ class CoreAgent(BaseAgent):
         self.conversation_manager = ConversationManager(self.message_store)
 
         # Initialize managers
-        self.tools = Tools()
+        self.tools = Tools(DefaultToolBox)
         self.llm_provider = LLMProvider(
             base_url=HEURIST_BASE_URL,
             api_key=HEURIST_API_KEY,
@@ -350,7 +351,8 @@ class CoreAgent(BaseAgent):
         skip_conversation_context: bool = False,
     ) -> Tuple[str, Optional[str], Optional[Dict]]:
         """Chain of thought processing (for backward compatibility)"""
-        return await self.chain_of_thought.process(
+        chat_id = str(chat_id) if chat_id else "General"
+        response, image_url_final, _ = await self.chain_of_thought.process(
             message=message,
             personality_provider=self.personality_provider,
             chat_id=chat_id,
@@ -364,6 +366,7 @@ class CoreAgent(BaseAgent):
             agent=self,
             conversation_provider=self.conversation_manager,
         )
+        return response, image_url_final, None
 
     def _should_use_cot(self, message: str) -> bool:
         """Determine if message should use chain of thought"""

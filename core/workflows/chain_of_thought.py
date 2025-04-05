@@ -45,7 +45,11 @@ class ChainOfThoughtReasoning:
 
         try:
             # Planning phase
-            planning_prompt = f"""<SYSTEM_PROMPT> I want you to give analyze the question {message_info}.
+            planning_prompt = f"""
+            <MAIN_INSTRUCTION>
+            You are a helpful assistant that can analyze the question/message or request and give me a list of steps with the tools you'd use in each step, if the step is not a specific tool you have to use, just put the tool name as "None", DO NOT ANSWER THE USER MESSAGE FOLLOW THE SYSTEM PROMPT INSTRUCTIONS.
+            </MAIN_INSTRUCTION>
+            <SYSTEM_PROMPT> I want you to give analyze the question/message or request {message_info}. Make sure you follow the following rules to answer the inital request.
                     IMPORTANT: DON'T USE TOOLS RIGHT NOW. ANALYZE AND Give me a list of steps with the tools you'd use in each step, if the step is not a specific tool you have to use, just put the tool name as "None".
                     The most important thing to tell me is what different calls you'd do or processes as a list. Your answer should be a valid JSON and ONLY the JSON.
                     Make sure you analyze what outputs from previous steps you'd need to use in the next step if applicable.
@@ -108,7 +112,7 @@ class ChainOfThoughtReasoning:
                 print("json_response: ", json_response)
             except json.JSONDecodeError:
                 logger.error(f"Failed to parse JSON response: {text_response}")
-                return self._fallback(message, personality_provider, chat_id, **kwargs)
+                return await self._json_fallback(message, personality_provider, chat_id, text_response, **kwargs)
 
             # Execute each step
             for step in json_response:
@@ -190,6 +194,45 @@ class ChainOfThoughtReasoning:
 
         except Exception as e:
             logger.error(f"Chain of thought processing failed: {str(e)}")
+            return await self._fallback(message, personality_provider, chat_id, **kwargs)
+
+    async def _json_fallback(self, message, personality_provider, chat_id, text_response, **kwargs):
+        """Special fallback for JSON parsing errors that attempts to fix the JSON format"""
+        logger.info("Attempting to fix malformed JSON response")
+
+        fix_json_prompt = """
+        The following text was supposed to be in valid JSON format but contains errors.
+        Please convert it to a valid JSON array of steps with the same information.
+        Each step should have "step", "tool", and "parameters" fields.
+
+        Original text:
+        ```
+        {text}
+        ```
+
+        Return ONLY the fixed JSON with no additional text, explanations, or markdown formatting.
+        """
+
+        try:
+            # Try to fix the JSON
+            fixed_json_text, _, _ = await self.llm_provider.call(
+                system_prompt=fix_json_prompt.format(text=text_response),
+                user_prompt="Please fix the JSON format issues in the text above.",
+                temperature=0.1,  # Low temperature for more deterministic output
+                skip_tools=True,
+            )
+
+            # Try to parse the fixed JSON
+            try:
+                json_response = json.loads(fixed_json_text)
+                logger.info("Successfully fixed JSON format")
+                return json_response
+            except json.JSONDecodeError:
+                logger.error("Failed to parse JSON even after attempted fix")
+                return await self._fallback(message, personality_provider, chat_id, **kwargs)
+
+        except Exception as e:
+            logger.error(f"JSON fix attempt failed: {str(e)}")
             return await self._fallback(message, personality_provider, chat_id, **kwargs)
 
     async def _fallback(self, message, personality_provider, chat_id, **kwargs):
