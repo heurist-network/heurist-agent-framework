@@ -4,7 +4,7 @@ import threading
 
 import dotenv
 
-from agents.core_agent_refactor import CoreAgent
+from agents.core_agent import CoreAgent
 from interfaces.api import FlaskAgent
 from interfaces.telegram import TelegramAgent
 from interfaces.twitter_post import TwitterAgent

@@ -546,7 +546,11 @@ class CoreAgent(BaseAgent):
         text_response = ""
         try:
             print("USING COT")
-            prompt = f"""<SYSTEM_PROMPT> I want you to give analyze the question {message_info}.
+            prompt = f"""
+            <MAIN_INSTRUCTION>
+            You are a helpful assistant that can analyze the question/message or request and give me a list of steps with the tools you'd use in each step, if the step is not a specific tool you have to use, just put the tool name as "None", DO NOT ANSWER THE USER MESSAGE FOLLOW THE SYSTEM PROMPT INSTRUCTIONS.
+            </MAIN_INSTRUCTION>
+            <SYSTEM_PROMPT> I want you to give analyze the question {message_info}.
                     IMPORTANT: DON'T USE TOOLS RIGHT NOW. ANALYZE AND Give me a list of steps with the tools you'd use in each step, if the step is not a specific tool you have to use, just put the tool name as "None".
                     The most important thing to tell me is what different calls you'd do or processes as a list. Your answer should be a valid JSON and ONLY the JSON.
                     Make sure you analyze what outputs from previous steps you'd need to use in the next step if applicable.

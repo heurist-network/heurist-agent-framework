@@ -2,7 +2,7 @@ import logging
 
 import dotenv
 
-from agents.core_agent_refactor import CoreAgent
+from agents.core_agent import CoreAgent
 from interfaces.twitter_post import TwitterAgent
 
 # Set up logging
