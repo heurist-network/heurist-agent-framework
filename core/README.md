@@ -460,7 +460,7 @@ from heurist_core.components import LLMProvider
 tools = Tools()
 
 # Initialize MCP connection
-await tools.initialize(server_url="https://sequencer-v2.heurist.xyz/tool51d0cadd/sse")
+await tools.initialize(server_url="https://localhost:8000/sse")
 
 # Initialize LLM provider with MCP tools
 llm_provider = LLMProvider(tool_manager=tools)
@@ -530,7 +530,7 @@ from heurist_core.clients import MCPClient
 
 # Initialize MCP client
 mcp_client = MCPClient(
-    server_url="https://sequencer-v2.heurist.xyz/tool51d0cadd/sse"  # Required: MCP server URL
+    server_url="https://localhost:8000/sse"  # Required: MCP server URL
 )
 
 # Start connection

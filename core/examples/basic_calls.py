@@ -26,7 +26,7 @@ augmented_llm = AugmentedLLMCall(knowledge_provider, conversation_manager, tools
 chain_of_thought = ChainOfThoughtReasoning(llm_provider, tools, augmented_llm)
 research_workflow = ResearchWorkflow(llm_provider, tools, search_client)
 
-server_url = "https://sequencer-v2.heurist.xyz/tool51d0cadd/sse"
+server_url = "https://localhost:8000/sse"
 
 
 async def main():
