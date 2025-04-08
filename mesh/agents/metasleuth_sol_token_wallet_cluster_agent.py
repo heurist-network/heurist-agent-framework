@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 import requests
 from dotenv import load_dotenv
 
-from core.llm import call_llm_async, call_llm_with_tools_async
+from core.llm import call_llm_with_tools_async
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -144,19 +144,6 @@ Note: Currently only Solana chain is supported.
                 },
             },
         ]
-
-    async def _respond_with_llm(self, query: str, tool_call_id: str, data: dict, temperature: float) -> str:
-        return await call_llm_async(
-            base_url=self.heurist_base_url,
-            api_key=self.heurist_api_key,
-            model_id=self.metadata["large_model_id"],
-            messages=[
-                {"role": "system", "content": self.get_system_prompt()},
-                {"role": "user", "content": query},
-                {"role": "tool", "content": str(data), "tool_call_id": tool_call_id},
-            ],
-            temperature=temperature,
-        )
 
     def _handle_error(self, maybe_error: dict) -> dict:
         if "error" in maybe_error:
@@ -311,7 +298,12 @@ Note: Currently only Solana chain is supported.
                 return {"response": "", "data": data}
 
             explanation = await self._respond_with_llm(
-                query=query, tool_call_id=tool_call.id, data=data, temperature=0.3
+                model_id=self.metadata["large_model_id"],
+                system_prompt=self.get_system_prompt(),
+                query=query,
+                tool_call_id=tool_call.id,
+                data=data,
+                temperature=0.3,
             )
             return {"response": explanation, "data": data}
 

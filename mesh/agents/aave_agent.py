@@ -353,7 +353,7 @@ class AaveAgent(MeshAgent):
             if raw_data_only:
                 return {"response": "", "data": data}
 
-            explanation = await super()._respond_with_llm(
+            explanation = await self._respond_with_llm(
                 model_id=self.metadata["large_model_id"],
                 system_prompt=self.get_system_prompt(),
                 query=query,

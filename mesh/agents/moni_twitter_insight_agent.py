@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 import aiohttp
 from dotenv import load_dotenv
 
-from core.llm import call_llm_async, call_llm_with_tools_async
+from core.llm import call_llm_with_tools_async
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -180,23 +180,6 @@ class MoniTwitterInsightAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                       SHARED / UTILITY METHODS
     # ------------------------------------------------------------------------
-    async def _respond_with_llm(self, query: str, tool_call_id: str, data: dict, temperature: float) -> str:
-        """
-        Reusable helper to ask the LLM to generate a user-friendly explanation
-        given a piece of data from a tool call.
-        """
-        return await call_llm_async(
-            base_url=self.heurist_base_url,
-            api_key=self.heurist_api_key,
-            model_id=self.metadata["large_model_id"],
-            messages=[
-                {"role": "system", "content": self.get_system_prompt()},
-                {"role": "user", "content": query},
-                {"role": "tool", "content": str(data), "tool_call_id": tool_call_id},
-            ],
-            temperature=temperature,
-        )
-
     def _clean_username(self, username: str) -> str:
         """
         Remove @ symbol if present in the username
@@ -339,7 +322,12 @@ class MoniTwitterInsightAgent(MeshAgent):
             return {"response": "", "data": formatted_data}
 
         explanation = await self._respond_with_llm(
-            query=query, tool_call_id=tool_call_id, data=formatted_data, temperature=0.3
+            model_id=self.metadata["large_model_id"],
+            system_prompt=self.get_system_prompt(),
+            query=query,
+            tool_call_id=tool_call_id,
+            data=formatted_data,
+            temperature=0.3,
         )
 
         return {"response": explanation, "data": formatted_data}

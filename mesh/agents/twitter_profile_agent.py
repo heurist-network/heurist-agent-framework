@@ -484,7 +484,12 @@ class TwitterProfileAgent(MeshAgent):
                 return {"response": "", "data": data}
 
             explanation = await self._respond_with_llm(
-                query=query, tool_call_id="twitter_profile_query", data=data, temperature=0.7
+                model_id=self.metadata["large_model_id"],
+                system_prompt=self.get_system_prompt(),
+                query=query,
+                tool_call_id="twitter_profile_query",
+                data=data,
+                temperature=0.7,
             )
 
             return {"response": explanation, "data": data}
