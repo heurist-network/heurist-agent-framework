@@ -11,8 +11,7 @@ from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_ex
 
 from core.llm import call_llm_async, call_llm_with_tools_async
 from decorators import monitor_execution, with_cache, with_retry
-
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 load_dotenv()

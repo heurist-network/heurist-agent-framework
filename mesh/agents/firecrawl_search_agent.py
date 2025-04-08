@@ -9,8 +9,7 @@ from firecrawl import FirecrawlApp
 
 from core.llm import call_llm_async, call_llm_with_tools_async
 from decorators import monitor_execution, with_cache, with_retry
-
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
 logger = logging.getLogger(__name__)

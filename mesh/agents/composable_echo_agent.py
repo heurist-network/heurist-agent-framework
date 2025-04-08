@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from loguru import logger
 
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 
 class ComposableEchoAgent(MeshAgent):

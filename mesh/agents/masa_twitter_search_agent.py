@@ -7,8 +7,7 @@ import requests
 
 from core.llm import call_llm_async
 from decorators import monitor_execution, with_cache, with_retry
-
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 

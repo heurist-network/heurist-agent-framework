@@ -10,8 +10,7 @@ from clients.defillama_client import DefiLlamaClient
 from clients.merkl_client import MerklClient
 from core.custom_smolagents import OpenAIServerModel, smolagents_system_prompt
 from decorators import monitor_execution, with_retry
-
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
 logger = logging.getLogger(__name__)

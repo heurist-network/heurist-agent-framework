@@ -11,8 +11,7 @@ from smolagents.memory import SystemPromptStep
 from core.custom_smolagents import OpenAIServerModel
 from core.llm import call_llm_async
 from decorators import monitor_execution, with_cache, with_retry
-
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
 logger = logging.getLogger(__name__)

@@ -11,7 +11,7 @@ import aiohttp
 from dotenv import load_dotenv
 from loguru import logger
 
-from mesh.agents.mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 # Configure loguru
 logger.remove()  # Remove default handler
@@ -44,7 +44,7 @@ class AgentLoader:
 
     def load_agents(self) -> Dict[str, Type[MeshAgent]]:
         agents_dict = {}
-        package_name = "mesh"
+        package_name = "mesh.agents"
         found_agents = []
         import_errors = []
 

@@ -1,6 +1,8 @@
 import logging
 import os
 import subprocess
+import sys
+from pathlib import Path
 from typing import Any, Dict, Optional
 
 import aiohttp
@@ -10,7 +12,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
 
-from mesh_manager import AgentLoader, Config
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
+
+from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s - %(message)s")
 logger = logging.getLogger("MeshAPI")

@@ -3,7 +3,7 @@ import logging
 import random
 from typing import Any, Dict
 
-from .mesh_agent import MeshAgent
+from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 
