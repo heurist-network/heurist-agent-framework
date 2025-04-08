@@ -1,4 +1,3 @@
-# mesh/composable_echo_agent.py
 from typing import Any, Dict
 
 from loguru import logger

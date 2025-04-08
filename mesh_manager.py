@@ -11,7 +11,7 @@ import aiohttp
 from dotenv import load_dotenv
 from loguru import logger
 
-from mesh.mesh_agent import MeshAgent
+from mesh.agents.mesh_agent import MeshAgent
 
 # Configure loguru
 logger.remove()  # Remove default handler

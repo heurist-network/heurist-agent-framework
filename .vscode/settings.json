@@ -4,7 +4,7 @@
     "source.fixAll": "always",
     "source.organizeImports": "always"
   },
-  "flake8.args": ["--ignore=E501,W503"],
+  "flake8.args": ["--ignore=E203,E501,W503"],
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true
