@@ -325,6 +325,7 @@ def list_agents():
 @click.argument("agent_tool_pairs", required=False)
 @click.option("--include-disabled", is_flag=True, help="Include disabled agents in testing")
 @click.option("--no-trim", is_flag=True, help="Disable output trimming")
+@click.option("--dev", is_flag=True, help="Use development server")
 @click.option(
     "--json",
     is_flag=False,
@@ -336,6 +337,7 @@ def test_agent(
     agent_tool_pairs: Optional[str] = None,
     include_disabled: bool = False,
     no_trim: bool = False,
+    dev: bool = False,
     json: Optional[str] = None,
 ):
     """Test specific agent-tool pairs. Format: 'agent1,tool1 agent2,tool2' or just 'agent1' to test all tools"""
@@ -350,7 +352,7 @@ def test_agent(
     try:
         agents_metadata = fetch_agents_metadata()
         test_inputs = load_test_inputs()
-        client = MeshClient()
+        client = MeshClient(base_url="http://localhost:8000" if dev else "https://sequencer-v2.heurist.xyz")
         console = Console()
         test_results = []
         skipped_tests = []
