@@ -129,11 +129,6 @@ class ZerionWalletAnalysisAgent(MeshAgent):
             temperature=temperature,
         )
 
-    def _handle_error(self, maybe_error: dict) -> dict:
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
     @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)

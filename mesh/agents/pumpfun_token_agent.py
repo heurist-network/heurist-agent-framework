@@ -438,14 +438,6 @@ Guidelines:
             # Unexpected errors
             raise Exception(f"Unexpected error during query execution: {str(e)}")
 
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """
-        Helper to return the error if present in a dictionary with the 'error' key.
-        """
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
     async def _respond_with_llm(self, query: str, tool_call_id: str, data: dict, temperature: float) -> str:
         """
         Reusable helper to ask the LLM to generate a user-friendly explanation

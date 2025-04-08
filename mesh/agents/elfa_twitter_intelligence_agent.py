@@ -177,12 +177,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                       SHARED / UTILITY METHODS
     # ------------------------------------------------------------------------
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """Small helper to return the error if present"""
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def _make_request(self, endpoint: str, method: str = "GET", params: Dict = None) -> Dict:

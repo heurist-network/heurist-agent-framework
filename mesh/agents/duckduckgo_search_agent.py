@@ -112,12 +112,6 @@ class DuckDuckGoSearchAgent(MeshAgent):
             temperature=temperature,
         )
 
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """Check for and return any errors in the response"""
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
     # ------------------------------------------------------------------------
     #                      API-SPECIFIC METHODS
     # ------------------------------------------------------------------------

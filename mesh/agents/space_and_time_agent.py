@@ -129,12 +129,6 @@ class SpaceTimeAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                       SHARED / UTILITY METHODS
     # ------------------------------------------------------------------------
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """Small helper to return the error if present"""
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
     @with_retry(max_retries=3)
     async def _authenticate(self):
         """Authenticate with Space and Time API if not already authenticated"""

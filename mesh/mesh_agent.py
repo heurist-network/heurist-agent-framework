@@ -7,6 +7,7 @@ import dotenv
 from loguru import logger
 
 from clients.mesh_client import MeshClient
+from core.llm import call_llm_async
 
 os.environ.clear()
 dotenv.load_dotenv()
@@ -105,6 +106,34 @@ class MeshAgent(ABC):
         if update_task_id:
             logger.info(f"Pushing update | Task: {update_task_id} | Content: {content}")
             self.mesh_client.push_update(update_task_id, content)
+
+    def _handle_error(self, maybe_error: dict) -> dict:
+        """
+        Small helper to return the error if present in
+        a dictionary with the 'error' key.
+        """
+        if "error" in maybe_error:
+            return {"error": maybe_error["error"]}
+        return {}
+
+    async def _respond_with_llm(
+        self, model_id: str, system_prompt: str, query: str, tool_call_id: str, data: dict, temperature: float
+    ) -> str:
+        """
+        Reusable helper to ask the LLM to generate a user-friendly explanation
+        given a piece of data from a tool call.
+        """
+        return await call_llm_async(
+            base_url=self.heurist_base_url,
+            api_key=self.heurist_api_key,
+            model_id=model_id,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": query},
+                {"role": "tool", "content": str(data), "tool_call_id": tool_call_id},
+            ],
+            temperature=temperature,
+        )
 
     async def cleanup(self):
         """Cleanup API clients"""

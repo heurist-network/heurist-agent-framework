@@ -185,15 +185,6 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             temperature=temperature,
         )
 
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """
-        Small helper to return the error if present in
-        a dictionary with the 'error' key.
-        """
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
     # ------------------------------------------------------------------------
     #                      API-SPECIFIC METHODS
     # ------------------------------------------------------------------------

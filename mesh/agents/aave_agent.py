@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from eth_defi.aave_v3.reserve import AaveContractsNotConfigured, fetch_reserve_data, get_helper_contracts
 from web3 import Web3
 
-from core.llm import call_llm_async, call_llm_with_tools_async
+from core.llm import call_llm_with_tools_async
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -108,35 +108,6 @@ class AaveAgent(MeshAgent):
                 },
             }
         ]
-
-    # ------------------------------------------------------------------------
-    #                       SHARED / UTILITY METHODS
-    # ------------------------------------------------------------------------
-    async def _respond_with_llm(self, query: str, tool_call_id: str, data: dict, temperature: float) -> str:
-        """
-        Reusable helper to ask the LLM to generate a user-friendly explanation
-        given a piece of data from a tool call.
-        """
-        return await call_llm_async(
-            base_url=self.heurist_base_url,
-            api_key=self.heurist_api_key,
-            model_id=self.metadata["large_model_id"],
-            messages=[
-                {"role": "system", "content": self.get_system_prompt()},
-                {"role": "user", "content": query},
-                {"role": "tool", "content": str(data), "tool_call_id": tool_call_id},
-            ],
-            temperature=temperature,
-        )
-
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """
-        Small helper to return the error if present in
-        a dictionary with the 'error' key.
-        """
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
 
     # ------------------------------------------------------------------------
     #                      AAVE API-SPECIFIC METHODS
@@ -382,8 +353,13 @@ class AaveAgent(MeshAgent):
             if raw_data_only:
                 return {"response": "", "data": data}
 
-            explanation = await self._respond_with_llm(
-                query=query, tool_call_id=tool_call.id, data=data, temperature=0.1
+            explanation = await super()._respond_with_llm(
+                model_id=self.metadata["large_model_id"],
+                system_prompt=self.get_system_prompt(),
+                query=query,
+                tool_call_id=tool_call.id,
+                data=data,
+                temperature=0.1,
             )
             return {"response": explanation, "data": data}
 
