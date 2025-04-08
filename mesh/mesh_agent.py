@@ -12,7 +12,7 @@ os.environ.clear()
 dotenv.load_dotenv()
 
 # By default, large and small models are the same
-DEFAULT_MODEL_ID = "anthropic/claude-3.5-haiku"  # "nvidia/llama-3.1-nemotron-70b-instruct"
+DEFAULT_MODEL_ID = "nvidia/llama-3.1-nemotron-70b-instruct"
 
 HEURIST_BASE_URL = os.getenv("HEURIST_BASE_URL")
 HEURIST_API_KEY = os.getenv("HEURIST_API_KEY")
