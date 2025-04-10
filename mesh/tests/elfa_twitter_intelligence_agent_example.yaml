@@ -1,0 +1,944 @@
+input_mentions:
+  query: Search for mentions of Heurist, HEU, and heurist_ai in the last 30 days
+output_mentions:
+  response: "**Mentions Analysis for Heurist, HEU, and heurist_ai (Last 30 days)**\n\
+    \n### **Overall Sentiment and Engagement**\n\n* **Sentiment:** Predominantly **Neutral**\
+    \ (90% of mentions), with a few **Positive** mentions (10%).\n* **Engagement:**\n\
+    \t+ Total Mentions: 20\n\t+ Total Likes: 341\n\t+ Total Replies: 56\n\t+ Total\
+    \ Reposts: 123\n\t+ Total Views: 43,111\n\n### **Key Influencers and Their Impact**\n\
+    \n1. **@Heurist_ai** (Official Account)\n\t* Mentions: 5\n\t* Engagement: 154\
+    \ Likes, 20 Replies, 46 Reposts, 18,440 Views\n\t* Impact: Driving conversations\
+    \ around Heurist Mesh, partnerships, and technological advancements.\n2. **@[Anonymous\
+    \ User]** (Author of the in-depth analysis post on March 6th)\n\t* Mentions: 1\n\
+    \t* Engagement: 71 Likes, 20 Replies, 22 Reposts, 8,390 Views\n\t* Impact: Significant\
+    \ influence with a detailed, neutral analysis of Heurist's ecosystem and potential.\n\
+    \n### **Notable Trends or Patterns**\n\n1. **Heurist Mesh:** Frequently mentioned,\
+    \ indicating growing interest in the decentralized network of AI agents.\n2. **Partnerships\
+    \ and Integrations:** Collaborations with companies like Spheron, Aethir, and\
+    \ integration with various data sources (e.g., CoinGecko, Elfa AI) are highlighted\
+    \ across mentions.\n3. **Technological Advancements:** Discussions around serverless\
+    \ AI cloud, modular AI agents, and multi-interface support showcase the project's\
+    \ focus on innovation.\n4. **Community Engagement:** The official account's activity\
+    \ and the engagement metrics suggest a moderately active and interested community,\
+    \ with room for growth in sentiment polarity (more positive/negative discussions).\n\
+    5. **Cross-Platform Compatibility:** Mentions of support across Telegram, Discord,\
+    \ Twitter, Farcaster, and REST API indicate an effort to cater to a broad user\
+    \ base."
+  data:
+    status: success
+    data:
+      success: true
+      data:
+      - content: 'Heurist Search
+
+          '
+        mentioned_at: '2025-03-18T16:19:08+00:00'
+        type: reply
+        metrics:
+          like_count: 9
+          reply_count: 1
+          repost_count: 0
+          view_count: 659
+        sentiment: netural
+      - content: "We're excited to announce our partnership with @Heurist_ai, a decentralized\
+          \ AI-as-a-Service cloud enabling cost-efficient, censorship-free AI integration\
+          \ with APIs. \n\nHeurist will be providing many offerings to support Think\
+          \ Agents, including Search which you can try below \U0001F447 "
+        mentioned_at: '2025-03-18T16:19:07+00:00'
+        type: post
+        metrics:
+          like_count: 64
+          reply_count: 4
+          repost_count: 12
+          view_count: 4599
+        sentiment: netural
+      - content: 'RT @heurist_ai: We''re officially on @AnthropicAI''s MCP servers
+          list! 🎉
+
+
+          Heurist Mesh MCP Server is now part of the Model Context Protocol r…'
+        mentioned_at: '2025-03-17T19:11:03+00:00'
+        type: repost
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 28
+          view_count: 0
+        sentiment: netural
+      - content: 'We''re officially on @AnthropicAI''s MCP servers list! 🎉
+
+
+          Heurist Mesh MCP Server is now part of the Model Context Protocol reference
+          implementations on Github.
+
+
+          Claude can now tap directly into Web3 tools and blockchain data through
+          our specialized agent network. '
+        mentioned_at: '2025-03-17T16:39:34+00:00'
+        type: post
+        metrics:
+          like_count: 54
+          reply_count: 12
+          repost_count: 28
+          view_count: 9200
+        sentiment: netural
+      - content: 'Just crafted a wallet analysis multi-agent system with Heurist Mesh
+          on a weekend. I brought the @heurist_ai mesh agents to @near_ai, spun up
+          an MCP server and had Claude generate personalized reports for any Ethereum
+          wallet.
+
+
+          Check out how it works 👇 '
+        mentioned_at: '2025-03-17T00:31:27+00:00'
+        type: post
+        metrics:
+          like_count: 31
+          reply_count: 5
+          repost_count: 7
+          view_count: 4446
+        sentiment: netural
+      - content: '🚀 Significant last hour moves
+
+
+          AI Meme:
+
+          $ava -3.1% | @AVA_holo
+
+          $mona +3.1% | @mona_witchy
+
+          $lqna -3.8% | @LiquinaHL
+
+
+          My Analysis:
+
+          $mona: Mona is undergoing a transformation through the Heurist AI Agent
+          Framework, which could be a major turning point for the project. The partnership
+          with Holoworld AI is also a significant development, and the team''s focus
+          on audio integration and Live2D animations is noteworthy. Mona''s future
+          looks promising, but it''s essential to keep an eye on the project''s progress.'
+        mentioned_at: '2025-03-14T18:10:08+00:00'
+        type: post
+        metrics:
+          like_count: 1
+          reply_count: 0
+          repost_count: 0
+          view_count: 71
+        sentiment: negative
+      - content: "The Dawn of Autonomous AI or there is more?\n\nThe AI Revolution\
+          \ is Shifting Gears - and it`s best to pay attention!\n\nI’ve been exploring\
+          \ @Heurist_AI, and honestly? It feels like they’re building the infrastructure\
+          \ we’ve always imagined: one where AI isn’t just powerful, but autonomous.\n\
+          \nThink agents; independent, modular AI units, working together to redefine\
+          \ how we solve problems, build systems, and interact with technology.\n\n\
+          Here’s what’s game-changing: @Heurist_AI has shut down their mining operations\
+          \ to focus entirely on a serverless AI cloud.\n\nBut this isn’t just another\
+          \ AI app or model. They’re laying the groundwork for something bigger: an\
+          \ agent economy, where decentralized AI agents don’t just operate independently,\
+          \ they collaborate like financial systems in DeFi, creating something far\
+          \ more powerful.\n\n‣ What stood out to me?\n• Unified AI simplified: @Heurist_ai\
+          \ serverless AI platform integrates everything, LLMs, image generation,\
+          \ even the latest video AI (the Hunyuan model). Developers don’t need to\
+          \ worry about infrastructure, all accessible via a single API. \n\n• Proven\
+          \ agents in action: This isn’t just theory. Real-world agents like @Aigent_chAIn\
+          \ (for DeFi) and @Mona_witchy (for AI content creation) @RadiantAixrpl (for\
+          \ video generation on XRPL) @VirtualsNikita (for alpha hunting) are already\
+          \ live on this infrastructure.\n\n• Eliza framework pioneers: @Heurist_ai\
+          \ is the first infrastructure provider for the Eliza framework, which is\
+          \ all about creating modular, collaborative agents. Think smart contracts\
+          \ in DeFi, but for AI. \n\n• Big partnerships, bigger possibilities:\n\n\
+          By teaming up with companies like Spheron and Aethir, they’re making decentralized\
+          \ compute scalable and enterprise-ready.\n\nAnd here’s the kicker: Heurist\
+          \ Mesh, their next big leap, launches next month.\n\nMesh is an open network\
+          \ of AI agents built to collaborate like modular components. Each agent\
+          \ has a specific function, processing data, generating reports, interacting\
+          \ with users, and together, they form a swarm capable of solving complex\
+          \ tasks\n\n‣ Here is why it's exciting: \n\n• Decentralized, open-source,\
+          \ and community-driven: Developers can build agents, contribute to the network,\
+          \ and monetize their work through pay-per-use. \n\n• Web2 interoperability:\
+          \ It works with tools like REST APIs and Claude MCP, so it’s not locked\
+          \ into one ecosystem.\n\n• Cost-efficient, scalable workflows: Built on\
+          \ decentralized compute, it’s designed to deliver high performance without\
+          \ breaking the bank. \n\n@Heurist_ai isn’t just building infrastructure\
+          \ but shaping what an autonomous AI economy could look like. And honestly?\
+          \ I’m here for it. \n\nTagging Gigachads that might be intrested in this\
+          \ \U0001F447\n\n- @SamuelXeus \n- @TheDeFISaint\n- @hmalviya9\n- @poopmandefi\n\
+          - @ayyeandy\n- @zerokn0wledge_\n- @alphabatcher\n- @Layer2_M\n- @therollupco\n\
+          - @LadyofCrypto1\n- @milesdeutscher\n- @Deebs_DeFi\n- @RubiksWeb3hub\n-\
+          \ @stacy_muur\n- @TheDeFinvestor\n- @splinter0n\n- @izu_crypt\n- @belizardd\n\
+          - @eli5_defi\n- @the_smart_ape \n- @ViktorDefi\n- @DefiIgnas\n- @0xMughal\n\
+          - @CryptoGirlNova\n- @Haylesdefi\n- @DeRonin_\n- @0xAndrewMoh\n- @defiinfant\n\
+          - @nickwh8te\n- @Dynamo_Patrick\n- @DeFiMinty\n- @Louround_ \n- @0xSalazar\n\
+          - @ardizor\n- @crypthoem\n- @zeuuss_01 \n- @crypto_linn\n- @CryptoShiro_"
+        mentioned_at: '2025-03-06T11:01:04+00:00'
+        type: post
+        metrics:
+          like_count: 71
+          reply_count: 20
+          repost_count: 22
+          view_count: 8390
+        sentiment: neutral
+      - content: 'Learn more about @heurist_ai  here👇🏻
+
+
+          1️⃣ Multi-Interface Support
+
+          AI agents can operate across Telegram, Discord, Twitter, Farcaster, REST
+          API, and more.
+
+
+          2️⃣ Modular AI Agents
+
+          Supports text/voice processing, image generation, and external API integrations.
+
+
+          3️⃣ Heurist Mesh
+
+          A decentralized network where AI agents share capabilities, similar to composable
+          DeFi smart contracts.
+
+
+          4️⃣ Mesh Agents Integration
+
+          Connects with top data sources like CoinGecko, Elfa AI, Allora, and GoPlus
+          Security.
+
+
+          5️⃣ Open Source
+
+          Anyone can contribute new agents and expand the Mesh ecosystem.
+
+
+          '
+        mentioned_at: '2025-02-27T07:26:40+00:00'
+        type: reply
+        metrics:
+          like_count: 9
+          reply_count: 0
+          repost_count: 0
+          view_count: 520
+        sentiment: netural
+      - content: 'Learn more about @heurist_ai  here👇🏻
+
+
+          1️⃣ Multi-Interface Support
+
+          AI agents can operate across Telegram, Discord, Twitter, Farcaster, REST
+          API, and more.
+
+
+          2️⃣ Modular AI Agents
+
+          Supports text/voice processing, image generation, and external API integrations.
+
+
+          3️⃣ Heurist Mesh
+
+          A decentralized network where AI agents share capabilities, similar to composable
+          DeFi smart contracts.
+
+
+          4️⃣ Mesh Agents Integration
+
+          Connects with top data sources like CoinGecko, Elfa AI, Allora, and GoPlus
+          Security.
+
+
+          5️⃣ Open Source
+
+          Anyone can contribute new agents and expand the Mesh ecosystem.
+
+
+          '
+        mentioned_at: '2025-02-27T07:26:40+00:00'
+        type: reply
+        metrics:
+          like_count: 9
+          reply_count: 0
+          repost_count: 0
+          view_count: 520
+        sentiment: netural
+      - content: 'Crypto AI needs its DeFi moment.
+
+
+          Today, agents are isolated islands – each rebuilding tools, repeating computations,
+          and reinventing what''s been done. The potential of collective intelligence
+          remains untapped.
+
+
+          Until now.
+
+
+          Introducing Heurist Mesh 🧩'
+        mentioned_at: '2025-02-26T19:15:51+00:00'
+        type: post
+        metrics:
+          like_count: 42
+          reply_count: 7
+          repost_count: 5
+          view_count: 8148
+        sentiment: netural
+      - content: 'Crypto AI needs its DeFi moment.
+
+
+          Today, agents are isolated islands – each rebuilding tools, repeating computations,
+          and reinventing what''s been done. The potential of collective intelligence
+          remains untapped.
+
+
+          Until now.
+
+
+          Introducing Heurist Mesh 🧩'
+        mentioned_at: '2025-02-26T19:15:51+00:00'
+        type: post
+        metrics:
+          like_count: 42
+          reply_count: 7
+          repost_count: 5
+          view_count: 8148
+        sentiment: netural
+      - content: "RT @heurist_ai: 20+ Elastic Chains and growing. \n\nUnified liquidity.\
+          \ Unified UX. Only possible on @zksync \n\nHeurist Chain is loading... ███…"
+        mentioned_at: '2025-02-22T01:38:56+00:00'
+        type: repost
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 10
+          view_count: 0
+        sentiment: positive
+      - content: "RT @heurist_ai: 20+ Elastic Chains and growing. \n\nUnified liquidity.\
+          \ Unified UX. Only possible on @zksync \n\nHeurist Chain is loading... ███…"
+        mentioned_at: '2025-02-22T01:38:56+00:00'
+        type: repost
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 11
+          view_count: 0
+        sentiment: positive
+      - content: "RT @heurist_ai: 20+ Elastic Chains and growing. \n\nUnified liquidity.\
+          \ Unified UX. Only possible on @zksync \n\nHeurist Chain is loading... ███…"
+        mentioned_at: '2025-02-22T01:38:56+00:00'
+        type: repost
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 11
+          view_count: 0
+        sentiment: positive
+input_account:
+  query: Analyze the Twitter account @heurist_ai
+output_account:
+  response: "**Analysis of Twitter Account @heurist_ai**\n\n### **Account Stats Summary**\n\
+    \n* **Smart Following Count**: 486\n* **Average Engagement**: 6,344.5\n* **Follower\
+    \ Engagement Ratio**: 0.1882 (approximately 18.82% of followers engage with the\
+    \ account)\n\n### **Mentions Analysis**\n\n#### **Overall Sentiment and Engagement**\n\
+    \n* **Dominant Sentiment**: Neutral (across all mentions, indicating a balanced\
+    \ or informative tone)\n* **Total Engagement** (across all mentions): \n\t+ Likes:\
+    \ 1,732\n\t+ Replies: 124\n\t+ Reposts: 341\n\t+ Views: 73,041\n\n#### **Key Influencers\
+    \ and Their Impact**\n\n1. **@marouen19 & @nonfungibleyash**:\n\t* **Mention Type**:\
+    \ Post\n\t* **Engagement**: 261 Likes, 20 Replies, 79 Reposts, 7,015 Views\n\t\
+    * **Impact**: Hosts of an event featuring @heurist_ai, indicating a collaborative\
+    \ and community-driven impact.\n2. **@AltcoinGordon**:\n\t* **Mention Type**:\
+    \ Post\n\t* **Engagement**: 71 Likes, 32 Replies, 26 Reposts, 15,390 Views\n\t\
+    * **Impact**: Participation in an event with @heurist_ai, suggesting influence\
+    \ in the crypto and AI spaces.\n\n#### **Notable Trends or Patterns**\n\n1. **Partnerships\
+    \ and Collaborations**: Frequent mentions of @heurist_ai in collaboration with\
+    \ other projects (@AethirCloud, @AlloraNetwork, etc.), highlighting a strong network\
+    \ within the AI and crypto ecosystems.\n2. **Event Participation**: Regular participation\
+    \ in events (e.g., DeAI Day, BLUEPRINT @EthereumDenver), indicating an active\
+    \ role in community engagement and development.\n3. **Technology and Innovation\
+    \ Focus**: Mentions often highlight @heurist_ai's technological advancements (e.g.,\
+    \ Heurist Mesh, serverless AI cloud), emphasizing innovation in AI and decentralized\
+    \ computing.\n\n### **Influential Connections**\n\n* **@AethirCloud**\n* **@AlloraNetwork**\n\
+    * **@AnthropicAI**\n* **@SpheronFDN**\n\n### **Posting Patterns and Impact**\n\
+    \n* **Frequency**: Regular posts and mentions, indicating consistent activity.\n\
+    * **Content Variety**: Mix of"
+  data:
+    status: success
+    data:
+      account_stats:
+        success: true
+        data:
+          smartFollowingCount: 486
+          averageEngagement: 6344.5
+          followerEngagementRatio: 0.1882194137890115
+      mentions:
+        success: true
+        data:
+        - content: 'RT @rendernetwork: At DeAI Day, @drjonessf joined leaders from
+            @AethirCloud, @HelloLumerin, @MorpheusAIs, @heurist_ai &amp; @SpheronFDN
+            to disc…'
+          mentioned_at: '2025-03-19T10:33:24+00:00'
+          type: repost
+          metrics:
+            like_count: 0
+            reply_count: 0
+            repost_count: 19
+            view_count: 0
+          sentiment: neutral
+        - content: 'At DeAI Day, @drjonessf joined leaders from @AethirCloud, @HelloLumerin,
+            @MorpheusAIs, @heurist_ai &amp; @SpheronFDN to discuss the future of AI
+            agents &amp; decentralized compute.
+
+
+            Watch the panel to learn more about how scalable inference on decentralized
+            GPUs is shaping on-chain AI'
+          mentioned_at: '2025-03-18T22:15:17+00:00'
+          type: post
+          metrics:
+            like_count: 147
+            reply_count: 2
+            repost_count: 19
+            view_count: 9898
+          sentiment: neutral
+        - content: 'Thinking Out Loud 🧠 ✊
+
+
+            Set your reminder👇
+
+
+
+            We’re back this Thursday at 1pm PST where @mikeyanderson @jessebryan @NovaSpectre_
+            and @johnnyclem will talk with @artoriatech (@heurist_ai) to discuss the
+            partnership and more!
+
+
+            Come join the conversation! '
+          mentioned_at: '2025-03-18T18:11:58+00:00'
+          type: post
+          metrics:
+            like_count: 39
+            reply_count: 2
+            repost_count: 15
+            view_count: 1995
+          sentiment: netural
+        - content: "We're excited to announce our partnership with @Heurist_ai, a\
+            \ decentralized AI-as-a-Service cloud enabling cost-efficient, censorship-free\
+            \ AI integration with APIs. \n\nHeurist will be providing many offerings\
+            \ to support Think Agents, including Search which you can try below \U0001F447\
+            \ "
+          mentioned_at: '2025-03-18T16:19:07+00:00'
+          type: post
+          metrics:
+            like_count: 64
+            reply_count: 4
+            repost_count: 12
+            view_count: 4599
+          sentiment: netural
+        - content: 'RT @heurist_ai: We''re officially on @AnthropicAI''s MCP servers
+            list! 🎉
+
+
+            Heurist Mesh MCP Server is now part of the Model Context Protocol r…'
+          mentioned_at: '2025-03-17T19:11:03+00:00'
+          type: repost
+          metrics:
+            like_count: 0
+            reply_count: 0
+            repost_count: 28
+            view_count: 0
+          sentiment: netural
+        - content: 'Just crafted a wallet analysis multi-agent system with Heurist
+            Mesh on a weekend. I brought the @heurist_ai mesh agents to @near_ai,
+            spun up an MCP server and had Claude generate personalized reports for
+            any Ethereum wallet.
+
+
+            Check out how it works 👇 '
+          mentioned_at: '2025-03-17T00:31:27+00:00'
+          type: post
+          metrics:
+            like_count: 31
+            reply_count: 5
+            repost_count: 7
+            view_count: 4446
+          sentiment: netural
+        - content: "The Dawn of Autonomous AI or there is more?\n\nThe AI Revolution\
+            \ is Shifting Gears - and it`s best to pay attention!\n\nI’ve been exploring\
+            \ @Heurist_AI, and honestly? It feels like they’re building the infrastructure\
+            \ we’ve always imagined: one where AI isn’t just powerful, but autonomous.\n\
+            \nThink agents; independent, modular AI units, working together to redefine\
+            \ how we solve problems, build systems, and interact with technology.\n\
+            \nHere’s what’s game-changing: @Heurist_AI has shut down their mining\
+            \ operations to focus entirely on a serverless AI cloud.\n\nBut this isn’t\
+            \ just another AI app or model. They’re laying the groundwork for something\
+            \ bigger: an agent economy, where decentralized AI agents don’t just operate\
+            \ independently, they collaborate like financial systems in DeFi, creating\
+            \ something far more powerful.\n\n‣ What stood out to me?\n• Unified AI\
+            \ simplified: @Heurist_ai serverless AI platform integrates everything,\
+            \ LLMs, image generation, even the latest video AI (the Hunyuan model).\
+            \ Developers don’t need to worry about infrastructure, all accessible\
+            \ via a single API. \n\n• Proven agents in action: This isn’t just theory.\
+            \ Real-world agents like @Aigent_chAIn (for DeFi) and @Mona_witchy (for\
+            \ AI content creation) @RadiantAixrpl (for video generation on XRPL) @VirtualsNikita\
+            \ (for alpha hunting) are already live on this infrastructure.\n\n• Eliza\
+            \ framework pioneers: @Heurist_ai is the first infrastructure provider\
+            \ for the Eliza framework, which is all about creating modular, collaborative\
+            \ agents. Think smart contracts in DeFi, but for AI. \n\n• Big partnerships,\
+            \ bigger possibilities:\n\nBy teaming up with companies like Spheron and\
+            \ Aethir, they’re making decentralized compute scalable and enterprise-ready.\n\
+            \nAnd here’s the kicker: Heurist Mesh, their next big leap, launches next\
+            \ month.\n\nMesh is an open network of AI agents built to collaborate\
+            \ like modular components. Each agent has a specific function, processing\
+            \ data, generating reports, interacting with users, and together, they\
+            \ form a swarm capable of solving complex tasks\n\n‣ Here is why it's\
+            \ exciting: \n\n• Decentralized, open-source, and community-driven: Developers\
+            \ can build agents, contribute to the network, and monetize their work\
+            \ through pay-per-use. \n\n• Web2 interoperability: It works with tools\
+            \ like REST APIs and Claude MCP, so it’s not locked into one ecosystem.\n\
+            \n• Cost-efficient, scalable workflows: Built on decentralized compute,\
+            \ it’s designed to deliver high performance without breaking the bank.\
+            \ \n\n@Heurist_ai isn’t just building infrastructure but shaping what\
+            \ an autonomous AI economy could look like. And honestly? I’m here for\
+            \ it. \n\nTagging Gigachads that might be intrested in this \U0001F447\
+            \n\n- @SamuelXeus \n- @TheDeFISaint\n- @hmalviya9\n- @poopmandefi\n- @ayyeandy\n\
+            - @zerokn0wledge_\n- @alphabatcher\n- @Layer2_M\n- @therollupco\n- @LadyofCrypto1\n\
+            - @milesdeutscher\n- @Deebs_DeFi\n- @RubiksWeb3hub\n- @stacy_muur\n- @TheDeFinvestor\n\
+            - @splinter0n\n- @izu_crypt\n- @belizardd\n- @eli5_defi\n- @the_smart_ape\
+            \ \n- @ViktorDefi\n- @DefiIgnas\n- @0xMughal\n- @CryptoGirlNova\n- @Haylesdefi\n\
+            - @DeRonin_\n- @0xAndrewMoh\n- @defiinfant\n- @nickwh8te\n- @Dynamo_Patrick\n\
+            - @DeFiMinty\n- @Louround_ \n- @0xSalazar\n- @ardizor\n- @crypthoem\n\
+            - @zeuuss_01 \n- @crypto_linn\n- @CryptoShiro_"
+          mentioned_at: '2025-03-06T11:01:04+00:00'
+          type: post
+          metrics:
+            like_count: 71
+            reply_count: 20
+            repost_count: 22
+            view_count: 8390
+          sentiment: neutral
+        - content: "\U0001F916 AI x DeFi on Friday at 3pm UTC \U0001F916 \n\nSpeakers:\
+            \ @condzxyz @0xBebis_ @afiprotocol_ai @CryptoWithLeo @bertugoymak @heurist_ai\
+            \ @explorersofai, @mishrakanika3 @nomyclub \n\n\U0001F3A4 Hosted by: @marouen19\
+            \ &amp; @nonfungibleyash\U0001F399️⚡\n\n"
+          mentioned_at: '2025-02-27T18:12:36+00:00'
+          type: post
+          metrics:
+            like_count: 261
+            reply_count: 20
+            repost_count: 79
+            view_count: 7015
+          sentiment: netural
+        - content: "\U0001F916 AI x DeFi on Friday at 3pm UTC \U0001F916 \n\nSpeakers:\
+            \ @condzxyz @0xBebis_ @afiprotocol_ai @CryptoWithLeo @bertugoymak @heurist_ai\
+            \ @explorersofai, @mishrakanika3 @nomyclub \n\n\U0001F3A4 Hosted by: @marouen19\
+            \ &amp; @nonfungibleyash\U0001F399️⚡\n\n"
+          mentioned_at: '2025-02-27T18:12:36+00:00'
+          type: post
+          metrics:
+            like_count: 275
+            reply_count: 20
+            repost_count: 83
+            view_count: 7632
+          sentiment: netural
+        - content: welcome @heurist_ai @artoriatech to the elfa gang
+          mentioned_at: '2025-02-27T07:50:39+00:00'
+          type: quote
+          metrics:
+            like_count: 10
+            reply_count: 1
+            repost_count: 0
+            view_count: 516
+          sentiment: netural
+        - content: welcome @heurist_ai @artoriatech to the elfa gang
+          mentioned_at: '2025-02-27T07:50:39+00:00'
+          type: quote
+          metrics:
+            like_count: 10
+            reply_count: 1
+            repost_count: 0
+            view_count: 531
+          sentiment: netural
+        - content: welcome @heurist_ai @artoriatech to the elfa gang
+          mentioned_at: '2025-02-27T07:50:39+00:00'
+          type: quote
+          metrics:
+            like_count: 10
+            reply_count: 1
+            repost_count: 0
+            view_count: 531
+          sentiment: netural
+        - content: 'Learn more about @heurist_ai  here👇🏻
+
+
+            1️⃣ Multi-Interface Support
+
+            AI agents can operate across Telegram, Discord, Twitter, Farcaster, REST
+            API, and more.
+
+
+            2️⃣ Modular AI Agents
+
+            Supports text/voice processing, image generation, and external API integrations.
+
+
+            3️⃣ Heurist Mesh
+
+            A decentralized network where AI agents share capabilities, similar to
+            composable DeFi smart contracts.
+
+
+            4️⃣ Mesh Agents Integration
+
+            Connects with top data sources like CoinGecko, Elfa AI, Allora, and GoPlus
+            Security.
+
+
+            5️⃣ Open Source
+
+            Anyone can contribute new agents and expand the Mesh ecosystem.
+
+
+            '
+          mentioned_at: '2025-02-27T07:26:40+00:00'
+          type: reply
+          metrics:
+            like_count: 9
+            reply_count: 0
+            repost_count: 0
+            view_count: 520
+          sentiment: netural
+        - content: 'Learn more about @heurist_ai  here👇🏻
+
+
+            1️⃣ Multi-Interface Support
+
+            AI agents can operate across Telegram, Discord, Twitter, Farcaster, REST
+            API, and more.
+
+
+            2️⃣ Modular AI Agents
+
+            Supports text/voice processing, image generation, and external API integrations.
+
+
+            3️⃣ Heurist Mesh
+
+            A decentralized network where AI agents share capabilities, similar to
+            composable DeFi smart contracts.
+
+
+            4️⃣ Mesh Agents Integration
+
+            Connects with top data sources like CoinGecko, Elfa AI, Allora, and GoPlus
+            Security.
+
+
+            5️⃣ Open Source
+
+            Anyone can contribute new agents and expand the Mesh ecosystem.
+
+
+            '
+          mentioned_at: '2025-02-27T07:26:40+00:00'
+          type: reply
+          metrics:
+            like_count: 9
+            reply_count: 0
+            repost_count: 0
+            view_count: 520
+          sentiment: netural
+        - content: 'Great little thread by @heurist_ai on the impact Hearist Mesh
+            can have on Crypto AI.
+
+
+            Their Mesh aims to create an intelligent liquidity layer where agents
+            share capabilities instead of tokens. This would make one agent''s power
+            everyone''s advantage!
+
+
+            Read more below👇!'
+          mentioned_at: '2025-02-26T19:59:10+00:00'
+          type: quote
+          metrics:
+            like_count: 644
+            reply_count: 12
+            repost_count: 12
+            view_count: 19123
+          sentiment: netural
+        - content: "\U0001F680 ANITA AI PRESENTS: THE AI REVOLUTION ON X! \U0001F680\
+            \nJoin ANITA AI for an exciting X Space!\n\U0001F4C5 Date: February 26,\
+            \ 2025 \n⏰ Time: 5 PM UTC\n\n\U0001F399 Host: ANITA AI\n\U0001F916 Guest\
+            \ AI Projects:\n\U0001F539 @ACTICOMMUNITY \n\U0001F539 @KittenHaimer \n\
+            \U0001F539 @heurist_ai \n\U0001F31FKOLs &amp; Influencers:\n\U0001F525\
+            \ @AltcoinGordon \n\U0001F525 "
+          mentioned_at: '2025-02-26T07:30:00+00:00'
+          type: post
+          metrics:
+            like_count: 71
+            reply_count: 32
+            repost_count: 26
+            view_count: 15390
+          sentiment: netural
+        - content: "\U0001F680 ANITA AI PRESENTS: THE AI REVOLUTION ON X! \U0001F680\
+            \nJoin ANITA AI for an exciting X Space!\n\U0001F4C5 Date: February 26,\
+            \ 2025 \n⏰ Time: 5 PM UTC\n\n\U0001F399 Host: ANITA AI\n\U0001F916 Guest\
+            \ AI Projects:\n\U0001F539 @ACTICOMMUNITY \n\U0001F539 @KittenHaimer \n\
+            \U0001F539 @heurist_ai \n\U0001F31FKOLs &amp; Influencers:\n\U0001F525\
+            \ @AltcoinGordon \n\U0001F525 "
+          mentioned_at: '2025-02-26T07:30:00+00:00'
+          type: post
+          metrics:
+            like_count: 71
+            reply_count: 32
+            repost_count: 26
+            view_count: 15741
+          sentiment: netural
+        - content: "\U0001F525 Pumped for BLUEPRINT @EthereumDenver tomorrow! \n\n\
+            @AlloraNetwork @BotanixLabs @DIAdata_org @elizaOS @0xFacet @fraxfinance\
+            \ @0G_labs @heurist_ai @nubilanetwork @Somnia_Network @Stacks @TacBuild\
+            \ @0xzerebro \n\nRegistration is closing \U0001F51C:  "
+          mentioned_at: '2025-02-25T19:37:01+00:00'
+          type: post
+          metrics:
+            like_count: 93
+            reply_count: 6
+            repost_count: 20
+            view_count: 10991
+          sentiment: neutral
+        - content: "\U0001F525 Pumped for BLUEPRINT @EthereumDenver tomorrow! \n\n\
+            @AlloraNetwork @BotanixLabs @DIAdata_org @elizaOS @0xFacet @fraxfinance\
+            \ @0G_labs @heurist_ai @nubilanetwork @Somnia_Network @Stacks @TacBuild\
+            \ @0xzerebro \n\nRegistration is closing \U0001F51C:  "
+          mentioned_at: '2025-02-25T19:37:01+00:00'
+          type: post
+          metrics:
+            like_count: 94
+            reply_count: 6
+            repost_count: 20
+            view_count: 11214
+          sentiment: neutral
+        - content: 'RT @heurist_ai: 🚨 $HEU $HEU $HEU $HEU 🚨
+
+
+            Finally the day has come - we''re launching $HEU Staking!
+
+            👉 50% Base APR
+
+            👉 Earn revenue share from…'
+          mentioned_at: '2025-02-25T19:36:12+00:00'
+          type: repost
+          metrics:
+            like_count: 0
+            reply_count: 0
+            repost_count: 19
+            view_count: 0
+          sentiment: positive
+input_trending:
+  tool: get_trending_tokens
+  tool_arguments:
+    time_window: 24h
+  query: Get trending tokens for reference
+output_trending:
+  response: ''
+  data:
+    status: success
+    data:
+      success: true
+      data:
+        total: 50
+        page: 1
+        pageSize: 50
+        data:
+        - token: btc
+          current_count: 432
+          previous_count: 400
+          change_percent: 8
+        - token: eth
+          current_count: 406
+          previous_count: 252
+          change_percent: 61.11
+        - token: xrp
+          current_count: 278
+          previous_count: 52
+          change_percent: 434.62
+        - token: sol
+          current_count: 169
+          previous_count: 135
+          change_percent: 25.19
+        - token: dog
+          current_count: 125
+          previous_count: 115
+          change_percent: 8.7
+        - token: tsla
+          current_count: 85
+          previous_count: 86
+          change_percent: -1.16
+        - token: usd
+          current_count: 83
+          previous_count: 94
+          change_percent: -11.7
+        - token: nvda
+          current_count: 82
+          previous_count: 120
+          change_percent: -31.67
+        - token: giga
+          current_count: 71
+          previous_count: 63
+          change_percent: 12.7
+        - token: s
+          current_count: 71
+          previous_count: 66
+          change_percent: 7.58
+        - token: usdc
+          current_count: 68
+          previous_count: 54
+          change_percent: 25.93
+        - token: hype
+          current_count: 64
+          previous_count: 40
+          change_percent: 60
+        - token: apdn
+          current_count: 63
+          previous_count: 0
+          change_percent: 100
+        - token: joe
+          current_count: 63
+          previous_count: 49
+          change_percent: 28.57
+        - token: usdt
+          current_count: 57
+          previous_count: 59
+          change_percent: -3.39
+        - token: tut
+          current_count: 52
+          previous_count: 64
+          change_percent: -18.75
+        - token: spx
+          current_count: 47
+          previous_count: 46
+          change_percent: 2.17
+        - token: kta
+          current_count: 46
+          previous_count: 55
+          change_percent: -16.36
+        - token: bat
+          current_count: 44
+          previous_count: 13
+          change_percent: 238.46
+        - token: spy
+          current_count: 43
+          previous_count: 38
+          change_percent: 13.16
+        - token: xmw
+          current_count: 38
+          previous_count: 25
+          change_percent: 52
+        - token: lebron
+          current_count: 37
+          previous_count: 18
+          change_percent: 105.56
+        - token: pvs
+          current_count: 36
+          previous_count: 88
+          change_percent: -59.09
+        - token: bnb
+          current_count: 35
+          previous_count: 59
+          change_percent: -40.68
+        - token: doge
+          current_count: 34
+          previous_count: 23
+          change_percent: 47.83
+        - token: sse
+          current_count: 30
+          previous_count: 14
+          change_percent: 114.29
+        - token: aave
+          current_count: 26
+          previous_count: 10
+          change_percent: 160
+        - token: bobo
+          current_count: 26
+          previous_count: 8
+          change_percent: 225
+        - token: pepe
+          current_count: 25
+          previous_count: 25
+          change_percent: 0
+        - token: tibbir
+          current_count: 24
+          previous_count: 10
+          change_percent: 140
+        - token: ava
+          current_count: 23
+          previous_count: 21
+          change_percent: 9.52
+        - token: qqq
+          current_count: 23
+          previous_count: 17
+          change_percent: 35.29
+        - token: fartcoin
+          current_count: 22
+          previous_count: 8
+          change_percent: 175
+        - token: plume
+          current_count: 22
+          previous_count: 17
+          change_percent: 29.41
+        - token: eur
+          current_count: 21
+          previous_count: 32
+          change_percent: -34.38
+        - token: trx
+          current_count: 21
+          previous_count: 25
+          change_percent: -16
+        - token: apu
+          current_count: 20
+          previous_count: 16
+          change_percent: 25
+        - token: bmt
+          current_count: 20
+          previous_count: 64
+          change_percent: -68.75
+        - token: mubarak
+          current_count: 20
+          previous_count: 23
+          change_percent: -13.04
+        - token: ray
+          current_count: 20
+          previous_count: 6
+          change_percent: 233.33
+        - token: sui
+          current_count: 20
+          previous_count: 16
+          change_percent: 25
+        - token: banana
+          current_count: 19
+          previous_count: 5
+          change_percent: 280
+        - token: ket
+          current_count: 19
+          previous_count: 0
+          change_percent: 100
+        - token: eos
+          current_count: 18
+          previous_count: 5
+          change_percent: 260
+        - token: fat
+          current_count: 18
+          previous_count: 9
+          change_percent: 100
+        - token: link
+          current_count: 18
+          previous_count: 9
+          change_percent: 100
+        - token: mnt
+          current_count: 18
+          previous_count: 8
+          change_percent: 125
+        - token: ondo
+          current_count: 17
+          previous_count: 14
+          change_percent: 21.43
+        - token: bitch
+          current_count: 16
+          previous_count: 3
+          change_percent: 433.33
+        - token: prime
+          current_count: 16
+          previous_count: 23
+          change_percent: -30.43

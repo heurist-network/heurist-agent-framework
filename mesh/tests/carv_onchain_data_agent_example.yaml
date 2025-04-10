@@ -1,0 +1,82 @@
+ethereum_example:
+  input:
+    query: Identify the biggest transaction of ETH in the past 30 days
+  output:
+    response: The biggest transaction of ETH in the past 30 days was recorded on March
+      18, 2025. The transaction hash is 0x4acf917a9149667083f6dbaadc1c27b175fb407eceefccc6c0ed3e61cf141d52.
+      It involved a transfer of approximately 159.268 ETH from the address 0x5a52e96bacdabb82fd05763e25335261b270efcb
+      to the address 0x835678a611b28684005a5e2233695fb6cbbb0007.
+    data:
+      blockchain: ethereum
+      query: Identify the biggest transaction of ETH in the past 30 days
+      results:
+        code: 0
+        msg: Success
+        data:
+          column_infos:
+          - hash
+          - from_address
+          - to_address
+          - value
+          - block_timestamp
+          rows:
+          - items:
+            - '0x4acf917a9149667083f6dbaadc1c27b175fb407eceefccc6c0ed3e61cf141d52'
+            - '0x5a52e96bacdabb82fd05763e25335261b270efcb'
+            - '0x835678a611b28684005a5e2233695fb6cbbb0007'
+            - 1.59268E23
+            - '2025-03-18 09:10:59.000'
+direct_example:
+  input:
+    tool: query_onchain_data
+    tool_arguments:
+      blockchain: bitcoin
+      query: How many Bitcoins have been mined since the beginning of 2025?
+  output:
+    response: ''
+    data:
+      blockchain: bitcoin
+      query: How many Bitcoins have been mined since the beginning of 2025?
+      results:
+        code: 0
+        msg: Success
+        data:
+          column_infos:
+          - total_bitcoins_mined
+          rows:
+          - items:
+            - '40032.93020269997'
+raw_example:
+  input:
+    query: What are the top 5 most popular smart contracts on Ethereum in the past
+      30 days?
+    raw_data_only: true
+  output:
+    response: ''
+    data:
+      blockchain: ethereum
+      query: What are the top 5 most popular smart contracts on Ethereum in the past
+        30 days?
+      results:
+        code: 0
+        msg: Success
+        data:
+          column_infos:
+          - contract_address
+          - interaction_count
+          rows:
+          - items:
+            - '0xdac17f958d2ee523a2206206994597c13d831ec7'
+            - '4255092'
+          - items:
+            - '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+            - '2177824'
+          - items:
+            - '0x66a9893cc07d91d95644aedd05d03f95e1dba8af'
+            - '700786'
+          - items:
+            - '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
+            - '402601'
+          - items:
+            - '0x51c72848c68a965f66fa7a88855f9f7784502a7f'
+            - '365621'

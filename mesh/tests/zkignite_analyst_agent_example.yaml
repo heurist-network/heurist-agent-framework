@@ -1,0 +1,632 @@
+input:
+  query: I have some ETH and ZK token and I want to farm on zksync. What are the best
+    opportunities?
+output:
+  response: "Here are the best farming opportunities on zkSync for your ETH and ZK\
+    \ tokens:\n\n### For ETH:\n1. **Maverick**  \n   - **Opportunity**: Maverick Boosted\
+    \ Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n   - **TVL**: $1.9M  \n  \
+    \ - **Tokens**: WETH, ZK  \n\n2. **RFX**  \n   - **Opportunity**: Supply USDC.e-WETH\
+    \ on RFX  \n   - **APR**: 50.9%  \n   - **TVL**: $547.7K  \n\n3. **ZKSwap**  \n\
+    \   - **Opportunity**: Provide liquidity to ZKSwap v3 ZK-WETH 0.2%  \n   - **APR**:\
+    \ 45.6%  \n   - **TVL**: $937.8K  \n\n### For ZK:\n1. **RFX**  \n   - **Opportunity**:\
+    \ Supply USDC.e-ZK on RFX  \n   - **APR**: 83.9%  \n   - **TVL**: $529.9K  \n\n\
+    2. **Uniswap**  \n   - **Opportunity**: Provide liquidity to Uniswap V3 USDC.e-ZK\
+    \ 0.3%  \n   - **APR**: 49.6%  \n   - **TVL**: $1.2M  \n\n3. **Maverick**  \n\
+    \   - **Opportunity**: Maverick Boosted Position MBP-ZK-WETH-43  \n   - **APR**:\
+    \ 55.4%  \n   - **TVL**: $1.9M  \n\n4. **ZKSwap**  \n   - **Opportunity**: Provide\
+    \ liquidity to ZKSwap v3 ZK-WETH 0.2%  \n   - **APR**: 45.6%  \n   - **TVL**:\
+    \ $937.8K  \n\nThese opportunities can yield significant returns based on your\
+    \ holdings."
+  reasoning_steps:
+  - task: 'Analyze this query and provide insights: I have some ETH and ZK token and
+      I want to farm on zksync. What are the best opportunities?
+
+
+      Guidelines:
+
+      - Combine data from multiple tools when needed
+
+      - Format numbers clearly (e.g. $1.5M, 15.2%) without too many decimals
+
+      - Keep response concise and focused on key insights
+
+      '
+    task_images: null
+  - tool_calls:
+    - id: call_j2YSe1ftcuuT36KYtVy5KJV5
+      type: function
+      function:
+        name: _get_top_yield_opportunities
+        arguments:
+          top: 10
+          category: eth
+    start_time: 1739165245.5991175
+    end_time: 1739165249.8868463
+    step: 1
+    error: null
+    duration: 4.287728786468506
+    model_output_message: !!python/object:smolagents.models.ChatMessage
+      role: assistant
+      content: ''
+      tool_calls:
+      - !!python/object:smolagents.models.ChatMessageToolCall
+        function: !!python/object:smolagents.models.ChatMessageToolCallDefinition
+          arguments:
+            top: 10
+            category: eth
+          name: _get_top_yield_opportunities
+          description: null
+        id: call_j2YSe1ftcuuT36KYtVy5KJV5
+        type: function
+      - !!python/object:smolagents.models.ChatMessageToolCall
+        function: !!python/object:smolagents.models.ChatMessageToolCallDefinition
+          arguments:
+            top: 10
+            category: zk
+          name: _get_top_yield_opportunities
+          description: null
+        id: call_xUppA3aDhDmI3hQBTwo4LZsj
+        type: function
+      raw: !!python/object:openai.types.chat.chat_completion.ChatCompletion
+        __dict__:
+          id: gen-1739165245-gziwa4OXfKM7todBeASz
+          choices:
+          - !!python/object:openai.types.chat.chat_completion.Choice
+            __dict__:
+              finish_reason: tool_calls
+              index: 0
+              logprobs: null
+              message: !!python/object:openai.types.chat.chat_completion_message.ChatCompletionMessage
+                __dict__:
+                  content: ''
+                  refusal: null
+                  role: assistant
+                  audio: null
+                  function_call: null
+                  tool_calls:
+                  - !!python/object:openai.types.chat.chat_completion_message_tool_call.ChatCompletionMessageToolCall
+                    __dict__:
+                      id: call_j2YSe1ftcuuT36KYtVy5KJV5
+                      function: !!python/object:openai.types.chat.chat_completion_message_tool_call.Function
+                        __dict__:
+                          arguments: '{"top": 10, "category": "eth"}'
+                          name: _get_top_yield_opportunities
+                        __pydantic_extra__: {}
+                        __pydantic_fields_set__: !!set
+                          name: null
+                          arguments: null
+                        __pydantic_private__: null
+                      type: function
+                    __pydantic_extra__:
+                      index: 0
+                    __pydantic_fields_set__: !!set
+                      function: null
+                      type: null
+                      id: null
+                      index: null
+                    __pydantic_private__: null
+                  - !!python/object:openai.types.chat.chat_completion_message_tool_call.ChatCompletionMessageToolCall
+                    __dict__:
+                      id: call_xUppA3aDhDmI3hQBTwo4LZsj
+                      function: !!python/object:openai.types.chat.chat_completion_message_tool_call.Function
+                        __dict__:
+                          arguments: '{"top": 10, "category": "zk"}'
+                          name: _get_top_yield_opportunities
+                        __pydantic_extra__: {}
+                        __pydantic_fields_set__: !!set
+                          name: null
+                          arguments: null
+                        __pydantic_private__: null
+                      type: function
+                    __pydantic_extra__:
+                      index: 1
+                    __pydantic_fields_set__: !!set
+                      function: null
+                      type: null
+                      id: null
+                      index: null
+                    __pydantic_private__: null
+                __pydantic_extra__: {}
+                __pydantic_fields_set__: !!set
+                  content: null
+                  role: null
+                  tool_calls: null
+                  refusal: null
+                __pydantic_private__: null
+            __pydantic_extra__:
+              native_finish_reason: tool_calls
+            __pydantic_fields_set__: !!set
+              logprobs: null
+              finish_reason: null
+              index: null
+              message: null
+            __pydantic_private__: null
+          created: 1739165245
+          model: openai/gpt-4o-mini
+          object: chat.completion
+          service_tier: null
+          system_fingerprint: fp_bd83329f63
+          usage: !!python/object:openai.types.completion_usage.CompletionUsage
+            __dict__:
+              completion_tokens: 62
+              prompt_tokens: 728
+              total_tokens: 790
+              completion_tokens_details: null
+              prompt_tokens_details: null
+            __pydantic_extra__: {}
+            __pydantic_fields_set__: !!set
+              completion_tokens: null
+              total_tokens: null
+              prompt_tokens: null
+            __pydantic_private__: null
+          _request_id: null
+        __pydantic_extra__:
+          provider: OpenAI
+        __pydantic_fields_set__: !!set
+          choices: null
+          usage: null
+          created: null
+          id: null
+          system_fingerprint: null
+          model: null
+          object: null
+        __pydantic_private__: null
+    model_output: null
+    observations: '{''opportunities'': [{''protocol_name'': ''Maverick'', ''opportunity_name'':
+      ''Maverick Boosted Position MBP-ZK-WETH-43'', ''apr'': 55.3586808579222, ''tvl'':
+      1910272.858997932, ''tokens'': [''WETH'', ''MBP-ZK-WETH-43'', ''ZK'']}, {''protocol_name'':
+      ''RFX'', ''opportunity_name'': ''Supply USDC.e-WETH on RFX'', ''apr'': 50.8549509546806,
+      ''tvl'': 547658.475966879, ''tokens'': [''USDC.e'', ''WETH'', ''RP'']}, {''protocol_name'':
+      ''ZKSwap'', ''opportunity_name'': ''Provide liquidity to  ZKSwap WETH-WBTC 0.2%'',
+      ''apr'': 46.35492186434623, ''tvl'': 1263752.109012838, ''tokens'': [''WBTC'',
+      ''WETH'']}, {''protocol_name'': ''ZKSwap'', ''opportunity_name'': ''Provide
+      liquidity to ZKSwap v3 ZK-WETH 0.2%'', ''apr'': 45.61129669517582, ''tvl'':
+      937752.6619982134, ''tokens'': [''WETH'', ''ZK'']}, {''protocol_name'': ''Izumi'',
+      ''opportunity_name'': ''Provide liquidity to  iZUMi WETH-WBTC 0.2%'', ''apr'':
+      45.10916761259268, ''tvl'': 834847.9814345168, ''tokens'': [''WBTC'', ''WETH'']}]}'
+    action_output: null
+  - tool_calls:
+    - id: call_tGJAyn4Ur06a9ztS6mxRSKWN
+      type: function
+      function:
+        name: _get_top_yield_opportunities
+        arguments:
+          top: 10
+          category: zk
+    start_time: 1739165249.8873231
+    end_time: 1739165250.8650856
+    step: 2
+    error: null
+    duration: 0.9777624607086182
+    model_output_message: !!python/object:smolagents.models.ChatMessage
+      role: assistant
+      content: ''
+      tool_calls:
+      - !!python/object:smolagents.models.ChatMessageToolCall
+        function: !!python/object:smolagents.models.ChatMessageToolCallDefinition
+          arguments:
+            top: 10
+            category: zk
+          name: _get_top_yield_opportunities
+          description: null
+        id: call_tGJAyn4Ur06a9ztS6mxRSKWN
+        type: function
+      raw: !!python/object:openai.types.chat.chat_completion.ChatCompletion
+        __dict__:
+          id: gen-1739165249-VU7tmlHEEm80JbOs6ADN
+          choices:
+          - !!python/object:openai.types.chat.chat_completion.Choice
+            __dict__:
+              finish_reason: tool_calls
+              index: 0
+              logprobs: null
+              message: !!python/object:openai.types.chat.chat_completion_message.ChatCompletionMessage
+                __dict__:
+                  content: ''
+                  refusal: null
+                  role: assistant
+                  audio: null
+                  function_call: null
+                  tool_calls:
+                  - !!python/object:openai.types.chat.chat_completion_message_tool_call.ChatCompletionMessageToolCall
+                    __dict__:
+                      id: call_tGJAyn4Ur06a9ztS6mxRSKWN
+                      function: !!python/object:openai.types.chat.chat_completion_message_tool_call.Function
+                        __dict__:
+                          arguments: '{"top":10,"category":"zk"}'
+                          name: _get_top_yield_opportunities
+                        __pydantic_extra__: {}
+                        __pydantic_fields_set__: !!set
+                          name: null
+                          arguments: null
+                        __pydantic_private__: null
+                      type: function
+                    __pydantic_extra__:
+                      index: 0
+                    __pydantic_fields_set__: !!set
+                      function: null
+                      type: null
+                      id: null
+                      index: null
+                    __pydantic_private__: null
+                __pydantic_extra__: {}
+                __pydantic_fields_set__: !!set
+                  content: null
+                  role: null
+                  tool_calls: null
+                  refusal: null
+                __pydantic_private__: null
+            __pydantic_extra__:
+              native_finish_reason: tool_calls
+            __pydantic_fields_set__: !!set
+              logprobs: null
+              finish_reason: null
+              index: null
+              message: null
+            __pydantic_private__: null
+          created: 1739165249
+          model: openai/gpt-4o-mini
+          object: chat.completion
+          service_tier: null
+          system_fingerprint: fp_bd83329f63
+          usage: !!python/object:openai.types.completion_usage.CompletionUsage
+            __dict__:
+              completion_tokens: 23
+              prompt_tokens: 1173
+              total_tokens: 1196
+              completion_tokens_details: null
+              prompt_tokens_details: null
+            __pydantic_extra__: {}
+            __pydantic_fields_set__: !!set
+              completion_tokens: null
+              total_tokens: null
+              prompt_tokens: null
+            __pydantic_private__: null
+          _request_id: null
+        __pydantic_extra__:
+          provider: OpenAI
+        __pydantic_fields_set__: !!set
+          choices: null
+          usage: null
+          created: null
+          id: null
+          system_fingerprint: null
+          model: null
+          object: null
+        __pydantic_private__: null
+    model_output: null
+    observations: '{''opportunities'': [{''protocol_name'': ''RFX'', ''opportunity_name'':
+      ''Supply USDC.e-ZK on RFX'', ''apr'': 83.91695423350862, ''tvl'': 529889.0908767697,
+      ''tokens'': [''USDC.e'', ''ZK'', ''RP'']}, {''protocol_name'': ''Maverick'',
+      ''opportunity_name'': ''Maverick Boosted Position MBP-ZK-WETH-43'', ''apr'':
+      55.3586808579222, ''tvl'': 1910272.858997932, ''tokens'': [''WETH'', ''MBP-ZK-WETH-43'',
+      ''ZK'']}, {''protocol_name'': ''Uniswap'', ''opportunity_name'': ''Provide liquidity
+      to UniswapV3 USDC.e-ZK 0.3%'', ''apr'': 49.63328984724768, ''tvl'': 1217284.824017053,
+      ''tokens'': [''USDC.e'', ''ZK'']}, {''protocol_name'': ''ZKSwap'', ''opportunity_name'':
+      ''Provide liquidity to ZKSwap v3 ZK-WETH 0.2%'', ''apr'': 45.61129669517582,
+      ''tvl'': 937752.6619982134, ''tokens'': [''WETH'', ''ZK'']}]}'
+    action_output: null
+  - tool_calls:
+    - id: call_0I40CvvW25Cq2tJmkPSJnmCC
+      type: function
+      function:
+        name: _get_top_yield_opportunities
+        arguments:
+          top: 10
+          category: zk
+    start_time: 1739165250.8655815
+    end_time: 1739165252.2055895
+    step: 3
+    error: null
+    duration: 1.340008020401001
+    model_output_message: !!python/object:smolagents.models.ChatMessage
+      role: assistant
+      content: ''
+      tool_calls:
+      - !!python/object:smolagents.models.ChatMessageToolCall
+        function: !!python/object:smolagents.models.ChatMessageToolCallDefinition
+          arguments:
+            top: 10
+            category: zk
+          name: _get_top_yield_opportunities
+          description: null
+        id: call_0I40CvvW25Cq2tJmkPSJnmCC
+        type: function
+      - !!python/object:smolagents.models.ChatMessageToolCall
+        function: !!python/object:smolagents.models.ChatMessageToolCallDefinition
+          arguments:
+            top: 10
+            category: eth
+          name: _get_top_yield_opportunities
+          description: null
+        id: call_s3AEkXSAAOxOjYa8f0QLzH8U
+        type: function
+      raw: !!python/object:openai.types.chat.chat_completion.ChatCompletion
+        __dict__:
+          id: gen-1739165250-L8p5UyihCR6dpINfZlMb
+          choices:
+          - !!python/object:openai.types.chat.chat_completion.Choice
+            __dict__:
+              finish_reason: tool_calls
+              index: 0
+              logprobs: null
+              message: !!python/object:openai.types.chat.chat_completion_message.ChatCompletionMessage
+                __dict__:
+                  content: ''
+                  refusal: null
+                  role: assistant
+                  audio: null
+                  function_call: null
+                  tool_calls:
+                  - !!python/object:openai.types.chat.chat_completion_message_tool_call.ChatCompletionMessageToolCall
+                    __dict__:
+                      id: call_0I40CvvW25Cq2tJmkPSJnmCC
+                      function: !!python/object:openai.types.chat.chat_completion_message_tool_call.Function
+                        __dict__:
+                          arguments: '{"top": 10, "category": "zk"}'
+                          name: _get_top_yield_opportunities
+                        __pydantic_extra__: {}
+                        __pydantic_fields_set__: !!set
+                          name: null
+                          arguments: null
+                        __pydantic_private__: null
+                      type: function
+                    __pydantic_extra__:
+                      index: 0
+                    __pydantic_fields_set__: !!set
+                      function: null
+                      type: null
+                      id: null
+                      index: null
+                    __pydantic_private__: null
+                  - !!python/object:openai.types.chat.chat_completion_message_tool_call.ChatCompletionMessageToolCall
+                    __dict__:
+                      id: call_s3AEkXSAAOxOjYa8f0QLzH8U
+                      function: !!python/object:openai.types.chat.chat_completion_message_tool_call.Function
+                        __dict__:
+                          arguments: '{"top": 10, "category": "eth"}'
+                          name: _get_top_yield_opportunities
+                        __pydantic_extra__: {}
+                        __pydantic_fields_set__: !!set
+                          name: null
+                          arguments: null
+                        __pydantic_private__: null
+                      type: function
+                    __pydantic_extra__:
+                      index: 1
+                    __pydantic_fields_set__: !!set
+                      function: null
+                      type: null
+                      id: null
+                      index: null
+                    __pydantic_private__: null
+                __pydantic_extra__: {}
+                __pydantic_fields_set__: !!set
+                  content: null
+                  role: null
+                  tool_calls: null
+                  refusal: null
+                __pydantic_private__: null
+            __pydantic_extra__:
+              native_finish_reason: tool_calls
+            __pydantic_fields_set__: !!set
+              logprobs: null
+              finish_reason: null
+              index: null
+              message: null
+            __pydantic_private__: null
+          created: 1739165250
+          model: openai/gpt-4o-mini
+          object: chat.completion
+          service_tier: null
+          system_fingerprint: fp_bd83329f63
+          usage: !!python/object:openai.types.completion_usage.CompletionUsage
+            __dict__:
+              completion_tokens: 62
+              prompt_tokens: 1550
+              total_tokens: 1612
+              completion_tokens_details: null
+              prompt_tokens_details: null
+            __pydantic_extra__: {}
+            __pydantic_fields_set__: !!set
+              completion_tokens: null
+              total_tokens: null
+              prompt_tokens: null
+            __pydantic_private__: null
+          _request_id: null
+        __pydantic_extra__:
+          provider: OpenAI
+        __pydantic_fields_set__: !!set
+          choices: null
+          usage: null
+          created: null
+          id: null
+          system_fingerprint: null
+          model: null
+          object: null
+        __pydantic_private__: null
+    model_output: null
+    observations: '{''opportunities'': [{''protocol_name'': ''RFX'', ''opportunity_name'':
+      ''Supply USDC.e-ZK on RFX'', ''apr'': 83.91695423350862, ''tvl'': 529889.0908767697,
+      ''tokens'': [''USDC.e'', ''ZK'', ''RP'']}, {''protocol_name'': ''Maverick'',
+      ''opportunity_name'': ''Maverick Boosted Position MBP-ZK-WETH-43'', ''apr'':
+      55.3586808579222, ''tvl'': 1910272.858997932, ''tokens'': [''WETH'', ''MBP-ZK-WETH-43'',
+      ''ZK'']}, {''protocol_name'': ''Uniswap'', ''opportunity_name'': ''Provide liquidity
+      to UniswapV3 USDC.e-ZK 0.3%'', ''apr'': 49.63328984724768, ''tvl'': 1217284.824017053,
+      ''tokens'': [''USDC.e'', ''ZK'']}, {''protocol_name'': ''ZKSwap'', ''opportunity_name'':
+      ''Provide liquidity to ZKSwap v3 ZK-WETH 0.2%'', ''apr'': 45.61129669517582,
+      ''tvl'': 937752.6619982134, ''tokens'': [''WETH'', ''ZK'']}]}'
+    action_output: null
+  - tool_calls:
+    - id: call_LuPw5PobGmABjK4rnKYw7P2B
+      type: function
+      function:
+        name: final_answer
+        arguments:
+          answer: "Here are the best farming opportunities on zkSync for your ETH\
+            \ and ZK tokens:\n\n### For ETH:\n1. **Maverick**  \n   - **Opportunity**:\
+            \ Maverick Boosted Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n\
+            \   - **TVL**: $1.9M  \n   - **Tokens**: WETH, ZK  \n\n2. **RFX**  \n\
+            \   - **Opportunity**: Supply USDC.e-WETH on RFX  \n   - **APR**: 50.9%\
+            \  \n   - **TVL**: $547.7K  \n\n3. **ZKSwap**  \n   - **Opportunity**:\
+            \ Provide liquidity to ZKSwap v3 ZK-WETH 0.2%  \n   - **APR**: 45.6% \
+            \ \n   - **TVL**: $937.8K  \n\n### For ZK:\n1. **RFX**  \n   - **Opportunity**:\
+            \ Supply USDC.e-ZK on RFX  \n   - **APR**: 83.9%  \n   - **TVL**: $529.9K\
+            \  \n\n2. **Uniswap**  \n   - **Opportunity**: Provide liquidity to Uniswap\
+            \ V3 USDC.e-ZK 0.3%  \n   - **APR**: 49.6%  \n   - **TVL**: $1.2M  \n\n\
+            3. **Maverick**  \n   - **Opportunity**: Maverick Boosted Position MBP-ZK-WETH-43\
+            \  \n   - **APR**: 55.4%  \n   - **TVL**: $1.9M  \n\n4. **ZKSwap**  \n\
+            \   - **Opportunity**: Provide liquidity to ZKSwap v3 ZK-WETH 0.2%  \n\
+            \   - **APR**: 45.6%  \n   - **TVL**: $937.8K  \n\nThese opportunities\
+            \ can yield significant returns based on your holdings."
+    start_time: 1739165252.2064464
+    end_time: 1739165261.3224285
+    step: 4
+    error: null
+    duration: 9.115982055664062
+    model_output_message: !!python/object:smolagents.models.ChatMessage
+      role: assistant
+      content: ''
+      tool_calls:
+      - !!python/object:smolagents.models.ChatMessageToolCall
+        function: !!python/object:smolagents.models.ChatMessageToolCallDefinition
+          arguments:
+            answer: "Here are the best farming opportunities on zkSync for your ETH\
+              \ and ZK tokens:\n\n### For ETH:\n1. **Maverick**  \n   - **Opportunity**:\
+              \ Maverick Boosted Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n\
+              \   - **TVL**: $1.9M  \n   - **Tokens**: WETH, ZK  \n\n2. **RFX**  \n\
+              \   - **Opportunity**: Supply USDC.e-WETH on RFX  \n   - **APR**: 50.9%\
+              \  \n   - **TVL**: $547.7K  \n\n3. **ZKSwap**  \n   - **Opportunity**:\
+              \ Provide liquidity to ZKSwap v3 ZK-WETH 0.2%  \n   - **APR**: 45.6%\
+              \  \n   - **TVL**: $937.8K  \n\n### For ZK:\n1. **RFX**  \n   - **Opportunity**:\
+              \ Supply USDC.e-ZK on RFX  \n   - **APR**: 83.9%  \n   - **TVL**: $529.9K\
+              \  \n\n2. **Uniswap**  \n   - **Opportunity**: Provide liquidity to\
+              \ Uniswap V3 USDC.e-ZK 0.3%  \n   - **APR**: 49.6%  \n   - **TVL**:\
+              \ $1.2M  \n\n3. **Maverick**  \n   - **Opportunity**: Maverick Boosted\
+              \ Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n   - **TVL**: $1.9M\
+              \  \n\n4. **ZKSwap**  \n   - **Opportunity**: Provide liquidity to ZKSwap\
+              \ v3 ZK-WETH 0.2%  \n   - **APR**: 45.6%  \n   - **TVL**: $937.8K  \n\
+              \nThese opportunities can yield significant returns based on your holdings."
+          name: final_answer
+          description: null
+        id: call_LuPw5PobGmABjK4rnKYw7P2B
+        type: function
+      raw: !!python/object:openai.types.chat.chat_completion.ChatCompletion
+        __dict__:
+          id: gen-1739165252-FVGcaCNenMaPqtPCqbxW
+          choices:
+          - !!python/object:openai.types.chat.chat_completion.Choice
+            __dict__:
+              finish_reason: tool_calls
+              index: 0
+              logprobs: null
+              message: !!python/object:openai.types.chat.chat_completion_message.ChatCompletionMessage
+                __dict__:
+                  content: ''
+                  refusal: null
+                  role: assistant
+                  audio: null
+                  function_call: null
+                  tool_calls:
+                  - !!python/object:openai.types.chat.chat_completion_message_tool_call.ChatCompletionMessageToolCall
+                    __dict__:
+                      id: call_LuPw5PobGmABjK4rnKYw7P2B
+                      function: !!python/object:openai.types.chat.chat_completion_message_tool_call.Function
+                        __dict__:
+                          arguments: '{"answer": "Here are the best farming opportunities
+                            on zkSync for your ETH and ZK tokens:\n\n### For ETH:\n1.
+                            **Maverick**  \n   - **Opportunity**: Maverick Boosted
+                            Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n   -
+                            **TVL**: $1.9M  \n   - **Tokens**: WETH, ZK  \n\n2. **RFX**  \n   -
+                            **Opportunity**: Supply USDC.e-WETH on RFX  \n   - **APR**:
+                            50.9%  \n   - **TVL**: $547.7K  \n\n3. **ZKSwap**  \n   -
+                            **Opportunity**: Provide liquidity to ZKSwap v3 ZK-WETH
+                            0.2%  \n   - **APR**: 45.6%  \n   - **TVL**: $937.8K  \n\n###
+                            For ZK:\n1. **RFX**  \n   - **Opportunity**: Supply USDC.e-ZK
+                            on RFX  \n   - **APR**: 83.9%  \n   - **TVL**: $529.9K  \n\n2.
+                            **Uniswap**  \n   - **Opportunity**: Provide liquidity
+                            to Uniswap V3 USDC.e-ZK 0.3%  \n   - **APR**: 49.6%  \n   -
+                            **TVL**: $1.2M  \n\n3. **Maverick**  \n   - **Opportunity**:
+                            Maverick Boosted Position MBP-ZK-WETH-43  \n   - **APR**:
+                            55.4%  \n   - **TVL**: $1.9M  \n\n4. **ZKSwap**  \n   -
+                            **Opportunity**: Provide liquidity to ZKSwap v3 ZK-WETH
+                            0.2%  \n   - **APR**: 45.6%  \n   - **TVL**: $937.8K  \n\nThese
+                            opportunities can yield significant returns based on your
+                            holdings."}'
+                          name: final_answer
+                        __pydantic_extra__: {}
+                        __pydantic_fields_set__: !!set
+                          name: null
+                          arguments: null
+                        __pydantic_private__: null
+                      type: function
+                    __pydantic_extra__:
+                      index: 0
+                    __pydantic_fields_set__: !!set
+                      function: null
+                      type: null
+                      id: null
+                      index: null
+                    __pydantic_private__: null
+                __pydantic_extra__: {}
+                __pydantic_fields_set__: !!set
+                  content: null
+                  role: null
+                  tool_calls: null
+                  refusal: null
+                __pydantic_private__: null
+            __pydantic_extra__:
+              native_finish_reason: tool_calls
+            __pydantic_fields_set__: !!set
+              logprobs: null
+              finish_reason: null
+              index: null
+              message: null
+            __pydantic_private__: null
+          created: 1739165252
+          model: openai/gpt-4o-mini
+          object: chat.completion
+          service_tier: null
+          system_fingerprint: fp_bd83329f63
+          usage: !!python/object:openai.types.completion_usage.CompletionUsage
+            __dict__:
+              completion_tokens: 519
+              prompt_tokens: 1931
+              total_tokens: 2450
+              completion_tokens_details: null
+              prompt_tokens_details: null
+            __pydantic_extra__: {}
+            __pydantic_fields_set__: !!set
+              completion_tokens: null
+              total_tokens: null
+              prompt_tokens: null
+            __pydantic_private__: null
+          _request_id: null
+        __pydantic_extra__:
+          provider: OpenAI
+        __pydantic_fields_set__: !!set
+          choices: null
+          usage: null
+          created: null
+          id: null
+          system_fingerprint: null
+          model: null
+          object: null
+        __pydantic_private__: null
+    model_output: null
+    observations: null
+    action_output: "Here are the best farming opportunities on zkSync for your ETH\
+      \ and ZK tokens:\n\n### For ETH:\n1. **Maverick**  \n   - **Opportunity**: Maverick\
+      \ Boosted Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n   - **TVL**: $1.9M\
+      \  \n   - **Tokens**: WETH, ZK  \n\n2. **RFX**  \n   - **Opportunity**: Supply\
+      \ USDC.e-WETH on RFX  \n   - **APR**: 50.9%  \n   - **TVL**: $547.7K  \n\n3.\
+      \ **ZKSwap**  \n   - **Opportunity**: Provide liquidity to ZKSwap v3 ZK-WETH\
+      \ 0.2%  \n   - **APR**: 45.6%  \n   - **TVL**: $937.8K  \n\n### For ZK:\n1.\
+      \ **RFX**  \n   - **Opportunity**: Supply USDC.e-ZK on RFX  \n   - **APR**:\
+      \ 83.9%  \n   - **TVL**: $529.9K  \n\n2. **Uniswap**  \n   - **Opportunity**:\
+      \ Provide liquidity to Uniswap V3 USDC.e-ZK 0.3%  \n   - **APR**: 49.6%  \n\
+      \   - **TVL**: $1.2M  \n\n3. **Maverick**  \n   - **Opportunity**: Maverick\
+      \ Boosted Position MBP-ZK-WETH-43  \n   - **APR**: 55.4%  \n   - **TVL**: $1.9M\
+      \  \n\n4. **ZKSwap**  \n   - **Opportunity**: Provide liquidity to ZKSwap v3\
+      \ ZK-WETH 0.2%  \n   - **APR**: 45.6%  \n   - **TVL**: $937.8K  \n\nThese opportunities\
+      \ can yield significant returns based on your holdings."

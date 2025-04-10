@@ -1,0 +1,127 @@
+input:
+  query: What are the latest developments in zero knowledge proofs?
+  depth: 2
+  breadth: 3
+  concurrency: 2
+output:
+  response: "\n{\n  \"reportMarkdown\": \n    \"# **Latest Developments in Zero Knowledge\
+    \ Proofs**\\n\\n\n    ## **Executive Summary**\\n\n    This report provides an\
+    \ in-depth analysis of the latest developments in Zero Knowledge Proofs (ZKPs),\
+    \ highlighting their definition, types, benefits, and applications in blockchain\
+    \ technology, cryptography, and other fields. ZKPs enable a party to prove the\
+    \ truth of a statement without revealing any underlying information, enhancing\
+    \ privacy and security in digital systems. Despite facing challenges, ZKPs are\
+    \ being integrated into various industries to improve security, privacy, and efficiency.\\\
+    n\\n\n    ## **Key Findings and Insights**\\n\n    * ZKPs enable a party to prove\
+    \ the truth of a statement without revealing any underlying information.\n   \
+    \ * Various applications in blockchain technology, including private transactions,\
+    \ verifiable computations, and decentralized identity management.\n    * Different\
+    \ types of ZKPs: zk-SNARKs, zk-STARKs, PLONK, and Bulletproofs, each with its\
+    \ own trade-offs and use cases.\n    * Enhance decentralization, reliability,\
+    \ and security in blockchain protocols and privacy in identity-sharing systems.\n\
+    \    * Real-world deployments in finance, healthcare, and government services\
+    \ to improve security, privacy, and efficiency.\\n\\n\n    ## **Detailed Analysis\
+    \ by Theme**\\n\n    ### **Definition and Properties**\\n\n    * Enable a prover\
+    \ to convince a verifier of a statement's truth without revealing any underlying\
+    \ information.\n    * Properties: completeness, soundness, and zero-knowledge.\n\
+    \    * Variants: perfect, statistical, and computational zero-knowledge, each\
+    \ with different security guarantees.\n    * Non-interactive zero-knowledge proofs\
+    \ (NIZKs) and multi-prover interactive proof systems as alternatives.\n\n    ###\
+    \ **Applications in Blockchain Technology**\\n\n    * Private transactions, verifiable\
+    \ computations, and decentralized identity management.\n    * Examples: zk-SNARKs\
+    \ and zk-STARKs for enhanced scalability, security, and privacy.\n\n    ### **Real-World\
+    \ Deployments**\\n\n    * Finance: improved security and privacy for transactions.\n\
+    \    * Healthcare: secure sharing of medical records.\n    * Government Services:\
+    \ enhanced security and efficiency for identity verification and voting systems.\n\
+    \n    ### **Challenges and Limitations**\\n\n    * Complexity, performance issues,\
+    \ and the need for trusted setups limiting widespread adoption.\\n\\n\n\n## Sources\n\
+    \n- https://www.protocol.ai/protocol-labs-the-future-of-zk-proofs.pdf\n- https://www.zeeve.io/blog/top-10-zero-knowledge-proof-projects-for-2023/\n\
+    - https://www.forbes.com/councils/forbesbusinesscouncil/2024/10/31/why-zero-knowledge-proofs-will-shape-the-future-of-data-privacy/\n\
+    - https://www.soa.org/resources/research-reports/2023/zero-knowledge-proof/\n\
+    - https://www.nttdata.com/global/en/insights/focus/2024/what-is-zero-knowledge-proof\n\
+    - https://chain.link/education/zero-knowledge-proof-zkp\n- https://chain.link/education-hub/zero-knowledge-proof-projects\n\
+    - https://en.wikipedia.org/wiki/Zero-knowledge_proof\n- https://www.stlouisfed.org/publications/review/2023/05/12/an-introduction-to-zero-knowledge-proofs-in-blockchains-and-economics\n\
+    - https://www.sciencedirect.com/science/article/pii/S2214212623002624\n- https://chain.link/education-hub/zero-knowledge-proof-use-cases\n\
+    - https://starkware.co/blog/scaling-blockchains-with-zero-knowledge-proofs/zk-proofs-applications-and-use-cases/\n\
+    - https://arxiv.org/html/2408.00243v1\n- https://www.dock.io/post/zero-knowledge-proofs\n\
+    - https://coinbureau.com/adoption/applications-zero-knowledge-proofs/\n- https://arxiv.org/abs/2408.00243\n\
+    - https://www.circularise.com/blogs/zero-knowledge-proofs-explained-in-3-examples\n\
+    - https://www.rapidinnovation.io/post/top-15-applications-of-zero-knowledge-proofs\n\
+    - https://csrc.nist.gov/csrc/media/presentations/2024/wpec2024-3b1/images-media/wpec2024-3b1-slides-akira-tjerand--ZKP-Overview.pdf\n\
+    - https://tees.tamu.edu/news/2022/05/cryptography-security-enhanced-through-zero-knowledge-schemes.html\n\
+    - https://www.debutinfotech.com/blog/zero-knowledge-proof-uses"
+  data:
+    query_info:
+      query: latest developments in zero knowledge proofs
+      depth: 2
+      breadth: 3
+      result_count: 24
+    result_count: 24
+    results_sample:
+    - title: '[PDF] Future of ZK Proofs - Protocol Labs'
+      description: Independent research shows that zk proof generation will become
+        a $10 billion market by the year 2030.
+      url: https://www.protocol.ai/protocol-labs-the-future-of-zk-proofs.pdf
+      content_length: 46819
+    - title: Top 10 Zero Knowledge Proof projects for 2023 - Zeeve
+      description: Get ahead of the curve with our breakdown of the top ten zero-knowledge
+        proof projects for 2023. From Ethereum to Zcash and everything in ...
+      url: https://www.zeeve.io/blog/top-10-zero-knowledge-proof-projects-for-2023/
+      content_length: 114362
+    analyses_count: 3
+    analyses_sample:
+    - analysis: Error processing search results.
+      key_findings: []
+      recommendations: []
+    - analysis: The search results provide an in-depth analysis of zero-knowledge
+        proofs (ZKPs) in blockchain technology. The main content is from Chainlink,
+        a leading blockchain platform, and Wikipedia, a reliable online encyclopedia.
+        The results cover the definition, types, benefits, and use cases of ZKPs,
+        as well as their applications in blockchain, cryptography, and other fields.
+        The content is technical, indicating a target audience with a background in
+        computer science, mathematics, or a related field. The tone is informative,
+        with a focus on educating readers about ZKPs and their potential in various
+        industries. The overall structure is well-organized, with clear headings,
+        sections, and links to additional resources.
+      key_findings:
+      - Zero-knowledge proofs (ZKPs) enable a party to prove the truth of a statement
+        without revealing any underlying information.
+      - ZKPs have various applications in blockchain technology, including private
+        transactions, verifiable computations, and decentralized identity management.
+      - There are different types of ZKPs, such as zk-SNARKs, zk-STARKs, PLONK, and
+        Bulletproofs, each with its own trade-offs and use cases.
+      - ZKPs can increase decentralization, reliability, and security in blockchain
+        protocols, and can be used to enhance privacy in identity-sharing systems.
+      - The integration of ZKP technology into blockchain has the potential to improve
+        privacy, security, and efficiency in various industries.
+      recommendations:
+      - Further research is needed to explore the applications of ZKPs in various
+        industries, such as finance, healthcare, and voting systems.
+      - Developing more efficient and scalable ZKP protocols is crucial for widespread
+        adoption in blockchain technology.
+      - Investigating the potential security risks and challenges associated with
+        ZKP implementation is essential for ensuring the integrity of blockchain systems.
+      - Educational resources and tutorials should be developed to make ZKP technology
+        more accessible to a broader audience, including those without a strong computer
+        science or mathematics background.
+      - Collaboration between academia, industry, and regulatory bodies is necessary
+        to establish standards and guidelines for the use of ZKPs in different sectors.
+    learnings_count: 14
+    learnings_sample:
+    - Zero-knowledge proofs (ZKPs) enable a party to prove the truth of a statement
+      without revealing any underlying information.
+    - ZKPs have various applications in blockchain technology, including private transactions,
+      verifiable computations, and decentralized identity management.
+    - There are different types of ZKPs, such as zk-SNARKs, zk-STARKs, PLONK, and
+      Bulletproofs, each with its own trade-offs and use cases.
+    - ZKPs can increase decentralization, reliability, and security in blockchain
+      protocols, and can be used to enhance privacy in identity-sharing systems.
+    - The integration of ZKP technology into blockchain has the potential to improve
+      privacy, security, and efficiency in various industries.
+    visited_urls_count: 21
+    visited_urls_sample:
+    - https://www.protocol.ai/protocol-labs-the-future-of-zk-proofs.pdf
+    - https://www.zeeve.io/blog/top-10-zero-knowledge-proof-projects-for-2023/
+    - https://www.forbes.com/councils/forbesbusinesscouncil/2024/10/31/why-zero-knowledge-proofs-will-shape-the-future-of-data-privacy/
+    - https://www.soa.org/resources/research-reports/2023/zero-knowledge-proof/
+    - https://www.nttdata.com/global/en/insights/focus/2024/what-is-zero-knowledge-proof

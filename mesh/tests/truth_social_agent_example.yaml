@@ -1,0 +1,230 @@
+input_query:
+  query: What has Donald Trump posted recently on Truth Social?
+output_query:
+  response: "**Recent Posts Analysis: @realDonaldTrump (Truth Social)**\n\n**Posting\
+    \ Period:** April 9-10, 2025\n**Total Posts:** 5\n\n### **Post Summaries:**\n\n\
+    1. **Optimism for the Future**\n\t* **Content:** \"What a day, but more great\
+    \ days coming!!!\"\n\t* **Created At:** April 10, 2025, 04:45:41 UTC\n\t* **Engagement:**\
+    \ 0 likes, 0 replies, 0 reposts\n\t* **URL:** [https://truthsocial.com/@realDonaldTrump/114311845711297973](https://truthsocial.com/@realDonaldTrump/114311845711297973)\n\
+    \n2. **Sharing News Article - NY Attorney General**\n\t* **Content:** Shared article\
+    \ about NY Attorney General Letitia James declaring her Virginia home as her ‘Principal\
+    \ Residence’\n\t* **Source:** whitecollarfraud.com\n\t* **Created At:** April\
+    \ 10, 2025, 04:16:43 UTC\n\t* **Engagement:** 0 likes, 0 replies, 0 reposts\n\t\
+    * **URL:** [https://truthsocial.com/@realDonaldTrump/114311731810349533](https://truthsocial.com/@realDonaldTrump/114311731810349533)\n\
+    \n3. **Acknowledging Success - Vince Molinari**\n\t* **Content:** Thank you message\
+    \ to Vince Molinari for his success\n\t* **Created At:** April 10, 2025, 03:34:48\
+    \ UTC\n\t* **Engagement:** 0 likes, 0 replies, 0 reposts\n\t* **URL:** [https://truthsocial.com/@realDonaldTrump/114311567036095643](https://truthsocial.com/@realDonaldTrump/114311567036095643)\n\
+    \n4. **Event at the White House**\n\t* **Content:** Welcoming North Dakota State\
+    \ University’s 2025 Division 1 Football Champions to the White House\n\t* **Created\
+    \ At:** April 9, 2025, 22:30:31 UTC\n\t* **Engagement:** 0 likes, 0 replies, 0\
+    \ reposts\n\t* **URL:** [https://truthsocial.com/@realDonaldTrump/114310370550367017](https://truthsocial.com/@realDonaldTrump/114310370550367017)\n\
+    \n5. **Policy Announcement - Support for Coal Miners**\n\t* **"
+  data:
+    profile: '@realDonaldTrump'
+    post_count: 5
+    posts:
+    - content: What a day, but more great days coming!!!
+      created_at: '2025-04-10T04:45:41.053Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114311845711297973
+    - content: '“EXCLUSIVE: NY Attorney General Letitia James Declares Virginia Home
+        Her ‘Principal Residence’” https://whitecollarfraud.com/2025/04/01/exclusive-ny-attorney-general-letitia-james-declares-virginia-home-her-principal-residence/'
+      created_at: '2025-04-10T04:16:43.063Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114311731810349533
+    - content: Thank you, Vince Molinari. Congratulations on all of your success!
+      created_at: '2025-04-10T03:34:48.808Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114311567036095643
+    - content: It was my Great Honor to welcome the North Dakota State University,
+        2025 Division 1 Football Champions—to the White House this evening. CONGRATULATIONS!
+      created_at: '2025-04-09T22:30:31.887Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114310370550367017
+    - content: We are taking historic action to help American workers, miners, families,
+        and consumers. We're ending Joe Biden's war on beautiful, clean coal once
+        and for all, and we're gonna put the miners back to work!
+      created_at: '2025-04-09T21:44:08.485Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114310188132445566
+input_direct:
+  tool: get_trump_posts
+  tool_arguments:
+    max_posts: 20
+  raw_data_only: true
+output_direct:
+  response: ''
+  data:
+    profile: '@realDonaldTrump'
+    post_count: 20
+    posts:
+    - content: What a day, but more great days coming!!!
+      created_at: '2025-04-10T04:45:41.053Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114311845711297973
+    - content: '“EXCLUSIVE: NY Attorney General Letitia James Declares Virginia Home
+        Her ‘Principal Residence’” https://whitecollarfraud.com/2025/04/01/exclusive-ny-attorney-general-letitia-james-declares-virginia-home-her-principal-residence/'
+      created_at: '2025-04-10T04:16:43.063Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114311731810349533
+    - content: Thank you, Vince Molinari. Congratulations on all of your success!
+      created_at: '2025-04-10T03:34:48.808Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114311567036095643
+    - content: It was my Great Honor to welcome the North Dakota State University,
+        2025 Division 1 Football Champions—to the White House this evening. CONGRATULATIONS!
+      created_at: '2025-04-09T22:30:31.887Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114310370550367017
+    - content: We are taking historic action to help American workers, miners, families,
+        and consumers. We're ending Joe Biden's war on beautiful, clean coal once
+        and for all, and we're gonna put the miners back to work!
+      created_at: '2025-04-09T21:44:08.485Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114310188132445566
+    - content: ''
+      created_at: '2025-04-09T21:42:12.310Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114310180518510028
+    - content: ''
+      created_at: '2025-04-09T21:40:57.033Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114310175585065012
+    - content: CONGRATULATIONS!
+      created_at: '2025-04-09T19:30:25.625Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114309662351113873
+    - content: Based on the lack of respect that China has shown to the World’s Markets,
+        I am hereby raising the Tariff charged to China by the United States of America
+        to 125%, effective immediately. At some point, hopefully in the near future,
+        China will realize that the days of ripping off the U.S.A., and other Countries,
+        is no longer sustainable or acceptable. Conversely, and based on the fact
+        that more than 75 Countries have called Representatives of the United States,
+        including the Departments of Commerce, Treasury, and the USTR, to negotiate
+        a solution to the subjects being discussed relative to Trade, Trade Barriers,
+        Tariffs, Currency Manipulation, and Non Monetary Tariffs, and that these Countries
+        have not, at my strong suggestion, retaliated in any way, shape, or form against
+        the United States, I have authorized a 90 day PAUSE, and a substantially lowered
+        Reciprocal Tariff during this period, of 10%, also effective immediately.
+        Thank you for your attention to this matter!
+      created_at: '2025-04-09T17:18:40.629Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114309144289505174
+    - content: Jon Husted is doing an incredible job as Senator for the Great State
+        of Ohio! He served as your Lieutenant Governor for seven years prior to becoming
+        a very distinguished and well respected Senator. Jon is a wonderful man, has
+        ALWAYS delivered for Ohio, and will continue doing so in the U.S. Senate.
+        He is working hard to Create Jobs, Lower Costs, Promote Products and Services
+        MADE IN AMERICA by our incredible Ohio Workers, Support our Great Farmers,
+        Champion Innovation, Secure our Border, Stop Criminals, Strengthen our Military/Veterans,
+        and Strongly Protect our always under siege Second Amendment. We are delivering
+        BIG WINS for America. One of the leaders I know I can count on is Ohio’s Senator
+        Jon Husted. He will fight to advance Common Sense Values, and put AMERICA
+        FIRST. Jon Husted has my Complete and Total Endorsement — HE WILL NOT LET
+        YOU DOWN!
+      created_at: '2025-04-09T16:16:12.535Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114308898654506738
+    - content: THIS IS A GREAT TIME TO BUY!!! DJT
+      created_at: '2025-04-09T13:37:01.627Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114308272725981913
+    - content: BE COOL! Everything is going to work out well. The USA will be bigger
+        and better than ever before!
+      created_at: '2025-04-09T13:33:25.243Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114308258545250117
+    - content: “Fixing Trade and Tariffs is a good thing!” Jamie Dimon, JPMorgan Chase,
+        Chairman & CEO, on Maria B Show!
+      created_at: '2025-04-09T13:25:48.545Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114308228615083777
+    - content: It is IMPERATIVE that Republicans in the House pass the Tax Cut Bill,
+        NOW! Our Country Will Boom!!!
+      created_at: '2025-04-09T12:58:38.995Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114308121820846336
+    - content: Republicans, it is more important now, than ever, that we pass THE
+        ONE, BIG, BEAUTIFUL BILL. The USA will Soar like never before!!!
+      created_at: '2025-04-09T11:58:00.395Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114307883361614427
+    - content: MAKE AMERICA GREAT AGAIN!
+      created_at: '2025-04-09T11:46:09.541Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114307836775073198
+    - content: This is a GREAT time to move your COMPANY into the United States of
+        America, like Apple, and so many others, in record numbers, are doing. ZERO
+        TARIFFS, and almost immediate Electrical/Energy hook ups and approvals. No
+        Environmental Delays. DON’T WAIT, DO IT NOW!
+      created_at: '2025-04-09T11:44:59.938Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114307832213562859
+    - content: ''
+      created_at: '2025-04-09T02:16:03.470Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114305595045936995
+    - content: I’m proud to be the President for the workers, not the outsourcers;
+        the President who stands up for Main Street, not Wall Street; who protects
+        the middle class, not the political class; and who defends America, not trade
+        cheaters all over the globe.
+      created_at: '2025-04-09T01:40:19.948Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114305454562761253
+    - content: Last month, we officially designated Tren de Aragua, MS-13 and the
+        Mexican drug cartels as foreign terrorist organizations—and thanks to the
+        Supreme Court yesterday...we will continue to deport these monsters under
+        the Alien Enemies Act…
+      created_at: '2025-04-09T01:38:44.868Z'
+      likes: 0
+      replies: 0
+      reposts: 0
+      url: https://truthsocial.com/@realDonaldTrump/114305448331638991

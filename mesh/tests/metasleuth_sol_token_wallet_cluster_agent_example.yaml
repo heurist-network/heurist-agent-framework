@@ -1,0 +1,437 @@
+direct_token_clusters:
+  input:
+    tool: fetch_token_clusters
+    tool_arguments:
+      address: tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump
+      page: 1
+      page_size: 10
+    raw_data_only: true
+  output:
+    response: ''
+    data:
+      code: 0
+      message: ''
+      queryID: 2Dy5HeLtiCFSxdTbCQaPd2
+      name: Doge-chan
+      symbol: DOGE-CHAN
+      price: 2.6845256611077647e-06
+      marketCap: 2684.525661107765
+      totalHolder: 72
+      topTenHoldings: 0.9943783282881886
+      creator: 54g2trzYgGkmQMgjchrS1B81koX83tB6Q5uMnjMxwep4
+      createTime: 1739998499
+      totalCluster: 69
+      clusters:
+      - clusterUUID: 1AZ3nuuJpT2miu3R6sWsEL
+        totalWallet: 1
+        holdingAmount: '9.84840269740335e+08'
+        holdingPercent: 0.985606836292113
+        rank: 1
+        holders:
+        - address: 5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1
+          mainEntity: Raydium Authority V4
+          holdingAmount: '9.84840269740335e+08'
+          holdingPercent: 0.985606836292113
+      - clusterUUID: 2isOYqwuGiSySGHINBlSt4
+        totalWallet: 1
+        holdingAmount: 2e+06
+        holdingPercent: 0.002001556732752165
+        rank: 2
+        holders:
+        - address: HG2dBdbJjRa5XaZ9dqbnk7PxELWwwPFaMsGyLHZqCYuj
+          mainEntity: ''
+          holdingAmount: 2e+06
+          holdingPercent: 0.002001556732752165
+      - clusterUUID: 5EyrEn0FKQSfWUJi534qOK
+        totalWallet: 2
+        holdingAmount: '1.591843018258e+06'
+        holdingPercent: 0.0015930820553394138
+        rank: 3
+        holders: null
+      - clusterUUID: 43eHx1o9ZdBtXHUizG44E3
+        totalWallet: 1
+        holdingAmount: '1.004350598022e+06'
+        holdingPercent: 0.0010051323507572988
+        rank: 4
+        holders:
+        - address: 4bHFSuLGjY5vr8hKv75yprv5psWnVZsrUds8DUoVkt68
+          mainEntity: ''
+          holdingAmount: '1.004350598022e+06'
+          holdingPercent: 0.0010051323507572988
+      - clusterUUID: 1HV16cwGoMjiJgG6QN6tGX
+        totalWallet: 1
+        holdingAmount: '1.003851057057e+06'
+        holdingPercent: 0.001004632420966408
+        rank: 5
+        holders:
+        - address: HjxpMwc4ELFvkP5jznexAkjGkaJNgszX6gqWnpCkHPGN
+          mainEntity: ''
+          holdingAmount: '1.003851057057e+06'
+          holdingPercent: 0.001004632420966408
+      - clusterUUID: 1xWJmpz1NSkK7gz73YzPQP
+        totalWallet: 1
+        holdingAmount: '788697.08367'
+        holdingPercent: 0.0007893109789608432
+        rank: 6
+        holders:
+        - address: 4anRunAmKHsLYsPfFHRPD13arsChA4R3jk1nNq3FTQUp
+          mainEntity: ''
+          holdingAmount: '788697.08367'
+          holdingPercent: 0.0007893109789608432
+      - clusterUUID: 6lxYzdmoXmd3Xj9ZkNUNZV
+        totalWallet: 1
+        holdingAmount: '770325.884434'
+        holdingPercent: 0.0007709254802010696
+        rank: 7
+        holders:
+        - address: G58hvrF5TNrS1YPzzfVQLSydxHnXVyew1C3YPGKZ97F8
+          mainEntity: ''
+          holdingAmount: '770325.884434'
+          holdingPercent: 0.0007709254802010696
+      - clusterUUID: 5rvKrYJFUDETcSxJeIWpsz
+        totalWallet: 1
+        holdingAmount: '636628.553819'
+        holdingPercent: 0.0006371240840793469
+        rank: 8
+        holders:
+        - address: A97a74Qy6gkjSDtpE6b8qUuDDiNeofBBTJfZrp1KKPJh
+          mainEntity: ''
+          holdingAmount: '636628.553819'
+          holdingPercent: 0.0006371240840793469
+      - clusterUUID: 04VBTEuk26cFAqlNiAjrov
+        totalWallet: 1
+        holdingAmount: '530934.812317'
+        holdingPercent: 0.0005313480741227993
+        rank: 9
+        holders:
+        - address: 6QzgzweMEkCUNn35suHuRcb8f5FPuRSwQdQPSpK3ecJG
+          mainEntity: ''
+          holdingAmount: '530934.812317'
+          holdingPercent: 0.0005313480741227993
+      - clusterUUID: 4DWgxOOWGBBnXbn4jqgJsH
+        totalWallet: 1
+        holdingAmount: '491541.901135'
+        holdingPercent: 0.0004919245008232793
+        rank: 10
+        holders:
+        - address: B8xZaPnA7Q4QVxcrviqK15hFjNJQLeUr64Fwt2fMpUxD
+          mainEntity: ''
+          holdingAmount: '491541.901135'
+          holdingPercent: 0.0004919245008232793
+direct_cluster_details:
+  input:
+    tool: fetch_cluster_details
+    tool_arguments:
+      cluster_uuid: 13axGrDoFlaj8E0ruhYfi1
+      page: 1
+      page_size: 10
+    raw_data_only: true
+  output:
+    response: ''
+    data:
+      code: 0
+      message: ''
+      tokenSymbol: DOGE-CHAN
+      timestamp: 1742102704
+      holders:
+      - address: 73LnJ7G9ffBDjEBGgJDdgvLUhD5APLonKrNiHsKDCw5B
+        mainEntity: ''
+        holdingAmount: '4.6557611217744e+07'
+        holdingPercent: 0.0465938381097468
+      - address: 9RBxnMxQwcyF1CVkAxNt5u59RqgX52ejZ6PrPfXXNXoG
+        mainEntity: ''
+        holdingAmount: '2.7e+07'
+        holdingPercent: 0.027021008940503865
+      total: 2
+      fundFlowLink: solana/73LnJ7G9ffBDjEBGgJDdgvLUhD5APLonKrNiHsKDCw5B?source=8ef00717-d78d-4f28-896d-81c48feaa93f
+      tokenPrice: 2.6845256611077647e-06
+      fundFlowUrl: '@https://metasleuth.io/result/solana/73LnJ7G9ffBDjEBGgJDdgvLUhD5APLonKrNiHsKDCw5B?source=8ef00717-d78d-4f28-896d-81c48feaa93f'
+nl_token_analysis:
+  input:
+    query: 'Analyze the wallet clusters of this Solana token: tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump'
+    raw_data_only: false
+  output:
+    response: "**Token-Level Analysis**\n==========================\n\n### Basic Token\
+      \ Info\n\n* **Token Name:** Doge-chan\n* **Symbol:** DOGE-CHAN\n* **Price:**\
+      \ 2.6845256611077647e-06 ( Scientific Notation ) / **$0.00000268** (Readable\
+      \ Format)\n* **Market Cap:** 2684.525661107765 ( Scientific Notation ) / **$2,684.53**\
+      \ (Readable Format)\n* **Total Holders:** 72\n\n### Top 10 Holders Concentration\n\
+      \n* **Percentage of Supply Held by Top 10 Addresses:** 0.9943783282881886 (or\
+      \ **99.44%**)\n\n### Creator Information\n\n* **Creator Address:** 54g2trzYgGkmQMgjchrS1B81koX83tB6Q5uMnjMxwep4\n\
+      * **Creation Time:** 1739998499 ( Unix Timestamp ) / **[Human Readable Time:\
+      \ Not Provided in Data]** \n\n### Wallet Clusters\n\n**Significant Holder Clusters\
+      \ (Top 5):**\n\n1. **Cluster UUID:** 1AZ3nuuJpT2miu3R6sWsEL\n\t* **Rank:** 1\n\
+      \t* **Total Wallets in Cluster:** 1\n\t* **Total Percentage of Token Supply:**\
+      \ 0.985606836292113 (or **98.56%**)\n\t* **Holder:**\n\t\t+ **Address:** 5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1\n\
+      \t\t+ **Main Entity:** Raydium Authority V4\n\t\t+ **Holding Amount:** 9.84840269740335e+08\
+      \ ( Scientific Notation ) / **984,840,269.74** (Readable Format)\n\t\t+ **Holding\
+      \ Percentage:** 0.985606836292113 (or **98.56%**)\n\n2. **Cluster UUID:** 2isOYqwuGiSySGHINBlSt4\n\
+      \t* **Rank:** 2\n\t* **Total Wallets in Cluster:** 1\n\t* **Total Percentage\
+      \ of Token Supply:** 0.002001556732752165 (or **0.20%**)\n\t* **Holder"
+    data: &id001
+      code: 0
+      message: ''
+      queryID: 2Dy5HeLtiCFSxdTbCQaPd2
+      name: Doge-chan
+      symbol: DOGE-CHAN
+      price: 2.6845256611077647e-06
+      marketCap: 2684.525661107765
+      totalHolder: 72
+      topTenHoldings: 0.9943783282881886
+      creator: 54g2trzYgGkmQMgjchrS1B81koX83tB6Q5uMnjMxwep4
+      createTime: 1739998499
+      totalCluster: 69
+      clusters:
+      - clusterUUID: 1AZ3nuuJpT2miu3R6sWsEL
+        totalWallet: 1
+        holdingAmount: '9.84840269740335e+08'
+        holdingPercent: 0.985606836292113
+        rank: 1
+        holders:
+        - address: 5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1
+          mainEntity: Raydium Authority V4
+          holdingAmount: '9.84840269740335e+08'
+          holdingPercent: 0.985606836292113
+      - clusterUUID: 2isOYqwuGiSySGHINBlSt4
+        totalWallet: 1
+        holdingAmount: 2e+06
+        holdingPercent: 0.002001556732752165
+        rank: 2
+        holders:
+        - address: HG2dBdbJjRa5XaZ9dqbnk7PxELWwwPFaMsGyLHZqCYuj
+          mainEntity: ''
+          holdingAmount: 2e+06
+          holdingPercent: 0.002001556732752165
+      - clusterUUID: 5EyrEn0FKQSfWUJi534qOK
+        totalWallet: 2
+        holdingAmount: '1.591843018258e+06'
+        holdingPercent: 0.0015930820553394138
+        rank: 3
+        holders:
+        - address: 77JDHe7kbp2d9FEiWUQjv7vScACExfpVbDHepSjnq9Fk
+          mainEntity: ''
+          holdingAmount: '1.538339981296e+06'
+          holdingPercent: 0.0015395373734124244
+        - address: GQEFg5Any5myhKr6JzyG4drnBnTVc9GN7aVya5MgHjDX
+          mainEntity: ''
+          holdingAmount: '53503.036962'
+          holdingPercent: 5.354468192698953e-05
+      - clusterUUID: 43eHx1o9ZdBtXHUizG44E3
+        totalWallet: 1
+        holdingAmount: '1.004350598022e+06'
+        holdingPercent: 0.0010051323507572988
+        rank: 4
+        holders:
+        - address: 4bHFSuLGjY5vr8hKv75yprv5psWnVZsrUds8DUoVkt68
+          mainEntity: ''
+          holdingAmount: '1.004350598022e+06'
+          holdingPercent: 0.0010051323507572988
+      - clusterUUID: 1HV16cwGoMjiJgG6QN6tGX
+        totalWallet: 1
+        holdingAmount: '1.003851057057e+06'
+        holdingPercent: 0.001004632420966408
+        rank: 5
+        holders:
+        - address: HjxpMwc4ELFvkP5jznexAkjGkaJNgszX6gqWnpCkHPGN
+          mainEntity: ''
+          holdingAmount: '1.003851057057e+06'
+          holdingPercent: 0.001004632420966408
+      - clusterUUID: 1xWJmpz1NSkK7gz73YzPQP
+        totalWallet: 1
+        holdingAmount: '788697.08367'
+        holdingPercent: 0.0007893109789608432
+        rank: 6
+        holders:
+        - address: 4anRunAmKHsLYsPfFHRPD13arsChA4R3jk1nNq3FTQUp
+          mainEntity: ''
+          holdingAmount: '788697.08367'
+          holdingPercent: 0.0007893109789608432
+      - clusterUUID: 6lxYzdmoXmd3Xj9ZkNUNZV
+        totalWallet: 1
+        holdingAmount: '770325.884434'
+        holdingPercent: 0.0007709254802010696
+        rank: 7
+        holders:
+        - address: G58hvrF5TNrS1YPzzfVQLSydxHnXVyew1C3YPGKZ97F8
+          mainEntity: ''
+          holdingAmount: '770325.884434'
+          holdingPercent: 0.0007709254802010696
+      - clusterUUID: 5rvKrYJFUDETcSxJeIWpsz
+        totalWallet: 1
+        holdingAmount: '636628.553819'
+        holdingPercent: 0.0006371240840793469
+        rank: 8
+        holders:
+        - address: A97a74Qy6gkjSDtpE6b8qUuDDiNeofBBTJfZrp1KKPJh
+          mainEntity: ''
+          holdingAmount: '636628.553819'
+          holdingPercent: 0.0006371240840793469
+      - clusterUUID: 04VBTEuk26cFAqlNiAjrov
+        totalWallet: 1
+        holdingAmount: '530934.812317'
+        holdingPercent: 0.0005313480741227993
+        rank: 9
+        holders:
+        - address: 6QzgzweMEkCUNn35suHuRcb8f5FPuRSwQdQPSpK3ecJG
+          mainEntity: ''
+          holdingAmount: '530934.812317'
+          holdingPercent: 0.0005313480741227993
+      - clusterUUID: 4DWgxOOWGBBnXbn4jqgJsH
+        totalWallet: 1
+        holdingAmount: '491541.901135'
+        holdingPercent: 0.0004919245008232793
+        rank: 10
+        holders:
+        - address: B8xZaPnA7Q4QVxcrviqK15hFjNJQLeUr64Fwt2fMpUxD
+          mainEntity: ''
+          holdingAmount: '491541.901135'
+          holdingPercent: 0.0004919245008232793
+      - clusterUUID: 4tYtzGA9SxVWOmeg99eaPM
+        totalWallet: 1
+        holdingAmount: '482282.819667'
+        holdingPercent: 0.0004826582123975911
+        rank: 11
+        holders:
+        - address: HJM9dfobbAJeo3RxX3sBwPS7YRu7gCS7brbfPwxiL7id
+          mainEntity: ''
+          holdingAmount: '482282.819667'
+          holdingPercent: 0.0004826582123975911
+      - clusterUUID: 0O7i7uspTULVWsKVxVDp9B
+        totalWallet: 1
+        holdingAmount: '448736.332198'
+        holdingPercent: 0.00044908561347070956
+        rank: 12
+        holders:
+        - address: HsuYkRW9cSdwy6k65PCfYwVtUrtxPj2E217eTchse4yf
+          mainEntity: ''
+          holdingAmount: '448736.332198'
+          holdingPercent: 0.00044908561347070956
+      - clusterUUID: 7dCINWZWxvhicAtqjayKzH
+        totalWallet: 1
+        holdingAmount: '407269.798586'
+        holdingPercent: 0.0004075868037032133
+        rank: 13
+        holders:
+        - address: 9LBQVpkcHcjsB37ZrxgEDgLgHBDeNzuBJLooKywHffx5
+          mainEntity: ''
+          holdingAmount: '407269.798586'
+          holdingPercent: 0.0004075868037032133
+      - clusterUUID: 1xdz0wAowR1i9pES66QeNN
+        totalWallet: 1
+        holdingAmount: '372478.246194'
+        holdingPercent: 0.00037276817073665967
+        rank: 14
+        holders:
+        - address: 5F7xF2AfjFAm7vVAKHq7PDme3k7HYFG8tB95t3EXhzcz
+          mainEntity: ''
+          holdingAmount: '372478.246194'
+          holdingPercent: 0.00037276817073665967
+      - clusterUUID: 0fW8pPeBV1Gf9sqcblLBAE
+        totalWallet: 1
+        holdingAmount: '350292.392249'
+        holdingPercent: 0.00035056504806892417
+        rank: 15
+        holders:
+        - address: 4zMS9332ocojE5mn1edz8R5djrhQRxFvGvjSqbMA9Ygp
+          mainEntity: ''
+          holdingAmount: '350292.392249'
+          holdingPercent: 0.00035056504806892417
+      - clusterUUID: 0vF3ieELwTA4lERDxbbsuM
+        totalWallet: 1
+        holdingAmount: '256054.420846'
+        holdingPercent: 0.00025625372499763383
+        rank: 16
+        holders:
+        - address: 298ZbKqwGDQkLHwzfM5sX9THuhnAUDj3y77uhSUUphDK
+          mainEntity: ''
+          holdingAmount: '256054.420846'
+          holdingPercent: 0.00025625372499763383
+      - clusterUUID: 1TPJ3JqOgShpdMmiF0sDby
+        totalWallet: 1
+        holdingAmount: '235217.624783'
+        holdingPercent: 0.0002354007102731931
+        rank: 17
+        holders:
+        - address: 1suV1f8Gi3h72f39zjoReDGNKAP2KPsXa2nCFzJtF1y
+          mainEntity: ''
+          holdingAmount: '235217.624783'
+          holdingPercent: 0.0002354007102731931
+      - clusterUUID: 5dwy0krpKWhWGgw3vPs203
+        totalWallet: 1
+        holdingAmount: '220959.410327'
+        holdingPercent: 0.0002211313977024776
+        rank: 18
+        holders:
+        - address: C78QCTrfuPjAYqZWd7mybykgpNZsqpuA1ASHb2eyABTN
+          mainEntity: ''
+          holdingAmount: '220959.410327'
+          holdingPercent: 0.0002211313977024776
+      - clusterUUID: 6Pf58aJVJVIe9pl3iFA3OV
+        totalWallet: 1
+        holdingAmount: '205556.392559'
+        holdingPercent: 0.00020571639074335677
+        rank: 19
+        holders:
+        - address: FNQZLffXBXs9SEyoNcAo8Bzrs3QmaKCnfN5WULEGMhFw
+          mainEntity: ''
+          holdingAmount: '205556.392559'
+          holdingPercent: 0.00020571639074335677
+      - clusterUUID: 5E82htc52mJ7iGKtb04G1x
+        totalWallet: 1
+        holdingAmount: '195987.094459'
+        holdingPercent: 0.00019613964422347303
+        rank: 20
+        holders:
+        - address: CvRvGyPUZwZWKHWpVi141AxQGwxgD9rNwXJqp828VeC8
+          mainEntity: ''
+          holdingAmount: '195987.094459'
+          holdingPercent: 0.00019613964422347303
+nl_cluster_details:
+  input:
+    query: Show me the details of wallet cluster with UUID 0j7eWWwixWixBYPg5oeVX6
+    raw_data_only: false
+  output:
+    response: "**Cluster-Level Analysis for UUID: 0j7eWWwixWixBYPg5oeVX6**\n===========================================================\n\
+      \n### Cluster Overview\n\n* **UUID**: 0j7eWWwixWixBYPg5oeVX6\n* **Rank**: Not\
+      \ Provided (assuming singular cluster for this analysis)\n* **Total Wallets\
+      \ in Cluster**: 1\n* **Total Percentage of Token Supply**: 85.51% (held by this\
+      \ single wallet cluster)\n\n### Holdings Analysis\n\n* **Total Holding Amount**:\
+      \ 8.54462958451071e+08 ( **854,462,958.45** in readable format)\n* **Percentage\
+      \ of Total Token Supply**: 85.51%\n\n### Wallet Breakdown\n\n| **Wallet Address**\
+      \ | **Individual Holdings** | **Percentage of Token Supply** | **Main Entity**\
+      \ |\n| --- | --- | --- | --- |\n| 5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1\
+      \ | 8.54462958451071e+08 ( **854,462,958.45** ) | 85.51% | **Raydium Authority\
+      \ V4** |\n\n### Entity Identification\n\n* **Identified Entity**: **Raydium\
+      \ Authority V4**, likely associated with Raydium, a decentralized exchange (DEX)\
+      \ on the Solana blockchain. This suggests the holdings might be part of the\
+      \ exchange's treasury or a large liquidity pool.\n\n### Centralization Analysis\n\
+      \n* **Concentration Assessment**: **Highly Concentrated**\n\t+ With only 1 wallet\
+      \ in the cluster holding 85.51% of the token supply, the distribution within\
+      \ this cluster is extremely centralized.\n\t+ This level of concentration could\
+      \ pose risks to the token's market dynamics, as decisions or actions by this\
+      \ single entity could significantly impact the token's value and liquidity.\n\
+      \n### Additional Notes\n\n* **Token Information** (based on provided data):\n\
+      \t+ **Token Symbol**: DOGE-CHAN\n\t+ **Token Price**: 2.6845256611077647e-06\
+      \ ( **$0.0000026845257** in readable format)\n* **Fund Flow Link**: Not Available\
+      \ (@https://metasleuth.io/result/{fundFlowLink} format not applicable since\
+      \ `fundFlowLink` is empty)"
+    data:
+      code: 0
+      message: ''
+      tokenSymbol: DOGE-CHAN
+      timestamp: 1742102032
+      holders:
+      - address: 5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1
+        mainEntity: Raydium Authority V4
+        holdingAmount: '8.54462958451071e+08'
+        holdingPercent: 0.8551278236902138
+      total: 1
+      fundFlowLink: ''
+      tokenPrice: 2.6845256611077647e-06
+raw_data_query:
+  input:
+    query: Get token cluster data for tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump
+    raw_data_only: true
+  output:
+    response: ''
+    data: *id001

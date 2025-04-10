@@ -1,0 +1,35 @@
+input:
+  query: What are the latest developments in artificial intelligence?
+  tool: search_web
+  tool_arguments:
+    search_term: What are the latest developments in artificial intelligence?
+    max_results: 3
+  raw_data_only: false
+output:
+  response: ''
+  data:
+    status: success
+    data:
+      search_term: What are the latest developments in artificial intelligence?
+      results:
+      - title: Artificial Intelligence News -- ScienceDaily
+        link: https://www.sciencedaily.com/news/computers_math/artificial_intelligence/
+        snippet: Artificial Intelligence News. Everything on AI including futuristic
+          robots with artificial intelligence, computer models of human intelligence
+          and more.
+      - title: Latest Development of Artificial Intelligence | InData Labs
+        link: https://indatalabs.com/blog/ai-latest-developments
+        snippet: Artificial intelligence is one of the most impressive tech advancements
+          of our times. The latest development of generative artificial intelligence
+          has seen it applied across dozens of industries and sectors. From manufacturing
+          and robotics to pharmaceuticals, supply chain management, and everyday AI
+          software automation, it's happening everywhere. Artificial intelligence
+          history and latest ...
+      - title: The Top Artificial Intelligence Trends | IBM
+        link: https://www.ibm.com/think/insights/artificial-intelligence-trends
+        snippet: 2022 was the year that generative artificial intelligence (AI) exploded
+          into the public consciousness, and 2023 was the year it began to take root
+          in the business world. 2024 thus stands to be a pivotal year for the future
+          of AI, as researchers and enterprises seek to establish how this evolutionary
+          leap in technology can be most practically integrated into our everyday
+          lives.
