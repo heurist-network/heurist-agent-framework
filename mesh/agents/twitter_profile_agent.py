@@ -355,6 +355,55 @@ class TwitterProfileAgent(MeshAgent):
 
         return {"status": "error", "error": "Maximum retries exceeded"}
 
+    async def _make_api_request(self, endpoint: str, params: Dict, max_retries: int = 3) -> Dict:
+        """
+        Make API request with retry logic for 429 errors
+
+        Args:
+            endpoint: API endpoint URL
+            params: Request parameters
+            max_retries: Maximum number of retries (default: 3)
+
+        Returns:
+            API response as dictionary
+        """
+        retries = 0
+        backoff_time = 2
+
+        while retries <= max_retries:
+            try:
+                response = requests.get(endpoint, params=params, headers=self.headers)
+
+                if response.status_code == 200:
+                    return response.json()
+                if response.status_code == 429:
+                    retries += 1
+                    if retries > max_retries:
+                        response.raise_for_status()
+                    wait_time = (
+                        backoff_time
+                        * (2 ** (retries - 1))
+                        * (0.8 + 0.4 * asyncio.get_event_loop().create_future().get_loop().time() % 1)
+                    )
+                    logger.warning(
+                        f"Rate limit hit. Retrying in {wait_time:.2f} seconds (Attempt {retries}/{max_retries})"
+                    )
+                    await asyncio.sleep(wait_time)
+                    continue
+                response.raise_for_status()
+
+            except requests.exceptions.RequestException as e:
+                logger.error(f"Request error: {str(e)}")
+                retries += 1
+                if retries > max_retries:
+                    return {"status": "error", "error": f"API request failed after {max_retries} retries: {str(e)}"}
+
+                wait_time = backoff_time * (2 ** (retries - 1))
+                logger.warning(f"Request failed. Retrying in {wait_time} seconds (Attempt {retries}/{max_retries})")
+                await asyncio.sleep(wait_time)
+
+        return {"status": "error", "error": "Maximum retries exceeded"}
+
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
     # ------------------------------------------------------------------------

@@ -12,7 +12,7 @@ load_dotenv()  # load environment variables from .env
 
 
 class MCPClient:
-    """Client for interacting with MCP (Machine Conversation Protocol) servers"""
+    """Client for interacting with MCP (Model Context Protocol) servers"""
 
     def __init__(self):
         # Initialize session and client objects

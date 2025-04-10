@@ -50,7 +50,7 @@ class AaveAgent(MeshAgent):
                     {"name": "data", "description": "Structured Aave reserve data", "type": "dict"},
                 ],
                 "external_apis": ["Aave"],
-                "tags": ["DeFi", "Lending"],
+                "tags": ["DeFi"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Aave.png",
                 "examples": [
                     "What is the current borrow rate for USDC on Polygon?",

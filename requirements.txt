@@ -105,3 +105,4 @@ Werkzeug==3.1.3
 win32_setctime==1.2.0
 yarl==1.18.3
 spaceandtime==1.1.70
+apify_client==1.9.2
