@@ -5,8 +5,6 @@ from typing import Any, Dict, List
 
 import requests
 from dotenv import load_dotenv
-
-# Import the Space and Time Python SDK
 from spaceandtime import SpaceAndTime
 
 from core.llm import call_llm_with_tools_async
@@ -64,7 +62,7 @@ class SpaceTimeAgent(MeshAgent):
                     },
                 ],
                 "external_apis": ["Space and Time"],
-                "tags": ["SQL", "ZK"],
+                "tags": ["Onchain Data"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/SpacenTime.png",
                 "examples": [

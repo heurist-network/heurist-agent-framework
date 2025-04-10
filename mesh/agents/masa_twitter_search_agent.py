@@ -55,7 +55,7 @@ class MasaTwitterSearchAgent(MeshAgent):
                     {"name": "data", "description": "Structured Twitter search results data.", "type": "dict"},
                 ],
                 "external_apis": ["Masa"],
-                "tags": ["Social", "Twitter"],
+                "tags": ["Twitter"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Masa.png",  # use the logo of masa
                 "examples": [
                     "Search for tweets about @heurist_ai",

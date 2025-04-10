@@ -63,7 +63,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                     {"name": "data", "description": "Structured data from ELFA API", "type": "dict"},
                 ],
                 "external_apis": ["Elfa"],
-                "tags": ["Social", "Twitter"],
+                "tags": ["Twitter"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Elfa.png",
                 "examples": [

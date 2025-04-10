@@ -49,7 +49,7 @@ class AlloraPricePredictionAgent(MeshAgent):
                     {"name": "data", "description": "Structured prediction data", "type": "dict"},
                 ],
                 "external_apis": ["Allora"],
-                "tags": ["Trading", "Prediction"],
+                "tags": ["Prediction"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Allora.png",
                 "examples": [
                     "What is the price prediction for BTC in the next 5 minutes?",

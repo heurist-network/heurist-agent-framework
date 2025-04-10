@@ -51,7 +51,7 @@ class PumpFunTokenAgent(MeshAgent):
                     {"name": "data", "description": "Structured token analysis data.", "type": "dict"},
                 ],
                 "external_apis": ["Bitquery"],
-                "tags": ["Solana", "Trading"],
+                "tags": ["Solana"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Pumpfun.png",
                 "examples": [
                     "Latest token launched on Pump.fun in the last 24 hours",

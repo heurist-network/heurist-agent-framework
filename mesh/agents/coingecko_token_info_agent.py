@@ -59,7 +59,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                     },
                 ],
                 "external_apis": ["Coingecko"],
-                "tags": ["Trading", "Data"],
+                "tags": ["Trading"],
                 "recommended": True,
                 "large_model_id": "google/gemini-2.0-flash-001",
                 "small_model_id": "google/gemini-2.0-flash-001",

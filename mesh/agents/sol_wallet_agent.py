@@ -57,8 +57,8 @@ class SolWalletAgent(MeshAgent):
                     },
                 ],
                 "external_apis": ["Helius"],
-                "tags": ["Onchain Data"],
-                "image_url": "",  # Add Helius or custom logo if needed
+                "tags": ["Solana"],
+                "image_url": "https://github.com/heurist-network/heurist-agent-framework/blob/main/mesh/images/Solana.png",
             }
         )
 
