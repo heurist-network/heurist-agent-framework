@@ -118,6 +118,9 @@ class CarvOnchainDataAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                       SHARED / UTILITY METHODS
     # ------------------------------------------------------------------------
+
+    # this has a different signature, that supports anthropic models better.
+    # todo: remove it from here, and edit all the other agents  to just use this one.
     async def _respond_with_llm(
         self,
         query: str,

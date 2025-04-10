@@ -7,7 +7,6 @@ from typing import Any, Dict, List
 import requests
 from dotenv import load_dotenv
 
-from core.llm import call_llm_async
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -303,22 +302,6 @@ class TwitterProfileAgent(MeshAgent):
                 return last_word
 
         return ""
-
-    async def _respond_with_llm(self, query: str, tool_call_id: str, data: dict, temperature: float) -> str:
-        """
-        Generate an LLM explanation of the Twitter profile data
-        """
-        return await call_llm_async(
-            base_url=self.heurist_base_url,
-            api_key=self.heurist_api_key,
-            model_id=self.metadata["large_model_id"],
-            messages=[
-                {"role": "system", "content": self.get_system_prompt()},
-                {"role": "user", "content": query},
-                {"role": "tool", "content": str(data), "tool_call_id": tool_call_id},
-            ],
-            temperature=temperature,
-        )
 
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS

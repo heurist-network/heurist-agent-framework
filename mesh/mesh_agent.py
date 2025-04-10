@@ -130,6 +130,17 @@ class MeshAgent(ABC):
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": query},
+                # {
+                #     "role": "assistant",
+                #     "content": None,
+                #     "tool_calls": [
+                #         {
+                #             "id": tool_call_id,
+                #             "type": "function",
+                #             "function": {"name": tool_name, "arguments": json.dumps(tool_args)},
+                #         }
+                #     ],
+                # },
                 {"role": "tool", "content": str(data), "tool_call_id": tool_call_id},
             ],
             temperature=temperature,
