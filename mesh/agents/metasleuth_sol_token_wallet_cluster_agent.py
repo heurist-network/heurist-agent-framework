@@ -145,13 +145,6 @@ Note: Currently only Solana chain is supported.
             },
         ]
 
-    def _handle_error(self, maybe_error: dict) -> dict:
-        if "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        if maybe_error.get("code", 0) != 0:
-            return {"error": maybe_error.get("message", "Unknown error")}
-        return {}
-
     @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)

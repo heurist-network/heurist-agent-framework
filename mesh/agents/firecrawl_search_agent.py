@@ -116,15 +116,6 @@ class FirecrawlSearchAgent(MeshAgent):
         ]
 
     # ------------------------------------------------------------------------
-    #                       SHARED / UTILITY METHODS
-    # ------------------------------------------------------------------------
-    def _handle_error(self, maybe_error: dict) -> dict:
-        """Check for and return any errors in the response"""
-        if isinstance(maybe_error, dict) and "error" in maybe_error:
-            return {"error": maybe_error["error"]}
-        return {}
-
-    # ------------------------------------------------------------------------
     #                      FIRECRAWL-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
