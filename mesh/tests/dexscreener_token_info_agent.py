@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.dexscreener_token_info_agent import DexScreenerTokenInfoAgent  # noqa: E402
+from mesh.agents.dexscreener_token_info_agent import DexScreenerTokenInfoAgent  # noqa: E402
 
 load_dotenv()
 

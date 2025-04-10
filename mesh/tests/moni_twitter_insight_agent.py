@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.moni_twitter_insight_agent import MoniTwitterInsightAgent  # noqa: E402
+from mesh.agents.moni_twitter_insight_agent import MoniTwitterInsightAgent  # noqa: E402
 
 load_dotenv()
 

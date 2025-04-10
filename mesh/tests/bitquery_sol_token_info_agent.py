@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.bitquery_solana_token_info_agent import BitquerySolanaTokenInfoAgent  # noqa: E402
+from mesh.agents.bitquery_solana_token_info_agent import BitquerySolanaTokenInfoAgent  # noqa: E402
 
 load_dotenv()
 

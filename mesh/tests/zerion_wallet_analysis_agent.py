@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.zerion_wallet_analysis_agent import ZerionWalletAnalysisAgent  # noqa: E402
+from mesh.agents.zerion_wallet_analysis_agent import ZerionWalletAnalysisAgent  # noqa: E402
 
 load_dotenv()
 

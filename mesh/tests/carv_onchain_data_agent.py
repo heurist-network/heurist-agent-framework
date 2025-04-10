@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 # Adjust the path to access the parent directory
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.carv_onchain_data_agent import CarvOnchainDataAgent  # noqa: E402
+from mesh.agents.carv_onchain_data_agent import CarvOnchainDataAgent  # noqa: E402
 
 load_dotenv()
 

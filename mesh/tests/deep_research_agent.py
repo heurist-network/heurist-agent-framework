@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.deep_research_agent import DeepResearchAgent  # noqa: E402
+from mesh.agents.deep_research_agent import DeepResearchAgent  # noqa: E402
 
 load_dotenv()
 

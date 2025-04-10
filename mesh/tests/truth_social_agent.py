@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.truth_social_agent import TruthSocialAgent  # noqa: E402
+from mesh.agents.truth_social_agent import TruthSocialAgent  # noqa: E402
 
 load_dotenv()
 

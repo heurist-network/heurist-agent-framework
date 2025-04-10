@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.exa_search_agent import ExaSearchAgent  # noqa: E402
+from mesh.agents.exa_search_agent import ExaSearchAgent  # noqa: E402
 
 load_dotenv()
 

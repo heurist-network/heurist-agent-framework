@@ -5,7 +5,7 @@ from pathlib import Path
 import yaml
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.allora_price_prediction_agent import AlloraPricePredictionAgent  # noqa: E402
+from mesh.agents.allora_price_prediction_agent import AlloraPricePredictionAgent  # noqa: E402
 
 
 async def run_agent():

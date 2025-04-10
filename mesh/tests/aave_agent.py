@@ -5,7 +5,7 @@ from pathlib import Path
 import yaml
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.aave_agent import AaveAgent  # noqa: E402
+from mesh.agents.aave_agent import AaveAgent  # noqa: E402
 
 
 # Tested Chain IDs: (43114 – Avalanche), (137 – Polygon), (42161 – Arbitrum), its not working now for (1 – Ethereum Mainnet)

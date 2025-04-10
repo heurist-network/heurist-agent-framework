@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.space_and_time_agent import SpaceTimeAgent  # noqa: E402
+from mesh.agents.space_and_time_agent import SpaceTimeAgent  # noqa: E402
 
 load_dotenv()
 

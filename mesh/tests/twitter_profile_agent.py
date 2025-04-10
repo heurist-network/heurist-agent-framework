@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.twitter_profile_agent import TwitterProfileAgent  # noqa: E402
+from mesh.agents.twitter_profile_agent import TwitterProfileAgent  # noqa: E402
 
 load_dotenv()
 

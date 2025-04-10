@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.sol_wallet_agent import SolWalletAgent  # noqa: E402
+from mesh.agents.sol_wallet_agent import SolWalletAgent  # noqa: E402
 
 load_dotenv()
 

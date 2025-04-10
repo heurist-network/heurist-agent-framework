@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.firecrawl_search_agent import FirecrawlSearchAgent  # noqa: E402
+from mesh.agents.firecrawl_search_agent import FirecrawlSearchAgent  # noqa: E402
 
 load_dotenv()
 

@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.duckduckgo_search_agent import DuckDuckGoSearchAgent  # noqa: E402
+from mesh.agents.duckduckgo_search_agent import DuckDuckGoSearchAgent  # noqa: E402
 
 load_dotenv()
 

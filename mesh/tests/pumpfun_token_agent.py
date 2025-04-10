@@ -7,7 +7,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.pumpfun_token_agent import PumpFunTokenAgent  # noqa: E402
+from mesh.agents.pumpfun_token_agent import PumpFunTokenAgent  # noqa: E402
 
 load_dotenv()
 

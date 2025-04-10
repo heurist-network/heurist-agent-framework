@@ -6,7 +6,7 @@ import yaml
 from dotenv import load_dotenv
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.metasleuth_sol_token_wallet_cluster_agent import MetaSleuthSolTokenWalletClusterAgent  # noqa: E402
+from mesh.agents.metasleuth_sol_token_wallet_cluster_agent import MetaSleuthSolTokenWalletClusterAgent  # noqa: E402
 
 load_dotenv()
 
