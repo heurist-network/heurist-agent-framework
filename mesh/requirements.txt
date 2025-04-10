@@ -15,6 +15,7 @@ safe-eth-py==6.0.0b42 # prerelease, so need to specify
 
 # might need to fork latest one and fix, causes issues with `requests` version
 spaceandtime==1.1.17
+apify-client==1.9.2
 tenacity==8.5.0
 mcp==1.6.0
 
