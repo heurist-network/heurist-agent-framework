@@ -11,7 +11,10 @@ import aiohttp
 from dotenv import load_dotenv
 from loguru import logger
 
-from mesh.mesh_agent import MeshAgent
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
+
+from mesh.mesh_agent import MeshAgent  # noqa: E402
 
 # Configure loguru
 logger.remove()  # Remove default handler
