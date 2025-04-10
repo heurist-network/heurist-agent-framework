@@ -21,8 +21,7 @@ class TwitterProfileAgent(MeshAgent):
         if not self.api_key:
             raise ValueError("APIDANCE_API_KEY environment variable is required")
 
-        self.twitter_user_api = "https://api.apidance.pro/1.1/users/show.json"
-        self.twitter_tweets_api = "https://api.apidance.pro/sapi/UserTweets"
+        self.base_url = "https://api.apidance.pro"
         self.headers = {"apikey": self.api_key}
 
         self.metadata.update(
@@ -60,15 +59,13 @@ class TwitterProfileAgent(MeshAgent):
                     },
                 ],
                 "external_apis": ["Twitter API"],
-                "tags": ["Social", "Twitter"],
+                "tags": ["Twitter"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/apidance.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/twitter.png",
                 "examples": [
-                    "Get recent tweets from @username",
-                    "Show me the latest updates from username",
-                    "What has username been tweeting lately?",
-                    "Get the recent tweets from username",
-                    "Check the latest tweets from user_id:123456789",
+                    "Summarise recent updates of @heurist_ai",
+                    "What has @elonmusk been tweeting lately?",
+                    "Get the recent tweets from cz_binance",
                 ],
             }
         )
@@ -110,6 +107,12 @@ class TwitterProfileAgent(MeshAgent):
                 },
             }
         ]
+
+    def get_twitter_user_endpoint(self) -> str:
+        return f"{self.base_url}/1.1/users/show.json"
+
+    def get_twitter_tweets_endpoint(self) -> str:
+        return f"{self.base_url}/sapi/UserTweets"
 
     # ------------------------------------------------------------------------
     #                       SHARED / UTILITY METHODS
@@ -303,6 +306,55 @@ class TwitterProfileAgent(MeshAgent):
 
         return ""
 
+    async def _make_api_request(self, endpoint: str, params: Dict, max_retries: int = 3) -> Dict:
+        """
+        Make API request with retry logic for 429 errors
+
+        Args:
+            endpoint: API endpoint URL
+            params: Request parameters
+            max_retries: Maximum number of retries (default: 3)
+
+        Returns:
+            API response as dictionary
+        """
+        retries = 0
+        backoff_time = 2
+
+        while retries <= max_retries:
+            try:
+                response = requests.get(endpoint, params=params, headers=self.headers)
+
+                if response.status_code == 200:
+                    return response.json()
+                if response.status_code == 429:
+                    retries += 1
+                    if retries > max_retries:
+                        response.raise_for_status()
+                    wait_time = (
+                        backoff_time
+                        * (2 ** (retries - 1))
+                        * (0.8 + 0.4 * asyncio.get_event_loop().create_future().get_loop().time() % 1)
+                    )
+                    logger.warning(
+                        f"Rate limit hit. Retrying in {wait_time:.2f} seconds (Attempt {retries}/{max_retries})"
+                    )
+                    await asyncio.sleep(wait_time)
+                    continue
+                response.raise_for_status()
+
+            except requests.exceptions.RequestException as e:
+                logger.error(f"Request error: {str(e)}")
+                retries += 1
+                if retries > max_retries:
+                    return {"status": "error", "error": f"API request failed after {max_retries} retries: {str(e)}"}
+
+                wait_time = backoff_time * (2 ** (retries - 1))
+                logger.warning(f"Request failed. Retrying in {wait_time} seconds (Attempt {retries}/{max_retries})")
+                await asyncio.sleep(wait_time)
+
+        return {"status": "error", "error": "Maximum retries exceeded"}
+
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
@@ -316,7 +368,6 @@ class TwitterProfileAgent(MeshAgent):
             identifier: Either a screen name or numeric user ID
         """
         try:
-            await asyncio.sleep(2)
             params = {}
             if self._is_numeric_id(identifier):
                 params = {"user_id": identifier}
@@ -324,10 +375,10 @@ class TwitterProfileAgent(MeshAgent):
                 clean_username = self._clean_username(identifier)
                 params = {"screen_name": clean_username}
 
-            response = requests.get(self.twitter_user_api, params=params, headers=self.headers)
-            response.raise_for_status()
+            user_data = await self._make_api_request(endpoint=self.get_twitter_user_endpoint(), params=params)
 
-            user_data = response.json()
+            if "status" in user_data and user_data["status"] == "error":
+                return user_data
 
             profile_info = {
                 "id_str": user_data.get("id_str"),
@@ -344,10 +395,6 @@ class TwitterProfileAgent(MeshAgent):
 
             return {"status": "success", "profile": profile_info}
 
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Error fetching Twitter user data: {e}")
-            return {"status": "error", "error": f"Failed to fetch Twitter user: {str(e)}"}
-
         except Exception as e:
             logger.error(f"Unexpected error in apidance_get_user_id: {e}")
             return {"status": "error", "error": f"Unexpected error: {str(e)}"}
@@ -357,14 +404,13 @@ class TwitterProfileAgent(MeshAgent):
     async def apidance_get_tweets(self, user_id: str, limit: int = 10) -> Dict:
         """Fetch recent tweets for a user by ID"""
         try:
-            await asyncio.sleep(2)
-
             params = {"user_id": user_id, "count": limit}
 
-            response = requests.get(self.twitter_tweets_api, params=params, headers=self.headers)
-            response.raise_for_status()
+            tweets_data = await self._make_api_request(endpoint=self.get_twitter_tweets_endpoint(), params=params)
 
-            tweets_data = response.json()
+            if "status" in tweets_data and tweets_data["status"] == "error":
+                return tweets_data
+
             tweets = tweets_data.get("tweets", [])
 
             cleaned_tweets = []
@@ -381,11 +427,6 @@ class TwitterProfileAgent(MeshAgent):
                 cleaned_tweets.append(cleaned_tweet)
 
             return {"status": "success", "tweets": cleaned_tweets}
-
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Error fetching tweets: {e}")
-            return {"status": "error", "error": f"Failed to fetch tweets: {str(e)}"}
-
         except Exception as e:
             logger.error(f"Unexpected error in apidance_get_tweets: {e}")
             return {"status": "error", "error": f"Unexpected error: {str(e)}"}
