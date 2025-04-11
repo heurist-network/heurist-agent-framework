@@ -54,18 +54,15 @@ class AlloraPricePredictionAgent(MeshAgent):
         )
 
     async def __aenter__(self):
-        """Initialize session for API calls"""
         self.session = aiohttp.ClientSession()
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Clean up resources when context is exited"""
         if self.session:
             await self.session.close()
             self.session = None
 
     def get_system_prompt(self) -> str:
-        """Return the system prompt for Allora price prediction"""
         return """You are a helpful assistant that can access external tools to provide Bitcoin and Ethereum price prediction data.
         The price prediction is provided by Allora. You only have access to BTC and ETH data with 5-minute and 8-hour time frames.
         You don't have the ability to tell anything else. If the user's query is out of your scope, return a brief error message.
@@ -74,7 +71,6 @@ class AlloraPricePredictionAgent(MeshAgent):
         and output in CLEAN text format with no markdown or other formatting. Only return your response, no other text."""
 
     def get_tool_schemas(self) -> List[Dict]:
-        """Return the available tool schemas for Allora API"""
         return [
             {
                 "type": "function",
