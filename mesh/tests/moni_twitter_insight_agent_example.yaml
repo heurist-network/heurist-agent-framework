@@ -8,415 +8,419 @@ output_followers_history:
 
 
     1. **Stable Follower Count**: The account''s follower count has remained relatively
-    stable, hovering around **357 followers** for the entire week.
+    stable, hovering around **352-354 followers** for most of the week.
 
-    2. **Minimal Fluctuations**: The only notable fluctuations occurred at the beginning
-    of the observed period, with a slight decrease from **361** to **357** followers.
-    Since then, the count has remained consistent.
+    2. **Minor Fluctuations**: Noticeable minor fluctuations, with a **peak of 355
+    followers** at the beginning of the week and a **low of 350 followers** towards
+    the end.
 
-    3. **Negligible Growth Rate**: The **timeframe change** indicates a negligible
-    growth rate of **-4.0%** over the week, which is essentially a flat line.
+    3. **Net Loss**: Overall, the account experienced a **net loss of 4 followers**
+    (-1.1% change) over the last week, as indicated by the `timeframeChange` of -4.0.
 
-    4. **Low Account Discovery**: The **sinceFound** metric suggests that the account
-    is not being discovered by new users at a significant rate, with an average of
-    **83** new discoveries over the period (approximately **11.9** per day).
-
-
-    **Actionable Recommendations:**
-
-
-    1. **Content Strategy Review**: Given the stable (yet low) follower count, reassess
-    the content strategy to increase engagement and attract new followers.
-
-    2. **Discovery Improvement**: Explore ways to enhance account visibility, such
-    as collaborating with influencers, utilizing relevant hashtags, or running targeted
-    Twitter Ads.
-
-    3. **Engagement Focus**: Shift focus towards increasing engagement (e.g., likes,
-    replies, retweets) among the existing follower base to potentially encourage organic
-    growth.
+    4. **Account Visibility**: The `sinceFoundChange` and `sinceFound` metrics suggest
+    that the account''s visibility or engagement might have **decreased slightly**,
+    with a 267.0 `sinceFoundChange` and an average `sinceFound` value of 83.0. However,
+    without more context, it''s challenging to provide a more detailed analysis of
+    these metrics.
 
 
-    **Metrics at a Glance:**
+    **Follower Count Trend Line (simplified for readability):**
 
 
-    * **Current Follower Count**: 357
+    * **Day 1-2**: 354 (peak)
 
-    * **Week''s Follower Range**: 357 - 361
+    * **Day 3-5**: 354 → 353 (minor drop)
 
-    * **Timeframe Change**: -4.0%
+    * **Day 6-7**: 353 → **350** (slight decline)
 
-    * **Average Daily New Discoveries**: 11.9 (sinceFound: 83 over the week)'
+
+    **Actionable Advice:**
+
+
+    * Monitor engagement metrics (e.g., likes, retweets, replies) to understand the
+    potential causes of the slight decline in followers and visibility.
+
+    * Consider refreshing content strategy to attract new followers and re-engage
+    existing ones, potentially addressing the minor decline in visibility.
+
+    * Keep a close eye on follower count and engagement in the upcoming week to assess
+    the effectiveness of any changes made.'
   data:
     tool: get_smart_followers_history
     username: heurist_ai
     data: &id001
       chart:
-      - - 1742539318
-        - 361
-      - - 1742546518
-        - 361
-      - - 1742550118
-        - 360
-      - - 1742553718
-        - 360
-      - - 1742557318
-        - 360
-      - - 1742560918
-        - 360
-      - - 1742564518
-        - 360
-      - - 1742568118
-        - 360
-      - - 1742571718
-        - 360
-      - - 1742575318
-        - 360
-      - - 1742578918
-        - 360
-      - - 1742582518
-        - 360
-      - - 1742586118
-        - 360
-      - - 1742589718
-        - 360
-      - - 1742593318
-        - 360
-      - - 1742596918
-        - 360
-      - - 1742600518
-        - 360
-      - - 1742604118
-        - 359
-      - - 1742607718
-        - 359
-      - - 1742611318
-        - 359
-      - - 1742614918
-        - 359
-      - - 1742618518
-        - 359
-      - - 1742622118
-        - 359
-      - - 1742625718
-        - 359
-      - - 1742629318
-        - 359
-      - - 1742632918
-        - 359
-      - - 1742636518
-        - 359
-      - - 1742640118
-        - 359
-      - - 1742643718
-        - 359
-      - - 1742647318
-        - 359
-      - - 1742650918
-        - 359
-      - - 1742654518
-        - 358
-      - - 1742658118
-        - 358
-      - - 1742661718
-        - 358
-      - - 1742665318
-        - 357
-      - - 1742668918
-        - 357
-      - - 1742672518
-        - 357
-      - - 1742676118
-        - 357
-      - - 1742679718
-        - 357
-      - - 1742683318
-        - 357
-      - - 1742686918
-        - 357
-      - - 1742690518
-        - 357
-      - - 1742694118
-        - 357
-      - - 1742697718
-        - 357
-      - - 1742701318
-        - 357
-      - - 1742704918
-        - 357
-      - - 1742708518
-        - 357
-      - - 1742712118
-        - 357
-      - - 1742715718
-        - 357
-      - - 1742719318
-        - 357
-      - - 1742722918
-        - 357
-      - - 1742726518
-        - 357
-      - - 1742730118
-        - 357
-      - - 1742733718
-        - 357
-      - - 1742737318
-        - 357
-      - - 1742740918
-        - 357
-      - - 1742744518
-        - 357
-      - - 1742748118
-        - 357
-      - - 1742751718
-        - 357
-      - - 1742755318
-        - 357
-      - - 1742758918
-        - 357
-      - - 1742762518
-        - 357
-      - - 1742766118
-        - 357
-      - - 1742769718
-        - 357
-      - - 1742773318
-        - 357
-      - - 1742776918
-        - 357
-      - - 1742780518
-        - 357
-      - - 1742784118
-        - 357
-      - - 1742787718
-        - 357
-      - - 1742791318
-        - 357
-      - - 1742794918
-        - 357
-      - - 1742798518
-        - 357
-      - - 1742802118
-        - 357
-      - - 1742805718
-        - 357
-      - - 1742809318
-        - 357
-      - - 1742812918
-        - 357
-      - - 1742816518
-        - 357
-      - - 1742820118
-        - 357
-      - - 1742823718
-        - 357
-      - - 1742827318
-        - 357
-      - - 1742830918
-        - 357
-      - - 1742834518
-        - 357
-      - - 1742838118
-        - 357
-      - - 1742841718
-        - 357
-      - - 1742845318
-        - 357
-      - - 1742848918
-        - 357
-      - - 1742852518
-        - 357
-      - - 1742856118
-        - 357
-      - - 1742859718
-        - 357
-      - - 1742863318
-        - 357
-      - - 1742866918
-        - 357
-      - - 1742870518
-        - 357
-      - - 1742874118
-        - 357
-      - - 1742877718
-        - 357
-      - - 1742881318
-        - 357
-      - - 1742884918
-        - 357
-      - - 1742888518
-        - 357
-      - - 1742892118
-        - 357
-      - - 1742895718
-        - 357
-      - - 1742899318
-        - 357
-      - - 1742902918
-        - 357
-      - - 1742906518
-        - 357
-      - - 1742910118
-        - 357
-      - - 1742913718
-        - 357
-      - - 1742917318
-        - 357
-      - - 1742920918
-        - 357
-      - - 1742924518
-        - 357
-      - - 1742928118
-        - 357
-      - - 1742931718
-        - 357
-      - - 1742935318
-        - 357
-      - - 1742938918
-        - 357
-      - - 1742942518
-        - 357
-      - - 1742946118
-        - 357
-      - - 1742949718
-        - 357
-      - - 1742953318
-        - 357
-      - - 1742956918
-        - 357
-      - - 1742960518
-        - 357
-      - - 1742964118
-        - 357
-      - - 1742967718
-        - 357
-      - - 1742971318
-        - 357
-      - - 1742974918
-        - 357
-      - - 1742978518
-        - 357
-      - - 1742982118
-        - 357
-      - - 1742985718
-        - 357
-      - - 1742989318
-        - 357
-      - - 1742992918
-        - 357
-      - - 1742996518
-        - 357
-      - - 1743000118
-        - 357
-      - - 1743003718
-        - 357
-      - - 1743007318
-        - 357
-      - - 1743010918
-        - 357
-      - - 1743014518
-        - 357
-      - - 1743018118
-        - 357
-      - - 1743021718
-        - 357
-      - - 1743025318
-        - 357
-      - - 1743028918
-        - 357
-      - - 1743032518
-        - 357
-      - - 1743036118
-        - 357
-      - - 1743039718
-        - 357
-      - - 1743043318
-        - 357
-      - - 1743046918
-        - 357
-      - - 1743050518
-        - 357
-      - - 1743054118
-        - 357
-      - - 1743057718
-        - 357
-      - - 1743061318
-        - 357
-      - - 1743064918
-        - 357
-      - - 1743068518
-        - 357
-      - - 1743072118
-        - 357
-      - - 1743075718
-        - 357
-      - - 1743079318
-        - 357
-      - - 1743082918
-        - 357
-      - - 1743086518
-        - 357
-      - - 1743090118
-        - 357
-      - - 1743093718
-        - 357
-      - - 1743097318
-        - 357
-      - - 1743100918
-        - 357
-      - - 1743104518
-        - 357
-      - - 1743108118
-        - 357
-      - - 1743111718
-        - 357
-      - - 1743115318
-        - 357
-      - - 1743118918
-        - 357
-      - - 1743122518
-        - 357
-      - - 1743126118
-        - 357
-      - - 1743129718
-        - 357
-      - - 1743133318
-        - 357
-      - - 1743136918
-        - 357
-      - - 1743140518
-        - 357
+      - - 1743757620
+        - 354
+      - - 1743761220
+        - 355
+      - - 1743764820
+        - 355
+      - - 1743768420
+        - 355
+      - - 1743772020
+        - 354
+      - - 1743775620
+        - 354
+      - - 1743779220
+        - 354
+      - - 1743782820
+        - 354
+      - - 1743786420
+        - 354
+      - - 1743790020
+        - 354
+      - - 1743793620
+        - 354
+      - - 1743797220
+        - 354
+      - - 1743800820
+        - 354
+      - - 1743804420
+        - 354
+      - - 1743808020
+        - 354
+      - - 1743811620
+        - 354
+      - - 1743815220
+        - 354
+      - - 1743818820
+        - 354
+      - - 1743822420
+        - 354
+      - - 1743826020
+        - 354
+      - - 1743829620
+        - 354
+      - - 1743833220
+        - 354
+      - - 1743836820
+        - 354
+      - - 1743840420
+        - 354
+      - - 1743844020
+        - 354
+      - - 1743847620
+        - 354
+      - - 1743851220
+        - 354
+      - - 1743854820
+        - 354
+      - - 1743858420
+        - 354
+      - - 1743862020
+        - 354
+      - - 1743865620
+        - 354
+      - - 1743869220
+        - 354
+      - - 1743872820
+        - 354
+      - - 1743876420
+        - 354
+      - - 1743880020
+        - 354
+      - - 1743883620
+        - 354
+      - - 1743887220
+        - 354
+      - - 1743890820
+        - 354
+      - - 1743894420
+        - 354
+      - - 1743898020
+        - 354
+      - - 1743901620
+        - 354
+      - - 1743905220
+        - 354
+      - - 1743908820
+        - 353
+      - - 1743912420
+        - 353
+      - - 1743916020
+        - 353
+      - - 1743919620
+        - 353
+      - - 1743923220
+        - 353
+      - - 1743926820
+        - 353
+      - - 1743930420
+        - 353
+      - - 1743934020
+        - 353
+      - - 1743937620
+        - 353
+      - - 1743941220
+        - 353
+      - - 1743944820
+        - 353
+      - - 1743948420
+        - 353
+      - - 1743952020
+        - 353
+      - - 1743955620
+        - 353
+      - - 1743959220
+        - 353
+      - - 1743962820
+        - 353
+      - - 1743966420
+        - 353
+      - - 1743970020
+        - 353
+      - - 1743973620
+        - 353
+      - - 1743977220
+        - 353
+      - - 1743980820
+        - 353
+      - - 1743984420
+        - 353
+      - - 1743988020
+        - 353
+      - - 1743991620
+        - 353
+      - - 1743995220
+        - 353
+      - - 1743998820
+        - 353
+      - - 1744002420
+        - 353
+      - - 1744006020
+        - 353
+      - - 1744009620
+        - 353
+      - - 1744013220
+        - 352
+      - - 1744016820
+        - 352
+      - - 1744020420
+        - 352
+      - - 1744024020
+        - 352
+      - - 1744027620
+        - 352
+      - - 1744031220
+        - 352
+      - - 1744034820
+        - 352
+      - - 1744038420
+        - 352
+      - - 1744042020
+        - 352
+      - - 1744045620
+        - 352
+      - - 1744049220
+        - 352
+      - - 1744052820
+        - 352
+      - - 1744056420
+        - 352
+      - - 1744060020
+        - 352
+      - - 1744063620
+        - 352
+      - - 1744067220
+        - 352
+      - - 1744070820
+        - 352
+      - - 1744074420
+        - 352
+      - - 1744078020
+        - 352
+      - - 1744081620
+        - 352
+      - - 1744085220
+        - 352
+      - - 1744088820
+        - 352
+      - - 1744092420
+        - 352
+      - - 1744096020
+        - 352
+      - - 1744099620
+        - 352
+      - - 1744103220
+        - 352
+      - - 1744106820
+        - 352
+      - - 1744110420
+        - 351
+      - - 1744114020
+        - 351
+      - - 1744117620
+        - 351
+      - - 1744121220
+        - 351
+      - - 1744124820
+        - 352
+      - - 1744128420
+        - 352
+      - - 1744132020
+        - 352
+      - - 1744135620
+        - 352
+      - - 1744139220
+        - 352
+      - - 1744142820
+        - 352
+      - - 1744146420
+        - 352
+      - - 1744150020
+        - 352
+      - - 1744153620
+        - 352
+      - - 1744157220
+        - 352
+      - - 1744160820
+        - 352
+      - - 1744164420
+        - 352
+      - - 1744168020
+        - 352
+      - - 1744171620
+        - 352
+      - - 1744175220
+        - 352
+      - - 1744178820
+        - 352
+      - - 1744182420
+        - 352
+      - - 1744186020
+        - 352
+      - - 1744189620
+        - 352
+      - - 1744193220
+        - 352
+      - - 1744196820
+        - 352
+      - - 1744200420
+        - 352
+      - - 1744204020
+        - 352
+      - - 1744207620
+        - 352
+      - - 1744211220
+        - 352
+      - - 1744214820
+        - 352
+      - - 1744218420
+        - 352
+      - - 1744222020
+        - 352
+      - - 1744225620
+        - 352
+      - - 1744229220
+        - 352
+      - - 1744232820
+        - 352
+      - - 1744236420
+        - 352
+      - - 1744240020
+        - 352
+      - - 1744243620
+        - 352
+      - - 1744247220
+        - 352
+      - - 1744250820
+        - 351
+      - - 1744254420
+        - 351
+      - - 1744258020
+        - 351
+      - - 1744261620
+        - 351
+      - - 1744265220
+        - 351
+      - - 1744268820
+        - 351
+      - - 1744272420
+        - 351
+      - - 1744276020
+        - 351
+      - - 1744279620
+        - 351
+      - - 1744283220
+        - 351
+      - - 1744286820
+        - 351
+      - - 1744290420
+        - 351
+      - - 1744294020
+        - 351
+      - - 1744297620
+        - 351
+      - - 1744301220
+        - 350
+      - - 1744304820
+        - 350
+      - - 1744308420
+        - 350
+      - - 1744312020
+        - 350
+      - - 1744315620
+        - 350
+      - - 1744319220
+        - 350
+      - - 1744322820
+        - 350
+      - - 1744326420
+        - 350
+      - - 1744330020
+        - 350
+      - - 1744333620
+        - 350
+      - - 1744337220
+        - 350
+      - - 1744340820
+        - 350
+      - - 1744344420
+        - 350
+      - - 1744348020
+        - 350
+      - - 1744351620
+        - 350
+      - - 1744355220
+        - 350
+      - - 1744358820
+        - 350
       timeframeChange: -4.0
-      sinceFoundChange: 274.0
+      sinceFoundChange: 267.0
       sinceFound: 83.0
 input_categories:
   query: What categories of followers does heurist_ai have?
 output_categories:
-  response: "**Insights into Heurist_AI's Smart Follower Categories**\n\nBased on\
-    \ the analysis of Heurist_AI's Twitter followers, here are the key categories\
-    \ of \"smart followers\" - high-quality accounts with meaningful engagement:\n\
-    \n* **Top Categories:**\n\t1. **Influencers** (119 followers, ~23% of smart followers):\
-    \ Indicates Heurist_AI's content resonates with industry thought leaders, potentially\
-    \ amplifying its reach.\n\t2. **Project Team** (83 followers, ~16% of smart followers):\
-    \ Suggests strong internal team engagement, which can foster a sense of community\
-    \ around the project.\n\t3. **DAOs/Groups Members** (69 followers, ~13% of smart\
-    \ followers): Reveals connections within the decentralized autonomous organization\
-    \ (DAO) and group member communities, hinting at potential collaboration or interest\
-    \ in Heurist_AI's offerings.\n\n* **Notable Mentions:**\n\t+ **VC/Fund Team**\
-    \ (50 followers): Indicates interest from venture capital and fund teams, which\
-    \ could lead to future investment opportunities.\n\t+ **Angel Investors** (14\
-    \ followers): Though smaller in number, the presence of angel investors suggests\
-    \ Heurist_AI is on the radar of early-stage investment enthusiasts.\n\n* **Emerging\
-    \ Interests:**\n\t+ **Projects** (4 followers), **Launchpads** (3 followers),\
-    \ and **DAOs/Groups** (1 follower) represent smaller but potentially growing areas\
-    \ of interest. These could be nascent communities or indicative of Heurist_AI's\
-    \ expanding ecosystem.\n\n**Actionable Insights:**\n\n1. **Leverage Influencer\
-    \ Engagement**: Collaborate with influencers to further amplify Heurist_AI's message.\n\
-    2. **Nurture Project Team Engagement**: Continue to foster a strong community\
-    \ spirit among team members.\n3. **Explore DAO and VC Connections**: Investigate\
-    \ potential partnerships or collaborations with engaged DAOs and VC teams.\n4.\
-    \ **Monitor Emerging Interests**: Keep a close eye on the growth of followers\
-    \ from projects, launchpads, and DAOs/groups, as these may signal new opportunities."
+  response: "**Smart Follower Categories for `heurist_ai`**\n\nBased on the analysis,\
+    \ `heurist_ai` has a diverse set of smart followers across 8 categories. Here's\
+    \ a breakdown of these categories, highlighting the quality and engagement of\
+    \ these follower groups:\n\n1. **Influencers (120)**\n\t* **Insight:** `heurist_ai`\
+    \ has a significant following among influential voices in the AI/tech space, indicating\
+    \ potential amplification of its content.\n2. **Project Team (82)**\n\t* **Insight:**\
+    \ A substantial number of followers are directly related to the project, suggesting\
+    \ strong internal support and likely collaborative engagement.\n3. **DAOs/Groups\
+    \ Members (68)**\n\t* **Insight:** Engagement from members of Decentralized Autonomous\
+    \ Organizations (DAOs) and groups indicates `heurist_ai`'s relevance in the decentralized\
+    \ tech community.\n4. **VC/Fund Team (50)**\n\t* **Insight:** Interest from Venture\
+    \ Capital and fund teams signifies potential investment opportunities and validation\
+    \ of `heurist_ai`'s innovation.\n5. **Angel Investors (14)**\n\t* **Insight:**\
+    \ Although smaller in number, the presence of angel investors among followers\
+    \ suggests `heurist_ai` is on the radar of early-stage investment experts.\n6.\
+    \ **Projects (5)**\n\t* **Insight:** Other projects are following `heurist_ai`,\
+    \ possibly indicating collaborative or inspirational relationships within the\
+    \ tech ecosystem.\n7. **Launchpads (3)**\n\t* **Insight:** The interest from launchpads,\
+    \ though limited, could imply future opportunities for `heurist_ai` to leverage\
+    \ these platforms for growth.\n8. **DAOs/Groups (1)**\n\t* **Insight:** The single\
+    \ entry here might suggest an area for growth, considering the stronger following\
+    \ among DAO/group members.\n\n**Key Trends and Actionable Insights:**\n\n- **Engage\
+    \ with Influencers:** Leverage the large influencer following to amplify content\
+    \ and reach broader audiences.\n- **Foster Project Ecosystem:** The strong project\
+    \ team and DAOs/groups members following indicates a robust ecosystem; nurture\
+    \ these relationships for collaborative opportunities.\n- **Explore Investment\
+    \ Opportunities:** The interest from VC/Fund teams and angel investors presents\
+    \ potential funding avenues worth exploring.\n- **Potential for Launchpad Collaborations:**\
+    \ Although a small following, consider outreach to launchpads for potential partnerships."
   data:
     tool: get_smart_followers_categories
     username: heurist_ai
@@ -424,13 +428,13 @@ output_categories:
       items:
       - slug: influencers
         name: Influencers
-        itemsCount: 119
+        itemsCount: 120
       - slug: project-team
         name: Project team
-        itemsCount: 83
+        itemsCount: 82
       - slug: daos/groups-members
         name: DAOs/Groups members
-        itemsCount: 69
+        itemsCount: 68
       - slug: vc/fund-team
         name: VC/Fund team
         itemsCount: 50
@@ -439,7 +443,7 @@ output_categories:
         itemsCount: 14
       - slug: projects
         name: Projects
-        itemsCount: 4
+        itemsCount: 5
       - slug: launchpads
         name: Launchpads
         itemsCount: 3
@@ -450,946 +454,837 @@ output_categories:
 input_mentions:
   query: Show me the recent smart mentions for ethereum
 output_mentions:
-  response: '**Recent Smart Mentions for Ethereum**
-
-
-    **Overview**
-
-    ---------------
-
-
-    * **Total Mentions:** 73
-
-    * **Timeframe:** Recent (exact timeframe not specified, assuming latest available
-    data)
-
-    * **Mentioning Accounts:** 43 unique accounts (some accounts mentioned Ethereum
-    multiple times)
-
-
-    **Top Mentioning Accounts (by frequency)**
-
-    ------------------------------------------
-
-
-    1. **@Celo** (9 mentions, **Score 3**) - Frequent mentions, likely indicating
-    a strong connection or ongoing collaboration with Ethereum.
-
-    2. **@marek_** (13 mentions, **Score 2**) - High engagement with Ethereum, possibly
-    suggesting a strong interest or affinity.
-
-    3. **@obchakevich_** (5 mentions, **Score 2**) - Notable mentions, indicating
-    some level of engagement or discussion related to Ethereum.
-
-
-    **Top Scoring Mentioning Accounts (by influence)**
-
-    -----------------------------------------------
-
-
-    1. **@AndreCronjeTech** (1 mention, **Score 3**) - High-influence account mentioning
-    Ethereum, potentially indicating significant interest or endorsement.
-
-    2. **@BanklessHQ** (1 mention, **Score 3**) - Influential account in the crypto
-    space mentioning Ethereum, suggesting relevance and importance.
-
-    3. **@DWFLabs** (1 mention, **Score 3**) - Notable mention from a high-scoring
-    account, possibly highlighting innovative or collaborative efforts.
-
-
-    **Insights and Actionable Takeaways**
-
-    --------------------------------------
-
-
-    1. **Collaboration Opportunities:** Engage with **@Celo** to explore potential
-    collaboration or integration opportunities, given their frequent mentions of Ethereum.
-
-    2. **Community Engagement:** Respond to **@marek_**''s mentions to foster a stronger
-    connection with this engaged community member and potentially encourage user-generated
-    content.
-
-    3. **Influence and Credibility:** Leverage mentions from high-scoring accounts
-    (e.g., **@AndreCronjeTech**, **@BanklessHQ**) to enhance Ethereum''s credibility
-    and influence within the crypto ecosystem.
-
-    4. **Monitor Emerging Discussions:** Keep a close eye on mentions from accounts
-    like **@obchakevich_** to stay informed about emerging discussions or trends related
-    to Ethereum.'
+  response: "**Recent Smart Mentions for Ethereum**\n\n**Overview**\n------------\n\
+    \n* **Total Mentions:** 63\n* **Timeframe:** Recent (exact timeframe not specified,\
+    \ assuming latest available data)\n* **Smart Follower Categories:**\n\t+ **High-Engagement\
+    \ Influencers (Score 3):** 34 mentions (54%)\n\t+ **Mid-Tier Influencers (Score\
+    \ 2):** 25 mentions (40%)\n\t+ **Low-Engagement Users (Score 1):** 4 mentions\
+    \ (6%)\n\n**Top Mentions by High-Engagement Influencers (Score 3)**\n-----------------------------------------------\n\
+    \n1. **@spencernoon** (4 mentions)\n\t* Tweet URLs: \n\t\t+ https://x.com/1527806202/status/1908220984525807893\n\
+    \t\t+ https://x.com/1527806202/status/1908212685772382387\n\t\t+ https://x.com/1527806202/status/1906808852835885552\n\
+    \t\t+ https://x.com/1527806202/status/1906808554188931487\n2. **@chainlink** (3\
+    \ mentions)\n\t* Tweet URLs: \n\t\t+ https://x.com/1530530365/status/1910367603245174963\n\
+    \t\t+ https://x.com/1530530365/status/1909999868438782045\n\t\t+ https://x.com/1530530365/status/1907583828501344541\n\
+    3. **@derekedws** (3 mentions)\n\t* Tweet URLs: \n\t\t+ https://x.com/625257421/status/1909550976689975644\n\
+    \t\t+ https://x.com/625257421/status/1909308457473257911\n\t\t+ https://x.com/625257421/status/1906727646823858295\n\
+    \n**Key Topics and Trends**\n-------------------------\n\n1. **Layer 2 Solutions:**\
+    \ Mentions of Ethereum's layer 2 solutions, such as @Optimism and @loopringorg,\
+    \ indicate a growing interest in scaling solutions.\n2. **DeFi and NFTs:** Tweets\
+    \ from influencers like @spencernoon, @chainlink, and @derekedws highlight the\
+    \ continued importance of DeFi and NFTs within the Ethereum ecosystem.\n3. **Cross-Chain\
+    \ Interoper"
   data:
     tool: get_smart_mentions_feed
     username: ethereum
     data:
       items:
-      - createdAt: 1743096638
+      - createdAt: 1744306452
         type: NEW_MENTION
         data:
           mentionBy:
-            username: SecretNetwork
+            username: matchaxyz
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1861101515286487040/uIyrrzu7_normal.jpg
-          tweetUrl: https://x.com/3305325070/status/1905311512983412897
-      - createdAt: 1743096355
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: trapphone_eth
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1886455056259768320/q_p0-9c3_normal.jpg
-          tweetUrl: https://x.com/1386084651551182851/status/1905310327346250013
-      - createdAt: 1743095893
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: cchungccc
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1900215757507878916/AQmH153__normal.jpg
-          tweetUrl: https://x.com/1390144583946969093/status/1905308389124833493
-      - createdAt: 1743093983
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: graphprotocol
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1887217540902076417/Q4b9EYlv_normal.jpg
-          tweetUrl: https://x.com/981325507080814592/status/1905300378117439825
-      - createdAt: 1743092506
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: 0xOmnia
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1880036285152219136/PxeO4v3v_normal.jpg
-          tweetUrl: https://x.com/1380935034/status/1905294182761009612
-      - createdAt: 1743088313
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1905276595431940244
-      - createdAt: 1743085507
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1905264826093305926
-      - createdAt: 1743075161
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: VanessaGrellet_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1882483045308968960/JqSTK77a_normal.jpg
-          tweetUrl: https://x.com/3166953201/status/1905221433342538232
-      - createdAt: 1743071899
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: BandProtocol
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1881731675450994688/r8LDRsxm_normal.jpg
-          tweetUrl: https://x.com/993805028182781954/status/1905207750683943279
-      - createdAt: 1743058800
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: _TokenHunter
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
-          tweetUrl: https://x.com/1310130190266241024/status/1905152810326667754
-      - createdAt: 1743049407
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: DCbuild3r
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1630352089569280003/PnFV0u3W_normal.jpg
-          tweetUrl: https://x.com/848628608738488321/status/1905113410842349965
-      - createdAt: 1743031795
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1905039541834232078
-      - createdAt: 1743028285
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: gmoneyNFT
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1626216945698881541/kF6xM_Cb_normal.jpg
-          tweetUrl: https://x.com/1311393885806100481/status/1905024821802508564
-      - createdAt: 1743028266
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1905024739493757058
-      - createdAt: 1743028086
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: derekedws
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1637642496472940544/l9McmF_R_normal.jpg
-          tweetUrl: https://x.com/625257421/status/1905023985903079523
-      - createdAt: 1743027879
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1905023117665468641
-      - createdAt: 1743021995
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: 0xdreadknight
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1897281127959638016/MQUFFwUc_normal.jpg
-          tweetUrl: https://x.com/1460139080596205570/status/1904998436359073857
-      - createdAt: 1743020930
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: _acap_acap
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1894039123180011521/iJAAfO4J_normal.jpg
-          tweetUrl: https://x.com/1382115916087889920/status/1904993972667518988
-      - createdAt: 1743019420
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904987639931138050
-      - createdAt: 1743019408
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904987586848030862
-      - createdAt: 1743015160
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: stacy_muur
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1605592382908628992/v1qmOV_P_normal.jpg
-          tweetUrl: https://x.com/1562768344725344256/status/1904969770652594613
-      - createdAt: 1743012326
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: insider0x
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1886933270660874240/MIfn06gu_normal.jpg
-          tweetUrl: https://x.com/809328107261988865/status/1904957884296724507
-      - createdAt: 1743010328
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904949504106692807
-      - createdAt: 1743007755
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904938711122665772
-      - createdAt: 1743006779
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904934619482644804
-      - createdAt: 1743005899
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904930924971835591
-      - createdAt: 1743005564
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904929522564423722
-      - createdAt: 1743005062
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904927416818294875
-      - createdAt: 1743004640
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: CryptoMiners_Co
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1782677742439313408/mrQWSJjS_normal.jpg
-          tweetUrl: https://x.com/1396901359925047305/status/1904925646117363796
-      - createdAt: 1743001934
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904914295353467269
-      - createdAt: 1742994220
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: CurveFinance
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1220560374346461185/W1sQNVWo_normal.jpg
-          tweetUrl: https://x.com/1214050967986946051/status/1904881940915695695
-      - createdAt: 1742993462
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904878760857657833
-      - createdAt: 1742993201
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: ubeswap
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1362462748383223810/nbaGP_I6_normal.png
-          tweetUrl: https://x.com/1355392569241440256/status/1904877668933173709
-      - createdAt: 1742992966
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: gajesh
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1892768221641789441/vXh_Gwmm_normal.jpg
-          tweetUrl: https://x.com/807257752775065601/status/1904876680641904660
-      - createdAt: 1742992823
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904876080525082776
-      - createdAt: 1742992823
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904876080525082776
-      - createdAt: 1742992822
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904876076633121039
-      - createdAt: 1742992822
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904876076633121039
-      - createdAt: 1742992334
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904874032094470355
-      - createdAt: 1742991897
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: sreeramkannan
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1866862776637161472/mVf8f6FK_normal.jpg
-          tweetUrl: https://x.com/2166711024/status/1904872196176065003
-      - createdAt: 1742990622
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: CatfishFishy
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1478146349199761412/Z4lMdk4n_normal.jpg
-          tweetUrl: https://x.com/1126955403491676160/status/1904866849239515436
-      - createdAt: 1742986857
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Wise_Token
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1885031829117280256/pBfsIR_O_normal.jpg
-          tweetUrl: https://x.com/1233798506818621440/status/1904851059777896510
-      - createdAt: 1742985584
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904845721326477369
-      - createdAt: 1742981000
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904826490795286804
-      - createdAt: 1742980325
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: travalacom
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1498537088366833664/x9bpm3SO_normal.jpg
-          tweetUrl: https://x.com/961827567740239872/status/1904823662189883651
-      - createdAt: 1742979785
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904821395298668906
-      - createdAt: 1742979737
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904821195628753314
-      - createdAt: 1742977415
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Celo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904811457185013976
-      - createdAt: 1742976502
+            profileImageUrl: https://pbs.twimg.com/profile_images/1876696776683786240/oMa8kHgU_normal.jpg
+          tweetUrl: https://x.com/1236028763931947008/status/1910385841891078400
+      - createdAt: 1744302104
         type: NEW_MENTION
         data:
           mentionBy:
             username: chainlink
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1800426318099595264/N7yf_kOD_normal.jpg
-          tweetUrl: https://x.com/1530530365/status/1904807627214975079
-      - createdAt: 1742974812
+          tweetUrl: https://x.com/1530530365/status/1910367603245174963
+      - createdAt: 1744258444
         type: NEW_MENTION
         data:
           mentionBy:
-            username: sassal0x
+            username: nansen_ai
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1880792442510999552/-HQI53Fc_normal.jpg
-          tweetUrl: https://x.com/313724502/status/1904800540024070419
-      - createdAt: 1742971224
+            profileImageUrl: https://pbs.twimg.com/profile_images/1798630976387764224/O05j4854_normal.jpg
+          tweetUrl: https://x.com/1260559704335568896/status/1910184481509810216
+      - createdAt: 1744257600
         type: NEW_MENTION
         data:
           mentionBy:
-            username: marek_
+            username: coinexcom
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904785491079418123
-      - createdAt: 1742969059
+            profileImageUrl: https://pbs.twimg.com/profile_images/1882379021285244928/joET-oWW_normal.jpg
+          tweetUrl: https://x.com/460537897/status/1910180941655625784
+      - createdAt: 1744229444
         type: NEW_MENTION
         data:
           mentionBy:
-            username: Celo
+            username: ensdomains
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1904776407215202508
-      - createdAt: 1742968724
+            profileImageUrl: https://pbs.twimg.com/profile_images/1810706000669798400/nYlIMYkq_normal.jpg
+          tweetUrl: https://x.com/996321865311358976/status/1910062844890279971
+      - createdAt: 1744225289
         type: NEW_MENTION
         data:
           mentionBy:
-            username: CryptoMiners_Co
+            username: BFreshHB
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1782677742439313408/mrQWSJjS_normal.jpg
-          tweetUrl: https://x.com/1396901359925047305/status/1904775003570352138
-      - createdAt: 1742961205
+            profileImageUrl: https://pbs.twimg.com/profile_images/1815563709164535809/8S-oEs8W_normal.jpg
+          tweetUrl: https://x.com/387377745/status/1910045417657553278
+      - createdAt: 1744224120
         type: NEW_MENTION
         data:
           mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904743465713623152
-      - createdAt: 1742960993
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1904742577737433386
-      - createdAt: 1742954680
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: tusdio
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1807980021195366402/94yJRsHH_normal.jpg
-          tweetUrl: https://x.com/1318636587203350530/status/1904716097552892235
-      - createdAt: 1742939702
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: b_potts23
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1686788846665760768/VNNG-N6E_normal.jpg
-          tweetUrl: https://x.com/465067650/status/1904653276089639126
-      - createdAt: 1742939047
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: b_potts23
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1686788846665760768/VNNG-N6E_normal.jpg
-          tweetUrl: https://x.com/465067650/status/1904650530078810293
-      - createdAt: 1742921309
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: SweatEconomy
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1498715824416346118/fhD9Xs16_normal.jpg
-          tweetUrl: https://x.com/1485617600239489028/status/1904576130541035747
-      - createdAt: 1742890123
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904445326091555210
-      - createdAt: 1742881507
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: CryptoMiners_Co
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1782677742439313408/mrQWSJjS_normal.jpg
-          tweetUrl: https://x.com/1396901359925047305/status/1904409188287250793
-      - createdAt: 1742877614
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: PatriceinMilano
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1871963723482718208/X3siCDSw_normal.jpg
-          tweetUrl: https://x.com/251663248/status/1904392862311305350
-      - createdAt: 1742870927
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Wise_Token
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1885031829117280256/pBfsIR_O_normal.jpg
-          tweetUrl: https://x.com/1233798506818621440/status/1904364815209877604
-      - createdAt: 1742866205
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: DCbuild3r
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1630352089569280003/PnFV0u3W_normal.jpg
-          tweetUrl: https://x.com/848628608738488321/status/1904345008607756689
-      - createdAt: 1742847525
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: 1confirmation
+            username: AltCryptoGems
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1541985106398674948/greJ9q91_normal.jpg
-          tweetUrl: https://x.com/875103478946775040/status/1904266656366707041
-      - createdAt: 1742846027
+            profileImageUrl: https://pbs.twimg.com/profile_images/1684526956266635264/xdq5pFT5_normal.jpg
+          tweetUrl: https://x.com/1372196901936848901/status/1910040515149516871
+      - createdAt: 1744214429
         type: NEW_MENTION
         data:
           mentionBy:
-            username: obchakevich_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1898782747767746560/1KUBNRcG_normal.jpg
-          tweetUrl: https://x.com/1047973474248151042/status/1904260376751190425
-      - createdAt: 1742832544
+            username: chainlink
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1800426318099595264/N7yf_kOD_normal.jpg
+          tweetUrl: https://x.com/1530530365/status/1909999868438782045
+      - createdAt: 1744177376
         type: NEW_MENTION
         data:
           mentionBy:
-            username: Cryptui0x
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1892280139804758016/siDf_4FE_normal.jpg
-          tweetUrl: https://x.com/1080935658003279874/status/1904203823121404379
-      - createdAt: 1742822012
+            username: realMaskNetwork
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1742603812932575232/_nC2nYOC_normal.jpg
+          tweetUrl: https://x.com/1113516753307426816/status/1909844457773769146
+      - createdAt: 1744151104
         type: NEW_MENTION
         data:
           mentionBy:
-            username: CoinSharesCo
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
-          tweetUrl: https://x.com/911024827305140224/status/1904159647147471351
-      - createdAt: 1742821908
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: ShentuChain
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1875067135774593024/8al8ULko_normal.jpg
-          tweetUrl: https://x.com/1432078161504841734/status/1904159214588858744
-      - createdAt: 1742818345
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: KimonSh
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1516048859432198148/3LFxsHAJ_normal.jpg
-          tweetUrl: https://x.com/1449424449787285508/status/1904144268811280474
-      - createdAt: 1742808571
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: barrybutterhand
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1869285743593480193/FcLTFGEO_normal.jpg
-          tweetUrl: https://x.com/1357974068566372353/status/1904103271523901566
-      - createdAt: 1742808035
+            username: trondao
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1761904730668675072/v98T7vRL_normal.jpg
+          tweetUrl: https://x.com/894231710065446912/status/1909734262661955594
+      - createdAt: 1744133655
         type: NEW_MENTION
         data:
           mentionBy:
             username: TokenPocket_TP
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1883802310834585600/HoVIdb5I_normal.jpg
-          tweetUrl: https://x.com/984117658202226689/status/1904101025277268307
-      - createdAt: 1742780358
+          tweetUrl: https://x.com/984117658202226689/status/1909661077186789771
+      - createdAt: 1744127503
         type: NEW_MENTION
         data:
           mentionBy:
-            username: ashrobinqt
+            username: dynamic_xyz
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1616178369011269648/2MUSZzrQ_normal.jpg
-          tweetUrl: https://x.com/1020418150821744640/status/1903984937767743822
-      - createdAt: 1742771011
+            profileImageUrl: https://pbs.twimg.com/profile_images/1890270950257487872/QL5TkfRh_normal.png
+          tweetUrl: https://x.com/1469105891056123909/status/1909635274537419098
+      - createdAt: 1744122191
         type: NEW_MENTION
         data:
           mentionBy:
-            username: AndreCronjeTech
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1895238831282028544/Cf5mbQcT_normal.jpg
-          tweetUrl: https://x.com/905395394/status/1903945734677823804
-      - createdAt: 1742759555
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: VanessaGrellet_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1882483045308968960/JqSTK77a_normal.jpg
-          tweetUrl: https://x.com/3166953201/status/1903897686605959347
-      - createdAt: 1742671360
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: casperdefi
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1693037416557232128/UpMtKNeu_normal.jpg
-          tweetUrl: https://x.com/59555878/status/1903527769776001423
-      - createdAt: 1742660221
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: gandalfcryptto
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1598020646428151824/U9UUy9p4_normal.jpg
-          tweetUrl: https://x.com/1519997309546811393/status/1903481049922912608
-      - createdAt: 1742631054
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: hmalviya9
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1785909064188530688/6pVGdxWW_normal.jpg
-          tweetUrl: https://x.com/84375672/status/1903358711399317822
-      - createdAt: 1742623882
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: econoar
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1892950144296927232/sDDH9-EB_normal.jpg
-          tweetUrl: https://x.com/14101591/status/1903328630287315316
-      - createdAt: 1742576421
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: notsofast
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1893998683089215488/jyu0ulIF_normal.png
-          tweetUrl: https://x.com/2631709828/status/1903129567281246680
-      - createdAt: 1742572866
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: slander_eth
+            username: MFL_tw
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1900587051226976256/vco1w3Ru_normal.jpg
-          tweetUrl: https://x.com/992626987930824704/status/1903114655729394129
-      - createdAt: 1742556601
+            profileImageUrl: https://pbs.twimg.com/profile_images/1879523757179691008/leLL-zEY_normal.jpg
+          tweetUrl: https://x.com/1156046022595903490/status/1909612996223287341
+      - createdAt: 1744117440
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: marek_
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1906756374199148544/Bhp4_Il2_normal.jpg
+          tweetUrl: https://x.com/250985705/status/1909593068900380907
+      - createdAt: 1744107405
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: derekedws
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1637642496472940544/l9McmF_R_normal.jpg
+          tweetUrl: https://x.com/625257421/status/1909550976689975644
+      - createdAt: 1744106921
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Immutable
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1894340023962800130/yAJxsR4W_normal.jpg
+          tweetUrl: https://x.com/1233171399872638976/status/1909548946311029165
+      - createdAt: 1744104520
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Immutable
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1894340023962800130/yAJxsR4W_normal.jpg
+          tweetUrl: https://x.com/1233171399872638976/status/1909538875804205365
+      - createdAt: 1744074508
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: betty_nft
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1747451575902277632/qdZQcCsR_normal.jpg
+          tweetUrl: https://x.com/1418431052704411653/status/1909412999225655401
+      - createdAt: 1744073071
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: betty_nft
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1747451575902277632/qdZQcCsR_normal.jpg
+          tweetUrl: https://x.com/1418431052704411653/status/1909406971763343680
+      - createdAt: 1744060119
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: DeFi_Dad
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1613764698775633921/72tL5YzB_normal.jpg
+          tweetUrl: https://x.com/991745162274467840/status/1909352647511130571
+      - createdAt: 1744049584
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: derekedws
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1637642496472940544/l9McmF_R_normal.jpg
+          tweetUrl: https://x.com/625257421/status/1909308457473257911
+      - createdAt: 1744047749
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: ManuAlzuru
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1807103446887038976/KK4KVi60_normal.jpg
+          tweetUrl: https://x.com/44054599/status/1909300760292028453
+      - createdAt: 1744036919
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: ensdomains
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1810706000669798400/nYlIMYkq_normal.jpg
+          tweetUrl: https://x.com/996321865311358976/status/1909255339482214573
+      - createdAt: 1744027200
         type: NEW_MENTION
         data:
           mentionBy:
             username: BanklessHQ
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1559689397288706048/uO6uah2X_normal.jpg
-          tweetUrl: https://x.com/1225557966142820354/status/1903046433835716945
-      - createdAt: 1742534415
+          tweetUrl: https://x.com/1225557966142820354/status/1909214573321761215
+      - createdAt: 1744021033
         type: NEW_MENTION
         data:
           mentionBy:
-            username: marek_
+            username: CoinSharesCo
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1902953378608713779
-      - createdAt: 1742503968
+            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
+          tweetUrl: https://x.com/911024827305140224/status/1909188707535532479
+      - createdAt: 1744010375
         type: NEW_MENTION
         data:
           mentionBy:
-            username: CRyptOracl3
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1875676711976628224/mxycbBuf_normal.jpg
-          tweetUrl: https://x.com/1246434494585942017/status/1902825676341686658
-      - createdAt: 1742491240
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: DeFi_Cheetah
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1501968720457252865/MPA-E4SN_normal.jpg
-          tweetUrl: https://x.com/1501968038991925249/status/1902772289156067713
-      - createdAt: 1742487302
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: marek_
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1902755772481810553
-      - createdAt: 1742485077
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: iamwhitelights
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1589459574666428417/FG-DoEmO_normal.png
-          tweetUrl: https://x.com/318561147/status/1902746442747281687
-      - createdAt: 1742464216
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: julienbrg
+            username: barrybutterhand
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1190391679959912449/dlXl1JCM_normal.jpg
-          tweetUrl: https://x.com/1946723772/status/1902658942381047886
-      - createdAt: 1742462528
+            profileImageUrl: https://pbs.twimg.com/profile_images/1869285743593480193/FcLTFGEO_normal.jpg
+          tweetUrl: https://x.com/1357974068566372353/status/1909144003192185234
+      - createdAt: 1744009597
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: pranksy
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1835689420910919680/KGi9lDfP_normal.jpg
+          tweetUrl: https://x.com/2621412174/status/1909140742380859470
+      - createdAt: 1744008272
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: tusdio
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1807980021195366402/94yJRsHH_normal.jpg
+          tweetUrl: https://x.com/1318636587203350530/status/1909135182969676027
+      - createdAt: 1744002000
         type: NEW_MENTION
         data:
           mentionBy:
             username: _TokenHunter
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
-          tweetUrl: https://x.com/1310130190266241024/status/1902651863343997008
-      - createdAt: 1742462520
+          tweetUrl: https://x.com/1310130190266241024/status/1909108878043738333
+      - createdAt: 1743984004
         type: NEW_MENTION
         data:
           mentionBy:
-            username: DWFLabs
+            username: AstarNetwork
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1578704446577840129/AYRr3eB7_normal.jpg
-          tweetUrl: https://x.com/1542042946161512448/status/1902651828539363624
-      - createdAt: 1742452693
+            profileImageUrl: https://pbs.twimg.com/profile_images/1876590468156334080/AE_YE8gn_normal.jpg
+          tweetUrl: https://x.com/1172038272618393600/status/1909033398490063062
+      - createdAt: 1743975204
         type: NEW_MENTION
         data:
           mentionBy:
-            username: CryptoMiners_Co
+            username: BFreshHB
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1782677742439313408/mrQWSJjS_normal.jpg
-          tweetUrl: https://x.com/1396901359925047305/status/1902610612435534234
-      - createdAt: 1742441118
+            profileImageUrl: https://pbs.twimg.com/profile_images/1815563709164535809/8S-oEs8W_normal.jpg
+          tweetUrl: https://x.com/387377745/status/1908996486949437576
+      - createdAt: 1743971841
         type: NEW_MENTION
         data:
           mentionBy:
-            username: Celo
+            username: UniswapVillain
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1672283273798533126/QjG1NxLE_normal.jpg
+          tweetUrl: https://x.com/1301203725416103943/status/1908982379881935094
+      - createdAt: 1743964679
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Subli_Defi
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1658843025928249350/vSfZKZP-_normal.png
+          tweetUrl: https://x.com/1399600570432905217/status/1908952339982983500
+      - createdAt: 1743898068
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: DeFi_Dad
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1613764698775633921/72tL5YzB_normal.jpg
+          tweetUrl: https://x.com/991745162274467840/status/1908672953492832724
+      - createdAt: 1743873120
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: spencernoon
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
-          tweetUrl: https://x.com/1009135067153616896/status/1902562063815229617
-      - createdAt: 1742440692
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765778485354643456/EfdOl5hs_normal.png
+          tweetUrl: https://x.com/1527806202/status/1908568314973986985
+      - createdAt: 1743869534
         type: NEW_MENTION
         data:
           mentionBy:
-            username: marek_
+            username: RuneCrypto_
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1902560275129393395
-      - createdAt: 1742437017
+            profileImageUrl: https://pbs.twimg.com/profile_images/1614637882492215298/fZZPDzQt_normal.jpg
+          tweetUrl: https://x.com/1556788003779010560/status/1908553273176375368
+      - createdAt: 1743859500
         type: NEW_MENTION
         data:
           mentionBy:
-            username: sreeramkannan
+            username: BFreshHB
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1815563709164535809/8S-oEs8W_normal.jpg
+          tweetUrl: https://x.com/387377745/status/1908511189929275750
+      - createdAt: 1743813192
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: jbrukh
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1866862776637161472/mVf8f6FK_normal.jpg
-          tweetUrl: https://x.com/2166711024/status/1902544864124043337
-      - createdAt: 1742435147
+            profileImageUrl: https://pbs.twimg.com/profile_images/1729966525505736705/wt6N12is_normal.jpg
+          tweetUrl: https://x.com/14592709/status/1908316957905986043
+      - createdAt: 1743807684
         type: NEW_MENTION
         data:
           mentionBy:
-            username: sreeramkannan
+            username: Uniswap
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1866862776637161472/mVf8f6FK_normal.jpg
-          tweetUrl: https://x.com/2166711024/status/1902537019366240285
-      - createdAt: 1742418409
+            profileImageUrl: https://pbs.twimg.com/profile_images/1831348758753206272/y2Z0hMrl_normal.jpg
+          tweetUrl: https://x.com/984188226826010624/status/1908293855285547249
+      - createdAt: 1743806224
         type: NEW_MENTION
         data:
           mentionBy:
-            username: marek_
+            username: notsofast
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1893998683089215488/jyu0ulIF_normal.png
+          tweetUrl: https://x.com/2631709828/status/1908287732666781715
+      - createdAt: 1743800362
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: cryptamurai
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1786269829755969536/csfYiXfm_normal.jpg
-          tweetUrl: https://x.com/250985705/status/1902466815554691366
-      - createdAt: 1742406430
+            profileImageUrl: https://pbs.twimg.com/profile_images/1822070240316157953/lst_Kssi_normal.jpg
+          tweetUrl: https://x.com/914788213763559424/status/1908263147783270455
+      - createdAt: 1743800331
         type: NEW_MENTION
         data:
           mentionBy:
-            username: EOSNetworkFDN
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1856093762323128320/So8X7kvr_normal.jpg
-          tweetUrl: https://x.com/1074128622083104768/status/1902416570279981468
-      - createdAt: 1742405303
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Wise_Token
+            username: cryptamurai
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1885031829117280256/pBfsIR_O_normal.jpg
-          tweetUrl: https://x.com/1233798506818621440/status/1902411844775506163
-      - createdAt: 1742403000
+            profileImageUrl: https://pbs.twimg.com/profile_images/1822070240316157953/lst_Kssi_normal.jpg
+          tweetUrl: https://x.com/914788213763559424/status/1908263014844817590
+      - createdAt: 1743798601
         type: NEW_MENTION
         data:
           mentionBy:
-            username: CryptosBatman
+            username: koreanjewcrypto
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1894243707483721728/Hs84pL1O_normal.jpg
+          tweetUrl: https://x.com/873190778910253056/status/1908255760041058314
+      - createdAt: 1743796531
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: adinalini
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1722736865327849472/nFn5Gp79_normal.jpg
-          tweetUrl: https://x.com/918957305571528705/status/1902402185243054415
-      - createdAt: 1742398466
+            profileImageUrl: https://pbs.twimg.com/profile_images/1890404746579652608/lc9W5rnc_normal.jpg
+          tweetUrl: https://x.com/4690474507/status/1908247079459156372
+      - createdAt: 1743791022
         type: NEW_MENTION
         data:
           mentionBy:
             username: jessepollak
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1879556312822120448/QngrqCSC_normal.jpg
-          tweetUrl: https://x.com/18876842/status/1902383169179152867
+          tweetUrl: https://x.com/18876842/status/1908223973302882813
+      - createdAt: 1743790729
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: andrewsaunders
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1804222326223048706/N_NukRXV_normal.jpg
+          tweetUrl: https://x.com/20392488/status/1908222742325060033
+      - createdAt: 1743790425
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: jessepollak
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1879556312822120448/QngrqCSC_normal.jpg
+          tweetUrl: https://x.com/18876842/status/1908221465616674822
+      - createdAt: 1743790310
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: spencernoon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765778485354643456/EfdOl5hs_normal.png
+          tweetUrl: https://x.com/1527806202/status/1908220984525807893
+      - createdAt: 1743789660
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: 0xNairolf
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1743957281719373824/KyBEWS05_normal.jpg
+          tweetUrl: https://x.com/1442176296356696064/status/1908218258185928724
+      - createdAt: 1743788331
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: spencernoon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765778485354643456/EfdOl5hs_normal.png
+          tweetUrl: https://x.com/1527806202/status/1908212685772382387
+      - createdAt: 1743788300
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: econoar
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1892950144296927232/sDDH9-EB_normal.jpg
+          tweetUrl: https://x.com/14101591/status/1908212552557097311
+      - createdAt: 1743786080
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: ViktorBunin
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1644327398358368257/ZRAFaGPY_normal.jpg
+          tweetUrl: https://x.com/923275581990588418/status/1908203241734619136
+      - createdAt: 1743786059
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Optimism
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1734354549496836096/-laoU9C9_normal.jpg
+          tweetUrl: https://x.com/1044836083530452992/status/1908203156661502352
+      - createdAt: 1743785979
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: DextMoon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1886975879953149952/D6OMiukE_normal.jpg
+          tweetUrl: https://x.com/1398870417595584514/status/1908202819590479964
+      - createdAt: 1743778708
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: chainyoda
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1896878801860091904/LzUARbvY_normal.jpg
+          tweetUrl: https://x.com/112509659/status/1908172321111552221
+      - createdAt: 1743777088
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: VenusProtocol
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1887671038286131200/O_lMBGqm_normal.png
+          tweetUrl: https://x.com/1304609819504984067/status/1908165525848625217
+      - createdAt: 1743771529
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: chainyoda
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1896878801860091904/LzUARbvY_normal.jpg
+          tweetUrl: https://x.com/112509659/status/1908142210006081603
+      - createdAt: 1743751882
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: aelfblockchain
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1870825439750737920/a11dIZKy_normal.jpg
+          tweetUrl: https://x.com/903565929719541760/status/1908059806541447486
+      - createdAt: 1743751701
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: aelfblockchain
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1870825439750737920/a11dIZKy_normal.jpg
+          tweetUrl: https://x.com/903565929719541760/status/1908059046990823865
+      - createdAt: 1743720308
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: M31Capital
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1834228964644028416/kB9xoZTI_normal.jpg
+          tweetUrl: https://x.com/1184234116662943744/status/1907927374353535107
+      - createdAt: 1743713636
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Cardano_CF
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765479184586166272/cziOm5PO_normal.png
+          tweetUrl: https://x.com/4135644558/status/1907899391941484812
+      - createdAt: 1743682674
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: AuraFinance
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1500790678963507203/TKrF4ZUY_normal.jpg
+          tweetUrl: https://x.com/1488200731849015299/status/1907769526281703759
+      - createdAt: 1743660000
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: _TokenHunter
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
+          tweetUrl: https://x.com/1310130190266241024/status/1907674424616333443
+      - createdAt: 1743638400
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: chainlink
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1800426318099595264/N7yf_kOD_normal.jpg
+          tweetUrl: https://x.com/1530530365/status/1907583828501344541
+      - createdAt: 1743632831
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: graphprotocol
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1887217540902076417/Q4b9EYlv_normal.jpg
+          tweetUrl: https://x.com/981325507080814592/status/1907560470346961263
+      - createdAt: 1743616560
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: spencernoon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765778485354643456/EfdOl5hs_normal.png
+          tweetUrl: https://x.com/1527806202/status/1907492224440619319
+      - createdAt: 1743613145
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Filecoin
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1742210554662436864/XmS_lhtl_normal.jpg
+          tweetUrl: https://x.com/2653394250/status/1907477902272127034
+      - createdAt: 1743598212
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: loopringorg
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1187288603170426880/vV5r_bLF_normal.jpg
+          tweetUrl: https://x.com/9130922/status/1907415268604645436
+      - createdAt: 1743562803
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: _TokenHunter
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
+          tweetUrl: https://x.com/1310130190266241024/status/1907266751773000074
+      - createdAt: 1743536422
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: marek_
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1906756374199148544/Bhp4_Il2_normal.jpg
+          tweetUrl: https://x.com/250985705/status/1907156102888018101
+      - createdAt: 1743525914
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: AragonProject
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1905525671839105025/s7s7hcnr_normal.jpg
+          tweetUrl: https://x.com/828668619986964480/status/1907112027522503042
+      - createdAt: 1743524830
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: MetisL2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755003905103040513/hA-eKaP1_normal.jpg
+          tweetUrl: https://x.com/1290738140219572225/status/1907107483153273037
+      - createdAt: 1743523919
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: lukso_io
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1866711035387789313/mpF2QNlQ_normal.jpg
+          tweetUrl: https://x.com/913391623538663424/status/1907103659202433272
+      - createdAt: 1743503327
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: TokenPocket_TP
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1883802310834585600/HoVIdb5I_normal.jpg
+          tweetUrl: https://x.com/984117658202226689/status/1907017291021308301
+      - createdAt: 1743502890
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: TokenPocket_TP
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1883802310834585600/HoVIdb5I_normal.jpg
+          tweetUrl: https://x.com/984117658202226689/status/1907015458446012828
+      - createdAt: 1743502248
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Subli_Defi
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1658843025928249350/vSfZKZP-_normal.png
+          tweetUrl: https://x.com/1399600570432905217/status/1907012766424039679
+      - createdAt: 1743499370
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Senpai_Gideon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1887975141935824899/uYOsnAbP_normal.jpg
+          tweetUrl: https://x.com/5533262/status/1907000696018509923
+      - createdAt: 1743495394
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Celo
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1613170131491848195/InjXBNx9_normal.jpg
+          tweetUrl: https://x.com/1009135067153616896/status/1906984018685710682
+      - createdAt: 1743489395
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: marek_
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1906756374199148544/Bhp4_Il2_normal.jpg
+          tweetUrl: https://x.com/250985705/status/1906958857630282005
+      - createdAt: 1743489369
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: marek_
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1906756374199148544/Bhp4_Il2_normal.jpg
+          tweetUrl: https://x.com/250985705/status/1906958745977921865
+      - createdAt: 1743489322
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: marek_
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1906756374199148544/Bhp4_Il2_normal.jpg
+          tweetUrl: https://x.com/250985705/status/1906958549747651065
+      - createdAt: 1743476873
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: imegatruh
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1735592995251269632/aomDvLC9_normal.jpg
+          tweetUrl: https://x.com/464520869/status/1906906334760775769
+      - createdAt: 1743476407
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: defi_mochi
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1676246952131043330/a_9p7KnH_normal.jpg
+          tweetUrl: https://x.com/1575414573019979776/status/1906904382375145516
+      - createdAt: 1743463889
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: derekedws
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1637642496472940544/l9McmF_R_normal.jpg
+          tweetUrl: https://x.com/625257421/status/1906851874353152109
+      - createdAt: 1743453631
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: spencernoon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765778485354643456/EfdOl5hs_normal.png
+          tweetUrl: https://x.com/1527806202/status/1906808852835885552
+      - createdAt: 1743453560
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: spencernoon
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1765778485354643456/EfdOl5hs_normal.png
+          tweetUrl: https://x.com/1527806202/status/1906808554188931487
+      - createdAt: 1743442973
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: DexeNetwork
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1877300533389570048/8ugZOw73_normal.jpg
+          tweetUrl: https://x.com/1171329011357835265/status/1906764146701414540
+      - createdAt: 1743440013
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: ShentuChain
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1875067135774593024/8al8ULko_normal.jpg
+          tweetUrl: https://x.com/1432078161504841734/status/1906751734795669918
+      - createdAt: 1743436943
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: NeoCallss
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1905656927704469504/fJuL0XjC_normal.jpg
+          tweetUrl: https://x.com/1395792419837423618/status/1906738854549217365
+      - createdAt: 1743434270
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: derekedws
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1637642496472940544/l9McmF_R_normal.jpg
+          tweetUrl: https://x.com/625257421/status/1906727646823858295
+      - createdAt: 1743429694
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: StakeCapital
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1542277743722860545/tNwRmxzh_normal.jpg
+          tweetUrl: https://x.com/1062027244288294914/status/1906708450924507240
+      - createdAt: 1743427728
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: BitmanTW
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1826337929436016640/9gOk6_4h_normal.jpg
+          tweetUrl: https://x.com/1407650169827463169/status/1906700206802096248
+      - createdAt: 1743425913
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: evgeth_
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1881867726915772416/eSmaQUH8_normal.jpg
+          tweetUrl: https://x.com/831338680975384577/status/1906692593510985793
+      - createdAt: 1743417661
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: splinter0n
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1886215896735338496/wgucA82S_normal.png
+          tweetUrl: https://x.com/315021946/status/1906657982974443602
+      - createdAt: 1743417661
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: splinter0n
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1886215896735338496/wgucA82S_normal.png
+          tweetUrl: https://x.com/315021946/status/1906657982974443602
+      - createdAt: 1743411594
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: CoinSharesCo
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
+          tweetUrl: https://x.com/911024827305140224/status/1906632533741076660
+      - createdAt: 1743406805
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: tusdio
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1807980021195366402/94yJRsHH_normal.jpg
+          tweetUrl: https://x.com/1318636587203350530/status/1906612448461050286
+      - createdAt: 1743393674
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: ArbitrumNewsDAO
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1619326090580824065/BPdJC9a4_normal.jpg
+          tweetUrl: https://x.com/1374628085471977478/status/1906557370978931126
+      - createdAt: 1743283946
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Optimism
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1734354549496836096/-laoU9C9_normal.jpg
+          tweetUrl: https://x.com/1044836083530452992/status/1906097140042002620
+      - createdAt: 1743221003
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: chainyoda
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1896878801860091904/LzUARbvY_normal.jpg
+          tweetUrl: https://x.com/112509659/status/1905833138393124980
 input_direct_history:
   tool: get_smart_followers_history
   tool_arguments:
     username: heurist_ai
     timeframe: D7
 output_direct_history:
-  response: '**Insights: Smart Follower History for `heurist_ai`**
-
-
-    **Overview:**
-
-    The provided data spans a significant period, offering a comprehensive view of
-    `heurist_ai`''s smart follower history. Here are the key insights:
-
-
-    ### **1. Stability in Smart Follower Count**
-
-    - **Current Smart Followers:** approximately **357**
-
-    - **Historical Trend:** The smart follower count has remained remarkably stable,
-    hovering around **357** for the entire observed period. This consistency suggests
-    a well-maintained engagement level with high-quality followers.
-
-
-    ### **2. Minimal Fluctuations**
-
-    - **Maximum Recorded:** **361** (observed at the beginning of the dataset)
-
-    - **Minimum Recorded:** **357** (consistent for the majority of the period)
-
-    - **Fluctuation Insight:** The slight decrease from **361** to **357** smart followers
-    indicates minimal loss of engagement over time, which could be due to various
-    factors including Twitter''s algorithm changes or slight shifts in content strategy.
-
-
-    ### **3. Engagement and Content Strategy**
-
-    - **Stable Engagement:** The consistent smart follower count suggests that `heurist_ai`''s
-    content strategy is effectively maintaining engagement with its audience.
-
-    - **Room for Growth:** While stability is positive, the lack of significant growth
-    might indicate an opportunity to explore new content themes, engagement strategies,
-    or audience outreach to attract additional high-quality followers.
-
-
-    ### **4. Timeframe and Change Analysis**
-
-    - **Timeframe Change:** **-4.0%** ( slight decrease, reflecting the drop from
-    361 to 357 smart followers)
-
-    - **Since Found Change:** **274.0** (interpretation depends on the context of
-    "since found," which isn''t fully clear without additional context)
-
-    - **Since Found:** **83.0** (similar to above, lacks clear context for a definitive
-    insight)
-
-
-    ### **Actionable Insights:**
-
-    1. **Content Refresh:** Consider introducing new content themes or formats to
-    potentially attract new smart followers.
-
-    2. **Engagement Deep Dive:** Analyze the engagement metrics (e.g., likes, replies,
-    retweets) to understand what types of content best resonate with the current smart
-    follower base.
-
-    3. **Audience Expansion Strategies:** Explore collaborations, Twitter Chats, or
-    targeted content to reach beyond the current audience, aiming to grow the smart
-    follower count.'
+  response: ''
   data:
     tool: get_smart_followers_history
     username: heurist_ai
@@ -1399,37 +1294,7 @@ input_direct_categories:
   tool_arguments:
     username: heurist_ai
 output_direct_categories:
-  response: "**Smart Follower Categories Insights for `heurist_ai`**\n\n**Overview:**\n\
-    The `heurist_ai` Twitter account has a diverse set of smart followers, indicating\
-    \ a broad range of interests and potential engagement opportunities. Here's a\
-    \ breakdown of the smart follower categories, highlighting key trends and patterns:\n\
-    \n**Top Categories (by itemsCount):**\n\n1. **Influencers** (119)\n\t* **Insight:**\
-    \ A significant portion of `heurist_ai`'s smart followers are influencers, suggesting\
-    \ the account's content resonates with individuals who have their own audiences.\
-    \ **Actionable Tip:** Engage with these influencers to amplify your reach.\n2.\
-    \ **Project Team** (83)\n\t* **Insight:** A substantial number of followers are\
-    \ from project teams, indicating interest from collaborative or organizational\
-    \ entities. **Actionable Tip:** Consider sharing content relevant to project management\
-    \ or team collaboration to nurture these relationships.\n3. **DAOs/Groups Members**\
-    \ (69)\n\t* **Insight:** Decentralized Autonomous Organization (DAO) and group\
-    \ members show a notable interest in `heurist_ai`. **Actionable Tip:** Explore\
-    \ creating content that caters to the interests of DAOs and groups, potentially\
-    \ highlighting AI applications in these areas.\n\n**Noteworthy Mentions:**\n\n\
-    * **VC/Fund Team** (50) and **Angel Investors** (14): The presence of venture\
-    \ capital, fund teams, and angel investors indicates potential interest in `heurist_ai`\
-    \ from an investment standpoint. **Actionable Tip:** Share updates on growth,\
-    \ innovation, or success stories to keep these followers engaged.\n* **Low but\
-    \ Present:** **Projects** (4), **Launchpads** (3), and **DAOs/Groups** (1) have\
-    \ smaller but still notable representations. **Actionable Tip:** Periodically\
-    \ assess content relevance to these groups to ensure inclusivity and potential\
-    \ for growth in these areas.\n\n**Key Takeaway:**\n`heurist_ai`'s smart followers\
-    \ are predominantly comprised of influencers and project teams, with a significant\
-    \ presence of DAOs/Groups members. Focusing content and engagement strategies\
-    \ on these categories, while maintaining a broad appeal, can enhance the account's\
-    \ Twitter presence and influence.\n\n**Recommendations for `heurist_ai`:**\n\n\
-    * **Content Strategy:**\n\t+ Influencer Collaboration\n\t+ Project Management\
-    \ & Team Collaboration Insights\n\t+ DAO and Group-Focused AI Applications\n\t\
-    + Periodic Updates for"
+  response: ''
   data:
     tool: get_smart_followers_categories
     username: heurist_ai
@@ -1440,37 +1305,44 @@ input_direct_mentions:
     username: heurist_ai
     limit: 100
 output_direct_mentions:
-  response: "**Twitter Account:** heurist_ai\n\n**Smart Mentions Feed Insights:**\n\
-    \n**Overview:**\nThe provided data spans a significant period, offering a comprehensive\
-    \ view of `heurist_ai`'s mentions. Here's a distilled analysis of the key trends\
-    \ and patterns:\n\n### **Top Mentioning Accounts:**\n\n1. **Karamata2_2** (Score\
-    \ 2) - **34 mentions**: Dominates the mentions, indicating a strong engagement\
-    \ or campaign focus.\n2. **thinkagents** (Score 2) - **5 mentions**: Shows consistent\
-    \ interest in `heurist_ai`.\n3. **cchungccc** (Score 1) - **5 mentions**: Regularly\
-    \ mentions `heurist_ai`, possibly due to shared interests or collaborations.\n\
-    4. **AltCryptoGems** (Score 3) - **4 mentions**: Highlights `heurist_ai` in a\
-    \ seemingly promotional or awareness context.\n5. **ankr** (Score 3) - **3 mentions**:\
-    \ Mentions `heurist_ai` in what appears to be industry-related discussions.\n\n\
-    ### **Engagement by Score:**\n\n- **Score 3 (High Engagement)**: 34% of mentions\
-    \ (from accounts like `AltCryptoGems`, `ankr`, `djenn`, etc.)\n- **Score 2 (Medium\
-    \ Engagement)**: 44% of mentions (from `Karamata2_2`, `thinkagents`, etc.)\n-\
-    \ **Score 1 (Low Engagement)**: 22% of mentions (from `cchungccc`, `boringasdead`,\
-    \ etc.)\n\n### **Insights and Recommendations:**\n\n- **Strong Campaign or Partnership\
-    \ with Karamata2_2**: The high volume of mentions from `Karamata2_2` suggests\
-    \ a collaborative project, campaign, or a very engaged community member. **Action:**\
-    \ Engage back, explore collaboration opportunities, or acknowledge their support\
-    \ publicly.\n  \n- **Niche Audience Engagement**: The presence of multiple accounts\
-    \ with lower engagement scores but consistent mentions (e.g., `cchungccc`, `thinkagents`)\
-    \ indicates a niche but dedicated audience. **Action:** Tailor content to nurture\
-    \ this niche, potentially leading to more significant engagement over time.\n\n\
-    - **High-Engagement Accounts for Potential Partnerships**: Accounts with a Score\
-    \ 3 (e.g., `AltCryptoGems`, `ankr`) might be open to collaborations or have an\
-    \ existing interest in"
+  response: ''
   data:
     tool: get_smart_mentions_feed
     username: heurist_ai
     data:
       items:
+      - createdAt: 1744307791
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: realbitzero
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1852874948395892737/VX8JORhk_normal.jpg
+          tweetUrl: https://x.com/1683230648889221121/status/1910391458101592390
+      - createdAt: 1744123679
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Fetch_ai
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1829125609353551872/5GnVEkRB_normal.png
+          tweetUrl: https://x.com/911245230426525697/status/1909619234629472379
+      - createdAt: 1744030828
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: 0xPrismatic
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1822948258752442368/rqjcPBNB_normal.jpg
+          tweetUrl: https://x.com/1299523632868110338/status/1909229792412758096
+      - createdAt: 1743442444
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: cchungccc
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1900215757507878916/AQmH153__normal.jpg
+          tweetUrl: https://x.com/1390144583946969093/status/1906761928883700216
       - createdAt: 1742649138
         type: NEW_MENTION
         data:
@@ -2031,6 +1903,22 @@ output_direct_mentions:
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
           tweetUrl: https://x.com/1223790632/status/1874026281001713762
+      - createdAt: 1735635371
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1874016691669340210
+      - createdAt: 1735635371
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1874016691669340210
       - createdAt: 1735635341
         type: NEW_MENTION
         data:
@@ -2071,6 +1959,22 @@ output_direct_mentions:
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
           tweetUrl: https://x.com/1223790632/status/1873964425952321808
+      - createdAt: 1735622881
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1873964302765613128
+      - createdAt: 1735622881
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1873964302765613128
       - createdAt: 1735622813
         type: NEW_MENTION
         data:
@@ -2079,6 +1983,22 @@ output_direct_mentions:
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
           tweetUrl: https://x.com/1223790632/status/1873964020094611891
+      - createdAt: 1735622666
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1873963405067116654
+      - createdAt: 1735622666
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1873963405067116654
       - createdAt: 1735618370
         type: NEW_MENTION
         data:
@@ -2111,6 +2031,22 @@ output_direct_mentions:
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
           tweetUrl: https://x.com/1223790632/status/1873787346992456168
+      - createdAt: 1735576420
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1873769433036140957
+      - createdAt: 1735576420
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: Karamata2_2
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
+          tweetUrl: https://x.com/1223790632/status/1873769433036140957
       - createdAt: 1735574375
         type: NEW_MENTION
         data:
@@ -2175,102 +2111,6 @@ output_direct_mentions:
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
           tweetUrl: https://x.com/1223790632/status/1873720134663344445
-      - createdAt: 1735564568
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873719723143397678
-      - createdAt: 1735564429
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873719137585057970
-      - createdAt: 1735564294
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873718574197735864
-      - createdAt: 1735564249
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873718383990173830
-      - createdAt: 1735554680
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873678250117152812
-      - createdAt: 1735552372
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873668569361481760
-      - createdAt: 1735551814
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873666229401276736
-      - createdAt: 1735551509
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873664949467349033
-      - createdAt: 1735549987
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873658563811516779
-      - createdAt: 1735549869
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873658071177900334
-      - createdAt: 1735512167
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: drakeondigital
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1670122472404922368/_wS8MRTq_normal.jpg
-          tweetUrl: https://x.com/975937900511744000/status/1873499937713127495
-      - createdAt: 1735492441
-        type: NEW_MENTION
-        data:
-          mentionBy:
-            username: Karamata2_2
-            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
-            profileImageUrl: https://pbs.twimg.com/profile_images/1755058687473823744/9Srw1b0M_normal.jpg
-          tweetUrl: https://x.com/1223790632/status/1873417200348045614
 input_raw_data:
   query: Get smart mentions feed for bitcoin
   raw_data_only: true
@@ -2281,6 +2121,198 @@ output_raw_data:
     username: bitcoin
     data:
       items:
+      - createdAt: 1744231240
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: mvcglobal
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1859148439038423042/P_dOPTSF_normal.jpg
+          tweetUrl: https://x.com/1523488997263110144/status/1910070380120748096
+      - createdAt: 1744231193
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: mvcglobal
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1859148439038423042/P_dOPTSF_normal.jpg
+          tweetUrl: https://x.com/1523488997263110144/status/1910070184087322944
+      - createdAt: 1744212979
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: BobBodily
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1747490938505867264/fxCn65lG_normal.jpg
+          tweetUrl: https://x.com/3140748877/status/1909993785255223638
+      - createdAt: 1744203154
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: PatriceinMilano
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1909225736625618944/5d0X4MFM_normal.jpg
+          tweetUrl: https://x.com/251663248/status/1909952578613637202
+      - createdAt: 1744128110
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: bullperks
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1876313187076943872/HUm9rIFO_normal.jpg
+          tweetUrl: https://x.com/1384903770392387586/status/1909637819804663937
+      - createdAt: 1744021033
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: CoinSharesCo
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
+          tweetUrl: https://x.com/911024827305140224/status/1909188707535532479
+      - createdAt: 1743813075
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: probablytails
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1858819732746465280/ll0RtkVz_normal.jpg
+          tweetUrl: https://x.com/508847678/status/1908316468908802061
+      - createdAt: 1743737282
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: PatriceinMilano
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1871963723482718208/X3siCDSw_normal.jpg
+          tweetUrl: https://x.com/251663248/status/1907998569854103778
+      - createdAt: 1743660000
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: _TokenHunter
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
+          tweetUrl: https://x.com/1310130190266241024/status/1907674424616333443
+      - createdAt: 1743621814
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: JagoeCapital
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1860502838377328641/fbA9dTfY_normal.jpg
+          tweetUrl: https://x.com/1252627966724648960/status/1907514261103915123
+      - createdAt: 1743595220
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: CoinSharesCo
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
+          tweetUrl: https://x.com/911024827305140224/status/1907402716445327707
+      - createdAt: 1743562803
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: _TokenHunter
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
+          tweetUrl: https://x.com/1310130190266241024/status/1907266751773000074
+      - createdAt: 1743544690
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: JagoeCapital
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1860502838377328641/fbA9dTfY_normal.jpg
+          tweetUrl: https://x.com/1252627966724648960/status/1907190779006558508
+      - createdAt: 1743458461
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: cryptocom
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1873578819833204736/t-8bwuwM_normal.jpg
+          tweetUrl: https://x.com/864347902029709314/status/1906829110296391978
+      - createdAt: 1743446277
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: vechainofficial
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1897591408728444929/WwV1FkAp_normal.jpg
+          tweetUrl: https://x.com/908576143975919616/status/1906778007856922912
+      - createdAt: 1743422418
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: CoinSharesCo
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
+          tweetUrl: https://x.com/911024827305140224/status/1906677934489752039
+      - createdAt: 1743413083
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: PatriceinMilano
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1871963723482718208/X3siCDSw_normal.jpg
+          tweetUrl: https://x.com/251663248/status/1906638781496664366
+      - createdAt: 1743411594
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: CoinSharesCo
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1782443493832417281/PB80Bwp7_normal.jpg
+          tweetUrl: https://x.com/911024827305140224/status/1906632533741076660
+      - createdAt: 1743381067
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: cryptosmithcoco
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1744976485000024064/-yLHGKXu_normal.jpg
+          tweetUrl: https://x.com/623346638/status/1906504495594631448
+      - createdAt: 1743357881
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: verasitytech
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1757791818144428032/_q2QVnna_normal.png
+          tweetUrl: https://x.com/953284716945399809/status/1906407247967633695
+      - createdAt: 1743357351
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: realbitzero
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_1.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1852874948395892737/VX8JORhk_normal.jpg
+          tweetUrl: https://x.com/1683230648889221121/status/1906405021647876374
+      - createdAt: 1743304804
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: ATHena_DeFi
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1875314786205892608/J9EAOhOB_normal.jpg
+          tweetUrl: https://x.com/1362223649571430406/status/1906184624386044052
+      - createdAt: 1743163201
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: BanklessHQ
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_3.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1559689397288706048/uO6uah2X_normal.jpg
+          tweetUrl: https://x.com/1225557966142820354/status/1905590698507993145
+      - createdAt: 1743145202
+        type: NEW_MENTION
+        data:
+          mentionBy:
+            username: _TokenHunter
+            levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
+            profileImageUrl: https://pbs.twimg.com/profile_images/1314763884083855365/enCn4G3i_normal.jpg
+          tweetUrl: https://x.com/1310130190266241024/status/1905515204328161302
       - createdAt: 1743058800
         type: NEW_MENTION
         data:
@@ -2889,7 +2921,7 @@ output_raw_data:
             levelLogoUrl: https://storage.googleapis.com/moni-twitter-bot/statics/images/score_2.png
             profileImageUrl: https://pbs.twimg.com/profile_images/1853420514083033088/kvYLbXU-_normal.jpg
           tweetUrl: https://x.com/28400964/status/1893118433006350810
-      - createdAt: 1740046444
+           - createdAt: 1740046444
         type: NEW_MENTION
         data:
           mentionBy:
