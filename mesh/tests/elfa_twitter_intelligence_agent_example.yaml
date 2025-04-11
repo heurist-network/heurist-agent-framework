@@ -1,27 +1,29 @@
 input_mentions:
   query: Search for mentions of Heurist, HEU, and heurist_ai in the last 30 days
 output_mentions:
-  response: "**Mentions Analysis for Heurist, HEU, and heurist_ai (Last 30 Days)**\n\
+  response: "**Mentions Analysis for Heurist, HEU, and heurist_ai (Last 30 days)**\n\
     \n### **Overall Sentiment and Engagement**\n\n* **Sentiment Distribution:**\n\t\
-    + Positive: 60% (12/20 mentions)\n\t+ Neutral: 40% (8/20 mentions)\n\t+ Negative:\
-    \ 0% (0/20 mentions)\n* **Total Engagement Metrics:**\n\t+ Likes: 1,231\n\t+ Replies:\
-    \ 285\n\t+ Reposts: 542\n\t+ Views: 123,419\n\n### **Key Influencers and Their\
-    \ Impact**\n\n1. **@heurist_ai** (Official Account)\n\t* Mentions: 7\n\t* Average\
-    \ Engagement (per mention): 2,444 views, 54 likes, 7 replies, 14 reposts\n\t*\
-    \ Notable Mention: \"Heurist + @fetch_ai just unlocked something big: ASI-1 Mini,\
-    \ the first Web3-native LLM, now lives on our decentralized AI cloud.\" (27567\
-    \ views, 209 likes, 14 replies, 55 reposts)\n2. **@artoriatech** (Founder of @heurist_ai)\n\
-    \t* Mentions: 2\n\t* Average Engagement (per mention): 58 views, 3 likes, 1 reply,\
-    \ 1 repost\n\t* Notable Mention: \"The future of AI isn’t just smarter, it’s decentralized....\"\
-    \ (115 views, 6 likes, 2 replies, 1 repost)\n3. **@crestalnetwork**\n\t* Mentions:\
-    \ 1\n\t* Engagement: 732 views, 45 likes, 8 replies, 7 reposts\n\t* Notable Mention:\
-    \ \"Feeding the image frenzy, we're thrilled to announce our @intentkitai integration\
-    \ with @heurist_ai...\" (732 views, 45 likes, 8 replies, 7 reposts)\n\n### **Notable\
-    \ Trends or Patterns**\n\n1. **Decentralized AI and Web3 Integration**: Many mentions\
-    \ highlight Heurist's focus on decentralized AI, Web3 integration, and the launch\
-    \ of Web3-native LLM (ASI-1 Mini).\n2. **Partnerships and Integrations**: Heurist's\
-    \ collaborations with other projects (@fetch_ai, @intentkitai, CARV, BNB Chain)\
-    \ are frequently mentioned, indicating a strong network"
+    + Positive: 30% (6 out of 20 mentions)\n\t+ Neutral: 65% (13 out of 20 mentions)\n\
+    \t+ Negative: 0% (0 out of 20 mentions)\n* **Engagement Metrics (Aggregate):**\n\
+    \t+ Like Count: 1,044\n\t+ Reply Count: 341\n\t+ Repost Count: 294\n\t+ View Count:\
+    \ 104,419\n\n### **Key Influencers and Their Impact**\n\n1. **@heurist_ai** (Official\
+    \ Account)\n\t* Mentions: 7\n\t* Engagement: 533 Likes, 173 Replies, 149 Reposts,\
+    \ 60,119 Views\n\t* Impact: High (Driven by official announcements and partnerships)\n\
+    2. **@intentkitai**\n\t* Mentions: 1\n\t* Engagement: 45 Likes, 8 Replies, 7 Reposts,\
+    \ 732 Views\n\t* Impact: Medium (Notable integration announcement with Heurist)\n\
+    3. **@getmasafi**\n\t* Mentions: 2 (including a repost)\n\t* Engagement: 75 Likes,\
+    \ 21 Replies, 30 Reposts, 9,538 Views (for the original post)\n\t* Impact: Medium\
+    \ (Strategic partnership announcement)\n\n### **Notable Trends or Patterns**\n\
+    \n1. **Partnerships and Integrations:** Heurist's collaborations with various\
+    \ platforms (e.g., @fetch_ai, @intentkitai, @getmasafi) are garnering significant\
+    \ attention and engagement.\n2. **Product Updates and Announcements:** Posts about\
+    \ new features or upgrades (e.g., Heurist Agent Framework v0.0.4) receive high\
+    \ engagement, indicating a strong interest in the platform's development.\n3.\
+    \ **Ecosystem Growth:** Mentions highlighting the expansion of Heurist Mesh and\
+    \ its capabilities suggest a growing ecosystem, which might attract more users\
+    \ and developers.\n4. **Dominance of Neutral Sentiment:** The majority of mentions\
+    \ are neutral, which could indicate informative or update-style content rather\
+    \ than promotional or controversial discussions."
   data:
     status: success
     data:
@@ -56,26 +58,6 @@ output_mentions:
           repost_count: 0
           view_count: 0
         sentiment: positive
-      - content: 'RT @artoriatech: @belizardd @DOLAK1NG @heurist_ai @Fetch_ai integrations
-          live, listed on @AnthropicAI official github, definitely more than…'
-        mentioned_at: '2025-04-10T16:11:26+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 1
-          view_count: 0
-        sentiment: positive
-      - content: '@belizardd @DOLAK1NG @heurist_ai @Fetch_ai integrations live, listed
-          on @AnthropicAI official github, definitely more than logo x logo partnerships'
-        mentioned_at: '2025-04-10T16:11:02+00:00'
-        type: reply
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 1
-          view_count: 7
-        sentiment: netural
       - content: "3 months ago Heurist Mesh was just an idea, aiming to solve tool-use\
           \ and inter-op challenges for agents \n\nNow, it's a fast-growing agentic\
           \ ecosystem connecting the dots of intelligence by unifying models, data\
@@ -88,49 +70,6 @@ output_mentions:
           repost_count: 0
           view_count: 15
         sentiment: positive
-      - content: 'If you’re a founder, a dev, or even a researcher in this space,
-          now’s the time to get familiar.
-
-          Not when the headlines come. But when the foundation is being laid - An
-          Alpha for you
-
-
-          Because that’s where the leverage is.
-
-
-          I’ll keep tracking @heurist_ai, keep building with them,'
-        mentioned_at: '2025-04-10T15:04:06+00:00'
-        type: reply
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 0
-          view_count: 0
-        sentiment: positive
-      - content: 'RT @ShardDubai: The future of AI isn’t just smarter, it’s decentralized.
-
-
-          @artoriatech, Founder of @heurist_ai, is building the foundation…'
-        mentioned_at: '2025-04-09T20:58:24+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 1
-          view_count: 0
-        sentiment: positive
-      - content: "Decentralized AI Infra — Today at 2 PM UTC w/ @0xCapx @ClusterProtocol\
-          \ @Gaianet_AI @heurist_ai @gpunet \U0001F916 \nHosted by @marouen19 &amp;\
-          \ @nonfungibleyash \U0001F3A4 \nHow do you scale AI at the edge? \U0001F6F0\
-          ️\nWhat does performance mean in Agents?\nLet’s find out⚙️\n"
-        mentioned_at: '2025-04-09T20:25:31+00:00'
-        type: post
-        metrics:
-          like_count: 100
-          reply_count: 7
-          repost_count: 28
-          view_count: 2017
-        sentiment: netural
       - content: "Not affected by the chaotic market movements. We keep shipping and\
           \ on the way towards the most open and interoperable agentic protocol.\n\
           \nWhat you can do with Agent Framework &amp; Heurist Mesh now:\n\n- TG multi-agent\
@@ -142,23 +81,6 @@ output_mentions:
           reply_count: 0
           repost_count: 0
           view_count: 5
-        sentiment: netural
-      - content: 'The future of AI isn’t just smarter, it’s decentralized.
-
-
-          @artoriatech, Founder of @heurist_ai, is building the foundation for that
-          future with a decentralized AI-as-a-Service cloud. Think scalable AI infrastructure,
-          accessible to anyone, and fully on-chain.
-
-
-          At Shard Dubai '
-        mentioned_at: '2025-04-09T13:30:01+00:00'
-        type: post
-        metrics:
-          like_count: 6
-          reply_count: 2
-          repost_count: 1
-          view_count: 115
         sentiment: netural
       - content: '1/ Announcing Heurist Agent Framework v0.0.4 - our biggest upgrade
           ever!
@@ -174,16 +96,6 @@ output_mentions:
           repost_count: 20
           view_count: 7812
         sentiment: netural
-      - content: Thrilled to see @Heurist_ai integrating ASI-1 Mini onto their decentralized
-          AI cloud 💪
-        mentioned_at: '2025-04-08T14:47:59+00:00'
-        type: quote
-        metrics:
-          like_count: 1
-          reply_count: 1
-          repost_count: 0
-          view_count: 0
-        sentiment: positive
       - content: 'RT @heurist_ai: Heurist + @fetch_ai just unlocked something big:
           ASI-1 Mini, the first Web3-native LLM, now lives on our decentralized AI
           c…'
@@ -208,30 +120,6 @@ output_mentions:
           repost_count: 55
           view_count: 27567
         sentiment: positive
-      - content: "AI Infra projects gaining traction:                 \n\nTop Avg.\
-          \ Impressions / Market Cap → $FMC $HEU $AIFUN\n\nTop Holders Growth % →\
-          \ $NRN $SAI $MTLX "
-        mentioned_at: '2025-04-05T08:32:21+00:00'
-        type: post
-        metrics:
-          like_count: 47
-          reply_count: 7
-          repost_count: 6
-          view_count: 3999
-        sentiment: positive
-      - content: 'RT @crestalnetwork: Feeding the image frenzy, we''re thrilled to
-          announce our @intentkitai integration with @heurist_ai 💚
-
-
-          agents can analyz…'
-        mentioned_at: '2025-04-04T16:19:28+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 7
-          view_count: 0
-        sentiment: positive
       - content: 'Feeding the image frenzy, we''re thrilled to announce our @intentkitai
           integration with @heurist_ai 💚
 
@@ -254,78 +142,196 @@ output_mentions:
           repost_count: 7
           view_count: 732
         sentiment: netural
-      - content: "BNB Chain users can now pay for @heurist_ai services in WBNB and\
-          \ USDT—bringing efficient, low-cost access to serverless AI and data insights\
-          \ for builders and developers! \U0001F447 \n\n"
-        mentioned_at: '2025-04-04T10:00:07+00:00'
-        type: quote
-        metrics:
-          like_count: 103
-          reply_count: 101
-          repost_count: 31
-          view_count: 30795
-        sentiment: positive
-      - content: 'Accuracy. Speed. Insights.
+      - content: 'Introducing CARV Agent on Heurist Mesh! 🧠⛓️
 
 
-          @heurist_ai just developed an AI Agent using CARV''s data infra.
+          We''ve built the first intelligence agent leveraging @CARV_Official''s data
+          infra.
 
 
-          Accessing onchain activities has never been easier than this.'
-        mentioned_at: '2025-04-04T09:30:43+00:00'
-        type: quote
-        metrics:
-          like_count: 384
-          reply_count: 115
-          repost_count: 338
-          view_count: 51137
-        sentiment: positive
-      - content: "\U0001F310 #Definews Daily Digest \n03.04.25\n\n\U0001F310 @DWFLabs\
-          \ has interacted with #USD1, a stablecoin from @worldlibertyfi on $BSC and\
-          \ #ERC20!\n\n\U0001F310  @aoTheComputer and @Liquid_Ops are now available\
-          \ on @DefiLlama for tracking\n\n\U0001F310 @Astake_Official is proud to\
-          \ support @soneium and @AstarNetwork!\n\n\U0001F310 @heurist_ai API credits\
-          \ payment is now available on @BNBCHAIN!\n\n\U0001F310  @levva_fi is now\
-          \ live on @BinanceWallet\n\n\U0001F310  @UniLend_Finance is partnering with\
-          \ @Runera_io!"
-        mentioned_at: '2025-04-04T08:54:14+00:00'
+          Access insights on onchain activity across Ethereum, Base, and Solana -
+          from whale movements to token trends - all through natural language. '
+        mentioned_at: '2025-04-03T16:04:26+00:00'
         type: post
         metrics:
-          like_count: 88
-          reply_count: 17
-          repost_count: 69
-          view_count: 25669
+          like_count: 52
+          reply_count: 7
+          repost_count: 23
+          view_count: 13348
         sentiment: positive
+      - content: 超赞的多agent协作天团，用到@heurist_ai Heurist Mesh和OpenAI Agents SDK
+        mentioned_at: '2025-04-02T14:54:21+00:00'
+        type: quote
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 0
+          view_count: 0
+        sentiment: netural
+      - content: '如何拥有一个 agent 金狗智囊团
+
+
+          群里一天发上百个 ca，根本看不过来，于是我搭建了一个在 telegram 群里秒回消息、分工协作的 agent 土狗决策天团，里面有叙事大师、链上数据专家、舆论监测播报员等等。
+
+
+          - @heurist_ai 项目里 agent 使用的实时数据是来自 Heurist Mesh '
+        mentioned_at: '2025-04-02T14:22:50+00:00'
+        type: post
+        metrics:
+          like_count: 59
+          reply_count: 14
+          repost_count: 6
+          view_count: 2846
+        sentiment: netural
+      - content: 'I''m genuinely impressed by @AlphapulseAI  🤯
+
+
+          Visualizing crypto on-demand is a game-changer. No more reading lengthy
+          articles but AI-generated infographics make everything crystal clear.
+
+
+          Behind the scenes, @heurist_ai Heurist Mesh MCP connects Alphapulse to 30+
+          specialized'
+        mentioned_at: '2025-03-31T19:00:37+00:00'
+        type: quote
+        metrics:
+          like_count: 1
+          reply_count: 0
+          repost_count: 0
+          view_count: 12
+        sentiment: positive
+      - content: 'March 2025 Recap: When Heurist transformed into a full-fledged Agent-as-a-Service
+          ecosystem.
+
+
+          The receipts?
+
+
+          Let''s dive👇 '
+        mentioned_at: '2025-03-31T14:55:20+00:00'
+        type: post
+        metrics:
+          like_count: 12
+          reply_count: 2
+          repost_count: 4
+          view_count: 414
+        sentiment: netural
+      - content: "We are partnering with @heurist_ai to bring our blockchain data\
+          \ to Heurist Mesh—a platform for building powerful, modular agents.   \n\
+          \nThis unlocks new use cases across Web2 + Web3 and brings us one step closer\
+          \ to agent-powered digital identity \U0001F310 "
+        mentioned_at: '2025-03-26T15:44:00+00:00'
+        type: post
+        metrics:
+          like_count: 231
+          reply_count: 126
+          repost_count: 64
+          view_count: 46375
+        sentiment: netural
+      - content: "We are partnering with @heurist_ai to bring our blockchain data\
+          \ to Heurist Mesh—a platform for building powerful, modular agents.   \n\
+          \nThis unlocks new use cases across Web2 + Web3 and brings us one step closer\
+          \ to agent-powered digital identity \U0001F310 "
+        mentioned_at: '2025-03-26T15:44:00+00:00'
+        type: post
+        metrics:
+          like_count: 237
+          reply_count: 126
+          repost_count: 75
+          view_count: 49780
+        sentiment: netural
+      - content: "We are partnering with @HeuristAI to bring our blockchain data to\
+          \ Heurist Mesh—a platform for building powerful, modular agents. \n\nThis\
+          \ unlocks new use cases across Web2 + Web3 and brings us one step closer\
+          \ to agent-powered digital identity \U0001F310 "
+        mentioned_at: '2025-03-26T13:32:26+00:00'
+        type: post
+        metrics:
+          like_count: 19
+          reply_count: 4
+          repost_count: 3
+          view_count: 1601
+        sentiment: netural
+      - content: 'RT @heurist_ai: Strategic partnership with @getmasafi
+
+
+          Combining Heurist Agent Framework with Masa''s secure Data API to unlock
+          protected da…'
+        mentioned_at: '2025-03-24T17:52:08+00:00'
+        type: repost
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 29
+          view_count: 0
+        sentiment: netural
+      - content: "RT @tethrees: I didn’t know elfa could help to do this, @heurist_ai\
+          \ must be good tech \n\nI also heard others are trying out heurist mcp with…"
+        mentioned_at: '2025-03-24T17:07:38+00:00'
+        type: repost
+        metrics:
+          like_count: 0
+          reply_count: 0
+          repost_count: 2
+          view_count: 0
+        sentiment: netural
+      - content: 'Strategic partnership with @getmasafi
+
+
+          Combining Heurist Agent Framework with Masa''s secure Data API to unlock
+          protected data access for AI agents.
+
+
+          The future of AI requires both innovative infrastructure AND secure data
+          access. We''re building it together. '
+        mentioned_at: '2025-03-24T15:26:54+00:00'
+        type: post
+        metrics:
+          like_count: 75
+          reply_count: 21
+          repost_count: 30
+          view_count: 9538
+        sentiment: netural
+      - content: "I didn’t know elfa could help to do this, @heurist_ai must be good\
+          \ tech \n\nI also heard others are trying out heurist mcp with elfa data\
+          \ integration, ty for helping us get more exposure!"
+        mentioned_at: '2025-03-21T11:16:55+00:00'
+        type: quote
+        metrics:
+          like_count: 10
+          reply_count: 1
+          repost_count: 1
+          view_count: 365
+        sentiment: netural
 input_account:
   query: Analyze the Twitter account @heurist_ai
 output_account:
   response: "**Analysis of Twitter Account @heurist_ai**\n\n### **Account Stats Summary**\n\
-    \n* **Smart Following Count**: 488\n* **Average Engagement**: 0.3334 ( Moderate\
-    \ engagement, with room for improvement)\n* **Follower Engagement Ratio**: 11,554.67\
-    \ (High ratio, indicating a dedicated follower base)\n\n### **Mentions Analysis\
-    \ (Last 9 days)**\n\n* **Overall Sentiment**:\n\t+ **Positive**: 60% (8 out of\
-    \ 13 mentions with a positive sentiment)\n\t+ **Neutral**: 40% (5 out of 13 mentions\
-    \ with a neutral sentiment)\n\t+ **Negative**: 0% (No negative mentions found)\n\
-    * **Top Engagement Metrics**:\n\t+ **Highest View Count**: 51,137 (Mention about\
-    \ CARV's data infra integration)\n\t+ **Highest Like Count**: 384 (Mention about\
-    \ CARV's data infra integration)\n\t+ **Highest Repost Count**: 338 (Mention about\
-    \ CARV's data infra integration)\n* **Key Influencers and Their Impact**:\n\t\
-    + **@artoriatech** (Founder of @heurist_ai): 2 mentions, both with positive sentiment,\
-    \ highlighting the founder's active role in promoting Heurist AI.\n\t+ **@ShardDubai**:\
-    \ 1 mention with a positive sentiment, indicating a potential partnership or collaboration.\n\
-    \t+ **@crestalnetwork**: 1 mention with a positive sentiment, showcasing an integration\
-    \ with Heurist AI.\n* **Notable Trends or Patterns**:\n\t+ **Decentralized AI\
-    \ and Web3**: Recurring themes in mentions, emphasizing Heurist AI's focus on\
-    \ decentralized AI solutions.\n\t+ **Integrations and Partnerships**: Multiple\
-    \ mentions highlight Heurist AI's collaborations with other projects (e.g., @Fetch_ai,\
-    \ @intentkitai, CARV), indicating an active ecosystem.\n\t+ **Technical Discussions**:\
-    \ Some mentions delve into technical aspects (e.g., DePAI, decentralized data\
-    \ networks), appealing to a technically inclined audience.\n\n### **Posting Patterns\
-    \ and Impact (Inferred from Mentions)**\n\n* **Posting Style**: Engaging, informative,\
-    \ and promotional, with a mix of technical and accessible content.\n* **Content\
-    \ Strategy**: Focus on showcasing integrations, partnerships, and the decentralized\
-    \ AI ecosystem, which resonates with the audience.\n* **Impact**: The account's\
-    \ content seems to generate moderate to high engagement,"
+    \n* **Smart Following Count:** 488\n* **Average Engagement:** 0.3334 (moderate\
+    \ engagement)\n* **Follower Engagement Ratio:** 11,554.67 (high engagement relative\
+    \ to follower count, indicating strong audience interaction)\n\n### **Mentions\
+    \ Analysis**\n\n* **Overall Sentiment:**\n\t+ **Positive:** 60% (12 out of 20\
+    \ mentions)\n\t+ **Neutral:** 40% (8 out of 20 mentions)\n\t+ **Negative:** 0%\
+    \ (no negative mentions found)\n* **Top Engagement Metrics:**\n\t+ **Highest View\
+    \ Count:** 51,137 (mention about AI Agent using CARV's data infra)\n\t+ **Highest\
+    \ Like Count:** 384 (same mention as above)\n\t+ **Highest Repost Count:** 338\
+    \ (same mention as above)\n* **Key Influencers and Their Impact:**\n\t+ **@artoriatech**\
+    \ (Founder of @heurist_ai): High-impact mentions, often linked to significant\
+    \ engagement.\n\t+ **@ShardDubai**: Mention highlighting @heurist_ai's decentralized\
+    \ AI cloud garnered moderate engagement.\n\t+ **@crestalnetwork**: Their integration\
+    \ announcement with @heurist_ai saw substantial engagement (45 likes, 8 replies,\
+    \ 7 reposts, 732 views).\n* **Notable Trends or Patterns:**\n\t+ **Decentralized\
+    \ AI and Web3:** Dominant themes in mentions, indicating @heurist_ai's strong\
+    \ positioning in these areas.\n\t+ **Partnerships and Integrations:** Frequent\
+    \ mentions of collaborations (e.g., with @fetch_ai, @intentkitai, @CARV) suggest\
+    \ an active strategy of building an ecosystem.\n\t+ **Positive Reception:** The\
+    \ absence of negative sentiments and the prevalence of positive to neutral sentiments\
+    \ indicate a favorable perception of @heurist_ai's endeavors.\n\n### **Influential\
+    \ Connections (based on mentions and engagement):**\n\n* **@artoriatech** (Founder)\n\
+    * **@ShardDubai**\n* **@crestalnetwork**\n* **@fetch_ai**\n* **@intentkitai**\n\
+    * **@CARV**\n\n### **Posting Patterns and Impact:**\n\n* **Content Strategy:**\
+    \ Focus on announcements, partnerships, and the intersection of AI, Web3, and\
+    \ decentralization.\n* **Engagement Impact:** Varied,"
   data:
     status: success
     data:
@@ -857,202 +863,202 @@ output_trending:
         pageSize: 50
         data:
         - token: btc
-          current_count: 463
-          previous_count: 728
-          change_percent: -36.4
+          current_count: 475
+          previous_count: 724
+          change_percent: -34.39
         - token: prompt
-          current_count: 336
-          previous_count: 133
-          change_percent: 152.63
+          current_count: 335
+          previous_count: 131
+          change_percent: 155.73
         - token: eth
-          current_count: 293
-          previous_count: 363
-          change_percent: -19.28
+          current_count: 284
+          previous_count: 351
+          change_percent: -19.09
         - token: usd
-          current_count: 200
-          previous_count: 197
-          change_percent: 1.52
-        - token: baby
-          current_count: 165
-          previous_count: 44
-          change_percent: 275
+          current_count: 195
+          previous_count: 209
+          change_percent: -6.7
         - token: big
-          current_count: 159
+          current_count: 179
           previous_count: 48
-          change_percent: 231.25
+          change_percent: 272.92
+        - token: baby
+          current_count: 168
+          previous_count: 46
+          change_percent: 265.22
         - token: sol
-          current_count: 119
+          current_count: 118
           previous_count: 173
-          change_percent: -31.21
+          change_percent: -31.79
         - token: hype
-          current_count: 104
-          previous_count: 107
-          change_percent: -2.8
+          current_count: 107
+          previous_count: 104
+          change_percent: 2.88
         - token: spx
-          current_count: 81
-          previous_count: 89
-          change_percent: -8.99
+          current_count: 79
+          previous_count: 92
+          change_percent: -14.13
         - token: spy
           current_count: 76
-          previous_count: 110
-          change_percent: -30.91
+          previous_count: 111
+          change_percent: -31.53
         - token: fartcoin
-          current_count: 74
-          previous_count: 85
-          change_percent: -12.94
-        - token: tao
-          current_count: 66
-          previous_count: 40
-          change_percent: 65
-        - token: dog
-          current_count: 65
-          previous_count: 155
-          change_percent: -58.06
-        - token: mcp
-          current_count: 59
-          previous_count: 103
-          change_percent: -42.72
+          current_count: 71
+          previous_count: 86
+          change_percent: -17.44
         - token: hiber
-          current_count: 57
-          previous_count: 75
-          change_percent: -24
-        - token: avax
-          current_count: 56
-          previous_count: 52
-          change_percent: 7.69
-        - token: giko
-          current_count: 51
-          previous_count: 66
-          change_percent: -22.73
-        - token: crv
-          current_count: 50
+          current_count: 64
+          previous_count: 72
+          change_percent: -11.11
+        - token: tao
+          current_count: 63
           previous_count: 43
-          change_percent: 16.28
+          change_percent: 46.51
+        - token: dog
+          current_count: 60
+          previous_count: 159
+          change_percent: -62.26
+        - token: avax
+          current_count: 57
+          previous_count: 52
+          change_percent: 9.62
+        - token: mcp
+          current_count: 57
+          previous_count: 102
+          change_percent: -44.12
+        - token: crv
+          current_count: 53
+          previous_count: 42
+          change_percent: 26.19
         - token: eur
-          current_count: 50
-          previous_count: 29
-          change_percent: 72.41
+          current_count: 51
+          previous_count: 33
+          change_percent: 54.55
         - token: s
-          current_count: 50
-          previous_count: 53
-          change_percent: -5.66
+          current_count: 48
+          previous_count: 54
+          change_percent: -11.11
         - token: usdc
-          current_count: 45
-          previous_count: 67
-          change_percent: -32.84
-        - token: fhe
-          current_count: 44
-          previous_count: 1
-          change_percent: 4300
+          current_count: 47
+          previous_count: 66
+          change_percent: -28.79
         - token: usdt
+          current_count: 47
+          previous_count: 75
+          change_percent: -37.33
+        - token: fhe
+          current_count: 46
+          previous_count: 1
+          change_percent: 4500
+        - token: wct
           current_count: 43
-          previous_count: 78
-          change_percent: -44.87
+          previous_count: 18
+          change_percent: 138.89
         - token: xrp
           current_count: 43
-          previous_count: 68
-          change_percent: -36.76
-        - token: wct
-          current_count: 42
-          previous_count: 18
-          change_percent: 133.33
+          previous_count: 66
+          change_percent: -34.85
         - token: prime
           current_count: 41
           previous_count: 11
           change_percent: 272.73
         - token: qqq
-          current_count: 39
+          current_count: 41
           previous_count: 74
-          change_percent: -47.3
-        - token: vix
-          current_count: 38
-          previous_count: 43
-          change_percent: -11.63
+          change_percent: -44.59
+        - token: giko
+          current_count: 39
+          previous_count: 79
+          change_percent: -50.63
         - token: ton
           current_count: 37
-          previous_count: 44
-          change_percent: -15.91
-        - token: figure
-          current_count: 36
-          previous_count: 19
-          change_percent: 89.47
-        - token: tsla
-          current_count: 34
-          previous_count: 53
-          change_percent: -35.85
-        - token: dxy
-          current_count: 33
-          previous_count: 19
-          change_percent: 73.68
+          previous_count: 45
+          change_percent: -17.78
         - token: sui
-          current_count: 31
+          current_count: 36
+          previous_count: 58
+          change_percent: -37.93
+        - token: vix
+          current_count: 36
           previous_count: 44
-          change_percent: -29.55
+          change_percent: -18.18
+        - token: macro
+          current_count: 35
+          previous_count: 26
+          change_percent: 34.62
+        - token: dxy
+          current_count: 34
+          previous_count: 19
+          change_percent: 78.95
+        - token: figure
+          current_count: 33
+          previous_count: 23
+          change_percent: 43.48
         - token: bnb
           current_count: 30
           previous_count: 30
           change_percent: 0
+        - token: gbp
+          current_count: 30
+          previous_count: 8
+          change_percent: 275
+        - token: tsla
+          current_count: 30
+          previous_count: 45
+          change_percent: -33.33
         - token: link
           current_count: 29
-          previous_count: 31
-          change_percent: -6.45
-        - token: nigga
-          current_count: 27
-          previous_count: 12
-          change_percent: 125
+          previous_count: 29
+          change_percent: 0
         - token: cs
           current_count: 26
-          previous_count: 49
-          change_percent: -46.94
+          previous_count: 43
+          change_percent: -39.53
         - token: giga
           current_count: 24
           previous_count: 36
           change_percent: -33.33
-        - token: house
-          current_count: 24
-          previous_count: 25
-          change_percent: -4
-        - token: amzn
-          current_count: 21
-          previous_count: 12
-          change_percent: 75
-        - token: ondo
-          current_count: 21
-          previous_count: 16
-          change_percent: 31.25
         - token: doge
+          current_count: 21
+          previous_count: 44
+          change_percent: -52.27
+        - token: amzn
           current_count: 20
-          previous_count: 47
-          change_percent: -57.45
-        - token: nvda
+          previous_count: 13
+          change_percent: 53.85
+        - token: house
           current_count: 20
-          previous_count: 27
-          change_percent: -25.93
+          previous_count: 18
+          change_percent: 11.11
         - token: pengu
           current_count: 20
           previous_count: 12
           change_percent: 66.67
-        - token: aapl
-          current_count: 19
-          previous_count: 20
-          change_percent: -5
-        - token: macro
-          current_count: 19
-          previous_count: 19
-          change_percent: 0
-        - token: pepe
-          current_count: 19
-          previous_count: 54
-          change_percent: -64.81
         - token: ufd
-          current_count: 19
+          current_count: 20
           previous_count: 16
-          change_percent: 18.75
-        - token: bera
-          current_count: 17
-          previous_count: 19
-          change_percent: -10.53
+          change_percent: 25
+        - token: aapl
+          current_count: 18
+          previous_count: 21
+          change_percent: -14.29
+        - token: hbar
+          current_count: 18
+          previous_count: 17
+          change_percent: 5.88
+        - token: ondo
+          current_count: 18
+          previous_count: 14
+          change_percent: 28.57
+        - token: popcat
+          current_count: 18
+          previous_count: 22
+          change_percent: -18.18
         - token: es
           current_count: 17
           previous_count: 21
           change_percent: -19.05
+        - token: nigga
+          current_count: 17
+          previous_count: 17
+          change_percent: 0
