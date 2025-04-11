@@ -1,7 +1,7 @@
 import asyncio
-import json
 import logging
 import os
+import uuid
 from typing import Any, Dict, List
 
 import aiohttp
@@ -9,8 +9,7 @@ import pydash as _py
 from dotenv import load_dotenv
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
-from core.llm import call_llm_with_tools_async
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -21,7 +20,7 @@ class SolWalletAgent(MeshAgent):
     def __init__(self):
         super().__init__()
         self.api_url = "https://mainnet.helius-rpc.com"
-
+        self.request_semaphore = asyncio.Semaphore(2)
         self.metadata.update(
             {
                 "name": "SolWallet Agent",
@@ -63,28 +62,33 @@ class SolWalletAgent(MeshAgent):
         )
 
     async def _request(self, method, url, data=None, json=None, headers=None, params=None, timeout=30):
-        """Make a request to the Helius API using a new session for each request"""
+        """Make a request to the Helius API using a new session for each request with rate limiting"""
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.request(
-                    method,
-                    url,
-                    data=data,
-                    json=json,
-                    headers=headers,
-                    params=params,
-                    timeout=aiohttp.ClientTimeout(total=timeout),
-                ) as response:
-                    match response.status:
-                        case 200:
-                            return await response.json()
-                        case 429:
-                            raise aiohttp.ClientError("Rate limit exceeded")
-                        case _:
-                            # should add better error log
-                            txt = await response.text()
-                            logger.error(txt)
-                            return {}
+            async with self.request_semaphore:  # Use semaphore to limit concurrent requests
+                async with aiohttp.ClientSession() as session:
+                    await asyncio.sleep(0.5)
+
+                    async with session.request(
+                        method,
+                        url,
+                        data=data,
+                        json=json,
+                        headers=headers,
+                        params=params,
+                        timeout=aiohttp.ClientTimeout(total=timeout),
+                    ) as response:
+                        match response.status:
+                            case 200:
+                                return await response.json()
+                            case 429:
+                                logger.warning("Rate limit hit, waiting before retry...")
+                                await asyncio.sleep(2.0)
+                                raise aiohttp.ClientError("Rate limit exceeded")
+                            case _:
+                                # should add better error log
+                                txt = await response.text()
+                                logger.error(txt)
+                                return {}
 
         except aiohttp.ClientResponseError as e:
             error_msg = f"HTTP error {e.status}: {e.message}"
@@ -182,7 +186,7 @@ class SolWalletAgent(MeshAgent):
     @with_cache(ttl_seconds=600)
     @retry(
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError)),
-        wait=wait_exponential(multiplier=0.1, min=0, max=10),
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
         stop=stop_after_attempt(5),
     )
     async def _get_holders(self, token_address: str, top_n: int = 20) -> List[Dict]:
@@ -197,7 +201,7 @@ class SolWalletAgent(MeshAgent):
             while True:
                 payload = {
                     "jsonrpc": "2.0",
-                    "id": "get-token-accounts-{uuid.uuid4()}",
+                    "id": f"get-token-accounts-{uuid.uuid4()}",
                     "method": "getTokenAccounts",
                     "params": {"mint": token_address, "limit": 1000, "cursor": cursor},
                 }
@@ -236,7 +240,7 @@ class SolWalletAgent(MeshAgent):
     @with_cache(ttl_seconds=600)
     @retry(
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError)),
-        wait=wait_exponential(multiplier=0.1, min=0, max=10),
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
         stop=stop_after_attempt(5),
     )
     async def get_wallet_assets(self, owner_address: str) -> List[Dict]:
@@ -247,7 +251,7 @@ class SolWalletAgent(MeshAgent):
             logger.info(f"Querying wallet assets for address: {owner_address}")
             payload = {
                 "jsonrpc": "2.0",
-                "id": "search-assets-{uuid.uuid4()}",
+                "id": f"search-assets-{uuid.uuid4()}",
                 "method": "searchAssets",
                 "params": {
                     "ownerAddress": owner_address,
@@ -307,7 +311,7 @@ class SolWalletAgent(MeshAgent):
     @with_cache(ttl_seconds=600)
     @retry(
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError)),
-        wait=wait_exponential(multiplier=0.1, min=0, max=10),
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
         stop=stop_after_attempt(5),
     )
     async def analyze_common_holdings_of_top_holders(self, token_address: str, top_n: int = 20) -> Dict:
@@ -323,47 +327,68 @@ class SolWalletAgent(MeshAgent):
             raydium_address = "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"
             top_holders = [h for h in holders if h["address"] != raydium_address]
 
-            tasks = [self.get_wallet_assets(holder["address"]) for holder in top_holders]
-            assets_results = await asyncio.gather(*tasks)
+            if not top_holders:
+                return {"error": "No valid holders found after filtering"}
 
-            token_map = {}
-            for holder, assets in zip(top_holders, assets_results):
-                if assets is None or isinstance(assets, dict) and "error" in assets:
-                    continue
+            batch_size = 3
+            common_tokens = {}
 
-                for token in assets:
-                    token_address = token["token_address"]
-                    if token_address not in token_map:
-                        token_map[token_address] = {
-                            "token_address": token_address,
-                            "symbol": token["symbol"],
-                            "price_per_token": token["price_per_token"],
-                            "total_holding_value": 0,
-                        }
+            for i in range(0, len(top_holders), batch_size):
+                batch = top_holders[i : i + batch_size]
+                for holder in batch:
+                    assets = await self.get_wallet_assets(holder["address"])
 
-                    token_map[token_address]["total_holding_value"] += token["total_holding_value"]
+                    if assets is None or (isinstance(assets, dict) and "error" in assets):
+                        continue
+
+                    for token in assets:
+                        token_address = token["token_address"]
+                        if token_address not in common_tokens:
+                            common_tokens[token_address] = {
+                                "token_address": token_address,
+                                "symbol": token["symbol"],
+                                "price_per_token": token["price_per_token"],
+                                "total_holding_value": 0,
+                                "holder_count": 0,
+                            }
+
+                        common_tokens[token_address]["total_holding_value"] += token["total_holding_value"]
+                        common_tokens[token_address]["holder_count"] += 1
+
+                await asyncio.sleep(1.0)
 
             # sort by total_holding_value and get top 5
-            sorted_tokens = sorted(token_map.values(), key=lambda x: x["total_holding_value"], reverse=True)[:5]
+            sorted_tokens = sorted(common_tokens.values(), key=lambda x: x["total_holding_value"], reverse=True)[:5]
 
             logger.info(f"Successfully analyzed holders for token: {token_address}")
-            return sorted_tokens
+
+            # If there are no common tokens found, return a more detailed error
+            if not sorted_tokens:
+                return {"common_tokens": [], "message": "No common tokens found among token holders"}
+
+            return {"common_tokens": sorted_tokens, "analyzed_holders": len(top_holders)}
 
         except Exception as e:
             logger.error(f"Error analyzing holders: {str(e)}")
-            return []
+            return {"error": f"Failed to analyze token holders: {str(e)}"}
 
     @with_cache(ttl_seconds=600)
-    @retry(wait=wait_exponential(multiplier=0.1, min=0, max=10), stop=stop_after_attempt(5))
-    async def get_tx_history(self, owner_address: str) -> List[Dict]:
+    @retry(
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
+        stop=stop_after_attempt(5),
+    )
+    async def get_tx_history(self, owner_address: str) -> Dict:
         """
         Query the HELIUS API to get swap transaction history for a given wallet address.
         """
-
         try:
             logger.info(f"Querying transaction history for address: {owner_address}")
 
-            params = {"api-key": os.getenv("HELIUS_API_KEY"), "type": ["SWAP"], "limit": 100}
+            api_key = os.getenv("HELIUS_API_KEY")
+            if not api_key:
+                return {"error": "HELIUS_API_KEY not set in environment variables"}
+
+            params = {"api-key": api_key, "type": ["SWAP"], "limit": 100}
 
             url = f"https://api.helius.xyz/v0/addresses/{owner_address}/transactions"
 
@@ -371,14 +396,14 @@ class SolWalletAgent(MeshAgent):
 
             if not data:
                 logger.warning(f"No data returned for address: {owner_address}")
-                return []
-
-            swap_txs = []
-            SOL_ADDRESS = "So11111111111111111111111111111111111111112"
+                return {"transactions": [], "message": "No transaction data found"}
 
             if not isinstance(data, list):
                 logger.warning(f"Unexpected data format: {type(data)}")
-                return []
+                return {"error": f"Unexpected data format: {type(data)}"}
+
+            swap_txs = []
+            SOL_ADDRESS = "So11111111111111111111111111111111111111112"
 
             swap_type = [tx for tx in data if _py.get(tx, "type") == "SWAP"]
 
@@ -447,102 +472,51 @@ class SolWalletAgent(MeshAgent):
 
                 swap_txs.append(processed_data)
 
-            return swap_txs
+            # Return a structured response
+            return {"transactions": swap_txs, "count": len(swap_txs)}
 
         except Exception as e:
             logger.error(f"Error querying transaction history: {str(e)}")
-            return [{"error": f"Failed to query transaction history: {str(e)}"}]
+            return {"error": f"Failed to query transaction history: {str(e)}"}
 
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
     async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
         """Handle execution of specific tools and return the raw data"""
+        try:
+            if tool_name == "get_wallet_assets":
+                owner_address = function_args.get("owner_address")
+                if not owner_address:
+                    return {"error": "owner_address is required"}
 
-        if tool_name == "get_wallet_assets":
-            result = await self.get_wallet_assets(function_args["owner_address"])
-        elif tool_name == "analyze_common_holdings_of_top_holders":
-            result = await self.analyze_common_holdings_of_top_holders(
-                function_args["token_address"], function_args.get("top_n", 20)
-            )
-        elif tool_name == "get_tx_history":
-            result = await self.get_tx_history(function_args["owner_address"])
-        else:
-            return {"error": f"Unsupported tool: {tool_name}"}
+                result = await self.get_wallet_assets(owner_address)
+                if not result:
+                    return {"assets": [], "message": "No assets found"}
 
-        error = self._handle_error(result)
-        if error:
-            return error
+                return {"assets": result}
 
-        return result
+            elif tool_name == "analyze_common_holdings_of_top_holders":
+                token_address = function_args.get("token_address")
+                if not token_address:
+                    return {"error": "token_address is required"}
 
-    # ------------------------------------------------------------------------
-    #                      MAIN HANDLER
-    # ------------------------------------------------------------------------
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Either 'query' or 'tool' is required in params.
-        - If 'query' is present, it means "agent mode", we use LLM to interpret the query and call tools
-          - if 'raw_data_only' is present, we return tool results without another LLM call
-        - If 'tool' is present, it means "direct tool call mode", we bypass LLM and directly call the API
-          - never run another LLM call, this minimizes latency and reduces error
-        """
-        query = params.get("query")
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
+                top_n = function_args.get("top_n", 20)
+                result = await self.analyze_common_holdings_of_top_holders(token_address, top_n)
+                return result
 
-        # ---------------------
-        # 1) DIRECT TOOL CALL
-        # ---------------------
-        if tool_name:
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-            return {"response": "", "data": data}
+            elif tool_name == "get_tx_history":
+                owner_address = function_args.get("owner_address")
+                if not owner_address:
+                    return {"error": "owner_address is required"}
 
-        # ---------------------
-        # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
-        # ---------------------
-        if query:
-            response = await call_llm_with_tools_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                user_prompt=query,
-                temperature=0.1,
-                tools=self.get_tool_schemas(),
-            )
+                result = await self.get_tx_history(owner_address)
 
-            if not response:
-                return {"error": "Failed to process query"}
+                return result
 
-            if not response.get("tool_calls"):
-                # No tool calls => the LLM just answered
-                return {"response": response["content"], "data": {}}
+            else:
+                return {"error": f"Unsupported tool: {tool_name}"}
 
-            tool_call = response["tool_calls"]
-            tool_call_name = tool_call.function.name
-            tool_call_args = json.loads(tool_call.function.arguments)
-
-            data = await self._handle_tool_logic(tool_name=tool_call_name, function_args=tool_call_args)
-
-            if raw_data_only:
-                return {"response": "", "data": data}
-
-            explanation = await self._respond_with_llm(
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                query=query,
-                tool_call_id=tool_call.id,
-                data=data,
-                temperature=0.7,
-            )
-
-            return {"response": explanation, "data": data}
-
-        # ---------------------
-        # 3) NEITHER query NOR tool
-        # ---------------------
-        return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
+        except Exception as e:
+            logger.error(f"Error in _handle_tool_logic for {tool_name}: {str(e)}")
+            return {"error": f"Tool execution failed: {str(e)}"}
