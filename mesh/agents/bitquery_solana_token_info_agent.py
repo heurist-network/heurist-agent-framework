@@ -926,7 +926,6 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
         return result
 
 
-# External utility functions
 def fetch_and_organize_dex_trade_data(base_address: str) -> List[Dict]:
     """
     Fetches DEX trade data from Bitquery for the given base token address,

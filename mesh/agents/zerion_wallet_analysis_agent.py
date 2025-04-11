@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 import requests
 from dotenv import load_dotenv
 
-from decorators import with_cache, with_retry
+from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -114,6 +114,7 @@ class ZerionWalletAnalysisAgent(MeshAgent):
             },
         ]
 
+    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def fetch_wallet_tokens(self, wallet_address: str) -> Dict:
@@ -198,6 +199,7 @@ class ZerionWalletAnalysisAgent(MeshAgent):
             logger.error(f"Unexpected error: {e}")
             return {"error": f"Unexpected error: {str(e)} for wallet address {wallet_address}"}
 
+    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def fetch_wallet_nfts(self, wallet_address: str) -> Dict:

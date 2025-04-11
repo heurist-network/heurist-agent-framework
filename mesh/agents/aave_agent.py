@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from eth_defi.aave_v3.reserve import AaveContractsNotConfigured, fetch_reserve_data, get_helper_contracts
 from web3 import Web3
 
-from decorators import with_cache, with_retry
+from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -191,6 +191,7 @@ class AaveAgent(MeshAgent):
 
         return processed
 
+    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def get_aave_reserves(

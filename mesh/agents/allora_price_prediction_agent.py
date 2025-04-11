@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 import aiohttp
 from dotenv import load_dotenv
 
-from decorators import with_cache, with_retry
+from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -100,6 +100,7 @@ class AlloraPricePredictionAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      ALLORA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
+    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def get_allora_prediction(self, token: str, timeframe: str) -> Dict:

@@ -13,9 +13,8 @@ from core.llm import call_llm_async
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
-load_dotenv()
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+load_dotenv()
 
 
 class CoinGeckoTokenInfoAgent(MeshAgent):

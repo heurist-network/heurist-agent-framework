@@ -186,7 +186,7 @@ class SolWalletAgent(MeshAgent):
     @with_cache(ttl_seconds=600)
     @retry(
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError)),
-        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),
         stop=stop_after_attempt(5),
     )
     async def _get_holders(self, token_address: str, top_n: int = 20) -> List[Dict]:
@@ -240,7 +240,7 @@ class SolWalletAgent(MeshAgent):
     @with_cache(ttl_seconds=600)
     @retry(
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError)),
-        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),
         stop=stop_after_attempt(5),
     )
     async def get_wallet_assets(self, owner_address: str) -> List[Dict]:
@@ -311,7 +311,7 @@ class SolWalletAgent(MeshAgent):
     @with_cache(ttl_seconds=600)
     @retry(
         retry=retry_if_exception_type((aiohttp.ClientError, asyncio.TimeoutError)),
-        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),  # Increased wait times
+        wait=wait_exponential(multiplier=1.0, min=1.0, max=20.0),
         stop=stop_after_attempt(5),
     )
     async def analyze_common_holdings_of_top_holders(self, token_address: str, top_n: int = 20) -> Dict:
@@ -472,7 +472,6 @@ class SolWalletAgent(MeshAgent):
 
                 swap_txs.append(processed_data)
 
-            # Return a structured response
             return {"transactions": swap_txs, "count": len(swap_txs)}
 
         except Exception as e:

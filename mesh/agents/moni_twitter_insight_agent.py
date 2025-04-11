@@ -314,19 +314,3 @@ class MoniTwitterInsightAgent(MeshAgent):
             return errors
 
         return {"tool": tool_name, "username": username, "data": result}
-
-    async def _respond_with_llm(
-        self, model_id: str, system_prompt: str, query: str, tool_call_id: str, data: dict, temperature: float
-    ) -> str:
-        """
-        Custom implementation to generate user-friendly explanations from the Twitter data.
-        """
-
-        return await super()._respond_with_llm(
-            model_id=model_id,
-            system_prompt=system_prompt,
-            query=query,
-            tool_call_id=tool_call_id,
-            data=data,
-            temperature=temperature,
-        )
