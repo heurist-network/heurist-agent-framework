@@ -2,46 +2,33 @@ input_market_sentiment:
   query: What is the current market sentiment for top cryptocurrencies?
   raw_data_only: false
 output_market_sentiment:
-  response: '**Market Sentiment Analysis (Top Cryptocurrencies)**
-
-
-    **Overall Market Sentiment:** *Insufficient Data*
-
-
-    **Highlighted Tokens with Notable Sentiment:** *None Available*
-
-
-    **Significant Sentiment Shifts:** *No Comparative Data Provided*
-
-
-    **Context for Investors:** Unfortunately, the `get_sentiments` tool query returned
-    an empty dataset, indicating no sentiment data is currently available for analysis.
-    This lack of data makes it challenging to gauge the overall market mood or identify
-    specific tokens with notably positive or negative sentiment.
-
-
-    **Recommendation for Investors:**
-
-    - **Await Updated Data:** Check back for fresh sentiment analysis when more data
-    becomes available.
-
-    - **Diversify Information Sources:** Supplement your investment research with
-    other market analysis tools, such as technical charts and fundamental analysis,
-    to make more informed decisions.
-
-    - **Risk Management:** As with any investment, ensure you have a robust risk management
-    strategy in place, especially when navigating without clear sentiment indicators.
-
-
-    **Request for More Accurate Analysis:**
-
-    To provide a more detailed sentiment analysis, please consider the following:
-
-    - **Specify Tokens:** If you have specific top cryptocurrencies in mind (e.g.,
-    BTC, ETH, LTC), let me know for targeted analysis when data becomes available.
-
-    - **Check Data Availability:** If you''d like, we can attempt to fetch the data
-    again or explore alternative analytics for a more comprehensive overview.'
+  response: "**Error in Sentiment Data Retrieval**\n\n**Status:** Unexpected Response\n\
+    **Request:** Current Market Sentiment for Top Cryptocurrencies\n**Tool Used:**\
+    \ `get_sentiments`\n\n**Response Analysis:**\n\nThe response indicates a **successful\
+    \ status** (`'status': 'success'`) with a **message** suggesting that `'Data fetched\
+    \ successfully'`. However, the **data payload** is unexpectedly empty (`'data':\
+    \ []`), despite the response claiming a **length of 1**. This inconsistency suggests\
+    \ an error in data retrieval or processing.\n\n**Key Findings (Limited by Error):**\n\
+    \n1. **Overall Market Sentiment:** *no data available*\n2. **Tokens with Notably\
+    \ Positive/Negative Sentiment:** *no data available*\n3. **Significant Sentiment\
+    \ Shifts:** *no data available*\n4. **Context for Investors:** Due to the lack\
+    \ of data, we cannot provide insights into current market sentiments. It's crucial\
+    \ for investors to stay informed about market moods, but in this case, we recommend:\n\
+    \t* **Checking the latest news** for market influencers (e.g., regulatory updates,\
+    \ significant adoption news).\n\t* **Utilizing alternative sentiment analysis\
+    \ tools** if available.\n\t* **Re-running the `get_sentiments` tool** with adjusted\
+    \ parameters (e.g., checking for a different number of results or a specific timeframe)\
+    \ to see if the issue persists.\n\n**Recommendation for Resolution:**\n\n* **Retry\
+    \ the Request:** Attempt to fetch the sentiment data again using the `get_sentiments`\
+    \ tool, ensuring all parameters (like the number of results, which defaults to\
+    \ 10) are correctly set.\n* **Specify Timeframe or Tokens:** If the issue persists,\
+    \ try specifying a clear timeframe (e.g., last 24 hours, week) or only retrieve\
+    \ sentiments for a particular set of top cryptocurrencies to see if the error\
+    \ is data-specific.\n* **Consult TokenMetrics Support:** If errors continue, reach\
+    \ out to TokenMetrics support for assistance with their API or platform to resolve\
+    \ the data retrieval issue.\n\n**Disclaimer:** This analysis is based on the provided\
+    \ data response and does not constitute financial advice. Always conduct thorough\
+    \ research and consider multiple sources before making investment decisions."
   data: &id002
     status: success
     data:
@@ -53,34 +40,32 @@ input_sentiment_with_limit:
   query: Can you show me the top 5 cryptocurrencies by market feeling?
   raw_data_only: false
 output_sentiment_with_limit:
-  response: "It looks like the `get_sentiments` tool didn't return the expected results.\
-    \ Let's try to interpret the response and provide a revised approach.\n\n**Response\
-    \ Analysis:**\n\n* **Status:** Success\n* **Success:** True\n* **Message:** Data\
-    \ fetched successfully\n* **Length:** 1 (expected a list of sentiments, but received\
-    \ an empty list)\n* **Data:** [] (empty list, indicating no sentiment data was\
-    \ returned)\n\n**Possible Reasons for Empty Response:**\n\n1. **Insufficient or\
-    \ No Data**: The `get_sentiments` tool might not have sufficient data to provide\
-    \ sentiment analysis for cryptocurrencies at this time.\n2. **Incorrect Tool Parameters**:\
-    \ The default parameters (e.g., number of results set to 1, instead of the intended\
-    \ 10) might have caused the empty response.\n3. **Temporary API Issue**: A transient\
-    \ issue with the API might have prevented the retrieval of sentiment data.\n\n\
-    **Revised Approach:**\n\nTo provide the top 5 cryptocurrencies by market feeling,\
-    \ I'll simulate a response based on typical sentiment analysis. **Please note\
-    \ that this is a simulated response for demonstration purposes only.** For actual\
-    \ data, we'll need to re-run the `get_sentiments` tool with adjusted parameters.\n\
-    \n**Simulated Response (for demonstration purposes only):**\n\n**Top 5 Cryptocurrencies\
-    \ by Market Feeling (Sentiment):**\n\n1. **Bitcoin (BTC)**\n\t* Sentiment Score:\
-    \ 62 (Moderately Bullish)\n\t* Reason: Positive news around institutional investment\
-    \ and improving hash rates\n2. **Cardano (ADA)**\n\t* Sentiment Score: 58 (Slightly\
-    \ Bullish)\n\t* Reason: Anticipation around upcoming protocol upgrades and partnerships\n\
-    3. **Ethereum (ETH)**\n\t* Sentiment Score: 55 (Neutral/Bullish Bias)\n\t* Reason:\
-    \ Mixed reactions to ongoing network congestion and upcoming fork discussions\n\
-    4. **Solana (SOL)**\n\t* Sentiment Score: 48 (Slightly Bearish)\n\t* Reason: Concerns\
-    \ around recent network outages and competition from other Layer 1 blockchains\n\
-    5. **Dogecoin (DOGE)**\n\t* Sentiment Score: 42 (Moderately Bearish)\n\t* Reason:\
-    \ Over-saturation of meme coins and lack of significant development updates\n\n\
-    **Context for Investors (based on simulated data):**\nThe current sentiment landscape\
-    \ suggests a cautiously optimistic outlook for top cryptocurrencies"
+  response: "It looks like we've encountered an unexpected response from the `get_sentiments`\
+    \ tool. Let's break down what we see:\n\n**Response Analysis**\n\n* **Status**:\
+    \ `success` (indicating the query was technically successful)\n* **Data**:\n\t\
+    + **Success**: `True` (confirming the success of the query execution)\n\t+ **Message**:\
+    \ `Data fetched successfully` (suggesting that the tool didn't encounter errors)\n\
+    \t+ **Length**: `1` (indicating the tool expected or retrieved a very limited\
+    \ set of data)\n\t+ **Data**: `[]` (an empty list, meaning no actual sentiment\
+    \ data was returned)\n\n**Conclusion and Next Steps**\n\nGiven the empty data\
+    \ set, we cannot provide the top 5 cryptocurrencies by market feeling as requested.\
+    \ To better assist you, let's troubleshoot or modify the approach:\n\n1. **Retry\
+    \ with Adjusted Parameters**: Sometimes, tools respond differently with tweaked\
+    \ parameters. If you have a:\n\t* **Specific Time Frame** in mind (e.g., last\
+    \ 24 hours, week, month), let's query with that.\n\t* **Preferred Number of Results**\
+    \ (you mentioned top 5, but the default was set to 10; however, since we got no\
+    \ results, let's try explicitly setting it to 5 or another number of your choice).\n\
+    2. **Explore Alternative Sentiment Analysis**: If the issue persists, we might\
+    \ discuss using a different aspect of the TokenMetrics platform or combining it\
+    \ with other data types (e.g., technical analysis) to gain insights into the market.\n\
+    \n**Your Action Required**\n\nTo proceed, please respond with one of the following:\n\
+    \nA) **Retry with Adjusted Parameters**:\n\t* Specify a time frame (e.g., last\
+    \ 24 hours, this week, etc.)\n\t* Optionally, suggest a different number of results\
+    \ (e.g., top 3, top 10, etc.)\n\nB) **Explore Alternative Analysis**:\n\t* Indicate\
+    \ if you're open to exploring resistance/support levels or another aspect of technical\
+    \ analysis for insights.\n\nC) **Other (Please Specify)**:\n\t* If you have a\
+    \ different approach in mind or questions regarding the response, feel free to\
+    \ ask."
   data: &id001
     status: success
     data:
@@ -93,28 +78,29 @@ input_resistance_support:
   raw_data_only: false
 output_resistance_support:
   response: "**Key Resistance and Support Levels for Bitcoin (BTC) and Ethereum (ETH)**\n\
-    \n**Please note that this analysis is based on historical data and should not\
-    \ be considered as financial advice.**\n\n### Bitcoin (BTC)\n\n* **Current Price\
-    \ (Assumption):** Not provided in the data; please refer to current market data\
-    \ for the most up-to-date price.\n* **Key Resistance Levels:**\n\t1. **Short-term\
-    \ Resistance:** Around $72539 (2024-04-08) and $99645 (2024-11-22)\n\t2. **Medium-term\
-    \ Resistance:** Approximately $103473 (2024-12-05) and $108042 (2024-12-17)\n\
-    * **Key Support Levels:**\n\t1. **Short-term Support:** Around $61781 (2024-04-13)\
-    \ and $53898 (2024-07-05)\n\t2. **Medium-term Support:** Approximately $43508\
-    \ (2022-01-20) and $26401 (2023-03-14)\n* **Technical Setup Indication:**\n\t\
-    + If BTC is testing the short-term resistance levels, a successful break could\
-    \ indicate a bullish short-term trend.\n\t+ Failure to break through these resistances\
-    \ might lead to a pullback towards the short-term support levels.\n\t+ The medium-term\
-    \ outlook suggests a broader trading range; a break above $108042 could signify\
-    \ a stronger bullish trend, while a drop below $26401 might indicate a bearish\
-    \ reversal.\n\n### Ethereum (ETH)\n\n* **Current Price (Assumption):** Not provided\
-    \ in the data; please refer to current market data for the most up-to-date price.\n\
-    * **Key Resistance Levels:**\n\t1. **Short-term Resistance:** Around $4083.65\
-    \ (2024-03-12) and $3800.05 (2024-03-11)\n\t2. **Medium-term Resistance:** Approximately\
-    \ $4770.73 (2021-11-15) and $4967.57 (2021-10-29)\n* **Key Support Levels:**\n\
-    \t1. **Short-term Support:** Around $3053.76 (2024-05-20) and $1579.27 (2022-10-26)\n\
-    \t2. **Medium-term Support:** Approximately $147.3 (2018-12-29) and $217.85 (2017-05-25)\n\
-    * **Technical Setup"
+    \n**Note:** The provided data is extensive, covering historical levels from 2011\
+    \ for BTC and 2015 for ETH. For practicality, this analysis will focus on recent\
+    \ key levels (2024-2025) to provide actionable insights for current market conditions.\n\
+    \n### Bitcoin (BTC)\n\n* **Current Price (Assumption):** Not provided in the query;\
+    \ please check current market data for accurate pricing.\n* **Recent Key Levels\
+    \ (2024-2025):**\n\t+ **Resistance:**\n\t\t- **Upper Resistance:** 108,042 (2024-12-17)\n\
+    \t\t- **Lower Resistance:** 95,541 (2024-12-10)\n\t+ **Support:**\n\t\t- **Upper\
+    \ Support:** 84,492 (2025-03-24)\n\t\t- **Lower Support:** 78,446 (2025-02-28)\n\
+    \n**Technical Setup Indication for BTC:**\n- If the current price is around or\
+    \ below the upper support (84,492), a bounce might be anticipated.\n- Breaking\
+    \ below the lower support (78,446) could indicate a bearish trend.\n- Overcoming\
+    \ the lower resistance (95,541) might signal a bullish move towards the upper\
+    \ resistance (108,042).\n\n### Ethereum (ETH)\n\n* **Current Price (Assumption):**\
+    \ Not provided in the query; please check current market data for accurate pricing.\n\
+    * **Recent Key Levels (2024-2025):**\n\t+ **Resistance:**\n\t\t- **Upper Resistance:**\
+    \ 4,083.65 (2024-03-12)\n\t\t- **Lower Resistance:** 3,805.05 (2024-03-11)\n\t\
+    + **Support:**\n\t\t- **Upper Support:** 2,325.02 (2023-12-15) *Note: More recent\
+    \ support levels are not as clearly defined in the provided data.*\n\t\t- **Lower\
+    \ Support:** 1,757.77 (2025-04-03)\n\n**Technical Setup Indication for ETH:**\n\
+    - Given the data, ETH's recent support levels are less defined. However, if the\
+    \ current price is near or below 1,757.77, it might seek support.\n- A move above\
+    \ the lower resistance (3,805.05) could indicate a bullish trend, with potential\
+    \ to test the"
   data: &id003
     status: success
     data:
@@ -122,10 +108,56 @@ output_resistance_support:
       message: Data fetched successfully
       length: 4
       data:
+      - TOKEN_ID: 39218
+        TOKEN_NAME: Osmosis allBTC
+        TOKEN_SYMBOL: BTC
+        DATE: '2025-04-11T00:00:00.000Z'
+        HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
+        - date: '2024-09-28'
+          level: 66242
+        - date: '2024-10-03'
+          level: 60207
+        - date: '2024-11-01'
+          level: 71064
+        - date: '2024-11-23'
+          level: 100101
+        - date: '2024-11-26'
+          level: 90348
+        - date: '2024-12-10'
+          level: 94406
+        - date: '2024-12-17'
+          level: 107854
+        - date: '2025-02-28'
+          level: 78324
+        - date: '2025-03-14'
+          level: 84877
+      - TOKEN_ID: 39220
+        TOKEN_NAME: Osmosis allETH
+        TOKEN_SYMBOL: ETH
+        DATE: '2025-04-11T00:00:00.000Z'
+        HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
+        - date: '2024-09-23'
+          level: 2683.45
+        - date: '2024-10-03'
+          level: 2307.17
+        - date: '2024-11-12'
+          level: 3428.5
+        - date: '2024-12-06'
+          level: 4102.79
+        - date: '2024-12-23'
+          level: 3225.21
+        - date: '2025-02-03'
+          level: 2464.15
+        - date: '2025-02-24'
+          level: 2839.81
+        - date: '2025-02-28'
+          level: 2096.39
+        - date: '2025-04-03'
+          level: 1752.77
       - TOKEN_ID: 3306
         TOKEN_NAME: Ethereum
         TOKEN_SYMBOL: ETH
-        DATE: '2025-04-08T00:00:00.000Z'
+        DATE: '2025-04-11T00:00:00.000Z'
         HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
         - date: '2015-08-16'
           level: 1.11
@@ -226,7 +258,7 @@ output_resistance_support:
       - TOKEN_ID: 3375
         TOKEN_NAME: Bitcoin
         TOKEN_SYMBOL: BTC
-        DATE: '2025-04-08T00:00:00.000Z'
+        DATE: '2025-04-11T00:00:00.000Z'
         HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
         - date: '2011-09-01'
           level: 7.99
@@ -378,52 +410,6 @@ output_resistance_support:
           level: 86958
         - date: '2025-03-24'
           level: 88492
-      - TOKEN_ID: 39218
-        TOKEN_NAME: Osmosis allBTC
-        TOKEN_SYMBOL: BTC
-        DATE: '2025-04-08T00:00:00.000Z'
-        HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
-        - date: '2024-09-28'
-          level: 66242
-        - date: '2024-10-03'
-          level: 60207
-        - date: '2024-11-01'
-          level: 71064
-        - date: '2024-11-23'
-          level: 100101
-        - date: '2024-11-26'
-          level: 90348
-        - date: '2024-12-10'
-          level: 94406
-        - date: '2024-12-17'
-          level: 107854
-        - date: '2025-02-28'
-          level: 78324
-        - date: '2025-03-14'
-          level: 84877
-      - TOKEN_ID: 39220
-        TOKEN_NAME: Osmosis allETH
-        TOKEN_SYMBOL: ETH
-        DATE: '2025-04-08T00:00:00.000Z'
-        HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
-        - date: '2024-09-23'
-          level: 2683.45
-        - date: '2024-10-03'
-          level: 2307.17
-        - date: '2024-11-12'
-          level: 3428.5
-        - date: '2024-12-06'
-          level: 4102.79
-        - date: '2024-12-23'
-          level: 3225.21
-        - date: '2025-02-03'
-          level: 2464.15
-        - date: '2025-02-24'
-          level: 2839.81
-        - date: '2025-02-28'
-          level: 2096.39
-        - date: '2025-04-03'
-          level: 1752.77
 input_direct_sentiments:
   tool: get_sentiments
   tool_arguments:
@@ -457,262 +443,52 @@ output_direct_resistance_support:
       message: Data fetched successfully
       length: 2
       data:
-      - TOKEN_ID: 3306
-        TOKEN_NAME: Ethereum
-        TOKEN_SYMBOL: ETH
-        DATE: '2025-04-08T00:00:00.000Z'
-        HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
-        - date: '2015-08-16'
-          level: 1.11
-        - date: '2017-05-09'
-          level: 77.76
-        - date: '2017-05-25'
-          level: 217.85
-        - date: '2017-06-12'
-          level: 420
-        - date: '2017-08-09'
-          level: 316.5
-        - date: '2017-12-13'
-          level: 784.77
-        - date: '2018-01-10'
-          level: 1401
-        - date: '2018-01-22'
-          level: 902
-        - date: '2018-01-28'
-          level: 1277
-        - date: '2018-02-06'
-          level: 555.56
-        - date: '2018-04-24'
-          level: 713.33616717
-        - date: '2018-05-12'
-          level: 633.2
-        - date: '2018-12-29'
-          level: 147.3
-        - date: '2021-01-22'
-          level: 1015.14
-        - date: '2021-01-25'
-          level: 1487.71
-        - date: '2021-01-27'
-          level: 1190.12
-        - date: '2021-02-05'
-          level: 1766.06
-        - date: '2021-02-13'
-          level: 1877.88
-        - date: '2021-02-20'
-          level: 2044.32
-        - date: '2021-03-03'
-          level: 1658
-        - date: '2021-04-02'
-          level: 2146.2
-        - date: '2021-04-16'
-          level: 2547.3
-        - date: '2021-04-22'
-          level: 2646.2
-        - date: '2021-06-03'
-          level: 2892.63
-        - date: '2021-06-12'
-          level: 2250
-        - date: '2021-07-07'
-          level: 2399.74
-        - date: '2021-08-18'
-          level: 2978.48
-        - date: '2021-08-30'
-          level: 3156.14
-        - date: '2021-09-16'
-          level: 3675.44
-        - date: '2021-09-21'
-          level: 2718.95
-        - date: '2021-09-29'
-          level: 2795.3
-        - date: '2021-10-11'
-          level: 3412.76
-        - date: '2021-10-16'
-          level: 3967.530000000001
-        - date: '2021-10-21'
-          level: 4361.18
-        - date: '2021-10-29'
-          level: 4467.57
-        - date: '2021-11-01'
-          level: 4171.98
-        - date: '2021-11-03'
-          level: 4674.9
-        - date: '2021-11-15'
-          level: 4770.73
-        - date: '2022-01-04'
-          level: 3895.38
-        - date: '2022-02-10'
-          level: 3269.659999999999
-        - date: '2022-10-26'
-          level: 1579.27
-        - date: '2022-11-10'
-          level: 1087.08
-        - date: '2023-12-15'
-          level: 2325.02
-        - date: '2024-01-15'
-          level: 2472.9
-        - date: '2024-03-11'
-          level: 3800.05
-        - date: '2024-03-12'
-          level: 4083.65
-        - date: '2024-05-20'
-          level: 3053.76
-        - date: '2024-07-01'
-          level: 3506.35
-      - TOKEN_ID: 3375
-        TOKEN_NAME: Bitcoin
+      - TOKEN_ID: 39218
+        TOKEN_NAME: Osmosis allBTC
         TOKEN_SYMBOL: BTC
-        DATE: '2025-04-08T00:00:00.000Z'
+        DATE: '2025-04-11T00:00:00.000Z'
         HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
-        - date: '2011-09-01'
-          level: 7.99
-        - date: '2013-11-23'
-          level: 886.876543
-        - date: '2017-05-04'
-          level: 1702
-        - date: '2017-05-25'
-          level: 2806
-        - date: '2017-08-22'
-          level: 3599
-        - date: '2017-09-02'
-          level: 4980
-        - date: '2017-10-21'
-          level: 6199.9
-        - date: '2017-11-05'
-          level: 7630
-        - date: '2017-11-30'
-          level: 8801
-        - date: '2017-12-07'
-          level: 17869.99
-        - date: '2017-12-10'
-          level: 12368
-        - date: '2017-12-17'
-          level: 19903.44
-        - date: '2017-12-27'
-          level: 16500.90800028
-        - date: '2018-01-23'
-          level: 9880
-        - date: '2019-06-27'
-          level: 13542.35
-        - date: '2019-08-20'
-          level: 10993
-        - date: '2020-12-27'
-          level: 28422
-        - date: '2021-01-29'
-          level: 38710.69632264
-        - date: '2021-02-22'
-          level: 59958.3
-        - date: '2021-02-23'
-          level: 44537.59
-        - date: '2021-03-03'
-          level: 52667.39
-        - date: '2021-03-05'
-          level: 46219.32
-        - date: '2021-03-25'
-          level: 50305
-        - date: '2021-04-14'
-          level: 64970
-        - date: '2021-05-29'
-          level: 33396.38
-        - date: '2021-06-03'
-          level: 39503.41
-        - date: '2021-06-08'
-          level: 31000
-        - date: '2021-06-14'
-          level: 41076.03
-        - date: '2021-06-26'
-          level: 30082.79
-        - date: '2021-06-29'
-          level: 36675
-        - date: '2021-07-11'
-          level: 34823.59
-        - date: '2021-08-01'
-          level: 42628.50000000001
-        - date: '2021-08-05'
-          level: 37595.75
-        - date: '2021-10-04'
-          level: 47188.04
-        - date: '2021-10-15'
-          level: 62728.57
-        - date: '2021-10-20'
-          level: 67276.79
-        - date: '2021-10-27'
-          level: 58178.72
-        - date: '2021-11-10'
-          level: 68791.49
-        - date: '2021-11-15'
-          level: 66359.45
-        - date: '2021-11-19'
-          level: 55821.38
-        - date: '2022-01-20'
-          level: 43508.26
-        - date: '2022-03-28'
-          level: 48078.86
-        - date: '2022-05-31'
-          level: 32227.41
-        - date: '2022-06-26'
-          level: 21781.58
-        - date: '2022-06-30'
-          level: 18782.75
-        - date: '2022-07-26'
-          level: 20771.83
-        - date: '2022-07-30'
-          level: 24604.68
-        - date: '2022-09-13'
-          level: 22654.13
-        - date: '2022-11-09'
-          level: 15663.49
-        - date: '2023-03-14'
-          level: 26401.67
-        - date: '2023-04-03'
-          level: 27371.72
-        - date: '2023-06-05'
-          level: 25444
-        - date: '2024-03-14'
-          level: 73626
-        - date: '2024-03-27'
-          level: 71528
-        - date: '2024-04-08'
-          level: 72539
-        - date: '2024-04-13'
-          level: 61781
-        - date: '2024-05-01'
-          level: 56782
-        - date: '2024-06-24'
-          level: 59086
-        - date: '2024-07-01'
-          level: 63688
-        - date: '2024-07-05'
-          level: 53898
-        - date: '2024-11-22'
-          level: 99645
+        - date: '2024-09-28'
+          level: 66242
+        - date: '2024-10-03'
+          level: 60207
+        - date: '2024-11-01'
+          level: 71064
+        - date: '2024-11-23'
+          level: 100101
         - date: '2024-11-26'
-          level: 90752
-        - date: '2024-12-05'
-          level: 103473
+          level: 90348
         - date: '2024-12-10'
-          level: 94541
+          level: 94406
         - date: '2024-12-17'
-          level: 108042
-        - date: '2024-12-23'
-          level: 92622
-        - date: '2025-01-07'
-          level: 102512
-        - date: '2025-01-13'
-          level: 89800
-        - date: '2025-01-30'
-          level: 106169
-        - date: '2025-02-11'
-          level: 98446
-        - date: '2025-02-18'
-          level: 93552
+          level: 107854
         - date: '2025-02-28'
-          level: 78446
+          level: 78324
         - date: '2025-03-14'
-          level: 85140
-        - date: '2025-03-20'
-          level: 86958
-        - date: '2025-03-24'
-          level: 88492
+          level: 84877
+      - TOKEN_ID: 39220
+        TOKEN_NAME: Osmosis allETH
+        TOKEN_SYMBOL: ETH
+        DATE: '2025-04-11T00:00:00.000Z'
+        HISTORICAL_RESISTANCE_SUPPORT_LEVELS:
+        - date: '2024-09-23'
+          level: 2683.45
+        - date: '2024-10-03'
+          level: 2307.17
+        - date: '2024-11-12'
+          level: 3428.5
+        - date: '2024-12-06'
+          level: 4102.79
+        - date: '2024-12-23'
+          level: 3225.21
+        - date: '2025-02-03'
+          level: 2464.15
+        - date: '2025-02-24'
+          level: 2839.81
+        - date: '2025-02-28'
+          level: 2096.39
+        - date: '2025-04-03'
+          level: 1752.77
 input_direct_resistance_support_default:
   tool: get_resistance_support_levels
   tool_arguments:
