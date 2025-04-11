@@ -22,8 +22,8 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             {
                 "name": "DexScreener Agent",
                 "version": "1.0.0",
-                "author": "Heurist team",
-                "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
+                "author": "Scattering team",
+                "author_address": "0xa7DeBb68F2684074Ec4354B68E36C34AF363Fd57",
                 "description": "This agent fetches real-time DEX trading data and token information across multiple chains using DexScreener API",
                 "inputs": [
                     {
