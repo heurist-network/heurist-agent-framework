@@ -39,32 +39,30 @@ api_call_tests:
       query: Summarise recent updates of @heurist_ai
       limit: 5
     output:
-      response: "**Brief Overview of @heurist_ai**\n\n* **Name:** Heurist\n* **Bio:**\
-        \ Decentralized AI-as-a-Service Cloud • $HEU • Backed by @AmberGroup_io @ManifoldTrading\
-        \ @SeliniCapital\n* **Follower Count:** 34,361\n\n**Recent Tweet Activity\
-        \ Summary (last observed: Apr 11, 2025)**\n\n* **Frequency:** High activity,\
-        \ with multiple tweets posted within short intervals, indicating a strategic\
-        \ communication approach.\n* **Topics:**\n\t1. **Platform Updates:** Upgrades\
-        \ to $HEU staking, Dual-APR boost, and the Heurist Agent Framework v0.0.4.\n\
-        \t2. **Partnerships & Collaborations:** Integration with @TokenMetricsInc\
-        \ for enhanced crypto analytics within Heurist Mesh.\n\t3. **Ecosystem Engagement:**\
-        \ Interactions with other projects (@Zyfi_org, @artoriatech, @crestalnetwork),\
-        \ showcasing a networked approach.\n\t4. **Decentralization & Vision:** Emphasis\
-        \ on Heurist's foundational commitment to decentralization and open, accessible\
-        \ AI infrastructure.\n\n**Notable Tweets with High Engagement:**\n\n1. **Collaboration\
-        \ Announcement with @TokenMetricsInc**\n\t* **Engagement:** 18 Retweets, 23\
-        \ Likes, 9 Replies\n\t* **Text:** \"Pumped to announce our collaboration with\
-        \ @TokenMetricsInc - bringing professional-grade crypto analytics to Heurist\
-        \ Mesh! \U0001F9E0\U0001F4CA\"\n\t* **URL:** https://t.co/x8IYS5lFPT\n2. **Yield\
-        \ Farming Simplification with @Zyfi_org**\n\t* **Engagement:** 21 Retweets,\
-        \ 27 Likes, 10 Replies\n\t* **Text:** \"Yield farming just went from 'manage\
-        \ 10 protocols manually' to 'choose & chill' mode! Love seeing @Zyfi_org building\
-        \ practical AI agent @ZyfAI_ that solve real problems.\"\n3. **Decentralization\
-        \ Vision & Upcoming Event**\n\t* **Engagement:** 20 Retweets, 55 Likes, 10\
-        \ Replies\n\t* **Text:** \"Decentralization goes beyond buzzwords. At Heurist,\
-        \ it's the foundation of everything we build. Excited to share our vision\
-        \ for AI infrastructure that's truly open, accessible, and owned by those\
-        \ who use it. See you"
+      response: "**Twitter Profile Analysis: @heurist_ai**\n\n**1. Brief Overview\
+        \ of the Account:**\n* **Name:** Heurist\n* **Bio:** Decentralized AI-as-a-Service\
+        \ Cloud • $HEU • Backed by @AmberGroup_io @ManifoldTrading @SeliniCapital\n\
+        * **Follower Count:** 34,430\n* **Account Age:** Created on Mon, Dec 18, 2023\n\
+        \n**2. Summary of Recent Tweet Activity (Last observed: Apr 11, 2025):**\n\
+        * **Frequency:** Approximately 10 tweets in the last 48 hours, indicating\
+        \ high activity.\n* **Topics:**\n\t+ Updates and upgrades to Heurist's AI-as-a-Service\
+        \ Cloud and its ecosystem (e.g., staking, API integrations).\n\t+ Collaborations\
+        \ and integrations (e.g., with @TokenMetricsInc).\n\t+ Promoting decentralization\
+        \ and the utility of $HEU tokens.\n\t+ Engagement with other projects and\
+        \ users in the AI and blockchain space.\n\n**3. Notable Tweets with High Engagement:**\n\
+        1. **Collaboration Announcement with @TokenMetricsInc**\n\t* **Tweet:** \"\
+        Pumped to announce our collaboration with @TokenMetricsInc - bringing professional-grade\
+        \ crypto analytics to Heurist Mesh! \"\n\t* **Engagement:** 19 Retweets, 26\
+        \ Likes, 10 Replies\n\t* **Date:** Fri, Apr 11, 2025\n2. **Yield Farming and\
+        \ Autonomous Finance**\n\t* **Tweet:** \"Yield farming just went from 'manage\
+        \ 10 protocols manually' to 'choose & chill' mode! \"\n\t* **Engagement:**\
+        \ 21 Retweets, 29 Likes, 10 Replies\n\t* **Date:** Thu, Apr 10, 2025\n3. **Decentralization\
+        \ Vision**\n\t* **Tweet:** \"Decentralization goes beyond buzzwords. At Heurist,\
+        \ it's the foundation of everything we build.\"\n\t* **Engagement:** 20 Retweets,\
+        \ 55 Likes, 10 Replies\n\t* **Date:** Thu, Apr 10, 2025\n4. **Heurist Agent\
+        \ Framework v0.0.4 Announcement**\n\t* **Tweet:** \"1/ Announcing Heurist\
+        \ Agent Framework v0.0.4 - our biggest upgrade ever! \"\n\t* **Engagement:**\
+        \ 24 Retweets,"
       data:
         profile:
           id_str: '1736748346566459392'
@@ -72,9 +70,9 @@ api_call_tests:
           screen_name: heurist_ai
           description: Decentralized AI-as-a-Service Cloud • $HEU • Backed by @AmberGroup_io
             @ManifoldTrading @SeliniCapital
-          followers_count: 34361
+          followers_count: 34430
           friends_count: 235
-          statuses_count: 1148
+          statuses_count: 1149
           profile_image_url: https://pbs.twimg.com/profile_images/1856703682324160512/7jrP8hf2_normal.jpg
           verified: false
           created_at: Mon Dec 18 14:01:02 +0000 2023
@@ -90,7 +88,7 @@ api_call_tests:
           created_at: Fri Apr 11 04:00:45 +0000 2025
           engagement:
             retweets: 2
-            likes: 7
+            likes: 12
             replies: 2
         - text: '2/ For every API request processed by our serverless AI cloud, a
             portion flows directly to HEU stakers.
@@ -126,9 +124,9 @@ api_call_tests:
             into our serverless agent network. https://t.co/x8IYS5lFPT'
           created_at: Fri Apr 11 02:01:03 +0000 2025
           engagement:
-            retweets: 18
-            likes: 23
-            replies: 9
+            retweets: 19
+            likes: 26
+            replies: 10
         - text: '4/ Heurist Mesh already links up with 20+ chains and over 10k assets.
             It forms an agentic alliance when we throw in @TokenMetricsInc''s comprehensive
             token data resource.
@@ -156,7 +154,7 @@ api_call_tests:
             1⃣Select agents for web sea…'
           created_at: Thu Apr 10 22:17:06 +0000 2025
           engagement:
-            retweets: 19
+            retweets: 20
             likes: 0
             replies: 0
         - text: 'Yield farming just went from "manage 10 protocols manually" to "choose
@@ -171,7 +169,7 @@ api_call_tests:
           created_at: Thu Apr 10 15:04:51 +0000 2025
           engagement:
             retweets: 21
-            likes: 27
+            likes: 29
             replies: 10
         - text: '@Zyfi_org @ZyfAI_ To Join the Waitlist: https://t.co/lj7T0Mi2f4'
           created_at: Thu Apr 10 15:05:47 +0000 2025
@@ -182,7 +180,7 @@ api_call_tests:
         - text: 'RT @crestalnetwork: https://t.co/Ubjh7eF3Z2'
           created_at: Thu Apr 10 14:10:03 +0000 2025
           engagement:
-            retweets: 27
+            retweets: 29
             likes: 0
             replies: 0
         - text: 'Decentralization goes beyond buzzwords. At Heurist, it''s the foundation
@@ -207,9 +205,9 @@ api_call_tests:
             Here''s what''s changed... 🧵 https://t.co/eMmWjTFB3R'
           created_at: Wed Apr 09 13:00:25 +0000 2025
           engagement:
-            retweets: 23
-            likes: 49
-            replies: 18
+            retweets: 24
+            likes: 51
+            replies: 19
         - text: '8/ 🚢 Deployment Automation:
 
 
@@ -236,71 +234,153 @@ api_call_tests:
       limit: 5
     output:
       response: "**Twitter Profile Overview:**\n\n* **Name:** Elon Musk\n* **Screen\
-        \ Name:** @elonmusk\n* **Bio:** *No bio available*\n* **Follower Count:**\
-        \ 218,932,598\n* **Friend (Following) Count:** 1,106\n* **Total Tweets:**\
-        \ 76,779\n* **Account Creation Date:** June 2, 2009\n\n**Recent Tweet Activity\
-        \ (last ~24 hours):**\n\n* **Frequency:** High, with multiple tweets per hour\n\
-        * **Topics:**\n\t1. **Technology and Innovation:** Tweets about Grok, a seemingly\
-        \ AI-related project, and its advancements (e.g., \"Grok 3 is now in Cursor!\
-        \ It's FAST and it's amazing!\").\n\t2. **Tesla and Automotive:** Updates\
-        \ on Tesla, including the availability of the long-range Cybertruck (\"Long\
-        \ range Cybertruck now available\").\n\t3. **Politics and Current Events:**\
-        \ Shares and comments on various political topics, both domestic and international\
-        \ (e.g., \"Now it is up to the US Senate\", \"The conservative AfD party is\
-        \ now the LARGEST party in Germany in latest poll\").\n\t4. **Miscellaneous:**\
-        \ Brief, often cryptic, personal opinions or reactions (e.g., \"Troubling\"\
-        , \"That’s a very big percentage\", \"Yup\").\n\n**Notable Tweets with High\
-        \ Engagement:**\n\n1. **\"$69M \"** (Apr 10, 2025)\n\t* **Engagement:** 18,915\
-        \ Retweets, 92,980 Likes, 6,674 Replies\n2. **\"Long range Cybertruck now\
-        \ available\"** (Apr 11, 2025)\n\t* **Engagement:** 1,162 Retweets, 10,974\
-        \ Likes, 1,586 Replies\n3. **\"RT @VigilantFox: BREAKING: Pam Bondi just confirmed\
-        \ that a MASSIVE Tesla terrorist arrest is coming...\"** (Apr 11, 2025)\n\t\
-        * **Engagement:** 5,774 Retweets, 0 Likes (as it's a retweet), 0 Replies\n\
-        4. **\"https://t.co/MGQI5jF1P1\"** (Apr 10, 2025) - **Note:** This tweet's\
-        \ content is not provided, but it has significant engagement.\n\t* **Engagement:**\
-        \ 29,230 Retweets,"
+        \ Name:** @elonmusk\n* **Bio:** *No bio provided*\n* **Follower Count:** 218,953,011\n\
+        * **Friend Count:** 1,106\n* **Total Tweets:** 76,796\n* **Account Creation:**\
+        \ June 2, 2009\n* **Verified:** No (Note: This contradicts public knowledge;\
+        \ Elon Musk's account is indeed verified on the actual Twitter platform. This\
+        \ discrepancy may be due to the data provided.)\n\n**Recent Tweet Activity\
+        \ (last ~24 hours, based on provided data):**\n\n* **Frequency:** Very High\
+        \ - 20 tweets in approximately 1 hour (mostly retweets)\n* **Topics:**\n\t\
+        + Politics and Governance (e.g., discussions on entitlements, voting access,\
+        \ and Senate actions)\n\t+ Technology and Innovations (e.g., Starship, Cybertruck,\
+        \ AI, and xAI improvements)\n\t+ Miscellaneous (e.g., terrorism arrest, cultural\
+        \ victories, and international launches)\n\n**Notable Tweets with High Engagement:**\n\
+        \n1. **\"Makes sense** https://t.co/DYxaBEaQyf\"\n\t* **Engagement:** 5,730\
+        \ Retweets, 38,059 Likes, 2,764 Replies\n2. **\"Now it is up to the US Senate\"\
+        **\n\t* **Engagement:** 4,925 Retweets, 44,726 Likes, 1,823 Replies\n3. **\"\
+        Troubling\"**\n\t* **Engagement:** 1,590 Retweets, 9,896 Likes, 883 Replies\n\
+        4. **RT @VigilantFox: BREAKING: Pam Bondi just confirmed that a MASSIVE Tesla\
+        \ terrorist arrest is coming...**\n\t* **Engagement:** 6,635 Retweets, (no\
+        \ likes/replies data for RTs)\n5. **\"That’s a very big percentage\"**\n\t\
+        * **Engagement:** 2,469 Retweets, 15,243 Likes, 1,147 Replies"
       data:
         profile:
           id_str: '44196397'
           name: Elon Musk
           screen_name: elonmusk
           description: ''
-          followers_count: 218932598
+          followers_count: 218953011
           friends_count: 1106
-          statuses_count: 76779
+          statuses_count: 76796
           profile_image_url: https://pbs.twimg.com/profile_images/1893803697185910784/Na5lOWi5_normal.jpg
           verified: false
           created_at: Tue Jun 02 20:12:29 +0000 2009
         tweets:
+        - text: Mostly counterproductive, not simply wasteful
+          created_at: Fri Apr 11 06:10:28 +0000 2025
+          engagement:
+            retweets: 2191
+            likes: 11884
+            replies: 1315
+        - text: 'RT @ElonClipsX: Elon Musk: As a system, Starship is thousands of
+            times more capable than Saturn V.
+
+
+            “Starship is 2.5 times the thrust of a…'
+          created_at: Fri Apr 11 06:04:28 +0000 2025
+          engagement:
+            retweets: 578
+            likes: 0
+            replies: 0
+        - text: 'RT @wmorrill3: More efficient. More affordable. Long Range Cybertruck
+            brings all-wheel stability and traction control plus a rear locking d…'
+          created_at: Fri Apr 11 06:04:11 +0000 2025
+          engagement:
+            retweets: 495
+            likes: 0
+            replies: 0
+        - text: 'True'
+          created_at: Fri Apr 11 06:01:08 +0000 2025
+          engagement:
+            retweets: 1982
+            likes: 12009
+            replies: 1044
+        - text: "RT @teslaownersSV: \"AI needs to say the truth &amp; know the truth,\
+            \ even if the truth is unpopular” \n\nElon Musk\n https://t.co/op3xbqgswz"
+          created_at: Fri Apr 11 06:00:36 +0000 2025
+          engagement:
+            retweets: 704
+            likes: 0
+            replies: 0
+        - text: 'RT @DOGE: Great partnership between @SecDef @DeptofDefense @DOGE'
+          created_at: Fri Apr 11 05:55:04 +0000 2025
+          engagement:
+            retweets: 2392
+            likes: 0
+            replies: 0
+        - text: "RT @techdevnotes: xAI has improved the UX of Voice with respect to\
+            \ Real Time web search \n\nPreviously it used to use Thinking wore like\
+            \ \"Let…"
+          created_at: Fri Apr 11 05:47:53 +0000 2025
+          engagement:
+            retweets: 224
+            likes: 0
+            replies: 0
+        - text: 'RT @MarioNawfal: ELON: DEMS ATTRACTED AND RETAINED ILLEGALS BY PAYING
+            THEM THROUGH ENTITLEMENTS
+
+
+            “Most of the federal spending is entitleme…'
+          created_at: Fri Apr 11 05:46:21 +0000 2025
+          engagement:
+            retweets: 1040
+            likes: 0
+            replies: 0
+        - text: 'RT @Rothmus: 🔥🔥 https://t.co/1tjMMNIFK5'
+          created_at: Fri Apr 11 05:42:05 +0000 2025
+          engagement:
+            retweets: 541
+            likes: 0
+            replies: 0
+        - text: "Makes sense \n https://t.co/DYxaBEaQyf"
+          created_at: Fri Apr 11 05:41:09 +0000 2025
+          engagement:
+            retweets: 5730
+            likes: 38059
+            replies: 2764
+        - text: 'RT @BasedMikeLee: Hillary Clinton argues that the SAVE Act “threatens
+            voting access” for “69 million women whose married names don’t match…'
+          created_at: Fri Apr 11 05:17:41 +0000 2025
+          engagement:
+            retweets: 3289
+            likes: 0
+            replies: 0
+        - text: "RT @teslaownersSV: “The woke mind virus is communism rebranded” \n\
+            Elon Musk\n https://t.co/QSiLuyboCG"
+          created_at: Fri Apr 11 05:16:32 +0000 2025
+          engagement:
+            retweets: 806
+            likes: 0
+            replies: 0
         - text: 'RT @techdevnotes: Grok 3 is now in Cursor!
 
 
             It''s FAST and it''s amazing! https://t.co/sbiLmWsB44'
           created_at: Fri Apr 11 05:14:04 +0000 2025
           engagement:
-            retweets: 23
+            retweets: 293
             likes: 0
             replies: 0
         - text: Now it is up to the US Senate
           created_at: Fri Apr 11 05:12:11 +0000 2025
           engagement:
-            retweets: 341
-            likes: 2116
-            replies: 313
+            retweets: 4925
+            likes: 44726
+            replies: 1823
         - text: 'RT @cb_doge: 🚨 ELON MUSK: Some of the waste &amp; fraud we found
             is just absurd, like people getting unemployment insurance who haven''t
             been bo…'
           created_at: Fri Apr 11 05:06:54 +0000 2025
           engagement:
-            retweets: 956
+            retweets: 1619
             likes: 0
             replies: 0
         - text: Troubling
           created_at: Fri Apr 11 05:04:01 +0000 2025
           engagement:
-            retweets: 340
-            likes: 2008
-            replies: 453
+            retweets: 1590
+            likes: 9896
+            replies: 883
         - text: 'RT @VigilantFox: BREAKING: Pam Bondi just confirmed that a MASSIVE
             Tesla terrorist arrest is coming.
 
@@ -308,20 +388,20 @@ api_call_tests:
             “Within the next 24 hours, you’re goi…'
           created_at: Fri Apr 11 04:57:22 +0000 2025
           engagement:
-            retweets: 5774
+            retweets: 6635
             likes: 0
             replies: 0
         - text: That’s a very big percentage
           created_at: Fri Apr 11 04:55:12 +0000 2025
           engagement:
-            retweets: 590
-            likes: 3610
-            replies: 627
+            retweets: 2469
+            likes: 15243
+            replies: 1147
         - text: 'RT @AutismCapital: 🚨 JOE ROGAN: “The word retarded is back and it’s
             one of the great culture victories.” https://t.co/WiASglTBc6'
           created_at: Fri Apr 11 04:45:58 +0000 2025
           engagement:
-            retweets: 985
+            retweets: 1471
             likes: 0
             replies: 0
         - text: 'RT @teslaeurope: A new era
@@ -330,131 +410,38 @@ api_call_tests:
             Launching in the Kingdom of Saudi Arabia today 🇸🇦 https://t.co/UyFgilD2kf'
           created_at: Fri Apr 11 04:45:21 +0000 2025
           engagement:
-            retweets: 1144
+            retweets: 1427
             likes: 0
             replies: 0
-        - text: 'RT @SawyerMerritt: Tesla has released 11 new beautiful 4K images
-            of the new Model Y.
-
-
-            Click on a photo then long press to view in 4K. Threa…'
-          created_at: Fri Apr 11 04:36:44 +0000 2025
-          engagement:
-            retweets: 332
-            likes: 0
-            replies: 0
-        - text: Long range Cybertruck now available
-          created_at: Fri Apr 11 04:30:59 +0000 2025
-          engagement:
-            retweets: 1162
-            likes: 10974
-            replies: 1586
-        - text: $69M 🤔
-          created_at: Thu Apr 10 22:36:51 +0000 2025
-          engagement:
-            retweets: 18915
-            likes: 92980
-            replies: 6674
-        - text: 'RT @ID_AA_Carmack: I have never seen it expressed exactly like that,
-            but I wholeheartedly endorse it:
-
-
-            Feedback beats planning.
-
-
-            My plea at…'
-          created_at: Thu Apr 10 22:36:03 +0000 2025
-          engagement:
-            retweets: 1185
-            likes: 0
-            replies: 0
-        - text: 'RT @edwards345: True.'
-          created_at: Thu Apr 10 08:43:07 +0000 2025
-          engagement:
-            retweets: 3013
-            likes: 0
-            replies: 0
-        - text: 'RT @AdamGhetti: Grok-3-mini-fast really is chasing that efficient
-            frontier. There are benchmarks and then there are results purely measured…'
-          created_at: Thu Apr 10 08:39:56 +0000 2025
-          engagement:
-            retweets: 998
-            likes: 0
-            replies: 0
-        - text: 'RT @PeterSweden7: IT HAPPENED
-
-
-            The conservative AfD party is now the LARGEST party in Germany in latest
-            poll.
-
-
-            This is a political earthqua…'
-          created_at: Thu Apr 10 08:39:31 +0000 2025
-          engagement:
-            retweets: 3916
-            likes: 0
-            replies: 0
-        - text: https://t.co/MGQI5jF1P1
-          created_at: Thu Apr 10 08:39:10 +0000 2025
-          engagement:
-            retweets: 29230
-            likes: 257846
-            replies: 9113
-        - text: 'RT @teslaownersSV: “I just like working, making products people love
-            and spending time with friends and family.”
-
-            Elon Musk https://t.co/oVi…'
-          created_at: Thu Apr 10 08:30:30 +0000 2025
-          engagement:
-            retweets: 2054
-            likes: 0
-            replies: 0
-        - text: 'RT @cb_doge: It''s pretty cool that you can play and stream a real
-            time video game, from an airplane. https://t.co/JZnCmnU7z5'
-          created_at: Thu Apr 10 08:28:39 +0000 2025
-          engagement:
-            retweets: 1260
-            likes: 0
-            replies: 0
-        - text: 'RT @elonmusk: @amasad Grok gets jokes https://t.co/321tVHv8Y8'
-          created_at: Thu Apr 10 08:27:46 +0000 2025
-          engagement:
-            retweets: 1194
-            likes: 0
-            replies: 0
-        - text: Yup
-          created_at: Thu Apr 10 07:38:27 +0000 2025
-          engagement:
-            retweets: 12827
-            likes: 85227
-            replies: 3694
   case_3:
     input:
       query: Get the recent tweets from cz_binance
       limit: 5
     output:
-      response: "**Twitter Profile Analysis: @cz_binance**\n\n**1. Brief Overview\
-        \ of the Account:**\n\n* **Name:** CZ \n* **Screen Name:** @cz_binance\n*\
-        \ **Bio:** DM: https://t.co/ITLXkxWlol (fees go to charity) | @BNBchain, @YZiLabs,\
-        \ @GiggleAcademy, ex-@binance.\n* **Follower Count:** 10,039,001\n* **Account\
-        \ Created:** August 30, 2017\n\n**2. Summary of Recent Tweet Activity:**\n\
-        \n* **Frequency:** Highly active, with multiple tweets per day.\n* **Topics:**\n\
-        \t+ Dominant topics include cryptocurrency (especially BNB, Bitcoin), blockchain\
-        \ technology, and Web3.\n\t+ Mentions of associated projects (@BNBchain, @GiggleAcademy).\n\
-        \t+ Engagement with community through retweets of user-generated content and\
-        \ event promotions.\n\t+ Occasional personal or humorous tweets.\n\n**3. Notable\
-        \ Tweets with High Engagement:**\n\n1. **\"Crypto doesn't have borders.\"\
-        **\n\t* **Created At:** Tue Apr 08 17:56:07 +0000 2025\n\t* **Engagement:**\
-        \ \n\t\t- **Retweets:** 1,568\n\t\t- **Likes:** 13,479\n\t\t- **Replies:**\
-        \ 2,519\n\t* **Note:** A short, impactful statement that resonated widely\
-        \ with the audience.\n\n2. **\"We are in it for the tech, right?\U0001F606\
-        \"**\n\t* **Created At:** Wed Apr 09 18:30:26 +0000 2025\n\t* **Engagement:**\
-        \ \n\t\t- **Retweets:** 942\n\t\t- **Likes:** 12,482\n\t\t- **Replies:** 2,868\n\
-        \t* **Note:** A lighthearted tweet that sparked significant engagement, indicating\
-        \ a strong community response to the account's more casual content.\n\n3.\
-        \ **\".@GiggleAcademy Creator v1.10.0 released:\"** (followed by a list of\
-        \ updates)\n\t* **Created At:** Tue Apr 08 11:51:24 +0000 2025\n\t* **Engagement:**\
-        \ \n\t\t- **Retweets:** 99\n\t\t- **Likes:**"
+      response: "**Twitter Profile Analysis: @cz_binance**\n\n### **1. Brief Overview\
+        \ of the Account**\n\n* **Name:** CZ \n* **Screen Name:** @cz_binance\n* **Bio:**\
+        \ DM: https://t.co/ITLXkxWlol (fees go to charity) | @BNBchain, @YZiLabs,\
+        \ @GiggleAcademy, ex-@binance.\n* **Follower Count:** 10,040,291\n* **Following\
+        \ Count:** 1,792\n* **Tweet Count:** 9,810\n* **Verified:** No\n* **Account\
+        \ Creation Date:** Wed Aug 30 16:12:13 +0000 2017\n\n### **2. Summary of Recent\
+        \ Tweet Activity**\n\n* **Frequency:** Highly active, with multiple tweets/posts\
+        \ per day, indicating a strong engagement strategy.\n* **Topics:**\n\t+ **BNB\
+        \ Chain & Crypto Updates:** Frequently shares updates, achievements, and upcoming\
+        \ developments related to BNB Chain.\n\t+ **Retweets of Community & Partners:**\
+        \ Actively retweets content from BNB Chain's ecosystem partners, community\
+        \ members, and related projects.\n\t+ **Personal Insights & Opinions:** Shares\
+        \ brief, often cryptic, personal thoughts on the crypto space, innovation,\
+        \ and perseverance.\n\t+ **Engagement with Global Events:** Mentions meetings\
+        \ with global leaders and events, highlighting the intersection of crypto\
+        \ with mainstream governance and economies.\n\n### **3. Notable Tweets with\
+        \ High Engagement**\n\n1. **\"Crypto doesn't have borders.\"**\n\t* **Created\
+        \ At:** Tue Apr 08 17:56:07 +0000 2025\n\t* **Engagement:** \n\t\t- **Retweets:**\
+        \ 1,564\n\t\t- **Likes:** 13,483\n\t\t- **Replies:** 2,521\n\t* **Highlight:**\
+        \ This tweet garnered significant engagement, reflecting the community's interest\
+        \ in the global and borderless nature of cryptocurrency.\n\n2. **\"We are\
+        \ in it for the tech, right?\U0001F606\"**\n\t* **Created At:** Wed Apr 09\
+        \ 18:30:26 +0000 2025\n\t* **Engagement:**\n\t\t- **Retweets:** 964\n\t\t\
+        - **Likes:** 12,621\n\t\t- **Replies:** 2,893\n\t* **Highlight:** This lightheart"
       data:
         profile:
           id_str: '902926941413453824'
@@ -464,50 +451,103 @@ api_call_tests:
 
 
             @BNBchain, @YZiLabs, @GiggleAcademy, ex-@binance.'
-          followers_count: 10039001
-          friends_count: 1791
-          statuses_count: 9798
+          followers_count: 10040291
+          friends_count: 1792
+          statuses_count: 9810
           profile_image_url: https://pbs.twimg.com/profile_images/1902270560236605440/KpVD026z_normal.jpg
           verified: false
           created_at: Wed Aug 30 16:12:13 +0000 2017
         tweets:
+        - text: 'RT @Crypto_bn: #BNB chain road map in 2025 looks 🔥
+
+
+            Pascal upgrade (March 2025 - Released): Quick transactions, scalable,
+            time sensitive
+
+
+            L…'
+          created_at: Fri Apr 11 08:57:23 +0000 2025
+          engagement:
+            retweets: 21
+            likes: 0
+            replies: 0
+        - text: 'RT @EowynChen: We’ve just dropped a new build, continue easy-to-use
+            improvements. Our team’s been grinding behind the scenes for @TrustWall…'
+          created_at: Fri Apr 11 08:50:17 +0000 2025
+          engagement:
+            retweets: 16
+            likes: 0
+            replies: 0
+        - text: Chaos and opportunity often come together.
+          created_at: Fri Apr 11 08:49:44 +0000 2025
+          engagement:
+            retweets: 238
+            likes: 1465
+            replies: 581
+        - text: 'RT @BNBCHAIN: The Lorentz testnet hardforks are complete!
+
+
+            opBNB is now running at 0.5s block times &amp; BSC testnet is live with
+            1.5s block t…'
+          created_at: Fri Apr 11 08:46:30 +0000 2025
+          engagement:
+            retweets: 53
+            likes: 0
+            replies: 0
+        - text: 'RT @Eljaboom: USD1 supply on @BNBChain surpasses $100M.
+
+
+            "USD1 stablecoin", launched by @worldlibertyfi has reached $103.48M MCap
+            on #BNB C…'
+          created_at: Fri Apr 11 08:08:22 +0000 2025
+          engagement:
+            retweets: 70
+            likes: 0
+            replies: 0
+        - text: Multiple people have told me again WSJ is writing another baseless
+            hit piece about me. 4 😂
+          created_at: Fri Apr 11 06:59:02 +0000 2025
+          engagement:
+            retweets: 143
+            likes: 1754
+            replies: 752
         - text: 'RT @CoinDesk: $BTC and altcoin spot trading volume has declined as
             crypto prices entered into correction mode in the last two months, with…'
           created_at: Thu Apr 10 17:58:01 +0000 2025
           engagement:
-            retweets: 77
+            retweets: 84
             likes: 0
             replies: 0
         - text: Step by step.
           created_at: Thu Apr 10 04:09:16 +0000 2025
           engagement:
-            retweets: 466
-            likes: 3698
-            replies: 647
+            retweets: 479
+            likes: 3792
+            replies: 672
         - text: https://t.co/Ot1wDyum3X
           created_at: Thu Apr 10 03:54:57 +0000 2025
           engagement:
-            retweets: 85
-            likes: 626
-            replies: 283
+            retweets: 83
+            likes: 638
+            replies: 286
         - text: We are in it for the tech, right?😆
           created_at: Wed Apr 09 18:30:26 +0000 2025
           engagement:
-            retweets: 942
-            likes: 12482
-            replies: 2868
+            retweets: 964
+            likes: 12621
+            replies: 2893
         - text: It was a good meeting. We probably talked more about education than
             crypto. I got too excited. But we did talk about crypto.🙂
           created_at: Wed Apr 09 17:43:49 +0000 2025
           engagement:
-            retweets: 594
-            likes: 5112
-            replies: 698
+            retweets: 607
+            likes: 5193
+            replies: 706
         - text: 'RT @ForeignOfficePk: Deputy Prime Minister/Foreign Minister, Senator
             Mohammad Ishaq Dar @MIshaqDar50 held a meeting with Mr. Changpeng Zhao…'
           created_at: Wed Apr 09 17:40:48 +0000 2025
           engagement:
-            retweets: 113
+            retweets: 111
             likes: 0
             replies: 0
         - text: "RT @BNBCHAINZH: BNB Super Meetup \U0001F1ED\U0001F1F0 活動精彩回顧 \n這場活動從\
@@ -515,7 +555,7 @@ api_call_tests:
             \ 依然決心扶持生態項目，…"
           created_at: Wed Apr 09 14:44:58 +0000 2025
           engagement:
-            retweets: 76
+            retweets: 80
             likes: 0
             replies: 0
         - text: 'RT @Eljaboom: World Liberty Financial stablecoin USD1 is approaching
@@ -528,7 +568,7 @@ api_call_tests:
             On the @BNB…'
           created_at: Wed Apr 09 14:43:52 +0000 2025
           engagement:
-            retweets: 115
+            retweets: 117
             likes: 0
             replies: 0
         - text: 'RT @GiggleAcademy: Which other language should Giggle Academy add?
@@ -542,7 +582,7 @@ api_call_tests:
             embodies a bright future Web3 isn’t just reshaping the internet ; it’s…'
           created_at: Wed Apr 09 03:41:22 +0000 2025
           engagement:
-            retweets: 144
+            retweets: 143
             likes: 0
             replies: 0
         - text: 'RT @SharkkBoooooy: Amazing Event 🫡❤️#binancemeetupcolombo 🇱🇰
@@ -550,103 +590,27 @@ api_call_tests:
             Happy Time With  My Brothers😍🇱🇰❤️ https://t.co/yvrS70t3vf'
           created_at: Wed Apr 09 03:34:09 +0000 2025
           engagement:
-            retweets: 60
+            retweets: 63
             likes: 0
             replies: 0
         - text: Crypto doesn't have borders.
           created_at: Tue Apr 08 17:56:07 +0000 2025
           engagement:
-            retweets: 1568
-            likes: 13479
-            replies: 2519
+            retweets: 1564
+            likes: 13483
+            replies: 2521
         - text: 🤷‍♂️
           created_at: Tue Apr 08 16:29:21 +0000 2025
           engagement:
-            retweets: 110
-            likes: 1168
+            retweets: 113
+            likes: 1169
             replies: 25
         - text: 😂 连这都能被黑。
           created_at: Tue Apr 08 16:08:15 +0000 2025
           engagement:
-            retweets: 72
-            likes: 692
-            replies: 555
-        - text: "RT @Eljaboom: $BNB is acting like a store of value.\n\nIncredible\
-            \ strength \U0001F4AA \n\nWhen you build a utility, it outperforms. https://t.co/K6TqDIL…"
-          created_at: Tue Apr 08 15:29:06 +0000 2025
-          engagement:
-            retweets: 102
-            likes: 0
-            replies: 0
-        - text: 'RT @RealJassia: Binance lights up Islamabad with the Cricket Cruiser!
-            Spot it, snap it, and share using #SpotTheCruiser for a chance to win…'
-          created_at: Tue Apr 08 13:30:25 +0000 2025
-          engagement:
-            retweets: 71
-            likes: 0
-            replies: 0
-        - text: '.@GiggleAcademy Creator v1.10.0 released:
-
-
-            Easier searching in libraries
-
-            Storybook creation optimized
-
-            AI image gen improved
-
-            Color selector for all layers
-
-            Following authors, with notifications
-
-
-            Please give it a try at https://t.co/Gq9YYjWAHb'
-          created_at: Tue Apr 08 11:51:24 +0000 2025
-          engagement:
-            retweets: 99
-            likes: 956
-            replies: 356
-        - text: 'RT @UmairNauman_: Just spotted a #Binance truck on the road.
-
-
-            Crypto adoption is real in Pakistan! 🇵🇰 https://t.co/5lZFUvKmcU'
-          created_at: Tue Apr 08 11:48:06 +0000 2025
-          engagement:
-            retweets: 122
-            likes: 0
-            replies: 0
-        - text: '.@GiggleAcademy 1.10.1 released:
-
-            LEVEL-1 challenge levels
-
-            Level Selection feature
-
-            Animal cards can be collected
-
-            Completion page animations
-
-            Skipping levels
-
-            Storybooks support following authors
-
-
-            iOS: https://t.co/5onPruZb7x
-
-            Android: https://t.co/pcFbeLOTWc'
-          created_at: Tue Apr 08 11:47:29 +0000 2025
-          engagement:
-            retweets: 93
-            likes: 733
-            replies: 275
-        - text: 'RT @tokenterminal: ICYMI: The applications on @BNBCHAIN generated
-            ~$170.2 million in fees during Q1 ‘25.
-
-
-            The 3 biggest contributors to BNB…'
-          created_at: Tue Apr 08 11:21:42 +0000 2025
-          engagement:
-            retweets: 53
-            likes: 0
-            replies: 0
+            retweets: 73
+            likes: 694
+            replies: 556
   case_4:
     input:
       tool: get_user_tweets
@@ -661,7 +625,7 @@ api_call_tests:
           name: Donald J. Trump
           screen_name: realDonaldTrump
           description: 45th & 47th President of the United States of America🇺🇸
-          followers_count: 103320902
+          followers_count: 103333111
           friends_count: 53
           statuses_count: 59735
           profile_image_url: https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_normal.jpg
@@ -674,9 +638,9 @@ api_call_tests:
             Patient, and GREATNESS will be the result!
           created_at: Mon Apr 07 14:56:03 +0000 2025
           engagement:
-            retweets: 70909
-            likes: 494697
-            replies: 51327
+            retweets: 70962
+            likes: 494927
+            replies: 51744
         - text: Oil prices are down, interest rates are down (the slow moving Fed
             should cut rates!), food prices are down, there is NO INFLATION, and the
             long time abused USA is bringing in Billions of Dollars a week from the
@@ -689,9 +653,9 @@ api_call_tests:
             so much else, to happen to our Country. MAKE AMERICA GREAT AGAIN!
           created_at: Mon Apr 07 14:55:39 +0000 2025
           engagement:
-            retweets: 68757
-            likes: 499403
-            replies: 48884
+            retweets: 68756
+            likes: 499589
+            replies: 49008
         - text: 'These Houthis gathered for instructions on an attack. Oops, there
             will be no attack by these Houthis! 
 
@@ -699,40 +663,40 @@ api_call_tests:
             They will never sink our ships again! https://t.co/lEzfyDgWP5'
           created_at: Fri Apr 04 23:27:15 +0000 2025
           engagement:
-            retweets: 61984
-            likes: 474550
-            replies: 71038
+            retweets: 61989
+            likes: 474557
+            replies: 71060
         - text: https://t.co/ZoSf5TdLqo
           created_at: Thu Apr 03 13:08:29 +0000 2025
           engagement:
-            retweets: 31424
-            likes: 182455
-            replies: 25616
+            retweets: 31476
+            likes: 182495
+            replies: 25631
         - text: https://t.co/CdTzF2sfMZ
           created_at: Wed Apr 02 20:07:22 +0000 2025
           engagement:
-            retweets: 23520
-            likes: 119312
-            replies: 13229
+            retweets: 23517
+            likes: 119350
+            replies: 13234
         - text: https://t.co/k8Eh7B8fq3
           created_at: Wed Apr 02 15:47:38 +0000 2025
           engagement:
-            retweets: 29352
-            likes: 157457
-            replies: 11960
+            retweets: 29377
+            likes: 157497
+            replies: 11966
         - text: https://t.co/RPXb6Y9E6y
           created_at: Wed Apr 02 13:42:29 +0000 2025
           engagement:
-            retweets: 47335
-            likes: 380057
-            replies: 37899
+            retweets: 47372
+            likes: 380110
+            replies: 37906
         - text: REPUBLICANS MUST DEFUND AND TOTALLY DISASSOCIATE THEMSELVES FROM NPR
             &amp; PBS, THE RADICAL LEFT “MONSTERS” THAT SO BADLY HURT OUR COUNTRY!
           created_at: Tue Apr 01 20:53:05 +0000 2025
           engagement:
-            retweets: 38717
-            likes: 262410
-            replies: 21341
+            retweets: 38729
+            likes: 262439
+            replies: 21344
         - text: 'The Iran-backed Houthi Terrorists have been decimated by the relentless
             strikes over the past two weeks. Many of their Fighters and Leaders are
             no longer with us. We hit them every day and night — Harder and harder.
@@ -744,40 +708,40 @@ api_call_tests:
             their sponsors in Iran.'
           created_at: Mon Mar 31 18:49:47 +0000 2025
           engagement:
-            retweets: 39941
-            likes: 267463
-            replies: 23869
+            retweets: 39948
+            likes: 267494
+            replies: 23871
         - text: There will never have been a transformation of a Country like the
             transformation that is happening, for all to see, in the United States
             of America. Companies are pouring into our Country at levels never seen
             before, with Jobs (and Money!) to follow. It is a beautiful thing to watch!
           created_at: Mon Mar 31 18:49:06 +0000 2025
           engagement:
-            retweets: 51614
-            likes: 367606
+            retweets: 51612
+            likes: 367615
             replies: 36393
         - text: In two months, there has been more Private Investment spoken for,
             and/or committed to, than in four years of the Sleepy Joe Biden Administration
             — A fact that the Fake News hates talking about!
           created_at: Mon Mar 31 18:48:06 +0000 2025
           engagement:
-            retweets: 24488
-            likes: 176548
+            retweets: 24514
+            likes: 176563
             replies: 9678
         - text: Thank you President Bukele, of El Salvador, for taking the criminals
             that were so stupidly allowed, by the Crooked Joe Biden Administration,
             to enter our Country, and giving them such a wonderful place to live!
           created_at: Mon Mar 31 18:16:47 +0000 2025
           engagement:
-            retweets: 58884
-            likes: 362226
-            replies: 12643
+            retweets: 58892
+            likes: 362245
+            replies: 12646
         - text: https://t.co/PRHm1dTtSX
           created_at: Mon Mar 31 13:33:55 +0000 2025
           engagement:
-            retweets: 22580
-            likes: 124280
-            replies: 11669
+            retweets: 22575
+            likes: 124289
+            replies: 11668
         - text: 'America First Patriot Randy Fine is running to represent the Wonderful
             People of Florida’s 6th Congressional District! A highly successful, Harvard
             educated businessman, and greatly respected State Legislator, Randy has
@@ -794,9 +758,9 @@ api_call_tests:
             https://t.co/3Bnn5ZweH2'
           created_at: Mon Mar 31 13:30:28 +0000 2025
           engagement:
-            retweets: 21129
-            likes: 104947
-            replies: 10000
+            retweets: 21155
+            likes: 104975
+            replies: 9998
         - text: 'Jimmy Patronis, Chief Financial Officer and Fire Marshall for the
             Great State of Florida, is running an incredible Campaign for Congress
             in Florida’s 1st Congressional District! A fourth generation Floridian
@@ -814,8 +778,8 @@ api_call_tests:
             NEVER LET YOU DOWN! https://t.co/xP3nBIgOep'
           created_at: Mon Mar 31 13:30:06 +0000 2025
           engagement:
-            retweets: 18524
-            likes: 91394
+            retweets: 18541
+            likes: 91415
             replies: 2992
         - text: 'RT @OcrazioCornPop: 🚨 SIGNAL SCANDAL:  Katherine Maher, the leftist
             NPR CEO, is currently the Chair of the Board of Signal!
@@ -824,27 +788,27 @@ api_call_tests:
             WHAT ARE THE O…'
           created_at: Sun Mar 30 20:39:21 +0000 2025
           engagement:
-            retweets: 24016
+            retweets: 24023
             likes: 0
             replies: 0
         - text: https://t.co/i1rW9HroWn
           created_at: Fri Mar 28 18:31:34 +0000 2025
           engagement:
-            retweets: 53520
-            likes: 314481
-            replies: 26482
+            retweets: 53559
+            likes: 314506
+            replies: 26481
         - text: FIGHT, FIGHT, FIGHT!!! https://t.co/irQ5B6TRE2
           created_at: Tue Mar 25 02:40:12 +0000 2025
           engagement:
-            retweets: 48809
-            likes: 267430
+            retweets: 48838
+            likes: 267446
             replies: 25175
         - text: https://t.co/6TBzTaF8iM
           created_at: Fri Mar 21 22:39:57 +0000 2025
           engagement:
-            retweets: 67393
-            likes: 315745
-            replies: 44547
+            retweets: 67410
+            likes: 315710
+            replies: 44544
         - text: 'RT @mrddmia: 🚨 Newly Filed Motion To Disqualify Radical Obama Judge
             Beryl Howell From Trump Case
 
@@ -852,7 +816,7 @@ api_call_tests:
             Read More: https://t.co/CyEILbUhyq https:…'
           created_at: Fri Mar 21 22:39:42 +0000 2025
           engagement:
-            retweets: 9531
+            retweets: 9528
             likes: 0
             replies: 0
   case_5:
@@ -860,35 +824,34 @@ api_call_tests:
       query: Get tweets from user_id:778764142412984320
       limit: 5
     output:
-      response: "**Twitter Profile Analysis: @huggingface**\n\n### **Brief Overview\
-        \ of the Account**\n\n* **Name:** Hugging Face\n* **Screen Name:** @huggingface\n\
+      response: "**Twitter Profile Analysis: @huggingface (Hugging Face)**\n\n**1.\
+        \ Brief Overview:**\n* **Name:** Hugging Face\n* **Screen Name:** @huggingface\n\
         * **Bio:** The AI community building the future. https://t.co/VkRPD0Vclr\n\
-        * **Follower Count:** 492,196\n* **Friends Count:** 201\n* **Total Tweets:**\
-        \ 10,581\n* **Verified:** No\n* **Account Creation Date:** Thu Sep 22 01:13:35\
-        \ +0000 2016\n\n### **Summary of Recent Tweet Activity**\n\n* **Frequency:**\
-        \ Highly active, with multiple tweets per day, indicating a strong engagement\
-        \ with the Twitter community.\n* **Topics:**\n\t+ **Dominant Theme:** Artificial\
-        \ Intelligence (AI), specifically focusing on advancements, new datasets,\
-        \ and model updates.\n\t+ **Sub-Themes:**\n\t\t- Reasoning datasets and competitions.\n\
-        \t\t- Model releases and updates (e.g., Llama, RolmOCR, Multilingual Orpheus\
-        \ TTS).\n\t\t- Collaborations and partnerships (e.g., with Nvidia, Cloudflare).\n\
-        \t\t- Community engagement and project updates from the Hugging Face ecosystem.\n\
-        \n### **Notable Tweets with High Engagement**\n\n1. **Tweet with the Highest\
-        \ Engagement:**\n\t* **Text:** RT @reach_vb: Fuck yeah! Multilingual Orpheus\
-        \ TTS 3B is here \U0001F525...\n\t* **Engagement:** 116 retweets, 0 likes,\
-        \ 0 replies\n\t* **Created At:** Wed Apr 09 21:03:10 +0000 2025\n\n2. **Other\
-        \ Noteworthy Mentions:**\n\t* **RT @lmstudio:** Llama 4 is now supported in\
-        \ LM Studio! (67 retweets)\n\t* **RT @_akhaliq:** Nvidia just dropped Llama\
-        \ 3.1 Nemotron Ultra 253B on Hugging Face (48 retweets)\n\t* **RT @rohanpaul_ai:**\
-        \ The absolute largest reasoning coding dataset just dropped in @huggingface\
-        \ (47 retweets)"
+        * **Follower Count:** 492,273\n* **Following Count:** 201\n* **Total Tweets:**\
+        \ 10,581\n* **Account Created:** Thu Sep 22 01:13:35 +0000 2016\n* **Verified:**\
+        \ No\n\n**2. Recent Tweet Activity (Last ~48 hours):**\n* **Frequency:** High,\
+        \ with 20 tweets in the last 2 days (all retweets)\n* **Topics:**\n\t+ Dominant\
+        \ topic: AI and Machine Learning advancements (e.g., new models, datasets,\
+        \ and tools)\n\t+ Mentions of collaborations and integrations (e.g., with\
+        \ @cloudflare, @nvidia)\n\t+ Announcements of new datasets and model support\
+        \ on Hugging Face's platform\n\t+ Community engagement and event promotions\
+        \ (e.g., hackathons, competitions)\n\n**3. Notable Tweets with High Engagement:**\n\
+        1. **High Engagement Tweet:**\n\t* **Text:** RT @reach_vb: Fuck yeah! Multilingual\
+        \ Orpheus TTS 3B is here \U0001F525...\n\t* **Engagement:** 120 Retweets\n\
+        \t* **Created At:** Wed Apr 09 21:03:10 +0000 2025\n2. **High Engagement Tweet:**\n\
+        \t* **Text:** RT @lmstudio: Llama 4 is now supported in LM Studio!...\n\t\
+        * **Engagement:** 67 Retweets\n\t* **Created At:** Tue Apr 08 18:46:02 +0000\
+        \ 2025\n3. **High Engagement Tweet:**\n\t* **Text:** RT @rohanpaul_ai: The\
+        \ absolute largest reasoning coding dataset just dropped in @huggingface ...\n\
+        \t* **Engagement:** 47 Retweets\n\t* **Created At:** Tue Apr 08 18:45:19 +0000\
+        \ 2025"
       data:
         profile:
           id_str: '778764142412984320'
           name: Hugging Face
           screen_name: huggingface
           description: The AI community building the future. https://t.co/VkRPD0Vclr
-          followers_count: 492196
+          followers_count: 492273
           friends_count: 201
           statuses_count: 10581
           profile_image_url: https://pbs.twimg.com/profile_images/1348748676282388482/nr8ZuLBE_normal.jpg
@@ -898,7 +861,7 @@ api_call_tests:
         - text: 'RT @dylan_ebert_: why MCPs will change everything (in 1 minute) https://t.co/DenPOxAvTq'
           created_at: Thu Apr 10 21:24:19 +0000 2025
           engagement:
-            retweets: 26
+            retweets: 37
             likes: 0
             replies: 0
         - text: "RT @evijitghosh: \U0001F6A8 New Article: Empowering Public Organizations:\
@@ -935,7 +898,7 @@ api_call_tests:
             Xet clients chunk files and…'
           created_at: Thu Apr 10 07:11:27 +0000 2025
           engagement:
-            retweets: 11
+            retweets: 12
             likes: 0
             replies: 0
         - text: 'RT @reach_vb: Fuck yeah! Multilingual Orpheus TTS 3B is here 🔥
@@ -950,7 +913,7 @@ api_call_tests:
             &gt;…'
           created_at: Wed Apr 09 21:03:10 +0000 2025
           engagement:
-            retweets: 116
+            retweets: 120
             likes: 0
             replies: 0
         - text: 'RT @bespokelabsai: Announcing Reasoning Datasets Competition📢in collaboration
@@ -959,7 +922,7 @@ api_call_tests:
             Since the launch of D…'
           created_at: Wed Apr 09 20:57:02 +0000 2025
           engagement:
-            retweets: 40
+            retweets: 41
             likes: 0
             replies: 0
         - text: 'RT @freddy_alfonso_: 🔥 Big news! @huggingface + @cloudflare are teaming
