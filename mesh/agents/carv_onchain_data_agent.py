@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 import aiohttp
 from dotenv import load_dotenv
 
-from core.llm import call_llm_async, call_llm_with_tools_async
+from core.llm import call_llm_async
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -250,76 +250,3 @@ class CarvOnchainDataAgent(MeshAgent):
         }
 
         return formatted_data
-
-    # ------------------------------------------------------------------------
-    #                      MAIN HANDLER
-    # ------------------------------------------------------------------------
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Handle incoming messages, supporting both direct tool calls and natural language queries.
-
-        Either 'query' or 'tool' is required in params.
-        - If 'query' is present, it means "agent mode", we use LLM to interpret the query and call tools
-          - if 'raw_data_only' is present, we return tool results without another LLM call
-        - If 'tool' is present, it means "direct tool call mode", we bypass LLM and directly call the API
-          - never run another LLM call, this minimizes latency and reduces error
-        """
-        query = params.get("query")
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
-
-        # ---------------------
-        # 1) DIRECT TOOL CALL
-        # ---------------------
-        if tool_name:
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-            return {"response": "", "data": data}
-
-        # ---------------------
-        # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
-        # ---------------------
-        if query:
-            response = await call_llm_with_tools_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                user_prompt=query,
-                temperature=0.1,
-                tools=self.get_tool_schemas(),
-            )
-
-            if not response:
-                return {"error": "Failed to process query"}
-
-            if not response.get("tool_calls"):
-                return {"response": response["content"], "data": {}}
-
-            tool_call = response["tool_calls"]
-            tool_call_name = tool_call.function.name
-            tool_call_args = json.loads(tool_call.function.arguments)
-
-            data = await self._handle_tool_logic(tool_name=tool_call_name, function_args=tool_call_args)
-
-            if raw_data_only:
-                return {"response": "", "data": data}
-
-            # Second API call to generate the final response
-            explanation = await self._respond_with_llm(
-                query=query,
-                tool_call_id=tool_call.id,
-                data=data,
-                temperature=0.3,
-                tool_name=tool_call_name,
-                tool_args=tool_call_args,
-            )
-
-            return {"response": explanation, "data": data}
-
-        # ---------------------
-        # 3) NEITHER query NOR tool
-        # ---------------------
-        return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
