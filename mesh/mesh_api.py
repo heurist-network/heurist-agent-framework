@@ -1,6 +1,5 @@
 import logging
 import os
-import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -37,17 +36,8 @@ app.add_middleware(
 
 config = Config()
 agents_dict = AgentLoader(config).load_agents()
-
-try:
-    result = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    current_commit = result.stdout.strip() if result.returncode == 0 else "unknown"
-except Exception:
-    current_commit = "unknown"
+# passed in at build time, by github actions
+current_commit = os.getenv("GITHUB_SHA", "unknown")
 
 
 class MeshRequest(BaseModel):

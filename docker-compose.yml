@@ -1,0 +1,18 @@
+services:
+  mesh:
+    container_name: mesh-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mesh-backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/mesh_health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

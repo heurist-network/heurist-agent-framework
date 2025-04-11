@@ -1,0 +1,31 @@
+[project]
+name = "mesh"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp==3.11.15",
+    "apify-client==1.9.2", # truth social agent
+    "duckduckgo-search==7.4.3", # ddg agent
+    "fastapi==0.115.12", # for mesh api server
+    "firecrawl-py==1.12.0", # firecrawl agent
+    "loguru==0.7.3",
+    "mcp==1.6.0",
+    "openai==1.71.0",
+    "psycopg2==2.9.10", # core embeddings
+    "pydash==8.0.5", # sol wallet agent
+    "pyethash", # to build web3-ethereum-defi
+    "python-dotenv==1.1.0",
+    "requests==2.32.3",
+    "safe-eth-py==6.0.0b42", # to build web3-ethereum-defi
+    "scikit-learn==1.6.1", # for core embeddings
+    "smolagents==1.9.2", # for coingecko, zkignite
+    "spaceandtime==1.1.17", # for spaceandtime agent
+    "tenacity==8.5.0", # sol wallet agent
+    "tiktoken==0.9.0", # core embeddings
+    "uvicorn==0.34.0", # for mesh api server
+    "web3-ethereum-defi==0.28.1", # aave agent
+]
+
+[tool.uv.sources]
+pyethash = { git = "https://github.com/rexdotsh/ethash.git", rev = "master" }
