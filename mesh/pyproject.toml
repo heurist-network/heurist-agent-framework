@@ -28,4 +28,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-pyethash = { git = "https://github.com/rexdotsh/ethash.git", rev = "master" }
+pyethash = { git = "https://github.com/rexdotsh/ethash.git", rev = "master" } # forked version of ethash with windows support
