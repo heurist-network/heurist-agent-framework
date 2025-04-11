@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 
 import requests
 
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -118,6 +118,7 @@ class MasaTwitterSearchAgent(MeshAgent):
     #                      MASA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=3600)
+    @with_retry(max_retries=3)
     async def search_twitter(self, search_term: str, max_results: int = 25) -> dict:
         try:
             # Note: The API still expects 'query' as the parameter name
@@ -213,55 +214,3 @@ class MasaTwitterSearchAgent(MeshAgent):
             return result
         else:
             return {"error": f"Unsupported tool '{tool_name}'"}
-
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Either 'query' or 'tool' is required in params.
-        - If 'query' is present, it means "agent mode", we use LLM to interpret the query and call tools
-          - if 'raw_data_only' is present, we return tool results without another LLM call
-        - If 'tool' is present, it means "direct tool call mode", we bypass LLM and directly call the API
-          - never run another LLM call, this minimizes latency and reduces error
-        """
-        query = params.get("query")
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
-        if "max_results" in params and (tool_name == "search_twitter" or query):
-            tool_args["max_results"] = params.get("max_results")
-
-        # ---------------------
-        # 1) DIRECT TOOL CALL
-        # ---------------------
-        if tool_name:
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-            return {"response": "", "data": data}
-
-        # ---------------------
-        # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
-        # ---------------------
-        if query:
-            # For Twitter search, we'll directly map the query to the search_twitter tool
-            # without requiring LLM to decide, since this is a specialized agent
-            search_args = {"search_term": query, "max_results": params.get("max_results", 25)}
-
-            data = await self._handle_tool_logic(tool_name="search_twitter", function_args=search_args)
-
-            if raw_data_only:
-                return {"response": "", "data": data}
-
-            explanation = await self._respond_with_llm(
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                query=query,
-                tool_call_id="natural_language_query",
-                data=data,
-                temperature=0.7,
-            )
-            return {"response": explanation, "data": data}
-
-        # ---------------------
-        # 3) NEITHER query NOR tool
-        # ---------------------
-        return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
