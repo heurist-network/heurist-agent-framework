@@ -17,9 +17,10 @@ ENV GITHUB_SHA=${GITHUB_SHA}
 COPY mesh/pyproject.toml mesh/uv.lock ./mesh/
 
 # Install supervisor for process management, curl for healthchecks, git for dependency installation, libpq-dev and gcc for psycopg2
-# ref: https://vsupalov.com/buildkit-cache-mount-dockerfile/
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
     rm -f /etc/apt/apt.conf.d/docker-clean && \
+    echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' >/etc/apt/apt.conf.d/keep-cache && \
     apt-get update && \
     apt-get install -yqq --no-install-recommends \
     supervisor \
