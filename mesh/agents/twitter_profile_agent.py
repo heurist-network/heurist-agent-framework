@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 import requests
 from dotenv import load_dotenv
 
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -462,63 +462,31 @@ class TwitterProfileAgent(MeshAgent):
             return {"error": f"Unsupported tool: {tool_name}"}
 
     # ------------------------------------------------------------------------
-    #                      MAIN MESSAGE HANDLER
+    #                       MAIN MESSAGE HANDLER
     # ------------------------------------------------------------------------
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
+    async def _before_handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Main entry point for handling messages.
-        Either 'query' or 'tool' is required in params.
+        Hook called before message handling to preprocess parameters.
+        Extracts username from query and modifies params if needed.
         """
         query = params.get("query")
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
-        limit = params.get("limit", 10)
 
-        # ---------------------
-        # 1) DIRECT TOOL CALL
-        # ---------------------
-        if tool_name:
-            if "limit" in params and tool_name == "get_user_tweets":
-                tool_args["limit"] = limit
-
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-            return {"response": "", "data": data}
-
-        # ---------------------
-        # 2) NATURAL LANGUAGE QUERY
-        # ---------------------
-        if query:
+        if query and not params.get("tool"):
             identifier = self._extract_username_from_query(query)
 
-            if not identifier:
+            if identifier:
+                logger.info(f"Extracted identifier: '{identifier}' from query: '{query}'")
+
+                modified_params = params.copy()
+                modified_params["tool"] = "get_user_tweets"
+                modified_params["tool_arguments"] = {"username": identifier, "limit": params.get("limit", 10)}
+
+                # Add a thinking message
+                thinking_msg = f"Looking up Twitter user: @{self._clean_username(identifier)}..."
+                self.push_update(params, thinking_msg)
+
+                return modified_params
+            else:
                 return {"error": "Could not extract a valid username or user ID from the query"}
 
-            logger.info(f"Extracted identifier: '{identifier}' from query: '{query}'")
-
-            function_args = {"username": identifier, "limit": limit}
-            data = await self._handle_tool_logic(tool_name="get_user_tweets", function_args=function_args)
-
-            if "error" in data:
-                return {"response": f"Error: {data['error']}", "data": data}
-
-            if raw_data_only:
-                return {"response": "", "data": data}
-
-            explanation = await self._respond_with_llm(
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                query=query,
-                tool_call_id="twitter_profile_query",
-                data=data,
-                temperature=0.7,
-            )
-
-            return {"response": explanation, "data": data}
-
-        # ---------------------
-        # 3) NEITHER query NOR tool
-        # ---------------------
-        return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
+        return await super()._before_handle_message(params)

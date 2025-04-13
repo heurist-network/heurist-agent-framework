@@ -1,13 +1,11 @@
-import json
 import logging
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 from dotenv import load_dotenv
 
-from core.llm import call_llm_with_tools_async
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -66,6 +64,13 @@ class TokenMetricsAgent(MeshAgent):
                     "Show me resistance and support levels for BTC and ETH",
                     "Get the latest sentiment analysis for top cryptocurrencies",
                     "What are the key support and resistance levels for Bitcoin?",
+                    "What's the sentiment for Solana (SOL)?",
+                    "Show me resistance levels for HEU token",
+                    "What is the current market sentiment for top cryptocurrencies?",
+                    "Can you show me the top 5 cryptocurrencies by market feeling?",
+                    "What are the key resistance and support levels for Bitcoin and Ethereum?",
+                    "What are the resistance and support levels for Solana (SOL)?",
+                    "What's the current sentiment for Heurist token?",
                 ],
             }
         )
@@ -95,6 +100,10 @@ class TokenMetricsAgent(MeshAgent):
 
         IMPORTANT: When a user asks about sentiment, feeling, or mood of the market, always use the get_sentiments tool.
         The default number of results should be 10 unless explicitly specified by the user.
+
+        When a user asks about a specific token other than BTC or ETH:
+        1. First use get_token_info internally to find the token's ID (don't explain this step)
+        2. Then use that ID for any further analysis with other tools
         """
 
     def get_tool_schemas(self) -> List[Dict]:
@@ -157,8 +166,277 @@ class TokenMetricsAgent(MeshAgent):
         ]
 
     # ------------------------------------------------------------------------
-    #                       SHARED / UTILITY METHODS
+    #                      API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
+    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
+    @with_retry(max_retries=3)
+    async def get_token_info(
+        self, token_name: Optional[str] = None, token_symbol: Optional[str] = None, limit: int = 20
+    ) -> Dict:
+        """
+        Retrieves token information from TokenMetrics API using token name or symbol.
+        Returns the token ID for use in other API calls.
+        This is an internal method and should not be exposed as a tool.
+        """
+        try:
+            params = {"limit": limit}
+
+            if token_name:
+                params["token_name"] = token_name.lower()
+            if token_symbol:
+                params["token_symbol"] = token_symbol.upper()
+
+            url = f"{self.base_url}/tokens"
+
+            response = requests.get(url, headers=self.headers, params=params)
+            response.raise_for_status()
+            token_data = response.json()
+
+            return {"status": "success", "data": token_data}
+        except requests.RequestException as e:
+            logger.error(f"Error getting token information: {e}")
+            return {"error": f"Failed to get token information: {str(e)}"}
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
+            return {"error": f"Unexpected error: {str(e)}"}
+
+    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
+    @with_retry(max_retries=3)
+    async def get_sentiments(self, limit: int = 10, page: int = 0) -> Dict:
+        """
+        Retrieves market sentiment data from TokenMetrics API.
+        Filters results to only include Twitter-related fields.
+        """
+        try:
+            params = {"limit": limit, "page": page}
+            url = f"{self.base_url}/sentiments"
+
+            response = requests.get(url, headers=self.headers, params=params)
+            response.raise_for_status()
+            sentiments_data = response.json()
+
+            # Extract only Twitter-related fields from each record
+            if "data" in sentiments_data and isinstance(sentiments_data["data"], list):
+                twitter_sentiments = []
+                for record in sentiments_data["data"]:
+                    twitter_fields = {
+                        "DATETIME": record.get("DATETIME"),
+                        "TWITTER_SENTIMENT_GRADE": record.get("TWITTER_SENTIMENT_GRADE"),
+                        "TWITTER_SENTIMENT_LABEL": record.get("TWITTER_SENTIMENT_LABEL"),
+                        "TWITTER_SUMMARY": record.get("TWITTER_SUMMARY"),
+                    }
+                    # Only include records that have Twitter sentiment data
+                    if twitter_fields["TWITTER_SENTIMENT_GRADE"] is not None:
+                        twitter_sentiments.append(twitter_fields)
+
+                sentiments_data["data"] = twitter_sentiments
+
+                if "metadata" in sentiments_data and "record_count" in sentiments_data["metadata"]:
+                    sentiments_data["metadata"]["record_count"] = len(twitter_sentiments)
+
+            return {"status": "success", "data": sentiments_data}
+        except requests.RequestException as e:
+            logger.error(f"Error getting sentiments: {e}")
+            return {"error": f"Failed to get market sentiments: {str(e)}"}
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
+            return {"error": f"Unexpected error: {str(e)}"}
+
+    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
+    @with_retry(max_retries=3)
+    async def get_resistance_support_levels(
+        self, token_ids: str = "3375,3306", symbols: str = "BTC,ETH", limit: int = 10, page: int = 0
+    ) -> Dict:
+        """
+        Retrieves resistance and support level data for specified cryptocurrencies.
+        """
+        try:
+            params = {"token_id": token_ids, "symbol": symbols, "limit": limit, "page": page}
+            url = f"{self.base_url}/resistance-support"
+
+            response = requests.get(url, headers=self.headers, params=params)
+            response.raise_for_status()
+            res_sup_data = response.json()
+
+            return {"status": "success", "data": res_sup_data}
+        except requests.RequestException as e:
+            logger.error(f"Error getting resistance & support data: {e}")
+            return {"error": f"Failed to get resistance & support data: {str(e)}"}
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
+            return {"error": f"Unexpected error: {str(e)}"}
+
+    # ------------------------------------------------------------------------
+    #                      HELPER METHODS FOR TOKEN HANDLING
+    # ------------------------------------------------------------------------
+    async def extract_token_id_from_response(
+        self, response_data: Dict, search_name: Optional[str] = None, search_symbol: Optional[str] = None
+    ) -> Optional[int]:
+        """
+        Extracts token ID from response data.
+        If multiple tokens match, returns the first one that matches the search criteria.
+        """
+        if "status" not in response_data or response_data["status"] != "success":
+            logger.error(f"Invalid response data: {response_data}")
+            return None
+        if "data" not in response_data or "data" not in response_data["data"]:
+            logger.error(f"No data in response: {response_data}")
+            return None
+        tokens = response_data["data"]["data"]
+        if not tokens:
+            logger.warning("No tokens found in response")
+            return None
+        for token in tokens:
+            if search_name and token.get("TOKEN_NAME") == search_name:
+                return token.get("TOKEN_ID")
+            if search_symbol and token.get("TOKEN_SYMBOL") == search_symbol:
+                return token.get("TOKEN_ID")
+        if tokens:
+            return tokens[0].get("TOKEN_ID")
+
+        return None
+
+    async def extract_tokens_from_query(self, query: str) -> List[str]:
+        """
+        Extracts token names or symbols from a user query.
+        Returns a list of possible token identifiers.
+        """
+        import re
+
+        default_tokens = {"btc", "bitcoin", "eth", "ethereum"}
+        pattern1 = r"(\w+)\s*\((\w+)\)"
+        pattern2 = r"\b(solana|cardano|ripple|xrp|bnb|ada|dot|avax|sol|heu|doge|shib|link|matic)\b"
+
+        tokens = []
+
+        for match in re.finditer(pattern1, query.lower()):
+            name, symbol = match.groups()
+            if name not in default_tokens and symbol not in default_tokens:
+                tokens.append({"name": name, "symbol": symbol})
+        for match in re.finditer(pattern2, query.lower()):
+            token = match.group(1)
+            if token not in default_tokens and not any(
+                t.get("name") == token or t.get("symbol") == token for t in tokens
+            ):
+                tokens.append({"name": token})
+
+        return tokens
+
+    async def process_custom_tokens(self, query: str) -> Tuple[Optional[str], Optional[str]]:
+        """
+        Processes a query to identify custom tokens.
+        Returns token_ids and symbols for use in API calls.
+        """
+        tokens = await self.extract_tokens_from_query(query)
+
+        if not tokens:
+            return None, None
+
+        token_ids = []
+        symbols = []
+
+        for token_info in tokens:
+            if "symbol" in token_info:
+                token_resp = await self.get_token_info(token_symbol=token_info["symbol"])
+                token_id = await self.extract_token_id_from_response(token_resp, search_symbol=token_info["symbol"])
+
+                if token_id:
+                    token_ids.append(str(token_id))
+                    symbols.append(token_info["symbol"].upper())
+                    continue
+
+            if "name" in token_info:
+                token_resp = await self.get_token_info(token_name=token_info["name"])
+                token_id = await self.extract_token_id_from_response(token_resp, search_name=token_info["name"])
+
+                if token_id:
+                    token_ids.append(str(token_id))
+                    # Get the symbol from response
+                    if "data" in token_resp and "data" in token_resp["data"] and token_resp["data"]["data"]:
+                        for t in token_resp["data"]["data"]:
+                            if t.get("TOKEN_ID") == token_id:
+                                symbols.append(t.get("TOKEN_SYMBOL", "").upper())
+                                break
+
+        if not token_ids:
+            return "3375,3306", "BTC,ETH"
+
+        if len(token_ids) == 1:
+            token_ids.append("3375")
+            symbols.append("BTC")
+
+        token_ids = token_ids[:2]
+        symbols = symbols[:2]
+
+        return ",".join(token_ids), ",".join(symbols)
+
+    # ------------------------------------------------------------------------
+    #                      MESH AGENT REQUIRED METHOD
+    # ------------------------------------------------------------------------
+    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+        """
+        Handle execution of specific tools and return the raw data.
+        This method is required by the MeshAgent abstract base class.
+        """
+        if tool_name == "get_sentiments":
+            limit = function_args.get("limit", 10)
+            page = function_args.get("page", 0)
+
+            logger.info(f"Getting market sentiments with limit={limit}, page={page}")
+            result = await self.get_sentiments(limit=limit, page=page)
+
+            errors = self._handle_error(result)
+            if errors:
+                return errors
+
+            return result
+
+        elif tool_name == "get_resistance_support_levels":
+            token_ids = function_args.get("token_ids", "3375,3306")
+            symbols = function_args.get("symbols", "BTC,ETH")
+            limit = function_args.get("limit", 10)
+            page = function_args.get("page", 0)
+
+            logger.info(f"Getting resistance & support data for {symbols} with limit={limit}, page={page}")
+            result = await self.get_resistance_support_levels(
+                token_ids=token_ids, symbols=symbols, limit=limit, page=page
+            )
+
+            errors = self._handle_error(result)
+            if errors:
+                return errors
+
+            return result
+
+        else:
+            return {"error": f"Unsupported tool '{tool_name}'"}
+
+    async def _before_handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Hook called before message handling.
+        Allows for modification of parameters before they're processed.
+        Processes custom tokens in the query if present.
+        """
+        query = params.get("query")
+
+        if query:
+            if self._should_use_sentiment_tool(query):
+                limit = self._extract_limit_from_query(query)
+                logger.info(f"Auto-detected sentiment query, sentiment keywords found with limit={limit}")
+            custom_token_ids, custom_symbols = await self.process_custom_tokens(query)
+            if custom_token_ids and custom_symbols:
+                logger.info(f"Detected custom tokens: IDs={custom_token_ids}, Symbols={custom_symbols}")
+                params["custom_token_ids"] = custom_token_ids
+                params["custom_symbols"] = custom_symbols
+
+        return super()._before_handle_message(params)
+
+    async def _after_handle_message(self, response: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Hook called after message handling.
+        Allows for modification of the response before it's returned to the caller.
+        """
+        return super()._after_handle_message(response)
 
     def _should_use_sentiment_tool(self, query: str) -> bool:
         """
@@ -181,102 +459,6 @@ class TokenMetricsAgent(MeshAgent):
             "market sentiment",
         ]
         return any(keyword in query_lower for keyword in sentiment_keywords)
-
-    # ------------------------------------------------------------------------
-    #                      API-SPECIFIC METHODS
-    # ------------------------------------------------------------------------
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
-    async def get_sentiments(self, limit: int = 10, page: int = 0) -> Dict:
-        """
-        Retrieves market sentiment data from TokenMetrics API.
-        Filters results to only include records with the 'TWITTER' prefix.
-        """
-        try:
-            params = {"limit": limit, "page": page}
-            url = f"{self.base_url}/sentiments"
-
-            response = requests.get(url, headers=self.headers, params=params)
-            response.raise_for_status()
-            sentiments_data = response.json()
-
-            # filter the results to only include records with the 'TWITTER' prefix
-            if "data" in sentiments_data and isinstance(sentiments_data["data"], list):
-                twitter_sentiments = [record for record in sentiments_data["data"] if record.get("prefix") == "TWITTER"]
-                sentiments_data["data"] = twitter_sentiments
-
-                if "metadata" in sentiments_data and "record_count" in sentiments_data["metadata"]:
-                    sentiments_data["metadata"]["record_count"] = len(twitter_sentiments)
-
-            return {"status": "success", "data": sentiments_data}
-        except requests.RequestException as e:
-            logger.error(f"Error getting sentiments: {e}")
-            return {"status": "error", "error": f"Failed to get market sentiments: {str(e)}"}
-        except Exception as e:
-            logger.error(f"Unexpected error: {e}")
-            return {"status": "error", "error": f"Unexpected error: {str(e)}"}
-
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
-    async def get_resistance_support_levels(
-        self, token_ids: str = "3375,3306", symbols: str = "BTC,ETH", limit: int = 10, page: int = 0
-    ) -> Dict:
-        """
-        Retrieves resistance and support level data for specified cryptocurrencies.
-        """
-        try:
-            params = {"token_id": token_ids, "symbol": symbols, "limit": limit, "page": page}
-            url = f"{self.base_url}/resistance-support"
-
-            response = requests.get(url, headers=self.headers, params=params)
-            response.raise_for_status()
-            res_sup_data = response.json()
-
-            return {"status": "success", "data": res_sup_data}
-        except requests.RequestException as e:
-            logger.error(f"Error getting resistance & support data: {e}")
-            return {"status": "error", "error": f"Failed to get resistance & support data: {str(e)}"}
-        except Exception as e:
-            logger.error(f"Unexpected error: {e}")
-            return {"status": "error", "error": f"Unexpected error: {str(e)}"}
-
-    # ------------------------------------------------------------------------
-    #                      TOOL HANDLING LOGIC
-    # ------------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
-        """
-        Handle direct tool calls with proper error handling and response formatting
-        """
-        if tool_name == "get_sentiments":
-            limit = function_args.get("limit", 10)
-            page = function_args.get("page", 0)
-
-            logger.info(f"Getting market sentiments with limit={limit}, page={page}")
-            result = await self.get_sentiments(limit=limit, page=page)
-
-            errors = self._handle_error(result)
-            if errors:
-                return errors
-            return result
-
-        elif tool_name == "get_resistance_support_levels":
-            token_ids = function_args.get("token_ids", "3375,3306")
-            symbols = function_args.get("symbols", "BTC,ETH")
-            limit = function_args.get("limit", 10)
-            page = function_args.get("page", 0)
-
-            logger.info(f"Getting resistance & support data for {symbols} with limit={limit}, page={page}")
-            result = await self.get_resistance_support_levels(
-                token_ids=token_ids, symbols=symbols, limit=limit, page=page
-            )
-
-            errors = self._handle_error(result)
-            if errors:
-                return errors
-            return result
-
-        else:
-            return {"status": "error", "error": f"Unsupported tool '{tool_name}'"}
 
     def _extract_limit_from_query(self, query: str) -> int:
         """
@@ -307,91 +489,3 @@ class TokenMetricsAgent(MeshAgent):
 
         # Return default if no pattern matched
         return 10
-
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Handle both direct tool calls and natural language queries.
-        Either 'query' or 'tool' must be provided in params.
-        """
-        query = params.get("query")
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
-
-        # ---------------------
-        # 1) DIRECT TOOL CALL
-        # ---------------------
-        if tool_name:
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-            return {"response": "", "data": data}
-
-        # ---------------------
-        # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
-        # ---------------------
-        if query:
-            if self._should_use_sentiment_tool(query):
-                limit = self._extract_limit_from_query(query)
-
-                logger.info(f"Auto-detected sentiment query, using get_sentiments with limit={limit}")
-                data = await self._handle_tool_logic(
-                    tool_name="get_sentiments", function_args={"limit": limit, "page": 0}
-                )
-
-                if raw_data_only:
-                    return {"response": "", "data": data}
-
-                tool_call_id = "auto_detected_sentiment_tool_call"
-                explanation = await self._respond_with_llm(
-                    query=query, tool_call_id=tool_call_id, data=data, temperature=0.3
-                )
-                return {"response": explanation, "data": data}
-
-            response = await call_llm_with_tools_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                user_prompt=query,
-                temperature=0.1,
-                tools=self.get_tool_schemas(),
-            )
-
-            if not response:
-                return {"status": "error", "error": "Failed to process query"}
-            tool_calls = response.get("tool_calls")
-            if not tool_calls:
-                return {"response": response.get("content", "No response content"), "data": {}}
-
-            if isinstance(tool_calls, list) and len(tool_calls) > 0:
-                tool_call = tool_calls[0]
-            else:
-                tool_call = tool_calls
-
-            tool_call_name = tool_call.function.name
-            tool_call_args = json.loads(tool_call.function.arguments)
-
-            if "limit" not in tool_call_args:
-                limit = self._extract_limit_from_query(query)
-                tool_call_args["limit"] = limit
-
-            data = await self._handle_tool_logic(tool_name=tool_call_name, function_args=tool_call_args)
-
-            if raw_data_only:
-                return {"response": "", "data": data}
-
-            explanation = await self._respond_with_llm(
-                model_id=self.metadata["large_model_id"],
-                system_prompt=self.get_system_prompt(),
-                query=query,
-                tool_call_id=tool_call.id,
-                data=data,
-                temperature=0.3,
-            )
-            return {"response": explanation, "data": data}
-
-        # ---------------------
-        # 3) NEITHER query NOR tool
-        # ---------------------
-        return {"status": "error", "error": "Either 'query' or 'tool' must be provided in the parameters."}

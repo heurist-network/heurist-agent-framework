@@ -29,7 +29,7 @@ async def run_agent():
 
             # Test via natural language query
             metrics_input = {
-                "query": f"Get market cap, liquidity and trade volume for {test_token} using {quote_token} pair"
+                "query": f"Get market cap and trade volume for {test_token} using {quote_token} pair"
             }
             metrics_output = await agent.handle_message(metrics_input)
             print(f"Natural language query result for {quote_token}:")

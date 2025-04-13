@@ -21,6 +21,9 @@ async def run_agent():
         raw_input = {"query": "Show me all Aave assets on Polygon with their liquidity rates", "raw_data_only": True}
         raw_output = await agent.handle_message(raw_input)
 
+        raw_input_2 = {"query": "Show me all Aave assets on Polygon with their liquidity rates", "raw_data_only": False}
+        raw_output_2 = await agent.handle_message(raw_input_2)
+
         script_dir = Path(__file__).parent
         current_file = Path(__file__).stem
         base_filename = f"{current_file}_example"
@@ -30,6 +33,7 @@ async def run_agent():
             "example1": {"input": agent_input, "output": agent_output},
             "example2": {"input": direct_input, "output": direct_output},
             "example3": {"input": raw_input, "output": raw_output},
+            "example4": {"input": raw_input_2, "output": raw_output_2},
         }
 
         with open(output_file, "w", encoding="utf-8") as f:

@@ -3,51 +3,53 @@ natural_language_query:
     query: What are the latest developments in quantum computing?
     raw_data_only: false
   output:
-    response: 'Here is the final answer to the user''s question:
-
-
-      **Latest Developments in Quantum Computing:**
+    response: '**Latest Developments in Quantum Computing:**
 
 
       1. **Secure Quantum Computing at Home**: Researchers at Oxford University Physics
-      have developed a breakthrough method for secure quantum computing, enabling
-      individuals and companies to harness the power of next-generation quantum computing
-      with complete security and privacy.
+      have made a breakthrough in guaranteeing security and privacy for cloud-based
+      quantum computing, enabling millions of individuals and companies to harness
+      its power. (Source: ScienceDaily)
 
-      2. **Quantum Teleportation**: Scientists have achieved quantum teleportation
-      between two quantum computers, a significant step towards building modular,
-      distributed quantum computing networks.
+      2. **Quantum Teleportation Between Computers**: In a world first, critical units
+      of a quantum processor have been successfully teleported between two computers,
+      paving the way for scalable and networked quantum systems. (Source: ScienceAlert)
 
-      3. **Fiber-Optic Power for Quantum Computers**: Physicists have developed a
-      fully optical readout for superconducting qubits, overcoming a key technological
-      hurdle and paving the way for more scalable and efficient quantum computing
-      systems.
+      3. **Fiber-Optic Power for Quantum Computers**: Physicists at the Institute
+      of Science and Technology Austria have developed a fully optical readout for
+      superconducting qubits, overcoming a key technological hurdle and enabling more
+      scalable and efficient quantum computing systems. (Source: SciTechDaily)
 
-      4. **Fluxonium Processors for Quantum Computing**: Researchers have developed
-      a blueprint for a novel quantum processor based on fluxonium qubits, offering
-      a promising path towards fault-tolerant universal quantum computing.
+      4. **Harvard''s Light-Powered Chip Connects Quantum Computers**: Researchers
+      at Harvard have developed a photon router that connects optical signals to superconducting
+      microwave qubits, enabling faster, more scalable, and more robust quantum networks.
+      (Source: SciTechDaily)
 
-      5. **Error-Correction Breakthrough**: A team of engineers has developed a method
-      to reduce errors in quantum computing, achieving a 100% success rate in 14,000
-      experiments with no detectable errors.
+      5. **Quantinuum Quantum Computer with Microsoft''s Logical Quantum Bits**: A
+      team from Quantinuum and Microsoft has demonstrated a quantum computer that
+      can run 14,000 experiments with no errors, achieving a significantly lower error
+      rate than previous systems. (Source: Phys.org)
+
+      6. **Fluxonium Processors for Quantum Computing**: Researchers at the Advanced
+      Quantum Testbed (AQT) have developed a blueprint for a novel quantum processor
+      based on fluxonium qubits, offering a promising path toward fault-tolerant universal
+      quantum computing. (Source: Phys.org)
 
 
-      **Sources:**
+      **Key Takeaways:**
 
 
-      * University of Oxford
+      * Quantum computing is advancing rapidly, with breakthroughs in security, scalability,
+      and efficiency.
 
-      * ScienceAlert
+      * Researchers are exploring new approaches, such as fiber-optic power and fluxonium
+      processors, to overcome technological hurdles.
 
-      * Phys.org
+      * Collaboration between industry leaders, like Microsoft and Quantinuum, is
+      driving innovation in the field.
 
-      * SciTechDaily
-
-      * Harvard John A. Paulson School of Engineering and Applied Sciences
-
-      * Institute of Science and Technology Austria
-
-      * Lawrence Berkeley National Laboratory'
+      * Quantum teleportation and secure quantum computing at home are becoming increasingly
+      feasible.'
     data:
       search_results:
       - title: Microsoft says it’s cracked the code on an important quantum computing
@@ -214,115 +216,6 @@ natural_language_query:
       - title: Quantinuum quantum computer using Microsoft's 'logical quantum bits'
           runs 14,000 experiments with no errors
         url: https://phys.org/news/2024-04-quantinuum-quantum-microsoft-logical-bits.html
-        published_date: N/A
-        text: '# Teleportation Achieved Between Quantum Computers in a World First
-
-
-          [Physics](https://www.sciencealert.com/physics) 12 February 2025
-
-
-          By [Mike McRae](https://www.sciencealert.com/mike-mcrae)
-
-
-          ![abstract light connected in a network](https://www.sciencealert.com/images/2025/02/TeleportationConceptCover.jpg)(Yuichiro
-          Chino/Getty Images)
-
-
-          In a groundbreaking use of teleportation, critical units of a quantum processor
-          have been successfully spread across multiple computers, proving the potential
-          of distributing quantum modules without compromising on their performance.
-
-
-          While the transfer only took place over a space of two meters (about six
-          feet) in an Oxford University laboratory, the leap was more than enough
-          to emphasize the feasibility of scaling quantum technology by teleporting
-          quantum states [across an ''internet'' of connected systems](https://www.sciencealert.com/quantum-teleportation-achieved-over-internet-for-first-time).
-
-
-          [Teleportation is a quirk of physics](https://www.sciencealert.com/physicists-have-teleported-information-between-particles-of-matter-for-the-first-time)
-          that only makes sense through a quantum lens, where objects exist in a blur
-          of possible characteristics until processes of measurement force them to
-          adopt each state.
-
-
-          By mingling the undecided states of different objects in [an act known as
-          entanglement](https://www.sciencealert.com/physicists-just-entangled-a-pair-of-atomic-clocks-six-feet-apart),
-          and then carefully choosing the right kinds of measurements to make on one,
-          it''s possible to use the answers to force an entangled object some distance
-          away to adopt (and destroy) the original object''s quantum identity.
-
-
-          It might not be the kind of teleportation that would beam passengers through
-          the vacuum of space in a blink, but it''s perfect for sharing the blur of
-          information necessary for logical operations in a quantum processor.
-
-
-          " [Previous demonstrations](https://www.sciencealert.com/quantum-gate-operations-teleported-reliably-first-time)
-          of quantum teleportation have focused on transferring quantum states between
-          physically separated systems," [says](https://www.ox.ac.uk/news/2025-02-06-first-distributed-quantum-algorithm-brings-quantum-supercomputers-closer)
-          lead author Dougal Main, a physicist at Oxford University.
-
-
-          "In our study, we use quantum teleportation to create interactions between
-          these distant systems."
-
-
-          ![Dougal Main working on a quantum computer](https://www.sciencealert.com/images/2025/02/teleport_quantum_comps_642.jpg)Dougal
-          Main and team member Beth Nichol working on the distributed [quantum computer](https://www.sciencealert.com/quantum-computers).
-          ( [John Cairns](https://www.ox.ac.uk/news/2025-02-06-first-distributed-quantum-algorithm-brings-quantum-supercomputers-closer))
-
-
-          Where classical computers use binary ''on or off'' switches to perform strings
-          of computations on bits of information, [quantum computers](https://www.sciencealert.com/quantum-computers)
-          use mathematically complex distributions of possibilities known as qubits,
-          typically represented in a simple feature of an uncharged particle such
-          as a charged atom.
-
-
-          [To make this process practical](https://www.sciencealert.com/it-s-official-google-and-nasa-claim-quantum-supremacy-in-controversial-world-first),
-          hundreds or even thousands of such particles need to have their yet-to-be-decided
-          states entangled with one another in a restricted fashion, without intrusive
-          objects weaving their own possibilities in and messing up the calculations.
-
-
-          Scaling current technology to this level is complicated by obstacles that
-          require [error-correcting processes](https://www.sciencealert.com/a-new-quantum-technique-could-change-how-we-study-the-universe)
-          or [shielding](https://www.sciencealert.com/natural-radiation-could-be-a-problem-for-our-quantum-computing-future)
-          to preserve the delicate quantum states long enough for them to be measured.
-
-
-          Linking a number of smaller processors across a network to create a kind
-          of quantum supercomputer is another solution. While quantum information
-          can be transmitted in the form of a light wave, the potential for its state
-          to be irreversibly corrupted along the way makes it an impractical option.
-
-
-          Teleportation requires the receipt of measurements the old-fashioned way
-          – through reliable binary data. Once sent, operations at the receiving end
-          can tweak their own entangled particle until it effectively looks like the
-          original.
-
-
-          The all-important quantum blur of the teleported spin state in the Oxford
-          University experiment was an 86 percent match with the original, more than
-          good enough for it to serve as a logic gate for a simple operation known
-          as a [Grover''s algorithm](https://en.wikipedia.org/wiki/Grover%27s_algorithm),
-          which succeeded with 71 percent efficiency across the two quantum processors.
-
-
-          "By interconnecting the modules using photonic links, our system gains valuable
-          flexibility, allowing modules to be upgraded or swapped out without disrupting
-          the entire architecture," says [Main](https://www.ox.ac.uk/news/2025-02-06-first-distributed-quantum-algorithm-brings-quantum-supercomputers-closer).
-
-
-          Having options for restructuring a quantum network could diversify the applications
-          for such technology, repurposing networks of computers into tools that can
-          measure and test physics at its most fundamental level.
-
-
-          This research was published in _[Nature](https://www.nature.com/articles/s41586-024-08404-x)_.'
-      - title: Physicists take step toward fault-tolerant quantum computing
-        url: https://phys.org/news/2023-04-physicists-fault-tolerant-quantum.html
         published_date: N/A
         text: '- share this!
 
@@ -791,8 +684,117 @@ natural_language_query:
 
           [It appears that you are currently using **Ad Blocking software**. What
           are the consequences?](https://sciencex.com/help/adblock/)×'
-      - title: Teleportation Achieved Between Quantum Computers in a World First
-        url: https://www.sciencealert.com/teleportation-achieved-between-quantum-computers-in-a-world-first
+      - title: Physicists take step toward fault-tolerant quantum computing
+        url: https://phys.org/news/2023-04-physicists-fault-tolerant-quantum.html
+        published_date: N/A
+        text: '# Teleportation Achieved Between Quantum Computers in a World First
+
+
+          [Physics](https://www.sciencealert.com/physics) 12 February 2025
+
+
+          By [Mike McRae](https://www.sciencealert.com/mike-mcrae)
+
+
+          ![abstract light connected in a network](https://www.sciencealert.com/images/2025/02/TeleportationConceptCover.jpg)(Yuichiro
+          Chino/Getty Images)
+
+
+          In a groundbreaking use of teleportation, critical units of a quantum processor
+          have been successfully spread across multiple computers, proving the potential
+          of distributing quantum modules without compromising on their performance.
+
+
+          While the transfer only took place over a space of two meters (about six
+          feet) in an Oxford University laboratory, the leap was more than enough
+          to emphasize the feasibility of scaling quantum technology by teleporting
+          quantum states [across an ''internet'' of connected systems](https://www.sciencealert.com/quantum-teleportation-achieved-over-internet-for-first-time).
+
+
+          [Teleportation is a quirk of physics](https://www.sciencealert.com/physicists-have-teleported-information-between-particles-of-matter-for-the-first-time)
+          that only makes sense through a quantum lens, where objects exist in a blur
+          of possible characteristics until processes of measurement force them to
+          adopt each state.
+
+
+          By mingling the undecided states of different objects in [an act known as
+          entanglement](https://www.sciencealert.com/physicists-just-entangled-a-pair-of-atomic-clocks-six-feet-apart),
+          and then carefully choosing the right kinds of measurements to make on one,
+          it''s possible to use the answers to force an entangled object some distance
+          away to adopt (and destroy) the original object''s quantum identity.
+
+
+          It might not be the kind of teleportation that would beam passengers through
+          the vacuum of space in a blink, but it''s perfect for sharing the blur of
+          information necessary for logical operations in a quantum processor.
+
+
+          " [Previous demonstrations](https://www.sciencealert.com/quantum-gate-operations-teleported-reliably-first-time)
+          of quantum teleportation have focused on transferring quantum states between
+          physically separated systems," [says](https://www.ox.ac.uk/news/2025-02-06-first-distributed-quantum-algorithm-brings-quantum-supercomputers-closer)
+          lead author Dougal Main, a physicist at Oxford University.
+
+
+          "In our study, we use quantum teleportation to create interactions between
+          these distant systems."
+
+
+          ![Dougal Main working on a quantum computer](https://www.sciencealert.com/images/2025/02/teleport_quantum_comps_642.jpg)Dougal
+          Main and team member Beth Nichol working on the distributed [quantum computer](https://www.sciencealert.com/quantum-computers).
+          ( [John Cairns](https://www.ox.ac.uk/news/2025-02-06-first-distributed-quantum-algorithm-brings-quantum-supercomputers-closer))
+
+
+          Where classical computers use binary ''on or off'' switches to perform strings
+          of computations on bits of information, [quantum computers](https://www.sciencealert.com/quantum-computers)
+          use mathematically complex distributions of possibilities known as qubits,
+          typically represented in a simple feature of an uncharged particle such
+          as a charged atom.
+
+
+          [To make this process practical](https://www.sciencealert.com/it-s-official-google-and-nasa-claim-quantum-supremacy-in-controversial-world-first),
+          hundreds or even thousands of such particles need to have their yet-to-be-decided
+          states entangled with one another in a restricted fashion, without intrusive
+          objects weaving their own possibilities in and messing up the calculations.
+
+
+          Scaling current technology to this level is complicated by obstacles that
+          require [error-correcting processes](https://www.sciencealert.com/a-new-quantum-technique-could-change-how-we-study-the-universe)
+          or [shielding](https://www.sciencealert.com/natural-radiation-could-be-a-problem-for-our-quantum-computing-future)
+          to preserve the delicate quantum states long enough for them to be measured.
+
+
+          Linking a number of smaller processors across a network to create a kind
+          of quantum supercomputer is another solution. While quantum information
+          can be transmitted in the form of a light wave, the potential for its state
+          to be irreversibly corrupted along the way makes it an impractical option.
+
+
+          Teleportation requires the receipt of measurements the old-fashioned way
+          – through reliable binary data. Once sent, operations at the receiving end
+          can tweak their own entangled particle until it effectively looks like the
+          original.
+
+
+          The all-important quantum blur of the teleported spin state in the Oxford
+          University experiment was an 86 percent match with the original, more than
+          good enough for it to serve as a logic gate for a simple operation known
+          as a [Grover''s algorithm](https://en.wikipedia.org/wiki/Grover%27s_algorithm),
+          which succeeded with 71 percent efficiency across the two quantum processors.
+
+
+          "By interconnecting the modules using photonic links, our system gains valuable
+          flexibility, allowing modules to be upgraded or swapped out without disrupting
+          the entire architecture," says [Main](https://www.ox.ac.uk/news/2025-02-06-first-distributed-quantum-algorithm-brings-quantum-supercomputers-closer).
+
+
+          Having options for restructuring a quantum network could diversify the applications
+          for such technology, repurposing networks of computers into tools that can
+          measure and test physics at its most fundamental level.
+
+
+          This research was published in _[Nature](https://www.nature.com/articles/s41586-024-08404-x)_.'
+      - title: 'Quantum Leap: Harvard’s Tiny Light-Powered Chip Connects Quantum Computers'
+        url: https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/
         published_date: N/A
         text: '- share this!
 
@@ -1241,273 +1243,6 @@ natural_language_query:
 
           [It appears that you are currently using **Ad Blocking software**. What
           are the consequences?](https://sciencex.com/help/adblock/)×'
-      - title: 'Quantum Leap: Harvard’s Tiny Light-Powered Chip Connects Quantum Computers'
-        url: https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/
-        published_date: N/A
-        text: '[Close Menu](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/)
-
-
-          [Facebook](https://www.facebook.com/scitechdaily) [X (Twitter)](https://twitter.com/SciTechDaily1)
-          [Instagram](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/)
-
-
-          [![SciTechDaily](https://scitechdaily.com/images/scitechdaily-logo-flat-80.png)](https://scitechdaily.com/)
-
-
-          [Facebook](https://www.facebook.com/scitechdaily) [X (Twitter)](https://twitter.com/SciTechDaily1)
-          [Pinterest](https://www.pinterest.com/scitechdaily/) [YouTube](https://www.youtube.com/@SciTechDaily)
-          [RSS](https://scitechdaily.com/feed/)
-
-
-          [![SciTechDaily](https://scitechdaily.com/images/scitechdaily-logo-flat-80.png)](https://scitechdaily.com/)
-
-
-          [Physics](https://scitechdaily.com/news/physics/)
-
-
-          # Quantum Leap: Harvard’s Tiny Light-Powered Chip Connects Quantum Computers
-
-
-          By Harvard John A. Paulson School of Engineering and Applied SciencesApril
-          2, 2025[No Comments](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/#respond)5
-          Mins Read
-
-
-          [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&media=https%3A%2F%2Fscitechdaily.com%2Fimages%2FNetworked-Quantum-Processors-Art-Illustration-Concept.jpg&description=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [Telegram](https://t.me/share/url?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [WhatsApp](https://wa.me/?text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers%20https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Email](mailto://https:%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F?subject=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers&body=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-
-
-          Share
-
-
-          [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&media=https%3A%2F%2Fscitechdaily.com%2Fimages%2FNetworked-Quantum-Processors-Art-Illustration-Concept.jpg&description=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [Telegram](https://t.me/share/url?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [Email](mailto://https:%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F?subject=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers&body=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-
-
-          [![Networked Quantum Processors Art Illustration Concept](https://scitechdaily.com/images/Networked-Quantum-Processors-Art-Illustration-Concept.jpg)](https://scitechdaily.com/images/Networked-Quantum-Processors-Art-Illustration-Concept.jpg)
-          Harvard researchers have built the first device to control superconducting
-          qubits using only light, paving the way for large-scale quantum networks.
-          (Artist’s concept.) Credit: SciTechDaily.com
-
-
-          **Harvard scientists have developed a groundbreaking photon router that
-          connects optical signals to superconducting microwave qubits, the building
-          blocks of many quantum computers.**
-
-
-          _This innovation could overcome one of quantum computing’s biggest hurdles:
-          getting different quantum systems to “talk” to each other efficiently. The
-          key lies in using light, not bulky wires, to control and connect qubits,
-          enabling faster, more scalable, and more robust quantum networks. The tiny
-          chip-sized device could help bring distributed, fiber-optic-based quantum
-          computers closer to reality._
-
-
-          #### Toward Modular Quantum Networks
-
-
-          Applied physicists at the Harvard John A. Paulson School of Engineering
-          and Applied Sciences (SEAS) have developed a photon router that could one
-          day link quantum computers through existing fiber-optic networks. The device
-          creates a robust optical interface for quantum systems that rely on microwave
-          signals, especially those sensitive to electrical noise.
-
-
-          This advance brings researchers closer to building modular, distributed
-          quantum computing networks. These networks would send quantum information
-          over today’s global telecommunications infrastructure, which already moves
-          data as pulses of light, called photons, through millions of miles of optical
-          fiber.
-
-
-          [![Microwave Optical Quantum Transducer Optical Micrograph](https://scitechdaily.com/images/Microwave-Optical-Quantum-Transducer-Optical-Micrograph-2048x767.jpg)](https://scitechdaily.com/images/Microwave-Optical-Quantum-Transducer-Optical-Micrograph-scaled.jpg)
-          Optical micrograph of the microwave-optical quantum transducer. Credit:
-          Lončar group / Harvard SEAS
-
-
-          #### Bridging the Quantum Gap
-
-
-          The research team, led by Marko Lončar, the Tiantsai Lin Professor of Electrical
-          Engineering and Applied Physics at SEAS, designed a new type of microwave-optical
-          quantum transducer. The device enables communication between microwave-based
-          superconducting qubits, the quantum equivalent of classical bits, and optical
-          signals. Their findings were published today (April 2) in _Nature Physics_.
-
-
-          Effectively a router for photons, the transducer bridges the large energy
-          gap between microwave and optical photons, thus enabling control of microwave
-          qubits with optical signals generated many miles away. The device is the
-          first of its kind to demonstrate control of a superconducting qubit using
-          only light.
-
-
-          #### Optical Power for Scalable Quantum Systems
-
-
-          Paper first author and graduate student Hana Warner said the transducer
-          offers a way to tap the power of optics when dreaming up quantum networks.
-          “The realization of these systems is still a ways out, but in order to get
-          there, we need to figure out practical ways to scale and interface with
-          the different components,” Warner said. “Optical photons are one of the
-          best ways you can do that, because they’re very good carriers of information,
-          with low loss, and high bandwidth.”
-
-
-          Superconducting qubits, which are nanofabricated circuits engineered for
-          different energy states, are an emerging quantum computing platform due
-          to their scalability, compatibility with existing manufacturing processes,
-          and ability to maintain quantum superposition long enough to perform calculations.
-
-
-          [![Transducer Driven Superconducting Qubit Scheme](https://scitechdaily.com/images/Transducer-Driven-Superconducting-Qubit-Scheme-2048x806.png)](https://scitechdaily.com/images/Transducer-Driven-Superconducting-Qubit-Scheme.png)
-          Transducer-driven superconducting qubit scheme. Credit: Lončar group / Harvard
-          SEAS
-
-
-          #### Overcoming Low-Temperature Bottlenecks
-
-
-          But one of the major bottlenecks to deploying superconducting microwave
-          qubit platforms is the extremely low temperatures at which they must operate,
-          necessitating large cooling systems called dilution refrigerators. Since
-          future quantum computing will require millions of qubits to operate, scaling
-          these systems only on microwave-frequency signals is challenging. The solution
-          lies in using microwave qubits to do the quantum operations, but to use
-          optical photons as efficient and scalable interfaces.
-
-
-          That’s where the transducer comes in.
-
-
-          #### A Compact Light-Matter Interface
-
-
-          The Harvard team’s 2-millimeter optical device resembles a paper clip and
-          sits on a chip that’s about 2 centimeters in length. It works by linking
-          a microwave resonator with two optical resonators, allowing back-and-forth
-          exchange of energy enabled by the properties of their base material, [lithium
-          niobate](https://seas.harvard.edu/news/2019/04/new-functionality-integrated-photonic-chips).
-          The team leveraged this exchange to eliminate the need for bulky, hot microwave
-          cables for controlling qubit states.
-
-
-          The same devices used for control could be used for qubit state readout,
-          or for forming direct links to convert finicky quantum information into
-          sturdy packets of light between quantum computing nodes. The breakthrough
-          brings us closer to a world with superconducting quantum processors connected
-          by low-loss, high-powered optical networks.
-
-
-          #### Entangling the Future
-
-
-          “The next step for our transducer could be reliable generation and distribution
-          of entanglement between microwave qubits using light,” Lončar said.
-
-
-          Reference: “Coherent control of a superconducting qubit using light” 2 April
-          2025, _Nature Physics_.
-
-
-          DOI: 10.1038/s41567-025-02812-0
-
-
-          The Harvard team combined their expertise in optical systems with collaborators
-          at Rigetti Computing, who provided the superconducting qubit platform on
-          which the researchers tested their transducer and mapped out different experiments.
-          Other collaborators were from the University of Chicago and the Massachusetts
-          Institute of Technology.
-
-
-          Fabrication of the chips was performed at Harvard’s Center for Nanoscale
-          Systems, a member of the National Nanotechnology Coordinated Infrastructure
-          Network, which is supported by National Science Foundation Award No. 1541959.
-
-
-          The work was further supported by the Air Force Research Laboratory under
-          award RCP06360; the National Science Foundation under awards EEC-1914583,
-          OMA-2137723, OMA-1936118, ERC-1941583, and OMA-2137642; the Defense Advanced
-          Research Projects Agency under award HR01120C0137; the Department of Defense
-          under award FA8702-15-D-000; the Department of Energy under award DE-SC0020376;
-          the Air Force Office of Scientific Research under awards FA9550-20-1, FA9550-19-1-0399,
-          and FA9550-21-1-0209; the Army Research Office under awards W911NF-20-1-0248,
-          W911NF-23-1- 0077, and W911NF-21-1-0325; and NTT Research, Packard Foundation
-          under award 2020-71479.
-
-
-          [Fiber Optics](https://scitechdaily.com/tag/fiber-optics/) [Harvard University](https://scitechdaily.com/tag/harvard-university/)
-          [Photonics](https://scitechdaily.com/tag/photonics/) [Quantum Computing](https://scitechdaily.com/tag/quantum-computing/)
-          [Quantum Information Science](https://scitechdaily.com/tag/quantum-information-science/)
-
-
-          Share.[Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&media=https%3A%2F%2Fscitechdaily.com%2Fimages%2FNetworked-Quantum-Processors-Art-Illustration-Concept.jpg&description=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-          [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Email](mailto://https:%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F?subject=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers&body=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
-          [Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
-
-
-          #### Related Articles
-
-
-          ## [Next-Gen Quantum Computing: The Fusion of Atoms and Photonic Innovation](https://scitechdaily.com/next-gen-quantum-computing-the-fusion-of-atoms-and-photonic-innovation/)
-
-
-          ## [The New Building Blocks of Quantum Tech: Quantum Dots and Twisted Light](https://scitechdaily.com/the-new-building-blocks-of-quantum-tech-quantum-dots-and-twisted-light/)
-
-
-          ## [Record-Breaking Source for Single Photons Developed That Can Produce
-          Billions of Quantum Particles per Second](https://scitechdaily.com/record-breaking-source-for-single-photons-developed-that-can-produce-billions-of-quantum-particles-per-second/)
-
-
-          ## [MIT Physicists Create a New Form of Light Where Photons Interact](https://scitechdaily.com/mit-physicists-create-new-form-of-light-where-photons-interact/)
-
-
-          ## [Quantum Simulator Could Shed Light on a Host of Complex Processes](https://scitechdaily.com/quantum-simulator-could-shed-light-on-a-host-of-complex-processes/)
-
-
-          ## [Physicists Demonstrate A New Way To Manipulate Quantum Bits of Matter](https://scitechdaily.com/physicists-demonstrate-a-new-way-to-manipulate-quantum-bits-of-matter/)
-
-
-          ## [Yale Engineers Advance Quantum Technology With Photon Control](https://scitechdaily.com/yale-engineers-advance-quantum-technology-with-photon-control/)
-
-
-          ## [Harvard and MIT Scientists Create Never-Before-Seen Form of Matter](https://scitechdaily.com/harvard-mit-scientists-create-never-seen-form-matter/)
-
-
-          ## [Quantum Bits Store Data for Nearly Two Seconds Using Laboratory Grown
-          Diamonds](https://scitechdaily.com/quantum-bits-store-data-for-nearly-two-seconds-using-laboratory-grown-diamonds/)
-
-
-          Leave A Reply[Cancel Reply](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/#respond)
-
-
-          Save my name, email, and website in this browser for the next time I comment.
-
-
-          Submit
-
-
-          Type above and press _Enter_ to search. Press _Esc_ to cancel.
-
-
-          DO NOT SELL OR SHARE MY INFORMATION
-
-
-          [iframe](https://app.grow.me/iframe-login?siteId=5fb3c17f-2a8c-41ca-97b7-f060be652e48&isHeadless=true&callback=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&isGdprCountry=false)'
       - title: Quantum Computers Just Got a Breakthrough Boost With Fiber-Optic Power
         url: https://scitechdaily.com/quantum-computers-just-got-a-breakthrough-boost-with-fiber-optic-power/
         published_date: N/A
@@ -1840,6 +1575,273 @@ natural_language_query:
 
 
           [iframe](https://app.grow.me/iframe-login?siteId=5fb3c17f-2a8c-41ca-97b7-f060be652e48&isHeadless=true&callback=https%3A%2F%2Fscitechdaily.com%2Fquantum-computers-just-got-a-breakthrough-boost-with-fiber-optic-power%2F&isGdprCountry=false)'
+      - title: Teleportation Achieved Between Quantum Computers in a World First
+        url: https://www.sciencealert.com/teleportation-achieved-between-quantum-computers-in-a-world-first
+        published_date: N/A
+        text: '[Close Menu](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/)
+
+
+          [Facebook](https://www.facebook.com/scitechdaily) [X (Twitter)](https://twitter.com/SciTechDaily1)
+          [Instagram](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/)
+
+
+          [![SciTechDaily](https://scitechdaily.com/images/scitechdaily-logo-flat-80.png)](https://scitechdaily.com/)
+
+
+          [Facebook](https://www.facebook.com/scitechdaily) [X (Twitter)](https://twitter.com/SciTechDaily1)
+          [Pinterest](https://www.pinterest.com/scitechdaily/) [YouTube](https://www.youtube.com/@SciTechDaily)
+          [RSS](https://scitechdaily.com/feed/)
+
+
+          [![SciTechDaily](https://scitechdaily.com/images/scitechdaily-logo-flat-80.png)](https://scitechdaily.com/)
+
+
+          [Physics](https://scitechdaily.com/news/physics/)
+
+
+          # Quantum Leap: Harvard’s Tiny Light-Powered Chip Connects Quantum Computers
+
+
+          By Harvard John A. Paulson School of Engineering and Applied SciencesApril
+          2, 2025[No Comments](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/#respond)5
+          Mins Read
+
+
+          [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&media=https%3A%2F%2Fscitechdaily.com%2Fimages%2FNetworked-Quantum-Processors-Art-Illustration-Concept.jpg&description=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [Telegram](https://t.me/share/url?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [WhatsApp](https://wa.me/?text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers%20https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Email](mailto://https:%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F?subject=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers&body=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+
+
+          Share
+
+
+          [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&media=https%3A%2F%2Fscitechdaily.com%2Fimages%2FNetworked-Quantum-Processors-Art-Illustration-Concept.jpg&description=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [Telegram](https://t.me/share/url?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [Email](mailto://https:%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F?subject=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers&body=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+
+
+          [![Networked Quantum Processors Art Illustration Concept](https://scitechdaily.com/images/Networked-Quantum-Processors-Art-Illustration-Concept.jpg)](https://scitechdaily.com/images/Networked-Quantum-Processors-Art-Illustration-Concept.jpg)
+          Harvard researchers have built the first device to control superconducting
+          qubits using only light, paving the way for large-scale quantum networks.
+          (Artist’s concept.) Credit: SciTechDaily.com
+
+
+          **Harvard scientists have developed a groundbreaking photon router that
+          connects optical signals to superconducting microwave qubits, the building
+          blocks of many quantum computers.**
+
+
+          _This innovation could overcome one of quantum computing’s biggest hurdles:
+          getting different quantum systems to “talk” to each other efficiently. The
+          key lies in using light, not bulky wires, to control and connect qubits,
+          enabling faster, more scalable, and more robust quantum networks. The tiny
+          chip-sized device could help bring distributed, fiber-optic-based quantum
+          computers closer to reality._
+
+
+          #### Toward Modular Quantum Networks
+
+
+          Applied physicists at the Harvard John A. Paulson School of Engineering
+          and Applied Sciences (SEAS) have developed a photon router that could one
+          day link quantum computers through existing fiber-optic networks. The device
+          creates a robust optical interface for quantum systems that rely on microwave
+          signals, especially those sensitive to electrical noise.
+
+
+          This advance brings researchers closer to building modular, distributed
+          quantum computing networks. These networks would send quantum information
+          over today’s global telecommunications infrastructure, which already moves
+          data as pulses of light, called photons, through millions of miles of optical
+          fiber.
+
+
+          [![Microwave Optical Quantum Transducer Optical Micrograph](https://scitechdaily.com/images/Microwave-Optical-Quantum-Transducer-Optical-Micrograph-2048x767.jpg)](https://scitechdaily.com/images/Microwave-Optical-Quantum-Transducer-Optical-Micrograph-scaled.jpg)
+          Optical micrograph of the microwave-optical quantum transducer. Credit:
+          Lončar group / Harvard SEAS
+
+
+          #### Bridging the Quantum Gap
+
+
+          The research team, led by Marko Lončar, the Tiantsai Lin Professor of Electrical
+          Engineering and Applied Physics at SEAS, designed a new type of microwave-optical
+          quantum transducer. The device enables communication between microwave-based
+          superconducting qubits, the quantum equivalent of classical bits, and optical
+          signals. Their findings were published today (April 2) in _Nature Physics_.
+
+
+          Effectively a router for photons, the transducer bridges the large energy
+          gap between microwave and optical photons, thus enabling control of microwave
+          qubits with optical signals generated many miles away. The device is the
+          first of its kind to demonstrate control of a superconducting qubit using
+          only light.
+
+
+          #### Optical Power for Scalable Quantum Systems
+
+
+          Paper first author and graduate student Hana Warner said the transducer
+          offers a way to tap the power of optics when dreaming up quantum networks.
+          “The realization of these systems is still a ways out, but in order to get
+          there, we need to figure out practical ways to scale and interface with
+          the different components,” Warner said. “Optical photons are one of the
+          best ways you can do that, because they’re very good carriers of information,
+          with low loss, and high bandwidth.”
+
+
+          Superconducting qubits, which are nanofabricated circuits engineered for
+          different energy states, are an emerging quantum computing platform due
+          to their scalability, compatibility with existing manufacturing processes,
+          and ability to maintain quantum superposition long enough to perform calculations.
+
+
+          [![Transducer Driven Superconducting Qubit Scheme](https://scitechdaily.com/images/Transducer-Driven-Superconducting-Qubit-Scheme-2048x806.png)](https://scitechdaily.com/images/Transducer-Driven-Superconducting-Qubit-Scheme.png)
+          Transducer-driven superconducting qubit scheme. Credit: Lončar group / Harvard
+          SEAS
+
+
+          #### Overcoming Low-Temperature Bottlenecks
+
+
+          But one of the major bottlenecks to deploying superconducting microwave
+          qubit platforms is the extremely low temperatures at which they must operate,
+          necessitating large cooling systems called dilution refrigerators. Since
+          future quantum computing will require millions of qubits to operate, scaling
+          these systems only on microwave-frequency signals is challenging. The solution
+          lies in using microwave qubits to do the quantum operations, but to use
+          optical photons as efficient and scalable interfaces.
+
+
+          That’s where the transducer comes in.
+
+
+          #### A Compact Light-Matter Interface
+
+
+          The Harvard team’s 2-millimeter optical device resembles a paper clip and
+          sits on a chip that’s about 2 centimeters in length. It works by linking
+          a microwave resonator with two optical resonators, allowing back-and-forth
+          exchange of energy enabled by the properties of their base material, [lithium
+          niobate](https://seas.harvard.edu/news/2019/04/new-functionality-integrated-photonic-chips).
+          The team leveraged this exchange to eliminate the need for bulky, hot microwave
+          cables for controlling qubit states.
+
+
+          The same devices used for control could be used for qubit state readout,
+          or for forming direct links to convert finicky quantum information into
+          sturdy packets of light between quantum computing nodes. The breakthrough
+          brings us closer to a world with superconducting quantum processors connected
+          by low-loss, high-powered optical networks.
+
+
+          #### Entangling the Future
+
+
+          “The next step for our transducer could be reliable generation and distribution
+          of entanglement between microwave qubits using light,” Lončar said.
+
+
+          Reference: “Coherent control of a superconducting qubit using light” 2 April
+          2025, _Nature Physics_.
+
+
+          DOI: 10.1038/s41567-025-02812-0
+
+
+          The Harvard team combined their expertise in optical systems with collaborators
+          at Rigetti Computing, who provided the superconducting qubit platform on
+          which the researchers tested their transducer and mapped out different experiments.
+          Other collaborators were from the University of Chicago and the Massachusetts
+          Institute of Technology.
+
+
+          Fabrication of the chips was performed at Harvard’s Center for Nanoscale
+          Systems, a member of the National Nanotechnology Coordinated Infrastructure
+          Network, which is supported by National Science Foundation Award No. 1541959.
+
+
+          The work was further supported by the Air Force Research Laboratory under
+          award RCP06360; the National Science Foundation under awards EEC-1914583,
+          OMA-2137723, OMA-1936118, ERC-1941583, and OMA-2137642; the Defense Advanced
+          Research Projects Agency under award HR01120C0137; the Department of Defense
+          under award FA8702-15-D-000; the Department of Energy under award DE-SC0020376;
+          the Air Force Office of Scientific Research under awards FA9550-20-1, FA9550-19-1-0399,
+          and FA9550-21-1-0209; the Army Research Office under awards W911NF-20-1-0248,
+          W911NF-23-1- 0077, and W911NF-21-1-0325; and NTT Research, Packard Foundation
+          under award 2020-71479.
+
+
+          [Fiber Optics](https://scitechdaily.com/tag/fiber-optics/) [Harvard University](https://scitechdaily.com/tag/harvard-university/)
+          [Photonics](https://scitechdaily.com/tag/photonics/) [Quantum Computing](https://scitechdaily.com/tag/quantum-computing/)
+          [Quantum Information Science](https://scitechdaily.com/tag/quantum-information-science/)
+
+
+          Share.[Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Twitter](https://twitter.com/intent/tweet?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&text=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [Pinterest](https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&media=https%3A%2F%2Fscitechdaily.com%2Fimages%2FNetworked-Quantum-Processors-Art-Illustration-Concept.jpg&description=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+          [LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Email](mailto://https:%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F?subject=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers&body=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F)
+          [Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&title=Quantum%20Leap%3A%20Harvard%E2%80%99s%20Tiny%20Light-Powered%20Chip%20Connects%20Quantum%20Computers)
+
+
+          #### Related Articles
+
+
+          ## [Next-Gen Quantum Computing: The Fusion of Atoms and Photonic Innovation](https://scitechdaily.com/next-gen-quantum-computing-the-fusion-of-atoms-and-photonic-innovation/)
+
+
+          ## [The New Building Blocks of Quantum Tech: Quantum Dots and Twisted Light](https://scitechdaily.com/the-new-building-blocks-of-quantum-tech-quantum-dots-and-twisted-light/)
+
+
+          ## [Record-Breaking Source for Single Photons Developed That Can Produce
+          Billions of Quantum Particles per Second](https://scitechdaily.com/record-breaking-source-for-single-photons-developed-that-can-produce-billions-of-quantum-particles-per-second/)
+
+
+          ## [MIT Physicists Create a New Form of Light Where Photons Interact](https://scitechdaily.com/mit-physicists-create-new-form-of-light-where-photons-interact/)
+
+
+          ## [Quantum Simulator Could Shed Light on a Host of Complex Processes](https://scitechdaily.com/quantum-simulator-could-shed-light-on-a-host-of-complex-processes/)
+
+
+          ## [Physicists Demonstrate A New Way To Manipulate Quantum Bits of Matter](https://scitechdaily.com/physicists-demonstrate-a-new-way-to-manipulate-quantum-bits-of-matter/)
+
+
+          ## [Yale Engineers Advance Quantum Technology With Photon Control](https://scitechdaily.com/yale-engineers-advance-quantum-technology-with-photon-control/)
+
+
+          ## [Harvard and MIT Scientists Create Never-Before-Seen Form of Matter](https://scitechdaily.com/harvard-mit-scientists-create-never-seen-form-matter/)
+
+
+          ## [Quantum Bits Store Data for Nearly Two Seconds Using Laboratory Grown
+          Diamonds](https://scitechdaily.com/quantum-bits-store-data-for-nearly-two-seconds-using-laboratory-grown-diamonds/)
+
+
+          Leave A Reply[Cancel Reply](https://scitechdaily.com/quantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers/#respond)
+
+
+          Save my name, email, and website in this browser for the next time I comment.
+
+
+          Submit
+
+
+          Type above and press _Enter_ to search. Press _Esc_ to cancel.
+
+
+          DO NOT SELL OR SHARE MY INFORMATION
+
+
+          [iframe](https://app.grow.me/iframe-login?siteId=5fb3c17f-2a8c-41ca-97b7-f060be652e48&isHeadless=true&callback=https%3A%2F%2Fscitechdaily.com%2Fquantum-leap-harvards-tiny-light-powered-chip-connects-quantum-computers%2F&isGdprCountry=false)'
       - title: New advances promise secure quantum computing at home
         url: https://phys.org/news/2024-04-advances-quantum-home.html
         published_date: N/A
@@ -2796,9 +2798,8 @@ direct_search:
     response: ''
     data:
       search_results:
-      - title: Microsoft says it’s cracked the code on an important quantum computing
-          problem
-        url: https://www.theverge.com/2024/4/8/24120103/microsoft-says-its-cracked-the-code-on-an-important-quantum-computing-problem
+      - title: Google announces quantum computing chip breakthrough
+        url: https://techxplore.com/news/2024-12-google-quantum-chip-breakthrough.html
         published_date: N/A
         text: '[Skip to main content](https://www.theverge.com/2024/4/8/24120103/microsoft-says-its-cracked-the-code-on-an-important-quantum-computing-problem#content)
 
@@ -3030,8 +3031,9 @@ direct_search:
 
 
           - [Advertiser Content From![Sponsor logo](https://www.theverge.com/icons/native-ad-placeholder.png)](http://theverge.com)'
-      - title: Google announces quantum computing chip breakthrough
-        url: https://techxplore.com/news/2024-12-google-quantum-chip-breakthrough.html
+      - title: Microsoft says it’s cracked the code on an important quantum computing
+          problem
+        url: https://www.theverge.com/2024/4/8/24120103/microsoft-says-its-cracked-the-code-on-an-important-quantum-computing-problem
         published_date: N/A
         text: '[Enterprise](https://techcrunch.com/category/enterprise/)
 
@@ -3867,8 +3869,9 @@ direct_search:
 
 
           [![Tesla shareholders to vote today on $56B pay package](https://techcrunch.com/wp-content/uploads/2024/04/GettyImages-1246103921.jpg?w=1024)](https://techcrunch.com/2024/06/13/tesla-shareholders-to-vote-today-on-56b-pay-package/)'
-      - title: New super-pure silicon chip opens path to powerful quantum computers
-        url: https://www.sciencedaily.com/releases/2024/05/240507150004.htm
+      - title: Quantinuum quantum computer using Microsoft's 'logical quantum bits'
+          runs 14,000 experiments with no errors
+        url: https://phys.org/news/2024-04-quantinuum-quantum-microsoft-logical-bits.html
         published_date: N/A
         text: "Science News\n\nfrom research organizations\n\n* * *\n\n# Breakthrough\
           \ promises secure quantum computing at home\n\nDate:April 11, 2024Source:University\
@@ -4027,8 +4030,8 @@ direct_search:
           \n[A Symphony in Quantum](https://www.sciencedaily.com/releases/2025/02/250210153912.htm)\n\
           \n[Quantum Theory and Thermodynamics: Maxwell's Demon?](https://www.sciencedaily.com/releases/2025/02/250207122632.htm)\n\
           \n[Novel 'Living' Biomaterial Aims to Advance Regenerative Medicine](https://www.sciencedaily.com/releases/2025/02/250206155347.htm)"
-      - title: Paving the way to quantum supercomputers
-        url: https://www.sciencedaily.com/releases/2025/02/250205130938.htm
+      - title: Breakthrough promises secure quantum computing at home
+        url: https://www.sciencedaily.com/releases/2024/04/240411130238.htm
         published_date: N/A
         text: '- share this!
 
@@ -4395,8 +4398,8 @@ direct_search:
           [It appears that you are currently using **Ad Blocking software**.\
 
           What are the consequences?](https://sciencex.com/help/adblock/)×'
-      - title: Breakthrough promises secure quantum computing at home
-        url: https://www.sciencedaily.com/releases/2024/04/240411130238.htm
+      - title: New super-pure silicon chip opens path to powerful quantum computers
+        url: https://www.sciencedaily.com/releases/2024/05/240507150004.htm
         published_date: N/A
         text: "Science News\n\nfrom research organizations\n\n* * *\n\n# Paving the\
           \ way to quantum supercomputers\n\nDate:February 5, 2025Source:University\
@@ -4563,9 +4566,8 @@ direct_search:
           \n[A Symphony in Quantum](https://www.sciencedaily.com/releases/2025/02/250210153912.htm)\n\
           \n[Quantum Theory and Thermodynamics: Maxwell's Demon?](https://www.sciencedaily.com/releases/2025/02/250207122632.htm)\n\
           \n[Novel 'Living' Biomaterial Aims to Advance Regenerative Medicine](https://www.sciencedaily.com/releases/2025/02/250206155347.htm)"
-      - title: Quantinuum quantum computer using Microsoft's 'logical quantum bits'
-          runs 14,000 experiments with no errors
-        url: https://phys.org/news/2024-04-quantinuum-quantum-microsoft-logical-bits.html
+      - title: Researchers use laser beams to pioneer new quantum computing breakthrough
+        url: https://phys.org/news/2024-11-laser-quantum-breakthrough.html
         published_date: N/A
         text: '- share this!
 
@@ -4996,8 +4998,9 @@ direct_search:
 
           [It appears that you are currently using **Ad Blocking software**. What
           are the consequences?](https://sciencex.com/help/adblock/)×'
-      - title: Researchers use laser beams to pioneer new quantum computing breakthrough
-        url: https://phys.org/news/2024-11-laser-quantum-breakthrough.html
+      - title: Microsoft and Quantinuum say they’ve ushered in the next era of quantum
+          computing
+        url: https://techcrunch.com/2024/04/03/microsoft-and-quantinuum-say-theyve-ushered-in-the-next-era-of-quantum-computing/
         published_date: N/A
         text: '- share this!
 
@@ -5425,94 +5428,71 @@ direct_search:
 
           [It appears that you are currently using **Ad Blocking software**. What
           are the consequences?](https://sciencex.com/help/adblock/)×'
-      - title: Microsoft and Quantinuum say they’ve ushered in the next era of quantum
-          computing
-        url: https://techcrunch.com/2024/04/03/microsoft-and-quantinuum-say-theyve-ushered-in-the-next-era-of-quantum-computing/
+      - title: Paving the way to quantum supercomputers
+        url: https://www.sciencedaily.com/releases/2025/02/250205130938.htm
         published_date: N/A
-        text: "Microsoft and Quantinuum today announced a major breakthrough in quantum\
-          \ error correction. Using Quantinuum’s ion-trap hardware and Microsoft’s\
-          \ new qubit-virtualization system, the team was able to run more than 14,000\
-          \ experiments without a single error. This new system also allowed the team\
-          \ to check the logical qubits and correct any errors it encountered without\
-          \ destroying the logical qubits. \n This, the two companies say, has now\
-          \ moved the state-of-the-art of quantum computing out of what has typically\
-          \ been dubbed the era of noisy intermediate scale quantum (NISQ) computers.\
-          \ “Noisy” because even the smallest changes in the environment can lead\
-          \ a quantum system to essentially become random (or “decohere”), and “intermediate\
-          \ scale” because the current generation of quantum computers is still limited\
-          \ to just over a thousand qubits at best. A qubit is the fundamental unit\
-          \ of computing in quantum systems, analogous to a bit in a classic computer,\
-          \ but each qubit can be in multiple states at the same time and doesn’t\
-          \ fall into a specific position until measured, which underlies the potential\
-          \ of quantum to deliver a huge leap in computing power. \n It doesn’t matter\
-          \ how many qubits you have, though, if you barely have time to run a basic\
-          \ algorithm before the system becomes too noisy to get a useful result —\
-          \ or any result at all. \n Combining several different techniques, the team\
-          \ was able to run thousands of experiments with virtually no errors. That\
-          \ involved quite a bit of preparation and pre-selecting systems that already\
-          \ looked to be in good shape for a successful run, but still, that’s a massive\
-          \ improvement from where the industry was just a short while ago. \n It’s\
-          \ a step in the right direction for quantum computing. There are still plenty\
-          \ of problems to be solved (and these results need to be replicated, too,\
-          \ of course), but theoretically, a computer with 100 of these logical qubits\
-          \ could already be useful for solving some problems, while a machine with\
-          \ 1,000 qubits could, Microsoft says, “unlock commercial advantage.” \n\
-          \ The discrepancies (errors) between entangled qubits. Discrepancies are\
-          \ revealed by comparing the images from each qubit in a pair, and any differences\
-          \ that exist appear as dots in the central image between each pair. Image\
-          \ Credits: Microsoft \n The team used Quantinuum’s H2 trapped-ion processor\
-          \ and was able to combine 30 physical qubits into four highly reliable logical\
-          \ qubits. Encoding multiple physical qubits into a single logical qubit\
-          \ helps protect the system from errors. The physical qubits are entangled\
-          \ together so that it becomes possible to detect an error in a physical\
-          \ qubit and fix it. \n It’s this error correction that has long vexed the\
-          \ industry: The lower the noise and the higher the quality of the physical\
-          \ qubits, the better, of course, but without sophisticated error correction,\
-          \ there is no way out of the NISQ era because these systems will all decohere\
-          \ sooner rather than later. \n “Merely increasing the number of physical\
-          \ qubits with a high error rate — without improving that error rate — is\
-          \ futile because doing so would result in a large quantum computer that\
-          \ is not any more powerful than before,” Dennis Tom, the general manager\
-          \ for Azure Quantum, and Krysta Svore, the VP of Advanced Quantum Development\
-          \ at Microsoft, wrote in today’s announcement. “In contrast, when physical\
-          \ qubits with sufficient quality of operation are used with a specialized\
-          \ orchestration-and-diagnostics system to enable virtual qubits, only then\
-          \ does increasing the number of physical qubits result in powerful, fault-tolerant\
-          \ quantum computers able to perform longer, more complex computation.” \n\
-          \ It was only a couple of years ago that logical qubits started outperforming\
-          \ physical qubits. Now, Microsoft and Quantinuum argue that their new hardware/software\
-          \ system demonstrates the largest gap between physical and logical error\
-          \ rates, improving on using only physical qubits by up to 800x. \n Image\
-          \ Credits: Microsoft \n The researchers note that to move beyond NISQ, a\
-          \ large separation between logical and physical qubit error rates is necessary,\
-          \ as is the ability to correct individual circuit errors and to generate\
-          \ entanglement between at least two logical qubits. If these results hold\
-          \ up, then the team achieved all three and we have indeed entered the era\
-          \ of resilient quantum computing. \n As it turns out, the most important\
-          \ result here may actually be the team’s ability to perform “active syndrome\
-          \ extraction” — that is, the ability to diagnose an error and correct it,\
-          \ without destroying the logical qubit in the process. \n “This achievement\
-          \ marks the first step in being able to correct errors while not destroying\
-          \ the logical qubits and showcases a fundamental milestone in quantum error\
-          \ correction,” Tom and Svore explain. “We demonstrated this critical component\
-          \ of reliable quantum computing with our qubit-virtualization system, which\
-          \ resulted in a low logical error rate over multiple rounds of syndrome\
-          \ extraction.” \n It’ll now be up to the rest of the quantum community to\
-          \ replicate these results and implement similar error correction systems.\
-          \ That’s likely just a matter of time, though. \n “Today’s results mark\
-          \ a historic achievement and are a wonderful reflection of how this collaboration\
-          \ continues to push the boundaries for the quantum ecosystem,” said Ilyas\
-          \ Khan, founder and chief product officer of Quantinuum. “With Microsoft’s\
-          \ state-of-the-art error correction aligned with the world’s most powerful\
-          \ quantum computer and a fully integrated approach, we are so excited for\
-          \ the next evolution in quantum applications and can’t wait to see how our\
-          \ customers and partners will benefit from our solutions especially as we\
-          \ move towards quantum processors at scale.” \n For more details, you can\
-          \ find the technical paper here . \n \n \n \nFrederic was with TechCrunch\
-          \ from 2012 through 2025. He also founded SiliconFilter and wrote for ReadWriteWeb\
-          \ (now ReadWrite). Frederic covers enterprise, cloud, developer tools, Google,\
-          \ Microsoft, gadgets, transportation and anything else he finds interesting.\
-          \ \n \n \n View Bio"
+        text: "In a milestone that brings quantum computing tangibly closer to large-scale\
+          \ practical use, scientists at Oxford University Physics have demonstrated\
+          \ the first instance of distributed quantum computing. Using a photonic\
+          \ network interface, they successfully linked two separate quantum processors\
+          \ to form a single, fully connected quantum computer, paving the way to\
+          \ tackling computational challenges previously out of reach. The results\
+          \ have been published today (5 Feb) in Nature. \n The breakthrough addresses\
+          \ quantum's 'scalability problem': a quantum computer powerful enough to\
+          \ be industry-disrupting would have to be capable of processing millions\
+          \ of qubits. Packing all these processors in a single device, however, would\
+          \ require a machine of an immense size. In this new approach, small quantum\
+          \ devices are linked together, enabling computations to be distributed across\
+          \ the network. In theory, there is no limit to the number of processors\
+          \ that could be in the network. \n The scalable architecture is based on\
+          \ modules which each contain only a small number of trapped-ion qubits (atomic-scale\
+          \ carriers of quantum information). These are linked together using optical\
+          \ fibres, and use light (photons) rather than electrical signals to transmit\
+          \ data between them. These photonic links enable qubits in separate modules\
+          \ to be entangled*, allowing quantum logic to be performed across the modules\
+          \ using quantum teleportation.** \n Although quantum teleportation of states\
+          \ has been achieved previously, this study is the first demonstration of\
+          \ quantum teleportation of logical gates (the minimum components of an algorithm)\
+          \ across a network link. According to the researchers, this could lay the\
+          \ groundwork for a future 'quantum internet,' where distant processors could\
+          \ form an ultra-secure network for communication, computation and sensing.\
+          \ \n Study lead Dougal Main from Oxford University Physics, said: \"Previous\
+          \ demonstrations of quantum teleportation have focused on transferring quantum\
+          \ states between physically separated systems. In our study, we use quantum\
+          \ teleportation to create interactions between these distant systems. By\
+          \ carefully tailoring these interactions, we can perform logical quantum\
+          \ gates -- the fundamental operations of quantum computing -- between qubits\
+          \ housed in separate quantum computers. This breakthrough enables us to\
+          \ effectively 'wire together' distinct quantum processors into a single,\
+          \ fully-connected quantum computer.\" \n The concept is similar to how traditional\
+          \ supercomputers work. These are made up of smaller computers linked together\
+          \ to achieve capabilities that are greater than those of each separate unit.\
+          \ This strategy circumvents many of the engineering obstacles associated\
+          \ with packing ever larger numbers of qubits into a single device, while\
+          \ preserving the delicate quantum properties needed for accurate and robust\
+          \ computations. \n Dougal Main added: \"By interconnecting the modules using\
+          \ photonic links, the system gains valuable flexibility, allowing modules\
+          \ to be upgraded or swapped out without disrupting the entire architecture.\"\
+          \ \n The researchers demonstrated the effectiveness of the method by executing\
+          \ Grover's search algorithm. This quantum method searches for a particular\
+          \ item in a large, unstructured dataset much faster than a regular computer\
+          \ can, using the quantum phenomena of superposition and entanglement to\
+          \ explore many possibilities in parallel. Its successful demonstration underscores\
+          \ how a distributed approach can extend quantum capabilities beyond the\
+          \ limits of a single device, setting the stage for scalable, high-performance\
+          \ quantum computers powerful enough to run calculations in hours that today's\
+          \ supercomputers would take many years to solve. \n Professor David Lucas,\
+          \ principal investigator of the research team and lead scientist for the\
+          \ UK Quantum Computing and Simulation Hub, led from Oxford University Physics,\
+          \ said: \"Our experiment demonstrates that network-distributed quantum information\
+          \ processing is feasible with current technology. Scaling up quantum computers\
+          \ remains a formidable technical challenge that will likely require new\
+          \ physics insights as well as intensive engineering effort over the coming\
+          \ years.\" \n *Quantum entanglement: Where two particles, such as a pair\
+          \ of photons, remain correlated even when separated by vast distances. This\
+          \ allows them to share information without having to travel physically.\
+          \ \n ** Quantum teleportation: The transfer of quantum information over\
+          \ long distances almost instantly, using entanglement."
 direct_answer:
   input:
     tool: exa_answer_question
@@ -5522,13 +5502,21 @@ direct_answer:
   output:
     response: ''
     data:
-      answer: 'Quantum supremacy or quantum advantage is the demonstration that a
-        programmable quantum computer can solve a problem that no classical computer
-        can solve in any feasible amount of time ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
-        The term was coined in 2011 ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
-        In March 2024, D-Wave Systems reported an experiment using a quantum annealing-based
-        processor that outperformed classical methods, claiming quantum supremacy
-        ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
+      answer: 'Quantum supremacy, or quantum advantage, is achieved when a programmable
+        quantum computer solves a problem that a classical computer cannot solve in
+        a feasible amount of time, regardless of the problem''s practical usefulness
+        ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)). The
+        term was coined in 2011 ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
+
+
+        In 2019, Google claimed to have achieved quantum supremacy with a 53-qubit
+        processor, performing a calculation in 200 seconds that would take a supercomputer
+        approximately 10,000 years ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
+        However, IBM disputed this, suggesting that an improved classical algorithm
+        could solve the problem in 2.5 days ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
+        More recently, in March 2024, D-Wave Systems reported an experiment using
+        a quantum annealing-based processor that outperformed classical methods, claiming
+        quantum supremacy ([en.wikipedia.org](https://en.wikipedia.org/wiki/Quantum_supremacy)).
 
         '
       sources: []

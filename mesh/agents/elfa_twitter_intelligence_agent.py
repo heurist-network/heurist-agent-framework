@@ -1,4 +1,3 @@
-import json
 import os
 import random
 import time
@@ -7,8 +6,7 @@ from typing import Any, Dict, List
 import requests
 from dotenv import load_dotenv
 
-from core.llm import call_llm_with_tools_async
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -289,69 +287,3 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         if errors:
             return errors
         return result
-
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Either 'query' or 'tool' is required in params.
-          - If 'tool' is provided, call that tool directly with 'tool_arguments' (bypassing the LLM).
-          - If 'query' is provided, route via LLM for dynamic tool selection.
-        """
-        query = params.get("query")
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
-
-        # ---------------------
-        # 1) DIRECT TOOL CALL
-        # ---------------------
-        if tool_name:
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-            return {"response": "", "data": data}
-
-        # ---------------------
-        # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
-        # ---------------------
-        # Only use search_mentions and search_account for LLM tool selection
-        llm_tools = [
-            tool
-            for tool in self.get_tool_schemas()
-            if tool["function"]["name"] in ["search_mentions", "search_account"]
-        ]
-
-        response = await call_llm_with_tools_async(
-            base_url=self.heurist_base_url,
-            api_key=self.heurist_api_key,
-            model_id=self.metadata["large_model_id"],
-            system_prompt=self.get_system_prompt(),
-            user_prompt=query,
-            temperature=0.1,
-            tools=llm_tools,
-        )
-
-        if not response:
-            return {"error": "Failed to process query"}
-
-        if not response.get("tool_calls"):
-            return {"response": response["content"], "data": {}}
-
-        tool_call = response["tool_calls"]
-        tool_call_name = tool_call.function.name
-        tool_call_args = json.loads(tool_call.function.arguments)
-
-        data = await self._handle_tool_logic(tool_name=tool_call_name, function_args=tool_call_args)
-
-        if raw_data_only:
-            return {"response": "", "data": data}
-
-        explanation = await self._respond_with_llm(
-            model_id=self.metadata["large_model_id"],
-            system_prompt=self.get_system_prompt(),
-            query=query,
-            tool_call_id=tool_call.id,
-            data=data,
-            temperature=0.6,
-        )
-
-        return {"response": explanation, "data": data}

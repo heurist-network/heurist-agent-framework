@@ -74,23 +74,23 @@ Head to [heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mes
 
 ### Recommended Mesh Agents
 
-• [BitquerySolanaTokenInfoAgent](./mesh/bitquery_solana_token_info_agent.py) - Provides comprehensive analysis of Solana tokens including metrics, holders, trading activity, and trending token discovery
+• [BitquerySolanaTokenInfoAgent](./mesh/agents/bitquery_solana_token_info_agent.py) - Provides comprehensive analysis of Solana tokens including metrics, holders, trading activity, and trending token discovery
 
-• [CoinGeckoTokenInfoAgent](./mesh/coingecko_token_info_agent.py) - Fetches token information, market data, trending coins, and category data from CoinGecko
+• [CoinGeckoTokenInfoAgent](./mesh/agents/coingecko_token_info_agent.py) - Fetches token information, market data, trending coins, and category data from CoinGecko
 
-• [DexScreenerTokenInfoAgent](./mesh/dexscreener_token_info_agent.py) - Fetches real-time DEX trading data and token information across multiple chains
+• [DexScreenerTokenInfoAgent](./mesh/agents/dexscreener_token_info_agent.py) - Fetches real-time DEX trading data and token information across multiple chains
 
-• [ElfaTwitterIntelligenceAgent](./mesh/elfa_twitter_intelligence_agent.py) - Analyzes tokens, topics or Twitter accounts using Twitter data, highlighting smart influencers
+• [ElfaTwitterIntelligenceAgent](./mesh/agents/elfa_twitter_intelligence_agent.py) - Analyzes tokens, topics or Twitter accounts using Twitter data, highlighting smart influencers
 
-• [ExaSearchAgent](./mesh/exa_search_agent.py) - Searches the web and provides direct answers to questions
+• [ExaSearchAgent](./mesh/agents/exa_search_agent.py) - Searches the web and provides direct answers to questions
 
-• [GoplusAnalysisAgent](./mesh/goplus_analysis_agent.py) - Fetches and analyzes security details of blockchain token contracts
+• [GoplusAnalysisAgent](./mesh/agents/goplus_analysis_agent.py) - Fetches and analyzes security details of blockchain token contracts
 
-• [MetaSleuthSolTokenWalletClusterAgent](./mesh/metasleuth_sol_token_wallet_cluster_agent.py) - Analyzes wallet clusters holding Solana tokens to identify holder behavior, concentration, and potential market manipulation
+• [MetaSleuthSolTokenWalletClusterAgent](./mesh/agents/metasleuth_sol_token_wallet_cluster_agent.py) - Analyzes wallet clusters holding Solana tokens to identify holder behavior, concentration, and potential market manipulation
 
-• [PumpFunTokenAgent](./mesh/pumpfun_token_agent.py) - Analyzes Pump.fun tokens on Solana, tracking token creation and graduation events
+• [PumpFunTokenAgent](./mesh/agents/pumpfun_token_agent.py) - Analyzes Pump.fun tokens on Solana, tracking token creation and graduation events
 
-• [SolWalletAgent](./mesh/sol_wallet_agent.py) - Queries Solana wallet assets and recent swap transactions
+• [SolWalletAgent](./mesh/agents/sol_wallet_agent.py) - Queries Solana wallet assets and recent swap transactions
 
 ### Full List of Mesh Agents
 

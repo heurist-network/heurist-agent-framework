@@ -1,29 +1,31 @@
 input_query:
   query: What has Donald Trump posted recently on Truth Social?
 output_query:
-  response: "**Recent Posts from @realDonaldTrump on Truth Social**\n\nBelow is a\
-    \ summary of the 20 most recent posts from Donald Trump's Truth Social profile,\
-    \ highlighting key themes and topics:\n\n**Post Categories and Key Themes:**\n\
-    \n1. **Condolences and Support** (1 post)\n\t* Expressing sorrow for a helicopter\
-    \ crash in the Hudson River (April 10, 23:12:57)\n2. **Policy and Governance**\
-    \ (7 posts)\n\t* Mexico's violation of the 1944 Water Treaty, impacting Texas\
-    \ farmers (April 10, 22:58:03)\n\t* Announcement of William \"Billy\" Marshall\
-    \ III as Director of the Bureau of Prisons (April 10, 22:57:43)\n\t* Criticism\
-    \ of Democrat Senators for delaying Ambassador confirmations (April 10, 19:03:40)\n\
-    \t* Opposition to Sanctuary Cities, threatening to withhold Federal Funding (April\
-    \ 10, 13:35:07)\n\t* Updates on \"The Big, Beautiful Bill\" with historic Tax\
-    \ Cuts (April 10, 12:28:56)\n\t* Passage of a Bill setting the stage for significant\
-    \ Tax and Regulation Cuts (April 10, 15:28:43)\n3. **Endorsements and Appointments**\
-    \ (4 posts)\n\t* Endorsement of Senator Pete Ricketts for Re-Election (April 10,\
-    \ 21:57:30)\n\t* Endorsement of Texas Lieutenant Governor Dan Patrick for Re-Election\
-    \ (April 10, 21:52:04)\n\t* Nomination of Mark Walker as U.S. Ambassador-at-Large\
-    \ for International Religious Freedom (April 10, 22:33:31)\n\t* Nomination of\
-    \ Yehuda Kaploun as U.S. Special Envoy to Monitor and Combat Antisemitism (April\
-    \ 10, 22:33:24)\n4. **Miscellaneous and Personal** (6 posts)\n\t* Sharing a YouTube\
-    \ live link (April 10, 19:06:55)\n\t* Brief update on a successful day with more\
-    \ to come (April 10, 04:45:41)\n\t* Sharing an article about NY Attorney General\
-    \ Letitia James (April 10, 04:16:43)\n\t* Thanking Vince Molinari for congratulations\
-    \ on success (April 10, 03:34:48)\n\t* Welcoming North Dakota"
+  response: "**Recent Posts from @realDonaldTrump on Truth Social (April 9-10, 2025)**\n\
+    \n### **Post Summary (20 posts, April 9-10, 2025)**\n\nBelow is a summary of the\
+    \ content from Donald Trump's recent Truth Social posts, highlighting key themes\
+    \ and topics:\n\n#### **1. Condolences and Response to Tragedy**\n- **Post**:\
+    \ Terrible helicopter crash in the Hudson River (April 10, 2025, 23:12:57 UTC)\n\
+    - **Key Points**: Trump expresses condolences for the victims of a helicopter\
+    \ crash, mentions the Secretary of Transportation's involvement, and promises\
+    \ forthcoming announcements on the incident.\n\n#### **2. International Relations\
+    \ and Treaty Obligations**\n- **Post**: Mexico's violation of the 1944 Water Treaty\
+    \ (April 10, 2025, 22:58:03 UTC)\n- **Key Points**: Trump criticizes Mexico for\
+    \ not honoring a water treaty, affecting Texas farmers, and vows to take action,\
+    \ including potential tariffs and sanctions.\n\n#### **3. Appointments and Endorsements**\n\
+    - **Posts**:\n  - Nomination of William \"Billy\" Marshall III as Director of\
+    \ the Bureau of Prisons (April 10, 2025, 22:57:43 UTC)\n  - Appointment of Mark\
+    \ Walker as U.S. Ambassador-at-Large for International Religious Freedom (April\
+    \ 10, 2025, 22:33:31 UTC)\n  - Nomination of Yehuda Kaploun as U.S. Special Envoy\
+    \ to Monitor and Combat Antisemitism (April 10, 2025, 22:33:24 UTC)\n  - Endorsement\
+    \ of Senator Pete Ricketts for Re-Election (April 10, 2025, 21:57:30 UTC)\n  -\
+    \ Endorsement of Texas Lieutenant Governor Dan Patrick for Re-Election (April\
+    \ 10, 2025, 21:52:04 UTC)\n- **Key Points**: Trump announces various appointments\
+    \ and endorsements, highlighting the nominees' and endorsees' qualifications and\
+    \ alignment with his policies.\n\n#### **4. Critique of Political Opposition and\
+    \ Processes**\n- **Posts**:\n  - Criticism of Democrat Senators for delaying ambassador\
+    \ confirmations (April 10, 2025, 19:03:40 UTC)\n  - Opposition to Sanctuary Cities,\
+    \ threatening to withhold Federal Funding (April 10, 2025,"
   data:
     profile: '@realDonaldTrump'
     post_count: 20
