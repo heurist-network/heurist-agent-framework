@@ -2,6 +2,8 @@ name: Build and Deploy Mesh
 
 on:
   push:
+    paths:
+      - "mesh/**"
     branches: [main]
   workflow_dispatch:
 
@@ -51,14 +53,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # - name: Deploy to server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USERNAME }}
-      #     key: ${{ secrets.SSH_KEY }}
-      #     script: |
-      #       cd ${{ secrets.DEPLOY_PATH }}
-      #       export GITHUB_REPOSITORY="${{ github.repository }}"
-      #       docker-compose pull
-      #       docker-compose up -d
+      - name: Trigger deployment webhook
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
+          data: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "commits": ${{ toJson(github.event.commits) }}}'
