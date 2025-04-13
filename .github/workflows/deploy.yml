@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - "mesh/**"
+      - "core/**"
+      - "clients/**"
+      - "agents/**"
+      - "interfaces/**"
     branches: [main]
   workflow_dispatch:
 

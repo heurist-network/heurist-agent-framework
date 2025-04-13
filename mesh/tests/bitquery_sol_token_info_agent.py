@@ -28,9 +28,7 @@ async def run_agent():
             print(f"\nTesting metrics with {quote_token.upper()} quote token:")
 
             # Test via natural language query
-            metrics_input = {
-                "query": f"Get market cap and trade volume for {test_token} using {quote_token} pair"
-            }
+            metrics_input = {"query": f"Get market cap and trade volume for {test_token} using {quote_token} pair"}
             metrics_output = await agent.handle_message(metrics_input)
             print(f"Natural language query result for {quote_token}:")
             print(yaml.dump(metrics_output, allow_unicode=True, sort_keys=False))
