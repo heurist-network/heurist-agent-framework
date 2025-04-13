@@ -53,7 +53,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/mesh:latest
+          tags: |
+            ghcr.io/${{ github.repository }}/mesh:latest
+            ghcr.io/${{ github.repository }}/mesh:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
