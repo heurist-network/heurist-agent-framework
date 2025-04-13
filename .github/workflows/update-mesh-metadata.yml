@@ -1,18 +1,19 @@
 name: Update Mesh Metadata
 
 on:
-  push:
-    paths:
-      - "mesh/**"
+  workflow_run:
+    workflows: ["Build and Deploy Mesh"]
+    types:
+      - completed
     branches:
       - main
-  workflow_dispatch: # allow manual trigger
 
 jobs:
   update-metadata:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
-      contents: write # needed for pushing changes
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -40,7 +41,8 @@ jobs:
           S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
           S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
           S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
-          GITHUB_SHA: ${{ github.sha }}
+          # commit hash of the original commit that triggered the workflow
+          GITHUB_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           python .github/scripts/update_mesh_metadata.py
 

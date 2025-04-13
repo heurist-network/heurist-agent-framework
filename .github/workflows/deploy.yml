@@ -59,3 +59,18 @@ jobs:
           webhook_url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
           webhook_secret: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
           data: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "commits": ${{ toJson(github.event.commits) }}}'
+
+      - name: Wait for deployment
+        run: |
+          for i in {1..30}; do
+            response=$(curl -s https://sequencer-v2.heurist.xyz/mesh_health)
+            commit=$(echo $response | jq -r '.commit')
+            if [ "$commit" = "${{ github.sha }}" ]; then
+              echo "Deployment successful!"
+              exit 0
+            fi
+            echo "Waiting for deployment... (attempt $i/30)"
+            sleep 10
+          done
+          echo "Deployment timed out"
+          exit 1
