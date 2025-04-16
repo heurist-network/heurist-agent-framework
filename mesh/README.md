@@ -2,9 +2,11 @@
 
 ![mesh-2](https://github.com/user-attachments/assets/ae8987db-f009-4cbb-9e8d-1ebc828f1810)
 
-**Heurist Mesh** is a new open network of modular and purpose-built AI agents. Each agent is a specialized unit that can process data, generate reports, or engage in conversations, while collectively forming an intelligent swarm to tackle complex tasks. Built on decentralized compute and powered by diverse open-source AI models, Mesh agents can be combined into powerful workflows for cost-efficient and highly flexible solutions. Once a Mesh agent is added to this Github main branch, it's automatically deployed and instantly available via REST API and MCP.
+🧩 **Heurist Mesh** is a new open network of modular and purpose-built AI agents. Each agent is a specialized unit that can process data, generate reports, or engage in conversations, while collectively forming an intelligent swarm to tackle complex tasks. Built on decentralized compute and powered by diverse open-source AI models, Mesh agents can be combined into powerful workflows for cost-efficient and highly flexible solutions. Once a Mesh agent is added to this Github main branch, it's automatically deployed and instantly available via REST API and MCP.
 
-Visit [heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mesh-mcp-server/blob/main/README.md) to use the agents with MCP.
+➡️ Set up a self-hosted MCP server to use the agents at [heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mesh-mcp-server/blob/main/README.md)
+
+➡️ Use [Heurist Mesh MCP Provisioner](https://mcp.heurist.ai) to start a managed MCP server.
 
 ## Table of Contents
 1. [How It Works](#how-it-works)
@@ -424,6 +426,7 @@ Thank you for contributing to **Heurist Mesh** and helping build a diverse ecosy
 | GoplusAnalysisAgent | This agent can fetch and analyze security details of blockchain token contracts using GoPlus API. | • fetch_security_details | [Source](./agents/goplus_analysis_agent.py) | GoPlus |
 | MasaTwitterSearchAgent | This agent can search on Twitter through Masa API and analyze the results by identifying trending topics and sentiment related to a topic. | • search_twitter | [Source](./agents/masa_twitter_search_agent.py) | Masa |
 | MetaSleuthSolTokenWalletClusterAgent | This agent can analyze the wallet clusters holding a specific Solana token, and identify top holder behavior, concentration, and potential market manipulation. | • fetch_token_clusters<br>• fetch_cluster_details | [Source](./agents/metasleuth_sol_token_wallet_cluster_agent.py) | MetaSleuth |
+| MindAiKolAgent | This agent analyzes Key Opinion Leaders (KOLs) and token performance in the crypto space using Mind AI API. | • get_best_initial_calls<br>• get_kol_statistics<br>• get_token_statistics<br>• get_top_gainers | [Source](./agents/mindai_kol_agent.py) | Mind AI |
 | MoniTwitterInsightAgent | This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity. | • get_smart_followers_history<br>• get_smart_followers_categories<br>• get_smart_mentions_feed | [Source](./agents/moni_twitter_insight_agent.py) | Moni |
 | PumpFunTokenAgent | This agent analyzes Pump.fun token on Solana using Bitquery API. It tracks token creation and graduation events on Pump.fun. | • query_recent_token_creation<br>• query_latest_graduated_tokens | [Source](./agents/pumpfun_token_agent.py) | Bitquery |
 | SolWalletAgent | This agent can query Solana wallet assets and recent swap transactions using Helius API. | • get_wallet_assets<br>• analyze_common_holdings_of_top_holders<br>• get_tx_history | [Source](./agents/sol_wallet_agent.py) | Helius |

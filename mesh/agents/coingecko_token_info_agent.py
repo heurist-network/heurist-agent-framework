@@ -966,3 +966,53 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
     async def cleanup(self):
         """Clean up any resources or connections"""
         pass
+
+    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+        """Handle execution of specific tools and return the raw data"""
+        if tool_name == "get_coingecko_id":
+            result = await self._get_coingecko_id(function_args["token_name"])
+            if isinstance(result, str):
+                return {"coingecko_id": result}
+            return result
+        
+        elif tool_name == "get_token_info":
+            result = await self._get_token_info(function_args["coingecko_id"])
+            if not isinstance(result, dict) or "error" not in result:
+                return self.format_token_info(result)
+            return result
+            
+        elif tool_name == "get_trending_coins":
+            return await self._get_trending_coins()
+            
+        elif tool_name == "get_token_price_multi":
+            result = await self._get_token_price_multi(
+                ids=function_args["ids"],
+                vs_currencies=function_args.get("vs_currencies", "usd"),
+                include_market_cap=function_args.get("include_market_cap", False),
+                include_24hr_vol=function_args.get("include_24hr_vol", False),
+                include_24hr_change=function_args.get("include_24hr_change", False),
+                include_last_updated_at=function_args.get("include_last_updated_at", False),
+                precision=function_args.get("precision", None)
+            )
+            if "error" not in result:
+                return {"price_data": result}
+            return result
+            
+        elif tool_name == "get_categories_list":
+            return await self._get_categories_list()
+            
+        elif tool_name == "get_category_data":
+            order = function_args.get("order", "market_cap_desc")
+            return await self._get_category_data(order)
+            
+        elif tool_name == "get_tokens_by_category":
+            return await self._get_tokens_by_category(
+                category_id=function_args["category_id"],
+                vs_currency=function_args.get("vs_currency", "usd"),
+                order=function_args.get("order", "market_cap_desc"),
+                per_page=function_args.get("per_page", 100),
+                page=function_args.get("page", 1)
+            )
+            
+        else:
+            return {"error": f"Unsupported tool: {tool_name}"}

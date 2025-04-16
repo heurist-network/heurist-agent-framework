@@ -25,10 +25,50 @@ class ResearchResult(TypedDict):
 class ResearchWorkflow:
     """Research workflow combining interactive and autonomous research patterns with advanced analysis"""
 
-    def __init__(self, llm_provider, tool_manager, search_client):
+    def __init__(self, llm_provider, tool_manager, search_client=None, search_clients=None):
+        """
+        Initialize the research workflow with LLM provider and search capabilities.
+
+        Args:
+            llm_provider: Provider for language model operations
+            tool_manager: Manager for various tools
+            search_client: A single search client (for backward compatibility)
+            search_clients: Dictionary of search clients with provider names as keys
+                            Example:
+                            {
+                                "exa": ExaClient(api_key="..."),
+                                "firecrawl": FirecrawlClient(api_key="..."),
+                                "duckduckgo": DuckDuckGoClient()
+                            }
+        """
         self.llm_provider = llm_provider
         self.tool_manager = tool_manager
-        self.search_client = search_client
+
+        # Initialize search clients dictionary
+        self.search_clients = {}
+
+        # Handle single client (backward compatibility)
+        if search_client:
+            self.search_clients["default"] = search_client
+            # Configure rate limit for the default client
+            if hasattr(search_client, "update_rate_limit"):
+                search_client.update_rate_limit(0)
+
+        # Handle multiple clients
+        if search_clients and isinstance(search_clients, dict):
+            for provider, client in search_clients.items():
+                self.search_clients[provider] = client
+                # Configure rate limit for each client
+                if hasattr(client, "update_rate_limit"):
+                    client.update_rate_limit(0)
+
+        # Make sure we have at least one search client
+        if not self.search_clients:
+            raise ValueError("At least one search client must be provided")
+
+        # For convenience, set search_client to the default client
+        self.search_client = self.search_clients.get("default", next(iter(self.search_clients.values())))
+
         self._last_request_time = 0
 
     async def process(
@@ -44,10 +84,14 @@ class ResearchWorkflow:
             "concurrency": 3,  # Max concurrent requests
             "temperature": 0.7,
             "raw_data_only": False,  # Whether to return only raw data without report
+            "report_model": None,  # Model to use for report generation
+            "multi_provider": len(self.search_clients) > 1,  # Auto-enable when multiple clients are available
+            "search_providers": [],  # List of search provider names to use (if multi_provider is True)
         }
 
         if workflow_options:
             options.update(workflow_options)
+            self.report_model = workflow_options.get("report_model", None)
 
         try:
             if options["interactive"]:
@@ -64,6 +108,8 @@ class ResearchWorkflow:
                 breadth=options["breadth"],
                 depth=options["depth"],
                 concurrency=options["concurrency"],
+                multi_provider=options.get("multi_provider", False),
+                search_providers=options.get("search_providers", []),
             )
 
             if options["raw_data_only"]:
@@ -132,9 +178,14 @@ class ResearchWorkflow:
         }
         """
         prompt += example_response
-        response, _, _ = await self.llm_provider.call(
-            system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.3
-        )
+        if self.report_model:
+            response, _, _ = await self.llm_provider.call(
+                system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.3, model_id=self.report_model
+            )
+        else:
+            response, _, _ = await self.llm_provider.call(
+                system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.3
+            )
         try:
             cleaned_response = response.replace("```json", "").replace("```", "").strip()
             result = json.loads(cleaned_response)
@@ -204,11 +255,13 @@ class ResearchWorkflow:
         breadth: int,
         depth: int,
         concurrency: int,
+        multi_provider: bool,
+        search_providers: List[str],
         learnings: List[str] = None,
         visited_urls: List[str] = None,
         analyses: List[Dict] = None,
     ) -> ResearchResult:
-        """Conduct deep research using SearchClient with improved handling and rate limiting"""
+        """Conduct deep research using SearchClient with improved handling and parallelization"""
 
         learnings = learnings or []
         visited_urls = visited_urls or []
@@ -220,45 +273,175 @@ class ResearchWorkflow:
         # Create semaphore for concurrent requests
         semaphore = asyncio.Semaphore(concurrency)
 
-        async def process_query(research_query: ResearchQuery) -> Dict:
-            async with semaphore:
+        # Decide which search clients to use
+        active_search_clients = {}
+
+        # If multi_provider is enabled and specific providers are requested, filter them
+        if multi_provider and search_providers:
+            for provider in search_providers:
+                if provider in self.search_clients:
+                    active_search_clients[provider] = self.search_clients[provider]
+
+        # If no specific providers were requested or found, use all available clients
+        if not active_search_clients:
+            active_search_clients = self.search_clients
+
+        # Single provider simplification - if only one provider, just use that
+        if len(active_search_clients) == 1:
+            provider = next(iter(active_search_clients.keys()))
+            search_client = active_search_clients[provider]
+
+            async def process_query(research_query: ResearchQuery) -> Dict:
+                async with semaphore:
+                    try:
+                        # Search using SearchClient with timeouts and retries
+                        for attempt in range(3):
+                            try:
+                                print(f"Searching with {provider} for {research_query.query}")
+                                result = await search_client.search(research_query.query, timeout=20000)
+                                break
+                            except Exception as e:
+                                if attempt == 2:  # Last attempt
+                                    raise
+                                logger.warning(f"Search attempt {attempt + 1} failed: {str(e)}")
+                                await asyncio.sleep(2)  # Wait before retrying
+
+                        # Extract URLs
+                        urls = [item.get("url") for item in result.get("data", []) if item.get("url")]
+
+                        # Process content to extract learnings
+                        processed_result = await self._process_search_result(
+                            query=research_query.query, search_result=result
+                        )
+
+                        new_breadth = max(1, breadth // 2)
+                        new_depth = depth - 1
+
+                        # If we have depth remaining and follow-up questions, explore deeper
+                        if new_depth > 0 and processed_result["follow_up_questions"]:
+                            next_query = "\n".join(
+                                [
+                                    f"Previous research goal: {research_query.research_goal}",
+                                    "Follow-up questions to explore:",
+                                    "\n".join(f"- {q}" for q in processed_result["follow_up_questions"][:new_breadth]),
+                                ]
+                            )
+
+                            deeper_results = await self._deep_research(
+                                query=next_query,
+                                breadth=new_breadth,
+                                depth=new_depth,
+                                concurrency=concurrency,
+                                multi_provider=multi_provider,
+                                search_providers=search_providers,
+                                learnings=learnings + processed_result["learnings"],
+                                visited_urls=visited_urls + urls,
+                                analyses=analyses
+                                + [{"query": research_query.query, "analysis": processed_result["analysis"]}],
+                            )
+
+                            return {
+                                "learnings": deeper_results["learnings"],
+                                "urls": deeper_results["visited_urls"],
+                                "follow_up_questions": deeper_results["follow_up_questions"],
+                                "analyses": deeper_results["analyses"],
+                            }
+
+                        return {
+                            "learnings": processed_result["learnings"],
+                            "urls": urls,
+                            "follow_up_questions": processed_result["follow_up_questions"],
+                            "analyses": [{"query": research_query.query, "analysis": processed_result["analysis"]}],
+                        }
+
+                    except Exception as e:
+                        logger.error(f"Error processing query {research_query.query}: {str(e)}")
+                        return {"learnings": [], "urls": [], "follow_up_questions": [], "analyses": []}
+
+            # Process all queries concurrently
+            results = await asyncio.gather(*[process_query(q) for q in search_queries])
+
+        else:
+            # Multiple providers case - search each query with each provider
+            async def search_with_provider(research_query: ResearchQuery, provider: str, search_client) -> Dict:
+                async with semaphore:
+                    try:
+                        # Search using this provider's client
+                        for attempt in range(3):
+                            try:
+                                print(f"Searching with {provider} for {research_query.query}")
+                                result = await search_client.search(research_query.query, timeout=20000)
+                                break
+                            except Exception as e:
+                                if attempt == 2:  # Last attempt
+                                    raise
+                                logger.warning(f"Search attempt {attempt + 1} failed: {str(e)}")
+                                await asyncio.sleep(2)  # Wait before retrying
+
+                        # Extract URLs
+                        urls = [item.get("url") for item in result.get("data", []) if item.get("url")]
+
+                        # Process content to extract learnings
+                        processed_result = await self._process_search_result(
+                            query=f"{research_query.query} [{provider}]", search_result=result
+                        )
+
+                        return {
+                            "learnings": processed_result["learnings"],
+                            "urls": urls,
+                            "follow_up_questions": processed_result["follow_up_questions"],
+                            "analysis": processed_result["analysis"],
+                            "provider": provider,
+                        }
+                    except Exception as e:
+                        logger.error(f"Error processing query {research_query.query} with {provider}: {str(e)}")
+                        return {
+                            "learnings": [],
+                            "urls": [],
+                            "follow_up_questions": [],
+                            "analysis": f"Error with {provider}: {str(e)}",
+                            "provider": provider,
+                        }
+
+            async def process_query_with_providers(research_query: ResearchQuery) -> Dict:
                 try:
-                    # Add rate limiting
-                    current_time = asyncio.get_event_loop().time()
-                    time_since_last = current_time - self._last_request_time
-                    if time_since_last < 3:  # Rate limit to prevent overloading
-                        await asyncio.sleep(3 - time_since_last)
-                    self._last_request_time = current_time
+                    # Create tasks to search with all providers in parallel
+                    provider_tasks = [
+                        search_with_provider(research_query, provider, client)
+                        for provider, client in active_search_clients.items()
+                    ]
 
-                    # Search using SearchClient with timeouts and retries
-                    for attempt in range(3):
-                        try:
-                            result = await self.search_client.search(research_query.query, timeout=20000)
-                            break
-                        except Exception as e:
-                            if attempt == 2:  # Last attempt
-                                raise
-                            logger.warning(f"Search attempt {attempt + 1} failed: {str(e)}")
-                            await asyncio.sleep(2)  # Wait before retrying
+                    # Run all provider searches in parallel
+                    provider_results = await asyncio.gather(*provider_tasks)
 
-                    # Extract URLs
-                    urls = [item.get("url") for item in result.get("data", []) if item.get("url")]
+                    # Combine results from all providers for this query
+                    combined_result = {"learnings": [], "urls": [], "follow_up_questions": [], "analyses": []}
 
-                    # Process content to extract learnings
-                    processed_result = await self._process_search_result(
-                        query=research_query.query, search_result=result
-                    )
+                    for result in provider_results:
+                        combined_result["learnings"].extend(result["learnings"])
+                        combined_result["urls"].extend(result["urls"])
+                        combined_result["follow_up_questions"].extend(result["follow_up_questions"])
+                        combined_result["analyses"].append(
+                            {
+                                "query": research_query.query,
+                                "provider": result["provider"],
+                                "analysis": result["analysis"],
+                            }
+                        )
 
+                    # Process follow-up questions if needed
                     new_breadth = max(1, breadth // 2)
                     new_depth = depth - 1
 
-                    # If we have depth remaining and follow-up questions, explore deeper
-                    if new_depth > 0 and processed_result["follow_up_questions"]:
+                    if new_depth > 0 and combined_result["follow_up_questions"]:
+                        # Get unique follow-up questions
+                        unique_follow_ups = list(dict.fromkeys(combined_result["follow_up_questions"]))
+
                         next_query = "\n".join(
                             [
                                 f"Previous research goal: {research_query.research_goal}",
                                 "Follow-up questions to explore:",
-                                "\n".join(f"- {q}" for q in processed_result["follow_up_questions"][:new_breadth]),
+                                "\n".join(f"- {q}" for q in unique_follow_ups[:new_breadth]),
                             ]
                         )
 
@@ -267,10 +450,11 @@ class ResearchWorkflow:
                             breadth=new_breadth,
                             depth=new_depth,
                             concurrency=concurrency,
-                            learnings=learnings + processed_result["learnings"],
-                            visited_urls=visited_urls + urls,
-                            analyses=analyses
-                            + [{"query": research_query.query, "analysis": processed_result["analysis"]}],
+                            multi_provider=multi_provider,
+                            search_providers=search_providers,
+                            learnings=learnings + combined_result["learnings"],
+                            visited_urls=visited_urls + combined_result["urls"],
+                            analyses=analyses + combined_result["analyses"],
                         )
 
                         return {
@@ -279,22 +463,16 @@ class ResearchWorkflow:
                             "follow_up_questions": deeper_results["follow_up_questions"],
                             "analyses": deeper_results["analyses"],
                         }
-
-                    return {
-                        "learnings": processed_result["learnings"],
-                        "urls": urls,
-                        "follow_up_questions": processed_result["follow_up_questions"],
-                        "analyses": [{"query": research_query.query, "analysis": processed_result["analysis"]}],
-                    }
-
+                    else:
+                        return combined_result
                 except Exception as e:
-                    logger.error(f"Error processing query {research_query.query}: {str(e)}")
+                    logger.error(f"Error processing query with providers: {str(e)}")
                     return {"learnings": [], "urls": [], "follow_up_questions": [], "analyses": []}
 
-        # Process all queries concurrently
-        results = await asyncio.gather(*[process_query(q) for q in search_queries])
+            # Process all queries concurrently - outer level parallelism
+            results = await asyncio.gather(*[process_query_with_providers(q) for q in search_queries])
 
-        # Combine results and remove duplicates
+        # Combine results from all queries
         all_learnings = learnings.copy()
         for result in results:
             all_learnings.extend(result.get("learnings", []))
@@ -308,6 +486,7 @@ class ResearchWorkflow:
         all_questions = []
         for result in results:
             all_questions.extend(result.get("follow_up_questions", []))
+        all_questions = list(dict.fromkeys(all_questions))
 
         all_analyses = analyses.copy()
         for result in results:
@@ -356,30 +535,42 @@ class ResearchWorkflow:
         {analyses_str}
         </analyses>
 
-        Create a detailed markdown report that includes:
-        1. Executive Summary
-        2. Key Findings and Insights
-        3. Detailed Analysis by Theme
-        4. Gaps and Areas for Further Research
-        5. Recommendations
-        6. Source Analysis and Credibility Assessment
+        Create a dynamic amount of sections and subsections based on the content provided. Make sure to cover all the content and provide a comprehensive analysis.
+        At a minimum, include the following sections:
+        - Key findings and main themes
+        - Source credibility and diversity
+        - Information completeness and gaps
+        - Emerging patterns and trends
+        - Potential biases or conflicting information
+        Make sure that for every relevant topic, you include a section and any subsctions it might need. Aside from the final conclusion, you should have at least 5 sections of subtopics and a sub conclusion per section.
+        IMPORTANT: Aim for at least 3+ pages of content, don't be afraid to add more sections and subsections.
+        IMPORTANT: Be verbose and detailed in your analysis. Don't over summarize, don't over simplify. Make as many sections and subsections as needed.
 
         IMPORTANT: MAKE SURE YOU RETURN THE JSON ONLY, NO OTHER TEXT OR MARKUP AND A VALID JSON.
         IMPORTANT: DONT ADD ANY COMMENTS OR MARKUP TO THE JSON. Example NO # or /* */ or /* */ or // or ``` or JSON or json or any other comments or markup.
         IMPORTANT: MAKE SURE YOU RETURN THE JSON ONLY, JSON SHOULD BE PERFECTLY FORMATTED. ALL KEYS SHOULD BE OPENED AND CLOSED.
         """
-
-        response, _, _ = await self.llm_provider.call(system_prompt=system_prompt, user_prompt=prompt, temperature=0.3)
+        if self.report_model:
+            response, _, _ = await self.llm_provider.call(
+                system_prompt=system_prompt, user_prompt=prompt, temperature=0.3, model_id=self.report_model
+            )
+        else:
+            response, _, _ = await self.llm_provider.call(
+                system_prompt=system_prompt, user_prompt=prompt, temperature=0.3, model_id=self.report_model
+            )
 
         try:
             cleaned_response = response.replace("```json", "").replace("```", "").strip()
             result = json.loads(cleaned_response)
             report = result.get("reportMarkdown", "Error generating report")
-
+            # Add key findings section
+            key_findings = "\n\n## Key Findings\n\n" + "\n".join(
+                [f"- {learning}" for learning in research_result["learnings"]]
+            )
             # Add sources section
             sources = "\n\n## Sources\n\n" + "\n".join([f"- {url}" for url in research_result["visited_urls"]])
 
-            return report + sources
+            return report + key_findings + sources
         except json.JSONDecodeError as e:
             logger.error(f"Error parsing report JSON: {e}")
             logger.debug(f"Raw response: {response}")
@@ -391,12 +582,14 @@ class ResearchWorkflow:
                 + "\n".join([f"- {learning}" for learning in research_result["learnings"]])
                 + "\n\n## Sources\n\n"
                 + "\n".join([f"- {url}" for url in research_result["visited_urls"]])
+                + "\n\n## Response\n\n"
+                + response
             )
 
     def _get_system_prompt(self) -> str:
         """Get the system prompt for research operations"""
         return """You are an expert research analyst that processes web search results.
-        Analyze the content and provide insights about:
+        Analyze the content and provide insights about for each section you identify:
         1. Key findings and main themes
         2. Source credibility and diversity
         3. Information completeness and gaps
@@ -414,6 +607,33 @@ class ResearchWorkflow:
         FOLLOW THE REQUESTED JSON FORMAT EXACTLY WITH NO ADDITIONAL MARKUP OR COMMENTS."""
 
     def _get_report_system_prompt(self) -> str:
+        """Get the system prompt specifically for report generation"""
+        return """
+        {
+            "role": "You are an expert researcher specializing in producing exhaustive, analytically rigorous research reports.",
+            "instructions": [
+                "When responding, assume all provided facts—especially those after your knowledge cutoff—are accurate unless contradicted internally.",
+                "The user is a highly experienced analyst. Do not simplify. Prioritize technical precision, domain-specific terminology, and comprehensive argumentation.",
+                "Organize the report with multiple clearly defined sections, such as: Executive Summary, Background, Market Landscape, Problem Analysis, Technological Trends, Competitive Analysis, Risk Factors, Opportunities, Speculative Insights (clearly marked), Strategic Recommendations, and Conclusion.",
+                "Each section should be verbose, detailed, and data-driven where possible. Aim for high information density.",
+                "Anticipate what the user might need to know next. Include frameworks, mental models, and decision trees where relevant.",
+                "Suggest novel or unconventional strategies the user may not have considered. Prioritize unique insight over consensus.",
+                "Include emerging technologies, trends, and contrarian ideas. Be aggressive in surfacing innovations, and clearly identify areas of high uncertainty or risk.",
+                "Do not cite sources by name unless necessary—strong reasoning is preferred over appeal to authority.",
+                "You may speculate about future developments, but you must clearly mark any speculative or high-uncertainty claims.",
+                "Use precise definitions, models, and numerical reasoning where appropriate.",
+                "Provide critical evaluation of ideas, trade-offs, and second-order consequences.",
+                "When delivering the report, ALWAYS return a single, clean JSON object and NOTHING ELSE.",
+                "The JSON MUST be valid and properly formatted. No comments, markdown, or other markup is allowed.",
+                "ALL KEYS in the JSON must be properly opened and closed with quotation marks."
+                "IMPORTANT: MAKE SURE YOU RETURN THE JSON ONLY, NO OTHER TEXT OR MARKUP AND A VALID JSON."
+                "DONT ADD ANY COMMENTS OR MARKUP TO THE JSON. Example NO # or /* */ or /* */ or // or any other comments or markup."
+            ]
+        }
+
+        """
+
+    def _get_report_system_prompt2(self) -> str:
         """Get the system prompt specifically for report generation"""
         return """You are an expert researcher preparing comprehensive research reports.
         Follow these instructions when responding:

@@ -14,74 +14,74 @@ load_dotenv()
 async def run_agent():
     agent = CoinGeckoTokenInfoAgent()
     try:
-        # Test with a query mentioning CoinGecko ID
-        agent_input = {"query": "Get information about MONA"}
+        # Test with a natural language query
+        query_input = {"query": "Get information about MONA"}
+        query_result = await agent.handle_message(query_input)
+        print(f"Natural Language Query Result: {query_result}")
 
-        agent_output = await agent.handle_message(agent_input)
-        print(f"Result of handle_message: {agent_output}")
+        # Test direct tool calls for each tool
+        # 1. get_coingecko_id
+        coingecko_id_input = {
+            "tool": "get_coingecko_id",
+            "tool_arguments": {"token_name": "bitcoin"},
+            "raw_data_only": True,
+        }
+        coingecko_id_result = await agent.handle_message(coingecko_id_input)
+        print(f"Get CoinGecko ID Tool Result: {coingecko_id_result}")
 
-        # # Test with query mentioning the token name
-        # agent_input_name = {"query": "analyze HEU"}
+        # 2. get_token_info
+        token_info_input = {
+            "tool": "get_token_info",
+            "tool_arguments": {"coingecko_id": "bitcoin"},
+            "raw_data_only": True,
+        }
+        token_info_result = await agent.handle_message(token_info_input)
+        print(f"Get Token Info Tool Result: {token_info_result}")
 
-        # agent_output_name = await agent.handle_message(agent_input_name)
-        # print(f"Result of handle_message when token name is provided: {agent_output_name}")
+        # 3. get_trending_coins
+        trending_coins_input = {
+            "tool": "get_trending_coins",
+            "tool_arguments": {},
+            "raw_data_only": True,
+        }
+        trending_coins_result = await agent.handle_message(trending_coins_input)
+        print(f"Get Trending Coins Tool Result: {trending_coins_result}")
 
-        # # Test with trending coins
-        # agent_input_trending = {"query": "Get information about trending coins"}
-        # agent_output_trending = await agent.handle_message(agent_input_trending)
-        # print(f"Result of handle_message when trending coins is provided: {agent_output_trending}")
+        # 4. get_token_price_multi
+        price_multi_input = {
+            "tool": "get_token_price_multi",
+            "tool_arguments": {
+                "ids": "bitcoin,ethereum",
+                "vs_currencies": "usd",
+                "include_market_cap": True,
+                "include_24hr_vol": True,
+                "include_24hr_change": True,
+            },
+            "raw_data_only": True,
+        }
+        price_multi_result = await agent.handle_message(price_multi_input)
+        print(f"Get Token Price Multi Tool Result: {price_multi_result}")
 
-        # agent_input_direct = {
-        #     "tool": "get_token_info",
-        #     "tool_arguments": {"coingecko_id": "bitcoin"},
-        #     "raw_data_only": True,
-        # }
-        # agent_output_direct = await agent.handle_message(agent_input_direct)
-        # print(f"Result of direct tool call: {agent_output_direct}")
+        # 5. get_categories_list
+        categories_list_input = {
+            "tool": "get_categories_list",
+            "tool_arguments": {},
+            "raw_data_only": True,
+        }
+        categories_list_result = await agent.handle_message(categories_list_input)
+        print(f"Get Categories List Tool Result: {categories_list_result}")
 
-        # # Test the new get_token_price_multi tool
-        # agent_input_price_multi = {
-        #     "tool": "get_token_price_multi",
-        #     "tool_arguments": {
-        #         "ids": "bitcoin,ethereum,solana",
-        #         "vs_currencies": "usd",
-        #         "include_market_cap": True,
-        #         "include_24hr_vol": True,
-        #         "include_24hr_change": True,
-        #     },
-        # }
-        # agent_output_price_multi = await agent.handle_message(agent_input_price_multi)
-        # print(f"Result of get_token_price_multi tool call: {agent_output_price_multi}")
-
-        # # Test query for comparing multiple tokens
-        # agent_input_compare = {"query": "Compare Bitcoin and Ethereum"}
-        # agent_output_compare = await agent.handle_message(agent_input_compare)
-        # print(f"Result of token comparison query: {agent_output_compare}")
-
-        # NEW: Test with categories list
-        agent_input_categories = {"query": "List all cryptocurrency categories"}
-        agent_output_categories = await agent.handle_message(agent_input_categories)
-
-        # NEW: Test with category data
-        agent_input_category_data = {"query": "Show me market data for all cryptocurrency categories"}
-        agent_output_category_data = await agent.handle_message(agent_input_category_data)
-
-        # NEW: Test with tokens by category
-        agent_input_category_tokens = {"query": "Show me all tokens in the layer-1 category"}
-        agent_output_category_tokens = await agent.handle_message(agent_input_category_tokens)
-
-        # NEW: Test direct tool calls for each new category function
-        agent_input_direct_categories = {"tool": "get_categories_list", "tool_arguments": {}, "raw_data_only": True}
-        agent_output_direct_categories = await agent.handle_message(agent_input_direct_categories)
-
-        agent_input_direct_category_data = {
+        # 6. get_category_data
+        category_data_input = {
             "tool": "get_category_data",
             "tool_arguments": {"order": "market_cap_desc"},
             "raw_data_only": True,
         }
-        agent_output_direct_category_data = await agent.handle_message(agent_input_direct_category_data)
+        category_data_result = await agent.handle_message(category_data_input)
+        print(f"Get Category Data Tool Result: {category_data_result}")
 
-        agent_input_direct_category_tokens = {
+        # 7. get_tokens_by_category
+        tokens_by_category_input = {
             "tool": "get_tokens_by_category",
             "tool_arguments": {
                 "category_id": "layer-1",
@@ -92,38 +92,33 @@ async def run_agent():
             },
             "raw_data_only": True,
         }
+        tokens_by_category_result = await agent.handle_message(tokens_by_category_input)
+        print(f"Get Tokens By Category Tool Result: {tokens_by_category_result}")
 
+        # Test with raw data only for natural language query
+        raw_input = {
+            "query": "Compare Bitcoin and Ethereum prices",
+            "raw_data_only": True,
+        }
+        raw_result = await agent.handle_message(raw_input)
+        print(f"Raw Data Query Result: {raw_result}")
+
+        # Save all test results to a YAML file
         script_dir = Path(__file__).parent
         current_file = Path(__file__).stem
         base_filename = f"{current_file}_example"
         output_file = script_dir / f"{base_filename}.yaml"
 
-        # Removed couple examples
         yaml_content = {
-            "input_by_id": agent_input,
-            "output_by_id": agent_output,
-            # "input_by_name": agent_input_name,
-            # "output_by_name": agent_output_name,
-            # "input_by_trending": agent_input_trending,
-            # "output_by_trending": agent_output_trending,
-            # "input_direct_tool": agent_input_direct,
-            # "output_direct_tool": agent_output_direct,
-            # "input_price_multi": agent_input_price_multi,
-            # "output_price_multi": agent_output_price_multi,
-            # "input_comparison": agent_input_compare,
-            # "output_comparison": agent_output_compare,
-            # Updated Data
-            "input_categories_list": agent_input_categories,
-            "output_categories_list": agent_output_categories,
-            "input_category_data": agent_input_category_data,
-            "output_category_data": agent_output_category_data,
-            "input_category_tokens": agent_input_category_tokens,
-            "output_category_tokens": agent_output_category_tokens,
-            "input_direct_categories": agent_input_direct_categories,
-            "output_direct_categories": agent_output_direct_categories,
-            "input_direct_category_data": agent_input_direct_category_data,
-            "output_direct_category_data": agent_output_direct_category_data,
-            "input_direct_category_tokens": agent_input_direct_category_tokens,
+            "natural_language_query": {"input": query_input, "output": query_result},
+            "coingecko_id_tool": {"input": coingecko_id_input, "output": coingecko_id_result},
+            "token_info_tool": {"input": token_info_input, "output": token_info_result},
+            "trending_coins_tool": {"input": trending_coins_input, "output": trending_coins_result},
+            "price_multi_tool": {"input": price_multi_input, "output": price_multi_result},
+            "categories_list_tool": {"input": categories_list_input, "output": categories_list_result},
+            "category_data_tool": {"input": category_data_input, "output": category_data_result},
+            "tokens_by_category_tool": {"input": tokens_by_category_input, "output": tokens_by_category_result},
+            "raw_data_query": {"input": raw_input, "output": raw_result},
         }
 
         with open(output_file, "w", encoding="utf-8") as f:

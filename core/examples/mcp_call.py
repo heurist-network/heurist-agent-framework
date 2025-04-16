@@ -3,13 +3,8 @@ import asyncio
 from heurist_core.components import LLMProvider
 from heurist_core.tools.tools_mcp import Tools
 
-# Initialize managers
 tools = Tools()
-
 llm_provider = LLMProvider(tool_manager=tools)
-
-# Initialize reasoning patterns
-
 server_url = "https://localhost:8000/sse"
 
 

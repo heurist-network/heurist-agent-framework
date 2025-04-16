@@ -116,12 +116,18 @@ class ChainOfThoughtReasoning:
 
             # Execute each step
             for step in json_response:
+                # Add validation to ensure step is a dictionary
+                if not isinstance(step, dict):
+                    logger.error(f"Invalid step format, expected dict but got: {type(step).__name__}")
+                    logger.debug(f"Step content: {step}")
+                    continue  # Skip this step or you could return the fallback
+
                 system_prompt = f"""CONTEXT: YOU ARE RUNNING STEPS FOR THE ORIGINAL QUESTION: {message_data}.
                 PREVIOUS STEP RESPONSES: {steps_responses}"""
 
                 skip_tools = False
                 # skip_conversation_context = True
-                if step["tool"] == "None":
+                if step.get("tool") == "None":
                     skip_tools = True
                     # skip_conversation_context = False
 

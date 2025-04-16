@@ -18,7 +18,7 @@ from core.components.media_handler import MediaHandler
 from core.components.personality_provider import PersonalityProvider
 from core.components.validation_manager import ValidationManager
 from core.embedding import MessageStore, PostgresConfig, PostgresVectorStorage, SQLiteConfig, SQLiteVectorStorage
-from core.tools.tools import Tools
+from core.tools.tools_mcp import Tools
 from core.workflows.augmented_llm import AugmentedLLMCall
 from core.workflows.chain_of_thought import ChainOfThoughtReasoning
 from core.workflows.deep_research import ResearchWorkflow
@@ -528,19 +528,22 @@ class CoreAgent(BaseAgent):
         Returns:
             Tuple of (research report, research results data)
         """
+        research_model = os.environ.get("RESEARCH_MODEL", "mistralai/mixtral-8x22b-instruct")
         try:
-            # Import here to avoid circular imports
-
-            # Initialize Firecrawl client if not already available
-
-            # firecrawl_client = kwargs.get("firecrawl_client") or Firecrawl(
-            #     api_key=os.environ.get("FIRECRAWL_KEY", ""), api_url=os.environ.get("FIRECRAWL_BASE_URL")
-            # )
-            search_client = SearchClient(client_type="exa", api_key=os.environ.get("EXA_API_KEY", ""), rate_limit=10)
-
+            exa_search_client = SearchClient(client_type="exa", api_key=os.environ.get("EXA_API_KEY", ""), rate_limit=1)
+            search_client = SearchClient(
+                client_type="firecrawl", api_key=os.environ.get("FIRECRAWL_KEY", ""), rate_limit=1
+            )
+            duckduckgo_search_client = SearchClient(client_type="duckduckgo", rate_limit=5)
             # Initialize the research workflow
             research_workflow = ResearchWorkflow(
-                llm_provider=self.llm_provider, tool_manager=self.tools, search_client=search_client
+                llm_provider=self.llm_provider,
+                tool_manager=self.tools,
+                search_clients={
+                    "exa": exa_search_client,
+                    "firecrawl": search_client,
+                    "duckduckgo": duckduckgo_search_client,
+                },
             )
 
             # Configure workflow options
@@ -548,9 +551,10 @@ class CoreAgent(BaseAgent):
                 "interactive": interactive,
                 "breadth": min(max(breadth, 1), 5),  # Ensure within valid range (1-5)
                 "depth": min(max(depth, 1), 3),  # Ensure within valid range (1-3)
-                "concurrency": min(max(concurrency, 1), 5),
+                "concurrency": min(max(concurrency, 1), 9),
                 "temperature": temperature,
                 "raw_data_only": raw_data_only,
+                "report_model": research_model,
             }
             print(f"workflow_options: {workflow_options}")
             # Process the research request
@@ -559,10 +563,120 @@ class CoreAgent(BaseAgent):
                 personality_provider=self.personality_provider,
                 chat_id=chat_id,
                 workflow_options=workflow_options,
+                search_providers=["firecrawl", "exa", "duckduckgo"],
                 **kwargs,
             )
 
             return report, research_result
+
+        except Exception as e:
+            logger.error(f"Deep research failed: {str(e)}")
+            return f"Research failed: {str(e)}", None
+
+    async def deeper_research(
+        self,
+        query: str,
+        chat_id: str = None,
+        interactive: bool = False,
+        breadth: int = 3,
+        depth: int = 2,
+        concurrency: int = 3,
+        temperature: float = 0.7,
+        raw_data_only: bool = False,
+        **kwargs,
+    ) -> Tuple[Optional[str], Optional[Dict]]:
+        """
+        Perform deep research on a query using the research workflow.
+
+        Args:
+            query: The research query or topic to investigate
+            chat_id: Unique identifier for the conversation
+            interactive: Whether to ask clarifying questions first
+            breadth: Number of parallel searches to perform (1-5)
+            depth: How deep to go in research (1-3)
+            concurrency: Maximum concurrent requests
+            temperature: Temperature for LLM calls
+            raw_data_only: Whether to return only raw data without report
+
+        Returns:
+            Tuple of (research report, research results data)
+        """
+        try:
+            exa_search_client = SearchClient(client_type="exa", api_key=os.environ.get("EXA_API_KEY", ""), rate_limit=1)
+            search_client = SearchClient(
+                client_type="firecrawl", api_key=os.environ.get("FIRECRAWL_KEY", ""), rate_limit=1
+            )
+            duckduckgo_search_client = SearchClient(client_type="duckduckgo", rate_limit=5)
+            # Initialize the research workflow
+            research_workflow = ResearchWorkflow(
+                llm_provider=self.llm_provider,
+                tool_manager=self.tools,
+                search_clients={
+                    "exa": exa_search_client,
+                    "firecrawl": search_client,
+                    "duckduckgo": duckduckgo_search_client,
+                },
+            )
+
+            # Configure workflow options
+            workflow_options = {
+                "interactive": interactive,
+                "breadth": min(max(breadth, 1), 5),  # Ensure within valid range (1-5)
+                "depth": min(max(depth, 1), 3),  # Ensure within valid range (1-3)
+                "concurrency": min(max(concurrency, 1), 6),
+                "temperature": temperature,
+                "raw_data_only": raw_data_only,
+                "report_model": "mistralai/mixtral-8x22b-instruct",
+            }
+            print(f"workflow_options: {workflow_options}")
+            # Process the research request
+            report, _, research_result = await research_workflow.process(
+                message=query,
+                personality_provider=self.personality_provider,
+                chat_id=chat_id,
+                workflow_options=workflow_options,
+                search_providers=["firecrawl"],
+                **kwargs,
+            )
+            print(report[:200])
+            cot_prompt = f"""
+            You are a helpful assistant that can answer questions and help with tasks.
+            You are given a report and a question.
+            You need to answer the question based on the report. See if there's tools relevevant to the question and use them to enhance the report.
+            Report: {report}
+            Question: {query}
+            Keep the Response as a report folowing the original format of the report.
+            """
+
+            logger.info("Using chain of thought reasoning")
+            response, image_url, tool_result = await self.chain_of_thought.process(
+                message=query,
+                system_prompt=cot_prompt,
+                chat_id=chat_id,
+                workflow_options=workflow_options,
+                agent=self,
+                skip_store=True,
+                conversation_provider=self.conversation_manager,
+                **kwargs,
+            )
+            final_report_prompt = f"""
+            You are a helpful assistant that can answer questions and help with tasks.
+            You are given a report and a question.
+            You need to enhance the report based on the extra information.
+            Report: {report}
+            Question: {query}
+            Extra information: {response}
+            Keep the Response as a report folowing the original format of the report. Make sure it's a valid markdown and all original content is included.
+            """
+            response, _, _ = await self.llm_provider.call(
+                message=query,
+                system_prompt=final_report_prompt,
+                user_prompt=query,
+                temperature=0.3,
+                model_id=workflow_options["report_model"],
+            )
+
+            return response, tool_result
 
         except Exception as e:
             logger.error(f"Deep research failed: {str(e)}")
