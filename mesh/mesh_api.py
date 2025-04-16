@@ -16,6 +16,14 @@ sys.path.append(str(project_root))
 
 from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 
+
+# exclude `mesh_health` logs as it's used for health checks
+class EndpointFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "GET /mesh_health" not in record.getMessage()
+
+
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s - %(message)s")
 logger = logging.getLogger("MeshAPI")
 
@@ -117,4 +125,5 @@ async def health_check():
 
 
 if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0")
     uvicorn.run(app, host="0.0.0.0")
