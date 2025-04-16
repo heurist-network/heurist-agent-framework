@@ -27,7 +27,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     curl \
     git \
     libpq-dev \
-    gcc && \
+    gcc \
+    libc6-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # Add supervisor configuration

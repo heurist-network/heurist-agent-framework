@@ -1,10 +1,10 @@
 services:
   mesh:
     container_name: mesh-backend
+    image: ghcr.io/heurist-network/heurist-agent-framework/mesh:latest
     build:
       context: .
       dockerfile: Dockerfile
-    image: mesh-backend
     ports:
       - "8000:8000"
     restart: unless-stopped
