@@ -18,7 +18,6 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 os.environ.clear()
 dotenv.load_dotenv(override=True)
-logger.info("Environment variables reloaded image generation")
 
 # Constants
 HEURIST_BASE_URL = os.getenv("HEURIST_BASE_URL")

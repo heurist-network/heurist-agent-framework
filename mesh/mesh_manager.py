@@ -16,8 +16,7 @@ sys.path.append(str(project_root))
 
 from mesh.mesh_agent import MeshAgent  # noqa: E402
 
-# Configure loguru
-logger.remove()  # Remove default handler
+logger.remove()
 logger.add(
     sys.stderr,
     level="INFO",
@@ -25,14 +24,11 @@ logger.add(
 )
 
 
-# Configuration
 class Config:
     """Configuration management for Mesh Manager"""
 
     def __init__(self):
         load_dotenv()
-
-        # Server configuration
         self.protocol_v2_url = os.getenv("PROTOCOL_V2_SERVER_URL", "https://sequencer-v2.heurist.xyz")
         self.poll_interval = float(os.getenv("POLL_INTERVAL_SECONDS", "2.0"))
         self.auth_token = os.getenv("PROTOCOL_V2_AUTH_TOKEN", "test_key")
