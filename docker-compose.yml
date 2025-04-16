@@ -1,7 +1,7 @@
 services:
   mesh:
     container_name: mesh-backend
-    image: ghcr.io/heurist-network/heurist-agent-framework/mesh:latest
+    image: ghcr.io/heurist-network/heurist-agent-framework/mesh:${COMMIT_SHA:-latest}
     build:
       context: .
       dockerfile: Dockerfile
