@@ -1,6 +1,5 @@
 services:
   mesh:
-    container_name: mesh-backend
     image: ghcr.io/heurist-network/heurist-agent-framework/mesh:${COMMIT_SHA:-latest}
     build:
       context: .
@@ -12,7 +11,13 @@ services:
       - .env
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/mesh_health"]
-      interval: 30s
-      timeout: 10s
+      interval: 10s
+      timeout: 5s
       retries: 3
-      start_period: 5s
+      start_period: 2s
+    deploy:
+      replicas: 2
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
