@@ -45,6 +45,9 @@ COPY . .
 # Place executables in the environment at the front of the path
 ENV PATH="/app/mesh/.venv/bin:$PATH"
 
+# Run requirements check to verify all dependencies are installed correctly
+RUN cd mesh && python requirements_checker.py && echo "Requirements check passed!" || (echo "Requirements check failed!" && exit 1)
+
 # Reset the entrypoint
 ENTRYPOINT []
 
