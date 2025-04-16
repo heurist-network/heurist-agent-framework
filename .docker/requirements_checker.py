@@ -7,7 +7,6 @@ sys.path.append(str(project_root))
 from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 
 if __name__ == "__main__":
-    print("\n== Testing Agent Imports ==")
     config = Config()
     agent_loader = AgentLoader(config)
 

@@ -31,22 +31,25 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     libc6-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Add supervisor configuration
-COPY mesh/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
 # Install the project's dependencies using the lockfile and settings
 RUN --mount=type=cache,target=/root/.cache/uv \
     cd mesh && \
     uv sync --frozen --no-install-project --no-dev
 
+# Add supervisor configuration
+COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Add the rest of the project source code
 COPY . .
+
+# Make the env-setup script executable
+RUN chmod +x /app/.docker/env-setup.sh
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/mesh/.venv/bin:$PATH"
 
 # Run requirements check to verify all dependencies are installed correctly
-RUN cd mesh && python requirements_checker.py && echo "Requirements check passed!" || (echo "Requirements check failed!" && exit 1)
+RUN python .docker/requirements_checker.py && echo "Requirements check passed!" || (echo "Requirements check failed!" && exit 1)
 
 # Reset the entrypoint
 ENTRYPOINT []
