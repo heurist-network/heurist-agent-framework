@@ -20,4 +20,4 @@ services:
       update_config:
         order: start-first
         failure_action: rollback
-        delay: 10s
+        delay: 5s
