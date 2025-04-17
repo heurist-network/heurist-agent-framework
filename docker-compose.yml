@@ -13,8 +13,8 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8000/mesh_health"]
       interval: 10s
       timeout: 5s
-      retries: 3
-      start_period: 2s
+      retries: 5
+      start_period: 5s
     deploy:
       replicas: 2
       update_config:
