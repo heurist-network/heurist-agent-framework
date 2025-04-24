@@ -1,0 +1,40 @@
+query_test:
+  input:
+    query: Tell me about trending projects on Ethereum
+  output:
+    response: "Based on the AixBT API data, here is the response:\n\n**Trending Projects\
+      \ on Ethereum**\n\nUnfortunately, the AixBT API did not return any information\
+      \ on trending projects on the Ethereum blockchain at this time. The search results\
+      \ yielded an empty list.\n\n**What to Try Next:**\n\nTo find information on\
+      \ popular or trending Ethereum projects, you can attempt the following:\n\n\
+      1. **Search by Specific Project:**\n\t* Provide me with a specific Ethereum\
+      \ project's:\n\t\t+ **Name** (e.g., Uniswap, OpenSea)\n\t\t+ **Ticker** (e.g.,\
+      \ UNI, LINK)\n\t\t+ **Twitter Handle** (e.g., @Uniswap, @OpenSea)\n\t* I can\
+      \ try to retrieve detailed information about that particular project using the\
+      \ AixBT API.\n\n2. **Broaden Your Query (if applicable):**\n\t* If you're interested\
+      \ in a specific category within Ethereum (e.g., DeFi, NFT, Gaming), let me know,\
+      \ and I can attempt to guide you on how to find relevant projects, although\
+      \ the AixBT API's direct results are currently unavailable for trending projects.\n\
+      \n3. **External Resources:**\n\t* For an overview of trending Ethereum projects,\
+      \ you may also want to explore external resources such as:\n\t\t+ Ethereum's\
+      \ official blog or community forums\n\t\t+ Crypto news websites (e.g., CoinDesk,\
+      \ CoinTelegraph)\n\t\t+ Blockchain analytics platforms (e.g., Etherscan, DappRadar)\n\
+      \n**Service Limitation Reminder:**\nPlease note that the AixBT API is primarily\
+      \ focused on cryptocurrency and blockchain projects. If your query shifts to\
+      \ non-crypto related projects, I'll be happy to explain how our service's scope\
+      \ applies. \n\nHow would you like to proceed? Would you like to search for a\
+      \ specific project or explore one of the suggested alternatives?"
+    data:
+      search_results:
+        projects: []
+tool_test:
+  input:
+    tool: search_projects
+    tool_arguments:
+      name: heurist
+      limit: 1
+  output:
+    response: ''
+    data:
+      search_results:
+        projects: []
