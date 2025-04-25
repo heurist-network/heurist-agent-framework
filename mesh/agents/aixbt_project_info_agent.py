@@ -1,18 +1,33 @@
+import logging
 import os
 from typing import Any, Dict, List, Optional
 
 import aiohttp
 from dotenv import load_dotenv
 
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 
 class AixbtProjectInfoAgent(MeshAgent):
     def __init__(self):
         super().__init__()
+        self.session = None
+
+        # Get API key from environment
+        self.api_key = os.getenv("AIXBT_API_KEY")
+        if not self.api_key:
+            raise ValueError("AIXBT_API_KEY environment variable is required")
+
+        self.base_url = "https://api.aixbt.tech/v1"
+        self.headers = {
+            "accept": "*/*",
+            "Authorization": f"Bearer {self.api_key}",
+        }
+
         self.metadata.update(
             {
                 "name": "AixBT Project Info Agent",
@@ -24,12 +39,6 @@ class AixbtProjectInfoAgent(MeshAgent):
                     {
                         "name": "query",
                         "description": "Natural language query about a crypto project",
-                        "type": "str",
-                        "required": False,
-                    },
-                    {
-                        "name": "project_id",
-                        "description": "Specific project ID to query",
                         "type": "str",
                         "required": False,
                     },
@@ -65,6 +74,12 @@ class AixbtProjectInfoAgent(MeshAgent):
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.session:
+            await self.session.close()
+            self.session = None
+
+    async def cleanup(self):
+        """Close any open resources"""
         if self.session:
             await self.session.close()
             self.session = None
@@ -129,7 +144,6 @@ class AixbtProjectInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      AIXBT API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @monitor_execution()
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
     @with_retry(max_retries=3)
     async def search_projects(
@@ -147,8 +161,7 @@ class AixbtProjectInfoAgent(MeshAgent):
             should_close = True
 
         try:
-            base_url = "https://api.aixbt.tech/v1"
-            url = f"{base_url}/projects"
+            url = f"{self.base_url}/projects"
 
             # Build params dict with only non-None values
             params = {}
@@ -163,34 +176,41 @@ class AixbtProjectInfoAgent(MeshAgent):
             if minScore is not None:
                 params["minScore"] = minScore
             if chain is not None:
-                params["chain"] = chain
+                params["chain"] = chain.lower()
+            logger.info(f"Searching projects with params: {params}")
 
-            headers = {
-                "accept": "*/*",
-                "x-api-key": os.getenv("AIXBT_API_KEY"),
-            }
+            async with self.session.get(url, headers=self.headers, params=params) as response:
+                if response.status != 200:
+                    response_text = await response.text()
+                    logger.error(f"API Error {response.status}: {response_text[:200]}")
+                    return {"error": f"API Error {response.status}: {response_text[:200]}"}
 
-            print(f"Searching for projects with params: {params} and headers: {headers}")
-            print(f"URL: {url}")
-
-            async with self.session.get(url, headers=headers, params=params) as response:
-                # Even if we get an error status, try to parse the response
-                status_code = response.status
-                response_text = await response.text()
-
+                # Parse JSON response
                 try:
                     data = await response.json()
-                    # Ensure we have a consistent format
-                    if "projects" not in data:
-                        data = {"projects": []}
-                    return data
-                except:
-                    # If we can't parse as JSON, return an error
-                    return {
-                        "error": f"Failed to search projects. Status: {status_code}, Response: {response_text[:200]}..."
-                    }
+                    if "status" in data and "data" in data:
+                        if data["status"] == 200:
+                            return {"projects": data["data"]}
+                        else:
+                            return {"error": data.get("error", "Unknown API error"), "projects": []}
+                    elif isinstance(data, list):
+                        return {"projects": data}
+
+                    elif "projects" in data:
+                        return data
+
+                    else:
+                        logger.warning(f"Unexpected response format: {data}")
+                        return {"projects": []}
+
+                except Exception as e:
+                    logger.error(f"Error parsing response: {str(e)}")
+                    response_text = await response.text()
+                    return {"error": f"Failed to parse API response: {str(e)}", "projects": []}
+
         except Exception as e:
-            return {"error": f"Failed to search projects: {str(e)}"}
+            logger.error(f"Error fetching projects: {str(e)}")
+            return {"error": f"Failed to search projects: {str(e)}", "projects": []}
         finally:
             if should_close and self.session:
                 await self.session.close()
@@ -200,24 +220,22 @@ class AixbtProjectInfoAgent(MeshAgent):
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
     async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
-        if tool_name == "search_projects":
-            # Extract all possible parameters with None as default
-            limit = function_args.get("limit", 10)
-            name = function_args.get("name")
-            ticker = function_args.get("ticker")
-            xHandle = function_args.get("xHandle")
-            minScore = function_args.get("minScore")
-            chain = function_args.get("chain")
+        """Handle tool execution and return results"""
+        if tool_name != "search_projects":
+            return {"error": f"Unsupported tool: {tool_name}", "data": {"projects": []}}
 
-            result = await self.search_projects(
-                limit=limit, name=name, ticker=ticker, xHandle=xHandle, minScore=minScore, chain=chain
-            )
+        limit = function_args.get("limit", 10)
+        name = function_args.get("name")
+        ticker = function_args.get("ticker")
+        xHandle = function_args.get("xHandle")
+        minScore = function_args.get("minScore")
+        chain = function_args.get("chain")
 
-            errors = self._handle_error(result)
-            if errors:
-                return errors
+        result = await self.search_projects(
+            limit=limit, name=name, ticker=ticker, xHandle=xHandle, minScore=minScore, chain=chain
+        )
+        if "error" in result and result["error"]:
+            logger.warning(f"Error in API response: {result['error']}")
+            return {"error": result["error"], "data": {"projects": []}}
 
-            return {"search_results": result}
-
-        else:
-            return {"error": f"Unsupported tool '{tool_name}'"}
+        return {"data": result}

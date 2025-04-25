@@ -2,31 +2,528 @@ query_test:
   input:
     query: Tell me about trending projects on Ethereum
   output:
-    response: "Based on the AixBT API data, here is the response:\n\n**Trending Projects\
-      \ on Ethereum**\n\nUnfortunately, the AixBT API did not return any information\
-      \ on trending projects on the Ethereum blockchain at this time. The search results\
-      \ yielded an empty list.\n\n**What to Try Next:**\n\nTo find information on\
-      \ popular or trending Ethereum projects, you can attempt the following:\n\n\
-      1. **Search by Specific Project:**\n\t* Provide me with a specific Ethereum\
-      \ project's:\n\t\t+ **Name** (e.g., Uniswap, OpenSea)\n\t\t+ **Ticker** (e.g.,\
-      \ UNI, LINK)\n\t\t+ **Twitter Handle** (e.g., @Uniswap, @OpenSea)\n\t* I can\
-      \ try to retrieve detailed information about that particular project using the\
-      \ AixBT API.\n\n2. **Broaden Your Query (if applicable):**\n\t* If you're interested\
-      \ in a specific category within Ethereum (e.g., DeFi, NFT, Gaming), let me know,\
-      \ and I can attempt to guide you on how to find relevant projects, although\
-      \ the AixBT API's direct results are currently unavailable for trending projects.\n\
-      \n3. **External Resources:**\n\t* For an overview of trending Ethereum projects,\
-      \ you may also want to explore external resources such as:\n\t\t+ Ethereum's\
-      \ official blog or community forums\n\t\t+ Crypto news websites (e.g., CoinDesk,\
-      \ CoinTelegraph)\n\t\t+ Blockchain analytics platforms (e.g., Etherscan, DappRadar)\n\
-      \n**Service Limitation Reminder:**\nPlease note that the AixBT API is primarily\
-      \ focused on cryptocurrency and blockchain projects. If your query shifts to\
-      \ non-crypto related projects, I'll be happy to explain how our service's scope\
-      \ applies. \n\nHow would you like to proceed? Would you like to search for a\
-      \ specific project or explore one of the suggested alternatives?"
+    response: 'Here is the information about trending projects on Ethereum based on
+      the provided AixBT API data:
+
+
+      **Trending Ethereum Project:**
+
+      * **Project Name:** Gelato Network
+
+      * **Ticker:** GEL
+
+      * **Twitter Handle:** @gelatonetwork
+
+
+      **Project Overview:**
+
+      Gelato Network is a blockchain infrastructure project focused on automated smart
+      contract execution and security, operating on Ethereum, among other chains (Fantom,
+      Polygon-POS).
+
+
+      **Recent Developments & Achievements:**
+
+
+      1. **Partnership with Forta Network Firewall**: Integrated AI-powered security
+      screening for real-time transaction protection at the sequencer level on Gelato
+      rollups.
+
+      2. **New RaaS (Relay-as-a-Service) Platform Launch**: Enables one-click deployment
+      of cross-chain bridging solutions with Hyperlane Validators.
+
+      3. **Major Protocol Integration**: Successfully executed a $1B USDT transaction,
+      demonstrating enterprise-grade capabilities with Arbitrum and LayerZero.
+
+      4. **Upcoming Showcase**: Enterprise blockchain deployment capabilities to be
+      highlighted at the Avalanche Summit in London.
+
+      5. **Testnet Performance Improvement**: The new testnet "mamo-1" achieved a
+      16x performance improvement over Celestia''s mainnet, with 128MB blocks and
+      21.33MB/s throughput.
+
+
+      **Analysis Score:** 0.401 (indicating the project''s trendiness or popularity
+      based on recent activities and achievements)
+
+
+      **Available Tokens:**
+
+      - **Ethereum:** 0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05
+
+      - **Fantom:** 0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05
+
+      - **Polygon-POS:** 0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05
+
+
+      **Note:** If you''re looking for information on other trending Ethereum projects
+      or more specific details about Gelato Network not covered here, please provide
+      more targeted queries or try searching by project name, ticker, or Twitter handle
+      for more comprehensive data, if available within the AixBT API''s limitations.'
     data:
-      search_results:
-        projects: []
+      data:
+        projects:
+        - id: 66f7891256fd508edf942dee
+          name: gelato
+          score: 0.401
+          xHandle: gelatonetwork
+          analysis: Gelato Network is a blockchain infrastructure project focusing
+            on automated smart contract execution and security. Their latest development
+            includes a partnership with Forta Network Firewall, implementing AI-powered
+            security screening for real-time transaction protection at the sequencer
+            level on Gelato rollups. The project appears to be positioned in the blockchain
+            infrastructure and security sector.
+          rationale: Protocol demonstrates enterprise-grade capabilities with $1B
+            USDT transaction, new RaaS platform launch, Forta security integration,
+            and testnet achieving 16x performance improvement.
+          ticker: gel
+          tokens:
+            ethereum: '0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05'
+            fantom: '0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05'
+            polygon-pos: '0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05'
+          summaries:
+          - id: gelato_2025-04-24T22:00:00.000Z
+            date: '2025-04-24T22:00:00.000Z'
+            description: New RaaS platform enables one-click deployment of cross-chain
+              bridging solutions with Hyperlane Validators.
+          - id: gelato_2025-04-22T13:00:00.000Z
+            date: '2025-04-22T13:00:00.000Z'
+            description: Forta Network security integration adds real-time AI-powered
+              transaction screening at sequencer level.
+          - id: gelato_2025-04-16T20:00:00.000Z
+            date: '2025-04-16T20:00:00.000Z'
+            description: Relay service executes $1B USDT transaction, demonstrating
+              major protocol integration with Arbitrum and LayerZero.
+          - id: gelato_2025-04-16T08:00:00.000Z
+            date: '2025-04-16T08:00:00.000Z'
+            description: Enterprise blockchain deployment capabilities to be showcased
+              at upcoming Avalanche Summit in London.
+          - id: gelato_2025-04-15T07:00:00.000Z
+            date: '2025-04-15T07:00:00.000Z'
+            description: New testnet mamo-1 launches with 128MB blocks and 21.33MB/s
+              throughput, achieving 16x Celestia mainnet performance.
+raw_query_test:
+  input:
+    query: Tell me about trending projects on solana with minscore of 0.1
+    raw_data_only: false
+  output:
+    response: "Here is the response in clean text without markdown or special formatting,\
+      \ providing an objective and informative analysis of the trending projects on\
+      \ Solana with a minimum score of 0.1:\n\n**Trending Solana Projects (Min Score:\
+      \ 0.1)**\n\n1. **Jelly Jelly**\n\t* Score: 0.321\n\t* Ticker: jellyjelly\n\t\
+      * Token Address (Solana): FeR8VBqNRSUD5NtXAj2n3j1dAHkZHfyDktKuLXD4pump\n\t*\
+      \ Analysis: Associated with Portal to Bitcoin, maintains previous known status\
+      \ with no significant updates.\n\t* Rationale: Faces multiple exploits and flash\
+      \ crashes despite 64.6% token price increase and exchange listings.\n\n2. **Chillguy**\n\
+      \t* Score: 0.31\n\t* Ticker: chillguy\n\t* Token Address (Solana): Df6yfrKC8kZE3KNkrHERKzAetSxbrWeniQfyJY4Jpump\n\
+      \t* Analysis: Solana-based meme token with strong community engagement, targeting\
+      \ younger demographics.\n\t* Rationale: Shows extreme volatility with 4000x\
+      \ movement, significant price correction, but maintains exchange presence.\n\
+      \n3. **PVS**\n\t* Score: 0.289\n\t* Ticker: pvs\n\t* Token Address (Solana):\
+      \ FWAr6oWa6CHg6WUcXu8CqkmsdbhtEqL8t31QTonppump\n\t* Analysis: Utility token\
+      \ by Paraverse Technology, features significant partnerships with major tech\
+      \ companies.\n\t* Rationale: Token with $3M market cap, grew 31x, and features\
+      \ usage-linked burn mechanism.\n\n4. **JitoSOL**\n\t* Score: 0.277\n\t* Ticker:\
+      \ jitosol\n\t* Token Address (Solana): J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn\n\
+      \t* Analysis: Leading Solana liquid staking token, enhances Solana's security\
+      \ through liquid staking.\n\t* Rationale: Dominates Solana liquid staking with\
+      \ 17.3M SOL TVL, offering 4.9% base yield plus 100bp"
+    data:
+      data:
+        projects:
+        - id: 679adf6b1961463d58ca0f8b
+          name: jelly jelly
+          score: 0.321
+          xHandle: Unable to definitively determine official handle from provided
+            tweets
+          analysis: JELLY ($JELLY) remains a cryptocurrency project associated with
+            Portal to Bitcoin. The current tweet set provides no substantial new information
+            about the project's developments, features, or market performance. The
+            project continues to maintain its previous known status, with no significant
+            updates or changes evident in the analyzed social media content.
+          rationale: Project faces multiple exploits and flash crashes between March-April
+            2025, including HLP exploit and forced settlements, despite 64.6% token
+            price increase and exchange listings on Binance and OKX.
+          ticker: jellyjelly
+          tokens:
+            solana: FeR8VBqNRSUD5NtXAj2n3j1dAHkZHfyDktKuLXD4pump
+          summaries:
+          - id: jelly jelly_2025-04-24T05:00:00.000Z
+            date: '2025-04-24T05:00:00.000Z'
+            description: Token shows 64.6% price increase, ranking among top small
+              cap gainers.
+          - id: jelly jelly_2025-04-18T19:00:00.000Z
+            date: '2025-04-18T19:00:00.000Z'
+            description: Flash crash occurs on Bybit affecting multiple memecoins,
+              triggered by possible whale liquidation.
+          - id: jelly jelly_2025-04-06T11:00:00.000Z
+            date: '2025-04-06T11:00:00.000Z'
+            description: Protocol experiences HLP exploit, affecting market dynamics
+              and trading patterns.
+          - id: jelly jelly_2025-04-03T07:00:00.000Z
+            date: '2025-04-03T07:00:00.000Z'
+            description: Major exploit triggers forced settlement of perpetual contracts
+              and trading suspension on Hyperliquid, following controversial Binance
+              and OKX listings.
+          - id: jelly jelly_2025-03-27T04:00:00.000Z
+            date: '2025-03-27T04:00:00.000Z'
+            description: Recent price pump due to short squeeze on Hyperliquid. HyperliquidX
+              overwrote oracle price with $6M short position.
+        - id: 673d28428249f486f3b5c23d
+          name: chillguy
+          score: 0.31
+          xHandle: chillguycto
+          analysis: CHILLGUY is a Solana-based meme token currently trading at approximately
+            $0.17 with a $170M market cap. The project has secured listings on multiple
+            exchanges including Bybit, Gate.io, and MEXC, with speculation of potential
+            HTX and Binance listings. The token has experienced significant price
+            correction, down 80% from its peak, but maintains strong community engagement
+            and is positioned as a next-generation meme token targeting younger demographics.
+            Building on its previous Gemini listing and Wintermute market making partnership,
+            the project continues to expand its exchange presence while maintaining
+            its position as a prominent meme token in the Solana ecosystem.
+          rationale: Project shows extreme volatility with 4000x movement in 8 days,
+            MC drop from $700M to $3.5M, and recent whale exit of 450,000 tokens,
+            while major holder remains with $1.2M unrealized loss.
+          ticker: chillguy
+          tokens:
+            solana: Df6yfrKC8kZE3KNkrHERKzAetSxbrWeniQfyJY4Jpump
+          summaries:
+          - id: chillguy_2025-04-16T14:00:00.000Z
+            date: '2025-04-16T14:00:00.000Z'
+            description: Major wallet holding $1.4M position from $390M MC remains
+              underwater with $1.2M unrealized loss, showing no exit.
+          - id: chillguy_2025-04-13T09:00:00.000Z
+            date: '2025-04-13T09:00:00.000Z'
+            description: Market cap currently at 3.5M, down from historical peak of
+              700M during meme popularity phase.
+          - id: chillguy_2025-04-08T14:00:00.000Z
+            date: '2025-04-08T14:00:00.000Z'
+            description: 'WARNING: Extreme 4000x price movement in 8 days indicates
+              high probability of pump and dump activity.'
+          - id: chillguy_2025-04-07T01:00:00.000Z
+            date: '2025-04-07T01:00:00.000Z'
+            description: Whale exits position with 450,000 token swap into ETF500
+          - id: chillguy_2024-12-30T16:00:00.000Z
+            date: '2024-12-30T16:00:00.000Z'
+            description: Mentioned as one of the coins that will either "send hard
+              from here or fall off a cliff" according to tweet on Dec 30.
+        - id: 67d3c79f5ffea468db8a6811
+          name: pvs
+          score: 0.289
+          xHandle: PVT_Paraverse
+          analysis: PVS is a Solana-based utility token by Paraverse Technology Limited,
+            a 10-year-old established company specializing in XR and virtual simulation
+            technology. The project features significant partnerships with major tech
+            companies including NVIDIA, BMW, Dell, and Alibaba Cloud. Their technology
+            has demonstrated real-world impact, including reducing BMW's plant construction
+            time by 6 months. PVS will become the default payment token for their
+            services, with projected revenue of $1.6M in Q3 2026. Despite strong fundamentals
+            and enterprise partnerships, the project faces challenges in community
+            engagement and crypto-specific communication.
+          rationale: Token with $3M market cap maintains partnerships with Nvidia,
+            BMW, and Dell, grew 31x from $120K, and features usage-linked burn mechanism
+            while competitor valued at $2B.
+          ticker: pvs
+          tokens:
+            solana: FWAr6oWa6CHg6WUcXu8CqkmsdbhtEqL8t31QTonppump
+          summaries:
+          - id: pvs_2025-04-08T17:00:00.000Z
+            date: '2025-04-08T17:00:00.000Z'
+            description: Active token burn mechanism linked to usage services thousands
+              of clients, while maintaining partnerships with Nvidia, BMW, and Dell
+              at $3M market cap versus competitor's $2B valuation.
+          - id: pvs_2025-03-31T16:00:00.000Z
+            date: '2025-03-31T16:00:00.000Z'
+            description: 'Ranks as #3 performing token for previous week'
+          - id: pvs_2025-03-28T07:00:00.000Z
+            date: '2025-03-28T07:00:00.000Z'
+            description: Discussion about token reaching 100M market cap, with mentions
+              of an 8M gap to fill.
+          - id: pvs_2025-03-22T14:00:00.000Z
+            date: '2025-03-22T14:00:00.000Z'
+            description: Token described as "probably the most obvious play" with
+              next leg up loading.
+          - id: pvs_2025-03-14T05:00:00.000Z
+            date: '2025-03-14T05:00:00.000Z'
+            description: Grew from $120k to $3.8M marketcap (31x). Project backed
+              by tech company with cloud service rendering use case. Found under $3M
+              marketcap.
+        - id: 670b3aaf90a8919c85d08cd1
+          name: jitosol
+          score: 0.277
+          xHandle: jito_sol
+          analysis: JitoSOL is a leading liquid staking token (LST) on the Solana
+            blockchain with a $2.4B market cap. Operated by Jito Foundation, it allows
+            users to stake SOL and receive JitoSOL tokens that earn both MEV and traditional
+            staking rewards (~7-8% APY). The project recently released a comprehensive
+            Securities Classification Report declaring it's not a security under U.S.
+            laws. JitoSOL enhances Solana's security through liquid staking and restaking
+            mechanisms, representing a significant portion of Solana's $6B LST ecosystem.
+          rationale: Leading Solana liquid staking protocol hits 17.3M SOL TVL with
+            95.3% network adoption, offering 4.9% base yield plus 100bp MEV premium
+            and up to 24% APY through leveraged staking.
+          ticker: jitosol
+          tokens:
+            solana: J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn
+            neon-evm: '0xfa8fb7e3bd299b2a9693b1bfdcf5dd13ab57007e'
+          summaries:
+          - id: jitosol_2025-04-23T21:00:00.000Z
+            date: '2025-04-23T21:00:00.000Z'
+            description: Dominates Solana liquid staking with 17.3M SOL TVL, setting
+              consecutive ATHs.
+          - id: jitosol_2025-04-22T14:00:00.000Z
+            date: '2025-04-22T14:00:00.000Z'
+            description: Largest Solana LST achieves 17.3M SOL TVL with 95.3% network
+              stake weight adoption.
+          - id: jitosol_2025-04-22T05:00:00.000Z
+            date: '2025-04-22T05:00:00.000Z'
+            description: Liquid staking token generates 4.9% real yield with 100bp
+              outperformance over plain staking through MEV rebates.
+          - id: jitosol_2025-04-21T23:00:00.000Z
+            date: '2025-04-21T23:00:00.000Z'
+            description: Current real yield at 4.9% with MEV rebates generating 100
+              basis points premium over standard staking.
+          - id: jitosol_2025-04-18T19:00:00.000Z
+            date: '2025-04-18T19:00:00.000Z'
+            description: 24% APY available through Kamino platform with 10x leverage
+              capability on staking
+        - id: 66f8b887481813460f48549f
+          name: bdc
+          score: 0.263
+          xHandle: billydollarcat
+          analysis: BILLION•DOLLAR•CAT (BDC/BILLY) remains a top 5 Bitcoin-based Rune
+            memecoin with a market cap of $10.37M. The project demonstrates consistent
+            daily transaction volume and maintains strong community engagement through
+            multiple platform integrations including Sats Terminal and Xverse App
+            mobile support. Recent developments include expanded trading accessibility
+            through new platform listings and continued position among leading BTC
+            memecoins by transaction count.
+          rationale: Sports prediction protocol shows strong growth with lending volumes
+            at ATH, token up 3x (6 to 22 sats), and profitable track record (80% NBA
+            prediction accuracy, $18k profits).
+          ticker: billy
+          tokens:
+            ordinals: c5e59f3f8024c80fe7f8685c1d920f66cee5e9d4a423f3f293d844b291381ba5i0
+            solana: BDCs2xEqzXyRpp9P6uPDnAvERpLKBfzHPEzbe3BfCxDY
+          summaries:
+          - id: bdc_2025-04-18T20:00:00.000Z
+            date: '2025-04-18T20:00:00.000Z'
+            description: Instant loan volume reaches ATH with protocol among top performers
+              in lending markets.
+          - id: bdc_2025-04-14T00:00:00.000Z
+            date: '2025-04-14T00:00:00.000Z'
+            description: New protective trading infrastructure and upcoming DEX launches
+              strengthen ecosystem fundamentals, supported by historical pattern of
+              reaching new ATHs in each cycle.
+          - id: bdc_2025-04-12T14:00:00.000Z
+            date: '2025-04-12T14:00:00.000Z'
+            description: Price action shows 3x gain from 6 to 22 sats over 3-day period.
+          - id: bdc_2025-02-23T20:00:00.000Z
+            date: '2025-02-23T20:00:00.000Z'
+            description: BILLY token at new ATH reaching $12M after going 2-0 on NBA
+              picks. Bot has made $18k in profits since launch a few days ago.
+          - id: bdc_2025-02-21T10:00:00.000Z
+            date: '2025-02-21T10:00:00.000Z'
+            description: Currently at $8.5M FDV. 5x returns for Vader stakers in 3
+              days. Devs funded wallet with $100k. 80% prediction accuracy across
+              5 NBA games.
+        - id: 66fb70703342c5177d17cd67
+          name: nosana
+          score: 0.261
+          xHandle: nosana_ai
+          analysis: Nosana is a Solana-based decentralized GPU marketplace platform
+            that enables users to share and rent GPU computing power for AI workloads.
+            The project offers 2.5x cost savings compared to traditional cloud providers
+            by leveraging consumer-grade GPUs. Key features include fast autoscaling,
+            on-demand capabilities, and pay-per-use pricing. The platform launched
+            its mainnet on January 14, 2025, after a year of successful testnet operations.
+            It operates in the DePIN sector, focusing on democratizing AI compute
+            resources through a decentralized approach.
+          rationale: Major exchange listing announced alongside platform growth metrics
+            of 12k users and 300+ daily sign-ups, while decentralized GPU network
+            reports 1,250 hosts and 28,000 weekly deployments across 800 active GPUs.
+          ticker: nos
+          tokens:
+            solana: nosXBVoaCTtYdLvKY6Csb4AC8JCdQKKAaWYtx2ZMoo7
+          summaries:
+          - id: nosana_2025-04-24T15:00:00.000Z
+            date: '2025-04-24T15:00:00.000Z'
+            description: Major exchange listing announced with upcoming tax reduction,
+              while platform demonstrates strong growth with 12k users and 300+ daily
+              new users.
+          - id: nosana_2025-04-22T12:00:00.000Z
+            date: '2025-04-22T12:00:00.000Z'
+            description: Decentralized GPU infrastructure now supports Gaia agent
+              deployment with pipeline template integration.
+          - id: nosana_2025-04-16T12:00:00.000Z
+            date: '2025-04-16T12:00:00.000Z'
+            description: Decentralized GPU network reaches 1,250 hosts with 28,000
+              weekly deployments and 800 active GPUs running AI workloads.
+          - id: nosana_2025-04-07T13:00:00.000Z
+            date: '2025-04-07T13:00:00.000Z'
+            description: Ongoing builders' competition offers 1000 USDC prize pool
+              for template development, submissions close April 14th.
+          - id: nosana_2025-04-01T12:00:00.000Z
+            date: '2025-04-01T12:00:00.000Z'
+            description: New builders' challenge launches with 1000 USDC prize pool,
+              focusing on GPU-powered template development. Ends April 14th.
+        - id: 67eae8f337be558be996362c
+          name: saros
+          score: 0.261
+          xHandle: saros_xyz
+          analysis: Saros is a Web3 application built on the Solana blockchain focusing
+            on decentralized finance. The project has shown significant market growth,
+            rising from $0.0015 to reach an ATH of $0.171, achieving a $1 billion+
+            fully diluted valuation milestone. Recently listed on Pionex exchange,
+            the token has demonstrated strong market performance with $412M+ market
+            cap and $1.1M+ TVL. The project has gained significant traction, trending
+            on CoinGecko and showing strong technical indicators.
+          rationale: Futures trading launch with 5X leverage arrives amid strong market
+            performance (#2 on CoinGecko), with $25.01M token unlock scheduled for
+            next week.
+          ticker: saros
+          tokens:
+            solana: SarosY6Vscao718M4A778z4CGtvcwcGef5M9MEH1LGL
+            tomochain: '0xb786d9c8120d311b948cf1e5aa48d8fbacf477e2'
+          summaries:
+          - id: saros_2025-04-22T16:00:00.000Z
+            date: '2025-04-22T16:00:00.000Z'
+            description: Futures trading launches with 5X leverage capability across
+              several DEX platforms.
+          - id: saros_2025-04-14T12:00:00.000Z
+            date: '2025-04-14T12:00:00.000Z'
+            description: Token unlock of $25.01M scheduled for next week.
+          - id: saros_2025-04-11T11:00:00.000Z
+            date: '2025-04-11T11:00:00.000Z'
+            description: 'Currently trending #2 on CoinGecko''s top 20 list, indicating
+              significant market momentum.'
+          - id: saros_2025-04-08T07:00:00.000Z
+            date: '2025-04-08T07:00:00.000Z'
+            description: Active trading competition with 50K SAROS prize ends April
+              11; top position requires >$97K volume.
+          - id: saros_2025-04-07T10:00:00.000Z
+            date: '2025-04-07T10:00:00.000Z'
+            description: Project shows notable strength as one of only four top gainers
+              during major market correction.
+        - id: 6712ffa739693e258b8d7198
+          name: fart
+          score: 0.254
+          xHandle: fartdotdao
+          analysis: $FART has evolved from a Solana meme token into a broader ecosystem
+            including FartDAO and strategic connections with other meme tokens. The
+            project demonstrates strong community engagement and market presence,
+            with a dual-token mechanism through $SHART rewards. Recent developments
+            include DAO formation and expansion into "Fart Nation" initiative. The
+            token maintains active trading with price targets around $1+, showing
+            significant growth from previous levels. The project combines humor-based
+            marketing with structured ecosystem development, maintaining its position
+            in the Solana meme token landscape.
+          rationale: Asset surges 50% on tariff pause news, reaching $640M market
+            cap, while showing strong perpetual futures volume and significant capital
+            rotation from Solana positions.
+          ticker: fartcoin
+          tokens:
+            solana: 9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump
+          summaries:
+          - id: fart_2025-04-11T04:00:00.000Z
+            date: '2025-04-11T04:00:00.000Z'
+            description: Counter-trend 18% price surge amid broader market selloff.
+          - id: fart_2025-04-09T18:00:00.000Z
+            date: '2025-04-09T18:00:00.000Z'
+            description: Large whale position holder reports $3M unrealized profit,
+              indicating significant price appreciation.
+          - id: fart_2025-04-09T17:00:00.000Z
+            date: '2025-04-09T17:00:00.000Z'
+            description: 50% price surge follows 90-day tariff pause announcement.
+              Market cap reaches $640M.
+          - id: fart_2025-04-07T20:00:00.000Z
+            date: '2025-04-07T20:00:00.000Z'
+            description: Perpetual futures market sees billions in daily volume without
+              major CEX listing, indicating untapped market potential.
+          - id: fart_2025-04-07T12:00:00.000Z
+            date: '2025-04-07T12:00:00.000Z'
+            description: Large-scale portfolio reallocation from Solana occurring,
+              with traders capitulating positions at loss to enter. High volatility
+              expected due to break-even sellers.
+        - id: 6700b8928b16fc6b302936c6
+          name: strike
+          score: 0.253
+          xHandle: StrikeX_
+          analysis: STRIKE/StrikeX is a multi-chain cryptocurrency platform operating
+            across Web3, sports betting, and combat sports industries. Their ecosystem
+            includes the StrikeX Wallet, which offers portfolio management for both
+            traditional and crypto assets, including RWAs and stablecoins. The platform
+            supports multiple networks including BNB, SOL, ETH, BTC, BASE, ARB, MATIC,
+            TRON, and AVAX, providing comprehensive cross-chain functionality.
+          rationale: CEO launches Bitcoin acquisition company Twenty One with $4B
+            holdings, partnering with Tether and SoftBank for SPAC merger under new
+            CEO Jack Mallers.
+          ticker: strike
+          tokens:
+            solana: STrikemJEk2tFVYpg7SMo9nGPrnJ56fHnS1K7PV2fPw
+          summaries:
+          - id: strike_2025-04-24T12:00:00.000Z
+            date: '2025-04-24T12:00:00.000Z'
+            description: CEO launches Bitcoin acquisition company Twenty One with
+              $4B in Bitcoin holdings.
+          - id: strike_2025-04-24T01:00:00.000Z
+            date: '2025-04-24T01:00:00.000Z'
+            description: Jack Mallers becomes CEO of Tether-controlled 21 Capital,
+              backed by SoftBank, planning SPAC merger with $3.6B Bitcoin reserves.
+          - id: strike_2025-04-16T16:00:00.000Z
+            date: '2025-04-16T16:00:00.000Z'
+            description: MMA media platform expands globally with launch of Brazilian
+              show featuring Moicano, adding to existing top-5 English show with Perry
+              and Spanish show with Romero.
+          - id: strike_2025-03-19T07:00:00.000Z
+            date: '2025-03-19T07:00:00.000Z'
+            description: Offering 11.05% APY with 5% commission for STRK staking through
+              Nansen.
+          - id: strike_2025-02-16T06:00:00.000Z
+            date: '2025-02-16T06:00:00.000Z'
+            description: Up 18.9% in 24h period.
+        - id: 67664d0091d6e0adecca7c48
+          name: swarms
+          score: 0.235
+          xHandle: swarms_corp
+          analysis: SWARMS is a Solana-based multi-agent AI framework that enables
+            collaborative AI systems across various industries. Founded by Kye Gomez,
+            the platform manages 45 million AI agents using advanced models (SSM +
+            MoE) and has expanded through multiple ecosystem projects including Medical
+            Swarm, SPORES, and CREATE. Currently valued at $348.9M-479.6M market cap,
+            SWARMS continues to develop its marketplace and infrastructure while maintaining
+            significant adoption with over 31,900 holders. The project recently announced
+            new features including auto-generation capabilities and paid agent store
+            integration, while actively expanding its development team and partnerships.
+          rationale: Project listed on Ourbit achieved 5.12X returns, but shows risk
+            of price manipulation with significant whale activity including $8.42M
+            sell-off followed by $7.84M buy-in at $0.26/token against $40M market
+            cap.
+          ticker: swarms
+          tokens:
+            solana: 74SBV4zDXxTRgv1pEMoECskKBkZHc2yGPnc7GYVepump
+          summaries:
+          - id: swarms_2025-04-23T10:00:00.000Z
+            date: '2025-04-23T10:00:00.000Z'
+            description: High risk of price manipulation indicated by elevated open
+              interest vs spot liquidity and historical pump patterns.
+          - id: swarms_2025-02-27T06:00:00.000Z
+            date: '2025-02-27T06:00:00.000Z'
+            description: Referenced at $40M market cap valuation.
+          - id: swarms_2025-01-12T05:00:00.000Z
+            date: '2025-01-12T05:00:00.000Z'
+            description: Smart money sold $8.42M worth 4 days ago, then spent $7.84M
+              to buy 29.7M tokens at average price of $0.26 in past 20 hours.
+          - id: swarms_2025-01-11T05:00:00.000Z
+            date: '2025-01-11T05:00:00.000Z'
+            description: Whale sold 5M tokens for 7,232 SOL ($1.35M). Whale initially
+              spent $458K to buy 20M tokens 14 days ago, currently holds 15M tokens
+              worth $4.02M, with total profit of $4.9M.
+          - id: swarms_2025-01-11T02:00:00.000Z
+            date: '2025-01-11T02:00:00.000Z'
+            description: Listed by Ourbit team, achieved 5.12X since listing. Both
+              spot and futures pairs available.
 tool_test:
   input:
     tool: search_projects
@@ -36,5 +533,993 @@ tool_test:
   output:
     response: ''
     data:
-      search_results:
-        projects: []
+      data:
+        projects:
+        - id: 66fb7f153342c5177d1800a2
+          name: heurist
+          score: 0
+          xHandle: heurist_ai
+          analysis: Heurist is a decentralized AI-as-a-Service cloud platform that
+            has raised $2M to build community-owned AI infrastructure. The project
+            features serverless AI integration, hosting over 30 decentralized AI models
+            with 13,000+ GPU miners and processing 1B+ inference requests. Their $HEU
+            token launched on Dec 9th, 2024, implementing a fair distribution model
+            with mining-based emissions. The platform operates on Base and ZKSync
+            Era networks, offering AI model hosting, API integration, and an upcoming
+            video generation feature. Currently valued at ~$22M market cap, Heurist
+            is backed by notable investors including Amber Group and Manifold Trading.
+          rationale: AI platform expands capabilities with agent infrastructure supporting
+            30+ agents, blockchain integration across major networks, and partnerships
+            with key data providers like Dexscreener and Coingecko.
+          ticker: heu
+          tokens:
+            ethereum: '0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea'
+            base: '0xef22cb48b8483df6152e1423b19df5553bbd818b'
+            zksync: '0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf'
+          summaries:
+          - id: heurist_2025-04-22T13:00:00.000Z
+            date: '2025-04-22T13:00:00.000Z'
+            description: AI platform integrates with decentralized cloud infrastructure,
+              adding web search and voice chat capabilities.
+          - id: heurist_2025-04-17T15:00:00.000Z
+            date: '2025-04-17T15:00:00.000Z'
+            description: Live integrations exist with Dexscreener, Coingecko, DuckDuckGo,
+              and SpaceandTimeDB platforms.
+          - id: heurist_2025-04-10T15:00:00.000Z
+            date: '2025-04-10T15:00:00.000Z'
+            description: Agent-native infrastructure now live with 30+ agents, backed
+              by strategic partnerships across major chains and protocols.
+          - id: heurist_2025-04-07T13:00:00.000Z
+            date: '2025-04-07T13:00:00.000Z'
+            description: CARV Agent launches on Heurist Mesh platform, enabling natural
+              language queries for blockchain activity across Ethereum, Base, and
+              Solana networks.
+          - id: heurist_2025-03-31T15:00:00.000Z
+            date: '2025-03-31T15:00:00.000Z'
+            description: Development focus shifts to AI-powered crypto research and
+              trading tools following end of mining phase.
+keyword_test:
+  input:
+    tool: search_projects
+    tool_arguments:
+      name: ethereum
+  output:
+    response: ''
+    data:
+      data:
+        projects:
+        - id: 66f510606811ccaef95624ef
+          name: ethereum name service
+          score: 0.124
+          xHandle: ensdomains
+          analysis: Ethereum Name Service (ENS) continues to solidify its position
+            as the leading decentralized domain protocol, with notable developments
+            including Linea blockchain integration and partnerships with PayPal and
+            Venmo. The protocol has seen significant domain registrations including
+            high-value purchases like search.eth ($14.9K) and truth.eth ($12.9K).
+            Currently trading at $33.37 with $192.2M daily volume, ENS maintains strong
+            market presence. The service's utility is demonstrated through high-profile
+            adoptions, including Trump-related domain acquisitions, while continuing
+            to serve as fundamental Web3 infrastructure for digital identity management
+            and blockchain addressing.
+          rationale: ENS expands functionality through GoDaddy and Dentity partnerships
+            while market shows bearish signals with major holder liquidations and
+            declining speculative domain values.
+          ticker: ens
+          tokens:
+            ethereum: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+          summaries:
+          - id: ethereum name service_2025-04-24T17:00:00.000Z
+            date: '2025-04-24T17:00:00.000Z'
+            description: New partnership with Dentity enables private, off-chain identity
+              verification for .eth domains.
+          - id: ethereum name service_2025-04-23T14:00:00.000Z
+            date: '2025-04-23T14:00:00.000Z'
+            description: GoDaddy integration enables traditional domain owners to
+              link their .com and .org domains directly to ENS, bridging Web2 and
+              Web3 infrastructure.
+          - id: ethereum name service_2025-04-22T15:00:00.000Z
+            date: '2025-04-22T15:00:00.000Z'
+            description: New Identity Kit release v0.2.22 adds paymaster support and
+              enhanced checkout features for improved integration capabilities.
+          - id: ethereum name service_2025-04-21T19:00:00.000Z
+            date: '2025-04-21T19:00:00.000Z'
+            description: Speculative niche domain purchases showing significant value
+              deterioration, with previous $70k investments proving unsustainable.
+          - id: ethereum name service_2025-04-21T08:00:00.000Z
+            date: '2025-04-21T08:00:00.000Z'
+            description: Major holder Fracton liquidates 3-digit ENS names with 14
+              more pending sale.
+        - id: 66f4fe366811ccaef955dfc7
+          name: ethereum
+          score: 0.011
+          xHandle: ethereum
+          analysis: Ethereum maintains its position as the dominant smart contract
+            platform with $62B TVL and over 300M unique addresses. Recent developments
+            include Fidelity's Treasury fund filing and Celo's integration as an L2
+            solution. While experiencing ETF outflows, the network shows strong fundamentals
+            with 2,181 full-time developers and 1,313 active DeFi protocols. Trading
+            around $2,000, market sentiment suggests potential upside with technical
+            patterns indicating similarity to previous bull cycles. The platform continues
+            to lead in institutional adoption, particularly in stablecoins and tokenization,
+            while expanding its L2 ecosystem for improved scalability.
+          rationale: 'ETFs record $63.5M net inflows (Blackrock: $40M) while whale
+            reactivates with 1,291 ETH ($2.3M) purchase and $8B options expire today.'
+          ticker: eth
+          tokens:
+            ? ''
+            : ''
+          summaries:
+          - id: ethereum_2025-04-25T07:00:00.000Z
+            date: '2025-04-25T07:00:00.000Z'
+            description: ETFs purchase 35,390 ETH ($63.5M inflows) while 461,000 ETH
+              options expire with bullish indicators.
+          - id: ethereum_2025-04-25T06:00:00.000Z
+            date: '2025-04-25T06:00:00.000Z'
+            description: Major market movement expected with $8B in options expiring
+              today, while a whale address reactivates with $2.3M ETH purchase.
+          - id: ethereum_2025-04-25T05:00:00.000Z
+            date: '2025-04-25T05:00:00.000Z'
+            description: Large whale accumulates 1,291 ETH ($2.3M) after 3-month dormancy
+              period.
+          - id: ethereum_2025-04-25T04:00:00.000Z
+            date: '2025-04-25T04:00:00.000Z'
+            description: Combined spot ETFs show strong institutional adoption with
+              $63.49M net inflow on April 24
+          - id: ethereum_2025-04-25T03:00:00.000Z
+            date: '2025-04-25T03:00:00.000Z'
+            description: Major whale accumulates 1,291 ETH at $1,768 after previously
+              selling at $2,531, while ETFs record $63.5M net inflows with Blackrock
+              contributing $40M, indicating strong institutional and whale buying
+              activity.
+        - id: 6700b5f38b16fc6b30292faa
+          name: ethereum memes
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67a443da16a479375ab5b4fd
+          name: ethereum etf
+          score: 0
+          xHandle: Not explicitly provided in tweets or previous analysis
+          analysis: Ethereum ETF represents a regulated investment vehicle providing
+            institutional exposure to ETH, with BlackRock's iShares Trust being a
+            dominant player ($3.5B in holdings). Currently experiencing mixed performance
+            with recent positive inflow of $4.7M after extended outflow period. Notable
+            developments include increasing validator count suggesting upcoming staking
+            capabilities, Pectra upgrade implementation, and BlackRock's BUIDL initiative
+            integrating ETH into traditional finance. Price performance remains volatile,
+            ranging from $1,878 to $3,250, with ETH posting its worst quarterly performance
+            since 2018. Market sentiment remains divided on ETF impact, though institutional
+            infrastructure continues to develop with potential staking approval on
+            horizon.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: ethereum etf_2025-03-31T05:00:00.000Z
+            date: '2025-03-31T05:00:00.000Z'
+            description: Recorded $8.6 million net outflows last week.
+          - id: ethereum etf_2025-03-27T17:00:00.000Z
+            date: '2025-03-27T17:00:00.000Z'
+            description: Saw outflows of 1,433 ETH (-$2.9M), with Grayscale Mini Trust
+              dropping 850 ETH ($1.72M), now holding 458,884 ETH ($928M).
+          - id: ethereum etf_2025-03-19T04:00:00.000Z
+            date: '2025-03-19T04:00:00.000Z'
+            description: Recorded $52.8M outflow on March 18, marking 10th consecutive
+              day of net outflows.
+          - id: ethereum etf_2025-02-21T06:00:00.000Z
+            date: '2025-02-21T06:00:00.000Z'
+            description: Saw $13.1M outflow on Feb 20.
+          - id: ethereum etf_2025-02-06T04:00:00.000Z
+            date: '2025-02-06T04:00:00.000Z'
+            description: 'Feb 5, 2024 flows: Total net inflow of $18.1M. Fidelity
+              $20.1M inflow, Grayscale $7.2M outflow, ETH fund $5.2M inflow.'
+        - id: 66f8bf3a481813460f486dc3
+          name: ethereum nfts
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67a451ff16a479375ab5b864
+          name: ethereum credit guild
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: ethereum credit guild_2025-02-06T05:00:00.000Z
+            date: '2025-02-06T05:00:00.000Z'
+            description: Interface being deprecated, users advised to withdraw funds
+              though smart contracts will remain accessible.
+        - id: 672df0f62eff629a17486982
+          name: ethereum foundation
+          score: 0
+          xHandle: ethereum
+          analysis: Ethereum is a foundational blockchain platform established in
+            2015 by Vitalik Buterin, managed by the Ethereum Foundation. It provides
+            infrastructure for decentralized applications through smart contracts,
+            supporting DeFi, NFTs, and Web3 development. The platform emphasizes community-driven
+            development, transparency, and long-term value creation over short-term
+            gains. Currently evolving with scaling solutions like rollups and sharding,
+            while maintaining focus on security and decentralization. The Foundation
+            actively supports ecosystem development through grants and partnerships,
+            particularly for technical upgrades and interoperability solutions. The
+            platform continues to attract institutional adoption while maintaining
+            its cypherpunk ethos and commitment to open-source development.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: ethereum foundation_2025-02-13T12:00:00.000Z
+            date: '2025-02-13T12:00:00.000Z'
+            description: Deployed 75% of assets into Aave. Expected to earn $1.5M
+              through allocation of 50k ETH to DeFi.
+          - id: ethereum foundation_2025-02-13T09:00:00.000Z
+            date: '2025-02-13T09:00:00.000Z'
+            description: Deposited 10,000 ETH ($26.74M) into Spark and 30,800 ETH
+              ($82.16M) into AAVE on Feb 13, 2025.
+          - id: ethereum foundation_2025-02-09T01:00:00.000Z
+            date: '2025-02-09T01:00:00.000Z'
+            description: Transferred 50,000 ETH ($131.66M) to multi-signature wallet
+              for DeFi participation. Previous wallet has interacted with AAVE.
+          - id: ethereum foundation_2024-11-08T10:00:00.000Z
+            date: '2024-11-08T10:00:00.000Z'
+            description: 'Current treasury: 970M with 2023 spending of 134.9M. At
+              current spending levels, estimated 7 years of runway remaining.'
+        - id: 670e2ffad5b654906222081e
+          name: book of ethereum
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 6752787f6601532deecfce16
+          name: ethereum classic
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: ethereum classic_2024-12-06T03:00:00.000Z
+            date: '2024-12-06T03:00:00.000Z'
+            description: Referenced regarding burn rate metrics being lower than a
+              startup's.
+        - id: 6704b4c6ade93b5baf362c92
+          name: ethereum l2s
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+limit_test:
+  input:
+    tool: search_projects
+    tool_arguments:
+      name: bitcoin
+      limit: 25
+    raw_data_only: true
+  output:
+    response: ''
+    data:
+      data:
+        projects:
+        - id: 66f52218bd7900daf0c5cd4a
+          name: bitcoin puppets
+          score: 0.128
+          xHandle: lepuppeteerfou
+          analysis: Bitcoin Puppets maintains its position as a leading Bitcoin Ordinals
+            project, ranking consistently in the top 5 by trading volume. Known for
+            its peace symbol (☮️) branding and starting from a free/cheap mint, it
+            has evolved into a high-value cultural asset with strong brand recognition.
+            The project continues its "world peace through maximum chaos" philosophy
+            while trading at approximately 0.043 BTC per piece. Notable for its engaged
+            community and cultural significance in the Bitcoin ecosystem, it stands
+            alongside major projects like Taproot Wizards and OMB in the Ordinals
+            space.
+          rationale: Public mint launches April 25 on OrdXcom with 28-32 supply amid
+            recent 6-8.75% floor price decline and dilution concerns from derivative
+            launches.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin puppets_2025-04-25T05:00:00.000Z
+            date: '2025-04-25T05:00:00.000Z'
+            description: Public mint starts April 25, 8am PST on OrdXcom, 0.000852
+              BTC per mint, 28 supply available FCFS.
+          - id: bitcoin puppets_2025-04-25T03:00:00.000Z
+            date: '2025-04-25T03:00:00.000Z'
+            description: Fundraiser mint launching April 25, 8am EST on OrdXcom with
+              32 supply at ~$69+fees per mint.
+          - id: bitcoin puppets_2025-04-25T02:00:00.000Z
+            date: '2025-04-25T02:00:00.000Z'
+            description: Continuous launch of derivative NFTs and tokens creates dilution
+              risk for existing holders.
+          - id: bitcoin puppets_2025-04-22T15:00:00.000Z
+            date: '2025-04-22T15:00:00.000Z'
+            description: Floor price drops 8.75% to 0.04 BTC amid sustained trading
+              activity on Bitcoin network.
+          - id: bitcoin puppets_2025-04-22T12:00:00.000Z
+            date: '2025-04-22T12:00:00.000Z'
+            description: Floor price drops 6% amid broader BTC NFT market decline.
+        - id: 66f4fdc76811ccaef955de3e
+          name: bitcoin
+          score: 0.006
+          xHandle: Bitcoin
+          analysis: Bitcoin (BTC) maintains its position as the leading cryptocurrency
+            with a $1.7T market cap, representing 1.3% of global money. March 2025
+            shows increasing institutional adoption, highlighted by GameStop's planned
+            $1.3B Bitcoin purchase and BlackRock CEO's bullish $500,000-700,000 price
+            target. Technical analysis indicates a forming bull flag pattern with
+            post-halving peak expectations. The asset continues to correlate with
+            gold while maintaining its value proposition as digital gold. Market sentiment
+            remains positive despite short-term resistance, with growing institutional
+            interest and a reported 98% historical profitability rate.
+          rationale: ETFs record $2.65B weekly inflows with BlackRock and ARK adding
+            4,550 BTC ($420M+), while Fed removes crypto activity reporting requirements
+            for banks.
+          ticker: btc
+          tokens:
+            ? ''
+            : ''
+          summaries:
+          - id: bitcoin_2025-04-25T07:00:00.000Z
+            date: '2025-04-25T07:00:00.000Z'
+            description: ETF inflows reach $2.65 billion this week while Federal Reserve
+              approves banks to work with the asset, indicating significant institutional
+              adoption acceleration.
+          - id: bitcoin_2025-04-25T06:00:00.000Z
+            date: '2025-04-25T06:00:00.000Z'
+            description: BlackRock and ARK ETFs purchase 4,550 BTC combined ($420M+)
+              amid $442M total ETF inflows and lowest exchange supply since 2018.
+          - id: bitcoin_2025-04-25T05:00:00.000Z
+            date: '2025-04-25T05:00:00.000Z'
+            description: Major institutions accumulate with BlackRock ETF adding 3,500
+              BTC ($326M) and ARK investing $97M, while Fed removes crypto activity
+              reporting requirements for banks.
+          - id: bitcoin_2025-04-25T04:00:00.000Z
+            date: '2025-04-25T04:00:00.000Z'
+            description: Major institutional buying activity with BlackRock acquiring
+              $327.3M (12,500 BTC) and spot ETFs recording $442M net inflow on April
+              24, marking five consecutive days of positive inflows.
+          - id: bitcoin_2025-04-25T03:00:00.000Z
+            date: '2025-04-25T03:00:00.000Z'
+            description: U.S. bank regulators remove crypto approval requirements
+              for banks, while ETF net flows reach $442M with Blackrock's IBIT contributing
+              $327.3M.
+        - id: 677f59971de257fa68cb2802
+          name: bitcoin freedom act
+          score: 0
+          xHandle: DustyDeevers (Senator who introduced the bill, no official project
+            handle exists as this is a legislative initiative)
+          analysis: The Bitcoin Freedom Act (SB325) is a legislative initiative introduced
+            in Oklahoma by Senator Dusty Deevers that would allow state employees
+            to opt-in to receive payment in Bitcoin and enable vendors to accept Bitcoin
+            payments. The act aims to combat inflation and provide financial sovereignty
+            while positioning Oklahoma as a leader in financial technology adoption.
+            This is part of a broader movement of state-level Bitcoin initiatives
+            in the United States.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin freedom act_2025-01-09T04:00:00.000Z
+            date: '2025-01-09T04:00:00.000Z'
+            description: Legislation introduced by Senator Dusty Deevers that would
+              allow Oklahoma state employees and vendors to receive payment in Bitcoin.
+        - id: 672275a99b19a432415e316f
+          name: bitcoin cyborg
+          score: 0
+          rationale: 'Three ultra-rare NFT traits identified across marketplaces:
+            Mask Zero (13 items), Thor''s Hammer (11 items), and Glizzy hands (34
+            items), with listings on Magic Eden and Mintify.'
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin cyborg_2025-04-11T21:00:00.000Z
+            date: '2025-04-11T21:00:00.000Z'
+            description: Mask Zero trait has only 13 items in entire collection, with
+              one listed on Magic Eden.
+          - id: bitcoin cyborg_2024-11-01T21:00:00.000Z
+            date: '2024-11-01T21:00:00.000Z'
+            description: NFT collection on Mintify featuring rare Glizzy hands trait
+              (only 34 in collection). Top 15% rarity grail piece available on floor.
+          - id: bitcoin cyborg_2024-10-30T17:00:00.000Z
+            date: '2024-10-30T17:00:00.000Z'
+            description: NFT collection on Magic Eden with only 11 Thor's Hammer pieces
+              in entire collection.
+        - id: 67183f95557585224a43cff4
+          name: bitcoin keys
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67a443da16a479375ab5b4fc
+          name: bitcoin etf
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67074326ef030d06d2760f40
+          name: bitcoin cash
+          score: 0
+          xHandle: BitcoinUnlimit
+          analysis: Bitcoin Cash (BCH) is a Bitcoin fork functioning as a peer-to-peer
+            electronic cash system. It features DeFi capabilities through BCH Bull,
+            supports CashTokens, and offers trading options via BodaSwap. The project
+            emphasizes accessibility and lower transaction fees compared to Bitcoin,
+            with various ecosystem tools including CashTab Wallet.
+          rationale: BCH launches Web3 domains for simplified wallet addressing while
+            showing YTD returns exceeding ETH performance.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin cash_2025-04-18T14:00:00.000Z
+            date: '2025-04-18T14:00:00.000Z'
+            description: New .BCH Web3 domains launch enables human-readable wallet
+              addresses for payments and business use.
+          - id: bitcoin cash_2024-11-21T05:00:00.000Z
+            date: '2024-11-21T05:00:00.000Z'
+            description: Showing price movement with returns outperforming ETH year-to-date.
+        - id: 66ff4952629b17bd99c940b9
+          name: bitcoin gold
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67f647367ae584c004d7eb88
+          name: bitcoin blue
+          score: 0
+          rationale: Yayoi Kusama Pumpkin auction launches with post-auction lottery
+            benefit for token holders.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin blue_2025-04-09T08:00:00.000Z
+            date: '2025-04-09T08:00:00.000Z'
+            description: Yayoi Kusama Pumpkin auction is live, with post-auction lottery
+              planned for token holders.
+        - id: 670a111c6cbe364b1775daeb
+          name: bitcoin layer 2
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67443e42216c5ce603f75e89
+          name: bitcoin brain
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin brain_2024-11-26T10:00:00.000Z
+            date: '2024-11-26T10:00:00.000Z'
+            description: Launched Rune fair launch with total supply of 1,000,000,000
+              and mint amount of 12,500 per mint. Project described as world's first
+              on-chain, community-owned AI agent on Bitcoin.
+          - id: bitcoin brain_2024-11-25T08:00:00.000Z
+            date: '2024-11-25T08:00:00.000Z'
+            description: Rune fair launch within 24 hours, first community-owned AI
+              agent on Bitcoin.
+        - id: 672a34c3345d3e5cba4c2766
+          name: bitcoin dog coin
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin dog coin_2024-11-05T14:00:00.000Z
+            date: '2024-11-05T14:00:00.000Z'
+            description: Market activity showing progression from 75M -> 9M -> 105M
+              -> 70M market cap.
+        - id: 67b7fc582d152e1c6d78eadc
+          name: bitcoin eternals
+          score: 0
+          xHandle: BitcoinEternals (inferred from hashtags and project name, as official
+            handle not explicitly stated in tweets)
+          analysis: Bitcoin Eternals is a premium Bitcoin Ordinals project launching
+            April 4th, 2025 on Magic Eden, featuring 4,444 luxury digital collectibles
+            with a mint price of 0.004444 BTC. Built on Block 9 Sats, the collection
+            showcases historical cultural figures with over 2,200 unique traits, revolutionary
+            on-chain metadata, and a recursive parent-child system. The project emphasizes
+            digital permanence and historical preservation through luxury digital
+            art, featuring various archetypes including Athenians and Tartarians.
+            Each piece represents unparalleled craftsmanship and digital provenance,
+            built directly on the Bitcoin blockchain.
+          rationale: Limited 44-piece NFT collection sees floor price surge to .027
+            BTC with two rare 1/1s sold as mint phase concludes April 12.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin eternals_2025-04-12T03:00:00.000Z
+            date: '2025-04-12T03:00:00.000Z'
+            description: Floor price reaches .027 BTC as two rare 1/1s sell within
+              24 hours. Mint closes in 3 hours.
+          - id: bitcoin eternals_2025-04-12T01:00:00.000Z
+            date: '2025-04-12T01:00:00.000Z'
+            description: Rare 1/1 NFT sells for 0.011 BTC ($920 USD) during final
+              hours of mint phase.
+          - id: bitcoin eternals_2025-04-11T21:00:00.000Z
+            date: '2025-04-11T21:00:00.000Z'
+            description: NFT mint is live on Magic Eden, closing at 11:59 PM PST today.
+          - id: bitcoin eternals_2025-04-08T19:00:00.000Z
+            date: '2025-04-08T19:00:00.000Z'
+            description: Floor price stands at 0.01 BTC ($767) with ongoing mint opportunity;
+              total supply capped at 44 pieces.
+          - id: bitcoin eternals_2025-04-07T19:00:00.000Z
+            date: '2025-04-07T19:00:00.000Z'
+            description: Primary mint phase is now active for new collection.
+        - id: 67faf2721613877caced6300
+          name: bitcoin bro bear
+          score: 0
+          rationale: 'New PFP collection launching Apr 22 on Magic Eden: 3,333 supply
+            at 23,420 $BRO, featuring holder airdrop and 100% mint proceeds burn.'
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin bro bear_2025-04-20T15:00:00.000Z
+            date: '2025-04-20T15:00:00.000Z'
+            description: New PFP collection launches April 22 on Magic Eden with 3,333
+              supply and 23,420 $BRO mint price; includes airdrop to existing holders
+              and 100% mint proceeds burn.
+        - id: 6721a2d475aa34ccd2ef4cc8
+          name: bitcoin etfs
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67c10c9414c7672770c31eb7
+          name: bitcoin bandits
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin bandits_2025-02-28T00:00:00.000Z
+            date: '2025-02-28T00:00:00.000Z'
+            description: Collection has 512 total supply with 408 current holders,
+              noted for having low inscription numbers.
+        - id: 67089b5aef5fecd86d0b2d09
+          name: bitcoin frogs
+          score: 0
+          xHandle: block_frogs
+          analysis: Block Frogs is a revolutionary Bitcoin Ordinals project featuring
+            3,300 unique, fully on-chain 3D voxel frogs that dynamically respond to
+            Bitcoin blockchain activity. Each frog is procedurally generated and animated
+            in real-time, with no off-chain dependencies. The project represents a
+            technical breakthrough in on-chain art, combining interactive elements,
+            blockchain reactivity, and generative design. Frogs respond to Bitcoin
+            block changes, featuring real-time animations, glitch effects, and mempool-driven
+            behavior changes. The project launched March 5, 2025, with both free mint
+            opportunities for whitelist holders and a public mint price of 0.00012
+            BTC.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin frogs_2025-03-06T03:00:00.000Z
+            date: '2025-03-06T03:00:00.000Z'
+            description: NFT collection showing significant price movement on March
+              5th. Chinese market activity noted as potential catalyst.
+        - id: 6758e5cfd63359f92799bcac
+          name: bitcoin corpses
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin corpses_2024-12-11T00:00:00.000Z
+            date: '2024-12-11T00:00:00.000Z'
+            description: DIY ordinals mint experience with no inscription fees & no
+              launchpads, focusing on corpse paint and black metal filth celebrating
+              runic and ordinal culture.
+        - id: 670b3e7690a8919c85d08d6d
+          name: bitcoin hpos10i
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67ed54191aa7eb2f9e0575ab
+          name: art on bitcoin
+          score: 0
+          rationale: New NFT collection "Celestial" by SatoshiLite set to launch on
+            Bitcoin network on April 8, 2025.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: art on bitcoin_2025-04-02T14:00:00.000Z
+            date: '2025-04-02T14:00:00.000Z'
+            description: Celestial collection by SatoshiLite launches April 8 on Bitcoin.
+        - id: 672d10050800d23a81142a94
+          name: bitcoin l2 labs
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin l2 labs_2024-11-07T18:00:00.000Z
+            date: '2024-11-07T18:00:00.000Z'
+            description: Launched to accelerate Stacks growth, added 5 new Rust developers
+              for sBTC and Clarity WASM development.
+        - id: 67144fade5b1a6e8af8e74bb
+          name: bitcoin cyborgs
+          score: 0
+          analysis: 10K Ordinal collection
+          rationale: 10K NFT collection currently minting at 0.00013 BTC per unit
+            with $ME token swap option available.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin cyborgs_2025-04-25T03:00:00.000Z
+            date: '2025-04-25T03:00:00.000Z'
+            description: Mint is live at 0.00013 BTC plus fees for a 10K total supply
+              collection.
+          - id: bitcoin cyborgs_2025-04-24T22:00:00.000Z
+            date: '2025-04-24T22:00:00.000Z'
+            description: Active mint ongoing at 0.00013 BTC plus fees.
+          - id: bitcoin cyborgs_2025-04-17T20:00:00.000Z
+            date: '2025-04-17T20:00:00.000Z'
+            description: NFT mint is live at 0.00013 BTC + fees, with $ME airdrop
+              tokens eligible for swapping to mint.
+          - id: bitcoin cyborgs_2025-04-17T17:00:00.000Z
+            date: '2025-04-17T17:00:00.000Z'
+            description: NFT mint is live at 0.00013 BTC per mint plus fees.
+          - id: bitcoin cyborgs_2025-04-09T21:00:00.000Z
+            date: '2025-04-09T21:00:00.000Z'
+            description: NFT collection of 10K units minting at 0.00013 BTC per unit.
+        - id: 67ec723205c042941dbf2a8f
+          name: american bitcoin
+          score: 0
+          rationale: Trump family launches Bitcoin mining venture with Hut 8 (80%
+            stake), securing Bitmain partnership and planning public listing, with
+            upcoming Consensus 2025 presentation in May.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: american bitcoin_2025-04-16T16:00:00.000Z
+            date: '2025-04-16T16:00:00.000Z'
+            description: Eric Trump and Hut 8 CEO to present mining venture at Consensus
+              2025 on May 15 in Toronto.
+          - id: american bitcoin_2025-04-02T16:00:00.000Z
+            date: '2025-04-02T16:00:00.000Z'
+            description: Eric and Donald Trump Jr. enter Bitcoin mining sector with
+              ambitious scaling goals.
+          - id: american bitcoin_2025-04-02T06:00:00.000Z
+            date: '2025-04-02T06:00:00.000Z'
+            description: Trump family launches new mining venture with 80% stake,
+              contributing equipment and planning public listing.
+          - id: american bitcoin_2025-04-01T22:00:00.000Z
+            date: '2025-04-01T22:00:00.000Z'
+            description: Major Bitcoin mining company launches through Trump-Hut 8
+              partnership, securing Bitmain support and targeting public listing.
+        - id: 6801602b228cd121f6a9484e
+          name: bitcoin ekasi
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 6769446290830cc5868afce0
+          name: bitcoin brain ai
+          score: 0
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: bitcoin brain ai_2024-12-23T10:00:00.000Z
+            date: '2024-12-23T10:00:00.000Z'
+            description: Launched as first community-created, community-owned, and
+              community-run Decentralized AI Agent on Bitcoin.
+empty_args_test:
+  input:
+    tool: search_projects
+    tool_arguments: {}
+  output:
+    response: ''
+    data:
+      data:
+        projects:
+        - id: 66f50f1e6811ccaef95621b5
+          name: olympus
+          score: 0.611
+          xHandle: OlympusGameP2E
+          analysis: Olympus is a blockchain-based gaming platform that combines strategic
+            card gameplay with character customization elements. The game features
+            a deck-building system where players can utilize 12 slots for ability
+            cards affecting various stats (Life, Melee, Range, Defense, Magic). Players
+            can select and customize characters with skins to enhance their abilities.
+            The platform integrates web3 technology and includes competitive seasonal
+            gameplay with real-world prizes, as previously established.
+          rationale: Token crashes 80% ($5B loss) amid sustained sell pressure from
+            validator rewards, though project announces new 150 OHM/epoch incentive
+            program and leader's strategic pivot discussion.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: olympus_2025-04-25T02:00:00.000Z
+            date: '2025-04-25T02:00:00.000Z'
+            description: Project leader breaks 4-year media silence with upcoming
+              podcast discussing strategic shift to pragmatism.
+          - id: olympus_2025-04-13T19:00:00.000Z
+            date: '2025-04-13T19:00:00.000Z'
+            description: Token crashes 80% in under one hour, eliminating $5B in market
+              capitalization.
+          - id: olympus_2025-04-06T13:00:00.000Z
+            date: '2025-04-06T13:00:00.000Z'
+            description: New incentive program launches with 150 OHM per epoch matching
+              for next 4 epochs through partnership expansion.
+          - id: olympus_2025-04-05T18:00:00.000Z
+            date: '2025-04-05T18:00:00.000Z'
+            description: Net incentives of 30,000 OHM ($800k) distributed to validators
+              are being consistently sold into the market, creating sustained sell
+              pressure.
+          - id: olympus_2025-04-05T15:00:00.000Z
+            date: '2025-04-05T15:00:00.000Z'
+            description: Sharp 10.18% price decrease in 24-hour period signals significant
+              selling pressure.
+        - id: 66ff4b35629b17bd99c944a4
+          name: nba top shot
+          score: 0.545
+          xHandle: NBATopShot
+          analysis: NBA Top Shot is an active NFT platform focused on NBA digital
+            collectibles, currently running their 2025 NBA Playoffs promotion. The
+            platform offers multi-tiered collecting systems, featuring Airdrops, Trade-Ins,
+            and Fast Break mechanics. Recent innovations include their AI assistant
+            "Alley" and the introduction of their first-ever Championship Ring NFT
+            reward. The platform maintains user engagement through regular pack giveaways
+            and playoff-focused collecting opportunities. Operating on the Flow blockchain,
+            the platform supports NFT-backed loans through integration with Flowty.io
+            and continues development under Dapper Labs management.
+          rationale: '2025 NBA Playoff Moments launching with multiple value propositions:
+            fungibility via Vaultopolis, airdrops for set holders, guaranteed buyback
+            rookie packs, and exclusive diamond ring rewards.'
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: nba top shot_2025-04-24T12:00:00.000Z
+            date: '2025-04-24T12:00:00.000Z'
+            description: New 2025 NBA Playoff moments collection announced with multiple
+              acquisition paths including airdrops and trade-ins.
+          - id: nba top shot_2025-04-24T02:00:00.000Z
+            date: '2025-04-24T02:00:00.000Z'
+            description: 2025 Playoff Moments feature new collection methods (airdrops,
+              trade-ins, Fast Break) and exclusive diamond-encrusted championship
+              ring.
+          - id: nba top shot_2025-04-17T20:00:00.000Z
+            date: '2025-04-17T20:00:00.000Z'
+            description: Moments become fungible through Vaultopolis integration,
+              enabling new trading possibilities.
+          - id: nba top shot_2025-04-15T12:00:00.000Z
+            date: '2025-04-15T12:00:00.000Z'
+            description: Limited edition Moments airdrop announced for users who lock
+              full sets of Holo Icon, Metallic Gold LE, For The Win, and Video Game
+              Numbers by April 15, 12PM ET.
+          - id: nba top shot_2025-04-02T01:00:00.000Z
+            date: '2025-04-02T01:00:00.000Z'
+            description: Legendary rookie pack drop available for $14 with guaranteed
+              buyback option.
+        - id: 67088055ef5fecd86d0b00e9
+          name: dojo
+          score: 0.525
+          xHandle: Dojo_Swap
+          analysis: DOJO is a cryptocurrency project built on the Injective ecosystem.
+            It's associated with Dojo_Swap and is currently working on implementing
+            atomic swap functionality. The project has shown consistent performance
+            as a top gainer within the Injective ecosystem. Recent trading data shows
+            24-hour buy volume of $8,992 and sell volume of $6,046, with a market
+            cap of $11,498. The project has a pending proposal that will expand its
+            capabilities within the Injective ecosystem.
+          rationale: New crypto prediction racing game launches on AbstractChain with
+            1,111 NFTs minting at $10 in May, offering token rewards redeemable for
+            ETH and passive income features.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: dojo_2025-04-25T03:00:00.000Z
+            date: '2025-04-25T03:00:00.000Z'
+            description: Gaming platform goes live featuring 30-second crypto price
+              prediction races with token rewards
+          - id: dojo_2025-04-25T01:00:00.000Z
+            date: '2025-04-25T01:00:00.000Z'
+            description: New NFT collection launching in May with 1,111 supply at
+              $10, offering passive income and XP boosts.
+          - id: dojo_2025-04-24T15:00:00.000Z
+            date: '2025-04-24T15:00:00.000Z'
+            description: New prediction racing game launches on AbstractChain with
+              upcoming 1111 supply NFT collection at $10 mint price; native token
+              redeemable for ETH.
+        - id: 66f8b9fb481813460f485a06
+          name: onchainmonkey
+          score: 0.514
+          xHandle: OnChainMonkey
+          analysis: OnChainMonkey (OCM) is a leading Bitcoin NFT project featuring
+            multiple collections including Genesis (ranked 4th by marketcap at $23.5M),
+            Katoshi Prime, and Katoshi Classic. The project is known for innovative
+            features like parent-child provenance and consecutive satoshi inscriptions.
+            Current collections showcase hand-drawn artwork with interactive features,
+            while maintaining strong market activity with Genesis pieces trading between
+            0.024-0.029 BTC. Recent developments include integration with The Order
+            of the Sats, Celestial NFT releases, and an active community engagement
+            program featuring banana-gifting mechanics. The project emphasizes Bitcoin-native
+            art and technological innovation in the Ordinals space.
+          rationale: Technical milestone project achieves sellout status and museum
+            acquisition but faces selling restrictions due to metadata changes, impacting
+            holder liquidity since November 2024.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: onchainmonkey_2025-04-24T14:00:00.000Z
+            date: '2025-04-24T14:00:00.000Z'
+            description: Metadata change in November 2024 prevents holders from selling
+              their assets, with no indication of restoration timeline.
+          - id: onchainmonkey_2025-04-18T18:00:00.000Z
+            date: '2025-04-18T18:00:00.000Z'
+            description: 'Achieves three technical firsts in NFT space: 10K on single
+              Bitcoin sat, parent-child provenance, and recursive 3D art.'
+          - id: onchainmonkey_2025-04-10T04:00:00.000Z
+            date: '2025-04-10T04:00:00.000Z'
+            description: Multiple collections rank in top 10 ordinals volume. Nine
+              pieces acquired by Toledo Museum of Art.
+          - id: onchainmonkey_2025-04-10T02:00:00.000Z
+            date: '2025-04-10T02:00:00.000Z'
+            description: Mint phase successfully completes with all tokens sold out.
+          - id: onchainmonkey_2025-04-09T17:00:00.000Z
+            date: '2025-04-09T17:00:00.000Z'
+            description: Katoshi mint sells out in 20 minutes; holders must retain
+              assets for 2 hours post-mint to qualify for airdrop.
+        - id: 67171c67542204f02af39fe2
+          name: felix
+          score: 0.514
+          xHandle: basedfelix0
+          analysis: FELIX is a cat-themed meme cryptocurrency on the BASE blockchain
+            featuring fair launch mechanics, burned supply (13%), locked liquidity,
+            and renounced ownership. The project has evolved from its initial lower
+            market cap range to achieve approximately $158M in Total Value Locked
+            (TVL) through HyperEVM farming. Currently transitioning between farming
+            seasons with planned airdrops and token launches. The project maintains
+            consistent social media presence with daily updates and promotional content.
+          rationale: Protocol achieves $158M TVL within 10 days, featuring stHYPE
+            staking product and Morpho smart contracts integration, with 1,307 early
+            participants and imminent token launches.
+          ticker: feusd
+          tokens:
+            hyperevm: '0x02c6a2fa58cc01a18b8d9e00ea48d65e4df26c70'
+          summaries:
+          - id: felix_2025-04-24T15:00:00.000Z
+            date: '2025-04-24T15:00:00.000Z'
+            description: Protocol reaches $158M TVL in 10 days; first farming season
+              ending with token launches imminent.
+          - id: felix_2025-04-24T14:00:00.000Z
+            date: '2025-04-24T14:00:00.000Z'
+            description: Protocol now operates front end for Morpho smart contracts
+              on HyperEVM platform.
+          - id: felix_2025-04-21T23:00:00.000Z
+            date: '2025-04-21T23:00:00.000Z'
+            description: Current staking infrastructure includes Thunderhead (stHYPE)
+              product and 50/50 Hyperlend pool with feUSD vault integration.
+          - id: felix_2025-04-21T08:00:00.000Z
+            date: '2025-04-21T08:00:00.000Z'
+            description: Borrow cap for HYPE token has been increased on the protocol.
+          - id: felix_2025-04-18T13:00:00.000Z
+            date: '2025-04-18T13:00:00.000Z'
+            description: Early protocol adoption shows 1,307 participants with 7-tier
+              structure and stability pool rewards mechanism.
+        - id: 67f29910831f306542ca77d5
+          name: solana crossroad
+          score: 0.434
+          xHandle: SolanaCrossroad
+          analysis: Solana Crossroads is a premier community conference for the Solana
+            ecosystem, taking place in Istanbul on April 25-26, 2025. The event features
+            multiple stages with presentations and discussions covering various aspects
+            of the Solana ecosystem, including DeFi, development, market analysis,
+            and consumer adoption. The conference brings together industry leaders,
+            developers, founders, and community members for networking and knowledge
+            sharing.
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 672f96dbe8b7715281db2591
+          name: miladies
+          score: 0.433
+          xHandle: miberamaker333
+          analysis: Mibera (formerly Miladies on Berachain) is an NFT project featuring
+            soulbound NFTs called "fractures" that include miparcels, miladies pre-reveal
+            art, and mireveal components. The project appears to be implementing a
+            strategic reveal process and has undergone a transition from its original
+            concept to a new form. The project incorporates elements of fragmentation
+            and evolution through reveals, with strong community engagement despite
+            mixed reactions to its development.
+          rationale: Project launches on Berachain with strong market performance,
+            reaching top 5 trading volume and 109 BERA floor price, while earlier
+            holders received 10 ETH airdrops.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: miladies_2025-04-24T20:00:00.000Z
+            date: '2025-04-24T20:00:00.000Z'
+            description: Berachain deployment rumors revealed as orchestrated misinformation
+              campaign.
+          - id: miladies_2025-04-22T12:00:00.000Z
+            date: '2025-04-22T12:00:00.000Z'
+            description: Collection reaches top 5 volume across chains with 30% floor
+              price increase to 109 BERA on Berachain.
+          - id: miladies_2025-04-20T20:00:00.000Z
+            date: '2025-04-20T20:00:00.000Z'
+            description: New launch on Berachain with rebrand complete; secondary
+              trading now active.
+          - id: miladies_2025-04-08T23:00:00.000Z
+            date: '2025-04-08T23:00:00.000Z'
+            description: Top NFT project consistently receiving airdrops due to strong
+              culture-first community approach.
+          - id: miladies_2024-12-09T11:00:00.000Z
+            date: '2024-12-09T11:00:00.000Z'
+            description: 10 ETH airdrop reported for holders who had Miladies and
+              Remilios in wallet half a year ago.
+        - id: 672961c45d84ca856148320b
+          name: gbtc
+          score: 0.425
+          xHandle: Grayscale
+          analysis: GBTC (Grayscale Bitcoin Trust) is one of the leading Bitcoin ETF
+            products, currently holding approximately 191,774 BTC. While maintaining
+            significant market presence, it faces competitive pressure from newer
+            ETFs like IBIT and FBTC, experiencing consistent outflows. The fund operates
+            in a dynamic market where Bitcoin has reached a $1.86T market cap, with
+            GBTC showing mixed performance including a 4.1% gain over a recent 2-week
+            period. The product has been noted for its market influence, with some
+            observers citing its role in previous Bitcoin price movements. Despite
+            outflows, it remains one of the top three Bitcoin holders among ETF products,
+            though trailing behind IBIT and FBTC in daily trading volume.
+          rationale: Bitcoin ETFs see largest daily inflow since January ($381.3M)
+            despite recent $713M market exodus, with significant whale concentration
+            and 15% premium over market benchmark.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: gbtc_2025-04-22T12:00:00.000Z
+            date: '2025-04-22T12:00:00.000Z'
+            description: Spot ETFs record largest daily inflow since January at $381.3M,
+              with combined BTC funds including target adding $69.1M amid $88K+ Bitcoin
+              price.
+          - id: gbtc_2025-04-22T06:00:00.000Z
+            date: '2025-04-22T06:00:00.000Z'
+            description: Single whale (Saylor) dominates trading activity, creating
+              market concentration risk and divergence from broader crypto patterns.
+          - id: gbtc_2025-04-22T04:00:00.000Z
+            date: '2025-04-22T04:00:00.000Z'
+            description: Records $36.6M in daily inflows amid broader $381M Bitcoin
+              ETF market surge.
+          - id: gbtc_2025-04-15T03:00:00.000Z
+            date: '2025-04-15T03:00:00.000Z'
+            description: ETF experiences $160.93M weekly outflows amid broader $713M
+              crypto ETF market exodus.
+          - id: gbtc_2025-04-14T20:00:00.000Z
+            date: '2025-04-14T20:00:00.000Z'
+            description: Volatility metrics show 15% premium over market benchmark,
+              ranking as second highest among major BTC ETFs.
+        - id: 6809b94f50a81f25be56b741
+          name: ratings
+          score: 0.422
+          xHandle: Cannot be determined from provided tweets
+          analysis: Based on the provided tweets, I cannot identify a specific crypto
+            project. While the tweets contain various mentions of ratings and rating
+            systems, none are specifically related to cryptocurrency or blockchain
+            technology. The majority of relevant ratings content relates to Fitch
+            Ratings (a traditional financial ratings agency) and various entertainment/sports/educational
+            rating systems.
+          ticker: ''
+          tokens: {}
+          summaries: []
+        - id: 67ec6479ebcf4557b7bd39c7
+          name: pectra
+          score: 0.411
+          xHandle: ethereum
+          analysis: Pectra is Ethereum's major network upgrade scheduled for May 7,
+            2025. It introduces significant improvements to the Ethereum network including
+            enhanced staking capabilities (up to 2048 ETH), smart wallet features,
+            improved validator performance, and better Layer 2 scalability. The upgrade
+            includes 11 Ethereum Improvement Proposals (EIPs) focusing on user experience,
+            transaction efficiency, and network security. Key features include single
+            slot finality, flexible gas payments, wallet recovery without seed phrases,
+            and enhanced staking rewards with partial withdrawal options.
+          rationale: Major protocol upgrade with EIP-7702 implementation for smart
+            account functionality set to launch on mainnet May 7, 2025, with client
+            releases on April 21.
+          ticker: ''
+          tokens: {}
+          summaries:
+          - id: pectra_2025-04-08T11:00:00.000Z
+            date: '2025-04-08T11:00:00.000Z'
+            description: Major protocol upgrade launching in one month, implementing
+              EIP-7702 for smart account functionality on all EOAs.
+          - id: pectra_2025-04-03T17:00:00.000Z
+            date: '2025-04-03T17:00:00.000Z'
+            description: Official launch date confirmed for May 7th.
+          - id: pectra_2025-04-03T16:00:00.000Z
+            date: '2025-04-03T16:00:00.000Z'
+            description: Mainnet launch scheduled for May 7 2025, with client releases
+              set for April 21 2025.
