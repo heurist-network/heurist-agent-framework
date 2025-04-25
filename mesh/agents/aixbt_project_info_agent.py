@@ -60,7 +60,7 @@ class AixbtProjectInfoAgent(MeshAgent):
                 ],
                 "external_apis": ["aixbt"],
                 "tags": ["Project Analysis"],
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/aixbt.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Aixbt.png",
                 "examples": [
                     "Tell me about Heurist",
                     "What are the latest developments for Ethereum?",
