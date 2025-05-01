@@ -1,18 +1,30 @@
+# This is a development docker-compose file for the mesh API and manager, without the swarm config.
+# Use `docker compose -f docker-compose.dev.yml up` to start the services.
 services:
-  mesh:
-    container_name: mesh
-    image: heurist-mesh:local
+  mesh-api:
+    container_name: mesh-api
     build:
       context: .
       dockerfile: Dockerfile
+    command: python -m mesh.mesh_api
     ports:
       - "8000:8000"
     restart: unless-stopped
     env_file:
       - .env
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/mesh_health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/mesh_health" ]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 10s
+
+  mesh-manager:
+    container_name: mesh-manager
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m mesh.mesh_manager
+    restart: unless-stopped
+    env_file:
+      - .env

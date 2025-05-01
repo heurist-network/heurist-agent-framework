@@ -1,20 +1,37 @@
 services:
-  mesh:
+  mesh-api:
     image: ghcr.io/heurist-network/heurist-agent-framework/mesh:${COMMIT_SHA:-latest}
     build:
       context: .
       dockerfile: Dockerfile
+    command: python -m mesh.mesh_api
     ports:
       - "8000:8000"
     restart: unless-stopped
     env_file:
       - .env
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/mesh_health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/mesh_health" ]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 10s
+    deploy:
+      replicas: 2
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 5s
+
+  mesh-manager:
+    image: ghcr.io/heurist-network/heurist-agent-framework/mesh:${COMMIT_SHA:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m mesh.mesh_manager
+    restart: unless-stopped
+    env_file:
+      - .env
     deploy:
       replicas: 2
       update_config:
