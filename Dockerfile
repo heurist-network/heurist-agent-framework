@@ -32,12 +32,10 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     cd mesh && \
     uv sync --frozen --no-install-project --no-dev
 
-# Copy specific configuration and scripts
+# Copy entrypoint script
 COPY .docker/entrypoint.sh /app/entrypoint.sh
-COPY .docker/env-setup.sh .docker/requirements_checker.py /app/.docker/
 
-# Make the scripts executable
-RUN chmod +x /app/.docker/env-setup.sh
+# Make the entrypoint script executable
 RUN chmod +x /app/entrypoint.sh
 
 # Copy the rest of the application code
