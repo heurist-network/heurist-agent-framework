@@ -85,3 +85,4 @@ venv/
 # Mesh client, tests, etc.
 heurist-mesh-client/
 mesh/tests/
+mesh/images/
