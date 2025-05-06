@@ -566,14 +566,10 @@ class ResearchWorkflow:
             cleaned_response = response.replace("```json", "").replace("```", "").strip()
             result = json.loads(cleaned_response)
             report = result.get("reportMarkdown", "Error generating report")
-            # Add key findings section
-            key_findings = "\n\n## Key Findings\n\n" + "\n".join(
-                [f"- {learning}" for learning in research_result["learnings"]]
-            )
             # Add sources section
             sources = "\n\n## Sources\n\n" + "\n".join([f"- {url}" for url in research_result["visited_urls"]])
 
-            return report + key_findings + sources
+            return report + sources
         except json.JSONDecodeError as e:
             logger.error(f"Error parsing report JSON: {e}")
             logger.debug(f"Raw response: {response}")

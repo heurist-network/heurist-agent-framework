@@ -18,7 +18,7 @@ async def run_agent():
             "query": "What are the latest developments in zero knowledge proofs?",
             "depth": 2,
             "breadth": 3,
-            "concurrency": 2,
+            "concurrency": 9,
         }
 
         try:
@@ -36,21 +36,7 @@ async def run_agent():
             "input": agent_input,
             "output": {
                 "response": agent_output["response"],
-                "data": {
-                    "query_info": agent_output["data"]["query_info"],
-                    "result_count": len(agent_output["data"]["results"]),
-                    "results_sample": agent_output["data"]["results"][:2] if agent_output["data"]["results"] else [],
-                    "analyses_count": len(agent_output["data"]["analyses"]),
-                    "analyses_sample": agent_output["data"]["analyses"][:2] if agent_output["data"]["analyses"] else [],
-                    "learnings_count": len(agent_output["data"]["learnings"]),
-                    "learnings_sample": agent_output["data"]["learnings"][:5]
-                    if agent_output["data"]["learnings"]
-                    else [],
-                    "visited_urls_count": len(agent_output["data"]["visited_urls"]),
-                    "visited_urls_sample": agent_output["data"]["visited_urls"][:5]
-                    if agent_output["data"]["visited_urls"]
-                    else [],
-                },
+                "data": agent_output["data"],
             },
         }
 
