@@ -174,3 +174,6 @@ test_results.json
 
 # Dev output from .github/scripts/update_mesh_metadata.py
 metadata.json
+
+# Mesh context
+mesh/context/*

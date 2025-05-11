@@ -102,7 +102,9 @@ class MeshAgent(ABC):
         pass
 
     @abstractmethod
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Handle execution of specific tools and return the raw data"""
         pass
 
@@ -122,12 +124,15 @@ class MeshAgent(ABC):
         tool_name = params.get("tool")
         tool_args = params.get("tool_arguments", {})
         raw_data_only = params.get("raw_data_only", False)
+        session_context = params.get("session_context", {})
 
         # ---------------------
         # 1) DIRECT TOOL CALL
         # ---------------------
         if tool_name:
-            data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
+            data = await self._handle_tool_logic(
+                tool_name=tool_name, function_args=tool_args, session_context=session_context
+            )
             return {"response": "", "data": data}
 
         # ---------------------
@@ -153,7 +158,9 @@ class MeshAgent(ABC):
             tool_call_name = tool_call.function.name
             tool_call_args = json.loads(tool_call.function.arguments)
 
-            data = await self._handle_tool_logic(tool_name=tool_call_name, function_args=tool_call_args)
+            data = await self._handle_tool_logic(
+                tool_name=tool_call_name, function_args=tool_call_args, session_context=session_context
+            )
 
             if raw_data_only:
                 return {"response": "", "data": data}
@@ -284,12 +291,10 @@ class MeshAgent(ABC):
         )
 
     async def __aenter__(self):
-        """Async context manager enter"""
         self.session = aiohttp.ClientSession()
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
         if self.session:
             await self.session.close()
             self.session = None

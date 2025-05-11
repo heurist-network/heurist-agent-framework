@@ -151,7 +151,7 @@ class MySpecialAgent(MeshAgent):
 4. **Start local server**:
 
 ```bash
-python -m mesh_api
+uvicorn mesh.mesh_api:app --reload
 ```
 
 ## Contributor Guidelines

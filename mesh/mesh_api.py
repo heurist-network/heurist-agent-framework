@@ -144,11 +144,10 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
     try:
         # Get agent from pool instead of creating a new instance each time
         agent = await agent_pool.get_agent(request.agent_id)
+        origin_api_key = api_key
 
         if request.heurist_api_key:
-            agent.set_heurist_api_key(
-                request.heurist_api_key
-            )  # this is the api key for the agent to authenticate with the heurist api, from config file if not provided
+            agent.set_heurist_api_key(request.heurist_api_key)  # this is the api key for the agent to use Heurist LLMs
 
         # Handle API credit deduction if enabled
         credits_api_url = os.getenv("HEURIST_CREDITS_DEDUCTION_API")
@@ -158,7 +157,7 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
                 raise HTTPException(status_code=500, detail="Credits API auth not configured")
             try:
                 # Parse user_id and api_key, split by first occurrence only, this is passed in from the user
-                if "#" in api_key:
+                if "#" in origin_api_key:
                     user_id, api_key = api_key.split("#", 1)
                 else:
                     user_id, api_key = api_key.split("-", 1)
@@ -185,7 +184,9 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
                 logger.error(f"Error validating API credits: {e}", exc_info=True)
                 raise HTTPException(status_code=500, detail="Error validating API credits")
 
-        result = await agent.call_agent(request.input)
+        call_args = dict(request.input)
+        call_args["session_context"] = {"api_key": origin_api_key}
+        result = await agent.call_agent(call_args)
 
         # Note: We don't call agent.cleanup() anymore since the agent is reused
         # Agent cleanup is now handled by the pool's TTL mechanism

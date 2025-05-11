@@ -1,17 +1,17 @@
 import logging
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 
 from decorators import monitor_execution, with_cache, with_retry
-from mesh.mesh_agent import MeshAgent
+from mesh.context_agent import ContextAgent
 
 logger = logging.getLogger(__name__)
 load_dotenv()
 
 
-class ZerionWalletAnalysisAgent(MeshAgent):
+class ZerionWalletAnalysisAgent(ContextAgent):
     def __init__(self):
         super().__init__()
         self.api_key = os.getenv("ZERION_API_KEY")
@@ -43,9 +43,7 @@ class ZerionWalletAnalysisAgent(MeshAgent):
         )
 
     def get_system_prompt(self) -> str:
-        return """You are a crypto wallet analyst that provides factual analysis of wallet holdings based on Zerion API data.
-        1. Extract the wallet address from the user's query. It must be a valid EVM wallet address. Otherwise, return an error.
-        2. Use the appropriate tools to get wallet data
+        return """You are a crypto wallet analyst that provides factual analysis of wallet holdings based on Zerion API data. Use the appropriate tools to get wallet data.
 
         Important:
         - NEVER make up data that is not returned from the tool
@@ -67,7 +65,7 @@ class ZerionWalletAnalysisAgent(MeshAgent):
                         "properties": {
                             "wallet_address": {
                                 "type": "string",
-                                "description": "The EVM wallet address to analyze. Must start with 0x and be 42 characters long.",
+                                "description": "The EVM wallet address （starting with 0x and 42-character long) to analyze. You can also use 'SELF' for wallet_address to use the user's own wallet address.",
                             },
                         },
                         "required": ["wallet_address"],
@@ -84,7 +82,7 @@ class ZerionWalletAnalysisAgent(MeshAgent):
                         "properties": {
                             "wallet_address": {
                                 "type": "string",
-                                "description": "The EVM wallet address to analyze. Must start with 0x and be 42 characters long.",
+                                "description": "The EVM wallet address （starting with 0x and 42-character long) to analyze. You can also use 'SELF' for wallet_address to use the user's own wallet address.",
                             },
                         },
                         "required": ["wallet_address"],
@@ -229,11 +227,25 @@ class ZerionWalletAnalysisAgent(MeshAgent):
             logger.error(f"Error fetching wallet NFTs: {e}")
             return {"error": f"Failed to fetch wallet NFTs: {str(e)} for wallet address {wallet_address}"}
 
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    def _is_valid_wallet_address(self, wallet_address: str) -> bool:
+        return wallet_address.startswith("0x") and len(wallet_address) == 42
+
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         if tool_name not in ["fetch_wallet_tokens", "fetch_wallet_nfts"]:
             return {"error": f"Unsupported tool '{tool_name}'"}
 
-        wallet_address = function_args.get("wallet_address")
+        if function_args.get("wallet_address"):
+            wallet_address = function_args.get("wallet_address")
+
+            if wallet_address == "SELF":
+                user_id = self._extract_user_id(session_context.get("api_key"))
+                if self._is_valid_wallet_address(user_id):
+                    wallet_address = user_id
+                    await self.update_user_context({"wallet_address": wallet_address}, user_id)
+                else:
+                    return {"error": "Invalid wallet address for SELF"}
 
         if not wallet_address:
             return {"error": "Missing 'wallet_address' in tool_arguments"}
