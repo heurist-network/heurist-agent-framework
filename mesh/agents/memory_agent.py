@@ -18,8 +18,9 @@ class MemoryAgent(ContextAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Agent that maintains conversation history across sessions and platforms",
+                "description": "Agent that maintains conversation history across sessions and platforms. It can query the conversation history and store new conversations.",
                 "tags": ["Memory"],
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Memory.png",
                 "examples": [
                     "Save our conversation to memory",
                     "What did we talk about in our last conversation?",
