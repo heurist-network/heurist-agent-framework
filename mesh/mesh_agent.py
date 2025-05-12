@@ -130,15 +130,9 @@ class MeshAgent(ABC):
         # 1) DIRECT TOOL CALL
         # ---------------------
         if tool_name:
-            try:
-                data = await self._handle_tool_logic(
-                    tool_name=tool_name, function_args=tool_args, session_context=session_context
-                )
-            except TypeError as e:
-                if "session_context" in str(e):
-                    data = await self._handle_tool_logic(tool_name=tool_name, function_args=tool_args)
-                else:
-                    raise
+            data = await self._handle_tool_logic(
+                tool_name=tool_name, function_args=tool_args, session_context=session_context
+            )
             return {"response": "", "data": data}
 
         # ---------------------
@@ -164,15 +158,9 @@ class MeshAgent(ABC):
             tool_call_name = tool_call.function.name
             tool_call_args = json.loads(tool_call.function.arguments)
 
-            try:
-                data = await self._handle_tool_logic(
-                    tool_name=tool_call_name, function_args=tool_call_args, session_context=session_context
-                )
-            except TypeError as e:
-                if "session_context" in str(e):
-                    data = await self._handle_tool_logic(tool_name=tool_call_name, function_args=tool_call_args)
-                else:
-                    raise
+            data = await self._handle_tool_logic(
+                tool_name=tool_call_name, function_args=tool_call_args, session_context=session_context
+            )
 
             if raw_data_only:
                 return {"response": "", "data": data}
