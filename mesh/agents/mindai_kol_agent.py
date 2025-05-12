@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import requests
 from dotenv import load_dotenv
@@ -248,7 +248,9 @@ class MindAiKolAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Handle execution of specific tools and return the raw data"""
         if tool_name == "get_best_initial_calls":
             period = function_args.get("period", 720)  # Default to 720 hours (30 days) for best initial calls

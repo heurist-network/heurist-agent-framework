@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
@@ -381,7 +381,9 @@ class FundingRateAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Handle tool execution and return the raw data"""
 
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")

@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 from duckduckgo_search import DDGS
@@ -99,7 +99,9 @@ class DuckDuckGoSearchAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Handle execution of specific tools and return the raw data"""
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 

@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
@@ -101,7 +101,9 @@ class AlloraPricePredictionAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Handle Allora prediction tool logic."""
         if tool_name != "get_allora_prediction":
             return {"error": f"Unsupported tool '{tool_name}'"}

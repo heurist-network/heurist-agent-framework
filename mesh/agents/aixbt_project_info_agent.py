@@ -201,7 +201,9 @@ class AIXBTProjectInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         """Handle AIXBT tool calls."""
         if tool_name != "search_projects":
             return {"error": f"Unsupported tool: {tool_name}", "data": {"projects": []}}
