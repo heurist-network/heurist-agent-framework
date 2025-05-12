@@ -2,6 +2,7 @@ import asyncio
 import os
 import sys
 import time
+from abc import ABC
 from importlib import import_module
 from pathlib import Path
 from pkgutil import iter_modules
@@ -61,6 +62,9 @@ class AgentLoader:
                     for attr_name in dir(mod):
                         attr = getattr(mod, attr_name)
                         if isinstance(attr, type) and issubclass(attr, MeshAgent) and attr is not MeshAgent:
+                            # skip abstract classes
+                            if ABC in attr.__bases__ or getattr(attr, "__abstractmethods__", set()):
+                                continue
                             # try to instantiate concrete agents only to check for config errors (ValueError)
                             try:
                                 _ = attr()  # attempt instantiation, ignore result

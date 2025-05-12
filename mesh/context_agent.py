@@ -3,7 +3,14 @@ import logging
 import os
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
+
+import boto3
+from botocore.exceptions import ClientError
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +65,54 @@ class FileContextStorage(ContextStorage):
             logger.error(f"Error writing context to {context_path}: {e}")
 
 
-class ContextAgent(MeshAgent):
+class S3ContextStorage(ContextStorage):
+    def __init__(self):
+        self.bucket = "mesh-context"
+        self.s3 = boto3.client(
+            "s3",
+            aws_access_key_id=os.getenv("S3_ACCESS_KEY"),
+            aws_secret_access_key=os.getenv("S3_SECRET_KEY"),
+            endpoint_url=os.getenv("S3_ENDPOINT"),
+            region_name=os.getenv("S3_REGION", "auto"),
+        )
+        logger.info(f"S3 context storage initialized with bucket {self.bucket}")
+
+    def _get_key(self, user_id: str) -> str:
+        sanitized_user_id = user_id.replace("/", "_").replace("\\", "_")
+        return f"{sanitized_user_id}.json"
+
+    async def get_context(self, user_id: str) -> Dict[str, Any]:
+        key = self._get_key(user_id)
+        try:
+            obj = self.s3.get_object(Bucket=self.bucket, Key=key)
+            return json.loads(obj["Body"].read())
+        except self.s3.exceptions.NoSuchKey:
+            return {}
+        except ClientError as e:
+            logger.error(f"Error fetching context from S3: {e}")
+            return {}
+        except Exception as e:
+            logger.error(f"Unknown error: {e}")
+            return {}
+
+    async def set_context(self, user_id: str, context: Dict[str, Any]) -> None:
+        key = self._get_key(user_id)
+        try:
+            self.s3.put_object(
+                Bucket=self.bucket,
+                Key=key,
+                Body=json.dumps(context, indent=2).encode("utf-8"),
+                ContentType="application/json",
+            )
+        except Exception as e:
+            logger.error(f"Error writing context to S3: {e}")
+
+
+def _has_s3_env():
+    return all(os.getenv(k) for k in ["S3_ACCESS_KEY", "S3_SECRET_KEY", "S3_ENDPOINT"])
+
+
+class ContextAgent(MeshAgent, ABC):
     """
     Base class for agents that need to maintain context for each user.
 
@@ -67,7 +121,12 @@ class ContextAgent(MeshAgent):
 
     def __init__(self, storage: Optional[ContextStorage] = None):
         super().__init__()
-        self.storage = storage or FileContextStorage()
+        if storage:
+            self.storage = storage
+        elif _has_s3_env():
+            self.storage = S3ContextStorage()
+        else:
+            self.storage = FileContextStorage()
 
     def _extract_user_id(self, api_key: str) -> Optional[str]:
         """Extract user_id from API key"""
@@ -92,3 +151,17 @@ class ContextAgent(MeshAgent):
         context.update(updates)
         await self.set_user_context(context, user_id)
         return context
+
+    @abstractmethod
+    def get_system_prompt(self) -> str:
+        pass
+
+    @abstractmethod
+    def get_tool_schemas(self) -> List[Dict]:
+        pass
+
+    @abstractmethod
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        pass

@@ -6,6 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "aiohttp==3.11.15",
     "apify-client==1.9.2", # truth social agent
+    "boto3>=1.38.13",
     "duckduckgo-search==7.4.3", # ddg agent
     "fastapi==0.115.12", # for mesh api server
     "firecrawl-py==1.12.0", # firecrawl agent
