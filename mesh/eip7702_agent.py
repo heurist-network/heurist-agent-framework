@@ -65,6 +65,7 @@ class SessionInfo:
 class EIP7702Agent(ContextAgent, ABC):
     """
     Abstract base class for agents that can execute onchain transactions via EIP7702.
+    It uses OKX Wallet Core Implementation for Session-Based Execution (https://github.com/okx/wallet-core?tab=readme-ov-file#type-3-execute-from-executor).
 
     This agent provides infrastructure for:
     - Chain validation and configuration
