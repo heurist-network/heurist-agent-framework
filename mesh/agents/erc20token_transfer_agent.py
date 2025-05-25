@@ -271,37 +271,6 @@ class ERC20TokenTransferAgent(EIP7702Agent):
             logger.error(f"Error in transfer_erc20_token: {e}")
             return {"error": f"Transfer failed: {str(e)}"}
 
-
-    async def get_transfer_history(self, user_id: str, limit: int = 10) -> Dict[str, Any]:
-        """
-        Get user's ERC20 transfer history.
-        
-        Args:
-            user_id: User identifier
-            limit: Maximum number of transfers to return
-            
-        Returns:
-            Dictionary with transfer history or error
-        """
-        try:
-            context = await self.get_user_context(user_id)
-            transfers = context.get("erc20_transfers", [])
-            
-            # Get most recent transfers
-            recent_transfers = transfers[-limit:] if len(transfers) > limit else transfers
-            recent_transfers.reverse()  # Most recent first
-
-            return {
-                "status": "success",
-                "total_transfers": len(transfers),
-                "recent_transfers": recent_transfers,
-                "showing": len(recent_transfers)
-            }
-
-        except Exception as e:
-            logger.error(f"Error getting transfer history: {e}")
-            return {"error": f"Failed to get transfer history: {str(e)}"}
-
     async def _handle_tool_logic(
         self, 
         tool_name: str, 
