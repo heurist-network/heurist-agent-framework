@@ -26,7 +26,7 @@ dependencies = [
     "tenacity==8.5.0", # sol wallet agent
     "tiktoken==0.9.0", # core embeddings
     "uvicorn==0.34.0", # for mesh api server
-    "web3-ethereum-defi==0.28.1", # aave agent
+    "web3==7.11.1", # for eip7702 agent
 ]
 
 # required for spaceandtime agent as it uses old deps

@@ -39,7 +39,7 @@ dependencies = [
     "tweepy==4.15.0", # clients/twitter_api.py
     "typer[all]==0.9.0", # main_research.py
     "uvicorn==0.34.0", # for mesh api server
-    "web3-ethereum-defi==0.28.1", # aave agent
+    "web3==7.11.1", # for eip7702 agent
 ]
 
 # required for spaceandtime agent as it uses old deps

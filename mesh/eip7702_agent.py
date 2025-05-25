@@ -1,0 +1,477 @@
+import os
+import json
+import logging
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional, Tuple
+from dataclasses import dataclass
+from enum import Enum
+
+import boto3
+from web3 import Web3
+from eth_account import Account
+from botocore.exceptions import ClientError
+
+from mesh.context_agent import ContextAgent
+from dotenv import load_dotenv
+
+load_dotenv()
+
+logger = logging.getLogger(__name__)
+
+
+class SupportedChain(Enum):
+    """Supported blockchain networks"""
+    ETHEREUM_MAINNET = 1
+    ETHEREUM_SEPOLIA = 11155111
+
+
+@dataclass
+class ChainConfig:
+    """Configuration for blockchain networks"""
+    chain_id: int
+    name: str
+    rpc_url_env_var: str
+    is_testnet: bool = False
+
+
+@dataclass
+class CallData:
+    """Structure for contract call data"""
+    target: str  # Contract address
+    value: int   # ETH value to send (in wei)
+    data: bytes  # Encoded function call data
+
+
+@dataclass
+class SessionInfo:
+    """Session information for EIP7702 execution"""
+    id: int
+    executor: str
+    validator: str
+    valid_until: int
+    valid_after: int
+    pre_hook: str
+    post_hook: str
+    signature: str
+
+
+class EIP7702Agent(ContextAgent, ABC):
+    """
+    Abstract base class for agents that can execute onchain transactions via EIP7702.
+    
+    This agent provides infrastructure for:
+    - Chain validation and configuration
+    - Executor management and authentication
+    - Transaction building and execution
+    - Session management for EIP7702 delegated execution
+    """
+
+    # Supported blockchain configurations
+    CHAIN_CONFIGS = {
+        SupportedChain.ETHEREUM_MAINNET: ChainConfig(
+            chain_id=1,
+            name="Ethereum Mainnet",
+            rpc_url_env_var=os.getenv("ETHEREUM_RPC_URL"),
+            is_testnet=False
+        ),
+        SupportedChain.ETHEREUM_SEPOLIA: ChainConfig(
+            chain_id=11155111,
+            name="Ethereum Sepolia",
+            rpc_url_env_var=os.getenv("SEPOLIA_RPC_URL"),
+            is_testnet=True
+        )
+    }
+
+    # Wallet Core Contract ABI for EIP7702 execution
+    WALLET_CORE_ABI = [
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {"internalType": "address", "name": "target", "type": "address"},
+                        {"internalType": "uint256", "name": "value", "type": "uint256"},
+                        {"internalType": "bytes", "name": "data", "type": "bytes"}
+                    ],
+                    "internalType": "struct Call[]",
+                    "name": "calls",
+                    "type": "tuple[]"
+                },
+                {
+                    "components": [
+                        {"internalType": "uint256", "name": "id", "type": "uint256"},
+                        {"internalType": "address", "name": "executor", "type": "address"},
+                        {"internalType": "address", "name": "validator", "type": "address"},
+                        {"internalType": "uint256", "name": "validUntil", "type": "uint256"},
+                        {"internalType": "uint256", "name": "validAfter", "type": "uint256"},
+                        {"internalType": "bytes", "name": "preHook", "type": "bytes"},
+                        {"internalType": "bytes", "name": "postHook", "type": "bytes"},
+                        {"internalType": "bytes", "name": "signature", "type": "bytes"}
+                    ],
+                    "internalType": "struct Session",
+                    "name": "session",
+                    "type": "tuple"
+                }
+            ],
+            "name": "executeFromExecutor",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {"internalType": "uint256", "name": "id", "type": "uint256"},
+                        {"internalType": "address", "name": "executor", "type": "address"},
+                        {"internalType": "address", "name": "validator", "type": "address"},
+                        {"internalType": "uint256", "name": "validUntil", "type": "uint256"},
+                        {"internalType": "uint256", "name": "validAfter", "type": "uint256"},
+                        {"internalType": "bytes", "name": "preHook", "type": "bytes"},
+                        {"internalType": "bytes", "name": "postHook", "type": "bytes"},
+                        {"internalType": "bytes", "name": "signature", "type": "bytes"}
+                    ],
+                    "internalType": "struct Session",
+                    "name": "session",
+                    "type": "tuple"
+                }
+            ],
+            "name": "getSessionTypedHash",
+            "outputs": [
+                {"internalType": "bytes32", "name": "", "type": "bytes32"}
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+
+    def __init__(self, default_chain: SupportedChain = SupportedChain.ETHEREUM_SEPOLIA):
+        super().__init__()
+        self.default_chain = default_chain
+        self._web3_instances: Dict[int, Web3] = {}
+        self._aws_secrets_client = None
+        
+        # Initialize AWS Secrets Manager client if credentials are available
+        try:
+            self._aws_secrets_client = boto3.client('secretsmanager')
+        except Exception as e:
+            logger.warning(f"Failed to initialize AWS Secrets Manager client: {e}")
+
+    def _get_web3_instance(self, chain_id: int) -> Web3:
+        """Get or create Web3 instance for the specified chain"""
+        if chain_id in self._web3_instances:
+            return self._web3_instances[chain_id]
+        
+        # Find chain config
+        chain_config = None
+        for supported_chain in SupportedChain:
+            if self.CHAIN_CONFIGS[supported_chain].chain_id == chain_id:
+                chain_config = self.CHAIN_CONFIGS[supported_chain]
+                break
+        
+        if not chain_config:
+            raise ValueError(f"Unsupported chain ID: {chain_id}")
+        
+        rpc_url = chain_config.rpc_url_env_var
+        if not rpc_url:
+            raise ValueError(f"RPC URL not found in environment variable: {chain_config.rpc_url_env_var}")
+        
+        w3 = Web3(Web3.HTTPProvider(rpc_url))
+        if not w3.is_connected():
+            raise ConnectionError(f"Failed to connect to {chain_config.name}")
+        
+        self._web3_instances[chain_id] = w3
+        logger.info(f"Connected to {chain_config.name} (Chain ID: {chain_id})")
+        return w3
+
+    def _validate_chain_id(self, chain_id: int) -> bool:
+        """Validate if the chain ID is supported"""
+        supported_chain_ids = [config.chain_id for config in self.CHAIN_CONFIGS.values()]
+        return chain_id in supported_chain_ids
+
+    async def _get_session_info(self, user_id: str) -> Optional[SessionInfo]:
+        """Extract session information from user context"""
+        try:
+            context = await self.get_user_context(user_id)
+            session_data = context.get("sessionInfo")
+            
+            if not session_data:
+                logger.error(f"No sessionInfo found in context for user {user_id}")
+                return None
+            
+            return SessionInfo(
+                id=session_data["id"],
+                executor=session_data["executor"],
+                validator=session_data["validator"],
+                valid_until=session_data["validUntil"],
+                valid_after=session_data["validAfter"],
+                pre_hook=session_data["preHook"],
+                post_hook=session_data["postHook"],
+                signature=session_data["signature"]
+            )
+        except Exception as e:
+            logger.error(f"Error extracting session info for user {user_id}: {e}")
+            return None
+
+    async def _get_executor_private_key(self, executor_address: str) -> Optional[str]:
+        """Retrieve executor private key from AWS Secrets Manager"""
+        if not self._aws_secrets_client:
+            logger.error("AWS Secrets Manager client not initialized")
+            return None
+        
+        try:
+            # Use executor address as secret name
+            secret_name = f"executor-private-key-{executor_address.lower()}"
+            
+            response = self._aws_secrets_client.get_secret_value(SecretId=secret_name)
+            secret_data = json.loads(response['SecretString'])
+            return secret_data.get('private_key')
+            
+        except ClientError as e:
+            logger.error(f"Failed to retrieve executor private key from AWS: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Unexpected error retrieving executor private key: {e}")
+            return None
+
+    def _prepare_session_tuple(self, session_info: SessionInfo) -> Tuple:
+        """Convert SessionInfo to tuple format for contract call"""
+        return (
+            session_info.id,
+            session_info.executor,
+            session_info.validator,
+            session_info.valid_until,
+            session_info.valid_after,
+            bytes.fromhex(session_info.pre_hook[2:]) if session_info.pre_hook.startswith('0x') else b'',
+            bytes.fromhex(session_info.post_hook[2:]) if session_info.post_hook.startswith('0x') else b'',
+            bytes.fromhex(session_info.signature[2:]) if session_info.signature.startswith('0x') else b''
+        )
+
+    def _prepare_call_tuple(self, call_data: CallData) -> Tuple:
+        """Convert CallData to tuple format for contract call"""
+        return (
+            call_data.target,
+            call_data.value,
+            call_data.data
+        )
+
+    async def _execute_transaction(
+        self, 
+        user_id: str, 
+        call_data_list: List[CallData], 
+        chain_id: int,
+        gas_limit: int = 500000,
+        max_fee_per_gas_gwei: float = 2.0,
+        max_priority_fee_per_gas_gwei: float = 1.0
+    ) -> Dict[str, Any]:
+        """
+        Execute transaction on behalf of user using EIP7702 delegation
+        
+        Args:
+            user_id: User identifier
+            call_data_list: List of contract calls to execute
+            chain_id: Target blockchain chain ID
+            gas_limit: Maximum gas to use
+            max_fee_per_gas_gwei: Maximum fee per gas in Gwei
+            max_priority_fee_per_gas_gwei: Maximum priority fee per gas in Gwei
+            
+        Returns:
+            Dictionary with transaction result or error
+        """
+        try:
+            # Validate chain
+            if not self._validate_chain_id(chain_id):
+                return {"error": f"Unsupported chain ID: {chain_id}"}
+            
+            # Get Web3 instance
+            w3 = self._get_web3_instance(chain_id)
+            
+            # Get session info
+            session_info = await self._get_session_info(user_id)
+            if not session_info:
+                return {"error": "Failed to retrieve session information"}
+            
+            # Get executor private key
+            executor_private_key = await self._get_executor_private_key(session_info.executor)
+            if not executor_private_key:
+                return {"error": "Failed to retrieve executor private key"}
+            
+            # Create executor account
+            executor_account = Account.from_key(executor_private_key)
+            if executor_account.address.lower() != session_info.executor.lower():
+                return {"error": "Executor address mismatch"}
+            
+
+            user_wallet_address = user_id
+            
+            # Create wallet contract instance
+            user_smart_wallet = w3.eth.contract(
+                address=Web3.to_checksum_address(user_wallet_address),
+                abi=self.WALLET_CORE_ABI
+            )
+            
+            # Prepare call data tuples
+            call_tuples = [self._prepare_call_tuple(call_data) for call_data in call_data_list]
+            
+            # Prepare session tuple
+            session_tuple = self._prepare_session_tuple(session_info)
+            
+            # Get nonce
+            nonce = w3.eth.get_transaction_count(executor_account.address)
+            
+            # Build transaction
+            tx = user_smart_wallet.functions.executeFromExecutor(
+                call_tuples, 
+                session_tuple
+            ).build_transaction({
+                "from": executor_account.address,
+                "nonce": nonce,
+                "gas": gas_limit,
+                "maxFeePerGas": w3.to_wei(max_fee_per_gas_gwei, 'gwei'),
+                "maxPriorityFeePerGas": w3.to_wei(max_priority_fee_per_gas_gwei, 'gwei'),
+                "chainId": chain_id,
+            })
+            
+            # Sign and send transaction
+            signed_tx = w3.eth.account.sign_transaction(tx, executor_private_key)
+            tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+            
+            logger.info(f"Transaction sent: {tx_hash.hex()}")
+            
+            return {
+                "success": True,
+                "tx_hash": tx_hash.hex(),
+                "chain_id": chain_id,
+                "executor": executor_account.address,
+                "gas_used": gas_limit,  # Will be updated when receipt is available
+            }
+            
+        except Exception as e:
+            logger.error(f"Transaction execution failed: {e}")
+            return {"error": f"Transaction execution failed: {str(e)}"}
+
+    @abstractmethod
+    async def prepare_call_data(
+        self, 
+        function_args: dict, 
+        chain_id: int,
+        user_context: Dict[str, Any]
+    ) -> List[CallData]:
+        """
+        Prepare call data for specific transaction type.
+        
+        This method must be implemented by subclasses to define how to prepare
+        the contract call data for their specific use case.
+        
+        Args:
+            function_args: Arguments from the tool call
+            chain_id: Target blockchain chain ID
+            user_context: User's stored context
+            
+        Returns:
+            List of CallData objects representing the contract calls to execute
+        """
+        pass
+
+    @abstractmethod
+    def get_supported_functions(self) -> List[str]:
+        """
+        Return list of supported function names that this agent can handle.
+        
+        Returns:
+            List of function names that can be processed by this agent
+        """
+        pass
+
+    async def execute_onchain_action(
+        self,
+        user_id: str,
+        function_name: str,
+        function_args: dict,
+        chain_id: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """
+        Execute an onchain action for the user.
+        
+        Args:
+            user_id: User identifier
+            function_name: Name of the function to execute
+            function_args: Arguments for the function
+            chain_id: Target chain ID (uses default if not specified)
+            
+        Returns:
+            Dictionary with execution result or error
+        """
+        try:
+            # Validate function
+            if function_name not in self.get_supported_functions():
+                return {"error": f"Unsupported function: {function_name}"}
+            
+            # Use default chain if not specified
+            if chain_id is None:
+                chain_id = self.CHAIN_CONFIGS[self.default_chain].chain_id
+            
+            # Get user context
+            user_context = await self.get_user_context(user_id)
+            
+            # Prepare call data
+            call_data_list = await self.prepare_call_data(function_args, chain_id, user_context)
+            
+            if not call_data_list:
+                return {"error": "Failed to prepare call data"}
+            
+            # Execute transaction
+            result = await self._execute_transaction(user_id, call_data_list, chain_id)
+            
+            # Update user context with transaction info if successful
+            if result.get("success"):
+                await self._update_transaction_history(user_id, function_name, function_args, result)
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error executing onchain action: {e}")
+            return {"error": f"Failed to execute onchain action: {str(e)}"}
+
+    async def _update_transaction_history(
+        self, 
+        user_id: str, 
+        function_name: str, 
+        function_args: dict, 
+        tx_result: Dict[str, Any]
+    ) -> None:
+        """Update user context with transaction history"""
+        try:
+            context = await self.get_user_context(user_id)
+            
+            if "transaction_history" not in context:
+                context["transaction_history"] = []
+            
+            transaction_record = {
+                "timestamp": self._get_current_timestamp(),
+                "function": function_name,
+                "args": function_args,
+                "tx_hash": tx_result.get("tx_hash"),
+                "chain_id": tx_result.get("chain_id"),
+                "status": "success" if tx_result.get("success") else "failed"
+            }
+            
+            context["transaction_history"].append(transaction_record)
+            
+            # Keep only last 100 transactions
+            # if len(context["transaction_history"]) > 100:
+            #     context["transaction_history"] = context["transaction_history"][-100:]
+            
+            await self.set_user_context(context, user_id)
+            
+        except Exception as e:
+            logger.error(f"Failed to update transaction history: {e}")
+
+    def _get_current_timestamp(self) -> str:
+        """Get current timestamp in ISO format"""
+        from datetime import datetime
+        return datetime.now().isoformat()
+
+    async def cleanup(self):
+        """Cleanup Web3 instances and parent resources"""
+        self._web3_instances.clear()
+        await super().cleanup()
