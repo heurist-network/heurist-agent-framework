@@ -39,7 +39,7 @@ class FileContextStorage(ContextStorage):
 
     def _get_context_path(self, user_id: str) -> Path:
         """Get the file path for a specific user context"""
-        sanitized_user_id = user_id.replace("/", "_").replace("\\", "_")
+        sanitized_user_id = user_id.lower().replace("/", "_").replace("\\", "_")
         return self.storage_dir / f"{sanitized_user_id}.json"
 
     async def get_context(self, user_id: str) -> Dict[str, Any]:
@@ -78,7 +78,7 @@ class S3ContextStorage(ContextStorage):
         logger.info(f"S3 context storage initialized with bucket {self.bucket}")
 
     def _get_key(self, user_id: str) -> str:
-        sanitized_user_id = user_id.replace("/", "_").replace("\\", "_")
+        sanitized_user_id = user_id.lower().replace("/", "_").replace("\\", "_")
         return f"{sanitized_user_id}.json"
 
     async def get_context(self, user_id: str) -> Dict[str, Any]:
