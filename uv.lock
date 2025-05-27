@@ -1098,6 +1098,11 @@ dependencies = [
     { name = "web3" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pre-commit" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "aiohttp", specifier = "==3.11.15" },
@@ -1136,6 +1141,9 @@ requires-dist = [
     { name = "uvicorn", specifier = "==0.34.0" },
     { name = "web3", specifier = "==7.11.1" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pre-commit", specifier = ">=3.6.0" }]
 
 [[package]]
 name = "hexbytes"

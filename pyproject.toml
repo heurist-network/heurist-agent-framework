@@ -56,3 +56,8 @@ pyethash = { git = "https://github.com/rexdotsh/ethash.git", rev = "master" } # 
 force-exclude = true
 line-length = 120
 lint.extend-select = ["I"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=3.6.0",
+]
