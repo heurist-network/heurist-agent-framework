@@ -201,16 +201,14 @@ class EIP7702Agent(ContextAgent, ABC):
         try:
             context = await self.get_user_context(user_id)
             session_data = context.get("sessionInfo")
+            print(f"session_data: {session_data}")
 
             if not session_data:
                 logger.error(f"No sessionInfo found in context for user {user_id}")
                 return None
 
-            if not self._validate_session_time(session_data):
-                logger.error(f"Session expired or not yet valid for user {user_id}")
-                return None
-
-            return SessionInfo(
+            # Create SessionInfo object first
+            session_info = SessionInfo(
                 id=session_data["id"],
                 executor=session_data["executor"],
                 validator=session_data["validator"],
@@ -220,6 +218,13 @@ class EIP7702Agent(ContextAgent, ABC):
                 post_hook=session_data["postHook"],
                 signature=session_data["signature"],
             )
+
+            # Then validate session time using the SessionInfo object
+            if not self._validate_session_time(session_info):
+                logger.error(f"Session expired or not yet valid for user {user_id}")
+                return None
+
+            return session_info
         except Exception as e:
             logger.error(f"Error extracting session info for user {user_id}: {e}")
             return None
@@ -269,6 +274,34 @@ class EIP7702Agent(ContextAgent, ABC):
         if current_time > session_info.valid_until:
             return False
         return True
+
+    def _get_chain_enum(self, chain_id: int) -> SupportedChain:
+        """Get SupportedChain enum from chain_id"""
+        for supported_chain in SupportedChain:
+            if self.CHAIN_CONFIGS[supported_chain].chain_id == chain_id:
+                return supported_chain
+        raise ValueError(f"Unsupported chain ID: {chain_id}")
+
+    def _get_revert_reason(self, w3: Web3, tx: dict, receipt: Any) -> Optional[str]:
+        """Try to extract revert reason from failed transaction"""
+        try:
+            # Try to replay the transaction to get revert reason
+            w3.eth.call(tx, receipt.blockNumber)
+            return "Unknown reason"
+        except Exception as e:
+            error_str = str(e)
+            
+            # Extract revert reason from different error formats
+            if "execution reverted:" in error_str:
+                # Extract reason after "execution reverted:"
+                reason_start = error_str.find("execution reverted:") + len("execution reverted:")
+                reason = error_str[reason_start:].strip()
+                return reason if reason else "No revert reason provided"
+            elif "revert" in error_str.lower():
+                # General revert error
+                return error_str
+            else:
+                return f"Transaction failed: {error_str}"
 
     async def _execute_transaction(
         self,
@@ -354,15 +387,44 @@ class EIP7702Agent(ContextAgent, ABC):
 
             logger.info(f"Transaction sent: {tx_hash.hex()}")
 
-            # TODO: should we wait for the receipt here?
-            # TODO: consider charging for the gas used
-            return {
-                "success": True,
-                "message": f"Transaction is sent. You can view it on {self.CHAIN_CONFIGS[chain_id].explorer_base_url}/tx/{tx_hash.hex()}",
-                "tx_hash": tx_hash.hex(),
-                "chain_id": chain_id,
-                "executor": executor_account.address,
-            }
+            # Wait for transaction receipt to check success/failure
+            try:
+                receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
+                
+                if receipt.status == 1:
+                    # Transaction succeeded
+                    logger.info(f"Transaction successful: {tx_hash.hex()}")
+                    # TODO: consider charging for the gas used
+                    return {
+                        "success": True,
+                        "message": f"Transaction executed successfully! Gas used: {receipt.gasUsed}. View on {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
+                        "tx_hash": tx_hash.hex(),
+                        "chain_id": chain_id,
+                        "executor": executor_account.address,
+                        "gas_used": receipt.gasUsed,
+                        "block_number": receipt.blockNumber,
+                    }
+                else:
+                    # Transaction failed, try to get revert reason
+                    revert_reason = self._get_revert_reason(w3, tx, receipt)
+                    error_msg = f"Transaction reverted: {revert_reason}" if revert_reason else "Transaction reverted with unknown reason"
+                    logger.error(f"{error_msg}. Tx hash: {tx_hash.hex()}")
+                    
+                    return {
+                        "error": f"{error_msg}. View failed transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
+                        "tx_hash": tx_hash.hex(),
+                        "chain_id": chain_id,
+                        "revert_reason": revert_reason,
+                        "gas_used": receipt.gasUsed,
+                    }
+                    
+            except Exception as receipt_error:
+                logger.error(f"Error waiting for transaction receipt: {receipt_error}")
+                return {
+                    "error": f"Transaction was sent but receipt could not be confirmed: {str(receipt_error)}. View transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
+                    "tx_hash": tx_hash.hex(),
+                    "chain_id": chain_id,
+                }
 
         except Exception as e:
             logger.error(f"Transaction execution failed: {e}")
