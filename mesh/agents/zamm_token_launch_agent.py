@@ -21,6 +21,7 @@ class ZammTokenLaunchAgent(EIP7702Agent):
     """
 
     # ZAMM contract address on Ethereum mainnet
+    # TODO: replace with new contract address
     ZAMM_CONTRACT_ADDRESS = "0x00000000007762D8DCADEddD5Aa5E9a5e2B7c6f5"
 
     # ABI for the make function
@@ -33,17 +34,17 @@ class ZammTokenLaunchAgent(EIP7702Agent):
                 {"name": "poolSupply", "type": "uint256"},
                 {"name": "ownerSupply", "type": "uint256"},
                 {"name": "swapFee", "type": "uint96"},
-                {"name": "owner", "type": "address"}
+                {"name": "owner", "type": "address"},
             ],
             "name": "make",
             "outputs": [
                 {"name": "coinId", "type": "uint256"},
                 {"name": "amount0", "type": "uint256"},
                 {"name": "amount1", "type": "uint256"},
-                {"name": "liquidity", "type": "uint256"}
+                {"name": "liquidity", "type": "uint256"},
             ],
             "stateMutability": "payable",
-            "type": "function"
+            "type": "function",
         }
     ]
 
@@ -141,6 +142,7 @@ class ZammTokenLaunchAgent(EIP7702Agent):
                             },
                         },
                         "required": ["name", "symbol", "pool_supply", "eth_amount"],
+                        # TODO: maybe we need token_uri? need to ask ross
                     },
                 },
             },
@@ -187,7 +189,7 @@ class ZammTokenLaunchAgent(EIP7702Agent):
             pool_supply = function_args.get("pool_supply")
             owner_supply = function_args.get("owner_supply", "0")
             swap_fee = function_args.get("swap_fee", "300")
-            
+
             # Use user_id as default owner (user_id is the user's wallet address)
             # This will be set later in execute_onchain_action by getting the user_id
             owner = function_args.get("owner")
@@ -196,7 +198,7 @@ class ZammTokenLaunchAgent(EIP7702Agent):
             if not all([name, symbol, pool_supply, eth_amount]):
                 logger.error("Missing required parameters for token launch")
                 raise ValueError("Missing required parameters: name, symbol, pool_supply, or eth_amount")
-                
+
             if not owner:
                 logger.error("Owner address is required and cannot be zero address")
                 raise ValueError("Owner address is required for token launch")
@@ -237,8 +239,7 @@ class ZammTokenLaunchAgent(EIP7702Agent):
             # Encode the make function call
             try:
                 make_data = zamm_contract.encode_abi(
-                    "make", 
-                    args=[name, symbol, token_uri, pool_supply_wei, owner_supply_wei, swap_fee_value, owner]
+                    "make", args=[name, symbol, token_uri, pool_supply_wei, owner_supply_wei, swap_fee_value, owner]
                 )
             except Exception as e:
                 logger.error(f"Failed to encode make function: {e}")
@@ -246,27 +247,28 @@ class ZammTokenLaunchAgent(EIP7702Agent):
 
             call_data = CallData(target=self.ZAMM_CONTRACT_ADDRESS, value=eth_amount_wei, data=make_data)
 
-            logger.info(f"Prepared ZAMM token launch: {name} ({symbol}) with {pool_supply} tokens in pool and {eth_amount} ETH")
+            logger.info(
+                f"Prepared ZAMM token launch: {name} ({symbol}) with {pool_supply} tokens in pool and {eth_amount} ETH"
+            )
             return [call_data]
 
         except Exception as e:
             logger.error(f"Error preparing call data for token launch: {e}")
             # Re-raise validation errors for user-friendly handling
             raise e
-        
-    # TODO: should owner required to be user_id?
+
     async def launch_zamm_token(
-        self, 
-        user_id: str, 
-        name: str, 
-        symbol: str, 
-        pool_supply: str, 
+        self,
+        user_id: str,
+        name: str,
+        symbol: str,
+        pool_supply: str,
         eth_amount: str,
         token_uri: Optional[str] = "",
         owner_supply: Optional[str] = "0",
         swap_fee: Optional[str] = "300",
         owner: Optional[str] = None,
-        chain_id: Optional[int] = None
+        chain_id: Optional[int] = None,
     ) -> Dict[str, Any]:
         """
         Execute ZAMM token launch for a user.
@@ -287,7 +289,7 @@ class ZammTokenLaunchAgent(EIP7702Agent):
             Dictionary with launch result or error
         """
         try:
-            chain_id = 1 # Ethereum Mainnet
+            chain_id = 1  # Ethereum Mainnet
 
             # Use user_id as default owner if not specified (user_id is the user's wallet address)
             if owner is None:
@@ -302,14 +304,11 @@ class ZammTokenLaunchAgent(EIP7702Agent):
                 "owner_supply": owner_supply,
                 "swap_fee": swap_fee,
                 "owner": owner,
-                "eth_amount": eth_amount
+                "eth_amount": eth_amount,
             }
 
             result = await self.execute_onchain_action(
-                user_id=user_id, 
-                function_name="launch_zamm_token", 
-                function_args=function_args, 
-                chain_id=chain_id
+                user_id=user_id, function_name="launch_zamm_token", function_args=function_args, chain_id=chain_id
             )
 
             return result
@@ -345,8 +344,8 @@ class ZammTokenLaunchAgent(EIP7702Agent):
                 owner_supply=owner_supply,
                 swap_fee=swap_fee,
                 owner=owner,
-                chain_id=chain_id
+                chain_id=chain_id,
             )
 
         else:
-            return {"error": f"Unknown tool: {tool_name}"} 
+            return {"error": f"Unknown tool: {tool_name}"}

@@ -27,32 +27,26 @@ class HeuristPayCreditAgent(EIP7702Agent):
     # ERC20 ABI for approval
     ERC20_ABI = [
         {
-            "inputs": [
-                {"name": "spender", "type": "address"},
-                {"name": "amount", "type": "uint256"}
-            ],
+            "inputs": [{"name": "spender", "type": "address"}, {"name": "amount", "type": "uint256"}],
             "name": "approve",
             "outputs": [{"name": "", "type": "bool"}],
             "stateMutability": "nonpayable",
-            "type": "function"
+            "type": "function",
         },
         {
-            "inputs": [
-                {"name": "owner", "type": "address"},
-                {"name": "spender", "type": "address"}
-            ],
+            "inputs": [{"name": "owner", "type": "address"}, {"name": "spender", "type": "address"}],
             "name": "allowance",
             "outputs": [{"name": "", "type": "uint256"}],
             "stateMutability": "view",
-            "type": "function"
+            "type": "function",
         },
         {
             "inputs": [{"name": "account", "type": "address"}],
             "name": "balanceOf",
             "outputs": [{"name": "", "type": "uint256"}],
             "stateMutability": "view",
-            "type": "function"
-        }
+            "type": "function",
+        },
     ]
 
     # ApiCreditPurchaser ABI
@@ -61,12 +55,12 @@ class HeuristPayCreditAgent(EIP7702Agent):
             "inputs": [
                 {"name": "tokenAddress", "type": "address"},
                 {"name": "creditedAddress", "type": "address"},
-                {"name": "amount", "type": "uint256"}
+                {"name": "amount", "type": "uint256"},
             ],
             "name": "purchaseCredits",
             "outputs": [],
             "stateMutability": "nonpayable",
-            "type": "function"
+            "type": "function",
         }
     ]
 
@@ -80,7 +74,7 @@ class HeuristPayCreditAgent(EIP7702Agent):
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Agent that helps users purchase API credits using USDC on Base chain with EIP7702 delegation.",
-                "tags": ["EIP7702", "API Credits", "USDC", "Base", "Payment"],
+                "tags": ["EIP7702"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/HeuristPay.png",
                 "examples": [
                     "Purchase 10 USDC worth of API credits",
@@ -166,16 +160,14 @@ class HeuristPayCreditAgent(EIP7702Agent):
             logger.info(f"Function args: {function_args}")
             logger.info(f"User context: {user_context}")
             logger.info(f"Chain ID: {chain_id}")
-            
+
             # Extract user_id from the function args since it gets passed through execute_onchain_action
             user_id = function_args.get("user_id")
             return await self._prepare_purchase_call_data(function_args, chain_id, user_id)
         else:
             raise ValueError(f"Unsupported function: {function_name}")
 
-    async def _prepare_purchase_call_data(
-        self, function_args: dict, chain_id: int, user_id: str
-    ) -> List[CallData]:
+    async def _prepare_purchase_call_data(self, function_args: dict, chain_id: int, user_id: str) -> List[CallData]:
         """
         Prepare call data for API credit purchase with automatic approval handling.
         """
@@ -220,14 +212,18 @@ class HeuristPayCreditAgent(EIP7702Agent):
 
             # Create contract instances
             usdc_contract = w3.eth.contract(address=self.USDC_TOKEN_ADDRESS, abi=self.ERC20_ABI)
-            purchaser_contract = w3.eth.contract(address=self.API_CREDIT_PURCHASER_ADDRESS, abi=self.API_CREDIT_PURCHASER_ABI)
+            purchaser_contract = w3.eth.contract(
+                address=self.API_CREDIT_PURCHASER_ADDRESS, abi=self.API_CREDIT_PURCHASER_ABI
+            )
 
             # Check user's USDC balance
             try:
                 usdc_balance = usdc_contract.functions.balanceOf(user_wallet_address).call()
                 if usdc_balance < amount_usdc_wei:
                     logger.error(f"Insufficient USDC balance. Required: {amount_usdc_wei}, Available: {usdc_balance}")
-                    raise ValueError(f"Insufficient USDC balance. You need {float(amount_usdc_wei) / (10**self.USDC_DECIMALS):.6f} USDC but only have {float(usdc_balance) / (10**self.USDC_DECIMALS):.6f} USDC")
+                    raise ValueError(
+                        f"Insufficient USDC balance. You need {float(amount_usdc_wei) / (10**self.USDC_DECIMALS):.6f} USDC but only have {float(usdc_balance) / (10**self.USDC_DECIMALS):.6f} USDC"
+                    )
             except Exception as e:
                 if "Insufficient USDC balance" in str(e):
                     raise e
@@ -237,25 +233,22 @@ class HeuristPayCreditAgent(EIP7702Agent):
             # Check current allowance
             call_data_list = []
             try:
-                current_allowance = usdc_contract.functions.allowance(user_wallet_address, self.API_CREDIT_PURCHASER_ADDRESS).call()
-                
+                current_allowance = usdc_contract.functions.allowance(
+                    user_wallet_address, self.API_CREDIT_PURCHASER_ADDRESS
+                ).call()
+
                 # If allowance is insufficient, add approval transaction
                 if current_allowance < amount_usdc_wei:
                     # Approve a bit more than needed for future transactions (add 10%)
                     approval_amount = int(amount_usdc_wei * 1.1)
-                    
+
                     approval_data = usdc_contract.encode_abi(
-                        "approve",
-                        args=[self.API_CREDIT_PURCHASER_ADDRESS, approval_amount]
+                        "approve", args=[self.API_CREDIT_PURCHASER_ADDRESS, approval_amount]
                     )
-                    
-                    approval_call_data = CallData(
-                        target=self.USDC_TOKEN_ADDRESS,
-                        value=0,
-                        data=approval_data
-                    )
+
+                    approval_call_data = CallData(target=self.USDC_TOKEN_ADDRESS, value=0, data=approval_data)
                     call_data_list.append(approval_call_data)
-                    
+
                     logger.info(f"Added approval for {float(approval_amount) / (10**self.USDC_DECIMALS):.6f} USDC")
             except Exception as e:
                 logger.error(f"Failed to check allowance: {e}")
@@ -264,19 +257,14 @@ class HeuristPayCreditAgent(EIP7702Agent):
             # Prepare purchase transaction
             try:
                 purchase_data = purchaser_contract.encode_abi(
-                    "purchaseCredits",
-                    args=[self.USDC_TOKEN_ADDRESS, credited_address, amount_usdc_wei]
+                    "purchaseCredits", args=[self.USDC_TOKEN_ADDRESS, credited_address, amount_usdc_wei]
                 )
-                
-                purchase_call_data = CallData(
-                    target=self.API_CREDIT_PURCHASER_ADDRESS,
-                    value=0,
-                    data=purchase_data
-                )
+
+                purchase_call_data = CallData(target=self.API_CREDIT_PURCHASER_ADDRESS, value=0, data=purchase_data)
                 call_data_list.append(purchase_call_data)
-                
+
                 logger.info(f"Prepared API credit purchase: {amount_usdc} USDC for address {credited_address}")
-                
+
             except Exception as e:
                 logger.error(f"Failed to encode purchase function: {e}")
                 raise ValueError("Failed to prepare credit purchase transaction")
@@ -289,11 +277,7 @@ class HeuristPayCreditAgent(EIP7702Agent):
             raise e
 
     async def purchase_api_credits(
-        self, 
-        user_id: str, 
-        amount_usdc: str,
-        credited_address: Optional[str] = None,
-        chain_id: Optional[int] = None
+        self, user_id: str, amount_usdc: str, credited_address: Optional[str] = None, chain_id: Optional[int] = None
     ) -> Dict[str, Any]:
         """
         Execute API credit purchase for a user.
@@ -318,14 +302,11 @@ class HeuristPayCreditAgent(EIP7702Agent):
             function_args = {
                 "amount_usdc": amount_usdc,
                 "credited_address": credited_address,
-                "user_id": user_id  # Pass user_id in function_args so prepare_call_data can access it
+                "user_id": user_id,  # Pass user_id in function_args so prepare_call_data can access it
             }
 
             result = await self.execute_onchain_action(
-                user_id=user_id, 
-                function_name="purchase_api_credits", 
-                function_args=function_args, 
-                chain_id=chain_id
+                user_id=user_id, function_name="purchase_api_credits", function_args=function_args, chain_id=chain_id
             )
 
             return result
@@ -346,11 +327,8 @@ class HeuristPayCreditAgent(EIP7702Agent):
             chain_id = function_args.get("chain_id")
 
             return await self.purchase_api_credits(
-                user_id=user_id,
-                amount_usdc=amount_usdc,
-                credited_address=credited_address,
-                chain_id=chain_id
+                user_id=user_id, amount_usdc=amount_usdc, credited_address=credited_address, chain_id=chain_id
             )
 
         else:
-            return {"error": f"Unknown tool: {tool_name}"} 
+            return {"error": f"Unknown tool: {tool_name}"}

@@ -298,7 +298,7 @@ class EIP7702Agent(ContextAgent, ABC):
             return "Unknown reason"
         except Exception as e:
             error_str = str(e)
-            
+
             # Extract revert reason from different error formats
             if "execution reverted:" in error_str:
                 # Extract reason after "execution reverted:"
@@ -335,10 +335,6 @@ class EIP7702Agent(ContextAgent, ABC):
             Dictionary with transaction result or error. The result contains user-friendly message about the transaction status or error.
         """
         try:
-            # Validate chain
-            if not self._validate_chain_id(chain_id):
-                return {"error": f"Unsupported chain ID: {chain_id}"}
-
             # Get Web3 instance
             w3 = self._get_web3_instance(chain_id)
 
@@ -398,7 +394,7 @@ class EIP7702Agent(ContextAgent, ABC):
             # Wait for transaction receipt to check success/failure
             try:
                 receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=120)
-                
+
                 if receipt.status == 1:
                     # Transaction succeeded
                     logger.info(f"Transaction successful: {tx_hash.hex()}")
@@ -415,9 +411,13 @@ class EIP7702Agent(ContextAgent, ABC):
                 else:
                     # Transaction failed, try to get revert reason
                     revert_reason = self._get_revert_reason(w3, tx, receipt)
-                    error_msg = f"Transaction reverted: {revert_reason}" if revert_reason else "Transaction reverted with unknown reason"
+                    error_msg = (
+                        f"Transaction reverted: {revert_reason}"
+                        if revert_reason
+                        else "Transaction reverted with unknown reason"
+                    )
                     logger.error(f"{error_msg}. Tx hash: {tx_hash.hex()}")
-                    
+
                     return {
                         "error": f"{error_msg}. View failed transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
                         "tx_hash": tx_hash.hex(),
@@ -425,7 +425,7 @@ class EIP7702Agent(ContextAgent, ABC):
                         "revert_reason": revert_reason,
                         "gas_used": receipt.gasUsed,
                     }
-                    
+
             except Exception as receipt_error:
                 logger.error(f"Error waiting for transaction receipt: {receipt_error}")
                 return {
@@ -493,8 +493,15 @@ class EIP7702Agent(ContextAgent, ABC):
             if chain_id is None:
                 chain_id = self.CHAIN_CONFIGS[self.default_chain].chain_id
 
+            if not self._validate_chain_id(chain_id):
+                return {"error": f"Unsupported chain ID: {chain_id}"}
+
             # Get user context
             user_context = await self.get_user_context(user_id)
+
+            # TODO: check if a valid session exists for the user for the chain
+
+            # TODO: check if smart wallet is available for the user for the chain (use get_code https://www.perplexity.ai/search/how-to-use-web3-py-to-get-a-wa-ttwIZ5qoRRibWwIDB9wRhQ#0)
 
             # Prepare call data
             call_data_list = await self.prepare_call_data(function_name, function_args, chain_id, user_context)
