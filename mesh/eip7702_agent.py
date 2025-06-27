@@ -26,6 +26,7 @@ class SupportedChain(Enum):
 
     ETHEREUM_MAINNET = 1
     ETHEREUM_SEPOLIA = 11155111
+    BASE_MAINNET = 8453
 
 
 @dataclass
@@ -89,6 +90,13 @@ class EIP7702Agent(ContextAgent, ABC):
             rpc_url_env_var=os.getenv("SEPOLIA_RPC_URL"),
             explorer_base_url="https://sepolia.etherscan.io",
             is_testnet=True,
+        ),
+        SupportedChain.BASE_MAINNET: ChainConfig(
+            chain_id=8453,
+            name="Base Mainnet",
+            rpc_url_env_var=os.getenv("BASE_RPC_URL"),
+            explorer_base_url="https://basescan.org",
+            is_testnet=False,
         ),
     }
 
