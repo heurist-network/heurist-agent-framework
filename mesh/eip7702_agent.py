@@ -204,15 +204,28 @@ class EIP7702Agent(ContextAgent, ABC):
         supported_chain_ids = [config.chain_id for config in self.CHAIN_CONFIGS.values()]
         return chain_id in supported_chain_ids
 
-    async def _get_session_info(self, user_id: str) -> Optional[SessionInfo]:
-        """Extract session information from user context"""
+    async def _get_session_info(self, user_id: str, chain_id: int) -> Optional[SessionInfo]:
+        """Extract session information from user context for specific chain
+        sessionInfos is a dictionary with chain_id as key and sessionInfo as value
+        sessionInfo is a dictionary with the following keys:
+        - id
+        - executor
+        - validator
+        - validUntil
+        - validAfter
+        - preHook
+        - postHook
+        - signature
+        """
         try:
             context = await self.get_user_context(user_id)
-            session_data = context.get("sessionInfo")
-            print(f"session_data: {session_data}")
+            session_infos = context.get("sessionInfos", {})
+            chain_id_str = str(chain_id)
+            session_data = session_infos.get(chain_id_str)
+            print(f"session_data for chain {chain_id}: {session_data}")
 
             if not session_data:
-                logger.error(f"No sessionInfo found in context for user {user_id}")
+                logger.error(f"No sessionInfo found for chain {chain_id} in context for user {user_id}")
                 return None
 
             # Create SessionInfo object first
@@ -229,13 +242,46 @@ class EIP7702Agent(ContextAgent, ABC):
 
             # Then validate session time using the SessionInfo object
             if not self._validate_session_time(session_info):
-                logger.error(f"Session expired or not yet valid for user {user_id}")
+                logger.error(f"Session expired or not yet valid for user {user_id} on chain {chain_id}")
                 return None
 
             return session_info
         except Exception as e:
-            logger.error(f"Error extracting session info for user {user_id}: {e}")
+            logger.error(f"Error extracting session info for user {user_id} on chain {chain_id}: {e}")
             return None
+
+    async def _validate_session_for_chain(self, user_id: str, chain_id: int) -> bool:
+        """Check if a valid session exists for the user for the specified chain"""
+        try:
+            session_info = await self._get_session_info(user_id, chain_id)
+            return session_info is not None
+        except Exception as e:
+            logger.error(f"Error validating session for user {user_id} on chain {chain_id}: {e}")
+            return False
+
+    async def _check_smart_wallet_deployment(self, user_id: str, chain_id: int) -> bool:
+        """Check if a smart wallet contract is deployed for the user on the specified chain"""
+        try:
+            w3 = self._get_web3_instance(chain_id)
+            user_address = Web3.to_checksum_address(user_id)
+            
+            # Get the contract code at the user's address
+            contract_code = w3.eth.get_code(user_address)
+            
+            # If contract_code is empty (0x or 0x0), no smart wallet is deployed
+            # If there's actual bytecode, a smart wallet exists
+            is_deployed = contract_code != b'' and contract_code.hex() not in ['0x', '0x0']
+            
+            if is_deployed:
+                logger.info(f"Smart wallet found for user {user_id} on chain {chain_id}")
+            else:
+                logger.warning(f"No smart wallet deployed for user {user_id} on chain {chain_id}")
+                
+            return is_deployed
+            
+        except Exception as e:
+            logger.error(f"Error checking smart wallet deployment for user {user_id} on chain {chain_id}: {e}")
+            return False
 
     async def _get_executor_private_key(self, executor_address: str) -> Optional[str]:
         """Retrieve executor private key from AWS Secrets Manager"""
@@ -339,7 +385,7 @@ class EIP7702Agent(ContextAgent, ABC):
             w3 = self._get_web3_instance(chain_id)
 
             # Get session info
-            session_info = await self._get_session_info(user_id)
+            session_info = await self._get_session_info(user_id, chain_id)
             if not session_info:
                 return {
                     "error": "Failed to find an active session for your wallet. You need to create a new session to authorize this transaction at https://heurist.ai/eip7702"
@@ -499,9 +545,19 @@ class EIP7702Agent(ContextAgent, ABC):
             # Get user context
             user_context = await self.get_user_context(user_id)
 
-            # TODO: check if a valid session exists for the user for the chain
+            # Check if a valid session exists for the user for the chain
+            if not await self._validate_session_for_chain(user_id, chain_id):
+                chain_name = self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].name
+                return {
+                    "error": f"No valid session found for {chain_name}. Please create a session for this chain at https://heurist.ai/eip7702"
+                }
 
-            # TODO: check if smart wallet is available for the user for the chain (use get_code https://www.perplexity.ai/search/how-to-use-web3-py-to-get-a-wa-ttwIZ5qoRRibWwIDB9wRhQ#0)
+            # Check if smart wallet is deployed for the user on the chain
+            if not await self._check_smart_wallet_deployment(user_id, chain_id):
+                chain_name = self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].name
+                return {
+                    "error": f"No smart wallet found for your address on {chain_name}. Please deploy a smart wallet first at https://heurist.ai/eip7702"
+                }
 
             # Prepare call data
             call_data_list = await self.prepare_call_data(function_name, function_args, chain_id, user_context)
