@@ -1,823 +1,129 @@
 input_mentions:
-  query: Search for mentions of Heurist, HEU, and heurist_ai in the last 30 days
+  query: Search for mentions of elonmusk, tesla, and spacex in the last 30 days
 output_mentions:
-  response: "**Twitter Data Analysis for Heurist, HEU, and heurist_ai (Last 30 days)**\n\
-    \n**Overview**\n\n* **Total Mentions:** 25\n* **Time Frame:** 2025-04-23 to 2025-04-28\n\
-    * **Sentiment Distribution:**\n\t+ Neutral: 20 (80%)\n\t+ Positive: 5 (20%)\n\t\
-    + Negative: 0 (0%)\n\n**Key Findings**\n\n1. **Top Mentioned Topics:**\n\t* Partnership\
-    \ between Heurist and JuliaOS (6 mentions)\n\t* Heurist's integration with Google\
-    \ Agent Development Kit (3 mentions)\n\t* Heurist Agent Framework + Claude Code\
-    \ (2 mentions)\n\t* Mission Control Protocol (MCP) integration (2 mentions)\n\
-    2. **HEU Token Mentions:** 1 (in the context of \"See exactly who's calling HEU\"\
-    )\n3. **Top Influencers:**\n\t* `@heurist_ai` (10 mentions, primarily self-posts\
-    \ and reposts)\n\t* `@BuildOnJulia` (2 mentions, highlighting partnership with\
-    \ Heurist)\n\t* `@cryptoceo_` (1 mention, discussing backing $JOS on SOL with\
-    \ Heurist partnership)\n4. **Engagement Metrics:**\n\t* **Highest Like Count:**\
-    \ 289 (post about JuliaOS partnering with Heurist)\n\t* **Highest Reply Count:**\
-    \ 83 (same post as above)\n\t* **Highest Repost Count:** 77 (same post as above)\n\
-    \t* **Highest View Count:** 30,768 (same post as above)\n\n**Detailed Metrics\
-    \ by Mention Type**\n\n| **Mention Type** | **Count** | **Avg. Likes** | **Avg.\
-    \ Replies** | **Avg. Reposts** | **Avg. Views** |\n| --- | --- | --- | --- | ---\
-    \ | --- |\n| Post | 12 | 73.5 | 19.5 | 29.5 | 8,441 |\n| Repost | 11 | 0 | 0 |\
-    \ 20.5 | 0 |\n| Quote | 2 | 8 | 0 | 1.5 | 512.5 |\n\n**Insights and Recommendations**\n\
-    \n* Heurist's partnership with JuliaOS has generated significant interest and\
-    \ engagement.\n* The integration with Google Agent Development Kit and the release\
-    \ of Heur"
+  response: '**ELFA API Response Analysis**
+
+
+    **Query Summary**
+
+    * **Search Terms:** `elonmusk`, `tesla`, `spacex`
+
+    * **Time Frame:** Last 30 days
+
+    * **API:** ELFA API
+
+
+    **Response Overview**
+
+
+    * **Status:** `success`
+
+    * **Success Indicator:** `True`
+
+    * **Returned Data:** **EMPTY** (`[]`)
+
+
+    **Key Findings:**
+
+
+    1. **No Mentions Found**: Despite the query covering three prominent entities
+    (`elonmusk`, `tesla`, `spacex`) over a significant time frame (last 30 days),
+    the ELFA API returned **no mentions** related to these terms in the context of
+    crypto tokens.
+
+
+    **Possible Interpretations:**
+
+
+    * **Low Crypto Relevance**: The searched terms might not have been significantly
+    discussed in relation to crypto tokens within the last 30 days.
+
+    * **API Scope Limitations**: The ELFA API''s scope or data sources might not cover
+    the platforms or conversations where these terms were mentioned in a crypto context.
+
+    * **Query Specificity**: The search terms, while popular, might not have been
+    linked to specific crypto tokens or discussions that the ELFA API tracks.
+
+
+    **Recommendations for Further Analysis:**
+
+
+    1. **Broaden Time Frame**: Extend the search period to observe if there were relevant
+    mentions in the preceding months.
+
+    2. **Related Crypto Tokens**: Identify specific crypto tokens related to the searched
+    terms (e.g., DOGE for Elon Musk) and query those directly.
+
+    3. **Cross-Platform Comparison**: Utilize other social media analytics tools to
+    compare the prevalence of these terms across different platforms for a more comprehensive
+    view.
+
+
+    **Next Steps:**
+
+    Would you like to:
+
+    A) Refine the search with a broader time frame
+
+    B) Query specific crypto tokens related to the searched terms
+
+    C) Explore mentions of different entities
+
+    D) Other (please specify)'
   data:
     status: success
     data:
       success: true
-      data:
-      - content: 'Trenches just got clearer vision.
-
-
-          Heurist Mesh now packing @MindAI_io Agent to cut through the noise.
-
-
-          See exactly who''s calling HEU 💚, track alpha sentiment from key accounts,
-          and spot market patterns before they form. '
-        mentioned_at: '2025-04-28T16:09:11+00:00'
-        type: post
-        metrics:
-          like_count: 46
-          reply_count: 16
-          repost_count: 22
-          view_count: 7141
-        sentiment: netural
-      - content: "RT @cryptoceo_: Backing $JOS on SOL is probably a good idea\n\n\
-          &gt; on-boarded QUBIC COO in last 24hrs @talentnodes \n&gt; partnered with\
-          \ heurist @a…"
-        mentioned_at: '2025-04-26T04:59:25+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 19
-          view_count: 0
-        sentiment: positive
-      - content: "Backing $JOS on SOL is probably a good idea\n\n> on-boarded QUBIC\
-          \ COO in last 24hrs @talentnodes \n> partnered with heurist @artoriatech\
-          \ @heurist_ai \n> recruited 3 more devs\n> open sourced, active github\n\
-          > pending partnership w/ leading German Uni\n\nBroke records on day 1 with\
-          \ insane vol & tapped 30m temporarily, now currently sitting at ~5m with\
-          \ MVP imminent, showcasing a AI Operating System that works cross-chain\
-          \ using Swarm Intel for #DeFAI trading\n\nAlongside trading, long term Julia\
-          \ can also take advantage of Mission Control Protocol (MCP) for other features...\n\
-          \nWith MCP, you'll be able to guide your agents by assigning tasks to individual\
-          \ agents who will be able to work cohesively as a swarm. For example, one\
-          \ agent could track news websites within web3, another could highlight particular\
-          \ terms that are trending within these sites, a third could track X accounts\
-          \ that use these terms in their bio, while a fourth could track age of X\
-          \ account to be <1 week old. As a swarm, this would give you an edge in\
-          \ finding projects before the masses. Just one such example. But the examples\
-          \ are limitless, and the product will require $JOS\n\nCredits @AltPartisan\
-          \ for introducing me to the project."
-        mentioned_at: '2025-04-25T22:44:15+00:00'
-        type: post
-        metrics:
-          like_count: 74
-          reply_count: 20
-          repost_count: 19
-          view_count: 3960
-        sentiment: netural
-      - content: 'RT @heurist_ai: 🤖 Connect @Google Agent Development Kit with Heurist
-
-
-          Google ADK offers powerful agent-building capabilities, but integrati…'
-        mentioned_at: '2025-04-25T17:48:02+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 18
-          view_count: 0
-        sentiment: positive
-      - content: 'RT @heurist_ai: 🤖 Connect @Google Agent Development Kit with Heurist
-
-
-          Google ADK offers powerful agent-building capabilities, but integrati…'
-        mentioned_at: '2025-04-25T17:48:02+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 18
-          view_count: 0
-        sentiment: positive
-      - content: '🤖 Connect @Google Agent Development Kit with Heurist
-
-
-          Google ADK offers powerful agent-building capabilities, but integration
-          with external services remains a challenge.
-
-
-          Heurist MCP provides a standardized solution that transforms agent development. '
-        mentioned_at: '2025-04-25T17:10:03+00:00'
-        type: post
-        metrics:
-          like_count: 59
-          reply_count: 18
-          repost_count: 18
-          view_count: 8672
-        sentiment: netural
-      - content: '🤖 Connect @Google Agent Development Kit with Heurist
-
-
-          Google ADK offers powerful agent-building capabilities, but integration
-          with external services remains a challenge.
-
-
-          Heurist MCP provides a standardized solution that transforms agent development. '
-        mentioned_at: '2025-04-25T17:10:03+00:00'
-        type: post
-        metrics:
-          like_count: 60
-          reply_count: 18
-          repost_count: 18
-          view_count: 9037
-        sentiment: netural
-      - content: 'also looking forward to MCP integration: imagine your agents analyzing
-          real-time market alpha with Heurist and executing trades on Julia, made
-          possible with MCP and A2A-connected swarms'
-        mentioned_at: '2025-04-24T16:41:24+00:00'
-        type: quote
-        metrics:
-          like_count: 14
-          reply_count: 0
-          repost_count: 3
-          view_count: 718
-        sentiment: netural
-      - content: 'also looking forward to MCP integration: imagine your agents analyzing
-          real-time market alpha with Heurist and executing trades on Julia, made
-          possible with MCP and A2A-connected swarms'
-        mentioned_at: '2025-04-24T16:41:24+00:00'
-        type: quote
-        metrics:
-          like_count: 13
-          reply_count: 0
-          repost_count: 3
-          view_count: 747
-        sentiment: netural
-      - content: 'RT @heurist_ai: Heurist × JuliaOS: Colliding to create a new foundation
-          for sovereign agent intelligence
-
-
-          @BuildOnJulia harnesses computati…'
-        mentioned_at: '2025-04-24T16:27:00+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 43
-          view_count: 0
-        sentiment: positive
-      - content: 'Heurist × JuliaOS: Colliding to create a new foundation for sovereign
-          agent intelligence
-
-
-          @BuildOnJulia harnesses computational excellence through its native language
-          while we provide the uncensored inference layer these agents need to thrive. '
-        mentioned_at: '2025-04-24T16:14:17+00:00'
-        type: post
-        metrics:
-          like_count: 149
-          reply_count: 30
-          repost_count: 43
-          view_count: 9372
-        sentiment: netural
-      - content: 'Heurist × JuliaOS: Colliding to create a new foundation for sovereign
-          agent intelligence
-
-
-          @BuildOnJulia harnesses computational excellence through its native language
-          while we provide the uncensored inference layer these agents need to thrive. '
-        mentioned_at: '2025-04-24T16:14:17+00:00'
-        type: post
-        metrics:
-          like_count: 148
-          reply_count: 30
-          repost_count: 43
-          view_count: 9575
-        sentiment: netural
-      - content: 'JuliaOS x Heurist x Qubic space today
-
-          Join us to talk about the next chapter of agent AI'
-        mentioned_at: '2025-04-24T14:49:44+00:00'
-        type: quote
-        metrics:
-          like_count: 2
-          reply_count: 0
-          repost_count: 0
-          view_count: 293
-        sentiment: positive
-      - content: 'JuliaOS x Heurist x Qubic space today
-
-          Join us to talk about the next chapter of agent AI'
-        mentioned_at: '2025-04-24T14:49:44+00:00'
-        type: quote
-        metrics:
-          like_count: 2
-          reply_count: 0
-          repost_count: 0
-          view_count: 307
-        sentiment: positive
-      - content: 'The old world wants you rate-limited and dependent.
-
-
-          JuliaOS just broke out.
-
-
-          We’ve partnered with @heurist_ai - a decentralized LLM cloud that can’t
-          be censored or stopped.
-
-
-          Heurist is powering up as our LLM backbone - offering free credits for JuliaOS
-          users, and building a GitHub reviewer agent that understands swarm code.
-
-
-          No GPU queues. No API ceilings.
-
-          Just instant, permissionless intelligence.
-
-
-          This is how the swarm breaks free.'
-        mentioned_at: '2025-04-24T13:56:16+00:00'
-        type: post
-        metrics:
-          like_count: 283
-          reply_count: 83
-          repost_count: 74
-          view_count: 29518
-        sentiment: netural
-      - content: 'The old world wants you rate-limited and dependent.
-
-
-          JuliaOS just broke out.
-
-
-          We’ve partnered with @heurist_ai - a decentralized LLM cloud that can’t
-          be censored or stopped.
-
-
-          Heurist is powering up as our LLM backbone - offering free credits for JuliaOS
-          users, and building a GitHub reviewer agent that understands swarm code.
-
-
-          No GPU queues. No API ceilings.
-
-          Just instant, permissionless intelligence.
-
-
-          This is how the swarm breaks free.'
-        mentioned_at: '2025-04-24T13:56:16+00:00'
-        type: post
-        metrics:
-          like_count: 289
-          reply_count: 83
-          repost_count: 77
-          view_count: 30768
-        sentiment: netural
-      - content: 'AGI moves closer 👀
-
-
-          Heurist Agent Framework + Claude Code just dropped!
-
-
-          We''ve integrated @AnthropicAI ''s revolutionary agentic coding system directly
-          into our open source framework. '
-        mentioned_at: '2025-04-23T13:30:03+00:00'
-        type: post
-        metrics:
-          like_count: 79
-          reply_count: 18
-          repost_count: 35
-          view_count: 11804
-        sentiment: netural
-      - content: 'AGI moves closer 👀
-
-
-          Heurist Agent Framework + Claude Code just dropped!
-
-
-          We''ve integrated @AnthropicAI ''s revolutionary agentic coding system directly
-          into our open source framework. '
-        mentioned_at: '2025-04-23T13:30:03+00:00'
-        type: post
-        metrics:
-          like_count: 80
-          reply_count: 18
-          repost_count: 35
-          view_count: 11933
-        sentiment: netural
-      - content: 'RT @heurist_ai: Your agents, your way.
-
-          Create a dedicated MCP server with Heurist as simple as 3 steps 👇 '
-        mentioned_at: '2025-04-22T06:53:26+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 22
-          view_count: 0
-        sentiment: positive
-      - content: 'RT @heurist_ai: Your agents, your way.
-
-          Create a dedicated MCP server with Heurist as simple as 3 steps 👇 '
-        mentioned_at: '2025-04-22T06:53:26+00:00'
-        type: repost
-        metrics:
-          like_count: 0
-          reply_count: 0
-          repost_count: 22
-          view_count: 0
-        sentiment: positive
+      data: []
 input_account:
   query: Analyze the Twitter account @heurist_ai
 output_account:
-  response: "**Twitter Analysis for @heurist_ai**\n\n**Account Statistics:**\n\n1.\
-    \ **Smart Following Count:** 494\n2. **Average Engagement:** 0.4484 (approximately\
-    \ 44.84% engagement rate)\n3. **Follower Engagement Ratio:** 15,493.4375 (highly\
-    \ engaged follower base)\n\n**Mentions Analysis (Last 20 Mentions):**\n\n1. **Total\
-    \ Mentions:** 20\n2. **Mention Types:**\n\t* **Quotes:** 5\n\t* **Replies:** 5\n\
-    \t* **Posts:** 5\n\t* **Reposts:** 5\n3. **Sentiment Distribution:**\n\t* **Positive:**\
-    \ 5 (25%)\n\t* **Neutral:** 14 (70%)\n\t* **Negative:** 0 (0%)\n4. **Top Metrics:**\n\
-    \t* **Highest Like Count:** 84 (AI Agents Daily Update 04/25/2025)\n\t* **Highest\
-    \ Reply Count:** 21 (AI Agents Daily Update 04/25/2025)\n\t* **Highest Repost\
-    \ Count:** 77 (RT @BuildOnJulia: The old world wants you rate-limited and dependent...)\n\
-    \t* **Highest View Count:** 9,048 (AI Agents Daily Update 04/25/2025)\n\n**Insights\
-    \ and Observations:**\n\n1. **High Engagement:** @heurist_ai enjoys a high average\
-    \ engagement rate, indicating a highly interactive and responsive audience.\n\
-    2. **Positive Sentiment Dominance:** Although the majority of mentions are neutral,\
-    \ the absence of negative sentiment and the presence of positive mentions suggest\
-    \ a favorable online reputation.\n3. **Partnerships and Collaborations:** Mentions\
-    \ highlight partnerships with notable projects like @BuildOnJulia, @open_mcp,\
-    \ and @Google, showcasing @heurist_ai's collaborative efforts in the AI and blockchain\
-    \ spaces.\n4. **Community Interest:** The high engagement and view counts for\
-    \ posts mentioning @heurist_ai, especially in the context of AI Agents Daily Updates,\
-    \ indicate a strong community interest in the project's activities and the broader\
-    \ AI agent sector.\n5. **Token Mentions:** $HEU is mentioned in the context of\
-    \ being undervalued with a $5M market cap, and its recent 50% increase in value,\
-    \ suggesting potential investor interest and market activity.\n\n**Recommendations\
-    \ for @heurist_ai:**\n\n1. **L"
+  response: "**Twitter Account Analysis: @heurist_ai**\n\n**Overall Status:** Successful\
+    \ data retrieval\n\n**Account Statistics:**\n\n1. **Follower Count:**\n\t* **Total\
+    \ Followers:** 34,075\n\t* **Smart Follower Count (likely engaged/active followers):**\
+    \ 142 (approximately **0.42%** of total followers)\n2. **Network:**\n\t* **Following\
+    \ Count (Smart):** 0 (indicating the account does not follow any other smart/active\
+    \ accounts via ELFA's definition)\n3. **Engagement & Reach:**\n\t* **Average Engagement:**\
+    \ **16.89%** (a relatively high engagement rate, suggesting content resonates\
+    \ with the audience)\n\t* **Average Reach:** **5,756** (average number of users\
+    \ who view the account's tweets)\n\n**Mentions Analysis:**\n\n* **Success Status:**\
+    \ True\n* **Mentions Data:** **No mentions found** (within the time frame or data\
+    \ scope provided by the ELFA API query)\n\n**Insights and Recommendations:**\n\
+    \n1. **High Engagement Rate:** The account's average engagement rate of 16.89%\
+    \ is significantly higher than typical rates (often around 1-2% for many accounts).\
+    \ This suggests that the content is highly engaging for the audience.\n   \n2.\
+    \ **Low Smart Follower Ratio:** Despite a large total follower count, the smart\
+    \ follower count is relatively low. This might indicate a need to focus on creating\
+    \ more engaging content to activate a broader segment of the audience.\n\n3. **No\
+    \ Mentions:** The absence of mentions in the provided data scope could indicate\
+    \ that the account is not currently part of larger conversations or is not being\
+    \ referenced by other users. Engaging with others, participating in relevant discussions,\
+    \ or collaborating with influencers might help increase visibility.\n\n4. **Following\
+    \ Strategy:** The account does not follow any \"smart\" accounts. Consider identifying\
+    \ and engaging with influential or highly active accounts in the crypto/token\
+    \ space to potentially expand the reach and build relationships.\n\n**Next Steps\
+    \ for Deeper Analysis:**\n\n- **Content Analysis:** Examine the types of tweets\
+    \ that receive the highest engagement to refine content strategy.\n- **Audience\
+    \ Analysis:** Use additional tools to dive deeper into the demographics and interests\
+    \ of both total and smart followers.\n- **Temporal Analysis:** Assess how engagement\
+    \ and reach vary over time to identify peaks and troughs, potentially correlating\
+    \ with specific events or content types.\n- **Comparative Analysis:** Compare\
+    \ @heurist_ai's metrics with industry benchmarks or direct competitors for a more\
+    \ nuanced understanding of its performance."
   data:
     status: success
     data:
       account_stats:
         success: true
         data:
-          smartFollowingCount: 494
-          averageEngagement: 0.44839630422828697
-          followerEngagementRatio: 15493.4375
+          smartFollowingCount: 0
+          averageEngagement: 0.1689214966984593
+          averageReach: 5756
+          smartFollowerCount: 142
+          followerCount: 34075
       mentions:
         success: true
-        data:
-        - content: 'Most MCP servers are Github code repositories that require local
-            setup. Not really "servers"
-
-
-            @heurist_ai servers are fully managed. A few button clicks to customize.
-            We also have a CLI to help you configure Claude/Cursor/Windsurf clients
-            with one command.'
-          mentioned_at: '2025-05-02T06:34:53+00:00'
-          type: quote
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 0
-            view_count: 1
-          sentiment: positive
-        - content: "9/ @AragonProject brings full onchain governance tools to @ZKsync.\n\
-            - source: \n\n10/ @Memento_Bc liquidity staking program offers up to 50%\
-            \ APR.\n- source: \n\n11/ @TRALA_Official platform is now live! You can\
-            \ stake $TRALA on @syncswap.\n- source: \n\n12/ Connect @Google Agent\
-            \ Development Kit with @heurist_ai MCP.\n- source: "
-          mentioned_at: '2025-04-28T15:40:11+00:00'
-          type: reply
-          metrics:
-            like_count: 12
-            reply_count: 1
-            repost_count: 0
-            view_count: 1903
-          sentiment: netural
-        - content: '@DOLAK1NG @AnthropicAI @OpenAI @Shopify @Microsoft @arcdotfun
-            @heurist_ai @StoryProtocol 🙏'
-          mentioned_at: '2025-04-27T12:49:57+00:00'
-          type: reply
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 0
-            view_count: 0
-          sentiment: netural
-        - content: '@CryptoGideon_ @AnthropicAI @OpenAI @Shopify @Microsoft @arcdotfun
-            @heurist_ai @StoryProtocol Theoriq 🫶'
-          mentioned_at: '2025-04-27T11:55:13+00:00'
-          type: reply
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 0
-            view_count: 0
-          sentiment: netural
-        - content: 'Next Big Thing in AI Agents Sector - MCP🤖
-
-
-            Developed by @AnthropicAI, this standard is widely used among Web2/3 AI
-            giants:
-
-
-            🔷 @OpenAI
-
-            🔷 @Shopify
-
-            🔷 @Microsoft
-
-            🔷 @arcdotfun
-
-            🔷 @heurist_ai
-
-            🔷 @StoryProtocol
-
-
-            But MCP has 1 big problem and Theoriq is solving it👇
-
-
-            Model Context Protocol solves the connectivity problem between AI agents
-            and data sources.
-
-
-            But these specialized AI agents need solutions to:
-
-
-            -> Communicate
-
-            -> Collaborate
-
-            -> Execute complex financial tasks
-
-
-            @TheoriqAI enables this agent-agent coordination🗣️
-
-
-            Theoriq''s Onchain Liquidity Provisioning (OLP) swarm addresses this by:
-
-
-            1️⃣Enabling agent-to-agent communication
-
-            2️⃣Providing coordination mechanisms
-
-            3️⃣Establishing economic incentives
-
-            4️⃣Securing agent interactions
-
-            5️⃣Supporting agent discovery and reputation
-
-
-            This means AI agents will be able to work and communicate as a team in
-            swarm - Powered by Theoriq👀
-
-
-            For details about MCP, check article by Theoriq co-founder @ronbodkin
-            👇'
-          mentioned_at: '2025-04-27T08:01:03+00:00'
-          type: quote
-          metrics:
-            like_count: 16
-            reply_count: 18
-            repost_count: 0
-            view_count: 2543
-          sentiment: neutral
-        - content: 'Next Big Thing in AI Agents Sector - MCP🤖
-
-
-            Developed by @AnthropicAI, this standard is widely used among Web2/3 AI
-            giants:
-
-
-            🔷 @OpenAI
-
-            🔷 @Shopify
-
-            🔷 @Microsoft
-
-            🔷 @arcdotfun
-
-            🔷 @heurist_ai
-
-            🔷 @StoryProtocol
-
-
-            But MCP has 1 big problem and Theoriq is solving it👇
-
-
-            Model Context Protocol solves the connectivity problem between AI agents
-            and data sources.
-
-
-            But these specialized AI agents need solutions to:
-
-
-            -> Communicate
-
-            -> Collaborate
-
-            -> Execute complex financial tasks
-
-
-            @TheoriqAI enables this agent-agent coordination🗣️
-
-
-            Theoriq''s Onchain Liquidity Provisioning (OLP) swarm addresses this by:
-
-
-            1️⃣Enabling agent-to-agent communication
-
-            2️⃣Providing coordination mechanisms
-
-            3️⃣Establishing economic incentives
-
-            4️⃣Securing agent interactions
-
-            5️⃣Supporting agent discovery and reputation
-
-
-            This means AI agents will be able to work and communicate as a team in
-            swarm - Powered by Theoriq👀
-
-
-            For details about MCP, check article by Theoriq co-founder @ronbodkin
-            👇'
-          mentioned_at: '2025-04-27T08:01:03+00:00'
-          type: quote
-          metrics:
-            like_count: 15
-            reply_count: 18
-            repost_count: 1
-            view_count: 3235
-          sentiment: neutral
-        - content: "Backing $JOS on SOL is probably a good idea\n\n> on-boarded QUBIC\
-            \ COO in last 24hrs @talentnodes \n> partnered with heurist @artoriatech\
-            \ @heurist_ai \n> recruited 3 more devs\n> open sourced, active github\n\
-            > pending partnership w/ leading German Uni\n\nBroke records on day 1\
-            \ with insane vol & tapped 30m temporarily, now currently sitting at ~5m\
-            \ with MVP imminent, showcasing a AI Operating System that works cross-chain\
-            \ using Swarm Intel for #DeFAI trading\n\nAlongside trading, long term\
-            \ Julia can also take advantage of Mission Control Protocol (MCP) for\
-            \ other features...\n\nWith MCP, you'll be able to guide your agents by\
-            \ assigning tasks to individual agents who will be able to work cohesively\
-            \ as a swarm. For example, one agent could track news websites within\
-            \ web3, another could highlight particular terms that are trending within\
-            \ these sites, a third could track X accounts that use these terms in\
-            \ their bio, while a fourth could track age of X account to be <1 week\
-            \ old. As a swarm, this would give you an edge in finding projects before\
-            \ the masses. Just one such example. But the examples are limitless, and\
-            \ the product will require $JOS\n\nCredits @AltPartisan for introducing\
-            \ me to the project."
-          mentioned_at: '2025-04-25T22:44:15+00:00'
-          type: post
-          metrics:
-            like_count: 74
-            reply_count: 20
-            repost_count: 19
-            view_count: 3960
-          sentiment: netural
-        - content: 'With already a great partnership on day 1, @heurist_ai '
-          mentioned_at: '2025-04-25T18:01:45+00:00'
-          type: quote
-          metrics:
-            like_count: 0
-            reply_count: 1
-            repost_count: 0
-            view_count: 0
-          sentiment: positive
-        - content: 'RT @heurist_ai: 🤖 Connect @Google Agent Development Kit with Heurist
-
-
-            Google ADK offers powerful agent-building capabilities, but integrati…'
-          mentioned_at: '2025-04-25T17:48:02+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 18
-            view_count: 0
-          sentiment: positive
-        - content: 'RT @heurist_ai: 🤖 Connect @Google Agent Development Kit with Heurist
-
-
-            Google ADK offers powerful agent-building capabilities, but integrati…'
-          mentioned_at: '2025-04-25T17:48:02+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 18
-            view_count: 0
-          sentiment: positive
-        - content: "AI Agents Daily Update 04/25/2025\n\n24 Hour Smart Money Netflows\
-            \ by @nansen_ai:\n@BuildOnJulia $JOS\n@elizaOS $AI16Z\n@ez1dev $EZ\n@FabelisAI\
-            \ $FABEL\n@heurist_ai $HEU\n\nProject Updates:\n1/ @powpowfun releases\
-            \ a real-time video showing their game developer agent comprehending game\
-            \ data and making modifications.\nFounder: @bboym0dE\nToken: $BNTY\nLink:\
-            \ \n\n2/ @Trenches_AI_ releases a teaser video showcasing the Trenches\
-            \ AI Beta Platform\nFounder: @thekryptoking_\nToken: $TRENCHAI\nLink:\
-            \ \n\n3/ @KosherCapital announces that for every trade made by a Kosher\
-            \ Capital Agent, $0.15 of the fee buys $SHEKEL and sends it to the staking\
-            \ contract as rewards!\nFounder: ???\nToken: $SHEKEL\nLink: \n\n4/ @aixCB_Vc\
-            \ is offering 200M $aixCB staking rewards and 50M 4aixCB LP rewards via\
-            \ Aerodrome for stakers\nFounder: @cryptoboys27 @T0kenPrince\nToken: $AIXCB\n\
-            Link: \n\n5/ @trustme_bros gives an update on the performance of the Automated\
-            \ Trading (AT) Model versions 1-3, and that they are working on v4.\n\
-            Founder: @Degen__Ape__ @ivaavimusic @Klingo18\nToken: $TRUST\nLink: \n\
-            \n6/ @DegenCapitalCIO is testing out a new feature in alpha stage called\
-            \ Token Radar, which includes mindshare metrics.\nFounder: @mikocryptonft\n\
-            Token: $DEGENC\nLink: \n\n7/ @pilot3ai is working on a real time market\
-            \ pulse, including live fear & greed index, sentiment graph across time,\
-            \ and more.\nFounder: @0xrheve\nToken: $PTAI\nLink: \n\n8/ @agixbt announces\
-            \ that they are joining batch 6 of the @AethirCloud $100M Eco Fund.\n\
-            Founder: ???\nToken: $AGIXBT\nLink: \n\n9/ @Symp_AI will be re-investing\
-            \ $150K of cbBTC into agent development, specifically for enhanced trading\
-            \ analytics, improved memory and resiliency, and deeper integrations into\
-            \ the Symphony execution network.\nFounder: @mozartcadence\nToken: $SYMP\n\
-            Link: \n\nProject Deep Dive:\nProject: @nottecore\nToken: $NUIT\nContent\
-            \ Creator: @AlphaSeeker21\nLink: \n\nPrevious Daily Update: \n\nContent\
-            \ Creators to Follow: @flowslikeosmo @watchingmarkets @Michael_Liu93\n\
-            \nLike, Share, and Follow. Thank you!"
-          mentioned_at: '2025-04-25T11:54:38+00:00'
-          type: post
-          metrics:
-            like_count: 84
-            reply_count: 21
-            repost_count: 19
-            view_count: 8846
-          sentiment: netural
-        - content: "AI Agents Daily Update 04/25/2025\n\n24 Hour Smart Money Netflows\
-            \ by @nansen_ai:\n@BuildOnJulia $JOS\n@elizaOS $AI16Z\n@ez1dev $EZ\n@FabelisAI\
-            \ $FABEL\n@heurist_ai $HEU\n\nProject Updates:\n1/ @powpowfun releases\
-            \ a real-time video showing their game developer agent comprehending game\
-            \ data and making modifications.\nFounder: @bboym0dE\nToken: $BNTY\nLink:\
-            \ \n\n2/ @Trenches_AI_ releases a teaser video showcasing the Trenches\
-            \ AI Beta Platform\nFounder: @thekryptoking_\nToken: $TRENCHAI\nLink:\
-            \ \n\n3/ @KosherCapital announces that for every trade made by a Kosher\
-            \ Capital Agent, $0.15 of the fee buys $SHEKEL and sends it to the staking\
-            \ contract as rewards!\nFounder: ???\nToken: $SHEKEL\nLink: \n\n4/ @aixCB_Vc\
-            \ is offering 200M $aixCB staking rewards and 50M 4aixCB LP rewards via\
-            \ Aerodrome for stakers\nFounder: @cryptoboys27 @T0kenPrince\nToken: $AIXCB\n\
-            Link: \n\n5/ @trustme_bros gives an update on the performance of the Automated\
-            \ Trading (AT) Model versions 1-3, and that they are working on v4.\n\
-            Founder: @Degen__Ape__ @ivaavimusic @Klingo18\nToken: $TRUST\nLink: \n\
-            \n6/ @DegenCapitalCIO is testing out a new feature in alpha stage called\
-            \ Token Radar, which includes mindshare metrics.\nFounder: @mikocryptonft\n\
-            Token: $DEGENC\nLink: \n\n7/ @pilot3ai is working on a real time market\
-            \ pulse, including live fear & greed index, sentiment graph across time,\
-            \ and more.\nFounder: @0xrheve\nToken: $PTAI\nLink: \n\n8/ @agixbt announces\
-            \ that they are joining batch 6 of the @AethirCloud $100M Eco Fund.\n\
-            Founder: ???\nToken: $AGIXBT\nLink: \n\n9/ @Symp_AI will be re-investing\
-            \ $150K of cbBTC into agent development, specifically for enhanced trading\
-            \ analytics, improved memory and resiliency, and deeper integrations into\
-            \ the Symphony execution network.\nFounder: @mozartcadence\nToken: $SYMP\n\
-            Link: \n\nProject Deep Dive:\nProject: @nottecore\nToken: $NUIT\nContent\
-            \ Creator: @AlphaSeeker21\nLink: \n\nPrevious Daily Update: \n\nContent\
-            \ Creators to Follow: @flowslikeosmo @watchingmarkets @Michael_Liu93\n\
-            \nLike, Share, and Follow. Thank you!"
-          mentioned_at: '2025-04-25T11:54:38+00:00'
-          type: post
-          metrics:
-            like_count: 84
-            reply_count: 21
-            repost_count: 19
-            view_count: 9048
-          sentiment: netural
-        - content: 'RT @BuildOnJulia: The old world wants you rate-limited and dependent.
-
-
-            JuliaOS just broke out.
-
-
-            We’ve partnered with @heurist_ai - a decent…'
-          mentioned_at: '2025-04-24T17:42:27+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 74
-            view_count: 0
-          sentiment: positive
-        - content: 'RT @BuildOnJulia: The old world wants you rate-limited and dependent.
-
-
-            JuliaOS just broke out.
-
-
-            We’ve partnered with @heurist_ai - a decent…'
-          mentioned_at: '2025-04-24T17:42:27+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 77
-            view_count: 0
-          sentiment: positive
-        - content: 'Aped into $HEU on Base.
-
-
-            #AI plays are starting to heat up over there and this looks like it has
-            legs!
-
-
-            Already up 50% in the past 7 days, and they have recently joined forces
-            with @open_mcp to streamline access to the decentralized web 🔋
-
-
-            Still undervalued at $5M Mcap.
-
-
-            @heurist_ai'
-          mentioned_at: '2025-04-24T17:27:04+00:00'
-          type: post
-          metrics:
-            like_count: 60
-            reply_count: 5
-            repost_count: 5
-            view_count: 2695
-          sentiment: positive
-        - content: 'Aped into $HEU on Base.
-
-
-            #AI plays are starting to heat up over there and this looks like it has
-            legs!
-
-
-            Already up 50% in the past 7 days, and they have recently joined forces
-            with @open_mcp to streamline access to the decentralized web 🔋
-
-
-            Still undervalued at $5M Mcap.
-
-
-            @heurist_ai'
-          mentioned_at: '2025-04-24T17:27:04+00:00'
-          type: post
-          metrics:
-            like_count: 59
-            reply_count: 5
-            repost_count: 5
-            view_count: 2729
-          sentiment: positive
-        - content: "RT @BuildOnJulia: We’re hosting an AMA later today.\n\nSpecial\
-            \ guests:\n@artoriatech, founder of @heurist_ai  \n@talentnodes, COO of\
-            \ @_Qubic_…"
-          mentioned_at: '2025-04-24T16:43:37+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 67
-            view_count: 0
-          sentiment: positive
-        - content: 'RT @BuildOnJulia: The old world wants you rate-limited and dependent.
-
-
-            JuliaOS just broke out.
-
-
-            We’ve partnered with @heurist_ai - a decent…'
-          mentioned_at: '2025-04-24T16:27:04+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 76
-            view_count: 0
-          sentiment: positive
-        - content: 'RT @BuildOnJulia: The old world wants you rate-limited and dependent.
-
-
-            JuliaOS just broke out.
-
-
-            We’ve partnered with @heurist_ai - a decent…'
-          mentioned_at: '2025-04-24T16:27:04+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 77
-            view_count: 0
-          sentiment: positive
-        - content: 'RT @heurist_ai: Heurist × JuliaOS: Colliding to create a new foundation
-            for sovereign agent intelligence
-
-
-            @BuildOnJulia harnesses computati…'
-          mentioned_at: '2025-04-24T16:27:00+00:00'
-          type: repost
-          metrics:
-            like_count: 0
-            reply_count: 0
-            repost_count: 43
-            view_count: 0
-          sentiment: positive
+        data: []
 input_trending:
   tool: get_trending_tokens
   tool_arguments:
@@ -835,202 +141,384 @@ output_trending:
         pageSize: 50
         data:
         - token: btc
-          current_count: 438
-          previous_count: 326
-          change_percent: 34.36
+          current_count: 949
+          previous_count: 834
+          change_percent: 13.79
         - token: eth
-          current_count: 200
-          previous_count: 140
-          change_percent: 42.86
-        - token: dog
-          current_count: 191
-          previous_count: 145
-          change_percent: 31.72
-        - token: troll
-          current_count: 180
-          previous_count: 353
-          change_percent: -49.01
-        - token: boop
-          current_count: 158
-          previous_count: 6
-          change_percent: 2533.33
+          current_count: 797
+          previous_count: 519
+          change_percent: 53.56
+        - token: bonk
+          current_count: 524
+          previous_count: 713
+          change_percent: -26.51
         - token: sol
-          current_count: 121
-          previous_count: 115
-          change_percent: 5.22
-        - token: hype
-          current_count: 97
-          previous_count: 78
-          change_percent: 24.36
-        - token: aapl
-          current_count: 93
-          previous_count: 10
-          change_percent: 830
-        - token: mstr
-          current_count: 92
-          previous_count: 26
-          change_percent: 253.85
-        - token: gork
-          current_count: 79
-          previous_count: 133
-          change_percent: -40.6
-        - token: giko
-          current_count: 76
-          previous_count: 54
-          change_percent: 40.74
-        - token: pengu
-          current_count: 76
-          previous_count: 82
-          change_percent: -7.32
-        - token: sui
-          current_count: 70
-          previous_count: 67
-          change_percent: 4.48
-        - token: usdc
-          current_count: 69
-          previous_count: 63
-          change_percent: 9.52
-        - token: amzn
-          current_count: 67
-          previous_count: 4
-          change_percent: 1575
-        - token: s
-          current_count: 63
-          previous_count: 24
-          change_percent: 162.5
-        - token: ava
-          current_count: 62
-          previous_count: 31
-          change_percent: 100
-        - token: msft
-          current_count: 60
-          previous_count: 75
-          change_percent: -20
-        - token: move
-          current_count: 59
-          previous_count: 20
-          change_percent: 195
-        - token: spx
-          current_count: 59
-          previous_count: 41
-          change_percent: 43.9
-        - token: boopa
-          current_count: 56
-          previous_count: 0
-          change_percent: 100
-        - token: xmw
-          current_count: 52
-          previous_count: 65
-          change_percent: -20
-        - token: crv
-          current_count: 51
-          previous_count: 72
-          change_percent: -29.17
-        - token: toshi
-          current_count: 49
-          previous_count: 0
-          change_percent: 100
-        - token: glxy
-          current_count: 48
-          previous_count: 47
-          change_percent: 2.13
-        - token: usd
-          current_count: 47
-          previous_count: 59
-          change_percent: -20.34
-        - token: house
-          current_count: 45
-          previous_count: 114
-          change_percent: -60.53
-        - token: ton
-          current_count: 39
-          previous_count: 43
-          change_percent: -9.3
-        - token: meta
-          current_count: 38
-          previous_count: 92
-          change_percent: -58.7
-        - token: wagmi
-          current_count: 36
-          previous_count: 25
-          change_percent: 44
-        - token: usdt
-          current_count: 35
-          previous_count: 35
-          change_percent: 0
-        - token: macro
-          current_count: 34
-          previous_count: 68
-          change_percent: -50
-        - token: fartcoin
-          current_count: 33
-          previous_count: 30
-          change_percent: 10
-        - token: tao
-          current_count: 32
-          previous_count: 41
-          change_percent: -21.95
-        - token: bnb
-          current_count: 31
-          previous_count: 4
-          change_percent: 675
-        - token: trump
-          current_count: 29
-          previous_count: 26
-          change_percent: 11.54
-        - token: giga
-          current_count: 28
-          previous_count: 30
-          change_percent: -6.67
-        - token: aixbt
-          current_count: 27
+          current_count: 351
+          previous_count: 241
+          change_percent: 45.64
+        - token: pump
+          current_count: 284
           previous_count: 22
-          change_percent: 22.73
-        - token: hosico
-          current_count: 27
-          previous_count: 55
-          change_percent: -50.91
-        - token: spy
-          current_count: 26
-          previous_count: 31
-          change_percent: -16.13
-        - token: tsla
-          current_count: 25
-          previous_count: 54
-          change_percent: -53.7
+          change_percent: 1190.91
         - token: xrp
-          current_count: 25
-          previous_count: 37
-          change_percent: -32.43
-        - token: debt
-          current_count: 23
-          previous_count: 39
-          change_percent: -41.03
-        - token: dolan
-          current_count: 23
-          previous_count: 3
-          change_percent: 666.67
-        - token: nvda
-          current_count: 23
-          previous_count: 25
-          change_percent: -8
-        - token: virtual
-          current_count: 23
+          current_count: 189
+          previous_count: 105
+          change_percent: 80
+        - token: pengu
+          current_count: 181
+          previous_count: 159
+          change_percent: 13.84
+        - token: hype
+          current_count: 173
+          previous_count: 102
+          change_percent: 69.61
+        - token: hosico
+          current_count: 169
+          previous_count: 151
+          change_percent: 11.92
+        - token: crcl
+          current_count: 157
+          previous_count: 31
+          change_percent: 406.45
+        - token: mstr
+          current_count: 156
+          previous_count: 50
+          change_percent: 212
+        - token: dog
+          current_count: 153
+          previous_count: 247
+          change_percent: -38.06
+        - token: wolfi
+          current_count: 138
+          previous_count: 83
+          change_percent: 66.27
+        - token: rekt
+          current_count: 123
+          previous_count: 112
+          change_percent: 9.82
+        - token: usdc
+          current_count: 116
+          previous_count: 72
+          change_percent: 61.11
+        - token: bitcoin
+          current_count: 115
+          previous_count: 60
+          change_percent: 91.67
+        - token: jail
+          current_count: 113
+          previous_count: 136
+          change_percent: -16.91
+        - token: bnkr
+          current_count: 112
+          previous_count: 121
+          change_percent: -7.44
+        - token: tao
+          current_count: 111
+          previous_count: 70
+          change_percent: 58.57
+        - token: vader
+          current_count: 111
+          previous_count: 114
+          change_percent: -2.63
+        - token: strd
+          current_count: 110
           previous_count: 13
-          change_percent: 76.92
-        - token: es
-          current_count: 22
-          previous_count: 11
-          change_percent: 100
+          change_percent: 746.15
+        - token: ap
+          current_count: 109
+          previous_count: 89
+          change_percent: 22.47
+        - token: sbet
+          current_count: 109
+          previous_count: 21
+          change_percent: 419.05
+        - token: gp
+          current_count: 107
+          previous_count: 94
+          change_percent: 13.83
+        - token: tsla
+          current_count: 102
+          previous_count: 75
+          change_percent: 36
+        - token: m
+          current_count: 101
+          previous_count: 96
+          change_percent: 5.21
+        - token: spx
+          current_count: 101
+          previous_count: 67
+          change_percent: 50.75
+        - token: mim
+          current_count: 100
+          previous_count: 41
+          change_percent: 143.9
+        - token: useless
+          current_count: 97
+          previous_count: 62
+          change_percent: 56.45
+        - token: doge
+          current_count: 95
+          previous_count: 88
+          change_percent: 7.95
+        - token: s
+          current_count: 92
+          previous_count: 80
+          change_percent: 15
+        - token: satfi
+          current_count: 92
+          previous_count: 174
+          change_percent: -47.13
+        - token: link
+          current_count: 91
+          previous_count: 82
+          change_percent: 10.98
+        - token: quby
+          current_count: 89
+          previous_count: 46
+          change_percent: 93.48
+        - token: btbt
+          current_count: 88
+          previous_count: 4
+          change_percent: 2100
+        - token: pepe
+          current_count: 86
+          previous_count: 117
+          change_percent: -26.5
+        - token: uranus
+          current_count: 84
+          previous_count: 38
+          change_percent: 121.05
+        - token: avax
+          current_count: 81
+          previous_count: 61
+          change_percent: 32.79
+        - token: dege
+          current_count: 78
+          previous_count: 29
+          change_percent: 168.97
+        - token: ikun
+          current_count: 78
+          previous_count: 89
+          change_percent: -12.36
+        - token: tibbir
+          current_count: 78
+          previous_count: 34
+          change_percent: 129.41
         - token: joe
-          current_count: 22
-          previous_count: 12
-          change_percent: 83.33
-        - token: anon
-          current_count: 20
-          previous_count: 3
-          change_percent: 566.67
-        - token: bios
-          current_count: 20
-          previous_count: 8
-          change_percent: 150
+          current_count: 72
+          previous_count: 30
+          change_percent: 140
+        - token: kas
+          current_count: 72
+          previous_count: 62
+          change_percent: 16.13
+        - token: sui
+          current_count: 68
+          previous_count: 54
+          change_percent: 25.93
+        - token: giko
+          current_count: 67
+          previous_count: 15
+          change_percent: 346.67
+        - token: ton
+          current_count: 66
+          previous_count: 176
+          change_percent: -62.5
+        - token: shib
+          current_count: 65
+          previous_count: 36
+          change_percent: 80.56
+        - token: coq
+          current_count: 62
+          previous_count: 27
+          change_percent: 129.63
+        - token: btog
+          current_count: 61
+          previous_count: 0
+          change_percent: 100
+        - token: gray
+          current_count: 61
+          previous_count: 15
+          change_percent: 306.67
+api_dance_test_query1:
+  tweet_id: '1913624766793289972'
+api_dance_output_query1:
+  pinned_tweet: null
+  tweets:
+  - tweet_id: '1913624766793289972'
+    user_id: '1736748346566459392'
+    media_type: video
+    text: 'Your agents, your way.
+
+      Create a dedicated MCP server with Heurist as simple as 3 steps 👇 https://t.co/8fj2Xkc9Jt'
+    medias:
+    - https://pbs.twimg.com/amplify_video_thumb/1913624592876535808/img/WHw2G9VCP7UNO0fL.jpg
+    urls: null
+    is_self_send: true
+    is_retweet: false
+    is_quote: false
+    is_reply: false
+    is_like: false
+    related_tweet_id: ''
+    related_user_id: ''
+    favorite_count: 38
+    quote_count: 4
+    reply_count: 12
+    retweet_count: 15
+    created_at: Sat Apr 19 16:04:32 +0000 2025
+    user:
+      id_str: '1736748346566459392'
+      name: Heurist
+      screen_name: heurist_ai
+      location: Agent-native Cloud
+      description: "Agent-native Cloud for Collective Intelligence \nBacked by @AmberGroup_io,\
+        \ @ManifoldTrading, @SeliniCapital \nhttps://t.co/RVIdwhpLdz"
+      followers_count: 34104
+      friends_count: 266
+      created_at: Mon Dec 18 14:01:02 +0000 2023
+      favourites_count: 1455
+      verified: true
+      statuses_count: 1379
+      media_count: 288
+      profile_image_url_https: https://pbs.twimg.com/profile_images/1856703682324160512/7jrP8hf2_normal.jpg
+  - tweet_id: '1913625034478034984'
+    user_id: '1736748346566459392'
+    media_type: ''
+    text: '1. Get an API key: https://t.co/Me0O3WQ4H9
+
+      2. Visit Heurist MCP Portal https://t.co/9mZtQWfB0W
+
+      3. Choose your agents and start!'
+    medias: null
+    urls:
+    - https://heurist.ai/credits
+    - https://mcp.heurist.ai
+    is_self_send: false
+    is_retweet: false
+    is_quote: false
+    is_reply: true
+    is_like: false
+    related_tweet_id: '1913624766793289972'
+    related_user_id: '1736748346566459392'
+    favorite_count: 6
+    quote_count: 0
+    reply_count: 0
+    retweet_count: 3
+    created_at: Sat Apr 19 16:05:36 +0000 2025
+    user:
+      id_str: '1736748346566459392'
+      name: Heurist
+      screen_name: heurist_ai
+      location: Agent-native Cloud
+      description: "Agent-native Cloud for Collective Intelligence \nBacked by @AmberGroup_io,\
+        \ @ManifoldTrading, @SeliniCapital \nhttps://t.co/RVIdwhpLdz"
+      followers_count: 34104
+      friends_count: 266
+      created_at: Mon Dec 18 14:01:02 +0000 2023
+      favourites_count: 1455
+      verified: true
+      statuses_count: 1379
+      media_count: 288
+      profile_image_url_https: https://pbs.twimg.com/profile_images/1856703682324160512/7jrP8hf2_normal.jpg
+  - tweet_id: '1913635740543520884'
+    user_id: '1399243366886486016'
+    media_type: ''
+    text: '@heurist_ai Love the simplicity, @heurist_ai! 🚀 Setting up a dedicated
+      MCP server in just 3 steps? That''s what I call user-friendly! Can''t wait to
+      see how this fuels our DeFi adventures! Let''s get those agents rolling! 💪🔥
+      #CryptoInnovation'
+    medias: null
+    urls: null
+    is_self_send: false
+    is_retweet: false
+    is_quote: false
+    is_reply: true
+    is_like: false
+    related_tweet_id: '1913624766793289972'
+    related_user_id: '1736748346566459392'
+    favorite_count: 0
+    quote_count: 0
+    reply_count: 0
+    retweet_count: 0
+    created_at: Sat Apr 19 16:48:08 +0000 2025
+    user:
+      id_str: '1399243366886486016'
+      name: sidekick.finance
+      screen_name: SidekickFinance
+      location: Atlanta, GA
+      description: "\U0001F680 NFT crowdfunding - JumpStart \n\U0001F4A5 PFPS - mint\
+        \ is live!\nhttps://t.co/sWo9ACWsVZ…\n#nft #crowdfunding #altcoin"
+      followers_count: 4579
+      friends_count: 1710
+      created_at: Mon May 31 05:57:02 +0000 2021
+      favourites_count: 24621
+      verified: true
+      statuses_count: 26978
+      media_count: 444
+      profile_image_url_https: https://pbs.twimg.com/profile_images/1682152266608828416/l3CRrWM3_normal.jpg
+  - tweet_id: '1913655033914065398'
+    user_id: '1878762026878504960'
+    media_type: ''
+    text: '@heurist_ai Just set this up for our internal tools—runs like a dream.'
+    medias: null
+    urls: null
+    is_self_send: false
+    is_retweet: false
+    is_quote: false
+    is_reply: true
+    is_like: false
+    related_tweet_id: '1913624766793289972'
+    related_user_id: '1736748346566459392'
+    favorite_count: 0
+    quote_count: 0
+    reply_count: 0
+    retweet_count: 0
+    created_at: Sat Apr 19 18:04:48 +0000 2025
+    user:
+      id_str: '1878762026878504960'
+      name: DigiMask CLONE $MGT🌕
+      screen_name: CloneMgt68974
+      location: New York, USA
+      description: Talk about 🔥tech 🔥crypto 🔥
+      followers_count: 50
+      friends_count: 263
+      created_at: Mon Jan 13 11:12:43 +0000 2025
+      favourites_count: 0
+      verified: false
+      statuses_count: 142
+      media_count: 0
+      profile_image_url_https: https://pbs.twimg.com/profile_images/1878762361579786241/hr0guLXP_normal.jpg
+  - tweet_id: '1913655086967820623'
+    user_id: '1863707690901356544'
+    media_type: ''
+    text: '@heurist_ai “Your agents, your way.” No lies detected ✅'
+    medias: null
+    urls: null
+    is_self_send: false
+    is_retweet: false
+    is_quote: false
+    is_reply: true
+    is_like: false
+    related_tweet_id: '1913624766793289972'
+    related_user_id: '1736748346566459392'
+    favorite_count: 0
+    quote_count: 0
+    reply_count: 0
+    retweet_count: 0
+    created_at: Sat Apr 19 18:05:01 +0000 2025
+    user:
+      id_str: '1863707690901356544'
+      name: CHEF
+      screen_name: CHEF03825545919
+      location: Binan City, Philippines
+      description: Lil Ass Aeon🪽 Went to the doc to get my test levels checked, I
+        got 6900T. GME on roids💹🧲
+      followers_count: 1
+      friends_count: 3
+      created_at: Mon Dec 02 22:12:08 +0000 2024
+      favourites_count: 346
+      verified: false
+      statuses_count: 153
+      media_count: 0
+      profile_image_url_https: https://pbs.twimg.com/profile_images/1863707969986125824/uWaIykv8_normal.jpg
+  next_cursor_str: LgAAAPAfHBlG0IDd1Y_1x4416MG0iabkzI417Iew8ajH1Y41nsWwlbTK1Y41JQQRFQ4AAA
