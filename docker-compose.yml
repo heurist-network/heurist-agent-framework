@@ -1,6 +1,6 @@
 services:
   mesh-api:
-    image: ghcr.io/heurist-network/heurist-agent-framework/mesh:${COMMIT_SHA:-latest}
+    image: heuristdotai/mesh:${COMMIT_SHA:-latest}
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
         delay: 5s
 
   mesh-manager:
-    image: ghcr.io/heurist-network/heurist-agent-framework/mesh:${COMMIT_SHA:-latest}
+    image: heuristdotai/mesh:${COMMIT_SHA:-latest}
     build:
       context: .
       dockerfile: Dockerfile

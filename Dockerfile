@@ -1,9 +1,5 @@
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:5c8edeb8b5644b618882e06ddaa8ddf509dcd1aa7d08fedac7155106116a9a9e
 
-# Capture git commit hash at build time
-ARG GITHUB_SHA=unknown
-ENV GITHUB_SHA=${GITHUB_SHA}
-
 # Configure environment variables
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
@@ -40,6 +36,10 @@ RUN chmod +x /app/entrypoint.sh
 
 # Copy the rest of the application code
 COPY . .
+
+# Capture git commit hash at build time
+ARG GITHUB_SHA=unknown
+ENV GITHUB_SHA=${GITHUB_SHA}
 
 # Set the entrypoint script
 ENTRYPOINT ["/app/entrypoint.sh"]

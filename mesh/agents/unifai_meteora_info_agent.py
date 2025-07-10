@@ -94,6 +94,12 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
                                 "description": "Optional array of token mint addresses to include (e.g., ['So11111111111111111111111111111111111111112'] for SOL)",
                                 "default": [],
                             },
+                            "include_pool_token_pairs": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "Optional array of token pairs to include (e.g., ['USDC-SOL'])",
+                                "default": [],
+                            },
                         },
                     },
                 },
@@ -147,10 +153,10 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
         """
         try:
             action = f"Meteora/{self.meteora_trending_id}/getTrendingDLMMPools"
-            payload = {"limit": limit}
-
-            if include_pool_token_pairs:
-                payload["include_pool_token_pairs"] = include_pool_token_pairs
+            payload = {
+                "limit": limit,
+                "include_pool_token_pairs": include_pool_token_pairs or [],
+            }
 
             data = {"action": action, "payload": payload}
 
@@ -175,6 +181,7 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
         self,
         limit: int = 10,
         include_token_mints: List[str] = None,
+        include_pool_token_pairs: List[str] = None,
     ) -> Dict:
         """
         Searches for dynamic AMM pools on Meteora
@@ -182,6 +189,7 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
         Args:
             limit: Number of pools to return
             include_token_mints: Optional array of token mint addresses to include
+            include_pool_token_pairs: Optional array of token pairs to include
 
         Returns:
             Dict containing pool search results or error information
@@ -192,10 +200,10 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
                 "size": limit,
                 "page": 0,
                 "order_by": "desc",
-                "sort_key": "tvl",
-                "hide_low_tvl": 1000,
-                "hide_low_apr": False,
-                "include_pool_token_pairs": [],
+                "sort_key": "fee_tvl_ratio",
+                "hide_low_tvl": 100000,
+                "hide_low_apr": True,
+                "include_pool_token_pairs": include_pool_token_pairs or [],
                 "include_token_mints": include_token_mints or [],
             }
 
@@ -286,10 +294,12 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
         elif tool_name == "search_dynamic_amm_pools":
             limit = function_args.get("limit", 10)
             include_token_mints = function_args.get("include_token_mints", [])
+            include_pool_token_pairs = function_args.get("include_pool_token_pairs", [])
 
             result = await self.search_dynamic_amm_pools(
                 limit=limit,
                 include_token_mints=include_token_mints,
+                include_pool_token_pairs=include_pool_token_pairs,
             )
 
             if result.get("status") == "error":

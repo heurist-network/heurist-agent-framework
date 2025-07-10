@@ -193,7 +193,7 @@
   "MindAiKolAgent": {
     "get_best_initial_calls": {
       "period": 720,
-      "token_symbol": "HEU"
+      "token_symbol": "BTC"
     },
     "get_kol_statistics": {
       "kol_name": "@agentcookiefun",

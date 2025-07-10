@@ -28,6 +28,7 @@ class CarvOnchainDataAgent(MeshAgent):
                 "description": "This agent can query blockchain metrics of Ethereum, Base, Bitcoin, or Solana using natural language through the CARV API.",
                 "external_apis": ["CARV"],
                 "tags": ["Onchain Data"],
+                "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Carv.png",
                 "examples": [
                     "Identify the biggest transaction of ETH in the past 30 days",

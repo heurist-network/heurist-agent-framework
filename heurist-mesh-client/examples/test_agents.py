@@ -20,6 +20,11 @@ TEST_INPUTS_FILE = os.path.join(SCRIPT_DIR, "test_inputs.json")
 DISABLED_AGENTS = {"DeepResearchAgent", "MemoryAgent"}
 
 
+def is_agent_hidden(agent_data: Dict) -> bool:
+    """Check if an agent is marked as hidden in metadata"""
+    return agent_data.get("metadata", {}).get("hidden", False) is True
+
+
 def fetch_agents_metadata() -> Dict:
     with httpx.Client() as client:
         response = client.get(MESH_METADATA_URL)
@@ -227,7 +232,7 @@ def list_agents():
             missing_tools = test_tools - tools
             if missing_tools:
                 orphaned_tools[agent_id] = missing_tools
-        elif tools and agent_id not in DISABLED_AGENTS:
+        elif tools and agent_id not in DISABLED_AGENTS and not is_agent_hidden(agent_data):
             agents_needing_samples.add(agent_id)
 
     if agents_needing_samples or orphaned_test_agents or orphaned_tools:
@@ -239,6 +244,8 @@ def list_agents():
         styled_name = f"[cyan]{agent_id}"
         if agent_id in DISABLED_AGENTS:
             styled_name = f"[dim]{agent_id} [red](disabled)[/]"
+        elif is_agent_hidden(agent_data):
+            styled_name = f"[dim]{agent_id} [yellow](hidden)[/]"
 
         if not tools:
             row = [styled_name, "[dim italic]No tools[/]", "[dim]-[/]"]
@@ -274,7 +281,11 @@ def list_agents():
         else:
             actions.append("[dim]-[/]")
 
-        display_name = styled_name if has_any_test or agent_id in DISABLED_AGENTS else f"[dim]{agent_id}[/]"
+        display_name = (
+            styled_name
+            if has_any_test or agent_id in DISABLED_AGENTS or is_agent_hidden(agent_data)
+            else f"[dim]{agent_id}[/]"
+        )
         row = [
             display_name,
             "\n".join(tool_names),
@@ -335,6 +346,7 @@ def list_agents():
 @cli.command()
 @click.argument("agent_tool_pairs", required=False)
 @click.option("--include-disabled", is_flag=True, help="Include disabled agents in testing")
+@click.option("--include-hidden", is_flag=True, help="Include hidden agents in testing")
 @click.option("--no-trim", is_flag=True, help="Disable output trimming")
 @click.option("--dev", is_flag=True, help="Use development server")
 @click.option(
@@ -347,6 +359,7 @@ def list_agents():
 def test_agent(
     agent_tool_pairs: Optional[str] = None,
     include_disabled: bool = False,
+    include_hidden: bool = False,
     no_trim: bool = False,
     dev: bool = False,
     json: Optional[str] = None,
@@ -380,6 +393,12 @@ def test_agent(
 
                 if test_agent_id in DISABLED_AGENTS and not include_disabled:
                     console.print(f"[yellow]Skipping disabled agent: {test_agent_id}[/yellow]")
+                    skipped_tests.extend(f"{test_agent_id} - {t}" for t in test_tools)
+                    continue
+
+                # Skip hidden agents
+                if is_agent_hidden(agents_metadata["agents"][test_agent_id]) and not include_hidden:
+                    console.print(f"[yellow]Skipping hidden agent: {test_agent_id}[/yellow]")
                     skipped_tests.extend(f"{test_agent_id} - {t}" for t in test_tools)
                     continue
 
