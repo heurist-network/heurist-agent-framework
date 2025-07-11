@@ -308,8 +308,8 @@ class EIP7702Agent(ContextAgent, ABC):
         """Convert SessionInfo to tuple format for contract call"""
         return (
             session_info.id,
-            session_info.executor,
-            session_info.validator,
+            Web3.to_checksum_address(session_info.executor),
+            Web3.to_checksum_address(session_info.validator),
             session_info.valid_until,
             session_info.valid_after,
             bytes.fromhex(session_info.pre_hook[2:]) if session_info.pre_hook.startswith("0x") else b"",
