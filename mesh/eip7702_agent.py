@@ -329,6 +329,99 @@ class EIP7702Agent(ContextAgent, ABC):
             return False
         return True
 
+    async def _estimate_gas_parameters(
+        self, 
+        w3: Web3, 
+        tx_data: Dict[str, Any], 
+        gas_buffer_percent: float = 20.0
+    ) -> Dict[str, Any]:
+        """
+        Estimate gas parameters dynamically with buffers
+        
+        Args:
+            w3: Web3 instance
+            tx_data: Transaction data for gas estimation
+            gas_buffer_percent: Buffer percentage for gas limit (default 20%)
+            
+        Returns:
+            Dictionary with estimated gas parameters
+        """
+        try:
+            # Estimate gas limit
+            estimated_gas = w3.eth.estimate_gas(tx_data)
+            gas_limit_with_buffer = int(estimated_gas * (1 + gas_buffer_percent / 100))
+            
+            # Get current gas prices using fee history (EIP-1559)
+            try:
+                # Get fee history for last 4 blocks to calculate base fee and priority fee
+                fee_history = w3.eth.fee_history(4, 'latest', [25, 50, 75])
+                
+                # Calculate average base fee from recent blocks
+                base_fees = fee_history['baseFeePerGas']
+                avg_base_fee = sum(base_fees) // len(base_fees)
+                
+                # Calculate average priority fee from 50th percentile
+                priority_fees = []
+                for block_rewards in fee_history['reward']:
+                    if block_rewards and len(block_rewards) > 1:
+                        priority_fees.append(block_rewards[1])  # 50th percentile
+                
+                if priority_fees:
+                    avg_priority_fee = sum(priority_fees) // len(priority_fees)
+                else:
+                    # Fallback to 1 gwei if no priority fee data
+                    avg_priority_fee = w3.to_wei(1, 'gwei')
+                
+                # Add buffers to ensure transaction inclusion
+                # Base fee buffer: 50% (base fee can spike)
+                # Priority fee buffer: 25%
+                max_priority_fee_per_gas = int(avg_priority_fee * 1.25)
+                max_fee_per_gas = int((avg_base_fee * 1.5) + max_priority_fee_per_gas)
+                
+                # Convert to gwei for logging
+                max_fee_per_gas_gwei = w3.from_wei(max_fee_per_gas, 'gwei')
+                max_priority_fee_per_gas_gwei = w3.from_wei(max_priority_fee_per_gas, 'gwei')
+                
+                logger.info(f"Dynamic gas estimation: limit={gas_limit_with_buffer}, "
+                          f"max_fee={max_fee_per_gas_gwei:.2f} gwei, "
+                          f"max_priority_fee={max_priority_fee_per_gas_gwei:.2f} gwei")
+                
+            except Exception as fee_error:
+                logger.warning(f"Failed to get EIP-1559 fee history, falling back to legacy gas price: {fee_error}")
+                
+                # Fallback to legacy gas price method
+                gas_price = w3.eth.gas_price
+                # Add 25% buffer to gas price
+                max_fee_per_gas = int(gas_price * 1.25)
+                max_priority_fee_per_gas = w3.to_wei(1, 'gwei')  # 1 gwei default priority
+                
+                max_fee_per_gas_gwei = w3.from_wei(max_fee_per_gas, 'gwei')
+                max_priority_fee_per_gas_gwei = w3.from_wei(max_priority_fee_per_gas, 'gwei')
+                
+                logger.info(f"Legacy gas estimation: limit={gas_limit_with_buffer}, "
+                          f"gas_price={max_fee_per_gas_gwei:.2f} gwei")
+            
+            return {
+                'gas_limit': gas_limit_with_buffer,
+                'max_fee_per_gas': max_fee_per_gas,
+                'max_priority_fee_per_gas': max_priority_fee_per_gas,
+                'max_fee_per_gas_gwei': max_fee_per_gas_gwei,
+                'max_priority_fee_per_gas_gwei': max_priority_fee_per_gas_gwei,
+                'estimated_gas': estimated_gas
+            }
+            
+        except Exception as e:
+            logger.error(f"Gas estimation failed: {e}")
+            # Fallback to conservative defaults
+            return {
+                'gas_limit': 1000000,  # Higher default for safety
+                'max_fee_per_gas': w3.to_wei(5, 'gwei'),  # 5 gwei fallback
+                'max_priority_fee_per_gas': w3.to_wei(1, 'gwei'),  # 1 gwei fallback
+                'max_fee_per_gas_gwei': 5.0,
+                'max_priority_fee_per_gas_gwei': 1.0,
+                'estimated_gas': 800000
+            }
+
     def _get_chain_enum(self, chain_id: int) -> SupportedChain:
         """Get SupportedChain enum from chain_id"""
         for supported_chain in SupportedChain:
@@ -362,9 +455,7 @@ class EIP7702Agent(ContextAgent, ABC):
         user_id: str,
         call_data_list: List[CallData],
         chain_id: int,
-        gas_limit: int = 500000,
-        max_fee_per_gas_gwei: float = 2.0,
-        max_priority_fee_per_gas_gwei: float = 0.1,
+        gas_buffer_percent: float = 20.0,
     ) -> Dict[str, Any]:
         """
         Execute transaction on behalf of user using EIP7702 delegation
@@ -373,9 +464,7 @@ class EIP7702Agent(ContextAgent, ABC):
             user_id: User identifier
             call_data_list: List of contract calls to execute
             chain_id: Target blockchain chain ID
-            gas_limit: Maximum gas to use
-            max_fee_per_gas_gwei: Maximum fee per gas in Gwei
-            max_priority_fee_per_gas_gwei: Maximum priority fee per gas in Gwei
+            gas_buffer_percent: Buffer percentage for gas limit estimation (default 20%)
 
         Returns:
             Dictionary with transaction result or error. The result contains user-friendly message about the transaction status or error.
@@ -419,14 +508,31 @@ class EIP7702Agent(ContextAgent, ABC):
             # Get nonce
             nonce = w3.eth.get_transaction_count(executor_account.address)
 
-            # Build transaction
-            tx = user_smart_wallet.functions.executeFromExecutor(call_tuples, session_tuple).build_transaction(
+            # Build transaction function
+            tx_function = user_smart_wallet.functions.executeFromExecutor(call_tuples, session_tuple)
+            
+            # Build transaction data for gas estimation first
+            tx_data_for_estimation = tx_function.build_transaction({
+                "from": executor_account.address,
+                "nonce": nonce,
+                "chainId": chain_id,
+            })
+
+            # Get dynamic gas parameters
+            gas_params = await self._estimate_gas_parameters(w3, tx_data_for_estimation, gas_buffer_percent)
+
+            logger.info(f"Using dynamic gas parameters: {gas_params['gas_limit']} gas, "
+                       f"{gas_params['max_fee_per_gas_gwei']:.2f} gwei max fee, "
+                       f"{gas_params['max_priority_fee_per_gas_gwei']:.2f} gwei priority fee")
+
+            # Build final transaction with estimated gas parameters
+            tx = tx_function.build_transaction(
                 {
                     "from": executor_account.address,
                     "nonce": nonce,
-                    "gas": gas_limit,
-                    "maxFeePerGas": w3.to_wei(max_fee_per_gas_gwei, "gwei"),
-                    "maxPriorityFeePerGas": w3.to_wei(max_priority_fee_per_gas_gwei, "gwei"),
+                    "gas": gas_params['gas_limit'],
+                    "maxFeePerGas": gas_params['max_fee_per_gas'],
+                    "maxPriorityFeePerGas": gas_params['max_priority_fee_per_gas'],
                     "chainId": chain_id,
                 }
             )
@@ -435,7 +541,7 @@ class EIP7702Agent(ContextAgent, ABC):
             signed_tx = w3.eth.account.sign_transaction(tx, executor_private_key)
             tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
 
-            logger.info(f"Transaction sent: {tx_hash.hex()}")
+            logger.info(f"Transaction sent: 0x{tx_hash.hex()}")
 
             # Wait for transaction receipt to check success/failure
             try:
@@ -443,15 +549,19 @@ class EIP7702Agent(ContextAgent, ABC):
 
                 if receipt.status == 1:
                     # Transaction succeeded
-                    logger.info(f"Transaction successful: {tx_hash.hex()}")
+                    logger.info(f"Transaction successful: 0x{tx_hash.hex()}")
                     # TODO: consider charging for the gas used
                     return {
                         "success": True,
-                        "message": f"Transaction executed successfully! Gas used: {receipt.gasUsed}. View on {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
-                        "tx_hash": tx_hash.hex(),
+                        "message": f"Transaction executed successfully! Gas used: {receipt.gasUsed}/{gas_params['gas_limit']} (estimated: {gas_params['estimated_gas']}). Max fee: {gas_params['max_fee_per_gas_gwei']:.2f} gwei. View on {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/0x{tx_hash.hex()}",
+                        "tx_hash": f"0x{tx_hash.hex()}",
                         "chain_id": chain_id,
                         "executor": executor_account.address,
                         "gas_used": receipt.gasUsed,
+                        "gas_limit": gas_params['gas_limit'],
+                        "gas_estimated": gas_params['estimated_gas'],
+                        "max_fee_per_gas_gwei": gas_params['max_fee_per_gas_gwei'],
+                        "max_priority_fee_per_gas_gwei": gas_params['max_priority_fee_per_gas_gwei'],
                         "block_number": receipt.blockNumber,
                     }
                 else:
@@ -462,11 +572,11 @@ class EIP7702Agent(ContextAgent, ABC):
                         if revert_reason
                         else "Transaction reverted with unknown reason"
                     )
-                    logger.error(f"{error_msg}. Tx hash: {tx_hash.hex()}")
+                    logger.error(f"{error_msg}. Tx hash: 0x{tx_hash.hex()}")
 
                     return {
-                        "error": f"{error_msg}. View failed transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
-                        "tx_hash": tx_hash.hex(),
+                        "error": f"{error_msg}. View failed transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/0x{tx_hash.hex()}",
+                        "tx_hash": f"0x{tx_hash.hex()}",
                         "chain_id": chain_id,
                         "revert_reason": revert_reason,
                         "gas_used": receipt.gasUsed,
@@ -475,8 +585,8 @@ class EIP7702Agent(ContextAgent, ABC):
             except Exception as receipt_error:
                 logger.error(f"Error waiting for transaction receipt: {receipt_error}")
                 return {
-                    "error": f"Transaction was sent but receipt could not be confirmed: {str(receipt_error)}. View transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/{tx_hash.hex()}",
-                    "tx_hash": tx_hash.hex(),
+                    "error": f"Transaction was sent but receipt could not be confirmed: {str(receipt_error)}. View transaction: {self.CHAIN_CONFIGS[self._get_chain_enum(chain_id)].explorer_base_url}/tx/0x{tx_hash.hex()}",
+                    "tx_hash": f"0x{tx_hash.hex()}",
                     "chain_id": chain_id,
                 }
 
