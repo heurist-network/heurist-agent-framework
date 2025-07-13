@@ -669,6 +669,9 @@ class EIP7702Agent(ContextAgent, ABC):
                     "error": f"No smart wallet found for your address on {chain_name}. Please deploy a smart wallet first at https://heurist.ai/eip7702"
                 }
 
+            # Add user_id to user_context if not already present
+            user_context["user_id"] = user_id if user_id not in user_context else user_context["user_id"]
+
             # Prepare call data
             call_data_list = await self.prepare_call_data(function_name, function_args, chain_id, user_context)
 
