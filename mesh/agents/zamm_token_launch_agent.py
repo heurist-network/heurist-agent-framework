@@ -5,6 +5,8 @@ import time
 import json
 import uuid
 import os
+import requests
+from urllib.parse import urlparse
 
 from web3 import Web3
 import boto3
@@ -301,6 +303,71 @@ class ZammTokenLaunchAgent(EIP7702Agent):
             logger.error(f"Error updating metadata in R2: {e}")
             raise ValueError(f"Failed to update metadata: {str(e)}")
 
+    async def _upload_external_image_to_r2(self, image_url: str, user_id: str) -> str:
+        """
+        Download external image and upload to R2 bucket with same pattern as metadata URL.
+        
+        Args:
+            image_url: URL of the external image
+            user_id: User ID (wallet address)
+            
+        Returns:
+            The public URL to the uploaded image in R2
+        """
+        try:
+            # Check if it's already an R2 URL
+            if image_url.startswith(self.R2_ENDPOINT_URL):
+                return image_url
+            
+            # Check if it's a valid URL
+            parsed_url = urlparse(image_url)
+            if not parsed_url.scheme or not parsed_url.netloc:
+                raise ValueError("Invalid image URL")
+            
+            # Download the image
+            response = requests.get(image_url, timeout=30)
+            response.raise_for_status()
+            
+            # Check if it's an image (basic check)
+            content_type = response.headers.get('content-type', '')
+            if not content_type.startswith('image/'):
+                raise ValueError("URL does not point to an image")
+            
+            # Get file extension from content type
+            if 'jpeg' in content_type or 'jpg' in content_type:
+                ext = '.jpg'
+            elif 'png' in content_type:
+                ext = '.png'
+            elif 'gif' in content_type:
+                ext = '.gif'
+            elif 'webp' in content_type:
+                ext = '.webp'
+            else:
+                ext = '.jpg'  # Default fallback
+            
+            # Generate unique filename
+            image_filename = f"{uuid.uuid4().hex}{ext}"
+            
+            # Create object key: user_id (lowercase) / filename
+            object_key = f"{user_id.lower()}/{image_filename}"
+            
+            # Upload to R2 bucket
+            self.r2_client.put_object(
+                Bucket=self.R2_BUCKET_NAME,
+                Key=object_key,
+                Body=response.content,
+                ContentType=content_type,
+            )
+            
+            # Return public URL
+            uploaded_image_url = f"{self.R2_ENDPOINT_URL}/{object_key}"
+            logger.info(f"Uploaded external image to R2: {uploaded_image_url}")
+            return uploaded_image_url
+            
+        except Exception as e:
+            logger.error(f"Error uploading external image to R2: {e}")
+            raise ValueError(f"Failed to upload image: {str(e)}")
+
     def _parse_launch_event_logs(self, w3: Web3, tx_receipt) -> Optional[int]:
         """
         Parse the Launch event logs from transaction receipt to extract coinId.
@@ -357,6 +424,12 @@ class ZammTokenLaunchAgent(EIP7702Agent):
                 
                 # Parse Launch event logs to extract coinId
                 coin_id = self._parse_launch_event_logs(w3, tx_receipt)
+
+                # Add metadata URL to result if available
+                if hasattr(self, '_current_metadata_url'):
+                    result["metadata_url"] = self._current_metadata_url
+                    # Clean up the temporary storage
+                    delattr(self, '_current_metadata_url')
                 
                 if coin_id is not None:
                     # Create ZAMM finance link
@@ -419,14 +492,21 @@ class ZammTokenLaunchAgent(EIP7702Agent):
             if not symbol:
                 raise ValueError("Token symbol is required")
             
-            # Use default image if not provided
-            if not image:
-                image = self.DEFAULT_IMAGE_URL
-            
             # Get user ID from context
             user_id = user_context.get("user_id")
             if not user_id:
                 raise ValueError("User ID is required for metadata storage")
+            
+            # Handle image upload to R2 if it's an external URL
+            if image and image != self.DEFAULT_IMAGE_URL:
+                try:
+                    # Upload external image to R2
+                    image = await self._upload_external_image_to_r2(image, user_id)
+                except ValueError as e:
+                    logger.warning(f"Failed to upload external image, using default: {e}")
+                    image = self.DEFAULT_IMAGE_URL
+            elif not image:
+                image = self.DEFAULT_IMAGE_URL
             
             # Create metadata object
             metadata = {
@@ -435,9 +515,12 @@ class ZammTokenLaunchAgent(EIP7702Agent):
                 "description": description,
                 "image": image,
             }
-            
+
             # Store metadata in R2 and get URI
             uri = await self._store_metadata_in_r2(user_id, metadata)
+            
+            # Store metadata URL for later retrieval in result
+            self._current_metadata_url = uri
             
             # Continue with existing launch logic
             creator_supply = function_args.get("creator_supply", "100000000000000000000000000")
@@ -567,28 +650,41 @@ class ZammTokenLaunchAgent(EIP7702Agent):
         except Exception as e:
             logger.error(f"Error in launch: {e}")
             return {"error": f"Token launch failed: {str(e)}"}
-
+    
     async def update_image(
         self, user_id: str, image_url: str, metadata_url: str
     ) -> Dict[str, Any]:
         """
         Update the image URL in existing token metadata.
+        External images will be uploaded to R2 first.
 
         Args:
             user_id: The user updating the metadata
-            image_url: New image URL to set
+            image_url: New image URL to set (will be uploaded to R2 if external)
             metadata_url: URL of the metadata file to update
 
         Returns:
             Dictionary with update result or error
         """
         try:
-            updated_metadata = await self._update_metadata_in_r2(metadata_url, image_url, user_id)
+            # Upload external image to R2 first if it's not already an R2 URL
+            r2_image_url = image_url
+            if not image_url.startswith(self.R2_ENDPOINT_URL):
+                try:
+                    r2_image_url = await self._upload_external_image_to_r2(image_url, user_id)
+                    logger.info(f"Uploaded external image to R2: {r2_image_url}")
+                except ValueError as e:
+                    logger.error(f"Failed to upload external image to R2: {e}")
+                    return {"error": f"Failed to upload image to R2: {str(e)}"}
+            
+            # Update metadata with R2 image URL
+            updated_metadata = await self._update_metadata_in_r2(metadata_url, r2_image_url, user_id)
             
             return {
                 "success": True,
                 "message": "Image updated successfully",
                 "metadata_url": metadata_url,
+                "r2_image_url": r2_image_url,
                 "updated_metadata": updated_metadata,
             }
             
