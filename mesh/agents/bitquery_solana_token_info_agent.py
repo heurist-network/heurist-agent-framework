@@ -22,10 +22,10 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
     # Supported quote tokens
     SUPPORTED_QUOTE_TOKENS = {
-        "usdc": USDC_ADDRESS, 
-        "sol": SOL_ADDRESS, 
+        "usdc": USDC_ADDRESS,
+        "sol": SOL_ADDRESS,
         "virtual": VIRTUAL_ADDRESS,
-        "native_sol": NATIVE_SOL_ADDRESS
+        "native_sol": NATIVE_SOL_ADDRESS,
     }
 
     # Default settings
@@ -36,17 +36,17 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
         self.api_key = os.getenv("BITQUERY_API_KEY")
         if not self.api_key:
             raise ValueError("BITQUERY_API_KEY environment variable is required")
-        
+
         self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"}
         self.bitquery_url = "https://streaming.bitquery.io/eap"
-        
+
         self.metadata.update(
             {
                 "name": "Solana Token Info Agent",
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent provides comprehensive analysis of Solana tokens using Bitquery API. It can analyze token metrics (volume, price, liquidity), track holders and buyers, monitor trading activity, and identify trending tokens. The agent supports both specific token analysis and market-wide trend discovery with optimized performance and robust error handling.",
+                "description": "This agent provides comprehensive analysis of Solana tokens using Bitquery API. It can analyze token metrics (volume, price, liquidity), track holders and buyers, monitor trading activity, and identify trending tokens. The agent supports both specific token analysis and market-wide trend discovery.",
                 "external_apis": ["Bitquery"],
                 "tags": ["Solana"],
                 "recommended": True,
@@ -92,10 +92,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "token_address": {
-                                "type": "string", 
-                                "description": "The Solana token mint address"
-                            },
+                            "token_address": {"type": "string", "description": "The Solana token mint address"},
                             "quote_token": {
                                 "type": "string",
                                 "description": "Quote token to use ('usdc', 'sol', 'virtual', 'native_sol', or the token address)",
@@ -158,10 +155,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "token_address": {
-                                "type": "string", 
-                                "description": "Token mint address on Solana"
-                            },
+                            "token_address": {"type": "string", "description": "Token mint address on Solana"},
                             "buyer_addresses": {
                                 "type": "array",
                                 "items": {"type": "string"},
@@ -213,10 +207,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
         try:
             result = await self._api_request(
-                url=self.bitquery_url, 
-                method="POST", 
-                headers=self.headers, 
-                json_data=payload
+                url=self.bitquery_url, method="POST", headers=self.headers, json_data=payload
             )
 
             if "error" in result:
@@ -252,7 +243,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
         """Validate and normalize limit parameter."""
         if default is None:
             default = self.DEFAULT_LIMIT
-        
+
         if limit is None:
             return default
         elif limit < 1:
@@ -286,11 +277,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
             query = "query ($time_1h_ago: DateTime!, $token: String!, $quote_token: String!) { Solana { volume: DEXTradeByTokens( where: { Trade: { Currency: { MintAddress: { is: $token } } Side: { Currency: { MintAddress: { is: $quote_token } } } } Block: { Time: { since: $time_1h_ago } } Transaction: { Result: { Success: true } } } limit: {count: 10} ) { sum(of: Trade_Side_AmountInUSD) } buyVolume: DEXTradeByTokens( where: { Trade: { Currency: { MintAddress: { is: $token } } Side: { Currency: { MintAddress: { is: $quote_token } } } } Block: { Time: { since: $time_1h_ago } } Transaction: { Result: { Success: true } } } limit: {count: 10} ) { sum(of: Trade_Side_AmountInUSD, if: {Trade: {Side: {Type: {is: buy}}}}) } sellVolume: DEXTradeByTokens( where: { Trade: { Currency: { MintAddress: { is: $token } } Side: { Currency: { MintAddress: { is: $quote_token } } } } Block: { Time: { since: $time_1h_ago } } Transaction: { Result: { Success: true } } } limit: {count: 10} ) { sum(of: Trade_Side_AmountInUSD, if: {Trade: {Side: {Type: {is: sell}}}}) } marketcap: TokenSupplyUpdates( where: { TokenSupplyUpdate: { Currency: { MintAddress: { is: $token } } } Block: { Time: { till: $time_1h_ago } } Transaction: { Result: { Success: true } } } limitBy: { by: TokenSupplyUpdate_Currency_MintAddress, count: 10 } orderBy: { descending: Block_Time } ) { TokenSupplyUpdate { PostBalanceInUSD Currency { Name MintAddress Symbol } } } tokenInfo: DEXTradeByTokens( where: { Trade: { Currency: { MintAddress: { is: $token } } } Transaction: { Result: { Success: true } } } limit: {count: 1} orderBy: {descending: Block_Time} ) { Trade { Currency { Name Symbol MintAddress } PriceInUSD } Block { Time } } } }"
 
-            variables = {
-                "time_1h_ago": time_1h_ago, 
-                "token": token_address, 
-                "quote_token": quote_token_address
-            }
+            variables = {"time_1h_ago": time_1h_ago, "token": token_address, "quote_token": quote_token_address}
 
             result = await self._execute_query(query, variables)
 
@@ -298,19 +285,23 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 return result
 
             # If no data found with primary quote token, try alternatives
-            if ("data" not in result or 
-                not result["data"]["Solana"]["volume"] or
-                self._safe_float_conversion(result["data"]["Solana"]["volume"][0] if result["data"]["Solana"]["volume"] else None) == 0):
-                
+            if (
+                "data" not in result
+                or not result["data"]["Solana"]["volume"]
+                or self._safe_float_conversion(
+                    result["data"]["Solana"]["volume"][0] if result["data"]["Solana"]["volume"] else None
+                )
+                == 0
+            ):
                 if quote_token.lower() != "sol" and quote_token != self.SOL_ADDRESS:
                     logger.info(f"No data found with {quote_token}, trying SOL as fallback")
                     sol_variables = {
-                        "time_1h_ago": time_1h_ago, 
-                        "token": token_address, 
-                        "quote_token": self.SOL_ADDRESS
+                        "time_1h_ago": time_1h_ago,
+                        "token": token_address,
+                        "quote_token": self.SOL_ADDRESS,
                     }
                     result = await self._execute_query(query, sol_variables)
-                    
+
                     if "data" in result:
                         result["data"]["fallback_used"] = "Used SOL as fallback quote token"
 
@@ -322,17 +313,27 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                         latest_data = trading_data[-1]
                         first_data = trading_data[0]
 
-                        price_change = self._safe_float_conversion(latest_data.get("close", 0)) - self._safe_float_conversion(first_data.get("open", 0))
+                        price_change = self._safe_float_conversion(
+                            latest_data.get("close", 0)
+                        ) - self._safe_float_conversion(first_data.get("open", 0))
                         first_open = self._safe_float_conversion(first_data.get("open", 0))
                         price_change_percent = (price_change / first_open) * 100 if first_open != 0 else 0
-                        total_volume = sum(self._safe_float_conversion(bucket.get("volume", 0)) for bucket in trading_data)
+                        total_volume = sum(
+                            self._safe_float_conversion(bucket.get("volume", 0)) for bucket in trading_data
+                        )
 
                         result["data"]["price_movements"] = {
                             "current_price": self._safe_float_conversion(latest_data.get("close", 0)),
                             "price_change_1h": price_change,
                             "price_change_percentage_1h": price_change_percent,
-                            "highest_price_1h": max(self._safe_float_conversion(bucket.get("high", 0)) for bucket in trading_data),
-                            "lowest_price_1h": min(self._safe_float_conversion(bucket.get("low", 0)) for bucket in trading_data if self._safe_float_conversion(bucket.get("low", 0)) > 0),
+                            "highest_price_1h": max(
+                                self._safe_float_conversion(bucket.get("high", 0)) for bucket in trading_data
+                            ),
+                            "lowest_price_1h": min(
+                                self._safe_float_conversion(bucket.get("low", 0))
+                                for bucket in trading_data
+                                if self._safe_float_conversion(bucket.get("low", 0)) > 0
+                            ),
                             "total_volume_1h": total_volume,
                             "last_updated": datetime.datetime.utcnow().isoformat(),
                         }
@@ -362,11 +363,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
         try:
             trending_tokens = self.get_trending_tokens(limit)
-            return {
-                "trending_tokens": trending_tokens,
-                "total_count": len(trending_tokens),
-                "query_limit": limit
-            }
+            return {"trending_tokens": trending_tokens, "total_count": len(trending_tokens), "query_limit": limit}
         except Exception as e:
             logger.error(f"Error in get_top_trending_tokens: {str(e)}")
             return {"error": f"Failed to fetch top trending tokens: {str(e)}"}
@@ -387,7 +384,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
         """
         limit = self._validate_limit(limit)
 
-        query = "query ($token: String!, $limit: Int!) { Solana(dataset: realtime) { BalanceUpdates( limit: { count: $limit } orderBy: { descendingByField: \"BalanceUpdate_Holding_maximum\" } where: { BalanceUpdate: { Currency: { MintAddress: { is: $token } } } Transaction: { Result: { Success: true } } } ) { BalanceUpdate { Currency { Name MintAddress Symbol Decimals } Account { Owner } Holding: PostBalance(maximum: Block_Slot) } } TotalSupply: TokenSupplyUpdates( limit: {count: 10} orderBy: {descending: Block_Time} where: { TokenSupplyUpdate: { Currency: { MintAddress: {is: $token} } } Transaction: { Result: { Success: true } } } ) { TokenSupplyUpdate { PostBalance Currency { Decimals } } } } }"
+        query = 'query ($token: String!, $limit: Int!) { Solana(dataset: realtime) { BalanceUpdates( limit: { count: $limit } orderBy: { descendingByField: "BalanceUpdate_Holding_maximum" } where: { BalanceUpdate: { Currency: { MintAddress: { is: $token } } } Transaction: { Result: { Success: true } } } ) { BalanceUpdate { Currency { Name MintAddress Symbol Decimals } Account { Owner } Holding: PostBalance(maximum: Block_Slot) } } TotalSupply: TokenSupplyUpdates( limit: {count: 10} orderBy: {descending: Block_Time} where: { TokenSupplyUpdate: { Currency: { MintAddress: {is: $token} } } Transaction: { Result: { Success: true } } } ) { TokenSupplyUpdate { PostBalance Currency { Decimals } } } } }'
 
         variables = {"token": token_address, "limit": limit}
 
@@ -436,10 +433,10 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 formatted_holders.append(formatted_holder)
 
             return {
-                "holders": formatted_holders, 
+                "holders": formatted_holders,
                 "total_supply": total_supply,
                 "total_count": len(formatted_holders),
-                "token_address": token_address
+                "token_address": token_address,
             }
 
         return {"holders": [], "total_supply": 0, "total_count": 0}
@@ -493,12 +490,12 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                         "buy_currency": {
                             "name": buy["Currency"].get("Name", "Unknown"),
                             "symbol": buy["Currency"].get("Symbol", "Unknown"),
-                            "decimals": self._safe_int_conversion(buy["Currency"].get("Decimals", 0))
+                            "decimals": self._safe_int_conversion(buy["Currency"].get("Decimals", 0)),
                         },
                         "sell_currency": {
                             "name": sell_currency.get("Name", "Unknown"),
                             "symbol": sell_currency.get("Symbol", "Unknown"),
-                            "mint_address": sell_currency.get("MintAddress", "")
+                            "mint_address": sell_currency.get("MintAddress", ""),
                         },
                         "currency_pair": f"{buy['Currency'].get('Symbol', 'Unknown')}/{sell_currency.get('Symbol', 'Unknown')}",
                         "time": trade["Block"]["Time"],
@@ -508,10 +505,10 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                     formatted_buyers.append(formatted_buyer)
 
             return {
-                "buyers": formatted_buyers, 
+                "buyers": formatted_buyers,
                 "unique_buyer_count": len(unique_buyers),
                 "total_count": len(formatted_buyers),
-                "token_address": token_address
+                "token_address": token_address,
             }
 
         return {"buyers": [], "unique_buyer_count": 0, "total_count": 0}
@@ -532,7 +529,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
         """
         limit = self._validate_limit(limit, default=30)
 
-        query = "query ($token: String!, $limit: Int!) { Solana { DEXTradeByTokens( orderBy: {descendingByField: \"volumeUsd\"} limit: {count: $limit} where: { Trade: { Currency: { MintAddress: {is: $token} } }, Transaction: { Result: {Success: true} } } ) { Trade { Account { Owner } Currency { Name Symbol MintAddress } Side { Account { Address } Currency { Symbol Name } } } bought: sum(of: Trade_Amount, if: {Trade: {Side: {Type: {is: buy}}}}) sold: sum(of: Trade_Amount, if: {Trade: {Side: {Type: {is: sell}}}}) volume: sum(of: Trade_Amount) volumeUsd: sum(of: Trade_Side_AmountInUSD) count: count } } }"
+        query = 'query ($token: String!, $limit: Int!) { Solana { DEXTradeByTokens( orderBy: {descendingByField: "volumeUsd"} limit: {count: $limit} where: { Trade: { Currency: { MintAddress: {is: $token} } }, Transaction: { Result: {Success: true} } } ) { Trade { Account { Owner } Currency { Name Symbol MintAddress } Side { Account { Address } Currency { Symbol Name } } } bought: sum(of: Trade_Amount, if: {Trade: {Side: {Type: {is: buy}}}}) sold: sum(of: Trade_Amount, if: {Trade: {Side: {Type: {is: sell}}}}) volume: sum(of: Trade_Amount) volumeUsd: sum(of: Trade_Side_AmountInUSD) count: count } } }'
 
         variables = {"token": token_address, "limit": limit}
 
@@ -548,7 +545,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             for trade in trades:
                 bought = self._safe_float_conversion(trade.get("bought", 0))
                 sold = self._safe_float_conversion(trade.get("sold", 0))
-                
+
                 buy_sell_ratio = 0
                 if sold > 0:
                     buy_sell_ratio = bought / sold
@@ -568,12 +565,12 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                     "token_info": {
                         "name": currency.get("Name", "Unknown"),
                         "symbol": currency.get("Symbol", "Unknown"),
-                        "mint_address": currency.get("MintAddress", "")
+                        "mint_address": currency.get("MintAddress", ""),
                     },
                     "side_currency_info": {
                         "name": side_currency.get("Name", "Unknown"),
-                        "symbol": side_currency.get("Symbol", "Unknown")
-                    }
+                        "symbol": side_currency.get("Symbol", "Unknown"),
+                    },
                 }
                 formatted_traders.append(formatted_trader)
 
@@ -586,8 +583,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 "token_address": token_address,
                 "stats": {
                     "largest_trader_volume": formatted_traders[0]["volume_usd"] if formatted_traders else 0,
-                    "average_volume_per_trader": total_volume_usd / len(formatted_traders) if formatted_traders else 0
-                }
+                    "average_volume_per_trader": total_volume_usd / len(formatted_traders) if formatted_traders else 0,
+                },
             }
 
         return {"traders": [], "total_count": 0, "total_volume_usd": 0}
@@ -657,11 +654,11 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                         "token_info": {
                             "name": currency.get("Name", "Unknown"),
                             "symbol": currency.get("Symbol", "Unknown"),
-                            "decimals": self._safe_int_conversion(currency.get("Decimals", 0))
+                            "decimals": self._safe_int_conversion(currency.get("Decimals", 0)),
                         },
                         "last_update": {
                             "time": update["Block"]["Time"],
-                            "transaction_index": self._safe_int_conversion(update["Transaction"].get("Index", 0))
+                            "transaction_index": self._safe_int_conversion(update["Transaction"].get("Index", 0)),
                         },
                     }
                     all_holder_statuses.append(holder_status)
@@ -670,20 +667,22 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 for address in address_chunk:
                     if address not in found_addresses:
                         status_counts["not_found"] += 1
-                        all_holder_statuses.append({
-                            "address": address, 
-                            "current_balance": 0, 
-                            "status": "not_found", 
-                            "token_info": None,
-                            "last_update": None
-                        })
+                        all_holder_statuses.append(
+                            {
+                                "address": address,
+                                "current_balance": 0,
+                                "status": "not_found",
+                                "token_info": None,
+                                "last_update": None,
+                            }
+                        )
 
         return {
             "holder_statuses": all_holder_statuses,
             "summary": status_counts,
             "total_addresses_checked": len(buyer_addresses),
             "total_found": len(all_holder_statuses),
-            "token_address": token_address
+            "token_address": token_address,
         }
 
     # ------------------------------------------------------------------------
@@ -702,32 +701,32 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                     return {"error": "Missing 'token_address' parameter"}
                 quote_token = function_args.get("quote_token", "sol")
                 result = await self.query_token_metrics(token_address=token_address, quote_token=quote_token)
-                
+
             elif tool_name == "query_token_holders":
                 token_address = function_args.get("token_address")
                 if not token_address:
                     return {"error": "Missing 'token_address' parameter"}
                 limit = function_args.get("limit")
                 result = await self.query_token_holders(token_address=token_address, limit=limit)
-                
+
             elif tool_name == "query_token_buyers":
                 token_address = function_args.get("token_address")
                 if not token_address:
                     return {"error": "Missing 'token_address' parameter"}
                 limit = function_args.get("limit")
                 result = await self.query_token_buyers(token_address=token_address, limit=limit)
-                
+
             elif tool_name == "query_top_traders":
                 token_address = function_args.get("token_address")
                 if not token_address:
                     return {"error": "Missing 'token_address' parameter"}
                 limit = function_args.get("limit")
                 result = await self.query_top_traders(token_address=token_address, limit=limit)
-                
+
             elif tool_name == "get_top_trending_tokens":
                 limit = function_args.get("limit")
                 result = await self.get_top_trending_tokens(limit=limit)
-                
+
             elif tool_name == "query_holder_status":
                 token_address = function_args.get("token_address")
                 if not token_address:
@@ -736,7 +735,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 if not buyer_addresses:
                     return {"error": "Missing 'buyer_addresses' parameter"}
                 result = await self.query_holder_status(token_address=token_address, buyer_addresses=buyer_addresses)
-                
+
             else:
                 return {"error": f"Unsupported tool: {tool_name}"}
 
@@ -768,7 +767,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             time_ago = (datetime.datetime.utcnow() - datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
             # GraphQL query using list filtering for tokens.
-            query = "query ( $tokens: [String!], $base: String, $dataset: dataset_arg_enum, $time_ago: DateTime, $interval: Int ) { Solana(dataset: $dataset) { DEXTradeByTokens( orderBy: { ascendingByField: \"Block_Time\" } where: { Transaction: { Result: { Success: true } }, Trade: { Side: { Amount: { gt: \"0\" }, Currency: { MintAddress: { in: $tokens } } }, Currency: { MintAddress: { is: $base } } }, Block: { Time: { after: $time_ago } } } ) { Block { Time(interval: { count: $interval, in: minutes }) } min: quantile(of: Trade_PriceInUSD, level: 0.05) max: quantile(of: Trade_PriceInUSD, level: 0.95) close: median(of: Trade_PriceInUSD) open: median(of: Trade_PriceInUSD) volume: sum(of: Trade_Side_AmountInUSD) } } }"
+            query = 'query ( $tokens: [String!], $base: String, $dataset: dataset_arg_enum, $time_ago: DateTime, $interval: Int ) { Solana(dataset: $dataset) { DEXTradeByTokens( orderBy: { ascendingByField: "Block_Time" } where: { Transaction: { Result: { Success: true } }, Trade: { Side: { Amount: { gt: "0" }, Currency: { MintAddress: { in: $tokens } } }, Currency: { MintAddress: { is: $base } } }, Block: { Time: { after: $time_ago } } } ) { Block { Time(interval: { count: $interval, in: minutes }) } min: quantile(of: Trade_PriceInUSD, level: 0.05) max: quantile(of: Trade_PriceInUSD, level: 0.95) close: median(of: Trade_PriceInUSD) open: median(of: Trade_PriceInUSD) volume: sum(of: Trade_Side_AmountInUSD) } } }'
 
             # Set up the variables for the query.
             variables = {
@@ -785,12 +784,9 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
             # Send the POST request.
             response = requests.post(
-                self.bitquery_url, 
-                json={"query": query, "variables": variables}, 
-                headers=self.headers,
-                timeout=30
+                self.bitquery_url, json={"query": query, "variables": variables}, headers=self.headers, timeout=30
             )
-            
+
             if response.status_code != 200:
                 logger.error(f"Query failed with status code {response.status_code}: {response.text}")
                 return []
@@ -812,14 +808,16 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 close_price = self._safe_float_conversion(bucket.get("close"))
                 volume = self._safe_float_conversion(bucket.get("volume"))
 
-                organized_data.append({
-                    "time": time_bucket,
-                    "open": open_price,
-                    "high": high_price,
-                    "low": low_price,
-                    "close": close_price,
-                    "volume": volume,
-                })
+                organized_data.append(
+                    {
+                        "time": time_bucket,
+                        "open": open_price,
+                        "high": high_price,
+                        "low": low_price,
+                        "close": close_price,
+                        "volume": volume,
+                    }
+                )
 
             organized_data.sort(key=lambda x: x["time"] if x["time"] else "")
             return organized_data
@@ -847,16 +845,11 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             time_since = (datetime.datetime.utcnow() - datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
             # Define the GraphQL query with the dynamic time filter.
-            query = f"query MyQuery {{ Solana {{ DEXTradeByTokens( where: {{ Transaction: {{Result: {{Success: true}}}}, Trade: {{Side: {{Currency: {{MintAddress: {{is: \"{self.SOL_ADDRESS}\"}}}}}}}}, Block: {{Time: {{since: \"{time_since}\"}}}} }} orderBy: {{descendingByField: \"total_trades\"}} limit: {{count: {limit}}} ) {{ Trade {{ Currency {{ Name MintAddress Symbol }} start: PriceInUSD(minimum: Block_Time) min5: PriceInUSD( minimum: Block_Time, if: {{Block: {{Time: {{after: \"2024-08-15T05:14:00Z\"}}}}}} ) end: PriceInUSD(maximum: Block_Time) Dex {{ ProtocolName ProtocolFamily ProgramAddress }} Market {{ MarketAddress }} Side {{ Currency {{ Symbol Name MintAddress }} }} }} makers: count(distinct:Transaction_Signer) total_trades: count total_traded_volume: sum(of: Trade_Side_AmountInUSD) total_buy_volume: sum( of: Trade_Side_AmountInUSD, if: {{Trade: {{Side: {{Type: {{is: buy}}}}}}}} ) total_sell_volume: sum( of: Trade_Side_AmountInUSD, if: {{Trade: {{Side: {{Type: {{is: sell}}}}}}}} ) total_buys: count(if: {{Trade: {{Side: {{Type: {{is: buy}}}}}}}} ) total_sells: count(if: {{Trade: {{Side: {{Type: {{is: sell}}}}}}}} ) }} }} }}"
+            query = f'query MyQuery {{ Solana {{ DEXTradeByTokens( where: {{ Transaction: {{Result: {{Success: true}}}}, Trade: {{Side: {{Currency: {{MintAddress: {{is: "{self.SOL_ADDRESS}"}}}}}}}}, Block: {{Time: {{since: "{time_since}"}}}} }} orderBy: {{descendingByField: "total_trades"}} limit: {{count: {limit}}} ) {{ Trade {{ Currency {{ Name MintAddress Symbol }} start: PriceInUSD(minimum: Block_Time) min5: PriceInUSD( minimum: Block_Time, if: {{Block: {{Time: {{after: "2024-08-15T05:14:00Z"}}}}}} ) end: PriceInUSD(maximum: Block_Time) Dex {{ ProtocolName ProtocolFamily ProgramAddress }} Market {{ MarketAddress }} Side {{ Currency {{ Symbol Name MintAddress }} }} }} makers: count(distinct:Transaction_Signer) total_trades: count total_traded_volume: sum(of: Trade_Side_AmountInUSD) total_buy_volume: sum( of: Trade_Side_AmountInUSD, if: {{Trade: {{Side: {{Type: {{is: buy}}}}}}}} ) total_sell_volume: sum( of: Trade_Side_AmountInUSD, if: {{Trade: {{Side: {{Type: {{is: sell}}}}}}}} ) total_buys: count(if: {{Trade: {{Side: {{Type: {{is: buy}}}}}}}} ) total_sells: count(if: {{Trade: {{Side: {{Type: {{is: sell}}}}}}}} ) }} }} }}'
 
             # Execute the HTTP POST request.
-            response = requests.post(
-                self.bitquery_url, 
-                json={"query": query}, 
-                headers=self.headers,
-                timeout=30
-            )
-            
+            response = requests.post(self.bitquery_url, json={"query": query}, headers=self.headers, timeout=30)
+
             if response.status_code != 200:
                 logger.error(f"Query failed with status code {response.status_code}: {response.text}")
                 raise Exception(f"Query failed with status code {response.status_code}: {response.text}")
