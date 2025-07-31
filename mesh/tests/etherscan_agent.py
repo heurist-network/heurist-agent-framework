@@ -45,33 +45,54 @@ async def run_agent():
         }
         direct_address_output = await agent.handle_message(direct_address_input)
 
-        # Test 5: Natural language query for token analysis
-        agent_input_token = {
-            "query": "Show token details for 0x55d398326f99059ff775485246999027b3197955 on BSC",
+        # Test 5: Natural language query for token transfers
+        agent_input_token_transfers = {
+            "query": "Show recent token transfers for 0x55d398326f99059ff775485246999027b3197955 on BSC",
             "raw_data_only": False,
         }
-        agent_output_token = await agent.handle_message(agent_input_token)
+        agent_output_token_transfers = await agent.handle_message(agent_input_token_transfers)
 
-        # Test 6: Direct tool call for ERC20 token details
-        direct_token_input = {
-            "tool": "get_erc20_token_details",
+        # Test 6: Direct tool call for ERC20 token transfers
+        direct_token_transfers_input = {
+            "tool": "get_erc20_token_transfers",
             "tool_arguments": {"chain": "bsc", "address": "0x55d398326f99059ff775485246999027b3197955"},
         }
-        direct_token_output = await agent.handle_message(direct_token_input)
+        direct_token_transfers_output = await agent.handle_message(direct_token_transfers_input)
 
-        # Test 7: Raw data only mode
+        # Test 7: Natural language query for token holders
+        agent_input_token_holders = {
+            "query": "Get top holders for token 0xEF22cb48B8483dF6152e1423b19dF5553BbD818b on Base",
+            "raw_data_only": False,
+        }
+        agent_output_token_holders = await agent.handle_message(agent_input_token_holders)
+
+        # Test 8: Direct tool call for ERC20 top holders
+        direct_token_holders_input = {
+            "tool": "get_erc20_top_holders",
+            "tool_arguments": {"chain": "base", "address": "0xEF22cb48B8483dF6152e1423b19dF5553BbD818b"},
+        }
+        direct_token_holders_output = await agent.handle_message(direct_token_holders_input)
+
+        # Test 9: Raw data only mode
         raw_data_input = {
             "query": "Analyze transaction 0xabc123 on Arbitrum",
             "raw_data_only": True,
         }
         raw_data_output = await agent.handle_message(raw_data_input)
 
-        # Test 8: Error handling - unsupported chain
+        # Test 10: Error handling - unsupported chain
         error_input = {
             "tool": "get_transaction_details",
             "tool_arguments": {"chain": "unsupported_chain", "txid": "0x123"},
         }
         error_output = await agent.handle_message(error_input)
+
+        # Test 11: Combined natural language query
+        combined_query_input = {
+            "query": "Show me both the transfers and top holders for USDT 0x55d398326f99059ff775485246999027b3197955 on BSC",
+            "raw_data_only": False,
+        }
+        combined_query_output = await agent.handle_message(combined_query_input)
 
         script_dir = Path(__file__).parent
         current_file = Path(__file__).stem
@@ -83,10 +104,22 @@ async def run_agent():
             "direct_transaction_call": {"input": direct_tx_input, "output": direct_tx_output},
             "natural_language_address": {"input": agent_input_address, "output": agent_output_address},
             "direct_address_call": {"input": direct_address_input, "output": direct_address_output},
-            "natural_language_token": {"input": agent_input_token, "output": agent_output_token},
-            "direct_token_call": {"input": direct_token_input, "output": direct_token_output},
+            "natural_language_token_transfers": {
+                "input": agent_input_token_transfers,
+                "output": agent_output_token_transfers,
+            },
+            "direct_token_transfers_call": {
+                "input": direct_token_transfers_input,
+                "output": direct_token_transfers_output,
+            },
+            "natural_language_token_holders": {
+                "input": agent_input_token_holders,
+                "output": agent_output_token_holders,
+            },
+            "direct_token_holders_call": {"input": direct_token_holders_input, "output": direct_token_holders_output},
             "raw_data_only": {"input": raw_data_input, "output": raw_data_output},
             "error_handling": {"input": error_input, "output": error_output},
+            "combined_query": {"input": combined_query_input, "output": combined_query_output},
         }
 
         with open(output_file, "w", encoding="utf-8") as f:

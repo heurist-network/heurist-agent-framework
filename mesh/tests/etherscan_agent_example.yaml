@@ -1,11 +1,2049 @@
-direct_token_call:
+natural_language_transaction:
   input:
-    tool: get_erc20_token_details
+    query: analyze transaction pattern of https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073
+    raw_data_only: false
+  output:
+    response: "**Address:** [0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\n\
+      \n**Current ETH Price:** $3,869.58 (+1.41%)\n**Current Gas Price:** 3.097 Gwei\n\
+      \n**Overview**\n\n*   **ETH Balance:** 1.414563195349619189 ETH\n*   **ETH Value:**\
+      \ $5,473.77 (@ $3,869.58/ETH)\n*   **Token Holdings Value:** $2.68 (22 Tokens)\n\
+      \n**Token Holdings (ERC-20)**\n\n| Token Name | Symbol | Amount | Value | Price\
+      \ per Token |\n| :--------- | :----- | :----- | :----- | :-------------- |\n\
+      | PREME Token | PREME | 1,008 | $2.66 | @0.0026 |\n| Black Agnus | FTW | 3,333,333\
+      \ | $0.01 | @0.00 |\n| TRUMP MAGA | MAGA | 2,240 | $0.00 | |\n| ERC-20: (NC-Eli...)\
+      \ | NC-Eligible (Verify: www.nodeco.in) | 8,162 | $0.00 | |\n| ERC-20: ! EL...\
+      \ | TONCrypto.io | 229 | $0.00 | |\n| ERC-20: !SNX... | wSNX | 685 | $0.00 |\
+      \ |\n| ERC-20: AI C... | AIC | 1 | $0.00 | |\n| ERC-20: Ange... | Lettuce |\
+      \ 34,302,925.8 | $0.00 | |\n| ERC-20: BMB | BMB | 0.89 | $0.00 | |\n| ERC-20:\
+      \ Marv... | Marvin | 17,776 | $0.00 | |\n| ERC-20: RATS | RATS | 8,000 | $0.00\
+      \ | |\n\n**NFT Holdings**\n\n| NFT Collection | Symbol | Token Standard |\n\
+      | :------------- | :----- | :------------- |\n| SHIBAFAIR. ORG | GVNO | ERC-1155\
+      \ |\n\n**More Info**\n\n*   **Transactions Sent:**\n    *   Latest: [2 hrs ago](https://etherscan.io/tx/0x790b36aca4d0b0a9f93ab1d4a908baa33aa091b4ce2b19b52b44c86a8ae6e611)\n\
+      \    *   First: [1 yr 308 days ago](https://etherscan.io/tx/0xce014ef2a02ebc0dd1545f8a2a6dac79756734785f81adb81cd1ab7c0be308f0)\n\
+      *   **Funded By:** [0x5D476039...7a251d821](https://etherscan.io/address/0x5d47603902a8cadbf3337abbc6df8f67a251d821)\
+      \ ([1 yr 308 days ago](https://etherscan.io/tx/0x9209ecf6e32d4b32909fbf6193548b13129e60dfb11add01546ed799e235fe1a))\n\
+      \n**Multichain Info**\n\n*   **Multichain Portfolio Value:** $5,479.1\n*   **Blockscan\
+      \ Addresses Found:** 1\n    *   [BaseScan ($3)](https://basescan.org/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\n\
+      \n**Multichain Portfolio - 35 Chains**\n\n| Chain | Value | Percentage |\n|\
+      \ :---- | :---- | :--------- |\n| Ethereum | $5,476 | 100% |\n| Base | $3 |\
+      \ <1% |\n| BNB Chain | 0 | 0% |\n| Polygon | 0 | 0% |\n| Arbitrum One | 0 |\
+      \ 0% |\n| Optimism | 0 | 0% |\n| BTTC | 0 | 0% |\n| Celo | 0 | 0% |\n| Gnosis\
+      \ | 0 | 0% |\n| Polygon zkEVM | 0 | 0% |\n| Linea | 0 | 0% |\n| Moonbeam | 0\
+      \ | 0% |\n| Moonriver | 0 | 0% |\n| Arbitrum Nova | 0 | 0% |\n| Scroll | 0 |\
+      \ 0% |\n| Wemix | 0 | 0% |\n| Avax C-Chain | 0 | 0% |\n| zkSync Era | 0 | 0%\
+      \ |\n| opBNB | 0 | 0% |\n| Fraxtal | 0 | 0% |\n| Blast | 0 | 0% |\n| Cronos\
+      \ | 0 | 0% |\n| Mantle | 0 | 0% |\n| Taiko | 0 | 0% |\n| Xai | 0 | 0% |\n| World\
+      \ | 0 | 0% |\n| Xdc | 0 | 0% |\n| Ape | 0 | 0% |\n| Sophon | 0 | 0% |\n| Unichain\
+      \ | 0 | 0% |\n| Berachain | 0 | 0% |\n| MemeCoreChain | 0 | 0% |\n| Swellchain\
+      \ | 0 | 0% |\n| Sonic | 0 | 0% |\n| Abstract | 0 | 0% |\n\n**Multichain Token\
+      \ Holdings**\n\n| Chain | Token | Portfolio % | Price | Amount | Value |\n|\
+      \ :---- | :---- | :---------- | :---- | :----- | :---- |\n| [ETH](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | Ether (ETH) | 99.90% | $3,869.58 | 1.4146 | $5,473.77 |\n| [ETH](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [PREME Token (PREME)](https://etherscan.io/token/0x7d0c49057c09501595a8ce23b773bb36a40b521f?a=0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | 0.05% | $0.00264 | 1,008 | $2.66 |\n| [BASE](https://basescan.org/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [PREME Token (PREME)](https://basescan.org/token/0x8c62ac3b71db8c81a764b84ffbc2a8d0bad7f111?a=0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | 0.05% | $0.002648 | 1,008 | $2.67 |\n\n**Latest 25 Transactions (Total:\
+      \ 35,804)**\n\n| Transaction Hash | Method | Block | Age | From | To | Amount\
+      \ | Txn Fee (ETH) | Txn Fee (USD) |\n| :--------------- | :----- | :---- | :--\
+      \ | :--- | :--- | :----- | :------------ | :------------ |\n| [0x790b36aca4d0b0a9f93ab1d4a908baa33aa091b4ce2b19b52b44c86a8ae6e611](https://etherscan.io/tx/0x790b36aca4d0b0a9f93ab1d4a908baa33aa091b4ce2b19b52b44c86a8ae6e611)\
+      \ | 0x122067ed | [23037308](https://etherscan.io/block/23037308) | 2 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00061495 | 5.05831716 |\n| [0xf5a647bf9d2fafb3c1e86c71cd67468537a2827b5ea85e011081cd4ad05f9a0e](https://etherscan.io/tx/0xf5a647bf9d2fafb3c1e86c71cd67468537a2827b5ea85e011081cd4ad05f9a0e)\
+      \ | 0x30a28ffc | [23036736](https://etherscan.io/block/23036736) | 4 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00081407 | 5.76705457 |\n| [0x835df1b7b3687d80dc38efbc835497903942e9cec751b7514b993c54da0b0d81](https://etherscan.io/tx/0x835df1b7b3687d80dc38efbc835497903942e9cec751b7514b993c54da0b0d81)\
+      \ | 0x122067ed | [23036552](https://etherscan.io/block/23036552) | 4 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00046675 | 3.51724697 |\n| [0x3a4de95ca715ed4e7ea3e5b19aceddcac6d5246175b60a779edee8a571ba8153](https://etherscan.io/tx/0x3a4de95ca715ed4e7ea3e5b19aceddcac6d5246175b60a779edee8a571ba8153)\
+      \ | 0x122067ed | [23036333](https://etherscan.io/block/23036333) | 5 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00067222 | 5.04039673 |\n| [0x805ac4ce9d9141385c46de952ef55dbe21c6f49247ffdeb96fca555746ff76ae](https://etherscan.io/tx/0x805ac4ce9d9141385c46de952ef55dbe21c6f49247ffdeb96fca555746ff76ae)\
+      \ | 0x122067ed | [23036286](https://etherscan.io/block/23036286) | 5 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00096009 | 8.82614133 |\n| [0x35d51e8c1f0bd0bb0c0432a187eaab503ca0a020d2c5c4748a302197b80aba08](https://etherscan.io/tx/0x35d51e8c1f0bd0bb0c0432a187eaab503ca0a020d2c5c4748a302197b80aba08)\
+      \ | 0x30a28ffc | [23036115](https://etherscan.io/block/23036115) | 6 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00049077 | 5.0831074 |\n| [0xe708ca2090cad2141f6b55420d2280b3535eb6b7a2989ff27e4f69f5c07b3713](https://etherscan.io/tx/0xe708ca2090cad2141f6b55420d2280b3535eb6b7a2989ff27e4f69f5c07b3713)\
+      \ | 0x122067ed | [23035973](https://etherscan.io/block/23035973) | 6 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00050269 | 3.39471216 |\n| [0xc8a4454bf4df82a2e594a7338414dce91695a3ee4ae7f5071370c1027b10e8e9](https://etherscan.io/tx/0xc8a4454bf4df82a2e594a7338414dce91695a3ee4ae7f5071370c1027b10e8e9)\
+      \ | 0x122067ed | [23035945](https://etherscan.io/block/23035945) | 6 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00053117 | 4.29135108 |\n| [0x1b5a558eeeab7dd3b55d598a71623198597450897b03bb54d4d4b5e4f8529ed0](https://etherscan.io/tx/0x1b5a558eeeab7dd3b55d598a71623198597450897b03bb54d4d4b5e4f8529ed0)\
+      \ | 0x122067ed | [23035874](https://etherscan.io/block/23035874) | 7 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.0007407 | 6.17094768 |\n| [0xf896250b25aaaefb35bb6b84d28f616448c761879d3a3ce0bcf7e2cd0d73dcec](https://etherscan.io/tx/0xf896250b25aaaefb35bb6b84d28f616448c761879d3a3ce0bcf7e2cd0d73dcec)\
+      \ | 0x30a28ffc | [23035742](https://etherscan.io/block/23035742) | 7 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00087905 | 8.70812366 |\n| [0x9ef4734968a356ad7562c40fc6a1dd6a81227823f4e6a5cb8746697005da7c03](https://etherscan.io/tx/0x9ef4734968a356ad7562c40fc6a1dd6a81227823f4e6a5cb8746697005da7c03)\
+      \ | 0x122067ed | [23035595](https://etherscan.io/block/23035595) | 7 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00042592 | 3.61747822 |\n| [0xcd43244d805ad9ad5b3831da254d3b404488b70df890035ac9137eb9a8b633d5](https://etherscan.io/tx/0xcd43244d805ad9ad5b3831da254d3b404488b70df890035ac9137eb9a8b633d5)\
+      \ | 0x30a28ffc | [23035389](https://etherscan.io/block/23035389) | 8 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00040054 | 3.14074587 |\n| [0x70303f1352c7064ee6fd0f099a5f9c47358335ea0d88608f43e51684c020389d](https://etherscan.io/tx/0x70303f1352c7064ee6fd0f099a5f9c47358335ea0d88608f43e51684c020389d)\
+      \ | 0x122067ed | [23035229](https://etherscan.io/block/23035229) | 9 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.000679 | 5.61265905 |\n| [0x340af1b52e3dcc6de0bc5109443accc4b1a73cd7770bdedf2e017f263ba01157](https://etherscan.io/tx/0x340af1b52e3dcc6de0bc5109443accc4b1a73cd7770bdedf2e017f263ba01157)\
+      \ | 0x30a28ffc | [23035164](https://etherscan.io/block/23035164) | 9 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00048862 | 3.83104036 |\n| [0x1e032bfd69d4c46ca3d8b6f60db1e796707615b2fd1d4fa7351fdf7fbe636949](https://etherscan.io/tx/0x1e032bfd69d4c46ca3d8b6f60db1e796707615b2fd1d4fa7351fdf7fbe636949)\
+      \ | 0x30a28ffc | [23035126](https://etherscan.io/block/23035126) | 9 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00277308 | 27.47092742 |\n| [0x94c8d963b41ca4c508cbc4fc77bf206584209b9ce64791d77dd556131a2afe77](https://etherscan.io/tx/0x94c8d963b41ca4c508cbc4fc77bf206584209b9ce64791d77dd556131a2afe77)\
+      \ | 0x30a28ffc | [23034984](https://etherscan.io/block/23034984) | 10 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00094474 | 6.69387072 |\n| [0x006a7e36c2c3a81410036eb6b42594bca23987bfd92e16cba6af2925468f67b7](https://etherscan.io/tx/0x006a7e36c2c3a81410036eb6b42594bca23987bfd92e16cba6af2925468f67b7)\
+      \ | 0x30a28ffc | [23034852](https://etherscan.io/block/23034852) | 10 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.0004596 | 3.60387722 |\n| [0x33a216271c16c218d5e7320cb7231ce885a7b848ceab8ee29b60be14aa5badab](https://etherscan.io/tx/0x33a216271c16c218d5e7320cb7231ce885a7b848ceab8ee29b60be14aa5badab)\
+      \ | 0x122067ed | [23034690](https://etherscan.io/block/23034690) | 10 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00049317 | 3.69903438 |\n| [0xeb1fe42f887ab0796beb74a508f9be7af641ad5566f7ec2451e90d4da9f2e996](https://etherscan.io/tx/0xeb1fe42f887ab0796beb74a508f9be7af641ad5566f7ec2451e90d4da9f2e996)\
+      \ | 0x122067ed | [23034621](https://etherscan.io/block/23034621) | 11 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00064109 | 5.33964668 |\n| [0x6fba6ed7a687184305d7fa1be38ae297c6dbcf3c8715d5fabf9c34db2e811706](https://etherscan.io/tx/0x6fba6ed7a687184305d7fa1be38ae297c6dbcf3c8715d5fabf9c34db2e811706)\
+      \ | 0x122067ed | [23034581](https://etherscan.io/block/23034581) | 11 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00074563 | 5.5919999 |\n| [0x1fb01a4c2c220e18782d9b0c3bd349658a67a3ab5f2158cdfa542efc74319fa4](https://etherscan.io/tx/0x1fb01a4c2c220e18782d9b0c3bd349658a67a3ab5f2158cdfa542efc74319fa4)\
+      \ | 0x122067ed | [23034363](https://etherscan.io/block/23034363) | 12 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00165001 | 12.37298973 |\n| [0x8e92ae4441ee474038fdfd3d907d351854d939561dab1a3e3bc83b66bbe0b3f3](https://etherscan.io/tx/0x8e92ae4441ee474038fdfd3d907d351854d939561dab1a3e3bc83b66bbe0b3f3)\
+      \ | 0x122067ed | [23034336](https://etherscan.io/block/23034336) | 12 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00193654 | 17.61460702 |\n| [0x3062b08bfedc22d3bbaec70aa58daf6451a250db903dbba505d00c8139f70d3d](https://etherscan.io/tx/0x3062b08bfedc22d3bbaec70aa58daf6451a250db903dbba505d00c8139f70d3d)\
+      \ | 0x122067ed | [23034262](https://etherscan.io/block/23034262) | 12 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00073225 | 5.7949205 |\n| [0x620658dee11580db527fd6a0e2a7a089b3de8988e8ea30428f13a889a80d1a32](https://etherscan.io/tx/0x620658dee11580db527fd6a0e2a7a089b3de8988e8ea30428f13a889a80d1a32)\
+      \ | 0x30a28ffc | [23034230](https://etherscan.io/block/23034230) | 12 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00085561 | 6.06183423 |\n| [0xbd087b775353663afbcd21fcf9a0850978b305de42c20edb1114796f2b74304b](https://etherscan.io/tx/0xbd087b775353663afbcd21fcf9a0850978b305de42c20edb1114796f2b74304b)\
+      \ | 0x122067ed | [23034168](https://etherscan.io/block/23034168) | 12 hrs ago\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+      \ | 0 ETH | 0.00112949 | 8.47001699 |\n\n**Latest Internal Transaction**\n\n\
+      | Parent Transaction Hash | Method | Block | Age | From | To | Amount |\n| :----------------------\
+      \ | :----- | :---- | :-- | :--- | :--- | :----- |\n| [0xc3ec0b4f45c2b4d15b177356c19cc448cc7c94459fc408997ef4183edb62c47c](https://etherscan.io/tx/0xc3ec0b4f45c2b4d15b177356c19cc448cc7c94459fc408997ef4183edb62c47c)\
+      \ | Transfer | [22719123](https://etherscan.io/block/22719123) | 44 days ago\
+      \ | [Disperse.app](https://etherscan.io/address/0xd152f549545093347a162dce210e7293f1452150)\
+      \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+      \ | 0.05291609 ETH ($204.76) |"
+    data:
+      status: success
+      data:
+        processed_content: "**Address:** [0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\n\
+          \n**Current ETH Price:** $3,869.58 (+1.41%)\n**Current Gas Price:** 3.097\
+          \ Gwei\n\n**Overview**\n\n*   **ETH Balance:** 1.414563195349619189 ETH\n\
+          *   **ETH Value:** $5,473.77 (@ $3,869.58/ETH)\n*   **Token Holdings Value:**\
+          \ $2.68 (22 Tokens)\n\n**Token Holdings (ERC-20)**\n\n| Token Name | Symbol\
+          \ | Amount | Value | Price per Token |\n| :--------- | :----- | :----- |\
+          \ :---- | :-------------- |\n| PREME Token | PREME | 1,008 | $2.66 | @0.0026\
+          \ |\n| Black Agnus | FTW | 3,333,333 | $0.01 | @0.00 |\n| TRUMP MAGA | MAGA\
+          \ | 2,240 | $0.00 | |\n| ERC-20: (NC-Eli...) | NC-Eligible (Verify: www.nodeco.in)\
+          \ | 8,162 | $0.00 | |\n| ERC-20: ! EL... | TONCrypto.io | 229 | $0.00 |\
+          \ |\n| ERC-20: !SNX... | wSNX | 685 | $0.00 | |\n| ERC-20: AI C... | AIC\
+          \ | 1 | $0.00 | |\n| ERC-20: Ange... | Lettuce | 34,302,925.8 | $0.00 |\
+          \ |\n| ERC-20: BMB | BMB | 0.89 | $0.00 | |\n| ERC-20: Marv... | Marvin\
+          \ | 17,776 | $0.00 | |\n| ERC-20: RATS | RATS | 8,000 | $0.00 | |\n\n**NFT\
+          \ Holdings**\n\n| NFT Collection | Symbol | Token Standard |\n| :-------------\
+          \ | :----- | :------------- |\n| SHIBAFAIR. ORG | GVNO | ERC-1155 |\n\n\
+          **More Info**\n\n*   **Transactions Sent:**\n    *   Latest: [2 hrs ago](https://etherscan.io/tx/0x790b36aca4d0b0a9f93ab1d4a908baa33aa091b4ce2b19b52b44c86a8ae6e611)\n\
+          \    *   First: [1 yr 308 days ago](https://etherscan.io/tx/0xce014ef2a02ebc0dd1545f8a2a6dac79756734785f81adb81cd1ab7c0be308f0)\n\
+          *   **Funded By:** [0x5D476039...7a251d821](https://etherscan.io/address/0x5d47603902a8cadbf3337abbc6df8f67a251d821)\
+          \ ([1 yr 308 days ago](https://etherscan.io/tx/0x9209ecf6e32d4b32909fbf6193548b13129e60dfb11add01546ed799e235fe1a))\n\
+          \n**Multichain Info**\n\n*   **Multichain Portfolio Value:** $5,479.1\n\
+          *   **Blockscan Addresses Found:** 1\n    *   [BaseScan ($3)](https://basescan.org/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\n\
+          \n**Multichain Portfolio - 35 Chains**\n\n| Chain | Value | Percentage |\n\
+          | :---- | :---- | :--------- |\n| Ethereum | $5,476 | 100% |\n| Base | $3\
+          \ | <1% |\n| BNB Chain | 0 | 0% |\n| Polygon | 0 | 0% |\n| Arbitrum One\
+          \ | 0 | 0% |\n| Optimism | 0 | 0% |\n| BTTC | 0 | 0% |\n| Celo | 0 | 0%\
+          \ |\n| Gnosis | 0 | 0% |\n| Polygon zkEVM | 0 | 0% |\n| Linea | 0 | 0% |\n\
+          | Moonbeam | 0 | 0% |\n| Moonriver | 0 | 0% |\n| Arbitrum Nova | 0 | 0%\
+          \ |\n| Scroll | 0 | 0% |\n| Wemix | 0 | 0% |\n| Avax C-Chain | 0 | 0% |\n\
+          | zkSync Era | 0 | 0% |\n| opBNB | 0 | 0% |\n| Fraxtal | 0 | 0% |\n| Blast\
+          \ | 0 | 0% |\n| Cronos | 0 | 0% |\n| Mantle | 0 | 0% |\n| Taiko | 0 | 0%\
+          \ |\n| Xai | 0 | 0% |\n| World | 0 | 0% |\n| Xdc | 0 | 0% |\n| Ape | 0 |\
+          \ 0% |\n| Sophon | 0 | 0% |\n| Unichain | 0 | 0% |\n| Berachain | 0 | 0%\
+          \ |\n| MemeCoreChain | 0 | 0% |\n| Swellchain | 0 | 0% |\n| Sonic | 0 |\
+          \ 0% |\n| Abstract | 0 | 0% |\n\n**Multichain Token Holdings**\n\n| Chain\
+          \ | Token | Portfolio % | Price | Amount | Value |\n| :---- | :---- | :----------\
+          \ | :---- | :----- | :---- |\n| [ETH](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | Ether (ETH) | 99.90% | $3,869.58 | 1.4146 | $5,473.77 |\n| [ETH](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [PREME Token (PREME)](https://etherscan.io/token/0x7d0c49057c09501595a8ce23b773bb36a40b521f?a=0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | 0.05% | $0.00264 | 1,008 | $2.66 |\n| [BASE](https://basescan.org/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [PREME Token (PREME)](https://basescan.org/token/0x8c62ac3b71db8c81a764b84ffbc2a8d0bad7f111?a=0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | 0.05% | $0.002648 | 1,008 | $2.67 |\n\n**Latest 25 Transactions (Total:\
+          \ 35,804)**\n\n| Transaction Hash | Method | Block | Age | From | To | Amount\
+          \ | Txn Fee (ETH) | Txn Fee (USD) |\n| :--------------- | :----- | :----\
+          \ | :-- | :--- | :--- | :----- | :------------ | :------------ |\n| [0x790b36aca4d0b0a9f93ab1d4a908baa33aa091b4ce2b19b52b44c86a8ae6e611](https://etherscan.io/tx/0x790b36aca4d0b0a9f93ab1d4a908baa33aa091b4ce2b19b52b44c86a8ae6e611)\
+          \ | 0x122067ed | [23037308](https://etherscan.io/block/23037308) | 2 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00061495 | 5.05831716 |\n| [0xf5a647bf9d2fafb3c1e86c71cd67468537a2827b5ea85e011081cd4ad05f9a0e](https://etherscan.io/tx/0xf5a647bf9d2fafb3c1e86c71cd67468537a2827b5ea85e011081cd4ad05f9a0e)\
+          \ | 0x30a28ffc | [23036736](https://etherscan.io/block/23036736) | 4 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00081407 | 5.76705457 |\n| [0x835df1b7b3687d80dc38efbc835497903942e9cec751b7514b993c54da0b0d81](https://etherscan.io/tx/0x835df1b7b3687d80dc38efbc835497903942e9cec751b7514b993c54da0b0d81)\
+          \ | 0x122067ed | [23036552](https://etherscan.io/block/23036552) | 4 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00046675 | 3.51724697 |\n| [0x3a4de95ca715ed4e7ea3e5b19aceddcac6d5246175b60a779edee8a571ba8153](https://etherscan.io/tx/0x3a4de95ca715ed4e7ea3e5b19aceddcac6d5246175b60a779edee8a571ba8153)\
+          \ | 0x122067ed | [23036333](https://etherscan.io/block/23036333) | 5 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00067222 | 5.04039673 |\n| [0x805ac4ce9d9141385c46de952ef55dbe21c6f49247ffdeb96fca555746ff76ae](https://etherscan.io/tx/0x805ac4ce9d9141385c46de952ef55dbe21c6f49247ffdeb96fca555746ff76ae)\
+          \ | 0x122067ed | [23036286](https://etherscan.io/block/23036286) | 5 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00096009 | 8.82614133 |\n| [0x35d51e8c1f0bd0bb0c0432a187eaab503ca0a020d2c5c4748a302197b80aba08](https://etherscan.io/tx/0x35d51e8c1f0bd0bb0c0432a187eaab503ca0a020d2c5c4748a302197b80aba08)\
+          \ | 0x30a28ffc | [23036115](https://etherscan.io/block/23036115) | 6 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00049077 | 5.0831074 |\n| [0xe708ca2090cad2141f6b55420d2280b3535eb6b7a2989ff27e4f69f5c07b3713](https://etherscan.io/tx/0xe708ca2090cad2141f6b55420d2280b3535eb6b7a2989ff27e4f69f5c07b3713)\
+          \ | 0x122067ed | [23035973](https://etherscan.io/block/23035973) | 6 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00050269 | 3.39471216 |\n| [0xc8a4454bf4df82a2e594a7338414dce91695a3ee4ae7f5071370c1027b10e8e9](https://etherscan.io/tx/0xc8a4454bf4df82a2e594a7338414dce91695a3ee4ae7f5071370c1027b10e8e9)\
+          \ | 0x122067ed | [23035945](https://etherscan.io/block/23035945) | 6 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00053117 | 4.29135108 |\n| [0x1b5a558eeeab7dd3b55d598a71623198597450897b03bb54d4d4b5e4f8529ed0](https://etherscan.io/tx/0x1b5a558eeeab7dd3b55d598a71623198597450897b03bb54d4d4b5e4f8529ed0)\
+          \ | 0x122067ed | [23035874](https://etherscan.io/block/23035874) | 7 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.0007407 | 6.17094768 |\n| [0xf896250b25aaaefb35bb6b84d28f616448c761879d3a3ce0bcf7e2cd0d73dcec](https://etherscan.io/tx/0xf896250b25aaaefb35bb6b84d28f616448c761879d3a3ce0bcf7e2cd0d73dcec)\
+          \ | 0x30a28ffc | [23035742](https://etherscan.io/block/23035742) | 7 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00087905 | 8.70812366 |\n| [0x9ef4734968a356ad7562c40fc6a1dd6a81227823f4e6a5cb8746697005da7c03](https://etherscan.io/tx/0x9ef4734968a356ad7562c40fc6a1dd6a81227823f4e6a5cb8746697005da7c03)\
+          \ | 0x122067ed | [23035595](https://etherscan.io/block/23035595) | 7 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00042592 | 3.61747822 |\n| [0xcd43244d805ad9ad5b3831da254d3b404488b70df890035ac9137eb9a8b633d5](https://etherscan.io/tx/0xcd43244d805ad9ad5b3831da254d3b404488b70df890035ac9137eb9a8b633d5)\
+          \ | 0x30a28ffc | [23035389](https://etherscan.io/block/23035389) | 8 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00040054 | 3.14074587 |\n| [0x70303f1352c7064ee6fd0f099a5f9c47358335ea0d88608f43e51684c020389d](https://etherscan.io/tx/0x70303f1352c7064ee6fd0f099a5f9c47358335ea0d88608f43e51684c020389d)\
+          \ | 0x122067ed | [23035229](https://etherscan.io/block/23035229) | 9 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.000679 | 5.61265905 |\n| [0x340af1b52e3dcc6de0bc5109443accc4b1a73cd7770bdedf2e017f263ba01157](https://etherscan.io/tx/0x340af1b52e3dcc6de0bc5109443accc4b1a73cd7770bdedf2e017f263ba01157)\
+          \ | 0x30a28ffc | [23035164](https://etherscan.io/block/23035164) | 9 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00048862 | 3.83104036 |\n| [0x1e032bfd69d4c46ca3d8b6f60db1e796707615b2fd1d4fa7351fdf7fbe636949](https://etherscan.io/tx/0x1e032bfd69d4c46ca3d8b6f60db1e796707615b2fd1d4fa7351fdf7fbe636949)\
+          \ | 0x30a28ffc | [23035126](https://etherscan.io/block/23035126) | 9 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00277308 | 27.47092742 |\n| [0x94c8d963b41ca4c508cbc4fc77bf206584209b9ce64791d77dd556131a2afe77](https://etherscan.io/tx/0x94c8d963b41ca4c508cbc4fc77bf206584209b9ce64791d77dd556131a2afe77)\
+          \ | 0x30a28ffc | [23034984](https://etherscan.io/block/23034984) | 10 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00094474 | 6.69387072 |\n| [0x006a7e36c2c3a81410036eb6b42594bca23987bfd92e16cba6af2925468f67b7](https://etherscan.io/tx/0x006a7e36c2c3a81410036eb6b42594bca23987bfd92e16cba6af2925468f67b7)\
+          \ | 0x30a28ffc | [23034852](https://etherscan.io/block/23034852) | 10 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.0004596 | 3.60387722 |\n| [0x33a216271c16c218d5e7320cb7231ce885a7b848ceab8ee29b60be14aa5badab](https://etherscan.io/tx/0x33a216271c16c218d5e7320cb7231ce885a7b848ceab8ee29b60be14aa5badab)\
+          \ | 0x122067ed | [23034690](https://etherscan.io/block/23034690) | 10 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00049317 | 3.69903438 |\n| [0xeb1fe42f887ab0796beb74a508f9be7af641ad5566f7ec2451e90d4da9f2e996](https://etherscan.io/tx/0xeb1fe42f887ab0796beb74a508f9be7af641ad5566f7ec2451e90d4da9f2e996)\
+          \ | 0x122067ed | [23034621](https://etherscan.io/block/23034621) | 11 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00064109 | 5.33964668 |\n| [0x6fba6ed7a687184305d7fa1be38ae297c6dbcf3c8715d5fabf9c34db2e811706](https://etherscan.io/tx/0x6fba6ed7a687184305d7fa1be38ae297c6dbcf3c8715d5fabf9c34db2e811706)\
+          \ | 0x122067ed | [23034581](https://etherscan.io/block/23034581) | 11 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00074563 | 5.5919999 |\n| [0x1fb01a4c2c220e18782d9b0c3bd349658a67a3ab5f2158cdfa542efc74319fa4](https://etherscan.io/tx/0x1fb01a4c2c220e18782d9b0c3bd349658a67a3ab5f2158cdfa542efc74319fa4)\
+          \ | 0x122067ed | [23034363](https://etherscan.io/block/23034363) | 12 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00165001 | 12.37298973 |\n| [0x8e92ae4441ee474038fdfd3d907d351854d939561dab1a3e3bc83b66bbe0b3f3](https://etherscan.io/tx/0x8e92ae4441ee474038fdfd3d907d351854d939561dab1a3e3bc83b66bbe0b3f3)\
+          \ | 0x122067ed | [23034336](https://etherscan.io/block/23034336) | 12 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00193654 | 17.61460702 |\n| [0x3062b08bfedc22d3bbaec70aa58daf6451a250db903dbba505d00c8139f70d3d](https://etherscan.io/tx/0x3062b08bfedc22d3bbaec70aa58daf6451a250db903dbba505d00c8139f70d3d)\
+          \ | 0x122067ed | [23034262](https://etherscan.io/block/23034262) | 12 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00073225 | 5.7949205 |\n| [0x620658dee11580db527fd6a0e2a7a089b3de8988e8ea30428f13a889a80d1a32](https://etherscan.io/tx/0x620658dee11580db527fd6a0e2a7a089b3de8988e8ea30428f13a889a80d1a32)\
+          \ | 0x30a28ffc | [23034230](https://etherscan.io/block/23034230) | 12 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00085561 | 6.06183423 |\n| [0xbd087b775353663afbcd21fcf9a0850978b305de42c20edb1114796f2b74304b](https://etherscan.io/tx/0xbd087b775353663afbcd21fcf9a0850978b305de42c20edb1114796f2b74304b)\
+          \ | 0x122067ed | [23034168](https://etherscan.io/block/23034168) | 12 hrs\
+          \ ago | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | [0x51C72848...784502a7F](https://etherscan.io/address/0x51c72848c68a965f66fa7a88855f9f7784502a7f)\
+          \ | 0 ETH | 0.00112949 | 8.47001699 |\n\n**Latest Internal Transaction**\n\
+          \n| Parent Transaction Hash | Method | Block | Age | From | To | Amount\
+          \ |\n| :---------------------- | :----- | :---- | :-- | :--- | :--- | :-----\
+          \ |\n| [0xc3ec0b4f45c2b4d15b177356c19cc448cc7c94459fc408997ef4183edb62c47c](https://etherscan.io/tx/0xc3ec0b4f45c2b4d15b177356c19cc448cc7c94459fc408997ef4183edb62c47c)\
+          \ | Transfer | [22719123](https://etherscan.io/block/22719123) | 44 days\
+          \ ago | [Disperse.app](https://etherscan.io/address/0xd152f549545093347a162dce210e7293f1452150)\
+          \ | [0x2B25B37c...642Eb1073](https://etherscan.io/address/0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073)\
+          \ | 0.05291609 ETH ($204.76) |"
+direct_transaction_call:
+  input:
+    tool: get_transaction_details
     tool_arguments:
-      chain: base
-      address: '0x352004829Ed5a80491B94A7cA75ce38cdAAABA93'
+      chain: ethereum
+      txid: '0xd8a484a402a4373221288fed84e9025ed48eba2a45a7294c19289f740ca00fcd'
   output:
     response: ''
     data:
-      error: 'Failed to get token details: Internal Server Error: Failed to scrape
-        URL. (Internal server error) - timeout - No additional error details provided.'
+      error: 'Failed to get transaction data: Request Timeout: Failed to scrape URL
+        as the request timed out. Request timed out - No additional error details
+        provided.'
+natural_language_address:
+  input:
+    query: Get address history for 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on ethereum
+    raw_data_only: false
+  output:
+    response: "**Address:** [0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045](https://etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\n\
+      **ENS Name:** vitalik.eth\n**Badges:** Gitcoin Grantee\n\n**Overview**\n\n*\
+      \   **ETH Balance:** 4.780780477785466472 ETH\n*   **ETH Value:** $18,498.50\
+      \ (@ $3,869.35/ETH)\n*   **Token Holdings:** $538,662.56 (>401 Tokens)\n\n**More\
+      \ Info**\n\n*   **Transactions Sent:**\n    *   Latest: [20 days ago](https://etherscan.io/tx/0xca0535a7e1fac9d0eab67e451494a7d063ba8fd7ee5b2089b788ed29550fa8f0)\n\
+      \    *   First: [9 yrs 303 days ago](https://etherscan.io/tx/0x6ff0860e202c61189cb2a3a38286bffd694acbc50577df6cb5a7ff40e21ea074)\n\
+      *   **Funded By:** [Vb 2](https://etherscan.io/address/0x1db3439a222c519ab44bb1144fc28167b4fa6ee6)\
+      \ ([9 yrs 307 days ago](https://etherscan.io/tx/0x9b629147b75dc0b275d478fa34d97c5d4a26926457540b15a5ce871df36c23fd))\n\
+      \n**Multichain Info**\n\n*   **Multichain Portfolio Total:** $5,812,657.35 (across\
+      \ 35 Chains)\n*   **Chains with Holdings:**\n    *   [Ethereum](https://etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $5,280,157 (91%)\n    *   [Base](https://basescan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $307,084 (5%)\n    *   [Blast](https://blastscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $128,210 (2%)\n    *   [BNB Chain](https://bscscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $53,511 (1%)\n    *   [Optimism](https://optimistic.etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $40,747 (1%)\n    *   [Polygon](https://polygonscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $1,063 (<1%)\n    *   [Arbitrum One](https://arbiscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $662 (<1%)\n    *   [Taiko](https://taikoscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $389 (<1%)\n    *   [World](https://worldscan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $348 (<1%)\n    *   [Scroll](https://scrollscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $281 (<1%)\n    *   [Polygon zkEVM](https://zkevm.polygonscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $82 (<1%)\n    *   [zkSync Era](https://era.zksync.network/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $57 (<1%)\n    *   [Linea](https://lineascan.build/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $30 (<1%)\n    *   [Avax C-Chain](https://snowscan.xyz/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $10 (<1%)\n    *   [Gnosis](https://gnosisscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $10 (<1%)\n    *   [Berachain](https://berascan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $5 (<1%)\n    *   [Abstract](https://abscan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $4 (<1%)\n    *   [Arbitrum Nova](https://nova.arbiscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $2 (<1%)\n    *   [Moonriver](https://moonriver.moonscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $2 (<1%)\n    *   [Moonbeam](https://moonbeam.moonscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $1 (<1%)\n    *   [Ape](https://apescan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $1 (<1%)\n    *   [Unichain](https://uniscan.xyz/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $1 (<1%)\n    *   [Celo](https://celoscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $0 (<1%)\n    *   [opBNB](https://opbnb.bscscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $0 (<1%)\n    *   [Mantle](https://mantlescan.xyz/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $0 (<1%)\n    *   [Xai](https://xaiscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $0 (<1%)\n    *   [Sonic](https://sonicscan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+      \ $0 (<1%)\n    *   BTTC: $0 (0%)\n    *   Wemix: $0 (0%)\n    *   Fraxtal:\
+      \ $0 (0%)\n    *   Cronos: $0 (0%)\n    *   Xdc: $0 (0%)\n    *   Sophon: $0\
+      \ (0%)\n    *   MemeCoreChain: $0 (0%)\n    *   Swellchain: $0 (0%)\n\n**ERC-20\
+      \ Token Holdings (Top 100)**\n\n| Token | Amount | Value | Price |\n|---|---|---|---|\n\
+      | [WhiteRock (WHITE)](https://etherscan.io/token/0x9cdf242ef7975d8c68d5c1f5b6905801699b1940?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000,000,000 WHITE | $3,039,300 | $0.000304 |\n| [MOO DENG (MOODENG)](https://etherscan.io/token/0x28561b8a2360f463011c16b6cc0b0cbef8dbbcad?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 30,001,118,566.5468 MOODENG | $738,027.52 | $0.000025 |\n| [Catecoin (CATE)](https://etherscan.io/token/0xf05897cfe3ce9bbbfe0751cbe6b1b2c686848dcb?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,669,700,921,390.7114 CATE | $619,123.43 | <$0.000001 |\n| [KyberNetwork\
+      \ (KNC)](https://etherscan.io/token/0xdd974d5c2e2928dea5f71b9825b8b646686bd200?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 700,008.5314 KNC | $320,815.31 | $0.458302 |\n| [COCORO (COCORO)](https://etherscan.io/token/0xa93d86af16fe83f064e3c0e2f3d129f7b7b002b0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,535,456,040.1753 COCORO | $46,862.12 | $0.000031 |\n| [Manyu (MANYU)](https://etherscan.io/token/0x95af4af910c28e8ece4512bfe46f1f33687424ce?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 2,000,000,069,069 MANYU | $45,572 | <$0.000001 |\n| [Ethereum Name Service\
+      \ (ENS)](https://etherscan.io/token/0xc18360217d8f7ab5e7c516566761ea12ce7f9d72?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,144.0361 ENS | $32,605.03 | $28.5 |\n| [ETHEREUM IS GOOD (EBULL)](https://etherscan.io/token/0x71297312753ea7a2570a5a3278ed70d9a75f4f44?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 250,010,000 EBULL | $31,658.77 | $0.000127 |\n| [Valentine (VALENTINE)](https://etherscan.io/token/0x6dcc10db1b1a7f7a49f6cd3669114aff053295fc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 39,008,397.16 VALENTINE | $29,756.39 | $0.000763 |\n| [OMG Network (OMG)](https://etherscan.io/token/0xd26114cd6ee289accf82350c8d8487fedb8a0c07?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 123,647.0304 OMG | $23,048.05 | $0.186402 |\n| [IAGON (IAG)](https://etherscan.io/token/0x40eb746dee876ac1e78697b7ca85142d178a1fc8?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 150,039.9997 IAG | $22,417.78 | $0.149412 |\n| [Oggie (OGGIE)](https://etherscan.io/token/0x11a001dc777f5bf8a5d63f246664d3bb67be496c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 30,000,000 OGGIE | $20,834.7 | $0.000694 |\n| [USDC (USDC)](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 19,094.7577 USDC | $19,091.13 | $0.99981 |\n| Ether (ETH) | 4.7808 ETH |\
+      \ $18,498.5 | $3,869.35 |\n| [VIX777 (VIX)](https://etherscan.io/token/0x283d480dfd6921055e9c335fc177bf8cb9c94184?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 27,000,000 VIX | $15,965.66 | $0.000591 |\n| [Miniature Woolly Mammoth (WOOLLY)](https://etherscan.io/token/0x9f277edfc463ebaa3d2a6274b01177697e910391?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000,000 WOOLLY | $12,737.07 | $0.001274 |\n| [CateCoin (CATE)](https://etherscan.io/token/0x051fb509e4a775fabd257611eea1efaed8f91359?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 32,500,665,303.8259 CATE | $12,051.21 | <$0.000001 |\n| [Ginnan Neko (GINNAN)](https://etherscan.io/token/0x6d06426a477200c385843a9ac4d4fd55346f2b7b?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 204,855,860,762,516.72 GINNAN | $10,066.21 | <$0.000001 |\n| [Baby Neiro\
+      \ (BABYNEIRO)](https://etherscan.io/token/0x7a2db92624fc80116cc209c9662ee2baa8adbeb1?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 12,650,000,000,000 BABYNEIRO | $9,765.04 | <$0.000001 |\n| [RyuJin (RYU)](https://etherscan.io/token/0xca530408c3e552b020a2300debc7bd18820fb42f?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,001,000,000,000 RYU | $8,396.39 | <$0.000001 |\n| [Dog Food Token (OISHII)](https://etherscan.io/token/0xa1b014878d47c0836ed79163ddec55985adb7023?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 125,000,000 OISHII | $7,228.75 | $0.000058 |\n| [TAIKI INU (TAIKI)](https://etherscan.io/token/0xe533c2480983e46664b15717d6fc02c0a1dad537?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 18,208,817,988.41 TAIKI | $6,962.63 | <$0.000001 |\n| [DogeClub (DOGC)](https://etherscan.io/token/0xda8263d8ce3f726233f8b5585bcb86a3120a58b6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 9,000,000,000,000 DOGC | $6,523.92 | <$0.000001 |\n| [Izzy (IZZY)](https://etherscan.io/token/0x6969f3a3754ab674b48b7829a8572360e98132ba?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 13,628,026,603.6384 IZZY | $6,086.1 | <$0.000001 |\n| [SuperGrok (SUPERGROK)](https://etherscan.io/token/0x00869e8e2e0343edd11314e6ccb0d78d51547ee5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 4,673,710.824 SUPERGROK | $6,015.77 | $0.001287 |\n| [Goatseus Maximus (GOAT)](https://etherscan.io/token/0x5200b34e6a519f289f5258de4554ebd3db12e822?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,321,523,519.2473 GOAT | $5,845.88 | $0.000002 |\n| [GigaChad (GIGACHAD)](https://etherscan.io/token/0xf43f21384d03b5cbbddd58d2de64071e4ce76ab0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 2,154,212,677,662 GIGACHAD | $5,737.17 | <$0.000001 |\n| [GROK (GROK)](https://etherscan.io/token/0x8390a1da07e376ef7add4be859ba74fb83aa02d5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 2,425,306.6457 GROK | $5,005.58 | $0.002064 |\n| [FusionBot (FUSION)](https://etherscan.io/token/0x6230f552a1c825d02e1140ccc0d3f5eeec81ca84?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 50,000 FUSION | $4,928.15 | $0.098563 |\n| [Mars the hippo (MARS)](https://etherscan.io/token/0x407eca46ff515cde14410cdc868c7f82e8c4f41d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 30,000,000 MARS | $4,836.37 | $0.000161 |\n| [Kobushi (KOBUSHI)](https://etherscan.io/token/0xd86830e9c56785e2b703eb0029ae71a943e4d442?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,521,456,900 KOBUSHI | $4,788.97 | <$0.000001 |\n| [Just a chill guy (CHILLGUY)](https://etherscan.io/token/0x60215db40b04fe029c42c56ff2e02221c1f288ef?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000,000.9763 CHILLGUY | $4,745.47 | $0.000475 |\n| [I love puppies (PUPPIES)](https://etherscan.io/token/0xcf91b70017eabde82c9671e30e5502d312ea6eb2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 150,000,234,624.7784 PUPPIES | $4,436.07 | <$0.000001 |\n| [Tigra (TIGRA)](https://etherscan.io/token/0xbe8eff45293598919c99d1cbe5297f2a6935bc64?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 30,000,000 TIGRA | $4,424.4 | $0.000147 |\n| [CASE (CASE)](https://etherscan.io/token/0x52dd39e5d1a5f4b8a622466bbe880b5427bf038e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 8,413,800,000 CASE | $4,370.73 | $0.000001 |\n| [NANJCOIN (NANJ)](https://etherscan.io/token/0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 111,000,000 NANJ | $4,358.11 | $0.000039 |\n| [Oscar (OSCAR)](https://etherscan.io/token/0xebb66a88cedd12bfe3a289df6dfee377f2963f12?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,101,169.8116 OSCAR | $4,206.96 | $0.00382 |\n| [Peanut (PNUT)](https://etherscan.io/token/0xe69ccaaaea33ebfe5b76e0dd373cd9a1a31fd410?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 232,055.3684 PNUT | $3,441.16 | $0.014829 |\n| [Spurdo (SPURDO)](https://etherscan.io/token/0x42069e779838929495ed0152ffc27145ce5c7f98?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 8,413,800,000,000 SPURDO | $3,354.97 | <$0.000001 |\n| [TORN Token (TORN)](https://etherscan.io/token/0x77777feddddffc19ff86db637967013e6c6a116c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 242.7309 TORN | $3,255.02 | $13.41 |\n| [VNDC (VNDC)](https://etherscan.io/token/0x1f3f677ecc58f6a1f9e2cf410df4776a8546b5de?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 80,000,000 VNDC | $3,063.2 | $0.000038 |\n| [Kabosu (KABOSU)](https://etherscan.io/token/0xb3e41d6e0ea14b43bc5de3c314a408af171b03dd?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 11,946,408,130.8127 KABOSU | $2,979.59 | <$0.000001 |\n| [Rastopyry (RASTO)](https://etherscan.io/token/0x5408d3883ec28c2de205064ae9690142b035fed2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 31,011,994.031 RASTO | $2,837.6 | $0.000092 |\n| [ETHARDIO (ETHARDIO)](https://etherscan.io/token/0x846e57af29fd21391919318a044191b8725822c2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 100,000,000 ETHARDIO | $2,733 | $0.000027 |\n| [Medusa (MEDUSA)](https://etherscan.io/token/0xe34ba9cbdf45c9d5dcc80e96424337365b6fe889?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,698,888.1235 MEDUSA | $2,619.95 | $0.000708 |\n| [∑ (∑)](https://etherscan.io/token/0xb772c8745c46c8868610dcecdcefc803cfdf28f5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 4,945,005.0084 ∑ | $2,551.44 | $0.000516 |\n| [Ducky (DUCKY)](https://etherscan.io/token/0x699ec925118567b6475fe495327ba0a778234aaa?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 6,289,135,433.8768 DUCKY | $2,533.45 | <$0.000001 |\n| [Chiba (CHIB)](https://etherscan.io/token/0xa5c45d48d36607741e90c0cca29545a46f5ee121?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 4,000,010,450.0748 CHIB | $2,435.24 | $0.000001 |\n| [CSI888 (CSI)](https://etherscan.io/token/0x888c1a341ce9d9ae9c2d2a75a72a7f0d2551a2dc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 7,867,269.1925 CSI | $2,410.3 | $0.000306 |\n| [Meh (MEH)](https://etherscan.io/token/0x1f38d22f4ec3479c8268c85476b9418716bdb115?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 167,146,371 MEH | $2,363.68 | $0.000014 |\n| [US Degen Index 6900 (DXY)](https://etherscan.io/token/0x6900f7b42fb4abb615c938db6a26d73a9afbed69?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,006,399.7394 DXY | $2,304.52 | $0.00229 |\n| [Lester (LESTER)](https://etherscan.io/token/0xf5809f3348ff40906bb509f936aba43e6d1961ab?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 23,174,898,166.2001 LESTER | $2,258.39 | <$0.000001 |\n| [Cairo (CAIRO)](https://etherscan.io/token/0xc0e10854ab40b2e59a5519c481161a090f1162a0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 172,652,889.0254 CAIRO | $2,204.78 | $0.000013 |\n| [Mars (MARS)](https://etherscan.io/token/0xb8d6196d71cdd7d90a053a7769a077772aaac464?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,608,128,451 MARS | $2,106.65 | $0.000001 |\n| [Biaoqing (BIAO)](https://etherscan.io/token/0x9fd9278f04f01c6a39a9d1c1cd79f7782c6ade08?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 5,000,025 BIAO | $2,086.51 | $0.000417 |\n| [Bird Dog (BIRDDOG)](https://etherscan.io/token/0xf6ce4be313ead51511215f1874c898239a331e37?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 358,886,846.219 BIRDDOG | $2,057.07 | $0.000006 |\n| [Foxe (FOXE)](https://etherscan.io/token/0x378e1be15be6d6d1f23cfe7090b6a77660dbf14d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,777,819,000,000.1777 FOXE | $2,017.82 | <$0.000001 |\n| [KaboChan (KABO)](https://etherscan.io/token/0x0c5cb676e38d6973837b9496f6524835208145a2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 30,000,000 KABO | $1,974.6 | $0.000066 |\n| [HarryPotterObamaSonic10Inu\
+      \ (BITCOIN)](https://etherscan.io/token/0x72e4f9f808c49a2a61de9c5896298920dc4eeea9?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 18,119.6916 BITCOIN | $1,865.02 | $0.102928 |\n| [BEBE (BEBE)](https://etherscan.io/token/0xec21890967a8ceb3e55a3f79dac4e90673ba3c2e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 311,354,089,612.0519 BEBE | $1,775.48 | <$0.000001 |\n| [Milady Cult Coin\
+      \ (CULT)](https://etherscan.io/token/0x0000000000c5dc95539589fbd24be07c6c14eca4?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,150,000 CULT | $1,770.28 | $0.001539 |\n| [Colon (COLON)](https://etherscan.io/token/0xd09eb9099fac55edcbf4965e0a866779ca365a0c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 9,863,464.7762 COLON | $1,678.86 | $0.00017 |\n| [Sanin (SANIN)](https://etherscan.io/token/0xd3c5bdbc6de5ea3899a28f6cd419f29c09fa749f?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,517,250,000 SANIN | $1,664.57 | <$0.000001 |\n| [Peanut (PEANUT)](https://etherscan.io/token/0x4947b72fed037ade3365da050a9be5c063e605a7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 7,964,430,788.2689 PEANUT | $1,662.35 | <$0.000001 |\n| [Bufficorn (BUFFI)](https://etherscan.io/token/0x4c1b1302220d7de5c22b495e78b72f2dd2457d45?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 13,045,349,615.4394 BUFFI | $1,644.68 | <$0.000001 |\n| [ETH Snek (SNEK)](https://etherscan.io/token/0x2025b2f4c7abe6dcb3843c62c32dfa14990a6269?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 261,120,545.9142 SNEK | $1,632 | $0.000006 |\n| [Zygo The Frog (ZYGO)](https://etherscan.io/token/0xee2b9b7e168b5b2d40c507b891c7cfb13a6aaf2b?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 430,648.0335 ZYGO | $1,604.48 | $0.003726 |\n| [Ken (KEN)](https://etherscan.io/token/0x7316d973b0269863bbfed87302e11334e25ea565?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 14,416,747 KEN | $1,546.33 | $0.000107 |\n| [WAGMICOIN (WAGMI)](https://etherscan.io/token/0x5f4ab80c2c7755d565371236f090597921d18ee5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 21,951,667,544.3032 WAGMI | $1,479.37 | <$0.000001 |\n| [BuckTheBunny (BUCK)](https://etherscan.io/token/0x5f531738eb92f34b8550237befdd4247d3525411?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 4,200,690,000 BUCK | $1,418.2 | <$0.000001 |\n| [Bahamas (BAHAMAS)](https://etherscan.io/token/0x426aedbed16726e3f220cb4fed4d4060b95cca46?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 13,063,586,986 BAHAMAS | $1,406.43 | <$0.000001 |\n| [ERC20 (ERC20)](https://etherscan.io/token/0xcdd981ef3330e159029e6e226dbd73d99f868f4d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 930,000 ERC20 | $1,388.69 | $0.001493 |\n| [Moo Cow (MOOCOW)](https://etherscan.io/token/0x67d9c7daecc5b87c3e68ac89f33ee924fac88c05?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,317,885,746.6094 MOOCOW | $1,344.24 | $0.000001 |\n| [Ushi (USHI)](https://etherscan.io/token/0x6dca182ac5e3f99985bc4ee0f726d6472ab1ec55?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 115,725,112.9981 USHI | $1,340.1 | $0.000012 |\n| [LuckysLeprecoin (LUCKYSLP)](https://etherscan.io/token/0x357c915d7c12dc506d13332bb06c932af13e99a0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 16,381,031,081.3476 LUCKYSLP | $1,311.83 | <$0.000001 |\n| [Keeshond (KEE)](https://etherscan.io/token/0xd89cc9d79ad3c49e2cd477a8bbc8e63dee53f82e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 200,000,000 KEE | $1,220 | $0.000006 |\n| [SafeStake Network Token (DVT)](https://etherscan.io/token/0x29fa1fee0f4f0ab0e36ef7ab8d7a35439ec6be75?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 99,999.9 DVT | $1,208.26 | $0.012083 |\n| [CRESO (CRE)](https://etherscan.io/token/0x162433c934aa74ba147e05150b1206b2c922f71d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,993,605.4989 CRE | $0.00 | $0.00 |\n| [CryptoAutos (AUTOS)](https://etherscan.io/token/0xf477ac7719e2e659001455cdda0cc8f3ad10b604?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 88,010.33 AUTOS | $1,117.11 | $0.012693 |\n| [Dogelon (ELON)](https://etherscan.io/token/0x761d38e5ddf6ccf6cf7c55759d5210750b5d60f3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 9,069,170,775.6352 ELON | $1,056.08 | <$0.000001 |\n| [Molly by Matt Furie\
+      \ (MOLLY)](https://etherscan.io/token/0x44048851c18e2ae10953164427300dc986b46815?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,180,464,394.3993 MOLLY | $1,036.7 | <$0.000001 |\n| [Brainlet (BRAINLET)](https://etherscan.io/token/0x0000bdaa645097ef80f9d475f341d0d107a45b3a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 15,000,000 BRAINLET | $978 | $0.000065 |\n| [Pepe (PEPE)](https://etherscan.io/token/0x6982508145454ce325ddbe47a25d4ec3d2311933?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 84,321,755.0955 PEPE | $975.6 | $0.000012 |\n| [TSLA6900 (TSLA)](https://etherscan.io/token/0xa3bc09171c009f05df7f0b8aaa818ee42d8a91bc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 7,560,959,264.3288 TSLA | $926.57 | <$0.000001 |\n| [Mirai (MIRAI)](https://etherscan.io/token/0x81987681443c156f881b70875724cc78b08ada26?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 8,416,900,000 MIRAI | $912.79 | <$0.000001 |\n| [Casinu Inu (CASINU)](https://etherscan.io/token/0x1b54a6fa1360bd71a0f28f77a1d6fba215d498c3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 888,888,888 CASINU | $890.68 | $0.000001 |\n| [Vitalik's Dog (MISHA)](https://etherscan.io/token/0x0ccae1bc46fb018dd396ed4c45565d4cb9d41098?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,886,065,641.7672 MISHA | $852.55 | <$0.000001 |\n| [TORA NEKO (TORA)](https://etherscan.io/token/0x1bb4afbf2ce0c9ec86e6414ad4ba4d9aab1c0de4?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 2,451,154.6841 TORA | $843.17 | $0.000344 |\n| [Squid Game (SQUID)](https://etherscan.io/token/0x561cf9121e89926c27fa1cfc78dfcc4c422937a4?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 2,069,000,000 SQUID | $800.47 | <$0.000001 |\n| [Bellscoin (BELLS)](https://etherscan.io/token/0xba2a3dad197d6fee75471215efd5c30c8c854e11?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 5,000,000 BELLS | $786.86 | $0.000157 |\n| [henlo (HENLO)](https://etherscan.io/token/0x960fce8724aa127184b6d13af41a711755236c77?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,113,000,000,000 HENLO | $764.63 | <$0.000001 |\n| [Kuma (KUMA)](https://etherscan.io/token/0x95ad53e32942c0cf9fd60208964782af8bedb709?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 12,620,700,000 KUMA | $754.71 | <$0.000001 |\n| [Real Smurf Cat (ШАЙЛУШАЙ)](https://etherscan.io/token/0xff836a5821e69066c87e268bc51b849fab94240c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 14,265,225 ШАЙЛУШАЙ | $731.09 | $0.000051 |\n| [Convex Token (CVX)](https://etherscan.io/token/0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 150 CVX | $706.82 | $4.71 |\n| [Feels Good Man (FGM)](https://etherscan.io/token/0x1f19d846d99a0e75581913b64510fe0e18bbc31f?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 94,228,966 FGM | $657.72 | $0.000007 |\n| [Mog Coin (MOG)](https://etherscan.io/token/0xaaee1a9723aadb7afa2810263653a34ba2c21c7a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 394,861,775.8893 MOG | $588.34 | $0.000001 |\n| [Donut (DONUT)](https://etherscan.io/token/0xc0f9bd5fa5698b6505f643900ffa515ea5df54a9?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 150,079.4207 DONUT | $584.8 | $0.003897 |\n| [Fu Bao (FUBAO)](https://etherscan.io/token/0x3e66c9a569efcf704391b54fd1eebd8ca0556960?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 14,919,290,948,770.5 FUBAO | $539.44 | <$0.000001 |\n| [Decentra Box (DBOX)](https://etherscan.io/token/0x56c9d5f1e727de03643af220b5ce52de23d4d973?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 580,000 DBOX | $0.00 | $0.00 |\n| [PAW (PAW)](https://etherscan.io/token/0x419777d3e39aa9b00405724eace5ea57620c9062?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,030,097,979,797 PAW | $524.96 | <$0.000001 |\n| [LABUBU (LABUBU)](https://etherscan.io/token/0xb0c41c08fd2f8782c6944204af085fec9db66c56?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 20,000,000,000 LABUBU | $495.01 | <$0.000001 |\n| [AISignal (AISIG)](https://etherscan.io/token/0x508b27902c6c14972a10a4e413b9cfa449e9cedb?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,000,000 AISIG | $489.13 | $0.000489 |\n| [XRPEPE (XRPEPE)](https://etherscan.io/token/0xde8ae95b1763d8fd23bd37d0eb30116ac60b0116?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 40,042,578.9143 XRPEPE | $438.11 | $0.000011 |\n| [Landwolf (WOLF)](https://etherscan.io/token/0x67466be17df832165f8c80a5a120ccc652bd7e69?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 6,942,000 WOLF | $407.08 | $0.000059 |\n| [ZENF Token (ZENF)](https://etherscan.io/token/0xe9b7b5d5e8d2bcc78884f9f9099bfa42a9e5c1a5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 100,000 ZENF | $398.49 | $0.003985 |\n| [Flying Avocado Cat (FAC)](https://etherscan.io/token/0x1a3a8cf347b2bf5890d3d6a1b981c4f4432c8661?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,799 FAC | $377.71 | $0.099424 |\n| [El Sapo Pepe (PEPE)](https://etherscan.io/token/0x69e15ab0fd240de689d09e4851181a6667968008?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 6,904,200 PEPE | $376.02 | $0.000054 |\n| [Landwolf (WOLF)](https://etherscan.io/token/0x67859a9314b9dca2642023ad8231beaa6cbf1933?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 7,200,000,000 WOLF | $339.09 | <$0.000001 |\n| [XAU9999 (XAU)](https://etherscan.io/token/0x999903502c1c7fea3591fb17315544c6bdde7699?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000,000,000,000 XAU | $324.46 | <$0.000001 |\n| [Measurable Data Token\
+      \ (MDT)](https://etherscan.io/token/0x814e0908b12a99fecf5bc101bb5d0b8b5cdf7d26?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000 MDT | $316.98 | $0.031698 |\n| [The Infinite Garden (ETH)](https://etherscan.io/token/0x5e21d1ee5cf0077b314c381720273ae82378d613?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 70,156 ETH | $311.77 | $0.004444 |\n| [MATRI\U0001D54F (MATRIX)](https://etherscan.io/token/0x362033a25b37603d4c99442501fa7b2852ddb435?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,000,000,000 MATRIX | $302.7 | <$0.000001 |\n| [PaleBlueDot (EARTH)](https://etherscan.io/token/0xbf5badfae2d219943dcd9652d1ce65960b8a1e0c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 0.02 EARTH | $296.23 | $14,811.3 |\n| [lifedog (LFDOG)](https://etherscan.io/token/0x425087bf4969f45818c225ae30f8560ce518582e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000,000 LFDOG | $277.2 | $0.000028 |\n| [MoonRabbit (AAA)](https://etherscan.io/token/0x8c6bf16c273636523c29db7db04396143770f6a0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 702,635,036 AAA | $273.99 | <$0.000001 |\n| [Bite (BITE)](https://etherscan.io/token/0x34103e1190b824a44c6a638438d425cba21143ba?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,498,063.1103 BITE | $267.77 | $0.000179 |\n| [Tether USD (USDT)](https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 256.495 USDT | $256.47 | $0.999914 |\n| [Gnome Child (GNOME)](https://etherscan.io/token/0xa9a660e7d49bbef606d07210ddd6568b70b93dd3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 15,468,253,098.3046 GNOME | $241.96 | <$0.000001 |\n| [Doggo (DOGGO)](https://etherscan.io/token/0x240cd7b53d364a208ed41f8ced4965d11f571b7a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 429,615,219.2162 DOGGO | $237.93 | $0.000001 |\n| [SPX6900 (SPX)](https://etherscan.io/token/0xe0f63a424a4439cbe457d80e4f4b51ad25b2c56c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 111 SPX | $217.56 | $1.96 |\n| [Aave interest bearing WETH (AWETH)](https://etherscan.io/token/0x030ba81f1c18d280636f32af80b9aad02cf0854e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 0.0515 AWETH | $199.03 | $3,861.48 |\n| [Janny (JANNY)](https://etherscan.io/token/0x5ff46696d6e4896137acb1628b06e28c10ee9634?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 40,000,000 JANNY | $198.8 | $0.000005 |\n| [Smiley (SMILEY)](https://etherscan.io/token/0x4c6e2c495b974b8d4220e370f23c7e0e1da9b644?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 110,000,000,000,000 SMILEY | $182.71 | <$0.000001 |\n| [Butterfly Ai (FLY)](https://etherscan.io/token/0x27c78a7c10a0673c3509ccf63044aab92e09edac?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 100,000 FLY | $161.69 | $0.001617 |\n| [XRP 2.0 (XRP 2.0)](https://etherscan.io/token/0xd61e1cafd50e570356dd5f6d679a7bd0535a7fcf?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 301,870,469,843,667.38 XRP 2.0 | $160.53 | <$0.000001 |\n| [Aurk AI (AURK)](https://etherscan.io/token/0xe5db5128935e3a8a8eaeabe4577fac2b353ae9fa?a=0xd8dA6BF26964aF9D7eEd9e042?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 50,000 AURK | $142.2 | $0.002844 |\n| [Wrapped BTC (WBTC)](https://etherscan.io/token/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 0.00107182 WBTC | $127.01 | $118,502 |\n| [America Party (AMERICA)](https://etherscan.io/token/0xb03eef386a61b5b462051636001485fffdd3d843?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 882,759,000 AMERICA | $124.17 | <$0.000001 |\n| [Andyman (ANDYMAN)](https://etherscan.io/token/0x68aaa0d94ea163b9bbf659dc3766defb4c0ac7be?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 314,159 ANDYMAN | $124.11 | $0.000395 |\n| [KABOSU (KABOSU)](https://etherscan.io/token/0x180000dda70eb7fb7f3e10e52e88ce88f46e3b3a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 180,000,000 KABOSU | $122.61 | $0.000001 |\n| [Catalorian (CATALORIAN)](https://etherscan.io/token/0x8baf5d75cae25c7df6d1e0d26c52d19ee848301a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 257,000 CATALORIAN | $118.98 | $0.000463 |\n| [Uncle Sam (USAM)](https://etherscan.io/token/0x0f79dff082b6f4324528f5ded2d6b8aa6d576277?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 475,903,000.4563 USAM | $113.61 | <$0.000001 |\n| [Spectre (SPCTR)](https://etherscan.io/token/0xb29e475b69f843046a757747943c00dce8a3d982?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 600,000,000 SPCTR | $111.38 | <$0.000001 |\n| [JIAOZI.farm (JIAOZI)](https://etherscan.io/token/0x94939d55000b31b7808904a80aa7bab05ef59ed6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 18,760,590.5535 JIAOZI | $99.36 | $0.000005 |\n| [Meow Meow Coin (MEOW)](https://etherscan.io/token/0x77be1ba1cd2d7a63bffc772d361168cc327dd8bc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 425,710,001 MEOW | $97.18 | <$0.000001 |\n| [FLEX Coin (FLEX)](https://etherscan.io/token/0xfcf8eda095e37a41e002e266daad7efc1579bc0a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 589.6022 FLEX | $95.94 | $0.162717 |\n| [Cybertruck (TRUCK)](https://etherscan.io/token/0xab5d6508e4726141d29c6074ab366afa03f4ec8d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,053,031.7246 TRUCK | $91.38 | $0.00003 |\n| [Hemule (HEMULE)](https://etherscan.io/token/0xeaa63125dd63f10874f99cdbbb18410e7fc79dd3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 31,795.69 HEMULE | $91.31 | $0.002872 |\n| [Decentralization obligatory,\
+      \ practicality essential (DOPE)](https://etherscan.io/token/0x85122dc2c0ac24e8aacaff4a4ccfcbdf36e80f60?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 2,445,424 DOPE | $89.75 | $0.000037 |\n| [Quantum DAO (QTDAO)](https://etherscan.io/token/0x26869045311fc5e5353eadcfa654cd47ddc20356?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 316,150,265.4 QTDAO | $0.00 | $0.00 |\n| [LoopringCoin V2 (LRC)](https://etherscan.io/token/0xbbbbca6a901c926f240b89eacb641d8aec7aeafd?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,000.3219 LRC | $88.65 | $0.08862 |\n| [Hana (HANA)](https://etherscan.io/token/0xb3912b20b3abc78c15e85e13ec0bf334fbb924f7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 4,082,934.4259 HANA | $78.6 | $0.000019 |\n| [Baby Neiro (BABYNEIRO)](https://etherscan.io/token/0xbabe3ce7835665464228df00b03246115c30730a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 291,005,069.881 BABYNEIRO | $77.73 | <$0.000001 |\n| [ACENT (ACE)](https://etherscan.io/token/0xec5483804e637d45cde22fa0869656b64b5ab1ab?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 275,000 ACE | $77.37 | $0.000281 |\n| [Joe Coin (JOE)](https://etherscan.io/token/0x76e222b07c53d28b89b0bac18602810fc22b49a8?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,937.8552 JOE | $74.35 | $0.038366 |\n| [HOLD (EARN)](https://etherscan.io/token/0x0b61c4f33bcdef83359ab97673cb5961c6435f4e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 34,936.1278 EARN | $71.88 | $0.002057 |\n| [SHIBA INU (SHIB)](https://etherscan.io/token/0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 5,390,989.2578 SHIB | $70.51 | $0.000013 |\n| [World Liberty Financial (WLF)](https://etherscan.io/token/0xda0c0d0a0ff8262f3ee9ee8a712b988df897be65?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 4,174,594,570,253.6987 WLF | $64.53 | <$0.000001 |\n| [Gala (GALA)](https://etherscan.io/token/0xd1d2eb1b1e90b638588728b4130137d262c87cae?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 3,386.9462 GALA | $56.24 | $0.016605 |\n| [Matter (MTR)](https://etherscan.io/token/0xaa6c7d24d03769370e1c31f7c4edf3ebe10b7cf7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 489 MTR | $55.74 | $0.113991 |\n| [Melania Trump (MELANIA)](https://etherscan.io/token/0x8cefbeb2172a9382753de431a493e21ba9694004?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000 MELANIA | $55.28 | $0.005528 |\n| [AVA (AVA)](https://etherscan.io/token/0xa6c0c097741d55ecd9a3a7def3a8253fd022ceb9?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 86.91 AVA | $51.02 | $0.587091 |\n| [Turbo (TURBO)](https://etherscan.io/token/0xa35923162c49cf95e6bf26623385eb431ad920d3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 10,000 TURBO | $50.64 | $0.005064 |\n| [Messier (M87)](https://etherscan.io/token/0x80122c6a83c8202ea365233363d3f4837d13e888?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 878,787 M87 | $49.09 | $0.000056 |\n| [Ishi (ISHI)](https://etherscan.io/token/0x85e0b9d3e7e4dba7e59090c533906d0e9211d8b6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 200,000,000 ISHI | $48.57 | <$0.000001 |\n| [Matic Token (MATIC)](https://etherscan.io/token/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 214.9151 MATIC | $47.58 | $0.221395 |\n| [Fable Of The Dragon (TYRANT)](https://etherscan.io/token/0x8ee325ae3e54e83956ef2d5952d3c8bc1fa6ec27?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,214 TYRANT | $47.26 | $0.038927 |\n| [Byte (BYTE)](https://etherscan.io/token/0xde342a3e269056fc3305f9e315f4c40d917ba521?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 9,594,270.6883 BYTE | $46.34 | $0.000005 |\n| [GoMining Token (GMT)](https://etherscan.io/token/0x7ddc52c4de30e94be3a6a0a2b259b2850f421989?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 94.3062 GMT | $45.43 | $0.481722 |\n| [MONEY PARTY (PARTY)](https://etherscan.io/token/0x314bd765cab4774b2e547eb0aa15013e03ff74d2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 251,091.1715 PARTY | $41.85 | $0.000167 |\n| [Kudoe (KDOE)](https://etherscan.io/token/0x5f190f9082878ca141f858c1c90b4c59fe2782c5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 100,000 KDOE | $40.86 | $0.000409 |\n| [MetaZooMee (MZM)](https://etherscan.io/token/0x61b57bdc01e3072fab3e9e2f3c7b88d482734e05?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1,000,000 MZM | $39.92 | $0.00004 |\n| [Memecoin (MEME)](https://etherscan.io/token/0xb131f4a55907b10d1f0a50d8ab8fa09ec342cd74?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 20,907 MEME | $37.71 | $0.001804 |\n| [Book of Ethereum (BOOE)](https://etherscan.io/token/0x289ff00235d2b98b0145ff5d4435d3e92f9540a6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 179 BOOE | $36.44 | $0.203583 |\n| [FUD.finance (FUD)](https://etherscan.io/token/0x2688213fedd489762a281a67ae4f2295d8e17ecc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 239.4339 FUD | $0.00 | $0.00 |\n| [HarryPotterTrumpHomerSimpson777Inu (ETHEREUM)](https://etherscan.io/token/0x24249b5a869a445c9b0ce269a08d73c618df9d21?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 162,822.026 ETHEREUM | $35.93 | $0.000221 |\n| [New Ancient DNA (REMUS)](https://etherscan.io/token/0x391883a5d2438716796336f2e420a92e52b45efe?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 353,102,088,496.7487 REMUS | $34.36 | <$0.000001 |\n| [ChainLink Token (LINK)](https://etherscan.io/token/0x514910771af9ca656af840dff83e8264ecf986ca?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+      \ | 1.7778 LINK | $32.2 | $18.11 |\n| [PREME Token (PREME)](https://ethers"
+    data:
+      status: success
+      data:
+        processed_content: "**Address:** [0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045](https://etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\n\
+          **ENS Name:** vitalik.eth\n**Badges:** Gitcoin Grantee\n\n**Overview**\n\
+          \n*   **ETH Balance:** 4.780780477785466472 ETH\n*   **ETH Value:** $18,498.50\
+          \ (@ $3,869.35/ETH)\n*   **Token Holdings:** $538,662.56 (>401 Tokens)\n\
+          \n**More Info**\n\n*   **Transactions Sent:**\n    *   Latest: [20 days\
+          \ ago](https://etherscan.io/tx/0xca0535a7e1fac9d0eab67e451494a7d063ba8fd7ee5b2089b788ed29550fa8f0)\n\
+          \    *   First: [9 yrs 303 days ago](https://etherscan.io/tx/0x6ff0860e202c61189cb2a3a38286bffd694acbc50577df6cb5a7ff40e21ea074)\n\
+          *   **Funded By:** [Vb 2](https://etherscan.io/address/0x1db3439a222c519ab44bb1144fc28167b4fa6ee6)\
+          \ ([9 yrs 307 days ago](https://etherscan.io/tx/0x9b629147b75dc0b275d478fa34d97c5d4a26926457540b15a5ce871df36c23fd))\n\
+          \n**Multichain Info**\n\n*   **Multichain Portfolio Total:** $5,812,657.35\
+          \ (across 35 Chains)\n*   **Chains with Holdings:**\n    *   [Ethereum](https://etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $5,280,157 (91%)\n    *   [Base](https://basescan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $307,084 (5%)\n    *   [Blast](https://blastscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $128,210 (2%)\n    *   [BNB Chain](https://bscscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $53,511 (1%)\n    *   [Optimism](https://optimistic.etherscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $40,747 (1%)\n    *   [Polygon](https://polygonscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $1,063 (<1%)\n    *   [Arbitrum One](https://arbiscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $662 (<1%)\n    *   [Taiko](https://taikoscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $389 (<1%)\n    *   [World](https://worldscan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $348 (<1%)\n    *   [Scroll](https://scrollscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $281 (<1%)\n    *   [Polygon zkEVM](https://zkevm.polygonscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $82 (<1%)\n    *   [zkSync Era](https://era.zksync.network/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $57 (<1%)\n    *   [Linea](https://lineascan.build/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $30 (<1%)\n    *   [Avax C-Chain](https://snowscan.xyz/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $10 (<1%)\n    *   [Gnosis](https://gnosisscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $10 (<1%)\n    *   [Berachain](https://berascan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $5 (<1%)\n    *   [Abstract](https://abscan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $4 (<1%)\n    *   [Arbitrum Nova](https://nova.arbiscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $2 (<1%)\n    *   [Moonriver](https://moonriver.moonscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $2 (<1%)\n    *   [Moonbeam](https://moonbeam.moonscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $1 (<1%)\n    *   [Ape](https://apescan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $1 (<1%)\n    *   [Unichain](https://uniscan.xyz/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $1 (<1%)\n    *   [Celo](https://celoscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $0 (<1%)\n    *   [opBNB](https://opbnb.bscscan.com/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $0 (<1%)\n    *   [Mantle](https://mantlescan.xyz/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $0 (<1%)\n    *   [Xai](https://xaiscan.io/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $0 (<1%)\n    *   [Sonic](https://sonicscan.org/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045):\
+          \ $0 (<1%)\n    *   BTTC: $0 (0%)\n    *   Wemix: $0 (0%)\n    *   Fraxtal:\
+          \ $0 (0%)\n    *   Cronos: $0 (0%)\n    *   Xdc: $0 (0%)\n    *   Sophon:\
+          \ $0 (0%)\n    *   MemeCoreChain: $0 (0%)\n    *   Swellchain: $0 (0%)\n\
+          \n**ERC-20 Token Holdings (Top 100)**\n\n| Token | Amount | Value | Price\
+          \ |\n|---|---|---|---|\n| [WhiteRock (WHITE)](https://etherscan.io/token/0x9cdf242ef7975d8c68d5c1f5b6905801699b1940?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000,000,000 WHITE | $3,039,300 | $0.000304 |\n| [MOO DENG (MOODENG)](https://etherscan.io/token/0x28561b8a2360f463011c16b6cc0b0cbef8dbbcad?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 30,001,118,566.5468 MOODENG | $738,027.52 | $0.000025 |\n| [Catecoin\
+          \ (CATE)](https://etherscan.io/token/0xf05897cfe3ce9bbbfe0751cbe6b1b2c686848dcb?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,669,700,921,390.7114 CATE | $619,123.43 | <$0.000001 |\n| [KyberNetwork\
+          \ (KNC)](https://etherscan.io/token/0xdd974d5c2e2928dea5f71b9825b8b646686bd200?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 700,008.5314 KNC | $320,815.31 | $0.458302 |\n| [COCORO (COCORO)](https://etherscan.io/token/0xa93d86af16fe83f064e3c0e2f3d129f7b7b002b0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,535,456,040.1753 COCORO | $46,862.12 | $0.000031 |\n| [Manyu (MANYU)](https://etherscan.io/token/0x95af4af910c28e8ece4512bfe46f1f33687424ce?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 2,000,000,069,069 MANYU | $45,572 | <$0.000001 |\n| [Ethereum Name Service\
+          \ (ENS)](https://etherscan.io/token/0xc18360217d8f7ab5e7c516566761ea12ce7f9d72?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,144.0361 ENS | $32,605.03 | $28.5 |\n| [ETHEREUM IS GOOD (EBULL)](https://etherscan.io/token/0x71297312753ea7a2570a5a3278ed70d9a75f4f44?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 250,010,000 EBULL | $31,658.77 | $0.000127 |\n| [Valentine (VALENTINE)](https://etherscan.io/token/0x6dcc10db1b1a7f7a49f6cd3669114aff053295fc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 39,008,397.16 VALENTINE | $29,756.39 | $0.000763 |\n| [OMG Network (OMG)](https://etherscan.io/token/0xd26114cd6ee289accf82350c8d8487fedb8a0c07?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 123,647.0304 OMG | $23,048.05 | $0.186402 |\n| [IAGON (IAG)](https://etherscan.io/token/0x40eb746dee876ac1e78697b7ca85142d178a1fc8?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 150,039.9997 IAG | $22,417.78 | $0.149412 |\n| [Oggie (OGGIE)](https://etherscan.io/token/0x11a001dc777f5bf8a5d63f246664d3bb67be496c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 30,000,000 OGGIE | $20,834.7 | $0.000694 |\n| [USDC (USDC)](https://etherscan.io/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 19,094.7577 USDC | $19,091.13 | $0.99981 |\n| Ether (ETH) | 4.7808 ETH\
+          \ | $18,498.5 | $3,869.35 |\n| [VIX777 (VIX)](https://etherscan.io/token/0x283d480dfd6921055e9c335fc177bf8cb9c94184?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 27,000,000 VIX | $15,965.66 | $0.000591 |\n| [Miniature Woolly Mammoth\
+          \ (WOOLLY)](https://etherscan.io/token/0x9f277edfc463ebaa3d2a6274b01177697e910391?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000,000 WOOLLY | $12,737.07 | $0.001274 |\n| [CateCoin (CATE)](https://etherscan.io/token/0x051fb509e4a775fabd257611eea1efaed8f91359?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 32,500,665,303.8259 CATE | $12,051.21 | <$0.000001 |\n| [Ginnan Neko\
+          \ (GINNAN)](https://etherscan.io/token/0x6d06426a477200c385843a9ac4d4fd55346f2b7b?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 204,855,860,762,516.72 GINNAN | $10,066.21 | <$0.000001 |\n| [Baby Neiro\
+          \ (BABYNEIRO)](https://etherscan.io/token/0x7a2db92624fc80116cc209c9662ee2baa8adbeb1?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 12,650,000,000,000 BABYNEIRO | $9,765.04 | <$0.000001 |\n| [RyuJin (RYU)](https://etherscan.io/token/0xca530408c3e552b020a2300debc7bd18820fb42f?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,001,000,000,000 RYU | $8,396.39 | <$0.000001 |\n| [Dog Food Token\
+          \ (OISHII)](https://etherscan.io/token/0xa1b014878d47c0836ed79163ddec55985adb7023?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 125,000,000 OISHII | $7,228.75 | $0.000058 |\n| [TAIKI INU (TAIKI)](https://etherscan.io/token/0xe533c2480983e46664b15717d6fc02c0a1dad537?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 18,208,817,988.41 TAIKI | $6,962.63 | <$0.000001 |\n| [DogeClub (DOGC)](https://etherscan.io/token/0xda8263d8ce3f726233f8b5585bcb86a3120a58b6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 9,000,000,000,000 DOGC | $6,523.92 | <$0.000001 |\n| [Izzy (IZZY)](https://etherscan.io/token/0x6969f3a3754ab674b48b7829a8572360e98132ba?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 13,628,026,603.6384 IZZY | $6,086.1 | <$0.000001 |\n| [SuperGrok (SUPERGROK)](https://etherscan.io/token/0x00869e8e2e0343edd11314e6ccb0d78d51547ee5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 4,673,710.824 SUPERGROK | $6,015.77 | $0.001287 |\n| [Goatseus Maximus\
+          \ (GOAT)](https://etherscan.io/token/0x5200b34e6a519f289f5258de4554ebd3db12e822?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,321,523,519.2473 GOAT | $5,845.88 | $0.000002 |\n| [GigaChad (GIGACHAD)](https://etherscan.io/token/0xf43f21384d03b5cbbddd58d2de64071e4ce76ab0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 2,154,212,677,662 GIGACHAD | $5,737.17 | <$0.000001 |\n| [GROK (GROK)](https://etherscan.io/token/0x8390a1da07e376ef7add4be859ba74fb83aa02d5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 2,425,306.6457 GROK | $5,005.58 | $0.002064 |\n| [FusionBot (FUSION)](https://etherscan.io/token/0x6230f552a1c825d02e1140ccc0d3f5eeec81ca84?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 50,000 FUSION | $4,928.15 | $0.098563 |\n| [Mars the hippo (MARS)](https://etherscan.io/token/0x407eca46ff515cde14410cdc868c7f82e8c4f41d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 30,000,000 MARS | $4,836.37 | $0.000161 |\n| [Kobushi (KOBUSHI)](https://etherscan.io/token/0xd86830e9c56785e2b703eb0029ae71a943e4d442?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,521,456,900 KOBUSHI | $4,788.97 | <$0.000001 |\n| [Just a chill guy\
+          \ (CHILLGUY)](https://etherscan.io/token/0x60215db40b04fe029c42c56ff2e02221c1f288ef?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000,000.9763 CHILLGUY | $4,745.47 | $0.000475 |\n| [I love puppies\
+          \ (PUPPIES)](https://etherscan.io/token/0xcf91b70017eabde82c9671e30e5502d312ea6eb2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 150,000,234,624.7784 PUPPIES | $4,436.07 | <$0.000001 |\n| [Tigra (TIGRA)](https://etherscan.io/token/0xbe8eff45293598919c99d1cbe5297f2a6935bc64?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 30,000,000 TIGRA | $4,424.4 | $0.000147 |\n| [CASE (CASE)](https://etherscan.io/token/0x52dd39e5d1a5f4b8a622466bbe880b5427bf038e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 8,413,800,000 CASE | $4,370.73 | $0.000001 |\n| [NANJCOIN (NANJ)](https://etherscan.io/token/0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 111,000,000 NANJ | $4,358.11 | $0.000039 |\n| [Oscar (OSCAR)](https://etherscan.io/token/0xebb66a88cedd12bfe3a289df6dfee377f2963f12?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,101,169.8116 OSCAR | $4,206.96 | $0.00382 |\n| [Peanut (PNUT)](https://etherscan.io/token/0xe69ccaaaea33ebfe5b76e0dd373cd9a1a31fd410?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 232,055.3684 PNUT | $3,441.16 | $0.014829 |\n| [Spurdo (SPURDO)](https://etherscan.io/token/0x42069e779838929495ed0152ffc27145ce5c7f98?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 8,413,800,000,000 SPURDO | $3,354.97 | <$0.000001 |\n| [TORN Token (TORN)](https://etherscan.io/token/0x77777feddddffc19ff86db637967013e6c6a116c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 242.7309 TORN | $3,255.02 | $13.41 |\n| [VNDC (VNDC)](https://etherscan.io/token/0x1f3f677ecc58f6a1f9e2cf410df4776a8546b5de?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 80,000,000 VNDC | $3,063.2 | $0.000038 |\n| [Kabosu (KABOSU)](https://etherscan.io/token/0xb3e41d6e0ea14b43bc5de3c314a408af171b03dd?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 11,946,408,130.8127 KABOSU | $2,979.59 | <$0.000001 |\n| [Rastopyry\
+          \ (RASTO)](https://etherscan.io/token/0x5408d3883ec28c2de205064ae9690142b035fed2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 31,011,994.031 RASTO | $2,837.6 | $0.000092 |\n| [ETHARDIO (ETHARDIO)](https://etherscan.io/token/0x846e57af29fd21391919318a044191b8725822c2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 100,000,000 ETHARDIO | $2,733 | $0.000027 |\n| [Medusa (MEDUSA)](https://etherscan.io/token/0xe34ba9cbdf45c9d5dcc80e96424337365b6fe889?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,698,888.1235 MEDUSA | $2,619.95 | $0.000708 |\n| [∑ (∑)](https://etherscan.io/token/0xb772c8745c46c8868610dcecdcefc803cfdf28f5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 4,945,005.0084 ∑ | $2,551.44 | $0.000516 |\n| [Ducky (DUCKY)](https://etherscan.io/token/0x699ec925118567b6475fe495327ba0a778234aaa?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 6,289,135,433.8768 DUCKY | $2,533.45 | <$0.000001 |\n| [Chiba (CHIB)](https://etherscan.io/token/0xa5c45d48d36607741e90c0cca29545a46f5ee121?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 4,000,010,450.0748 CHIB | $2,435.24 | $0.000001 |\n| [CSI888 (CSI)](https://etherscan.io/token/0x888c1a341ce9d9ae9c2d2a75a72a7f0d2551a2dc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 7,867,269.1925 CSI | $2,410.3 | $0.000306 |\n| [Meh (MEH)](https://etherscan.io/token/0x1f38d22f4ec3479c8268c85476b9418716bdb115?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 167,146,371 MEH | $2,363.68 | $0.000014 |\n| [US Degen Index 6900 (DXY)](https://etherscan.io/token/0x6900f7b42fb4abb615c938db6a26d73a9afbed69?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,006,399.7394 DXY | $2,304.52 | $0.00229 |\n| [Lester (LESTER)](https://etherscan.io/token/0xf5809f3348ff40906bb509f936aba43e6d1961ab?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 23,174,898,166.2001 LESTER | $2,258.39 | <$0.000001 |\n| [Cairo (CAIRO)](https://etherscan.io/token/0xc0e10854ab40b2e59a5519c481161a090f1162a0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 172,652,889.0254 CAIRO | $2,204.78 | $0.000013 |\n| [Mars (MARS)](https://etherscan.io/token/0xb8d6196d71cdd7d90a053a7769a077772aaac464?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,608,128,451 MARS | $2,106.65 | $0.000001 |\n| [Biaoqing (BIAO)](https://etherscan.io/token/0x9fd9278f04f01c6a39a9d1c1cd79f7782c6ade08?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 5,000,025 BIAO | $2,086.51 | $0.000417 |\n| [Bird Dog (BIRDDOG)](https://etherscan.io/token/0xf6ce4be313ead51511215f1874c898239a331e37?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 358,886,846.219 BIRDDOG | $2,057.07 | $0.000006 |\n| [Foxe (FOXE)](https://etherscan.io/token/0x378e1be15be6d6d1f23cfe7090b6a77660dbf14d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,777,819,000,000.1777 FOXE | $2,017.82 | <$0.000001 |\n| [KaboChan\
+          \ (KABO)](https://etherscan.io/token/0x0c5cb676e38d6973837b9496f6524835208145a2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 30,000,000 KABO | $1,974.6 | $0.000066 |\n| [HarryPotterObamaSonic10Inu\
+          \ (BITCOIN)](https://etherscan.io/token/0x72e4f9f808c49a2a61de9c5896298920dc4eeea9?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 18,119.6916 BITCOIN | $1,865.02 | $0.102928 |\n| [BEBE (BEBE)](https://etherscan.io/token/0xec21890967a8ceb3e55a3f79dac4e90673ba3c2e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 311,354,089,612.0519 BEBE | $1,775.48 | <$0.000001 |\n| [Milady Cult\
+          \ Coin (CULT)](https://etherscan.io/token/0x0000000000c5dc95539589fbd24be07c6c14eca4?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,150,000 CULT | $1,770.28 | $0.001539 |\n| [Colon (COLON)](https://etherscan.io/token/0xd09eb9099fac55edcbf4965e0a866779ca365a0c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 9,863,464.7762 COLON | $1,678.86 | $0.00017 |\n| [Sanin (SANIN)](https://etherscan.io/token/0xd3c5bdbc6de5ea3899a28f6cd419f29c09fa749f?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,517,250,000 SANIN | $1,664.57 | <$0.000001 |\n| [Peanut (PEANUT)](https://etherscan.io/token/0x4947b72fed037ade3365da050a9be5c063e605a7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 7,964,430,788.2689 PEANUT | $1,662.35 | <$0.000001 |\n| [Bufficorn (BUFFI)](https://etherscan.io/token/0x4c1b1302220d7de5c22b495e78b72f2dd2457d45?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 13,045,349,615.4394 BUFFI | $1,644.68 | <$0.000001 |\n| [ETH Snek (SNEK)](https://etherscan.io/token/0x2025b2f4c7abe6dcb3843c62c32dfa14990a6269?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 261,120,545.9142 SNEK | $1,632 | $0.000006 |\n| [Zygo The Frog (ZYGO)](https://etherscan.io/token/0xee2b9b7e168b5b2d40c507b891c7cfb13a6aaf2b?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 430,648.0335 ZYGO | $1,604.48 | $0.003726 |\n| [Ken (KEN)](https://etherscan.io/token/0x7316d973b0269863bbfed87302e11334e25ea565?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 14,416,747 KEN | $1,546.33 | $0.000107 |\n| [WAGMICOIN (WAGMI)](https://etherscan.io/token/0x5f4ab80c2c7755d565371236f090597921d18ee5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 21,951,667,544.3032 WAGMI | $1,479.37 | <$0.000001 |\n| [BuckTheBunny\
+          \ (BUCK)](https://etherscan.io/token/0x5f531738eb92f34b8550237befdd4247d3525411?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 4,200,690,000 BUCK | $1,418.2 | <$0.000001 |\n| [Bahamas (BAHAMAS)](https://etherscan.io/token/0x426aedbed16726e3f220cb4fed4d4060b95cca46?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 13,063,586,986 BAHAMAS | $1,406.43 | <$0.000001 |\n| [ERC20 (ERC20)](https://etherscan.io/token/0xcdd981ef3330e159029e6e226dbd73d99f868f4d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 930,000 ERC20 | $1,388.69 | $0.001493 |\n| [Moo Cow (MOOCOW)](https://etherscan.io/token/0x67d9c7daecc5b87c3e68ac89f33ee924fac88c05?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,317,885,746.6094 MOOCOW | $1,344.24 | $0.000001 |\n| [Ushi (USHI)](https://etherscan.io/token/0x6dca182ac5e3f99985bc4ee0f726d6472ab1ec55?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 115,725,112.9981 USHI | $1,340.1 | $0.000012 |\n| [LuckysLeprecoin (LUCKYSLP)](https://etherscan.io/token/0x357c915d7c12dc506d13332bb06c932af13e99a0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 16,381,031,081.3476 LUCKYSLP | $1,311.83 | <$0.000001 |\n| [Keeshond\
+          \ (KEE)](https://etherscan.io/token/0xd89cc9d79ad3c49e2cd477a8bbc8e63dee53f82e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 200,000,000 KEE | $1,220 | $0.000006 |\n| [SafeStake Network Token (DVT)](https://etherscan.io/token/0x29fa1fee0f4f0ab0e36ef7ab8d7a35439ec6be75?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 99,999.9 DVT | $1,208.26 | $0.012083 |\n| [CRESO (CRE)](https://etherscan.io/token/0x162433c934aa74ba147e05150b1206b2c922f71d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,993,605.4989 CRE | $0.00 | $0.00 |\n| [CryptoAutos (AUTOS)](https://etherscan.io/token/0xf477ac7719e2e659001455cdda0cc8f3ad10b604?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 88,010.33 AUTOS | $1,117.11 | $0.012693 |\n| [Dogelon (ELON)](https://etherscan.io/token/0x761d38e5ddf6ccf6cf7c55759d5210750b5d60f3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 9,069,170,775.6352 ELON | $1,056.08 | <$0.000001 |\n| [Molly by Matt\
+          \ Furie (MOLLY)](https://etherscan.io/token/0x44048851c18e2ae10953164427300dc986b46815?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,180,464,394.3993 MOLLY | $1,036.7 | <$0.000001 |\n| [Brainlet (BRAINLET)](https://etherscan.io/token/0x0000bdaa645097ef80f9d475f341d0d107a45b3a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 15,000,000 BRAINLET | $978 | $0.000065 |\n| [Pepe (PEPE)](https://etherscan.io/token/0x6982508145454ce325ddbe47a25d4ec3d2311933?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 84,321,755.0955 PEPE | $975.6 | $0.000012 |\n| [TSLA6900 (TSLA)](https://etherscan.io/token/0xa3bc09171c009f05df7f0b8aaa818ee42d8a91bc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 7,560,959,264.3288 TSLA | $926.57 | <$0.000001 |\n| [Mirai (MIRAI)](https://etherscan.io/token/0x81987681443c156f881b70875724cc78b08ada26?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 8,416,900,000 MIRAI | $912.79 | <$0.000001 |\n| [Casinu Inu (CASINU)](https://etherscan.io/token/0x1b54a6fa1360bd71a0f28f77a1d6fba215d498c3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 888,888,888 CASINU | $890.68 | $0.000001 |\n| [Vitalik's Dog (MISHA)](https://etherscan.io/token/0x0ccae1bc46fb018dd396ed4c45565d4cb9d41098?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,886,065,641.7672 MISHA | $852.55 | <$0.000001 |\n| [TORA NEKO (TORA)](https://etherscan.io/token/0x1bb4afbf2ce0c9ec86e6414ad4ba4d9aab1c0de4?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 2,451,154.6841 TORA | $843.17 | $0.000344 |\n| [Squid Game (SQUID)](https://etherscan.io/token/0x561cf9121e89926c27fa1cfc78dfcc4c422937a4?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 2,069,000,000 SQUID | $800.47 | <$0.000001 |\n| [Bellscoin (BELLS)](https://etherscan.io/token/0xba2a3dad197d6fee75471215efd5c30c8c854e11?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 5,000,000 BELLS | $786.86 | $0.000157 |\n| [henlo (HENLO)](https://etherscan.io/token/0x960fce8724aa127184b6d13af41a711755236c77?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,113,000,000,000 HENLO | $764.63 | <$0.000001 |\n| [Kuma (KUMA)](https://etherscan.io/token/0x95ad53e32942c0cf9fd60208964782af8bedb709?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 12,620,700,000 KUMA | $754.71 | <$0.000001 |\n| [Real Smurf Cat (ШАЙЛУШАЙ)](https://etherscan.io/token/0xff836a5821e69066c87e268bc51b849fab94240c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 14,265,225 ШАЙЛУШАЙ | $731.09 | $0.000051 |\n| [Convex Token (CVX)](https://etherscan.io/token/0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 150 CVX | $706.82 | $4.71 |\n| [Feels Good Man (FGM)](https://etherscan.io/token/0x1f19d846d99a0e75581913b64510fe0e18bbc31f?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 94,228,966 FGM | $657.72 | $0.000007 |\n| [Mog Coin (MOG)](https://etherscan.io/token/0xaaee1a9723aadb7afa2810263653a34ba2c21c7a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 394,861,775.8893 MOG | $588.34 | $0.000001 |\n| [Donut (DONUT)](https://etherscan.io/token/0xc0f9bd5fa5698b6505f643900ffa515ea5df54a9?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 150,079.4207 DONUT | $584.8 | $0.003897 |\n| [Fu Bao (FUBAO)](https://etherscan.io/token/0x3e66c9a569efcf704391b54fd1eebd8ca0556960?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 14,919,290,948,770.5 FUBAO | $539.44 | <$0.000001 |\n| [Decentra Box\
+          \ (DBOX)](https://etherscan.io/token/0x56c9d5f1e727de03643af220b5ce52de23d4d973?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 580,000 DBOX | $0.00 | $0.00 |\n| [PAW (PAW)](https://etherscan.io/token/0x419777d3e39aa9b00405724eace5ea57620c9062?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,030,097,979,797 PAW | $524.96 | <$0.000001 |\n| [LABUBU (LABUBU)](https://etherscan.io/token/0xb0c41c08fd2f8782c6944204af085fec9db66c56?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 20,000,000,000 LABUBU | $495.01 | <$0.000001 |\n| [AISignal (AISIG)](https://etherscan.io/token/0x508b27902c6c14972a10a4e413b9cfa449e9cedb?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,000,000 AISIG | $489.13 | $0.000489 |\n| [XRPEPE (XRPEPE)](https://etherscan.io/token/0xde8ae95b1763d8fd23bd37d0eb30116ac60b0116?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 40,042,578.9143 XRPEPE | $438.11 | $0.000011 |\n| [Landwolf (WOLF)](https://etherscan.io/token/0x67466be17df832165f8c80a5a120ccc652bd7e69?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 6,942,000 WOLF | $407.08 | $0.000059 |\n| [ZENF Token (ZENF)](https://etherscan.io/token/0xe9b7b5d5e8d2bcc78884f9f9099bfa42a9e5c1a5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 100,000 ZENF | $398.49 | $0.003985 |\n| [Flying Avocado Cat (FAC)](https://etherscan.io/token/0x1a3a8cf347b2bf5890d3d6a1b981c4f4432c8661?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,799 FAC | $377.71 | $0.099424 |\n| [El Sapo Pepe (PEPE)](https://etherscan.io/token/0x69e15ab0fd240de689d09e4851181a6667968008?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 6,904,200 PEPE | $376.02 | $0.000054 |\n| [Landwolf (WOLF)](https://etherscan.io/token/0x67859a9314b9dca2642023ad8231beaa6cbf1933?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 7,200,000,000 WOLF | $339.09 | <$0.000001 |\n| [XAU9999 (XAU)](https://etherscan.io/token/0x999903502c1c7fea3591fb17315544c6bdde7699?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000,000,000,000 XAU | $324.46 | <$0.000001 |\n| [Measurable Data\
+          \ Token (MDT)](https://etherscan.io/token/0x814e0908b12a99fecf5bc101bb5d0b8b5cdf7d26?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000 MDT | $316.98 | $0.031698 |\n| [The Infinite Garden (ETH)](https://etherscan.io/token/0x5e21d1ee5cf0077b314c381720273ae82378d613?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 70,156 ETH | $311.77 | $0.004444 |\n| [MATRI\U0001D54F (MATRIX)](https://etherscan.io/token/0x362033a25b37603d4c99442501fa7b2852ddb435?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,000,000,000 MATRIX | $302.7 | <$0.000001 |\n| [PaleBlueDot (EARTH)](https://etherscan.io/token/0xbf5badfae2d219943dcd9652d1ce65960b8a1e0c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 0.02 EARTH | $296.23 | $14,811.3 |\n| [lifedog (LFDOG)](https://etherscan.io/token/0x425087bf4969f45818c225ae30f8560ce518582e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000,000 LFDOG | $277.2 | $0.000028 |\n| [MoonRabbit (AAA)](https://etherscan.io/token/0x8c6bf16c273636523c29db7db04396143770f6a0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 702,635,036 AAA | $273.99 | <$0.000001 |\n| [Bite (BITE)](https://etherscan.io/token/0x34103e1190b824a44c6a638438d425cba21143ba?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,498,063.1103 BITE | $267.77 | $0.000179 |\n| [Tether USD (USDT)](https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 256.495 USDT | $256.47 | $0.999914 |\n| [Gnome Child (GNOME)](https://etherscan.io/token/0xa9a660e7d49bbef606d07210ddd6568b70b93dd3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 15,468,253,098.3046 GNOME | $241.96 | <$0.000001 |\n| [Doggo (DOGGO)](https://etherscan.io/token/0x240cd7b53d364a208ed41f8ced4965d11f571b7a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 429,615,219.2162 DOGGO | $237.93 | $0.000001 |\n| [SPX6900 (SPX)](https://etherscan.io/token/0xe0f63a424a4439cbe457d80e4f4b51ad25b2c56c?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 111 SPX | $217.56 | $1.96 |\n| [Aave interest bearing WETH (AWETH)](https://etherscan.io/token/0x030ba81f1c18d280636f32af80b9aad02cf0854e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 0.0515 AWETH | $199.03 | $3,861.48 |\n| [Janny (JANNY)](https://etherscan.io/token/0x5ff46696d6e4896137acb1628b06e28c10ee9634?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 40,000,000 JANNY | $198.8 | $0.000005 |\n| [Smiley (SMILEY)](https://etherscan.io/token/0x4c6e2c495b974b8d4220e370f23c7e0e1da9b644?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 110,000,000,000,000 SMILEY | $182.71 | <$0.000001 |\n| [Butterfly Ai\
+          \ (FLY)](https://etherscan.io/token/0x27c78a7c10a0673c3509ccf63044aab92e09edac?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 100,000 FLY | $161.69 | $0.001617 |\n| [XRP 2.0 (XRP 2.0)](https://etherscan.io/token/0xd61e1cafd50e570356dd5f6d679a7bd0535a7fcf?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 301,870,469,843,667.38 XRP 2.0 | $160.53 | <$0.000001 |\n| [Aurk AI\
+          \ (AURK)](https://etherscan.io/token/0xe5db5128935e3a8a8eaeabe4577fac2b353ae9fa?a=0xd8dA6BF26964aF9D7eEd9e042?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 50,000 AURK | $142.2 | $0.002844 |\n| [Wrapped BTC (WBTC)](https://etherscan.io/token/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 0.00107182 WBTC | $127.01 | $118,502 |\n| [America Party (AMERICA)](https://etherscan.io/token/0xb03eef386a61b5b462051636001485fffdd3d843?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 882,759,000 AMERICA | $124.17 | <$0.000001 |\n| [Andyman (ANDYMAN)](https://etherscan.io/token/0x68aaa0d94ea163b9bbf659dc3766defb4c0ac7be?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 314,159 ANDYMAN | $124.11 | $0.000395 |\n| [KABOSU (KABOSU)](https://etherscan.io/token/0x180000dda70eb7fb7f3e10e52e88ce88f46e3b3a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 180,000,000 KABOSU | $122.61 | $0.000001 |\n| [Catalorian (CATALORIAN)](https://etherscan.io/token/0x8baf5d75cae25c7df6d1e0d26c52d19ee848301a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 257,000 CATALORIAN | $118.98 | $0.000463 |\n| [Uncle Sam (USAM)](https://etherscan.io/token/0x0f79dff082b6f4324528f5ded2d6b8aa6d576277?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 475,903,000.4563 USAM | $113.61 | <$0.000001 |\n| [Spectre (SPCTR)](https://etherscan.io/token/0xb29e475b69f843046a757747943c00dce8a3d982?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 600,000,000 SPCTR | $111.38 | <$0.000001 |\n| [JIAOZI.farm (JIAOZI)](https://etherscan.io/token/0x94939d55000b31b7808904a80aa7bab05ef59ed6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 18,760,590.5535 JIAOZI | $99.36 | $0.000005 |\n| [Meow Meow Coin (MEOW)](https://etherscan.io/token/0x77be1ba1cd2d7a63bffc772d361168cc327dd8bc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 425,710,001 MEOW | $97.18 | <$0.000001 |\n| [FLEX Coin (FLEX)](https://etherscan.io/token/0xfcf8eda095e37a41e002e266daad7efc1579bc0a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 589.6022 FLEX | $95.94 | $0.162717 |\n| [Cybertruck (TRUCK)](https://etherscan.io/token/0xab5d6508e4726141d29c6074ab366afa03f4ec8d?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,053,031.7246 TRUCK | $91.38 | $0.00003 |\n| [Hemule (HEMULE)](https://etherscan.io/token/0xeaa63125dd63f10874f99cdbbb18410e7fc79dd3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 31,795.69 HEMULE | $91.31 | $0.002872 |\n| [Decentralization obligatory,\
+          \ practicality essential (DOPE)](https://etherscan.io/token/0x85122dc2c0ac24e8aacaff4a4ccfcbdf36e80f60?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 2,445,424 DOPE | $89.75 | $0.000037 |\n| [Quantum DAO (QTDAO)](https://etherscan.io/token/0x26869045311fc5e5353eadcfa654cd47ddc20356?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 316,150,265.4 QTDAO | $0.00 | $0.00 |\n| [LoopringCoin V2 (LRC)](https://etherscan.io/token/0xbbbbca6a901c926f240b89eacb641d8aec7aeafd?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,000.3219 LRC | $88.65 | $0.08862 |\n| [Hana (HANA)](https://etherscan.io/token/0xb3912b20b3abc78c15e85e13ec0bf334fbb924f7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 4,082,934.4259 HANA | $78.6 | $0.000019 |\n| [Baby Neiro (BABYNEIRO)](https://etherscan.io/token/0xbabe3ce7835665464228df00b03246115c30730a?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 291,005,069.881 BABYNEIRO | $77.73 | <$0.000001 |\n| [ACENT (ACE)](https://etherscan.io/token/0xec5483804e637d45cde22fa0869656b64b5ab1ab?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 275,000 ACE | $77.37 | $0.000281 |\n| [Joe Coin (JOE)](https://etherscan.io/token/0x76e222b07c53d28b89b0bac18602810fc22b49a8?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,937.8552 JOE | $74.35 | $0.038366 |\n| [HOLD (EARN)](https://etherscan.io/token/0x0b61c4f33bcdef83359ab97673cb5961c6435f4e?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 34,936.1278 EARN | $71.88 | $0.002057 |\n| [SHIBA INU (SHIB)](https://etherscan.io/token/0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 5,390,989.2578 SHIB | $70.51 | $0.000013 |\n| [World Liberty Financial\
+          \ (WLF)](https://etherscan.io/token/0xda0c0d0a0ff8262f3ee9ee8a712b988df897be65?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 4,174,594,570,253.6987 WLF | $64.53 | <$0.000001 |\n| [Gala (GALA)](https://etherscan.io/token/0xd1d2eb1b1e90b638588728b4130137d262c87cae?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 3,386.9462 GALA | $56.24 | $0.016605 |\n| [Matter (MTR)](https://etherscan.io/token/0xaa6c7d24d03769370e1c31f7c4edf3ebe10b7cf7?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 489 MTR | $55.74 | $0.113991 |\n| [Melania Trump (MELANIA)](https://etherscan.io/token/0x8cefbeb2172a9382753de431a493e21ba9694004?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000 MELANIA | $55.28 | $0.005528 |\n| [AVA (AVA)](https://etherscan.io/token/0xa6c0c097741d55ecd9a3a7def3a8253fd022ceb9?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 86.91 AVA | $51.02 | $0.587091 |\n| [Turbo (TURBO)](https://etherscan.io/token/0xa35923162c49cf95e6bf26623385eb431ad920d3?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 10,000 TURBO | $50.64 | $0.005064 |\n| [Messier (M87)](https://etherscan.io/token/0x80122c6a83c8202ea365233363d3f4837d13e888?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 878,787 M87 | $49.09 | $0.000056 |\n| [Ishi (ISHI)](https://etherscan.io/token/0x85e0b9d3e7e4dba7e59090c533906d0e9211d8b6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 200,000,000 ISHI | $48.57 | <$0.000001 |\n| [Matic Token (MATIC)](https://etherscan.io/token/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 214.9151 MATIC | $47.58 | $0.221395 |\n| [Fable Of The Dragon (TYRANT)](https://etherscan.io/token/0x8ee325ae3e54e83956ef2d5952d3c8bc1fa6ec27?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,214 TYRANT | $47.26 | $0.038927 |\n| [Byte (BYTE)](https://etherscan.io/token/0xde342a3e269056fc3305f9e315f4c40d917ba521?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 9,594,270.6883 BYTE | $46.34 | $0.000005 |\n| [GoMining Token (GMT)](https://etherscan.io/token/0x7ddc52c4de30e94be3a6a0a2b259b2850f421989?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 94.3062 GMT | $45.43 | $0.481722 |\n| [MONEY PARTY (PARTY)](https://etherscan.io/token/0x314bd765cab4774b2e547eb0aa15013e03ff74d2?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 251,091.1715 PARTY | $41.85 | $0.000167 |\n| [Kudoe (KDOE)](https://etherscan.io/token/0x5f190f9082878ca141f858c1c90b4c59fe2782c5?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 100,000 KDOE | $40.86 | $0.000409 |\n| [MetaZooMee (MZM)](https://etherscan.io/token/0x61b57bdc01e3072fab3e9e2f3c7b88d482734e05?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1,000,000 MZM | $39.92 | $0.00004 |\n| [Memecoin (MEME)](https://etherscan.io/token/0xb131f4a55907b10d1f0a50d8ab8fa09ec342cd74?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 20,907 MEME | $37.71 | $0.001804 |\n| [Book of Ethereum (BOOE)](https://etherscan.io/token/0x289ff00235d2b98b0145ff5d4435d3e92f9540a6?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 179 BOOE | $36.44 | $0.203583 |\n| [FUD.finance (FUD)](https://etherscan.io/token/0x2688213fedd489762a281a67ae4f2295d8e17ecc?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 239.4339 FUD | $0.00 | $0.00 |\n| [HarryPotterTrumpHomerSimpson777Inu\
+          \ (ETHEREUM)](https://etherscan.io/token/0x24249b5a869a445c9b0ce269a08d73c618df9d21?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 162,822.026 ETHEREUM | $35.93 | $0.000221 |\n| [New Ancient DNA (REMUS)](https://etherscan.io/token/0x391883a5d2438716796336f2e420a92e52b45efe?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 353,102,088,496.7487 REMUS | $34.36 | <$0.000001 |\n| [ChainLink Token\
+          \ (LINK)](https://etherscan.io/token/0x514910771af9ca656af840dff83e8264ecf986ca?a=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045)\
+          \ | 1.7778 LINK | $32.2 | $18.11 |\n| [PREME Token (PREME)](https://ethers"
+direct_address_call:
+  input:
+    tool: get_address_history
+    tool_arguments:
+      chain: base
+      address: '0x742d35Cc6639C0532fEa3BcdE3524A0be79C3b7B'
+  output:
+    response: ''
+    data:
+      status: success
+      data:
+        processed_content: "**Address:** [0x742d35Cc6639C0532fEa3BcdE3524A0be79C3b7B](https://basescan.org/address/0x742d35Cc6639C0532fEa3BcdE3524A0be79C3b7B)\n\
+          \n**Overview**\n\n*   **ETH Balance:** 0 ETH\n*   **ETH Value:** $0.00\n\
+          \n**More Info**\n\n*   **Private Name Tags:** Add\n*   **Transactions Sent:**\n\
+          \    *   Latest: N/A\n    *   First: N/A\n*   **Funded By:** N/A\n\n**Multichain\
+          \ Info**\n\n*   **Multichain Portfolio Value:** $0 (across 35 chains)\n\n\
+          **Transactions**\n\n*   There are no matching entries.\n\n**Token Transfers\
+          \ (ERC-20)**\n\n*   There are no matching entries.\n\n**Internal Transactions**\n\
+          \n*   No internal transactions found.\n\n**Contract Details**\n\n*   **Contract\
+          \ Name:** 0 ETH\n*   **Compiler Version:** 0\n*   **Optimization Enabled:**\
+          \ 0 ETH\n*   **Other Settings:** -NA-\n\n**Blocks Produced**\n\n*   No blocks\
+          \ produced by this address.\n\n**Uncles Produced**\n\n*   No uncles produced\
+          \ by this address.\n\n**Withdrawals**\n\n*   No withdrawals found.\n\n**Deposits**\n\
+          \n*   No deposits found.\n\n**Multichain Portfolio Details (35 Chains)**\n\
+          \n*   **Last updated:** less than 1 sec ago\n*   **Chains with 0 balance:**\n\
+          \    *   Ethereum (0)\n    *   BNB Chain (0)\n    *   Polygon (0)\n    *\
+          \   Arbitrum One (0)\n    *   Optimism (0)\n    *   Base (0)\n    *   BTTC\
+          \ (0)\n    *   Celo (0)\n    *   Gnosis (0)\n    *   Polygon zkEVM (0)\n\
+          \    *   Linea (0)\n    *   Moonbeam (0)\n    *   Moonriver (0)\n    * \
+          \  Arbitrum Nova (0)\n    *   Scroll (0)\n    *   Wemix (0)\n    *   Avax\
+          \ C-Chain (0)\n    *   zkSync Era (0)\n    *   opBNB (0)\n    *   Fraxtal\
+          \ (0)\n    *   Blast (0)\n    *   Cronos (0)\n    *   Mantle (0)\n    *\
+          \   Taiko (0)\n    *   Xai (0)\n    *   World (0)\n    *   Xdc (0)\n   \
+          \ *   Ape (0)\n    *   Sophon (0)\n    *   Unichain (0)\n    *   Berachain\
+          \ (0)\n    *   MemeCoreChain (0)\n    *   Swellchain (0)\n    *   Sonic\
+          \ (0)\n    *   Abstract (0)"
+natural_language_token_transfers:
+  input:
+    query: Show recent token transfers for 0x55d398326f99059ff775485246999027b3197955
+      on BSC
+    raw_data_only: false
+  output:
+    response: '**Token Information**
+
+
+      *   **Name:** Binance-Peg BSC-USD (BSC-USD)
+
+      *   **Reputation:** OK (Evaluated to be a token of public interest by BscScan)
+
+      *   **Contract Address:** [0x55d398326f99059ff775485246999027b3197955](https://bscscan.com/address/0x55d398326f99059ff775485246999027b3197955)
+
+      *   **Decimals:** 18
+
+      *   **Type:** BEP-20, Cross-Chain, Stablecoin, Binance-Pegged
+
+      *   **Description:** A pegged token by Binance which gives you the joint benefits
+      of open blockchain technology and traditional currency by converting your cash
+      into a stable digital currency equivalent.
+
+      *   **Note:** This token''s displayed name symbol does not match its contract''s
+      Name and Symbol function.
+
+
+      **Overview**
+
+
+      *   **Max Total Supply:** 6,784,993,699.453934 BSC-USD (Circulating Supply:
+      6,783,382,586.457622)
+
+      *   **Holders:** 34,643,555 (0.008%)
+
+      *   **Total Transfers:** More than 3,207,182,843
+
+
+      **Market**
+
+
+      *   **Price:** $0.9999 @ 0.001237 BNB
+
+      *   **Onchain Market Cap:** $6,784,315,200.08
+
+      *   **Circulating Supply Market Cap:** $163,736,442,478.00
+
+      *   **Volume (24H):** $91,922,013,360.00
+
+      *   **Market Capitalization:** $163,736,442,478.00
+
+      *   **Circulating Supply:** 163,751,876,809.00 BSC-USD
+
+      *   **Market Data Source:** Coinmarketcap
+
+
+      **Contract Details**
+
+
+      *   **Contract Source Code:** Verified (Exact Match)
+
+      *   **Contract Name:** BEP20USDT
+
+      *   **Compiler Version:** v0.5.16+commit.9c3226ce
+
+      *   **Optimization Enabled:** Yes with 200 runs
+
+      *   **Other Settings:** default evmVersion, Apache-2.0 license, Audited
+
+      *   **Contract Security Audit:** Etherauthority - Apr 3rd, 2025 - [Security
+      Audit Report](https://etherauthority.io/wp-content/uploads/2025/04/Binance-BSC-USD.pdf)
+
+
+      **Recent Token Transfers (Showing the last 100k records)**
+
+
+      | Transaction Hash | Method | Block | Age | From | To | Amount |
+
+      |---|---|---|---|---|---|---|
+
+      | [0x8bcdfa22b7bdc44c22e203aaa0b0394a77e062fe655ae284676d6a88a3cec444](https://bscscan.com/tx/0x8bcdfa22b7bdc44c22e203aaa0b0394a77e062fe655ae284676d6a88a3cec444)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+      | [0xfB545e4F...E64a19812](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xfb545e4f1679aaaa31ae4024ddc2b9fe64a19812)
+      | 400.305909682115276105$400.27 |
+
+      | [0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2](https://bscscan.com/tx/0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+      | 400$399.96 |
+
+      | [0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2](https://bscscan.com/tx/0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xfB545e4F...E64a19812](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xfb545e4f1679aaaa31ae4024ddc2b9fe64a19812)
+      | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | 400$399.96 |
+
+      | [0xd7f9f80ffaacf4b49bd0c534d0a5288ac7afaae13a65ec973dd54761aa083c45](https://bscscan.com/tx/0xd7f9f80ffaacf4b49bd0c534d0a5288ac7afaae13a65ec973dd54761aa083c45)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+      | [0x22A51993...5466376E0](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x22a51993e047a57e4200cca22e3d0855466376e0)
+      | 58$57.99 |
+
+      | [0x5e453df4a75b1071ba1f95348482b59a03e861f911cf636179cfba3e05b8a17f](https://bscscan.com/tx/0x5e453df4a75b1071ba1f95348482b59a03e861f911cf636179cfba3e05b8a17f)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+      | [0xBAa602A1...30b5742D6](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xbaa602a1f4d2feeb6ef175b666e834a30b5742d6)
+      | 10$10.00 |
+
+      | [0xef385447c16acdea918816e59dd150d191d2a523b8c9ed0c50644e39dbe858ad](https://bscscan.com/tx/0xef385447c16acdea918816e59dd150d191d2a523b8c9ed0c50644e39dbe858ad)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 4](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x0639556f03714a74a5feeaf5736a4a64ff70d206)
+      | [0x97Ce7517...3043603F7](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x97ce75179c25a28738b1bcc332d62a43043603f7)
+      | 10$10.00 |
+
+      | [0x13fc619b1a2f92caf8c0bcf30aae5d4df9fba5692529c2a28532e1a0692f97e3](https://bscscan.com/tx/0x13fc619b1a2f92caf8c0bcf30aae5d4df9fba5692529c2a28532e1a0692f97e3)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+      | [0xD9b2CDd2...952266f13](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xd9b2cdd2d5291d99d2a9964547e09e5952266f13)
+      | 10$10.00 |
+
+      | [0xff54f26f9a0d3dba853a5fbe3d595bbdf6d4d557f467b0cbf331dfedda4c1e3f](https://bscscan.com/tx/0xff54f26f9a0d3dba853a5fbe3d595bbdf6d4d557f467b0cbf331dfedda4c1e3f)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Binance: Hot Wallet 11](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x161ba15a5f335c9f06bb5bbb0a9ce14076fbb645)
+      | [0xc555f286...3a9BE94C2](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xc555f28630b48c1a0e84ae02412dbdd3a9be94c2)
+      | 13.46$13.46 |
+
+      | [0xa7ae75ffecf95916b06daafffc7ec837ffa0625ea5733555a0298542d2b76ff2](https://bscscan.com/tx/0xa7ae75ffecf95916b06daafffc7ec837ffa0625ea5733555a0298542d2b76ff2)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [0xFF51157F...81dD35035](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xff51157f52701d3d5acc2978ea230bf81dd35035)
+      | [0x0dfaAb7c...7A27d418b](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x0dfaab7cda3bca3d51cee52efe37edc7a27d418b)
+      | 5$5.00 |
+
+      | [0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7](https://bscscan.com/tx/0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | [0xCb648e73...34Ad82CC3](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xcb648e73ac79b39cffca92615503b7034ad82cc3)
+      | 1,000.8001732456384058$1,000.70 |
+
+      | [0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7](https://bscscan.com/tx/0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xA0c5B17A...1d8B0B2F2](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xa0c5b17a5be4e4c991e891b757587371d8b0b2f2)
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | 1,000.8001732456384058$1,000.70 |
+
+      | [0xe2e370b8999d9885a49e1951ace1c35d7beda2d74f7e74da1dc668720f00655c](https://bscscan.com/tx/0xe2e370b8999d9885a49e1951ace1c35d7beda2d74f7e74da1dc668720f00655c)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [0xc5Ac784C...F46001dD8](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xc5ac784cbf9c4ebf9404aee9173c08bf46001dd8)
+      | [0xD408Cd30...0D994667E](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xd408cd308294cd1575db8b0aa651a730d994667e)
+      | 100$99.99 |
+
+      | [0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb](https://bscscan.com/tx/0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | [0x172fcD41...4f546f849](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x172fcd41e0913e95784454622d1c3724f546f849)
+      | 57.088003884745718323$57.08 |
+
+      | [0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb](https://bscscan.com/tx/0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+      | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | 57.088003884745718323$57.08 |
+
+      | [0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc](https://bscscan.com/tx/0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | [0xF38a2E3A...B439Fa14B](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf38a2e3a8cdd6871a1d492dbd56c03bb439fa14b)
+      | 51.426$51.42 |
+
+      | [0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc](https://bscscan.com/tx/0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x75606dae...Dc2820A40](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x75606dae9d4b97b68cd9462d2ebff8ddc2820a40)
+      | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | 51.426$51.42 |
+
+      | [0xb4f9f5693e4eb5a58ef3dcdf929937147ca8f811beb38c7a4a519756f600e1cd](https://bscscan.com/tx/0xb4f9f5693e4eb5a58ef3dcdf929937147ca8f811beb38c7a4a519756f600e1cd)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [0x04b076e2...7CFEF7Aac](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x04b076e2844ea8401cb820fe3af84df7cfef7aac)
+      | [0xcF402a4C...5e13dE7f7](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xcf402a4c13df61827fd8c5529a8e1735e13de7f7)
+      | 2,000$1,999.80 |
+
+      | [0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843](https://bscscan.com/tx/0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xcA852767...5E20c78Bd](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xca852767b43a395ac1dd54737193eba5e20c78bd)
+      | [0x55FE5567...9a771A1c0](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x55fe55677e8398ef5c92f01b780403c9a771a1c0)
+      | 0.046146349978361912$0.05 |
+
+      | [0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843](https://bscscan.com/tx/0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xebe60743...3ba96a85e](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xebe60743a843002e061fac29f93dde53ba96a85e)
+      | [0xcA852767...5E20c78Bd](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xca852767b43a395ac1dd54737193eba5e20c78bd)
+      | 0.046146349978361912$0.05 |
+
+      | [0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d](https://bscscan.com/tx/0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d)
+      | 0x8f9fa5db | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | [0x73D8bD54...0644946Db](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x73d8bd54f7cf5fab43fe4ef40a62d390644946db)
+      | 79.146202408171495547$79.14 |
+
+      | [0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d](https://bscscan.com/tx/0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d)
+      | 0x8f9fa5db | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0x172fcD41...4f546f849](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x172fcd41e0913e95784454622d1c3724f546f849)
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | 79.146202408171495547$79.14 |
+
+      | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xde9e4FE3...470FFCA73](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xde9e4fe32b049f821c7f3e9802381aa470ffca73)
+      | [0x3bE400E8...9C576EffC](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x3be400e891786c958c22e121abe71599c576effc)
+      | 100$99.99 |
+
+      | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | [0xde9e4FE3...470FFCA73](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xde9e4fe32b049f821c7f3e9802381aa470ffca73)
+      | 100$99.99 |
+
+      | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xEB2add0C...78FD96b4A](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xeb2add0c881c60910212dcab70b866978fd96b4a)
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | 100$99.99 |
+
+      | [0x30be9f12a2b1f5d0cded42174d23ece5f8160f32c9034a326b93e5a12029f3ea](https://bscscan.com/tx/0x30be9f12a2b1f5d0cded42174d23ece5f8160f32c9034a326b93e5a12029f3ea)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xF38a2E3A...B439Fa14B](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf38a2e3a8cdd6871a1d492dbd56c03bb439fa14b)
+      | [0xa1A60f05...4579A53B6](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xa1a60f05fd5160b00af34c74712238a4579a53b6)
+      | 250.093163516588561782$250.07 |'
+    data: &id001
+      status: success
+      data:
+        processed_content: '**Token Information**
+
+
+          *   **Name:** Binance-Peg BSC-USD (BSC-USD)
+
+          *   **Reputation:** OK (Evaluated to be a token of public interest by BscScan)
+
+          *   **Contract Address:** [0x55d398326f99059ff775485246999027b3197955](https://bscscan.com/address/0x55d398326f99059ff775485246999027b3197955)
+
+          *   **Decimals:** 18
+
+          *   **Type:** BEP-20, Cross-Chain, Stablecoin, Binance-Pegged
+
+          *   **Description:** A pegged token by Binance which gives you the joint
+          benefits of open blockchain technology and traditional currency by converting
+          your cash into a stable digital currency equivalent.
+
+          *   **Note:** This token''s displayed name symbol does not match its contract''s
+          Name and Symbol function.
+
+
+          **Overview**
+
+
+          *   **Max Total Supply:** 6,784,993,699.453934 BSC-USD (Circulating Supply:
+          6,783,382,586.457622)
+
+          *   **Holders:** 34,643,555 (0.008%)
+
+          *   **Total Transfers:** More than 3,207,182,843
+
+
+          **Market**
+
+
+          *   **Price:** $0.9999 @ 0.001237 BNB
+
+          *   **Onchain Market Cap:** $6,784,315,200.08
+
+          *   **Circulating Supply Market Cap:** $163,736,442,478.00
+
+          *   **Volume (24H):** $91,922,013,360.00
+
+          *   **Market Capitalization:** $163,736,442,478.00
+
+          *   **Circulating Supply:** 163,751,876,809.00 BSC-USD
+
+          *   **Market Data Source:** Coinmarketcap
+
+
+          **Contract Details**
+
+
+          *   **Contract Source Code:** Verified (Exact Match)
+
+          *   **Contract Name:** BEP20USDT
+
+          *   **Compiler Version:** v0.5.16+commit.9c3226ce
+
+          *   **Optimization Enabled:** Yes with 200 runs
+
+          *   **Other Settings:** default evmVersion, Apache-2.0 license, Audited
+
+          *   **Contract Security Audit:** Etherauthority - Apr 3rd, 2025 - [Security
+          Audit Report](https://etherauthority.io/wp-content/uploads/2025/04/Binance-BSC-USD.pdf)
+
+
+          **Recent Token Transfers (Showing the last 100k records)**
+
+
+          | Transaction Hash | Method | Block | Age | From | To | Amount |
+
+          |---|---|---|---|---|---|---|
+
+          | [0x8bcdfa22b7bdc44c22e203aaa0b0394a77e062fe655ae284676d6a88a3cec444](https://bscscan.com/tx/0x8bcdfa22b7bdc44c22e203aaa0b0394a77e062fe655ae284676d6a88a3cec444)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+          | [0xfB545e4F...E64a19812](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xfb545e4f1679aaaa31ae4024ddc2b9fe64a19812)
+          | 400.305909682115276105$400.27 |
+
+          | [0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2](https://bscscan.com/tx/0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+          | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+          | 400$399.96 |
+
+          | [0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2](https://bscscan.com/tx/0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0xfB545e4F...E64a19812](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xfb545e4f1679aaaa31ae4024ddc2b9fe64a19812)
+          | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+          | 400$399.96 |
+
+          | [0xd7f9f80ffaacf4b49bd0c534d0a5288ac7afaae13a65ec973dd54761aa083c45](https://bscscan.com/tx/0xd7f9f80ffaacf4b49bd0c534d0a5288ac7afaae13a65ec973dd54761aa083c45)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+          | [0x22A51993...5466376E0](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x22a51993e047a57e4200cca22e3d0855466376e0)
+          | 58$57.99 |
+
+          | [0x5e453df4a75b1071ba1f95348482b59a03e861f911cf636179cfba3e05b8a17f](https://bscscan.com/tx/0x5e453df4a75b1071ba1f95348482b59a03e861f911cf636179cfba3e05b8a17f)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+          | [0xBAa602A1...30b5742D6](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xbaa602a1f4d2feeb6ef175b666e834a30b5742d6)
+          | 10$10.00 |
+
+          | [0xef385447c16acdea918816e59dd150d191d2a523b8c9ed0c50644e39dbe858ad](https://bscscan.com/tx/0xef385447c16acdea918816e59dd150d191d2a523b8c9ed0c50644e39dbe858ad)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [Bitget 4](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x0639556f03714a74a5feeaf5736a4a64ff70d206)
+          | [0x97Ce7517...3043603F7](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x97ce75179c25a28738b1bcc332d62a43043603f7)
+          | 10$10.00 |
+
+          | [0x13fc619b1a2f92caf8c0bcf30aae5d4df9fba5692529c2a28532e1a0692f97e3](https://bscscan.com/tx/0x13fc619b1a2f92caf8c0bcf30aae5d4df9fba5692529c2a28532e1a0692f97e3)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+          | [0xD9b2CDd2...952266f13](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xd9b2cdd2d5291d99d2a9964547e09e5952266f13)
+          | 10$10.00 |
+
+          | [0xff54f26f9a0d3dba853a5fbe3d595bbdf6d4d557f467b0cbf331dfedda4c1e3f](https://bscscan.com/tx/0xff54f26f9a0d3dba853a5fbe3d595bbdf6d4d557f467b0cbf331dfedda4c1e3f)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [Binance: Hot Wallet 11](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x161ba15a5f335c9f06bb5bbb0a9ce14076fbb645)
+          | [0xc555f286...3a9BE94C2](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xc555f28630b48c1a0e84ae02412dbdd3a9be94c2)
+          | 13.46$13.46 |
+
+          | [0xa7ae75ffecf95916b06daafffc7ec837ffa0625ea5733555a0298542d2b76ff2](https://bscscan.com/tx/0xa7ae75ffecf95916b06daafffc7ec837ffa0625ea5733555a0298542d2b76ff2)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [0xFF51157F...81dD35035](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xff51157f52701d3d5acc2978ea230bf81dd35035)
+          | [0x0dfaAb7c...7A27d418b](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x0dfaab7cda3bca3d51cee52efe37edc7a27d418b)
+          | 5$5.00 |
+
+          | [0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7](https://bscscan.com/tx/0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+          | [0xCb648e73...34Ad82CC3](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xcb648e73ac79b39cffca92615503b7034ad82cc3)
+          | 1,000.8001732456384058$1,000.70 |
+
+          | [0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7](https://bscscan.com/tx/0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [0xA0c5B17A...1d8B0B2F2](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xa0c5b17a5be4e4c991e891b757587371d8b0b2f2)
+          | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+          | 1,000.8001732456384058$1,000.70 |
+
+          | [0xe2e370b8999d9885a49e1951ace1c35d7beda2d74f7e74da1dc668720f00655c](https://bscscan.com/tx/0xe2e370b8999d9885a49e1951ace1c35d7beda2d74f7e74da1dc668720f00655c)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [0xc5Ac784C...F46001dD8](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xc5ac784cbf9c4ebf9404aee9173c08bf46001dd8)
+          | [0xD408Cd30...0D994667E](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xd408cd308294cd1575db8b0aa651a730d994667e)
+          | 100$99.99 |
+
+          | [0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb](https://bscscan.com/tx/0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+          | [0x172fcD41...4f546f849](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x172fcd41e0913e95784454622d1c3724f546f849)
+          | 57.088003884745718323$57.08 |
+
+          | [0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb](https://bscscan.com/tx/0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+          | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+          | 57.088003884745718323$57.08 |
+
+          | [0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc](https://bscscan.com/tx/0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+          | [0xF38a2E3A...B439Fa14B](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf38a2e3a8cdd6871a1d492dbd56c03bb439fa14b)
+          | 51.426$51.42 |
+
+          | [0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc](https://bscscan.com/tx/0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0x75606dae...Dc2820A40](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x75606dae9d4b97b68cd9462d2ebff8ddc2820a40)
+          | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+          | 51.426$51.42 |
+
+          | [0xb4f9f5693e4eb5a58ef3dcdf929937147ca8f811beb38c7a4a519756f600e1cd](https://bscscan.com/tx/0xb4f9f5693e4eb5a58ef3dcdf929937147ca8f811beb38c7a4a519756f600e1cd)
+          | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+          | [0x04b076e2...7CFEF7Aac](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x04b076e2844ea8401cb820fe3af84df7cfef7aac)
+          | [0xcF402a4C...5e13dE7f7](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xcf402a4c13df61827fd8c5529a8e1735e13de7f7)
+          | 2,000$1,999.80 |
+
+          | [0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843](https://bscscan.com/tx/0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [0xcA852767...5E20c78Bd](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xca852767b43a395ac1dd54737193eba5e20c78bd)
+          | [0x55FE5567...9a771A1c0](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x55fe55677e8398ef5c92f01b780403c9a771a1c0)
+          | 0.046146349978361912$0.05 |
+
+          | [0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843](https://bscscan.com/tx/0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [0xebe60743...3ba96a85e](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xebe60743a843002e061fac29f93dde53ba96a85e)
+          | [0xcA852767...5E20c78Bd](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xca852767b43a395ac1dd54737193eba5e20c78bd)
+          | 0.046146349978361912$0.05 |
+
+          | [0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d](https://bscscan.com/tx/0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d)
+          | 0x8f9fa5db | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+          | [0x73D8bD54...0644946Db](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x73d8bd54f7cf5fab43fe4ef40a62d390644946db)
+          | 79.146202408171495547$79.14 |
+
+          | [0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d](https://bscscan.com/tx/0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d)
+          | 0x8f9fa5db | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [0x172fcD41...4f546f849](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x172fcd41e0913e95784454622d1c3724f546f849)
+          | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+          | 79.146202408171495547$79.14 |
+
+          | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [0xde9e4FE3...470FFCA73](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xde9e4fe32b049f821c7f3e9802381aa470ffca73)
+          | [0x3bE400E8...9C576EffC](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x3be400e891786c958c22e121abe71599c576effc)
+          | 100$99.99 |
+
+          | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+          | [0xde9e4FE3...470FFCA73](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xde9e4fe32b049f821c7f3e9802381aa470ffca73)
+          | 100$99.99 |
+
+          | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+          | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs
+          ago | [0xEB2add0C...78FD96b4A](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xeb2add0c881c60910212dcab70b866978fd96b4a)
+          | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+          | 100$99.99 |
+
+          | [0x30be9f12a2b1f5d0cded42174d23ece5f8160f32c9034a326b93e5a12029f3ea](https://bscscan.com/tx/0x30be9f12a2b1f5d0cded42174d23ece5f8160f32c9034a326b93e5a12029f3ea)
+          | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) |
+          17 secs ago | [0xF38a2E3A...B439Fa14B](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf38a2e3a8cdd6871a1d492dbd56c03bb439fa14b)
+          | [0xa1A60f05...4579A53B6](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xa1a60f05fd5160b00af34c74712238a4579a53b6)
+          | 250.093163516588561782$250.07 |'
+direct_token_transfers_call:
+  input:
+    tool: get_erc20_token_transfers
+    tool_arguments:
+      chain: bsc
+      address: '0x55d398326f99059ff775485246999027b3197955'
+  output:
+    response: ''
+    data: *id001
+natural_language_token_holders:
+  input:
+    query: Get top holders for token 0xEF22cb48B8483dF6152e1423b19dF5553BbD818b on
+      Base
+    raw_data_only: false
+  output:
+    response: '**Token Information: Heurist (HEU)**
+
+
+      *   **Contract Address:** [0xEF22cb48B8483dF6152e1423b19dF5553BbD818b](https://basescan.org/address/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b)
+
+      *   **Decimals:** 18
+
+      *   **Reputation:** NEUTRAL (Some information on this token has been verified
+      by BaseScan.)
+
+      *   **Category:** ERC-20, Artificial Intelligence
+
+
+      **Overview**
+
+
+      *   **Max Total Supply:** 165,753,771.393111126850438475 HEU
+
+      *   **Holders:** 46,437
+
+      *   **Total Transfers:** - (Data not provided in numerical format)
+
+
+      **Market Data**
+
+
+      *   **Price:** $0.0631 @ 0.000016 ETH (-8.61%)
+
+      *   **Onchain Market Cap:** $10,463,372.57
+
+      *   **Circulating Supply Market Cap:** $10,300,033.00
+
+      *   **Volume (24H):** $1,469,302.00
+
+      *   **Circulating Supply:** 163,641,831.00 HEU
+
+      *   **Market Data Source:** Coinmarketcap
+
+
+      **Project Description**
+
+
+      Heurist is a decentralized GPU cloud for AI, offering serverless architecture
+      and elastic scaling for DePIN. It''s designed for GPU-intensive tasks like AI
+      inference and model fine-tuning, with a layer 2 blockchain for robust incentives.
+
+
+      **Official Links**
+
+
+      *   **Website:** [https://www.heurist.ai/](https://www.heurist.ai/)
+
+      *   **CoinMarketCap:** [https://coinmarketcap.com/currencies/heurist-ai/](https://coinmarketcap.com/currencies/heurist-ai/)
+
+      *   **CoinGecko:** [https://www.coingecko.com/en/coins/heurist/](https://www.coingecko.com/en/coins/heurist/)
+
+      *   **Email:** team@heurist.ai
+
+      *   **Blog:** [https://heuristai.medium.com/](https://heuristai.medium.com/)
+
+      *   **X (Twitter):** [https://x.com/heurist_ai](https://x.com/heurist_ai)
+
+      *   **Github:** [https://github.com/heurist-network](https://github.com/heurist-network)
+
+      *   **Telegram:** [https://t.me/heuristsupport](https://t.me/heuristsupport)
+
+      *   **LinkedIn:** [https://www.linkedin.com/company/heurist-ai/](https://www.linkedin.com/company/heurist-ai/)
+
+      *   **Whitepaper:** [https://docs.heurist.ai/protocol-overview/litepaper](https://docs.heurist.ai/protocol-overview/litepaper)
+
+
+      **Contract Details**
+
+
+      *   **Contract Name:** OptimismMintableERC20
+
+      *   **Compiler Version:** v0.8.15+commit.e14f2714
+
+      *   **Optimization Enabled:** Yes with 999999 runs
+
+      *   **Other Settings:** default evmVersion
+
+      *   **Similar Match Source Code:** This contract matches the deployed Bytecode
+      of the Source Code for Contract [0x38815A4455921667d673B4cb3d48F0383eE93400](https://basescan.org/address/0x38815A4455921667d673B4cb3d48F0383eE93400#code).
+      The constructor portion of the code might be different and could alter the actual
+      behaviour of the contract.
+
+      *   **Contract Security Audit:** No Contract Security Audit Submitted
+
+
+      **Top 50 Token Holders**
+
+      (From a total of 46,437 holders)
+
+
+      | Rank | Address | Quantity (HEU) | Percentage | Value (USD) |
+
+      |---|---|---|---|---|
+
+      | 1 | [0xFa13536b...f5C95761C](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfa13536bc4181db19fe93da82115f43f5c95761c)
+      | 26,768,253.297260756311046444 | 16.1494% | $1,689,772.76 |
+
+      | 2 | [0xbeb7381f...4864B3d31](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xbeb7381f574e941650dc91e710ca0bd4864b3d31)
+      | 8,527,344.900045878183107045 | 5.1446% | $538,297.17 |
+
+      | 3 | [0xf314fA64...386761ce5](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xf314fa643d4819021d7a3c3b2f9f8b6386761ce5)
+      | 8,198,474.848486948889221927 | 4.9462% | $517,536.92 |
+
+      | 4 | [0xB655DC66...2dbEF2275](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xb655dc66ecead581d1f1a5759c2c37c2dbef2275)
+      | 7,229,718.89966509720459987 | 4.3617% | $456,383.24 |
+
+      | 5 | [MEXC 15](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x4e3ae00e8323558fa5cac04b152238924aa31b60)
+      | 6,658,588.11987668243146166 | 4.0172% | $420,330.03 |
+
+      | 6 | [0xCFC4f31d...1C154ADa2](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xcfc4f31d615f81d2f2508a06fb43e5b1c154ada2)
+      | 5,450,636.698101877887679602 | 3.2884% | $344,076.89 |
+
+      | 7 | [Gate.io 1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x0d0707963952f2fba59dd06f2b425ace40b492fe)
+      | 5,264,609.568758916627907181 | 3.1762% | $332,333.74 |
+
+      | 8 | [0x89f9f593...961109Ae9](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x89f9f593d2957bec9dc1ac58068a115961109ae9)
+      | 4,000,004.75 | 2.4132% | $252,504.30 |
+
+      | 9 | [0x5f619a8B...4a11f8016](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x5f619a8bc66b775d2d85419210c0b934a11f8016)
+      | 3,740,053.72 | 2.2564% | $236,094.63 |
+
+      | 10 | [0xD72a3Cf9...c07A7De67](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xd72a3cf959e023bc3d8d62b9f5a7120c07a7de67)
+      | 3,500,000 | 2.1116% | $220,941.00 |
+
+      | 11 | [0x726E0b74...C1e127598](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x726e0b747df0f78a7d8c546b6b34e1ac1e127598)
+      | 3,446,869.915485570104524663 | 2.0795% | $217,587.11 |
+
+      | 12 | [0xfB39F454...4029CBf8E](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfb39f454bfc710e92e6fcc5737acd734029cbf8e)
+      | 3,366,008.266151123591947455 | 2.0307% | $212,482.64 |
+
+      | 13 | [0xD77E1D4a...2BC09F129](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xd77e1d4a9cc2a5525e9674d6a6006a32bc09f129)
+      | 3,363,593.19219952012682253 | 2.0293% | $212,330.18 |
+
+      | 14 | [0x7d74F7af...92d0acF9B](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x7d74f7afee742d85059d6a6f3f9dd9b92d0acf9b)
+      | 2,614,584.278700451075808598 | 1.5774% | $165,048.25 |
+
+      | 15 | [0x45FBA43c...3BFFAE9b7](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x45fba43ce3956dbefb2919ad0657bb33bffae9b7)
+      | 2,467,494.10635816281507 | 1.4887% | $155,763.03 |
+
+      | 16 | [0xa963e3c2...9CB0E2590](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xa963e3c22bbce591e8520ae545205389cb0e2590)
+      | 2,075,901.715743572397537978 | 1.2524% | $131,043.37 |
+
+      | 17 | [0x3e4cFb54...52fbCCF04](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x3e4cfb54bb6bfe170123eaed699e5dd52fbccf04)
+      | 2,015,796.16270143335513 | 1.2161% | $127,249.15 |
+
+      | 18 | [0x2376AbF6...89984f2ad](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x2376abf6b2f8572eca1291c1846550589984f2ad)
+      | 1,800,000 | 1.0859% | $113,626.80 |
+
+      | 19 | [0xAf841c79...eEe26398C](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xaf841c79057d329bdc14f2b5d870283eee26398c)
+      | 1,562,500 | 0.9427% | $98,634.38 |
+
+      | 20 | [0xB25E7E39...EB1dc4115](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xb25e7e39811bf4dc61a1a1d3ce3ceb0eb1dc4115)
+      | 1,294,871.692307692307692311 | 0.7812% | $81,740.07 |
+
+      | 21 | [seertrader.base.eth](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xcbbd242a7f23e065532a99699b3c76eca3781ad6)
+      | 1,199,390.245037557605297016 | 0.7236% | $75,712.71 |
+
+      | 22 | [0xe2CEa50b...6484Db295](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xe2cea50ba5a302a691b93692e74786d6484db295)
+      | 1,091,256.287487238289173397 | 0.6584% | $68,886.64 |
+
+      | 23 | [0x9bD90659...90A23Cefe](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x9bd9065995e6b10fe9cdd8499d9413e90a23cefe)
+      | 1,046,082.01497800455587 | 0.6311% | $66,034.97 |
+
+      | 24 | [0x43f3935c...6257aA206](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x43f3935c2ac54fdcf14d1058852b8a16257aa206)
+      | 1,030,648.36279402396264292 | 0.6218% | $65,060.71 |
+
+      | 25 | [0x3b2Ca6Cf...82bEf03B8](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x3b2ca6cf3f2ea187a8a8c22db74cb7982bef03b8)
+      | 924,513.122779031642723193 | 0.5578% | $58,360.82 |
+
+      | 26 | [0xdEb10085...F0fc91827](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xdeb10085207433cf3c9b5a7fa983186f0fc91827)
+      | 898,091.396286406699611446 | 0.5418% | $56,692.92 |
+
+      | 27 | [0xa51703bE...b1a4D5AF2](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xa51703beb1cd60e1f16bb9bdd92fa42b1a4d5af2)
+      | 869,149.0542414994556768 | 0.5244% | $54,865.90 |
+
+      | 28 | [0xfe7Db7B0...560dFd44b](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfe7db7b01b71a60346e750bded0a9b8560dfd44b)
+      | 850,049.646172471078450751 | 0.5128% | $53,660.23 |
+
+      | 29 | [0x27661dDa...75B7Cc2D1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x27661dda1fcb28835574fe39401f1e175b7cc2d1)
+      | 830,289.906922568389853973 | 0.5009% | $52,412.88 |
+
+      | 30 | [0x08C83155...2e2fA80Cb](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x08c8315549f059ab63e95d0c70770582e2fa80cb)
+      | 801,166.978532569453800892 | 0.4833% | $50,574.47 |
+
+      | 31 | [0x4A85a818...3BE1a786a](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x4a85a81858b6abf37262bdb63516fac3be1a786a)
+      | 747,852.86158724343 | 0.4512% | $47,208.96 |
+
+      | 32 | [multichainbandit.base.eth](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x2dcce04416ec8fad376b733fac16cfb03cfb189e)
+      | 745,001.387213476697488965 | 0.4495% | $47,028.96 |
+
+      | 33 | [0xF930E134...Eeb4cFb87](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xf930e1342fc23c5c7bceae58cbbc776eeb4cfb87)
+      | 603,722.781376236534053168 | 0.3642% | $38,110.60 |
+
+      | 34 | [0x13314892...0DBEB63d8](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x13314892577c8f2062cac452650f6b90dbeb63d8)
+      | 601,690.594279521150896638 | 0.3630% | $37,982.32 |
+
+      | 35 | [0x1aF1dFCE...336859126](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x1af1dfce3a2ed25f4d809e8bbe6041c336859126)
+      | 590,000 | 0.3559% | $37,244.34 |
+
+      | 36 | [0x16B33E69...041d325a1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x16b33e69dcdd73421aa6058d8800273041d325a1)
+      | 585,138.461538461538461539 | 0.3530% | $36,937.45 |
+
+      | 37 | [0x7C42dD15...c5E571f35](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x7c42dd1556754be827e187ce0870e70c5e571f35)
+      | 524,024.032676092232491948 | 0.3161% | $33,079.54 |
+
+      | 38 | [0xFab8DA71...4A6C89d12](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfab8da7144c196d44f8985dcb231f6b4a6c89d12)
+      | 520,833 | 0.3142% | $32,878.10 |
+
+      | 39 | [0x32A71e50...c5019E47A](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x32a71e506cc318c4c336e9118f3ed2ec5019e47a)
+      | 503,698.250962283631037562 | 0.3039% | $31,796.46 |
+
+      | 40 | [0x1051E4D2...9231DDc02](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x1051e4d29ccfc196f3417483800cd8a9231ddc02)
+      | 503,472 | 0.3037% | $31,782.17 |
+
+      | 41 | [0x51dA5aC4...1Dac16a29](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x51da5ac49b94847bf7b946a0d2d3feb1dac16a29)
+      | 500,000.006033171959796025 | 0.3017% | $31,563.00 |
+
+      | 42 | [0x0630986E...0128e5988](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x0630986e80c94e5a7e6d8cc66a8832a0128e5988)
+      | 500,000 | 0.3017% | $31,563.00 |
+
+      | 43 | [0x1A08B58F...15cB797ab](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x1a08b58f73e881d85d37b04060af21615cb797ab)
+      | 488,034.073076923076923078 | 0.2944% | $30,807.64 |
+
+      | 44 | [0x0D8fFd05...5f7AD69a0](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x0d8ffd05c3b56604ef791afdebe4fc45f7ad69a0)
+      | 487,281.066097859904505823 | 0.2940% | $30,760.10 |
+
+      | 45 | [0x9219759D...1A6B91F3e](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x9219759da600c65f508f76999b5d9fe1a6b91f3e)
+      | 483,162.682374730541721446 | 0.2915% | $30,500.13 |
+
+      | 46 | [0xA511E3a8...9920B97Cc](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xa511e3a81ebcad738cad9a25aeddae69920b97cc)
+      | 482,875.674814372261262699 | 0.2913% | $30,482.01 |
+
+      | 47 | [0xAD30A962...8E472FF97](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xad30a962a03bc7134cc1545bea7318c8e472ff97)
+      | 478,316 | 0.2886% | $30,194.18 |
+
+      | 48 | [0x42fEeB72...0e050cd00](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x42feeb72d0e7670f26c733e7175925d0e050cd00)
+      | 477,811.816192560174840764 | 0.2883% | $30,162.35 |
+
+      | 49 | [0x013488b0...3d2eCe6a0](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x013488b0486d87a88f9b01f197d20803d2ece6a0)
+      | 472,384.619665117145326828 | 0.2850% | $29,819.75 |
+
+      | 50 | [0x373DfC63...4B00E68d1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x373dfc63eb5f1c29861fc26f91854744b00e68d1)
+      | 454,293.185350454752769792 | 0.2741% | $28,677.71 |'
+    data: &id002
+      status: success
+      data:
+        processed_content: '**Token Information: Heurist (HEU)**
+
+
+          *   **Contract Address:** [0xEF22cb48B8483dF6152e1423b19dF5553BbD818b](https://basescan.org/address/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b)
+
+          *   **Decimals:** 18
+
+          *   **Reputation:** NEUTRAL (Some information on this token has been verified
+          by BaseScan.)
+
+          *   **Category:** ERC-20, Artificial Intelligence
+
+
+          **Overview**
+
+
+          *   **Max Total Supply:** 165,753,771.393111126850438475 HEU
+
+          *   **Holders:** 46,437
+
+          *   **Total Transfers:** - (Data not provided in numerical format)
+
+
+          **Market Data**
+
+
+          *   **Price:** $0.0631 @ 0.000016 ETH (-8.61%)
+
+          *   **Onchain Market Cap:** $10,463,372.57
+
+          *   **Circulating Supply Market Cap:** $10,300,033.00
+
+          *   **Volume (24H):** $1,469,302.00
+
+          *   **Circulating Supply:** 163,641,831.00 HEU
+
+          *   **Market Data Source:** Coinmarketcap
+
+
+          **Project Description**
+
+
+          Heurist is a decentralized GPU cloud for AI, offering serverless architecture
+          and elastic scaling for DePIN. It''s designed for GPU-intensive tasks like
+          AI inference and model fine-tuning, with a layer 2 blockchain for robust
+          incentives.
+
+
+          **Official Links**
+
+
+          *   **Website:** [https://www.heurist.ai/](https://www.heurist.ai/)
+
+          *   **CoinMarketCap:** [https://coinmarketcap.com/currencies/heurist-ai/](https://coinmarketcap.com/currencies/heurist-ai/)
+
+          *   **CoinGecko:** [https://www.coingecko.com/en/coins/heurist/](https://www.coingecko.com/en/coins/heurist/)
+
+          *   **Email:** team@heurist.ai
+
+          *   **Blog:** [https://heuristai.medium.com/](https://heuristai.medium.com/)
+
+          *   **X (Twitter):** [https://x.com/heurist_ai](https://x.com/heurist_ai)
+
+          *   **Github:** [https://github.com/heurist-network](https://github.com/heurist-network)
+
+          *   **Telegram:** [https://t.me/heuristsupport](https://t.me/heuristsupport)
+
+          *   **LinkedIn:** [https://www.linkedin.com/company/heurist-ai/](https://www.linkedin.com/company/heurist-ai/)
+
+          *   **Whitepaper:** [https://docs.heurist.ai/protocol-overview/litepaper](https://docs.heurist.ai/protocol-overview/litepaper)
+
+
+          **Contract Details**
+
+
+          *   **Contract Name:** OptimismMintableERC20
+
+          *   **Compiler Version:** v0.8.15+commit.e14f2714
+
+          *   **Optimization Enabled:** Yes with 999999 runs
+
+          *   **Other Settings:** default evmVersion
+
+          *   **Similar Match Source Code:** This contract matches the deployed Bytecode
+          of the Source Code for Contract [0x38815A4455921667d673B4cb3d48F0383eE93400](https://basescan.org/address/0x38815A4455921667d673B4cb3d48F0383eE93400#code).
+          The constructor portion of the code might be different and could alter the
+          actual behaviour of the contract.
+
+          *   **Contract Security Audit:** No Contract Security Audit Submitted
+
+
+          **Top 50 Token Holders**
+
+          (From a total of 46,437 holders)
+
+
+          | Rank | Address | Quantity (HEU) | Percentage | Value (USD) |
+
+          |---|---|---|---|---|
+
+          | 1 | [0xFa13536b...f5C95761C](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfa13536bc4181db19fe93da82115f43f5c95761c)
+          | 26,768,253.297260756311046444 | 16.1494% | $1,689,772.76 |
+
+          | 2 | [0xbeb7381f...4864B3d31](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xbeb7381f574e941650dc91e710ca0bd4864b3d31)
+          | 8,527,344.900045878183107045 | 5.1446% | $538,297.17 |
+
+          | 3 | [0xf314fA64...386761ce5](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xf314fa643d4819021d7a3c3b2f9f8b6386761ce5)
+          | 8,198,474.848486948889221927 | 4.9462% | $517,536.92 |
+
+          | 4 | [0xB655DC66...2dbEF2275](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xb655dc66ecead581d1f1a5759c2c37c2dbef2275)
+          | 7,229,718.89966509720459987 | 4.3617% | $456,383.24 |
+
+          | 5 | [MEXC 15](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x4e3ae00e8323558fa5cac04b152238924aa31b60)
+          | 6,658,588.11987668243146166 | 4.0172% | $420,330.03 |
+
+          | 6 | [0xCFC4f31d...1C154ADa2](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xcfc4f31d615f81d2f2508a06fb43e5b1c154ada2)
+          | 5,450,636.698101877887679602 | 3.2884% | $344,076.89 |
+
+          | 7 | [Gate.io 1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x0d0707963952f2fba59dd06f2b425ace40b492fe)
+          | 5,264,609.568758916627907181 | 3.1762% | $332,333.74 |
+
+          | 8 | [0x89f9f593...961109Ae9](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x89f9f593d2957bec9dc1ac58068a115961109ae9)
+          | 4,000,004.75 | 2.4132% | $252,504.30 |
+
+          | 9 | [0x5f619a8B...4a11f8016](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x5f619a8bc66b775d2d85419210c0b934a11f8016)
+          | 3,740,053.72 | 2.2564% | $236,094.63 |
+
+          | 10 | [0xD72a3Cf9...c07A7De67](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xd72a3cf959e023bc3d8d62b9f5a7120c07a7de67)
+          | 3,500,000 | 2.1116% | $220,941.00 |
+
+          | 11 | [0x726E0b74...C1e127598](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x726e0b747df0f78a7d8c546b6b34e1ac1e127598)
+          | 3,446,869.915485570104524663 | 2.0795% | $217,587.11 |
+
+          | 12 | [0xfB39F454...4029CBf8E](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfb39f454bfc710e92e6fcc5737acd734029cbf8e)
+          | 3,366,008.266151123591947455 | 2.0307% | $212,482.64 |
+
+          | 13 | [0xD77E1D4a...2BC09F129](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xd77e1d4a9cc2a5525e9674d6a6006a32bc09f129)
+          | 3,363,593.19219952012682253 | 2.0293% | $212,330.18 |
+
+          | 14 | [0x7d74F7af...92d0acF9B](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x7d74f7afee742d85059d6a6f3f9dd9b92d0acf9b)
+          | 2,614,584.278700451075808598 | 1.5774% | $165,048.25 |
+
+          | 15 | [0x45FBA43c...3BFFAE9b7](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x45fba43ce3956dbefb2919ad0657bb33bffae9b7)
+          | 2,467,494.10635816281507 | 1.4887% | $155,763.03 |
+
+          | 16 | [0xa963e3c2...9CB0E2590](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xa963e3c22bbce591e8520ae545205389cb0e2590)
+          | 2,075,901.715743572397537978 | 1.2524% | $131,043.37 |
+
+          | 17 | [0x3e4cFb54...52fbCCF04](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x3e4cfb54bb6bfe170123eaed699e5dd52fbccf04)
+          | 2,015,796.16270143335513 | 1.2161% | $127,249.15 |
+
+          | 18 | [0x2376AbF6...89984f2ad](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x2376abf6b2f8572eca1291c1846550589984f2ad)
+          | 1,800,000 | 1.0859% | $113,626.80 |
+
+          | 19 | [0xAf841c79...eEe26398C](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xaf841c79057d329bdc14f2b5d870283eee26398c)
+          | 1,562,500 | 0.9427% | $98,634.38 |
+
+          | 20 | [0xB25E7E39...EB1dc4115](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xb25e7e39811bf4dc61a1a1d3ce3ceb0eb1dc4115)
+          | 1,294,871.692307692307692311 | 0.7812% | $81,740.07 |
+
+          | 21 | [seertrader.base.eth](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xcbbd242a7f23e065532a99699b3c76eca3781ad6)
+          | 1,199,390.245037557605297016 | 0.7236% | $75,712.71 |
+
+          | 22 | [0xe2CEa50b...6484Db295](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xe2cea50ba5a302a691b93692e74786d6484db295)
+          | 1,091,256.287487238289173397 | 0.6584% | $68,886.64 |
+
+          | 23 | [0x9bD90659...90A23Cefe](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x9bd9065995e6b10fe9cdd8499d9413e90a23cefe)
+          | 1,046,082.01497800455587 | 0.6311% | $66,034.97 |
+
+          | 24 | [0x43f3935c...6257aA206](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x43f3935c2ac54fdcf14d1058852b8a16257aa206)
+          | 1,030,648.36279402396264292 | 0.6218% | $65,060.71 |
+
+          | 25 | [0x3b2Ca6Cf...82bEf03B8](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x3b2ca6cf3f2ea187a8a8c22db74cb7982bef03b8)
+          | 924,513.122779031642723193 | 0.5578% | $58,360.82 |
+
+          | 26 | [0xdEb10085...F0fc91827](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xdeb10085207433cf3c9b5a7fa983186f0fc91827)
+          | 898,091.396286406699611446 | 0.5418% | $56,692.92 |
+
+          | 27 | [0xa51703bE...b1a4D5AF2](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xa51703beb1cd60e1f16bb9bdd92fa42b1a4d5af2)
+          | 869,149.0542414994556768 | 0.5244% | $54,865.90 |
+
+          | 28 | [0xfe7Db7B0...560dFd44b](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfe7db7b01b71a60346e750bded0a9b8560dfd44b)
+          | 850,049.646172471078450751 | 0.5128% | $53,660.23 |
+
+          | 29 | [0x27661dDa...75B7Cc2D1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x27661dda1fcb28835574fe39401f1e175b7cc2d1)
+          | 830,289.906922568389853973 | 0.5009% | $52,412.88 |
+
+          | 30 | [0x08C83155...2e2fA80Cb](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x08c8315549f059ab63e95d0c70770582e2fa80cb)
+          | 801,166.978532569453800892 | 0.4833% | $50,574.47 |
+
+          | 31 | [0x4A85a818...3BE1a786a](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x4a85a81858b6abf37262bdb63516fac3be1a786a)
+          | 747,852.86158724343 | 0.4512% | $47,208.96 |
+
+          | 32 | [multichainbandit.base.eth](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x2dcce04416ec8fad376b733fac16cfb03cfb189e)
+          | 745,001.387213476697488965 | 0.4495% | $47,028.96 |
+
+          | 33 | [0xF930E134...Eeb4cFb87](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xf930e1342fc23c5c7bceae58cbbc776eeb4cfb87)
+          | 603,722.781376236534053168 | 0.3642% | $38,110.60 |
+
+          | 34 | [0x13314892...0DBEB63d8](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x13314892577c8f2062cac452650f6b90dbeb63d8)
+          | 601,690.594279521150896638 | 0.3630% | $37,982.32 |
+
+          | 35 | [0x1aF1dFCE...336859126](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x1af1dfce3a2ed25f4d809e8bbe6041c336859126)
+          | 590,000 | 0.3559% | $37,244.34 |
+
+          | 36 | [0x16B33E69...041d325a1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x16b33e69dcdd73421aa6058d8800273041d325a1)
+          | 585,138.461538461538461539 | 0.3530% | $36,937.45 |
+
+          | 37 | [0x7C42dD15...c5E571f35](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x7c42dd1556754be827e187ce0870e70c5e571f35)
+          | 524,024.032676092232491948 | 0.3161% | $33,079.54 |
+
+          | 38 | [0xFab8DA71...4A6C89d12](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xfab8da7144c196d44f8985dcb231f6b4a6c89d12)
+          | 520,833 | 0.3142% | $32,878.10 |
+
+          | 39 | [0x32A71e50...c5019E47A](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x32a71e506cc318c4c336e9118f3ed2ec5019e47a)
+          | 503,698.250962283631037562 | 0.3039% | $31,796.46 |
+
+          | 40 | [0x1051E4D2...9231DDc02](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x1051e4d29ccfc196f3417483800cd8a9231ddc02)
+          | 503,472 | 0.3037% | $31,782.17 |
+
+          | 41 | [0x51dA5aC4...1Dac16a29](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x51da5ac49b94847bf7b946a0d2d3feb1dac16a29)
+          | 500,000.006033171959796025 | 0.3017% | $31,563.00 |
+
+          | 42 | [0x0630986E...0128e5988](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x0630986e80c94e5a7e6d8cc66a8832a0128e5988)
+          | 500,000 | 0.3017% | $31,563.00 |
+
+          | 43 | [0x1A08B58F...15cB797ab](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x1a08b58f73e881d85d37b04060af21615cb797ab)
+          | 488,034.073076923076923078 | 0.2944% | $30,807.64 |
+
+          | 44 | [0x0D8fFd05...5f7AD69a0](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x0d8ffd05c3b56604ef791afdebe4fc45f7ad69a0)
+          | 487,281.066097859904505823 | 0.2940% | $30,760.10 |
+
+          | 45 | [0x9219759D...1A6B91F3e](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x9219759da600c65f508f76999b5d9fe1a6b91f3e)
+          | 483,162.682374730541721446 | 0.2915% | $30,500.13 |
+
+          | 46 | [0xA511E3a8...9920B97Cc](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xa511e3a81ebcad738cad9a25aeddae69920b97cc)
+          | 482,875.674814372261262699 | 0.2913% | $30,482.01 |
+
+          | 47 | [0xAD30A962...8E472FF97](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0xad30a962a03bc7134cc1545bea7318c8e472ff97)
+          | 478,316 | 0.2886% | $30,194.18 |
+
+          | 48 | [0x42fEeB72...0e050cd00](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x42feeb72d0e7670f26c733e7175925d0e050cd00)
+          | 477,811.816192560174840764 | 0.2883% | $30,162.35 |
+
+          | 49 | [0x013488b0...3d2eCe6a0](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x013488b0486d87a88f9b01f197d20803d2ece6a0)
+          | 472,384.619665117145326828 | 0.2850% | $29,819.75 |
+
+          | 50 | [0x373DfC63...4B00E68d1](https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b?a=0x373dfc63eb5f1c29861fc26f91854744b00e68d1)
+          | 454,293.185350454752769792 | 0.2741% | $28,677.71 |'
+direct_token_holders_call:
+  input:
+    tool: get_erc20_top_holders
+    tool_arguments:
+      chain: base
+      address: '0xEF22cb48B8483dF6152e1423b19dF5553BbD818b'
+  output:
+    response: ''
+    data: *id002
+raw_data_only:
+  input:
+    query: Analyze transaction 0xabc123 on Arbitrum
+    raw_data_only: true
+  output:
+    response: ''
+    data:
+      status: success
+      data:
+        processed_content: '**Transaction Details**
+
+
+          Oops! An invalid Txn hash has been entered: `0xabc123`'
+error_handling:
+  input:
+    tool: get_transaction_details
+    tool_arguments:
+      chain: unsupported_chain
+      txid: '0x123'
+  output:
+    response: ''
+    data:
+      error: 'Unsupported chain: unsupported_chain'
+combined_query:
+  input:
+    query: Show me both the transfers and top holders for USDT 0x55d398326f99059ff775485246999027b3197955
+      on BSC
+    raw_data_only: false
+  output:
+    response: '**Token Information**
+
+
+      *   **Name:** Binance-Peg BSC-USD (BSC-USD)
+
+      *   **Reputation:** OK (Evaluated to be a token of public interest by BscScan)
+
+      *   **Contract Address:** [0x55d398326f99059ff775485246999027b3197955](https://bscscan.com/address/0x55d398326f99059ff775485246999027b3197955)
+
+      *   **Decimals:** 18
+
+      *   **Type:** BEP-20, Cross-Chain, Stablecoin, Binance-Pegged
+
+      *   **Description:** A pegged token by Binance which gives you the joint benefits
+      of open blockchain technology and traditional currency by converting your cash
+      into a stable digital currency equivalent.
+
+      *   **Note:** This token''s displayed name symbol does not match its contract''s
+      Name and Symbol function.
+
+
+      **Overview**
+
+
+      *   **Max Total Supply:** 6,784,993,699.453934 BSC-USD (Circulating Supply:
+      6,783,382,586.457622)
+
+      *   **Holders:** 34,643,555 (0.008%)
+
+      *   **Total Transfers:** More than 3,207,182,843
+
+
+      **Market**
+
+
+      *   **Price:** $0.9999 @ 0.001237 BNB
+
+      *   **Onchain Market Cap:** $6,784,315,200.08
+
+      *   **Circulating Supply Market Cap:** $163,736,442,478.00
+
+      *   **Volume (24H):** $91,922,013,360.00
+
+      *   **Market Capitalization:** $163,736,442,478.00
+
+      *   **Circulating Supply:** 163,751,876,809.00 BSC-USD
+
+      *   **Market Data Source:** Coinmarketcap
+
+
+      **Contract Details**
+
+
+      *   **Contract Source Code:** Verified (Exact Match)
+
+      *   **Contract Name:** BEP20USDT
+
+      *   **Compiler Version:** v0.5.16+commit.9c3226ce
+
+      *   **Optimization Enabled:** Yes with 200 runs
+
+      *   **Other Settings:** default evmVersion, Apache-2.0 license, Audited
+
+      *   **Contract Security Audit:** Etherauthority - Apr 3rd, 2025 - [Security
+      Audit Report](https://etherauthority.io/wp-content/uploads/2025/04/Binance-BSC-USD.pdf)
+
+
+      **Recent Token Transfers (Showing the last 100k records)**
+
+
+      | Transaction Hash | Method | Block | Age | From | To | Amount |
+
+      |---|---|---|---|---|---|---|
+
+      | [0x8bcdfa22b7bdc44c22e203aaa0b0394a77e062fe655ae284676d6a88a3cec444](https://bscscan.com/tx/0x8bcdfa22b7bdc44c22e203aaa0b0394a77e062fe655ae284676d6a88a3cec444)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+      | [0xfB545e4F...E64a19812](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xfb545e4f1679aaaa31ae4024ddc2b9fe64a19812)
+      | 400.305909682115276105$400.27 |
+
+      | [0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2](https://bscscan.com/tx/0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+      | 400$399.96 |
+
+      | [0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2](https://bscscan.com/tx/0x6b48d0dfc381d3286c62911feb3383fe18994808d6676f8ea7c9a70f765081b2)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xfB545e4F...E64a19812](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xfb545e4f1679aaaa31ae4024ddc2b9fe64a19812)
+      | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | 400$399.96 |
+
+      | [0xd7f9f80ffaacf4b49bd0c534d0a5288ac7afaae13a65ec973dd54761aa083c45](https://bscscan.com/tx/0xd7f9f80ffaacf4b49bd0c534d0a5288ac7afaae13a65ec973dd54761aa083c45)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+      | [0x22A51993...5466376E0](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x22a51993e047a57e4200cca22e3d0855466376e0)
+      | 58$57.99 |
+
+      | [0x5e453df4a75b1071ba1f95348482b59a03e861f911cf636179cfba3e05b8a17f](https://bscscan.com/tx/0x5e453df4a75b1071ba1f95348482b59a03e861f911cf636179cfba3e05b8a17f)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+      | [0xBAa602A1...30b5742D6](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xbaa602a1f4d2feeb6ef175b666e834a30b5742d6)
+      | 10$10.00 |
+
+      | [0xef385447c16acdea918816e59dd150d191d2a523b8c9ed0c50644e39dbe858ad](https://bscscan.com/tx/0xef385447c16acdea918816e59dd150d191d2a523b8c9ed0c50644e39dbe858ad)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 4](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x0639556f03714a74a5feeaf5736a4a64ff70d206)
+      | [0x97Ce7517...3043603F7](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x97ce75179c25a28738b1bcc332d62a43043603f7)
+      | 10$10.00 |
+
+      | [0x13fc619b1a2f92caf8c0bcf30aae5d4df9fba5692529c2a28532e1a0692f97e3](https://bscscan.com/tx/0x13fc619b1a2f92caf8c0bcf30aae5d4df9fba5692529c2a28532e1a0692f97e3)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Bitget 5](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x5bdf85216ec1e38d6458c870992a69e38e03f7ef)
+      | [0xD9b2CDd2...952266f13](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xd9b2cdd2d5291d99d2a9964547e09e5952266f13)
+      | 10$10.00 |
+
+      | [0xff54f26f9a0d3dba853a5fbe3d595bbdf6d4d557f467b0cbf331dfedda4c1e3f](https://bscscan.com/tx/0xff54f26f9a0d3dba853a5fbe3d595bbdf6d4d557f467b0cbf331dfedda4c1e3f)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [Binance: Hot Wallet 11](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x161ba15a5f335c9f06bb5bbb0a9ce14076fbb645)
+      | [0xc555f286...3a9BE94C2](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xc555f28630b48c1a0e84ae02412dbdd3a9be94c2)
+      | 13.46$13.46 |
+
+      | [0xa7ae75ffecf95916b06daafffc7ec837ffa0625ea5733555a0298542d2b76ff2](https://bscscan.com/tx/0xa7ae75ffecf95916b06daafffc7ec837ffa0625ea5733555a0298542d2b76ff2)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [0xFF51157F...81dD35035](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xff51157f52701d3d5acc2978ea230bf81dd35035)
+      | [0x0dfaAb7c...7A27d418b](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x0dfaab7cda3bca3d51cee52efe37edc7a27d418b)
+      | 5$5.00 |
+
+      | [0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7](https://bscscan.com/tx/0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | [0xCb648e73...34Ad82CC3](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xcb648e73ac79b39cffca92615503b7034ad82cc3)
+      | 1,000.8001732456384058$1,000.70 |
+
+      | [0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7](https://bscscan.com/tx/0x42f61849924ffd8e8adbccbc3163b747f0aa7d67f660a93dff4c8b05a4797ba7)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xA0c5B17A...1d8B0B2F2](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xa0c5b17a5be4e4c991e891b757587371d8b0b2f2)
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | 1,000.8001732456384058$1,000.70 |
+
+      | [0xe2e370b8999d9885a49e1951ace1c35d7beda2d74f7e74da1dc668720f00655c](https://bscscan.com/tx/0xe2e370b8999d9885a49e1951ace1c35d7beda2d74f7e74da1dc668720f00655c)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [0xc5Ac784C...F46001dD8](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xc5ac784cbf9c4ebf9404aee9173c08bf46001dd8)
+      | [0xD408Cd30...0D994667E](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xd408cd308294cd1575db8b0aa651a730d994667e)
+      | 100$99.99 |
+
+      | [0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb](https://bscscan.com/tx/0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | [0x172fcD41...4f546f849](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x172fcd41e0913e95784454622d1c3724f546f849)
+      | 57.088003884745718323$57.08 |
+
+      | [0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb](https://bscscan.com/tx/0x013d361e8346135fbc9af58656e447a7c4b05a86ca541663dea8b95e389645fb)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xf9452Bb9...88e94b319](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf9452bb9b8b119dc08094b8b3b191bc88e94b319)
+      | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | 57.088003884745718323$57.08 |
+
+      | [0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc](https://bscscan.com/tx/0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | [0xF38a2E3A...B439Fa14B](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf38a2e3a8cdd6871a1d492dbd56c03bb439fa14b)
+      | 51.426$51.42 |
+
+      | [0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc](https://bscscan.com/tx/0xd079892ad3967ae0730ffa04d0ae4e8aeb291a4a0f49ac640dee38c3a0313fdc)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0x75606dae...Dc2820A40](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x75606dae9d4b97b68cd9462d2ebff8ddc2820a40)
+      | [0x7A7AD9aa...Ec14997FF](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x7a7ad9aa93cd0a2d0255326e5fb145cec14997ff)
+      | 51.426$51.42 |
+
+      | [0xb4f9f5693e4eb5a58ef3dcdf929937147ca8f811beb38c7a4a519756f600e1cd](https://bscscan.com/tx/0xb4f9f5693e4eb5a58ef3dcdf929937147ca8f811beb38c7a4a519756f600e1cd)
+      | Transfer | [55938255](https://bscscan.com/block/55938255) | 17 secs ago |
+      [0x04b076e2...7CFEF7Aac](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x04b076e2844ea8401cb820fe3af84df7cfef7aac)
+      | [0xcF402a4C...5e13dE7f7](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xcf402a4c13df61827fd8c5529a8e1735e13de7f7)
+      | 2,000$1,999.80 |
+
+      | [0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843](https://bscscan.com/tx/0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xcA852767...5E20c78Bd](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xca852767b43a395ac1dd54737193eba5e20c78bd)
+      | [0x55FE5567...9a771A1c0](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x55fe55677e8398ef5c92f01b780403c9a771a1c0)
+      | 0.046146349978361912$0.05 |
+
+      | [0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843](https://bscscan.com/tx/0x265f88a7deeb0f882c0ccf07cb51a2cd8318a356a53bab52a3b681a20c615843)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xebe60743...3ba96a85e](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xebe60743a843002e061fac29f93dde53ba96a85e)
+      | [0xcA852767...5E20c78Bd](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xca852767b43a395ac1dd54737193eba5e20c78bd)
+      | 0.046146349978361912$0.05 |
+
+      | [0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d](https://bscscan.com/tx/0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d)
+      | 0x8f9fa5db | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | [0x73D8bD54...0644946Db](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x73d8bd54f7cf5fab43fe4ef40a62d390644946db)
+      | 79.146202408171495547$79.14 |
+
+      | [0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d](https://bscscan.com/tx/0x029a204586c328f0f8c4f763fb004b141cb52de1f4b67a54d6e530e5c68f943d)
+      | 0x8f9fa5db | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0x172fcD41...4f546f849](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x172fcd41e0913e95784454622d1c3724f546f849)
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | 79.146202408171495547$79.14 |
+
+      | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xde9e4FE3...470FFCA73](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xde9e4fe32b049f821c7f3e9802381aa470ffca73)
+      | [0x3bE400E8...9C576EffC](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0x3be400e891786c958c22e121abe71599c576effc)
+      | 100$99.99 |
+
+      | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | [0xde9e4FE3...470FFCA73](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xde9e4fe32b049f821c7f3e9802381aa470ffca73)
+      | 100$99.99 |
+
+      | [0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd](https://bscscan.com/tx/0x12c7dcc2e06a2d02bd02ebb1d6060fa46ddae79610d8405497fb3bb1f8dda1cd)
+      | Proxy Swap V2 | [55938255](https://bscscan.com/block/55938255) | 17 secs ago
+      | [0xEB2add0C...78FD96b4A](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xeb2add0c881c60910212dcab70b866978fd96b4a)
+      | [Binance: DEX Router](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xb300000b72deaeb607a12d5f54773d1c19c7028d)
+      | 100$99.99 |
+
+      | [0x30be9f12a2b1f5d0cded42174d23ece5f8160f32c9034a326b93e5a12029f3ea](https://bscscan.com/tx/0x30be9f12a2b1f5d0cded42174d23ece5f8160f32c9034a326b93e5a12029f3ea)
+      | Smart Swap By Or... | [55938255](https://bscscan.com/block/55938255) | 17
+      secs ago | [0xF38a2E3A...B439Fa14B](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xf38a2e3a8cdd6871a1d492dbd56c03bb439fa14b)
+      | [0xa1A60f05...4579A53B6](https://bscscan.com/token/0x55d398326f99059ff775485246999027b3197955?a=0xa1a60f05fd5160b00af34c74712238a4579a53b6)
+      | 250.093163516588561782$250.07 |'
+    data: *id001

@@ -23,6 +23,7 @@ class EtherscanAgent(MeshAgent):
             raise ValueError("FIRECRAWL_API_KEY environment variable is required")
 
         self.app = FirecrawlApp(api_key=self.api_key)
+        self._api_clients["firecrawl"] = self.app  # Register in base class API clients
 
         # Supported blockchain
         self.explorers = {
@@ -37,7 +38,7 @@ class EtherscanAgent(MeshAgent):
         self.metadata.update(
             {
                 "name": "Etherscan Agent",
-                "version": "1.0.0",
+                "version": "1.1.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can analyze blockchain transactions, addresses, and ERC20 tokens across multiple chains using blockchain explorers and Firecrawl for data extraction.",
@@ -48,7 +49,8 @@ class EtherscanAgent(MeshAgent):
                 "examples": [
                     "Analyze transaction 0xd8a484a402a4373221288fed84e9025ed48eba2a45a7294c19289f740ca00fcd on Ethereum",
                     "Get address history for 0x742d35Cc6639C0532fEa3BcdE3524A0be79C3b7B on Base",
-                    "Show token details for 0x55d398326f99059ff775485246999027b3197955 on BSC",
+                    "Show token transfers for 0x55d398326f99059ff775485246999027b3197955 on BSC",
+                    "Get top holders for 0xEF22cb48B8483dF6152e1423b19dF5553BbD818b on Base",
                 ],
                 "credits": 2,
                 "large_model_id": "google/gemini-2.5-flash",
@@ -114,6 +116,28 @@ class EtherscanAgent(MeshAgent):
             logger.warning("Falling back to raw content due to LLM processing failure")
             return raw_content
 
+    async def _scrape_and_process(self, url: str, context_info: Dict[str, str]) -> Dict[str, Any]:
+        """Common method to scrape URL and process with LLM"""
+        try:
+            scrape_result = await asyncio.get_event_loop().run_in_executor(
+                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=10000)
+            )
+            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
+            if not markdown_content:
+                return {"status": "error", "error": f"Failed to scrape {context_info['type']} page"}
+            processed_content = await self._process_with_llm(markdown_content, context_info)
+            logger.info(f"Successfully processed {context_info['type']} data")
+
+            return {
+                "status": "success",
+                "data": {
+                    "processed_content": processed_content,
+                },
+            }
+        except Exception as e:
+            logger.error(f"Exception in _scrape_and_process for {context_info['type']}: {str(e)}")
+            return {"status": "error", "error": f"Failed to get {context_info['type']} data: {str(e)}"}
+
     def get_tool_schemas(self) -> List[Dict]:
         return [
             {
@@ -163,8 +187,30 @@ class EtherscanAgent(MeshAgent):
             {
                 "type": "function",
                 "function": {
-                    "name": "get_erc20_token_details",
-                    "description": "Analyze an ERC20 token contract to get token information including name, symbol, supply, holders, and contract details.",
+                    "name": "get_erc20_token_transfers",
+                    "description": "Get recent token transfer transactions and basic token information including name, symbol, total supply, and holder count.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "chain": {
+                                "type": "string",
+                                "description": "Blockchain network where the token is deployed",
+                                "enum": ["ethereum", "base", "arbitrum", "zksync", "avalanche", "bsc"],
+                            },
+                            "address": {
+                                "type": "string",
+                                "description": "Token contract address to analyze",
+                            },
+                        },
+                        "required": ["chain", "address"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_erc20_top_holders",
+                    "description": "Get top 50 token holders data including wallet addresses, balances, percentages, and basic token information.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -196,36 +242,14 @@ class EtherscanAgent(MeshAgent):
         """
         logger.info(f"Getting transaction details for {txid} on {chain}")
 
-        try:
-            if chain not in self.explorers:
-                return {"status": "error", "error": f"Unsupported chain: {chain}"}
+        if chain not in self.explorers:
+            return {"status": "error", "error": f"Unsupported chain: {chain}"}
 
-            explorer_url = self.explorers[chain]
-            url = f"{explorer_url}/tx/{txid}"
+        explorer_url = self.explorers[chain]
+        url = f"{explorer_url}/tx/{txid}"
+        context_info = {"type": "transaction", "chain": chain, "url": url}
 
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=10000)
-            )
-
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-            if not markdown_content:
-                return {"status": "error", "error": "Failed to scrape transaction page"}
-
-            context_info = {"type": "transaction", "chain": chain, "url": url}
-
-            processed_content = await self._process_with_llm(markdown_content, context_info)
-            logger.info("Successfully processed transaction data")
-
-            return {
-                "status": "success",
-                "data": {
-                    "processed_content": processed_content,
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception in get_transaction_details: {str(e)}")
-            return {"status": "error", "error": f"Failed to get transaction details: {str(e)}"}
+        return await self._scrape_and_process(url, context_info)
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
@@ -235,74 +259,48 @@ class EtherscanAgent(MeshAgent):
         """
         logger.info(f"Getting address history for {address} on {chain}")
 
-        try:
-            if chain not in self.explorers:
-                return {"status": "error", "error": f"Unsupported chain: {chain}"}
+        if chain not in self.explorers:
+            return {"status": "error", "error": f"Unsupported chain: {chain}"}
 
-            explorer_url = self.explorers[chain]
-            url = f"{explorer_url}/address/{address}"
+        explorer_url = self.explorers[chain]
+        url = f"{explorer_url}/address/{address}"
+        context_info = {"type": "address", "chain": chain, "url": url}
 
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=10000)
-            )
-
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-            if not markdown_content:
-                return {"status": "error", "error": "Failed to scrape address page"}
-
-            context_info = {"type": "address", "chain": chain, "url": url}
-
-            processed_content = await self._process_with_llm(markdown_content, context_info)
-            logger.info("Successfully processed address data")
-
-            return {
-                "status": "success",
-                "data": {
-                    "processed_content": processed_content,
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception in get_address_history: {str(e)}")
-            return {"status": "error", "error": f"Failed to get address history: {str(e)}"}
+        return await self._scrape_and_process(url, context_info)
 
     @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=3)
-    async def get_erc20_token_details(self, chain: str, address: str) -> Dict[str, Any]:
+    async def get_erc20_token_transfers(self, chain: str, address: str) -> Dict[str, Any]:
         """
-        Scrape and analyze ERC20 token details from blockchain explorer.
+        Scrape and analyze ERC20 token transfers and basic token info from blockchain explorer.
         """
-        logger.info(f"Getting ERC20 token details for {address} on {chain}")
+        logger.info(f"Getting ERC20 token transfers for {address} on {chain}")
 
-        try:
-            if chain not in self.explorers:
-                return {"status": "error", "error": f"Unsupported chain: {chain}"}
+        if chain not in self.explorers:
+            return {"status": "error", "error": f"Unsupported chain: {chain}"}
 
-            explorer_url = self.explorers[chain]
-            url = f"{explorer_url}/token/{address}"
+        explorer_url = self.explorers[chain]
+        url = f"{explorer_url}/token/{address}"
+        context_info = {"type": "token_transfers", "chain": chain, "url": url}
 
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=10000)
-            )
+        return await self._scrape_and_process(url, context_info)
 
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-            if not markdown_content:
-                return {"status": "error", "error": "Failed to scrape token page"}
+    @with_cache(ttl_seconds=3600)
+    @with_retry(max_retries=3)
+    async def get_erc20_top_holders(self, chain: str, address: str) -> Dict[str, Any]:
+        """
+        Scrape and analyze top 50 ERC20 token holders from blockchain explorer.
+        """
+        logger.info(f"Getting ERC20 top holders for {address} on {chain}")
 
-            context_info = {"type": "token", "chain": chain, "url": url}
-            processed_content = await self._process_with_llm(markdown_content, context_info)
-            logger.info("Successfully processed token data")
+        if chain not in self.explorers:
+            return {"status": "error", "error": f"Unsupported chain: {chain}"}
 
-            return {
-                "status": "success",
-                "data": {
-                    "processed_content": processed_content,
-                },
-            }
+        explorer_url = self.explorers[chain]
+        url = f"{explorer_url}/token/{address}#balances"
+        context_info = {"type": "token_holders", "chain": chain, "url": url}
 
-        except Exception as e:
-            logger.error(f"Exception in get_erc20_token_details: {str(e)}")
-            return {"status": "error", "error": f"Failed to get token details: {str(e)}"}
+        return await self._scrape_and_process(url, context_info)
 
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
@@ -328,12 +326,19 @@ class EtherscanAgent(MeshAgent):
                 return {"status": "error", "error": "Missing required parameters: chain and address"}
             result = await self.get_address_history(chain, address)
 
-        elif tool_name == "get_erc20_token_details":
+        elif tool_name == "get_erc20_token_transfers":
             chain = function_args.get("chain")
             address = function_args.get("address")
             if not chain or not address:
                 return {"status": "error", "error": "Missing required parameters: chain and address"}
-            result = await self.get_erc20_token_details(chain, address)
+            result = await self.get_erc20_token_transfers(chain, address)
+
+        elif tool_name == "get_erc20_top_holders":
+            chain = function_args.get("chain")
+            address = function_args.get("address")
+            if not chain or not address:
+                return {"status": "error", "error": "Missing required parameters: chain and address"}
+            result = await self.get_erc20_top_holders(chain, address)
 
         else:
             return {"status": "error", "error": f"Unsupported tool: {tool_name}"}
