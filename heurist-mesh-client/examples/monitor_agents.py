@@ -60,7 +60,7 @@ NUM_WORKERS = 4
 TEST_PER_WORKER = 4
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_INPUTS_FILE = os.path.join(SCRIPT_DIR, "test_inputs.json")
-DISABLED_AGENTS = {"DeepResearchAgent", "MemoryAgent", "ArbusAgent"}
+DISABLED_AGENTS = {"DeepResearchAgent", "MemoryAgent", "ArbusAgent", "MindAiKolAgent"}
 
 
 def is_agent_hidden(agent_data: dict) -> bool:
