@@ -30,6 +30,7 @@ class CookieProjectInfoAgent(MeshAgent):
                 "description": "This agent provides information about crypto projects including market data, social media metrics and mindshare growth metrics using Cookie API. It can identify projects by Twitter username or contract address.",
                 "external_apis": ["Cookie API"],
                 "tags": ["Projects"],
+                "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/CookieFun.png",
                 "examples": [
                     "Tell me about the project with Twitter handle @heurist_ai",
