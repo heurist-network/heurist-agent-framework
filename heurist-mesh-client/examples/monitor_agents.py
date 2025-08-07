@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import time
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from typing import Optional
@@ -61,6 +62,80 @@ TEST_PER_WORKER = 4
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_INPUTS_FILE = os.path.join(SCRIPT_DIR, "test_inputs.json")
 DISABLED_AGENTS = {"DeepResearchAgent", "MemoryAgent", "ArbusAgent", "MindAiKolAgent"}
+SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
+
+
+def send_slack_alert(message):
+    if not SLACK_WEBHOOK_URL:
+        logger.warning("Slack webhook URL not set. Skipping alert.")
+        return
+    try:
+        data = json.dumps({"text": message}).encode("utf-8")
+        req = urllib.request.Request(SLACK_WEBHOOK_URL, data=data, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req) as response:
+            response.read()
+        logger.info("Slack alert sent successfully.")
+    except Exception as e:
+        logger.error(f"Failed to send Slack alert: {e}")
+
+
+def send_summary_to_slack(stats):
+    failing = []
+    healthy = []
+
+    for agent_id, (latency, success_count, total_tests) in stats.items():
+        if total_tests == 0:
+            continue
+        success_rate = (success_count / total_tests) * 100
+
+        if success_rate < 90.0:
+            failing.append((agent_id, success_rate))
+        else:
+            healthy.append((agent_id, success_rate))
+
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+    if failing:
+        failing.sort(key=lambda x: x[1])
+        failure_text = ""
+        for agent, rate in failing:
+            failure_text += f"• `{agent}` → {rate:.1f}%\n"
+        message_text = "*🔴 Agent Performance Alert*\n"
+        message_text += f"*Time:* {current_time}\n\n"
+        message_text += f"*❌ Below Threshold (90%):*\n{failure_text}\n"
+
+    else:
+        total_agents = len(healthy)
+        avg_success_rate = sum(rate for _, rate in healthy) / total_agents if total_agents > 0 else 0
+        healthy.sort(key=lambda x: x[1], reverse=True)
+        top_performers = ""
+        for agent, rate in healthy[:8]:
+            top_performers += f"• `{agent}` → {rate:.1f}%\n"
+        if len(healthy) > 8:
+            top_performers += f"• +{len(healthy) - 8} more agents\n"
+
+        message_text = "*🟢 All Systems Healthy*\n"
+        message_text += f"*Time:* {current_time}\n\n"
+        message_text += "*📊 Performance Summary:*\n"
+        message_text += f"• Total Agents: `{total_agents}`\n"
+        message_text += f"• Average Success: `{avg_success_rate:.1f}%`\n\n"
+        message_text += f"*🎯 Top Performers:*\n{top_performers}"
+
+    try:
+        req = urllib.request.Request(
+            SLACK_WEBHOOK_URL,
+            data=json.dumps({"text": message_text}).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req) as response:
+            response.read()
+
+        if failing:
+            logger.info("Slack alert sent successfully for failing agents.")
+        else:
+            logger.info("Slack health status sent successfully - all agents healthy.")
+    except Exception as e:
+        logger.error(f"Failed to send Slack summary alert: {e}")
 
 
 def is_agent_hidden(agent_data: dict) -> bool:
@@ -143,6 +218,7 @@ def test_tool(client: MeshClient, agent_id: str, tool_name: str, inputs: dict) -
 
 
 async def push_to_prometheus(stats: dict):
+    send_summary_to_slack(stats)
     try:
         registry = CollectorRegistry()
         for agent_id, (total_latency, success_count, total_tests) in stats.items():
@@ -160,6 +236,7 @@ async def push_to_prometheus(stats: dict):
         logger.info(f"Metrics pushed to Prometheus at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     except Exception as e:
         logger.error(f"Error pushing metrics to Prometheus: {e}")
+        send_slack_alert(f"Failed to push metrics to Prometheus: {e}")
 
 
 def run_tests_for_agent(agent_id: str, client: MeshClient, test_inputs: dict, agents_metadata: dict) -> dict:
