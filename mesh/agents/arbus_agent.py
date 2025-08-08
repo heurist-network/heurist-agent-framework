@@ -38,7 +38,7 @@ class ArbusAgent(MeshAgent):
                     "Generate a report on Solana's partnerships",
                     "Analyze the current crypto market sentiment",
                 ],
-                "credits": 0,
+                "credits": 75,
             }
         )
 

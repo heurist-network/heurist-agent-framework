@@ -39,7 +39,7 @@ class TwitterInfoAgent(MeshAgent):
                     "Search for 'bitcoin' (single word search)",
                     "Search for '#ETH' (hashtag search)",
                 ],
-                "credits": 2,
+                "credits": 5,
             }
         )
 
@@ -156,12 +156,12 @@ class TwitterInfoAgent(MeshAgent):
                 "replies": tweet.get("reply_count", 0),
             },
         }
-        
+
         # Add thread/reply context if available
         if tweet.get("in_reply_to_status_id_str"):
             simplified["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
             simplified["in_reply_to_user"] = tweet.get("in_reply_to_screen_name")
-        
+
         # Add quoted tweet info if available
         if tweet.get("quoted_status"):
             simplified["quoted_tweet"] = {
@@ -169,7 +169,7 @@ class TwitterInfoAgent(MeshAgent):
                 "text": tweet["quoted_status"].get("text", ""),
                 "author": tweet["quoted_status"].get("user", {}).get("screen_name", ""),
             }
-            
+
         return simplified
 
     # ------------------------------------------------------------------------
@@ -257,12 +257,8 @@ class TwitterInfoAgent(MeshAgent):
                 logger.error(f"Error fetching tweet details: {tweet_data['error']}")
                 return tweet_data
 
-            result = {
-                "main_tweet": None,
-                "thread_tweets": [],
-                "replies": []
-            }
-            
+            result = {"main_tweet": None, "thread_tweets": [], "replies": []}
+
             # Find the main tweet and organize thread/replies
             tweets = tweet_data.get("tweets", [])
             for tweet in tweets:
@@ -287,9 +283,9 @@ class TwitterInfoAgent(MeshAgent):
         """Search for tweets using a query term using _api_request"""
         try:
             # Warn if query appears to be multi-word without quotes
-            if ' ' in query and not (query.startswith('"') and query.endswith('"')):
+            if " " in query and not (query.startswith('"') and query.endswith('"')):
                 logger.warning(f"Multi-word search query detected: '{query}'. This may return empty results.")
-            
+
             params = {"q": query}
 
             logger.info(f"Performing general search for query: {query}")
@@ -304,15 +300,13 @@ class TwitterInfoAgent(MeshAgent):
             tweets = search_data.get("tweets", [])
             simplified_tweets = [self._simplify_tweet_data(tweet) for tweet in tweets]
 
-            result = {
-                "query": query,
-                "tweets": simplified_tweets,
-                "result_count": len(simplified_tweets)
-            }
-            
+            result = {"query": query, "tweets": simplified_tweets, "result_count": len(simplified_tweets)}
+
             # Add warning if no results found
             if len(simplified_tweets) == 0:
-                result["warning"] = "No results found. If you used multiple words, try a single keyword, hashtag (#example), or mention (@username) instead."
+                result["warning"] = (
+                    "No results found. If you used multiple words, try a single keyword, hashtag (#example), or mention (@username) instead."
+                )
 
             logger.info(f"Successfully completed search for query: {query}, found {len(simplified_tweets)} results")
             return result
@@ -387,11 +381,10 @@ class TwitterInfoAgent(MeshAgent):
                 return {"error": "Missing 'q' parameter"}
 
             # Log warning for multi-word queries
-            if ' ' in query and not (query.startswith('"') and query.endswith('"')):
+            if " " in query and not (query.startswith('"') and query.endswith('"')):
                 logger.warning(f"Multi-word search query: '{query}'. Suggesting single keyword search.")
                 self.push_update(
-                    {"query": query}, 
-                    "Warning: Multi-word searches often return empty results. Searching anyway..."
+                    {"query": query}, "Warning: Multi-word searches often return empty results. Searching anyway..."
                 )
 
             logger.info(f"Performing general search for query '{query}'")

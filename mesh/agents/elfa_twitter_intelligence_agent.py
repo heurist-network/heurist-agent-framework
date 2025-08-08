@@ -53,6 +53,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                     "Get trending tokens on Twitter in the last 24 hours",
                     "What are people talking about ETH and SOL this week?",
                 ],
+                "credits": 10,
             }
         )
 
