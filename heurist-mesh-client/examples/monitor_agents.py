@@ -4,7 +4,7 @@ import logging
 import os
 import time
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from typing import Optional
 
@@ -83,13 +83,14 @@ def send_summary_to_slack(stats):
     failing = []
     healthy = []
 
-    for agent_id, (latency, success_count, total_tests) in stats.items():
+    for agent_id, agent_data in stats.items():
+        total_latency, success_count, total_tests, tool_breakdown = agent_data
         if total_tests == 0:
             continue
         success_rate = (success_count / total_tests) * 100
 
         if success_rate < 90.0:
-            failing.append((agent_id, success_rate))
+            failing.append((agent_id, success_rate, tool_breakdown))
         else:
             healthy.append((agent_id, success_rate))
 
@@ -98,11 +99,24 @@ def send_summary_to_slack(stats):
     if failing:
         failing.sort(key=lambda x: x[1])
         failure_text = ""
-        for agent, rate in failing:
+        for agent, rate, tool_breakdown in failing:
             failure_text += f"• `{agent}` → {rate:.1f}%\n"
+            for tool_name, (tool_success, tool_total) in tool_breakdown.items():
+                tool_rate = (tool_success / tool_total * 100) if tool_total > 0 else 0
+                failure_text += f"  ** {tool_name} = {tool_rate:.0f}%\n"
+            failure_text += "\n"
+
+        healthy.sort(key=lambda x: x[1], reverse=True)
+        top_healthy = ""
+        for agent, rate in healthy[:5]:
+            top_healthy += f"• `{agent}` → {rate:.1f}%\n"
+
         message_text = "*🔴 Agent Performance Alert*\n"
         message_text += f"*Time:* {current_time}\n\n"
-        message_text += f"*❌ Below Threshold (90%):*\n{failure_text}\n"
+        message_text += f"*❌ Below Threshold (90%):*\n{failure_text}"
+        if top_healthy:
+            message_text += f"*✅ Top 5 Healthy Agents:*\n{top_healthy}\n"
+        message_text += f"*Summary:* {len(failing)} failing • {len(healthy)} healthy"
 
     else:
         total_agents = len(healthy)
@@ -221,7 +235,8 @@ async def push_to_prometheus(stats: dict):
     send_summary_to_slack(stats)
     try:
         registry = CollectorRegistry()
-        for agent_id, (total_latency, success_count, total_tests) in stats.items():
+        for agent_id, agent_data in stats.items():
+            total_latency, success_count, total_tests, _ = agent_data
             metric_name = agent_id.replace("-", "_").replace(" ", "_")
             avg_latency = total_latency / total_tests if total_tests > 0 else 0.0
             success_rate = (success_count / total_tests * 100) if total_tests > 0 else 0.0
@@ -254,20 +269,25 @@ def run_tests_for_agent(agent_id: str, client: MeshClient, test_inputs: dict, ag
     total_latency = 0.0
     total_success_count = 0
     total_tests = 0
+    tool_breakdown = {}
+
     with ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
         futures = []
         for tool_name, inputs in test_inputs.get(agent_id, {}).items():
             if tool_name in agent_tools:
-                futures.append(executor.submit(test_tool, client, agent_id, tool_name, inputs))
+                futures.append((tool_name, executor.submit(test_tool, client, agent_id, tool_name, inputs)))
             else:
                 logger.warning(f"Tool {tool_name} not found for agent {agent_id}")
-        for future in as_completed(futures):
+
+        for tool_name, future in futures:
             tool_latency, tool_success_count, tool_total_tests = future.result()
             total_latency += tool_latency
             total_success_count += tool_success_count
             total_tests += tool_total_tests
+            tool_breakdown[tool_name] = (tool_success_count, tool_total_tests)
+
     if total_tests > 0:
-        stats[agent_id] = (total_latency, total_success_count, total_tests)
+        stats[agent_id] = (total_latency, total_success_count, total_tests, tool_breakdown)
     return stats
 
 
