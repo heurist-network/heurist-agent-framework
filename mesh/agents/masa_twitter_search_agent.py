@@ -32,6 +32,7 @@ class MasaTwitterSearchAgent(MeshAgent):
                 "description": "This agent can search on Twitter through Masa API and analyze the results by identifying trending topics and sentiment related to a topic.",
                 "external_apis": ["Masa"],
                 "tags": ["Twitter"],
+                "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Masa.png",
                 "examples": [
                     "Search for tweets about @heurist_ai",
