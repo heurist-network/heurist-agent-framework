@@ -191,22 +191,41 @@
   },
   "LetsBonkTokenInfoAgent": {
     "query_about_to_graduate_tokens": {
-      "limit": 10
-    },
-    "query_about_to_graduate_tokens_with_date": {
-      "limit": 25,
-      "since_date": "2025-07-15T00:00:00Z"
+      "limit": 5
     },
     "query_latest_trades": {
-      "token_address": "UGe91CmZsz7iyju1xn75KNWdX8fujifUNMnaDE1bonk",
-      "limit": 20
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "limit": 5
     },
     "query_latest_price": {
-      "token_address": "UGe91CmZsz7iyju1xn75KNWdX8fujifUNMnaDE1bonk"
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     },
     "query_top_buyers": {
-      "token_address": "UGe91CmZsz7iyju1xn75KNWdX8fujifUNMnaDE1bonk",
-      "limit": 30
+      "token_address": "F9WhPkcmLCVfgKucysxUWbqjrZfUYFsyQkxYnam9bonk",
+      "limit": 5
+    },
+    "query_top_sellers": {
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "limit": 5
+    },
+    "query_ohlcv_data": {
+      "token_address": "E8XPu39wNY4HfRgCRMmp2vee75N9gCAd9PnPsoesbonk",
+      "limit": 55
+    },
+    "query_pair_address": {
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    },
+    "query_liquidity": {
+      "pool_address": "Hv1i8WrxEhL8djBuxhFGJxXTt4qEupywWKFSgGB5A7w6"
+    },
+    "query_recently_created_tokens": {
+      "limit": 5
+    },
+    "query_bonding_curve_progress": {
+      "token_address": "F9WhPkcmLCVfgKucysxUWbqjrZfUYFsyQkxYnam9bonk"
+    },
+    "query_tokens_above_95_percent": {
+      "limit": 5
     }
   },
   "MasaTwitterSearchAgent": {

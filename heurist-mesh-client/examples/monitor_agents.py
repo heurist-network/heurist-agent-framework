@@ -108,14 +108,14 @@ def send_summary_to_slack(stats):
 
         healthy.sort(key=lambda x: x[1], reverse=True)
         top_healthy = ""
-        for agent, rate in healthy[:5]:
+        for agent, rate in healthy[-5:]:
             top_healthy += f"• `{agent}` → {rate:.1f}%\n"
 
         message_text = "*🔴 Agent Performance Alert*\n"
         message_text += f"*Time:* {current_time}\n\n"
         message_text += f"*❌ Below Threshold (90%):*\n{failure_text}"
         if top_healthy:
-            message_text += f"*✅ Top 5 Healthy Agents:*\n{top_healthy}\n"
+            message_text += f"*🤒 Least 5 Healthy Agents:*\n{top_healthy}\n"
         message_text += f"*Summary:* {len(failing)} failing • {len(healthy)} healthy"
 
     else:
