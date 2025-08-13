@@ -109,7 +109,7 @@ class FirecrawlSearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "firecrawl_web_search",
-                    "description": "Execute a web search query by reading the web pages using Firecrawl. It provides more comprehensive information than standard web search by extracting the full contents from the pages. Use this when you need in-depth information on a topic. Data comes from Firecrawl search API. It may fail to find information of niche topics such like small cap crypto projects.",
+                    "description": "Execute a web search query by reading the web pages using Firecrawl. It provides comprehensive information than standard web search by extracting the full contents from the pages. Use this when you need in-depth information on a topic. Data comes from Firecrawl search API. It may fail to find information of niche topics such like small cap crypto projects.",
                     "parameters": {
                         "type": "object",
                         "properties": {"search_term": {"type": "string", "description": "The search term to execute"}},
@@ -121,7 +121,7 @@ class FirecrawlSearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "firecrawl_extract_web_data",
-                    "description": "Extract structured data from one or multiple web pages using natural language instructions using Firecrawl. This tool can process single URLs or entire domains (using wildcards like example.com/*). Use this when you need specific information from websites rather than general search results. You must specify what data to extract from the pages using the 'extraction_prompt' parameter.",
+                    "description": "Extract structured data from one or multiple web pages using natural language instructions. This tool can process single URLs or entire domains (using wildcards like example.com/*). Use this when you need specific information from websites rather than general search results. You must specify what data to extract from the pages using the 'extraction_prompt' parameter.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -143,7 +143,7 @@ class FirecrawlSearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "firecrawl_scrape_url",
-                    "description": "Scrape and analyze content from a specific URL using Firecrawl. This provides detailed content extraction and processing from individual web pages with intelligent content analysis.",
+                    "description": "Scrape full contents from a specific URL. This provides complete raw web contents from individual web pages.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -245,7 +245,7 @@ class FirecrawlSearchAgent(MeshAgent):
 
         try:
             scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time)
+                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=15000)
             )
 
             markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
