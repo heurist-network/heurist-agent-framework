@@ -109,23 +109,22 @@ class FirecrawlSearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "firecrawl_web_search",
-                    "description": "Execute a web search query with advanced filtering using Firecrawl. Supports Google search operators (OR, AND, site:domain.com, exact phrases in quotes) and time filtering. Provides comprehensive information by extracting full contents from pages. Examples: 'site:coinbase.com new listings', 'coinbase OR binance listing', '\"newly listed on coinbase\"'. Use this when you need in-depth information on a topic. Do not use this for niche topics such like small cap crypto projects.",
+                    "description": "Execute a web search query with advanced filtering using Firecrawl. MANDATORY: Use time_filter parameter for ANY time-sensitive requests (recent, today, past week, etc.). Supports Google search operators in search_term. Examples: For 'recent coinbase listings' use search_term='coinbase listings' + time_filter='qdr:w'. For 'today's bitcoin news' use search_term='bitcoin news' + time_filter='qdr:d'. For site-specific searches use search_term='site:coinbase.com announcements'",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "search_term": {
                                 "type": "string", 
-                                "description": "Search query. Supports advanced operators: OR, AND, site:domain.com, exact phrases in quotes."
+                                "description": "Search query WITHOUT time words. Remove 'recent', 'today', 'past week' from query - use time_filter instead. Supports operators: OR, AND, site:domain.com, quotes. Examples: 'coinbase listings' (not 'recent coinbase listings'), 'site:coinbase.com announcements', 'bitcoin OR ethereum price'."
                             },
                             "time_filter": {
                                 "type": "string",
-                                "description": "Time filter for results. Use for time-sensitive searches like recent announcements.",
-                                "enum": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"],
-                                "enumDescriptions": ["Past hour", "Past 24 hours", "Past week", "Past month", "Past year"]
+                                "description": "REQUIRED for time-sensitive queries. Map: 'recent/past week'→'qdr:w', 'today/past day'→'qdr:d', 'past hour'→'qdr:h', 'past month'→'qdr:m', 'past year'→'qdr:y'. Always use when user mentions time periods.",
+                                "enum": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"]
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": "Number of results to return (1-50). Default is 10.",
+                                "description": "Number of results to return. Set based on user request: '5 results'→5, '10 items'→10, etc. Default is 10.",
                                 "minimum": 5,
                                 "maximum": 10,
                                 "default": 10
