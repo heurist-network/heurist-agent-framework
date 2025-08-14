@@ -109,10 +109,28 @@ class FirecrawlSearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "firecrawl_web_search",
-                    "description": "Execute a web search query by reading the web pages using Firecrawl. It provides comprehensive information than standard web search by extracting the full contents from the pages. Use this when you need in-depth information on a topic. Data comes from Firecrawl search API. It may fail to find information of niche topics such like small cap crypto projects.",
+                    "description": "Execute a web search query with advanced filtering using Firecrawl. Supports Google search operators (OR, AND, site:domain.com, exact phrases in quotes) and time filtering. Provides comprehensive information by extracting full contents from pages. Examples: 'site:coinbase.com new listings', 'coinbase OR binance listing', '\"newly listed on coinbase\"'. Use this when you need in-depth information on a topic. Do not use this for niche topics such like small cap crypto projects.",
                     "parameters": {
                         "type": "object",
-                        "properties": {"search_term": {"type": "string", "description": "The search term to execute"}},
+                        "properties": {
+                            "search_term": {
+                                "type": "string", 
+                                "description": "Search query. Supports advanced operators: OR, AND, site:domain.com, exact phrases in quotes."
+                            },
+                            "time_filter": {
+                                "type": "string",
+                                "description": "Time filter for results. Use for time-sensitive searches like recent announcements.",
+                                "enum": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"],
+                                "enumDescriptions": ["Past hour", "Past 24 hours", "Past week", "Past month", "Past year"]
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Number of results to return (1-50). Default is 10.",
+                                "minimum": 5,
+                                "maximum": 10,
+                                "default": 10
+                            }
+                        },
                         "required": ["search_term"],
                     },
                 },
@@ -168,17 +186,34 @@ class FirecrawlSearchAgent(MeshAgent):
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def firecrawl_web_search(self, search_term: str) -> Dict[str, Any]:
+    async def firecrawl_web_search(self, search_term: str, time_filter: Optional[str] = None, limit: int = 10) -> Dict[str, Any]:
         """
-        Execute a web search using Firecrawl and return formatted results.
+        Execute a web search using Firecrawl with advanced filtering options.
+        
+        Args:
+            search_term: Search query with optional operators (OR, AND, site:, quotes)
+            time_filter: Time filter (qdr:h/d/w/m/y for past hour/day/week/month/year)
+            limit: Number of results to return (1-50)
         """
-        logger.info(f"Executing Firecrawl web search for '{search_term}'")
+        logger.info(f"Executing Firecrawl web search for '{search_term}' with time_filter='{time_filter}', limit={limit}")
 
         try:
             scrape_options = ScrapeOptions(formats=["markdown"])
+            
+            # Build search parameters
+            search_params = {
+                "query": search_term,
+                "limit": limit,
+                "scrape_options": scrape_options
+            }
+            
+            # Add time filter if specified
+            if time_filter:
+                search_params["tbs"] = time_filter
+                logger.info(f"Applied time filter: {time_filter}")
 
             response = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.search(query=search_term, scrape_options=scrape_options)
+                None, lambda: self.app.search(**search_params)
             )
 
             data = getattr(response, "data", None) or (response.get("data") if isinstance(response, dict) else None)
@@ -282,10 +317,13 @@ class FirecrawlSearchAgent(MeshAgent):
 
         if tool_name == "firecrawl_web_search":
             search_term = function_args.get("search_term")
+            time_filter = function_args.get("time_filter")
+            limit = function_args.get("limit", 10)
+            
             if not search_term:
                 return {"status": "error", "error": "Missing 'search_term' parameter"}
 
-            result = await self.firecrawl_web_search(search_term)
+            result = await self.firecrawl_web_search(search_term, time_filter, limit)
 
         elif tool_name == "firecrawl_extract_web_data":
             urls = function_args.get("urls")
