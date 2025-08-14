@@ -30,6 +30,7 @@ class EvmTokenInfoAgent(MeshAgent):
                 "external_apis": ["Bitquery"],
                 "tags": ["EVM"],
                 "supported_chains": ["ethereum", "eth", "bsc", "binance", "base", "arbitrum", "arb"],
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/EVM.png",
                 "examples": [
                     "Show me recent large trades for USDT on Ethereum",
                     "Get large buyers of token 0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c on BSC",
@@ -130,12 +131,14 @@ class EvmTokenInfoAgent(MeshAgent):
             "bnb": "bsc",
             "base": "base",
             "arbitrum": "arbitrum",
-            "arb": "arbitrum"
+            "arb": "arbitrum",
         }
-        
+
         normalized_chain = chain_mapping.get(chain.lower())
         if not normalized_chain:
-            return {"error": f"Unsupported chain: {chain}. Supported chains: ethereum/eth, bsc/binance, base, arbitrum/arb"}
+            return {
+                "error": f"Unsupported chain: {chain}. Supported chains: ethereum/eth, bsc/binance, base, arbitrum/arb"
+            }
 
         if filter not in ["all", "buy", "sell"]:
             return {"error": f"Invalid filter: {filter}. Must be 'all', 'buy', or 'sell'"}
@@ -239,7 +242,7 @@ class EvmTokenInfoAgent(MeshAgent):
 
         print("Generated query:", query)
         print("Variables:", variables)
-        
+
         return await self._api_request(
             url=self.bitquery_url,
             method="POST",
