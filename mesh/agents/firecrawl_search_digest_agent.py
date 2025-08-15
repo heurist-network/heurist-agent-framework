@@ -239,14 +239,14 @@ Return clear, focused summaries that extract only the most relevant information.
                 # Process results with LLM
                 processed_summary = await self._process_search_results_with_llm(data, search_term)
                 
-                return {"status": "success", "data": {"results": data, "processed_summary": processed_summary}}
+                return {"status": "success", "data": {"processed_summary": processed_summary}}
             elif isinstance(response, list):
                 logger.info(f"Search completed with {len(response)} results")
                 
                 # Process results with LLM  
                 processed_summary = await self._process_search_results_with_llm(response, search_term)
                 
-                return {"status": "success", "data": {"results": response, "processed_summary": processed_summary}}
+                return {"status": "success", "data": {"processed_summary": processed_summary}}
             else:
                 logger.warning("Search completed but no results were found")
                 return {"status": "no_data", "data": {"results": []}}
@@ -319,7 +319,6 @@ Return clear, focused summaries that extract only the most relevant information.
                 "status": "success",
                 "data": {
                     "processed_content": processed_summary,
-                    "raw_markdown": markdown_content,
                     "url": url,
                 },
             }
