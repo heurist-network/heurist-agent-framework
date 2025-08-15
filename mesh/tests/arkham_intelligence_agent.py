@@ -21,7 +21,7 @@ async def run_agent():
         }
         agent_output_1 = await agent.handle_message(agent_input_1)
 
-        # Test 2: Direct tool call for address intelligence on Solana
+        # Test 2: Direct tool call for address intelligence on Base
         agent_input_2 = {
             "tool": "get_address_intelligence",
             "tool_arguments": {"address": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d", "chain": "base"},
@@ -47,8 +47,8 @@ async def run_agent():
         agent_input_5 = {
             "tool": "get_token_holders",
             "tool_arguments": {
-                "chain": "solana",
-                "address": "38PgzpJYu2HkiYvV8qePFakB8tuobPdGm2FFEn7Dpump",
+                "chain": "ethereum",
+                "address": "0xdd3b11ef34cd511a2da159034a05fcb94d806686",
                 "groupByEntity": False,
             },
         }
