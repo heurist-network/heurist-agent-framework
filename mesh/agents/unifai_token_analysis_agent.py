@@ -54,7 +54,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_gmgn_trend",
-                    "description": "Get trending tokens from GMGN memecoin trading platform",
+                    "description": "Get trending tokens from GMGN memecoin trading platform. Use this tool when you want to get trending memecoins.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -66,7 +66,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
                             "limit": {
                                 "type": "integer",
                                 "description": "Maximum number of trending tokens to return",
-                                "default": 50,
+                                "default": 10,
                                 "minimum": 1,
                                 "maximum": 100,
                             },
@@ -78,7 +78,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_gmgn_token_info",
-                    "description": "Get detailed token information from GMGN",
+                    "description": "Get detailed token information from GMGN (a memecoin trading platform). Use this tool to get new memecoin trading info, including basic market data, security metrics, liquidity info. Don't use this tool for large cap tokens or established projects.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -99,7 +99,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "analyze_token",
-                    "description": "Analyze a cryptocurrency token by its ticker",
+                    "description": "Analyze a memecoin by its ticker. Use this tool to get a short summary of memecoin price, market cap and holder concentration. Don't use this tool for large cap tokens or established projects.",
                     "parameters": {
                         "type": "object",
                         "properties": {
