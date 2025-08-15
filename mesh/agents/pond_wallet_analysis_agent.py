@@ -58,7 +58,7 @@ class PondWalletAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "analyze_ethereum_wallet",
-                    "description": "Analyze an Ethereum wallet address for trading activity, volume, and transaction metrics over the last 30 days. The unit of gas fees is in GWEI.",
+                    "description": "Analyze an Ethereum wallet address for DEX trading frequency and volume and PnL over the last 30 days. The unit of gas fees is in GWEI. Useful when analyzing trading patterns of an EOA wallet.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -75,7 +75,7 @@ class PondWalletAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "analyze_solana_wallet",
-                    "description": "Analyze a Solana wallet address for trading activity, volume, and transaction metrics over the last 30 days",
+                    "description": "Analyze a Solana wallet address for DEX trading frequency and volume and PnL over the last 30 days. Useful when analyzing trading patterns of a user wallet.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -92,7 +92,7 @@ class PondWalletAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "analyze_base_wallet",
-                    "description": "Analyze a Base network wallet address for trading activity, volume, and transaction metrics over the last 30 days. Ignore the gas fee results.",
+                    "description": "Analyze a Base network wallet address for DEX trading frequency and volume and PnL over the last 30 days. Ignore the gas fee results. Useful when analyzing trading patterns of an EOA wallet.",
                     "parameters": {
                         "type": "object",
                         "properties": {
