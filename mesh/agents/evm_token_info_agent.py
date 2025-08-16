@@ -23,10 +23,10 @@ class EvmTokenInfoAgent(MeshAgent):
         self.metadata.update(
             {
                 "name": "EVM Token Info Agent",
-                "version": "1.2.0",
+                "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent analyzes large trades for EVM tokens across multiple chains using Bitquery API. It tracks whale movements, identifying large buyers and sellers with transaction details.",
+                "description": "This agent analyzes large trades for EVM tokens across multiple chains using Bitquery API. It tracks whale movements by identifying actual traders with transaction details.",
                 "external_apis": ["Bitquery"],
                 "tags": ["EVM"],
                 "supported_chains": ["ethereum", "eth", "bsc", "binance", "base", "arbitrum", "arb"],
@@ -44,21 +44,22 @@ class EvmTokenInfoAgent(MeshAgent):
         return """You are a specialized assistant that analyzes large trades for EVM tokens across multiple blockchains using Bitquery API. Your capabilities include:
 
         1. Large Trade Analysis: Track and analyze large trades (whales) for any EVM token on supported chains
-        2. Buyer/Seller Identification: Identify large buyers and sellers with their addresses and transaction details
+        2. Actual Trader Identification: Identify the actual wallet addresses initiating trades (not DEX contracts)
         3. Trade Filtering: Filter trades by minimum USD amount and trade type (buy/sell/all)
         4. Multi-chain Support: Analyze tokens on Ethereum (eth), Binance Smart Chain (bsc), Base (base), and Arbitrum (arbitrum)
 
         Key Features:
         - Default minimum trade size: $5,000 USD (customizable)
-        - Shows both buyers and sellers by default unless specifically requested
-        - Returns raw trade data from Bitquery API
+        - Shows actual trader addresses (Transaction.From) not DEX routers
+        - Returns both buyers and sellers by default unless specifically requested
         - Sorted by USD amount in descending order
 
         Important:
         - User must provide a valid token contract address (starting with 0x)
-        - If no valid address is provided, inform the user to provide a valid EVM token contract address
-        - Only use buy/sell filters when user explicitly asks for "buyers only", "sellers only", "only buyers", "only sellers", etc.
-        - Present the data in a clear and concise manner focusing on key insights
+        - The 'Trader' field shows the actual wallet that initiated the transaction
+        - For buy trades: Trader is buying the specified token
+        - For sell trades: Trader is selling the specified token
+        - Present the data in a clear and concise manner focusing on actual whale wallets
         - Supported chains: Ethereum, BSC, Base, and Arbitrum only"""
 
     def get_tool_schemas(self) -> List[Dict]:
@@ -67,7 +68,7 @@ class EvmTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_recent_large_trades",
-                    "description": "Get recent large trades for a specific EVM token on supported chains. Shows whale activity including large buys and sells with transaction details. Perfect for tracking smart money movements and identifying accumulation or distribution patterns.",
+                    "description": "Get recent large trades for a specific EVM token on supported chains. Shows actual whale wallet addresses (not DEX contracts) with transaction details. Perfect for tracking smart money movements and identifying accumulation or distribution patterns.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -117,7 +118,7 @@ class EvmTokenInfoAgent(MeshAgent):
     ) -> Dict[str, Any]:
         """
         Get recent large trades for a specific EVM token.
-        Returns raw data from Bitquery API without any processing.
+        Returns actual trader addresses (Transaction.From) instead of DEX contracts.
         """
         if not tokenAddress or not tokenAddress.startswith("0x"):
             return {"error": "Please provide a valid token contract address starting with '0x'"}
@@ -145,94 +146,10 @@ class EvmTokenInfoAgent(MeshAgent):
 
         limit = min(max(1, limit), 100)
 
-        # Build the query with the network as an enum (not string)
         if filter == "all":
-            query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{
-  EVM(network: {normalized_chain}) {{
-    DEXTradeByTokens(
-      orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}}
-      limit: {{count: $limit}}
-      where: {{
-        Trade: {{
-          Currency: {{SmartContract: {{is: $token}}}},
-          Side: {{
-            AmountInUSD: {{gt: $minUsdAmount}}
-          }}
-        }}
-      }}
-    ) {{
-      Trade {{
-        Buyer
-        Seller
-        Currency {{
-          Name
-          Symbol
-          SmartContract
-        }}
-        Side {{
-          Type
-          Amount
-          AmountInUSD
-          Currency {{
-            Name
-            Symbol
-            SmartContract
-          }}
-        }}
-      }}
-      Transaction {{
-        Hash
-      }}
-      Block {{
-        Time
-      }}
-    }}
-  }}
-}}"""
+            query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{ EVM(network: {normalized_chain}) {{ DEXTradeByTokens( orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}} limit: {{count: $limit}} where: {{ Trade: {{ Currency: {{SmartContract: {{is: $token}}}}, Side: {{ AmountInUSD: {{gt: $minUsdAmount}} }} }} }} ) {{ Trade {{ Currency {{ Name Symbol SmartContract }} Side {{ Type Amount AmountInUSD Currency {{ Name Symbol SmartContract }} }} }} Transaction {{ From Hash }} Block {{ Time }} }} }} }}"""
         else:
-            query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{
-  EVM(network: {normalized_chain}) {{
-    DEXTradeByTokens(
-      orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}}
-      limit: {{count: $limit}}
-      where: {{
-        Trade: {{
-          Currency: {{SmartContract: {{is: $token}}}},
-          Side: {{
-            Type: {{is: {filter}}},
-            AmountInUSD: {{gt: $minUsdAmount}}
-          }}
-        }}
-      }}
-    ) {{
-      Trade {{
-        Buyer
-        Seller
-        Currency {{
-          Name
-          Symbol
-          SmartContract
-        }}
-        Side {{
-          Type
-          Amount
-          AmountInUSD
-          Currency {{
-            Name
-            Symbol
-            SmartContract
-          }}
-        }}
-      }}
-      Transaction {{
-        Hash
-      }}
-      Block {{
-        Time
-      }}
-    }}
-  }}
-}}"""
+            query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{ EVM(network: {normalized_chain}) {{ DEXTradeByTokens( orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}} limit: {{count: $limit}} where: {{ Trade: {{ Currency: {{SmartContract: {{is: $token}}}}, Side: {{ Type: {{is: {filter}}}, AmountInUSD: {{gt: $minUsdAmount}} }} }} }} ) {{ Trade {{ Currency {{ Name Symbol SmartContract }} Side {{ Type Amount AmountInUSD Currency {{ Name Symbol SmartContract }} }} }} Transaction {{ From Hash }} Block {{ Time }} }} }} }}"""
 
         variables = {
             "token": tokenAddress.lower(),
@@ -243,19 +160,27 @@ class EvmTokenInfoAgent(MeshAgent):
         print("Generated query:", query)
         print("Variables:", variables)
 
-        return await self._api_request(
+        result = await self._api_request(
             url=self.bitquery_url,
             method="POST",
             headers=self.headers,
             json_data={"query": query, "variables": variables},
         )
 
+        if result and "data" in result and "EVM" in result["data"]:
+            trades = result["data"]["EVM"]["DEXTradeByTokens"]
+            for trade in trades:
+                if "Transaction" in trade and "From" in trade["Transaction"]:
+                    trade["Trader"] = trade["Transaction"]["From"]
+                    trade["TradeType"] = trade["Trade"]["Side"]["Type"]
+
+        return result
+
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        Handle execution of specific tools and return the raw data.
-        This method is called by the base class and should return data directly.
+        Handle execution of specific tools and return the data with actual trader addresses.
         """
         if tool_name != "get_recent_large_trades":
             return {"error": f"Unsupported tool '{tool_name}'"}
