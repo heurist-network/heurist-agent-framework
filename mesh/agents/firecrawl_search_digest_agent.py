@@ -219,7 +219,8 @@ Return clear, focused summaries that extract only the most relevant information.
             search_params = {
                 "query": search_term,
                 "limit": limit,
-                "scrape_options": scrape_options
+                "scrape_options": scrape_options,
+                "timeout": 30000
             }
             
             # Add time filter if specified
