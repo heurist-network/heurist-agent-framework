@@ -186,8 +186,8 @@ Return clear, focused summaries that extract only the most relevant information.
                             },
                             "wait_time": {
                                 "type": "integer",
-                                "description": "Time to wait for page to load in milliseconds (default: 5000)",
-                                "default": 5000,
+                                "description": "Time to wait for page to load in milliseconds (default: 7500)",
+                                "default": 7500,
                             },
                         },
                         "required": ["url"],
@@ -296,7 +296,7 @@ Return clear, focused summaries that extract only the most relevant information.
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def firecrawl_scrape_url(self, url: str, wait_time: int = 5000) -> Dict[str, Any]:
+    async def firecrawl_scrape_url(self, url: str, wait_time: int = 7500) -> Dict[str, Any]:
         """
         Scrape and analyze content from a specific URL using Firecrawl with AI processing.
         """
@@ -361,7 +361,7 @@ Return clear, focused summaries that extract only the most relevant information.
 
         elif tool_name == "firecrawl_scrape_url":
             url = function_args.get("url")
-            wait_time = function_args.get("wait_time", 5000)
+            wait_time = function_args.get("wait_time", 7500)
 
             if not url:
                 return {"status": "error", "error": "Missing 'url' parameter"}
