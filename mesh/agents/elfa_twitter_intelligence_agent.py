@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import os
 import random
@@ -151,6 +152,95 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         ]
 
     # ------------------------------------------------------------------------
+    #                      ENHANCED TWEET TEXT FETCHING
+    # ------------------------------------------------------------------------
+
+    async def _fetch_single_tweet_text(self, tweet_id: str) -> Optional[str]:
+        """Fetch text for a single tweet using Apidance API"""
+        try:
+            tweet_details = await self.get_tweet_detail(tweet_id)
+            if "error" not in tweet_details and tweet_details.get("tweets"):
+                for tweet in tweet_details.get("tweets", []):
+                    if str(tweet.get("tweet_id")) == str(tweet_id) or str(tweet.get("id_str")) == str(tweet_id):
+                        return tweet.get("text")
+            return None
+        except Exception as e:
+            logger.warning(f"Failed to fetch text for tweet {tweet_id}: {str(e)}")
+            return None
+
+    async def _fetch_batch_tweet_texts(
+        self, tweet_ids: List[str], batch_size: int = 3, delay: float = 2.0
+    ) -> List[Optional[str]]:
+        """
+        Fetch texts for tweets with controlled parallelism.
+
+        Args:
+            tweet_ids: List of tweet IDs to fetch
+            batch_size: Number of tweets to fetch in parallel (default: 3)
+            delay: Delay between batches in seconds (default: 2.0)
+        """
+        all_results = []
+
+        for i in range(0, len(tweet_ids), batch_size):
+            batch = tweet_ids[i : i + batch_size]
+            logger.info(
+                f"Processing batch {i // batch_size + 1}/{(len(tweet_ids) + batch_size - 1) // batch_size}: {len(batch)} tweets"
+            )
+
+            batch_tasks = [self._fetch_single_tweet_text(tweet_id) for tweet_id in batch]
+            batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+            processed_results = []
+            for tweet_id, result in zip(batch, batch_results):
+                if isinstance(result, Exception):
+                    logger.warning(f"Exception fetching text for tweet {tweet_id}: {result}")
+                    processed_results.append(None)
+                else:
+                    processed_results.append(result)
+
+            all_results.extend(processed_results)
+            if i + batch_size < len(tweet_ids):
+                logger.debug(f"Waiting {delay}s before next batch...")
+                await asyncio.sleep(delay)
+
+        return all_results
+
+    async def _enrich_tweets_with_text(self, tweets: List[Dict]) -> List[Dict]:
+        """
+        Enrich tweet data with full text using parallel API calls.
+        Removes the 'link' field and adds 'text' field for each tweet.
+        """
+        tweet_ids = []
+        tweet_id_to_index = {}
+
+        for i, tweet in enumerate(tweets):
+            tweet_id = tweet.get("tweetId")
+            if tweet_id:
+                tweet_ids.append(tweet_id)
+                tweet_id_to_index[tweet_id] = i
+        if tweet_ids:
+            logger.info(f"Fetching text for {len(tweet_ids)} tweets")
+            if len(tweet_ids) > 20:
+                batch_size = 2
+                delay = 3.0
+            elif len(tweet_ids) > 10:
+                batch_size = 3
+                delay = 2.0
+            else:
+                batch_size = 5
+                delay = 1.0
+
+            tweet_texts = await self._fetch_batch_tweet_texts(tweet_ids, batch_size, delay)
+            for tweet_id, text_result in zip(tweet_ids, tweet_texts):
+                tweet_index = tweet_id_to_index[tweet_id]
+                tweets[tweet_index]["text"] = text_result
+        for tweet in tweets:
+            tweet.pop("link", None)
+            if "text" not in tweet:
+                tweet["text"] = None
+
+        return tweets
+
+    # ------------------------------------------------------------------------
     #                      ELFA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
@@ -185,22 +275,15 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 logger.error(f"Error searching mentions: {result['error']}")
                 return result
             if "data" in result:
-                for item in result["data"]:
-                    tweet_id = item.get("tweet_id")
-                    if tweet_id:
-                        tweet_details = await self.get_tweet_detail(tweet_id)
-                        if "error" not in tweet_details:
-                            for tweet in tweet_details.get("tweets", []):
-                                if tweet.get("id_str") == tweet_id:
-                                    item["text"] = tweet.get("text")
-                                    break
                 for tweet in result["data"]:
                     tweet.pop("id", None)
                     tweet.pop("twitter_id", None)
                     tweet.pop("twitter_user_id", None)
 
+                result["data"] = await self._enrich_tweets_with_text(result["data"])
             result.pop("metadata", None)
-            logger.info(f"Successfully retrieved mentions data with {len(result.get('data', []))} results")
+
+            logger.info(f"Successfully retrieved and enriched {len(result.get('data', []))} mentions")
             return {"status": "success", "data": result}
         except Exception as e:
             logger.error(f"Exception in search_mentions: {str(e)}")
@@ -280,10 +363,9 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         url = f"{self.apidance_base_url}/{endpoint}"
         try:
             result = await self._api_request(url=url, method="GET", headers=headers, params=params)
-            if "error" in result:
-                return result
-            return result
+            return result if result else {"error": "Empty response from API"}
         except Exception as e:
+            logger.error(f"Error fetching tweet {tweet_id}: {str(e)}")
             return {"error": f"Failed to fetch tweet details: {str(e)}"}
 
     # ------------------------------------------------------------------------

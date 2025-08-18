@@ -16,239 +16,244 @@ test_1_search_mentions_tool:
       data:
         success: true
         data:
-        - tweetId: '1948677770487497121'
-          link: https://x.com/0xgilllee/status/1948677770487497121
-          likeCount: 0
-          repostCount: 6
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:32:39+00:00'
-          type: repost
-          account:
-            username: 0xgilllee
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948675716960457037'
-          link: https://x.com/defikadic/status/1948675716960457037
-          likeCount: 0
-          repostCount: 5
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:24:30+00:00'
-          type: repost
-          account:
-            username: defikadic
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948673910620233810'
-          link: https://x.com/EliBenSasson/status/1948673910620233810
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:17:19+00:00'
-          type: note
-          account:
-            username: EliBenSasson
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948670306022789284'
-          link: https://x.com/eli5_defi/status/1948670306022789284
-          likeCount: 0
-          repostCount: 4
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:03:00+00:00'
-          type: repost
-          account:
-            username: eli5_defi
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948668573507059821'
-          link: https://x.com/eli5_defi/status/1948668573507059821
-          likeCount: 42
-          repostCount: 6
-          viewCount: 1673
-          quoteCount: 1
-          replyCount: 27
-          bookmarkCount: 8
-          mentionedAt: '2025-07-25T08:56:07+00:00'
-          type: note
-          account:
-            username: eli5_defi
-            isVerified: false
-          repostBreakdown:
-            smart: 1
-            ct: 2
-        - tweetId: '1948666138247717204'
-          link: https://x.com/NathanHeadPhoto/status/1948666138247717204
-          likeCount: 7
+        - tweetId: '1957360763158286495'
+          likeCount: 29
           repostCount: 2
-          viewCount: 672
-          quoteCount: 0
-          replyCount: 4
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T08:46:26+00:00'
-          type: post
+          viewCount: 1053
+          quoteCount: 3
+          replyCount: 13
+          bookmarkCount: 3
+          mentionedAt: '2025-08-18T08:35:46+00:00'
+          type: note
           account:
-            username: NathanHeadPhoto
+            username: Mars_DeFi
             isVerified: false
           repostBreakdown:
             smart: 0
-            ct: 0
-        - tweetId: '1948647199648137532'
-          link: https://x.com/DjaniWhaleSkul/status/1948647199648137532
+            ct: 1
+          text: "For decades, corporate treasuries were seen as the boring corner\
+            \ of finance, that is, a place where the priority was keeping cash safe,\
+            \ minimizing risk, and giving out modest returns.\n\nThat world has changed.\n\
+            \nA new era of Digital Asset Treasuries (DATs) is reshaping balance sheets.\
+            \ Instead of relying only on cash, bonds, or government bills, companies\
+            \ are now holding Bitcoin, Ethereum, stablecoins, and even tokenized real-world\
+            \ assets alongside traditional reserves.\n\n_______\nFrom Niche Bet →\
+            \ Mainstream Play\n\nWhat started in 2020 with MicroStrategy’s bold move\
+            \ into Bitcoin has turned into one of the fastest-growing frontiers in\
+            \ corporate finance.\n\n● Bitcoin is now a core reserve for companies\
+            \ like MicroStrategy, Block, and Bit Digital.\n\n● Ethereum isn’t just\
+            \ a store of value rather it’s a yield-bearing asset. Staking or deploying\
+            \ ETH in DeFi allows treasuries to generate 3–14% annual returns, turning\
+            \ what was once a cost center into a profit center.\n\n● Other assets\
+            \ like Solana and tokenized RWAs are beginning to appear on corporate\
+            \ balance sheets as well.\n\n_____\n\nNow how exactly do these DATs operate?\n\
+            \nSome DATs raise capital by issuing shares, using the proceeds to accumulate\
+            \ crypto.\n(See infographic for mechanics)\n\nOthers integrate yield strategies\
+            \ directly into their treasury management or even mining in the case of\
+            \ Bitcoin. \n\nThere’s no single playbook that governs all but the endgame\
+            \ is clear: exposure to digital assets as a core treasury strategy.\n\n\
+            ______\n\nDATs aren’t just another financial vehicle rather they introduce\
+            \ a feedback loop that strengthens crypto markets:\n\n● Transparency &\
+            \ Trust: As public companies, DATs must comply with securities laws, quarterly\
+            \ filings, and oversight which is a level of accountability that makes\
+            \ institutions far more comfortable allocating capital.\n\n● Positive\
+            \ Market Feedback: Rising crypto prices → higher DAT valuations → more\
+            \ capital raises → more crypto purchases. This cycle accelerates adoption,\
+            \ liquidity, and overall market depth.\n\nOf course, the loop works in\
+            \ reverse too:\n• Falling prices can hit DAT share values harder than\
+            \ the underlying crypto.\n• Issuing too many shares risks diluting investors.\n\
+            • In downturns, DATs may be forced to sell, putting extra pressure on\
+            \ prices.\n\nHowever,  Digital Asset Treasuries are no longer an experiment\
+            \ rather they have become a structural shift. They blend corporate finance\
+            \ with the open, high-growth world of crypto.\n\nYes, the risks are real.\
+            \ But the potential is greater: regulated, transparent vehicles that could\
+            \ unlock trillions in institutional capital for the digital asset economy."
+        - tweetId: '1957320197120872719'
           likeCount: 10
           repostCount: 0
-          viewCount: 148
-          quoteCount: 0
-          replyCount: 5
+          viewCount: 281
+          quoteCount: 1
+          replyCount: 6
           bookmarkCount: 0
-          mentionedAt: '2025-07-25T07:31:11+00:00'
+          mentionedAt: '2025-08-18T05:54:34+00:00'
           type: note
           account:
             username: DjaniWhaleSkul
             isVerified: false
           repostBreakdown:
             smart: 0
-            ct: 0
-        - tweetId: '1948639483731345832'
-          link: https://x.com/Jeremyybtc/status/1948639483731345832
-          likeCount: 0
-          repostCount: 22
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T07:00:31+00:00'
-          type: repost
-          account:
-            username: Jeremyybtc
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948609523079626913'
-          link: https://x.com/0xhugeape/status/1948609523079626913
-          likeCount: 0
-          repostCount: 32
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T05:01:28+00:00'
-          type: repost
-          account:
-            username: 0xhugeape
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948590471980482822'
-          link: https://x.com/PANewsCN/status/1948590471980482822
-          likeCount: 0
+            ct: 1
+          text: "Good morning fam, happy Monday. \n\nI’m back from holidays. Spent\
+            \ hours in the car yesterday, driving through a big city with endless\
+            \ highways, and all I could think about was how much better it felt at\
+            \ the sea small streets, quiet harbors, people coming together. Totally\
+            \ different vibe. Honestly feels like I’ve had enough of big cities. Could\
+            \ see myself settling in a small harbor town in the Mediterranean one\
+            \ day. We’ll see at the end of the year when Q4 kicks in, depending on\
+            \ wars, markets, and how things play out.\n\nMarkets? Weekend gave us\
+            \ a bump, but as usual, Sunday night/Monday looks red.\n• Bitcoin at 115k,\
+            \ down 3% from yesterday, but still in range. We were 108k just 2 weeks\
+            \ ago. Boring? Maybe. But boredom = opportunity.\n• Ethereum at 4300,\
+            \ drifting down. From 1300 to here in a straight run can’t complain unless\
+            \ you bought the top.\n• Solana ranging at 180.\n• Dogecoin 22c is this\
+            \ the cycle where DOGE finally pushes to $1? Totally possible.\n• Chainlink\
+            \ at 24.6, solid spot after touching 26 recently.\n• Sui at 3.6, red with\
+            \ the rest.\n• Monero reminding us privacy coins were once the OG narrative:\
+            \ “don’t trust the state, do it yourself.” Tornado Cash pushed that further,\
+            \ but now regulators clamp down. Less regulation talk, harder punishments.\n\
+            • Polygon (POL) at 25c, struggling.\n• Arbitrum keeps sneaking green on\
+            \ red days. With all those L2s using Arb tech, and stablecoins flowing\
+            \ through, it could cement itself as the hub.\n\nNFTs? Heating up. Every\
+            \ chain has its culture. On Solana you’ve got Claynosaurz and Mad Lads.\
+            \ On ETH it’s always CryptoPunks, Pudgy, Creepz. On Starknet, I’m repping\
+            \ my Schizo NFT feels early, but I think Starknet NFTs will run. Abstract?\
+            \ Bearish, Final Bosu, and the rest building culture there. Wherever you\
+            \ look, culture drives cycles, and NFTs carry that flag.\n\nI could keep\
+            \ going on bags and plays, but let’s leave that for later. I’m back, I’ve\
+            \ got more time, more focus, and yeah, even with a Web2 job I’m sharper\
+            \ now because I’ve learned to time-box and think in sprints.\n\nSee you\
+            \ later today. Have a great Monday, fam."
+        - tweetId: '1957259942790090790'
+          likeCount: 5
           repostCount: 0
-          viewCount: 1230
+          viewCount: 499
           quoteCount: 0
           replyCount: 1
           bookmarkCount: 0
-          mentionedAt: '2025-07-25T03:45:46+00:00'
+          mentionedAt: '2025-08-18T01:55:09+00:00'
           type: note
           account:
-            username: PANewsCN
+            username: Hyperliquid_Hub
             isVerified: false
           repostBreakdown:
             smart: 0
             ct: 0
-        - tweetId: '1948579803105559039'
-          link: https://x.com/0xTG3/status/1948579803105559039
+          text: 'On-chain Derivatives Trading Volume Across 15 Major Chains (Past
+            24h, as of August 18, 2025)
+
+
+            Top 1: #Hyperliquid – $6,42B
+
+            Top 2: #BNBCHAIN –$2,023B
+
+            Top 3: #Ethereum – $1,938B
+
+            Top 4: #Solana –$958,38m
+
+            Top 5: #Arbitrum – $485,31m
+
+            Top 6: #Base – $230,21m
+
+            Top 7: #dYdX –$177,13m
+
+            Top 8: #zkSync Era –$140,62m
+
+            Top 9: #Starknet– $108,95m
+
+            Top 10: #Injective  –$84,33m
+
+            Top 11: #Sui Network– $68,58m
+
+            Top 12: #zkSync Lite –$49,74m
+
+            Top 13: #Scroll– $41,65m
+
+            Top 14: #Bitcoin– $34,13m
+
+            Top 15: #Linea –$30,23m
+
+
+            Source: #DefiLlama
+
+
+            Note:
+
+            This X account, Hyperliquid Hub, is operated by an independent team.
+
+            We do not invest in any projects within the Hyperliquid ecosystem — our
+            sole purpose is to provide unbiased, real-time updates 24/7/365.
+
+
+            We do not offer any buy or sell recommendations. All insights are strictly
+            informational and should not be considered investment advice.
+
+
+            Stay ahead in the game — the Hyperliquid ecosystem is evolving at lightning
+            speed.
+
+            Follow @Hyperliquid_Hub
+
+
+            and all the builders above to stay in the loop.
+
+
+            Support our journey by trading $HYPE using Hyperliquid’s referral link:
+
+            https://t.co/F8MBskmFhs
+
+
+            Use code TTTLABS to get a discount on trading fees.
+
+            Thank you for riding this wave with us!'
+        - tweetId: '1957249678304800795'
           likeCount: 0
           repostCount: 2
           viewCount: 0
           quoteCount: 0
           replyCount: 0
           bookmarkCount: 0
-          mentionedAt: '2025-07-25T03:03:22+00:00'
+          mentionedAt: '2025-08-18T01:14:21+00:00'
           type: repost
           account:
-            username: 0xTG3
+            username: nftscan_com
             isVerified: false
           repostBreakdown:
             smart: 0
             ct: 0
-        - tweetId: '1948565967623119001'
-          link: https://x.com/frankieblanco99/status/1948565967623119001
-          likeCount: 0
-          repostCount: 4
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T02:08:23+00:00'
-          type: repost
+          text: 'RT @NDIDI_GRAM: Scarping Data On Onchain:
+
+
+            → @DefiLlama [most of DeFi analysis]
+
+            → @tokenterminal [covers financial metrics like, revenue, P…'
+        - tweetId: '1957240947126817083'
+          likeCount: 66
+          repostCount: 0
+          viewCount: 19735
+          quoteCount: 1
+          replyCount: 24
+          bookmarkCount: 14
+          mentionedAt: '2025-08-18T00:39:40+00:00'
+          type: quote
           account:
-            username: frankieblanco99
+            username: 0xkydo
             isVerified: false
           repostBreakdown:
             smart: 0
             ct: 0
-        - tweetId: '1948559151187329354'
-          link: https://x.com/xXKaptainKillXx/status/1948559151187329354
-          likeCount: 7
-          repostCount: 2
-          viewCount: 153
+          text: "I like the Blockworks guys\n\nI think Dan here summarizes well on\
+            \ why some folks in Ethereum think they are anti-Ethereum. \n\nSome other\
+            \ things I think is not spelled out here is that Blockworks folks generally\
+            \ do not think Ethereum is special. They think Bitcoin is special and\
+            \ nothing else. \n\nTherefore, everything else needs value accrual and\
+            \ revenue in that regard to be valuable. \n\nCurrently, execution value\
+            \ capture through speculative retail trading is the best way to capture\
+            \ revenue in this current stage of crypto. That's why they're more aligned\
+            \ with the Solana roadmap or you can say the Solana strategy. \n\nThis\
+            \ is very well reflected if you look at what people hold in the BlockWorks\
+            \ team; they're generally different protocols, some within Ethereum, some\
+            \ outside ETH. But the key thing that they all have in common is to have\
+            \ a clear value accrual or revenue driver. \n\nSo the question is: how\
+            \ do you mean something special? Idk but my intuition tells me maybe its\
+            \ just “number go up”"
+        - tweetId: '1957237763910361265'
+          likeCount: 12
+          repostCount: 0
+          viewCount: 6332
           quoteCount: 0
-          replyCount: 3
+          replyCount: 10
           bookmarkCount: 0
-          mentionedAt: '2025-07-25T01:41:18+00:00'
-          type: note
-          account:
-            username: xXKaptainKillXx
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 1
-        - tweetId: '1948553728233029896'
-          link: https://x.com/drjasper_eth/status/1948553728233029896
-          likeCount: 14
-          repostCount: 2
-          viewCount: 406
-          quoteCount: 0
-          replyCount: 2
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T01:19:45+00:00'
-          type: post
-          account:
-            username: drjasper_eth
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948543409574346914'
-          link: https://x.com/hellosuoha/status/1948543409574346914
-          likeCount: 9
-          repostCount: 1
-          viewCount: 9463
-          quoteCount: 0
-          replyCount: 6
-          bookmarkCount: 2
-          mentionedAt: '2025-07-25T00:38:45+00:00'
+          mentionedAt: '2025-08-18T00:27:01+00:00'
           type: note
           account:
             username: hellosuoha
@@ -256,520 +261,1167 @@ test_1_search_mentions_tool:
           repostBreakdown:
             smart: 0
             ct: 0
-        - tweetId: '1948542937803178335'
-          link: https://x.com/hellosuoha/status/1948542937803178335
-          likeCount: 0
-          repostCount: 0
-          viewCount: 42
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T00:36:53+00:00'
-          type: note
-          account:
-            username: hellosuoha
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948540584412471397'
-          link: https://x.com/digitalassetbuy/status/1948540584412471397
-          likeCount: 219
-          repostCount: 31
-          viewCount: 26522
-          quoteCount: 3
-          replyCount: 23
-          bookmarkCount: 3
-          mentionedAt: '2025-07-25T00:27:32+00:00'
-          type: quote
-          account:
-            username: digitalassetbuy
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948510058721255515'
-          link: https://x.com/BlueWolfNFTs/status/1948510058721255515
-          likeCount: 15
-          repostCount: 2
-          viewCount: 318
-          quoteCount: 1
-          replyCount: 12
-          bookmarkCount: 0
-          mentionedAt: '2025-07-24T22:26:14+00:00'
-          type: note
-          account:
-            username: BlueWolfNFTs
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 1
-        - tweetId: '1948502765548044506'
-          link: https://x.com/0xErod/status/1948502765548044506
-          likeCount: 1
-          repostCount: 0
-          viewCount: 170
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-24T21:57:15+00:00'
-          type: quote
-          account:
-            username: 0xErod
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948493140941226085'
-          link: https://x.com/iambroots/status/1948493140941226085
-          likeCount: 117
-          repostCount: 21
-          viewCount: 2755
-          quoteCount: 0
-          replyCount: 14
-          bookmarkCount: 0
-          mentionedAt: '2025-07-24T21:19:00+00:00'
-          type: note
-          account:
-            username: iambroots
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948484944331669954'
-          link: https://x.com/Jeremyybtc/status/1948484944331669954
-          likeCount: 0
-          repostCount: 19
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-24T20:46:26+00:00'
-          type: repost
-          account:
-            username: Jeremyybtc
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948475736001577076'
-          link: https://x.com/Cryptoluche/status/1948475736001577076
-          likeCount: 0
-          repostCount: 13
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-24T20:09:51+00:00'
-          type: repost
-          account:
-            username: Cryptoluche
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948474846154735997'
-          link: https://x.com/ShizzyOnChain/status/1948474846154735997
-          likeCount: 0
-          repostCount: 4
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-24T20:06:18+00:00'
-          type: repost
-          account:
-            username: ShizzyOnChain
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948474259736854775'
-          link: https://x.com/TheCryptoKazi/status/1948474259736854775
-          likeCount: 57
-          repostCount: 13
-          viewCount: 4235
-          quoteCount: 1
-          replyCount: 12
-          bookmarkCount: 1
-          mentionedAt: '2025-07-24T20:03:59+00:00'
-          type: post
-          account:
-            username: TheCryptoKazi
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 1
-        - tweetId: '1948473461615329307'
-          link: https://x.com/OnChainRev/status/1948473461615329307
-          likeCount: 7
-          repostCount: 4
-          viewCount: 251
-          quoteCount: 0
-          replyCount: 2
-          bookmarkCount: 1
-          mentionedAt: '2025-07-24T20:00:48+00:00'
-          type: note
-          account:
-            username: OnChainRev
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 1
-test_2_search_mentions_query:
-  input:
-    query: Search for mentions of bitcoin, solana, and ethereum in the last 30 days
-  output:
-    response: "**Twitter Mentions Analysis for Bitcoin, Solana, and Ethereum (Last\
-      \ 30 Days)**\n\n**Note:** The provided data only contains tweets from July 25,\
-      \ 2025, and does not span the full 30-day period as requested. The analysis\
-      \ is based on the available data.\n\n**Mentioned Tokens:**\n\n1. **Bitcoin (BTC)**\n\
-      2. **Solana (SOL)** *No mentions found in the provided data*\n3. **Ethereum\
-      \ (ETH)** *No mentions found in the provided data*\n\n**Bitcoin (BTC) Mentions:**\n\
-      \n* **Total Mentions:** 13 (out of 20 tweets in the dataset)\n* **Top Accounts\
-      \ by Engagement:**\n\t1. **@RaoulGMI** (198 likes, 18 reposts, 7239 views, 1\
-      \ quote, 30 replies, 9 bookmarks)\n\t2. **@BritishHodl** (56 likes, 5 reposts,\
-      \ 2581 views, 12 replies, 2 bookmarks)\n\t3. **@rektfluf** (cumulative: 487\
-      \ reposts across 3 tweets, but 0 likes/views for the specific BTC-related tweets)\n\
-      * **Engagement Metrics (Average per BTC Mention):**\n\t+ Likes: 10.46\n\t+ Reposts:\
-      \ 23.85\n\t+ Views: 1,044.62 (note: most views come from @RaoulGMI's single\
-      \ tweet, skewing the average)\n\t+ Quotes: 0.08\n\t+ Replies: 3.15\n\t+ Bookmarks:\
-      \ 0.69\n\n**Observations and Insights:**\n\n* Bitcoin dominates the mentions\
-      \ in the provided dataset, with no mentions of Solana or Ethereum.\n* @RaoulGMI's\
-      \ single tweet contributed significantly to the overall engagement metrics for\
-      \ Bitcoin, indicating the influence of this account in the crypto Twitter space.\n\
-      * @rektfluf, despite having a high number of reposts, did not garner likes or\
-      \ views for the tweets mentioning Bitcoin in this dataset, suggesting a different\
-      \ engagement pattern for this account's content.\n\n**Limitations:**\n- The\
-      \ dataset only covers a single day (July 25, 2025), not the requested 30-day\
-      \ period.\n- Engagement metrics are skewed by outliers (e.g., @RaoulGMI's tweet).\n\
-      - No insights can be provided for Solana or Ethereum due to the absence of mentions\
-      \ in the dataset."
-    data:
-      status: success
-      data:
-        success: true
-        data:
-        - tweetId: '1948684733635871064'
-          link: https://x.com/CoinMarketCap/status/1948684733635871064
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T10:00:19+00:00'
-          type: post
-          account:
-            username: CoinMarketCap
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948684670507647231'
-          link: https://x.com/dappOS_com/status/1948684670507647231
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T10:00:04+00:00'
-          type: post
-          account:
-            username: dappOS_com
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948684663565713893'
-          link: https://x.com/binance/status/1948684663565713893
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T10:00:03+00:00'
-          type: note
-          account:
-            username: binance
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948684491314118684'
-          link: https://x.com/antiprosynth/status/1948684491314118684
-          likeCount: 0
-          repostCount: 6
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:59:22+00:00'
-          type: repost
-          account:
-            username: antiprosynth
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948683801158451537'
-          link: https://x.com/rektfluf/status/1948683801158451537
-          likeCount: 0
-          repostCount: 18
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:56:37+00:00'
-          type: repost
-          account:
-            username: rektfluf
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948683427479220441'
-          link: https://x.com/sunnydecree/status/1948683427479220441
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:55:08+00:00'
-          type: post
-          account:
-            username: sunnydecree
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948683350740213994'
-          link: https://x.com/rektfluf/status/1948683350740213994
-          likeCount: 0
-          repostCount: 332
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:54:50+00:00'
-          type: repost
-          account:
-            username: rektfluf
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948683327566684160'
-          link: https://x.com/RaoulGMI/status/1948683327566684160
-          likeCount: 198
-          repostCount: 18
-          viewCount: 7239
-          quoteCount: 1
-          replyCount: 30
-          bookmarkCount: 9
-          mentionedAt: '2025-07-25T09:54:44+00:00'
-          type: post
-          account:
-            username: RaoulGMI
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 1
-        - tweetId: '1948683308184834442'
-          link: https://x.com/Vivek4real_/status/1948683308184834442
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:54:40+00:00'
-          type: post
-          account:
-            username: Vivek4real_
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948682917355393240'
-          link: https://x.com/bramk/status/1948682917355393240
-          likeCount: 4
-          repostCount: 0
-          viewCount: 117
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:53:06+00:00'
-          type: quote
-          account:
-            username: bramk
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948682219972628556'
-          link: https://x.com/RobinSeyr/status/1948682219972628556
-          likeCount: 6
-          repostCount: 1
-          viewCount: 94
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:50:20+00:00'
-          type: post
-          account:
-            username: RobinSeyr
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948681486212690145'
-          link: https://x.com/BritishHodl/status/1948681486212690145
-          likeCount: 56
-          repostCount: 5
-          viewCount: 2581
-          quoteCount: 0
-          replyCount: 12
-          bookmarkCount: 2
-          mentionedAt: '2025-07-25T09:47:25+00:00'
-          type: quote
-          account:
-            username: BritishHodl
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948681134839038155'
-          link: https://x.com/tickerBITCOINbb/status/1948681134839038155
-          likeCount: 0
-          repostCount: 6
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:46:01+00:00'
-          type: repost
-          account:
-            username: tickerBITCOINbb
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680936926630122'
-          link: https://x.com/geoxbt/status/1948680936926630122
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:45:14+00:00'
-          type: post
-          account:
-            username: geoxbt
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680654473830735'
-          link: https://x.com/BTCTN/status/1948680654473830735
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:44:07+00:00'
-          type: note
-          account:
-            username: BTCTN
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680550543491288'
-          link: https://x.com/yellowdoodle1x/status/1948680550543491288
-          likeCount: 0
-          repostCount: 0
-          viewCount: 5
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:43:42+00:00'
-          type: post
-          account:
-            username: yellowdoodle1x
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680284058120679'
-          link: https://x.com/steko170981/status/1948680284058120679
-          likeCount: 0
-          repostCount: 0
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:42:39+00:00'
-          type: post
-          account:
-            username: steko170981
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680280379703425'
-          link: https://x.com/RustinPeace_SB/status/1948680280379703425
-          likeCount: 0
-          repostCount: 15
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:42:38+00:00'
-          type: repost
-          account:
-            username: RustinPeace_SB
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680240215044312'
-          link: https://x.com/rektfluf/status/1948680240215044312
-          likeCount: 0
-          repostCount: 135
-          viewCount: 0
-          quoteCount: 0
-          replyCount: 0
-          bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:42:28+00:00'
-          type: repost
-          account:
-            username: rektfluf
-            isVerified: false
-          repostBreakdown:
-            smart: 0
-            ct: 0
-        - tweetId: '1948680216831729981'
-          link: https://x.com/BSCNews/status/1948680216831729981
+          text: '8.18梭哈晨报：
+
+
+            一觉起来发现睡梦中居然插针了，这得开40x以上合约的人才能爆仓吧？
+
+
+            1. $BTC 稳稳当当的震荡中，上下不到1000点，为工作日作准备；
+
+
+            2. $ETH 昨天下午突破站上4500后半夜插针回4400，目前又一路震荡到4500附近；
+
+
+            3. $SOL 跟随行情190附近震荡，等待新的ETF利好刺激吧；
+
+
+            4.本周重点关注美联储会议纪要、杰克逊霍尔全球央行年会以及美俄乌三方会谈等；
+
+
+            5.跨链 DeFi 协议 MaiaDAO 启动以太坊储备，当前 ETH 持仓触及169 枚；
+
+
+            6.CEX中以太坊储备持续减少，当前仅剩1839万枚；
+
+
+            7.Upbit 24 小时交易量排行：ETH、XRP、 CYBER 位居前三；
+
+
+            8.多数参与美国银行全球基金经理调查的投资者加密货币敞口仍为“零”；
+
+
+            9.  $LINK 24 小时涨超 13%，或为 LINK 储备金计划与链上流入共同推动；
+
+
+            10.Monad 测试网数据已上线 Dune；
+
+
+            11.Coinbase Smart Wallet 账户创建数已超过 100 万；
+
+
+            12. $MNT 从引入新的领导层开始，涨幅超过100%；
+
+
+            13.Tom Lee 评美国加密储备政策：比特币战略储备确保美国在未来数字化转型中的主导地位；
+
+
+            14. Sky 联创使用 177 万枚 ENA 回购 1638 万枚 SKY；
+
+
+            还记得之前卖其他投资的项目回购 $MKR 吗？
+
+
+            15. @virtuals_io 生态蓬勃发展，低市值一大堆KOL开启喊单模式， $VIRTUAL 横盘不动；
+
+
+            ----------
+
+            ✍️继续深耕链上，交易所搭配点强势币种，一切朝着好的方向进展。
+
+
+            #Bitcoin #ethereum #Solana #Crypto'
+        - tweetId: '1957237455452774827'
           likeCount: 0
           repostCount: 0
           viewCount: 9
           quoteCount: 0
           replyCount: 0
           bookmarkCount: 0
-          mentionedAt: '2025-07-25T09:42:23+00:00'
-          type: post
+          mentionedAt: '2025-08-18T00:25:47+00:00'
+          type: note
           account:
-            username: BSCNews
+            username: hellosuoha
             isVerified: false
           repostBreakdown:
             smart: 0
             ct: 0
+          text: '8.18梭哈晨报：
+
+
+            一觉起来发现睡梦中居然插针了，这得开40x以上合约的人才能爆仓吧？
+
+
+            1. $BTC 稳稳当当的震荡中，上下不到1000点，为工作日作准备；
+
+
+            2. $ETH 昨天下午突破站上4500后半夜插针回4400，目前又一路震荡到4500附近；
+
+
+            3. $SOL 跟随行情190附近震荡，等待新的ETF利好刺激吧；
+
+
+            4.本周重点关注美联储会议纪要、杰克逊霍尔全球央行年会以及美俄乌三方会谈等；
+
+
+            5.跨链 DeFi 协议 MaiaDAO 启动以太坊储备，当前 ETH 持仓触及169 枚；
+
+
+            6.CEX中以太坊储备持续减少，当前仅剩1839万枚；
+
+
+            7.Upbit 24 小时交易量排行：ETH、XRP、 CYBER 位居前三；
+
+
+            8.多数参与美国银行全球基金经理调查的投资者加密货币敞口仍为“零”；
+
+
+            9.  $LINK 24 小时涨超 13%，或为 LINK 储备金计划与链上流入共同推动；
+
+
+            10.Monad 测试网数据已上线 Dune；
+
+
+            11.Coinbase Smart Wallet 账户创建数已超过 100 万；
+
+
+            12. $MNT 从引入新的领导层开始，涨幅超过100%；
+
+
+            13.Tom Lee 评美国加密储备政策：比特币战略储备确保美国在未来数字化转型中的主导地位；
+
+
+            14. Sky 联创使用 177 万枚 ENA 回购 1638 万枚 SKY；
+
+
+            还记得之前卖其他投资的项目回购 $MKR 吗？
+
+
+            15. @virtuals_io 生态蓬勃发展，低市值一大堆KOL开启喊单模式， $VIRTUAL 横盘不动；
+
+
+            ----------
+
+            ✍️继续深耕链上，交易所搭配点强势币种，一切朝着好的方向进展。
+
+
+            #Bitcoin #ethereum #Solana #Crypto'
+        - tweetId: '1957219033419510033'
+          likeCount: 0
+          repostCount: 2
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T23:12:35+00:00'
+          type: repost
+          account:
+            username: volmexfinance
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: "RT @gaintozz: Bitcoin implied volatility $BVIV vs \nEthereum implied\
+            \ volatility index $EVIV\n\n&gt; $ETH spot ETF inflows have been massive\n\
+            &gt; Tom…"
+        - tweetId: '1957218102367920294'
+          likeCount: 4
+          repostCount: 2
+          viewCount: 31
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 3
+          mentionedAt: '2025-08-17T23:08:53+00:00'
+          type: post
+          account:
+            username: gaintozz
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: "Bitcoin implied volatility $BVIV vs \nEthereum implied volatility\
+            \ index $EVIV\n\n&gt; $ETH spot ETF inflows have been massive\n&gt; Tom\
+            \ Lee is $ETH Sailor\n\nVol views are trade-able, up to 150X, on Base,\
+            \ Solana, Arbitrum, Apechain and Polygon. \n\nhttps://t.co/syGTFK8AEp\
+            \ https://t.co/mLoGhAKVnW"
+        - tweetId: '1957216133964296197'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 3
+          quoteCount: 1
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T23:01:04+00:00'
+          type: reply
+          account:
+            username: dcaeverything
+            isVerified: false
+          repostBreakdown:
+            smart: 1
+            ct: 0
+          text: '@edgarpavlovsky @lorenzo_noya And one more thing you think you can
+            add the live  price of Solana bitcoin and Ethereum on top where it doesn’t
+            matter where you’re searching or what you’re looking into it will show
+            on the top'
+        - tweetId: '1957215708863209560'
+          likeCount: 0
+          repostCount: 3
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T22:59:22+00:00'
+          type: repost
+          account:
+            username: Nostradamus411
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @bitbadges_io: Ethereum = Good
+
+            Solana = Good
+
+            Bitcoin = Good
+
+            Cosmos = Good
+
+            Any Future Ecosystem = Good
+
+
+            The future is omnichain. Don’t sp…'
+        - tweetId: '1957177336778145973'
+          likeCount: 13
+          repostCount: 3
+          viewCount: 295
+          quoteCount: 0
+          replyCount: 1
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T20:26:54+00:00'
+          type: post
+          account:
+            username: bitbadges_io
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 1
+          text: null
+        - tweetId: '1957166037335769409'
+          likeCount: 607
+          repostCount: 59
+          viewCount: 51331
+          quoteCount: 7
+          replyCount: 242
+          bookmarkCount: 69
+          mentionedAt: '2025-08-17T19:42:00+00:00'
+          type: post
+          account:
+            username: rovercrc
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: "My Perfect Top 10 Crypto:\n\n1. #Bitcoin\n\n2. #Ethereum\n\n3. #BNB\n\
+            \n4. #Solana \n\n5. #Ondo\n\n6. #Chainlink\n\n7. #Aptos\n\n8. #Sui\n\n\
+            9. #Bittensor\n\n10. #XRP"
+        - tweetId: '1957160034590400536'
+          likeCount: 613
+          repostCount: 38
+          viewCount: 63272
+          quoteCount: 5
+          replyCount: 129
+          bookmarkCount: 81
+          mentionedAt: '2025-08-17T19:18:09+00:00'
+          type: post
+          account:
+            username: legen_eth
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
+        - tweetId: '1957140049020998017'
+          likeCount: 159
+          repostCount: 20
+          viewCount: 8244
+          quoteCount: 0
+          replyCount: 14
+          bookmarkCount: 16
+          mentionedAt: '2025-08-17T17:58:44+00:00'
+          type: note
+          account:
+            username: juanbiter
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'La idea de #tokenizar activos usando #Blockchain NO es nueva… esto
+            ya lo vimos en años anteriores y mucha gente perdió dinero🤷🏻
+
+
+            Se intentó hacerlo con propiedad inmobiliaria, acceso a servicios y hasta
+            minería de #bitcoin 😳
+
+
+            No funcionó, los creadores cambian las reglas, diluyen tu participación
+            o la desaparecen… veremos si ahora con #Blockchain de las tecnológicas
+            “reguladas”; la historia cambie 🧐
+
+
+            Por ahora no se plantea usar #Ethereum, #Solana u otras… no quieren depender
+            de sus creadores, tarifas y potenciales fallos, mejor crean las suyas🤯'
+        - tweetId: '1957120962039833086'
+          likeCount: 47
+          repostCount: 1
+          viewCount: 2358
+          quoteCount: 0
+          replyCount: 12
+          bookmarkCount: 12
+          mentionedAt: '2025-08-17T16:42:53+00:00'
+          type: note
+          account:
+            username: GuarEmperor
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
+        - tweetId: '1957117626087358809'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T16:29:38+00:00'
+          type: post
+          account:
+            username: ThisIsNuse
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: "I wonder if Bitcoin being one hundred eighteen thousand has priced\
+            \ people out\n\nSo much so that perhaps they don't own ONE \n\nOr maybe\
+            \ Ethereum being four thousand and five hundred dollars that they own\
+            \ only a handful if any\n\nAnd man, that Solana, its nearly two hundred\
+            \ bucks! https://t.co/5VcJ8ZFTKT"
+        - tweetId: '1957094792501899687'
+          likeCount: 0
+          repostCount: 76
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T14:58:54+00:00'
+          type: repost
+          account:
+            username: Elikrypt
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @TheDeFinvestor: Crypto Watchlist for the week ahead:
+
+
+            $AAVE - AAVE will soon get 7% of the upcoming WLFI supply, which is worth
+            $1b+ at…'
+        - tweetId: '1957094335259779334'
+          likeCount: 0
+          repostCount: 17
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T14:57:05+00:00'
+          type: repost
+          account:
+            username: Luisa6521
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @pupsgoups: An update on @theunipcs'' thesis on why BTC memecoins
+            could be the easiest 50 to 100x opportunity in all of crypto...
+
+
+            let''s…'
+        - tweetId: '1957093651781431634'
+          likeCount: 12
+          repostCount: 0
+          viewCount: 188
+          quoteCount: 0
+          replyCount: 12
+          bookmarkCount: 1
+          mentionedAt: '2025-08-17T14:54:22+00:00'
+          type: note
+          account:
+            username: BlueWolfNFTs
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
+        - tweetId: '1957085591742398708'
+          likeCount: 0
+          repostCount: 55
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T14:22:20+00:00'
+          type: repost
+          account:
+            username: unsehrtain
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @TheDeFinvestor: Crypto Watchlist for the week ahead:
+
+
+            $AAVE - AAVE will soon get 7% of the upcoming WLFI supply, which is worth
+            $1b+ at…'
+        - tweetId: '1957085281179377950'
+          likeCount: 0
+          repostCount: 81
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T14:21:06+00:00'
+          type: repost
+          account:
+            username: DOLAK1NG
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
+        - tweetId: '1957083986926109076'
+          likeCount: 0
+          repostCount: 77
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T14:15:58+00:00'
+          type: repost
+          account:
+            username: TheDeFiKenshin
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @TheDeFinvestor: Crypto Watchlist for the week ahead:
+
+
+            $AAVE - AAVE will soon get 7% of the upcoming WLFI supply, which is worth
+            $1b+ at…'
+        - tweetId: '1957083602681827519'
+          likeCount: 0
+          repostCount: 68
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-17T14:14:26+00:00'
+          type: repost
+          account:
+            username: cryptofishx
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @TheDeFinvestor: Crypto Watchlist for the week ahead:
+
+
+            $AAVE - AAVE will soon get 7% of the upcoming WLFI supply, which is worth
+            $1b+ at…'
+        - tweetId: '1957082988857954347'
+          likeCount: 460
+          repostCount: 81
+          viewCount: 45092
+          quoteCount: 7
+          replyCount: 81
+          bookmarkCount: 96
+          mentionedAt: '2025-08-17T14:12:00+00:00'
+          type: note
+          account:
+            username: TheDeFinvestor
+            isVerified: false
+          repostBreakdown:
+            smart: 1
+            ct: 5
+          text: 'Crypto Watchlist for the week ahead:
+
+
+            $AAVE - AAVE will soon get 7% of the upcoming WLFI supply, which is worth
+            $1b+ at pre-market prices
+
+
+            $JUP $FLUID - The public launch of Jupiter Lend on Solana is scheduled
+            for August
+
+
+            $RESOLV - Resolv''s fee switch rollout will be completed on Aug. 21
+
+
+            $BTC - Brazil’s Parliament will hold a hearing on a national Bitcoin reserve
+            on Aug. 20
+
+
+            $ARB - Arbitrum''s online buildathon starts on Aug. 22
+
+
+            $IN - INFINIT V2 public beta will go live in the coming days
+
+
+            $JOE - LFJ (previously called Trader Joe) will release a novel token launcher
+            on Solana next week
+
+
+            Cap Money - Cap will launch on Ethereum L1 on Aug. 18. This is one of
+            the most hyped MegaETH ecosystem projects
+
+
+            $ORCA $1INCH - Several dApps, including 1inch and Orca, teased a major
+            announcement for Aug. 19
+
+
+            Macro events - FED Chair Jerome Powell will give a speech next week +
+            FOMC Minutes will be released on Aug. 20
+
+
+            If you enjoyed reading this, a like and a repost would be appreciated🫡'
+test_2_search_mentions_query:
+  input:
+    query: Search for mentions of bitcoin, solana, and ethereum in the last 30 days
+  output:
+    response: "**Twitter Mentions Analysis for Bitcoin, Solana, and Ethereum (Last\
+      \ 30 Days)**\n\n**Note:** The provided data only contains tweets from a single\
+      \ day (2025-08-18). The analysis is limited to this day's data, as there's no\
+      \ indication of a 30-day dataset.\n\n### **Mentioned Tokens:**\n\n1. **Bitcoin\
+      \ (BTC)**\n2. **Solana (SOL)**: *No mentions found in the provided dataset.*\n\
+      3. **Ethereum (ETH)**: *No mentions found in the provided dataset.*\n\n### **Bitcoin\
+      \ (BTC) Mentions Analysis:**\n\n* **Total Mentions:** 17\n* **Unique Users:**\
+      \ 14\n* **Engagement Metrics:**\n\t+ **Like Count:** 4 (average: 0.24 per mention)\n\
+      \t+ **Repost Count:** 342 (average: 20.12 per mention)\n\t+ **View Count:**\
+      \ 44 (average: 2.59 per mention, but note that most view counts are 0)\n\t+\
+      \ **Quote Count:** 2\n\t+ **Reply Count:** 1\n\t+ **Bookmark Count:** 0\n* **Top\
+      \ Mentions by Engagement (Repost Count):**\n\t1. `pete_rizzo_` (Repost Count:\
+      \ 137, Tweet ID: 1957393657977241649)\n\t2. `Bitcoineconprof` (Repost Count:\
+      \ 119, Tweet ID: 1957391190015561780)\n\t3. `DeFiTracer` (Repost Count: 39,\
+      \ Tweet ID: 1957392199814955065)\n* **Key Topics and Sentiments:**\n\t+ Dominant\
+      \ topic: **Bitcoin's price and market movements** (e.g., potential dips, targets,\
+      \ and the impact of AMDAX's plan to buy 1% of the total Bitcoin supply).\n\t\
+      + Sentiment: Generally **neutral** with a **slight positive bias**, focusing\
+      \ on market analysis and potential growth rather than negative critiques.\n\n\
+      ### **Solana (SOL) and Ethereum (ETH) Analysis:**\n\n* **No mentions** of Solana\
+      \ or Ethereum were found in the provided dataset.\n\n### **Limitations and Future\
+      \ Recommendations:**\n\n* The analysis is constrained by the single-day dataset.\
+      \ A 30-day dataset would provide a more comprehensive overview.\n* To enhance\
+      \ the analysis, consider tracking:\n\t+ Sentiment analysis with more nuanced\
+      \ categorization (e.g., using natural language processing techniques).\n\t+\
+      \ User influence and credibility metrics.\n\t+ Topic modeling for deeper insight\
+      \ into discussions around each token.\n\t+ Comparative analysis with other cryptocurrencies\
+      \ for market positioning."
+    data:
+      status: success
+      data:
+        success: true
+        data:
+        - tweetId: '1957393657977241649'
+          likeCount: 0
+          repostCount: 137
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:46:29+00:00'
+          type: repost
+          account:
+            username: bensemchee
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @pete_rizzo_: JUST IN: DUTCH PUBLIC COMPANY AMDAX ANNOUNCES PLAN
+            TO BUY 1% OF THE TOTAL #BITCOIN SUPPLY
+
+
+            THAT''S 210,000 BTC. HUGE 🚀 http…'
+        - tweetId: '1957393649202819397'
+          likeCount: 0
+          repostCount: 1
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:46:27+00:00'
+          type: repost
+          account:
+            username: LawrenceLepard
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @dariusz605: @LawrenceLepard Just started reading your book, it’s
+            brilliantly written, easy to follow, and honestly one of the best book…'
+        - tweetId: '1957393336123248757'
+          likeCount: 1
+          repostCount: 0
+          viewCount: 19
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:45:12+00:00'
+          type: post
+          account:
+            username: BritishHodl
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'I have tapped all available liquidity to buy Bitcoin exposure in
+            the last year, and today after my friend stupidly sold 1 Bitcoin to buy
+            a Rolex - I have suddenly found more.
+
+
+            Rage does wonderful things.'
+        - tweetId: '1957393325826191811'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 1
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:45:10+00:00'
+          type: post
+          account:
+            username: ReutersBiz
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: Dutch crypto firm Amdax aims to launch Bitcoin treasury company on
+            Euronext https://t.co/L8QzrIZeNz https://t.co/L8QzrIZeNz
+        - tweetId: '1957392199814955065'
+          likeCount: 0
+          repostCount: 39
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:40:41+00:00'
+          type: repost
+          account:
+            username: DeFiTracer
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @DeFiTracer: Bitcoin Macro bull-cycles
+
+
+            2011:
+
+            - Duration 9 Months (after ATH)
+
+            - Bear trap in Month 6
+
+
+            2013:
+
+            - Duration 9 Months
+
+            - Bear t…'
+        - tweetId: '1957392102171828439'
+          likeCount: 0
+          repostCount: 109
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:40:18+00:00'
+          type: repost
+          account:
+            username: Bitcoineconprof
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @Bitcoin_Teddy: “Oh my God, it’s not a currency.  It’s a network.”
+
+
+            Andreas Antonopoulos recalls the moment Bitcoin clicked for him. htt…'
+        - tweetId: '1957391441572814923'
+          likeCount: 0
+          repostCount: 36
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:37:40+00:00'
+          type: repost
+          account:
+            username: DeFiTracer
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
+        - tweetId: '1957391190015561780'
+          likeCount: 0
+          repostCount: 119
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:36:40+00:00'
+          type: repost
+          account:
+            username: Bitcoineconprof
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @pete_rizzo_: JUST IN: DUTCH PUBLIC COMPANY AMDAX ANNOUNCES PLAN
+            TO BUY 1% OF THE TOTAL #BITCOIN SUPPLY
+
+
+            THAT''S 210,000 BTC. HUGE 🚀 http…'
+        - tweetId: '1957391078782320843'
+          likeCount: 1
+          repostCount: 0
+          viewCount: 25
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:36:14+00:00'
+          type: quote
+          account:
+            username: WiseAnalyze
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: "\U0001F4C9 Bitcoin Daily \U0001F4C8\n\n\U0001F3AF Key Levels to Watch:\n\
+            • Above: 115700 / 116628 / 117354\n• Below: 114150 / 113090 / 112112\n\
+            \n\U0001F525 BTC Liquidation Heatmap:\n• Above: 118843 / 119480 / 120117\n\
+            • Below: 114133 / 112987 / 111968\n\nSeems like $BTC is coming back to\
+            \ post-breakout VAL around 113k. I've marked three nearest zones, that\
+            \ can reverse the price: 114150 / 113090 / 112112. If that will be the\
+            \ bottom, then we have range.\n\nFriday close at 116630 skipped on that\
+            \ dump is the nearest bounce target. Week close at 119255 is the second.\
+            \ At one of these zones BTC has to either breakout towards 120k or get\
+            \ rejected and fall to VAL (unless that bullish move happens after that\
+            \ dip).\n\nBitcoin skipped July close which I earlier indicated as the\
+            \ nearest liquidity pool zone. That dip flashed with oversold alarm sent\
+            \ from 30m timeframe. These alarms usually catch extremes, but since based\
+            \ on lower timeframe, not every \"oversold\" or \"overbought\" is the\
+            \ final one before full reversal. I leave past alarms on the chart, so\
+            \ that you could see what to expect.\n\n⏰ TG alarms set for: 114150, 113090\
+            \ (VAL), 117960 (POC), dev Quarter VAH & Day 20-sma\n\nTV: https://t.co/rOraixzanx\n\
+            \ #Crypto #Cryptotrading #trading #BTCUSDT #BTCUSD $BTC"
+        - tweetId: '1957390988437049619'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:35:52+00:00'
+          type: post
+          account:
+            username: CryptoNewton
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: '$BTC #Bitcoin https://t.co/3fk6r1X48L'
+        - tweetId: '1957390964399444164'
+          likeCount: 0
+          repostCount: 5
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:35:47+00:00'
+          type: repost
+          account:
+            username: JOEATANG
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @limitlesssauce: When Bitcoin’s metaverse narrative takes off…
+            Bitmap will be the blueprint.
+
+
+            The market simply doesn''t know yet how pow…'
+        - tweetId: '1957390895470223705'
+          likeCount: 0
+          repostCount: 8
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:35:30+00:00'
+          type: repost
+          account:
+            username: MrHodl
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @nvk: If you can learn to drive, you can learn to self custody.
+
+
+            If you can''t, then don''t drive or buy bitcoin.
+
+
+            You will just lose it.'
+        - tweetId: '1957390551411470435'
+          likeCount: 0
+          repostCount: 5
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:34:08+00:00'
+          type: repost
+          account:
+            username: knutsvanholm
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @BtcInfinityShow: We’ve just wrapped up @btchelevent  on a high,
+            and the energy was electric!
+
+
+            It’s easy to forget what Bitcoin is throu…'
+        - tweetId: '1957390182111723652'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:32:40+00:00'
+          type: quote
+          account:
+            username: RyanChow_DeFi
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
+        - tweetId: '1957389781379297293'
+          likeCount: 0
+          repostCount: 1
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:31:05+00:00'
+          type: repost
+          account:
+            username: herogamer21btc
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @TheBlueMatt: @fluffypony Yea, I know. Honestly the post was a
+            bit tongue in cheek. In practice, though, with bitcoin mining operating
+            t…'
+        - tweetId: '1957389721694536118'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:30:50+00:00'
+          type: note
+          account:
+            username: FabiusDefi
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'The Battle for Bitcoin Yield ⚔️
+
+
+            The BTCFI market has reached ~$6B+ in TVL across major protocols as of
+            August 2025, with Babylon Protocol dominating at $5B TVL through native
+            BTC staking.
+
+
+            I believe the competition centers on distinct approaches:
+
+
+            – Native staking @babylonlabs_io 5B TVL
+
+            – Synthetic Bitcoin @Stacks'' sBTC at $592M
+
+            – Restaking infra @satlayer at $446M
+
+            – Hybrid Layer-2s @build_on_bob at $160M.
+
+
+            Each protocol takes a different angle on unlocking Bitcoin-native yield.
+            👇
+
+
+            This surge in innovation has driven the BTCFi ecosystem to grow dramatically,
+            with TVL surging 2,767% as more $BTC holders look to earn yield while
+            maintaining exposure to their underlying asset.
+
+
+            🔹 Competitive Analysis:
+
+
+            1⃣  Babylon Protocol: The Staking Giant
+
+
+            Undisputed leader with 41,669 BTC (~$5B) locked in native staking protocols.
+
+
+            Yield Strategy:
+
+
+            – Users lock native Bitcoin in time-locked UTXOs without wrapping or bridges
+
+            – 0.52% APR paid in BABY tokens for securing PoS chains
+
+            – 50/50 reward split between BTC stakers and BABY token holders
+
+
+            Key Advantages:
+
+
+            – Tier-1 exchange integration: Kraken live, Binance announced for retail
+            accessibility
+
+            – Genesis V2 upgrade (June 2025) added TokenFactory and IBC capabilities
+
+            – Bitcoin-Secured Networks (BSN): 9 partner chains including Osmosis,
+            Sui, BOB, Manta
+
+
+            2025 Roadmap:
+
+
+            – Q2: Multi-staking testnet allowing single BTC position to secure multiple
+            networks
+
+            – Q3: Genesis EVM testnet for Solidity compatibility
+
+            – Q4: Mainnet launch of multi-staking and EVM capabilities
+
+            – 2026: Trust-minimized BTC liquidity layer with BitVM integration
+
+
+            2⃣  Stacks: The Smart Contract Leader
+
+
+            #1 programmable Bitcoin layer by TVL with $592M in sBTC alone.
+
+
+            Synthetic Bitcoin Approach:
+
+
+            – 1:1 BTC-backed sBTC through multi-sig custody on Bitcoin mainnet
+
+            – Phased capacity rollouts: Cap-3 of 5,000 BTC filled in 2.5 hours (May
+            2025)
+
+            – 150 BTC/day withdrawal limits during stress-testing phase
+
+
+            Native DeFi: @ALEXLabBTC DEX, @ZestProtocol lending, @VelarBTC derivatives,
+            @Bitflow_Finance AMM
+
+
+            Cross-chain: Wormhole bridges to Solana and Sui for broader liquidity
+
+
+            SIP-031 governance: $310M STX approved community endowment for incentives
+
+
+            4 years of mainnet runtime and live withdrawals vs. newer rollup competitors.
+
+
+            3⃣  SatLayer: The Restaking Innovator
+
+
+            $446M TVL across multiple chains, positioned as EigenLayer for Bitcoin.
+
+
+            Restaking Architecture:
+
+
+            – Babylon integration: BTC staked through Babylon can be restaked to secure
+            additional services
+
+            – Programmable slashing: CosmWasm contracts enable arbitrary fault conditions
+            beyond double-signing
+
+            – Dual yield streams: Babylon base rewards + Bitcoin-Validated Service
+            (BVS) fees
+
+
+            Growth Metrics:
+
+
+            – 78% TVL growth in 4 months
+
+            – Here'' token listed on Binance Alpha and Gate (August 11, 2025)
+
+            – 20+ ecosystem partners: Including Sui, Berachain, Avail, LayerZero
+
+
+            4⃣  BOB: The Hybrid L2 Pioneer
+
+
+            $160M TVL, first hybrid ZK-optimistic rollup targeting Bitcoin DeFi.
+
+
+            – BitVM-powered bridge: Native BTC transfers without custodial wrappers
+            (testnet)
+
+            – OP Kailua upgrade: ZK fraud proofs in optimistic design, <$50 bond disputes
+
+            – Hybrid BTC vaults: Multi-chain yield routing (5-7% APY target)
+
+
+            Institutional Traction:
+
+
+            – $21M total funding: Castle Island, Anchorage, Coinbase Ventures
+
+            – Fireblocks integration: 2,000+ custody clients access (March 2025)
+
+            – $239M TVL, #3 Superchain position (December 2024)
+
+            – Babylon LST flywheel, Solv Protocol BTC+ vault, Euler Labs lending markets.
+
+
+            🔹 Key Competitive Dynamics
+
+
+            Custody Models
+
+
+            – Self-Custody Leaders: Babylon, SatLayer maintain Bitcoin keys with users
+
+            – Bridge-Based: BOB (BitVM), Stacks (multi-sig) require trust assumptions
+
+            – Institutional Options: Kraken, Fireblocks integrations for regulated
+            custody
+
+
+            Yield Generation Mechanisms
+
+
+            – Native Staking: Babylon''s 0.52% base rate from PoS validation
+
+            – DeFi Composability: Stacks'' smart contract ecosystem, BOB''s multi-chain
+            routing
+
+            – Restaking Premium: SatLayer''s multiple service fee stacking
+
+            – Hybrid Approaches: BOB''s yield vaults combining multiple strategies
+
+
+            🔹 Market Outlook
+
+
+            In my POV, BTCFI competition is evolving into specialized niches rather
+            than direct substitutes:
+
+
+            – Conservative yield seekers → Babylon''s exchange-integrated staking
+
+            – DeFi power users → Stacks'' programmable sBTC ecosystem
+
+            – Yield optimizers → SatLayer''s multi-service restaking
+
+            – Cross-chain strategists → BOB''s hybrid vault infrastructure
+
+
+            With Bitcoin’s total supply = 21M, the ~47,000 BTC currently locked represents
+            just around 0.22% → still a rather modest figure.
+
+
+            But that tiny slice might actually point to a huge upside, especially
+            as more big players start stepping in.
+
+
+            From where we’re sitting, 2025–2026 looks like a window where institutional
+            adoption could accelerate and unlock significant growth potential.'
+        - tweetId: '1957389666446889078'
+          likeCount: 0
+          repostCount: 4
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:30:37+00:00'
+          type: repost
+          account:
+            username: 0xTheGreatApe
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'RT @limitlesssauce: When Bitcoin’s metaverse narrative takes off…
+            Bitmap will be the blueprint.
+
+
+            The market simply doesn''t know yet how pow…'
+        - tweetId: '1957389639284654211'
+          likeCount: 2
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:30:31+00:00'
+          type: post
+          account:
+            username: rovercrc
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: "\U0001F4A5BREAKING: \n\n\U0001F1F3\U0001F1F1 AMDAX TO LAUNCH BITCOIN\
+            \ TREASURY FIRM AMBTS ON DUTCH STOCK EXCHANGE, AIMING FOR 1% OF TOTAL\
+            \ $BTC SUPPLY \U0001F680"
+        - tweetId: '1957389517830467801'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:30:02+00:00'
+          type: quote
+          account:
+            username: Itsdehamza
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: 'Moves and counter moves. See you sub 100K #Bitcoin https://t.co/ujbUVjluf9'
+        - tweetId: '1957389175180689812'
+          likeCount: 0
+          repostCount: 0
+          viewCount: 0
+          quoteCount: 0
+          replyCount: 0
+          bookmarkCount: 0
+          mentionedAt: '2025-08-18T10:28:40+00:00'
+          type: post
+          account:
+            username: JinseFinance
+            isVerified: false
+          repostBreakdown:
+            smart: 0
+            ct: 0
+          text: null
 test_3_search_account_tool:
   input:
     tool: search_account
@@ -787,363 +1439,652 @@ test_3_search_account_tool:
           success: true
           data:
             smartFollowingCount: 0
-            averageEngagement: 0.30233021077283373
-            averageReach: 10327.6
-            smartFollowerCount: 140
-            followerCount: 34160
+            averageEngagement: 0.5300362581580855
+            averageReach: 18273
+            smartFollowerCount: 144
+            followerCount: 34475
         mentions:
           success: true
           data:
-          - tweetId: '1948485207645880388'
-            link: https://x.com/artoriatech/status/1948485207645880388
-            likeCount: 0
-            repostCount: 9
-            viewCount: 0
+          - tweetId: '1957100750313587080'
+            likeCount: 12
+            repostCount: 0
+            viewCount: 1054
+            quoteCount: 1
+            replyCount: 2
+            bookmarkCount: 1
+            mentionedAt: '2025-08-17T15:22:34+00:00'
+            type: note
+            account:
+              username: artoriatech
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 1
+            text: "Here's a query I found very useful for benchmarking AI search tools\
+              \ / agents: \"Coinbase listing July 2025\"\n\nMost products struggle\
+              \ at it, giving empty or incorrect results \n❌ Perplexity\n❌ Claude\n\
+              ❌ Serp API\n❌ Tavily\n❌ OpenAI responses API + web search tools\n\n\
+              There are only a few products that can correctly answer a list of tokens\
+              \ like $BNKR $RSC $BIO that listed in July\n✔️ ChatGPT\n✔️ Gemini\n\
+              ✔️ @bankrbot on base app\n✔️ @elfa_ai bot on TG\n✔️ @heurist_ai agent\
+              \ on base app\n\nSimple as it may seem, this query is actually tricky\
+              \ to handle. Why?\n\nWhen you Google this query, you'll find plenty\
+              \ of unrelated articles and spammy news sites. 1 or 2 out of 10 search\
+              \ results are actually useful.\n\nLike, 99bitcoins dot com shows up\
+              \ top in the search results, followed by bitget wallet and a coinbase\
+              \ investor report. None of top 5 search results contain the right info\
+              \ \U0001F480\n\nThis is particularly common in exchange listing related\
+              \ topics\n\nIt's up to the agent to filter useful information out of\
+              \ SEO-optimized garbage. Very challenging."
+          - tweetId: '1956992416583504091'
+            likeCount: 166
+            repostCount: 20
+            viewCount: 7747
+            quoteCount: 2
+            replyCount: 4
+            bookmarkCount: 3
+            mentionedAt: '2025-08-17T08:12:05+00:00'
+            type: post
+            account:
+              username: Filecoin
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: null
+          - tweetId: '1956933189013815656'
+            likeCount: 44
+            repostCount: 4
+            viewCount: 1743
             quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-24T20:47:29+00:00'
-            type: repost
+            replyCount: 11
+            bookmarkCount: 1
+            mentionedAt: '2025-08-17T04:16:44+00:00'
+            type: post
             account:
               username: artoriatech
               isVerified: false
             repostBreakdown:
               smart: 0
               ct: 0
-          - tweetId: '1948460941374620034'
-            link: https://x.com/mathburn666/status/1948460941374620034
+            text: null
+          - tweetId: '1956329128736502070'
             likeCount: 0
-            repostCount: 11
+            repostCount: 108
             viewCount: 0
             quoteCount: 0
             replyCount: 0
             bookmarkCount: 0
-            mentionedAt: '2025-07-24T19:11:03+00:00'
+            mentionedAt: '2025-08-15T12:16:25+00:00'
             type: repost
             account:
-              username: mathburn666
+              username: DJR2086
               isVerified: false
             repostBreakdown:
               smart: 0
               ct: 0
-          - tweetId: '1948409654905880675'
-            link: https://x.com/jkrdoc/status/1948409654905880675
-            likeCount: 0
-            repostCount: 11
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-24T15:47:16+00:00'
-            type: repost
-            account:
-              username: jkrdoc
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1948401896554627335'
-            link: https://x.com/midoji7/status/1948401896554627335
-            likeCount: 0
-            repostCount: 3
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-24T15:16:26+00:00'
-            type: repost
-            account:
-              username: midoji7
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1948397102100287659'
-            link: https://x.com/resdegen/status/1948397102100287659
-            likeCount: 50
-            repostCount: 11
-            viewCount: 20691
-            quoteCount: 1
-            replyCount: 8
-            bookmarkCount: 11
-            mentionedAt: '2025-07-24T14:57:23+00:00'
-            type: quote
-            account:
-              username: resdegen
-              isVerified: false
-            repostBreakdown:
-              smart: 3
-              ct: 2
-          - tweetId: '1948116474457161919'
-            link: https://x.com/gpt3_eth/status/1948116474457161919
-            likeCount: 0
-            repostCount: 3
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-23T20:22:16+00:00'
-            type: repost
-            account:
-              username: gpt3_eth
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1948036977174953984'
-            link: https://x.com/TheZKnomist/status/1948036977174953984
-            likeCount: 50
-            repostCount: 3
-            viewCount: 1259
-            quoteCount: 1
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-23T15:06:22+00:00'
-            type: quote
-            account:
-              username: TheZKnomist
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 1
-          - tweetId: '1947936360943526382'
-            link: https://x.com/gpt3_eth/status/1947936360943526382
-            likeCount: 0
-            repostCount: 1
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-23T08:26:34+00:00'
-            type: repost
-            account:
-              username: gpt3_eth
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1947917266315563256'
-            link: https://x.com/wasabi_protocol/status/1947917266315563256
-            likeCount: 0
-            repostCount: 8
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-23T07:10:41+00:00'
-            type: repost
-            account:
-              username: wasabi_protocol
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1947903435711349107'
-            link: https://x.com/AlexprimeOO1/status/1947903435711349107
-            likeCount: 17
-            repostCount: 8
-            viewCount: 828
-            quoteCount: 0
-            replyCount: 4
-            bookmarkCount: 0
-            mentionedAt: '2025-07-23T06:15:44+00:00'
-            type: note
-            account:
-              username: AlexprimeOO1
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 1
-          - tweetId: '1947836224959614982'
-            link: https://x.com/deb_crypt/status/1947836224959614982
-            likeCount: 36
-            repostCount: 4
-            viewCount: 693
-            quoteCount: 1
-            replyCount: 20
-            bookmarkCount: 0
-            mentionedAt: '2025-07-23T01:48:39+00:00'
+            text: 'RT @Gaianet_AI: Gaia 🤝 Heurist!
+
+
+              We’re partnering with @heurist_ai to make onboarding to Web3 AI faster,
+              easier, and more intuitive for dev…'
+          - tweetId: '1955993646987403450'
+            likeCount: 169
+            repostCount: 108
+            viewCount: 5210
+            quoteCount: 2
+            replyCount: 116
+            bookmarkCount: 4
+            mentionedAt: '2025-08-14T14:03:20+00:00'
             type: post
             account:
-              username: deb_crypt
+              username: Gaianet_AI
               isVerified: false
             repostBreakdown:
               smart: 0
               ct: 1
-          - tweetId: '1947836105430339691'
-            link: https://x.com/scattering_io/status/1947836105430339691
-            likeCount: 4
+            text: 'Gaia 🤝 Heurist!
+
+
+              We’re partnering with @heurist_ai to make onboarding to Web3 AI faster,
+              easier, and more intuitive for developers and founders 🧵⏬ https://t.co/xHQQL4NmnN'
+          - tweetId: '1955898701253394446'
+            likeCount: 0
+            repostCount: 7
+            viewCount: 0
+            quoteCount: 0
+            replyCount: 0
+            bookmarkCount: 0
+            mentionedAt: '2025-08-14T07:46:03+00:00'
+            type: repost
+            account:
+              username: rekpero
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: 'RT @CryptobuddyInfo: Top 10 DePIN Coins by 7 Days Market Cap Growth
+
+
+              @SpheronFDN - $SPON =&gt; +85.3%
+
+              @heurist_ai - $HEU =&gt; +61.9%
+
+              @ICN_Protoc…'
+          - tweetId: '1955521530063888848'
+            likeCount: 32
+            repostCount: 7
+            viewCount: 4799
+            quoteCount: 3
+            replyCount: 5
+            bookmarkCount: 1
+            mentionedAt: '2025-08-13T06:47:19+00:00'
+            type: note
+            account:
+              username: CryptobuddyInfo
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 3
+            text: 'Top 10 DePIN Coins by 7 Days Market Cap Growth
+
+
+              @SpheronFDN - $SPON => +85.3%
+
+              @heurist_ai - $HEU => +61.9%
+
+              @ICN_Protocol - $ICNT => +44.8%
+
+              @SentinelP2P - $P2P => +42.3%
+
+              @NodeAIETH  - $GPU => +39.1%
+
+              @AukiNetwork - $AUKI => +36.9%
+
+              @HNS - $HNS => +35.3%
+
+              @lavanetxyz - $LAVA => +34.4%
+
+              @PinLinkAi - $PIN => +31.6%
+
+              @session_token - $SESH => +29.9%
+
+
+              #Cryptolenz #Crypto #cryptocurrency #CryptoNews #Blockchain #Web3 #DePIN'
+          - tweetId: '1955408509832663522'
+            likeCount: 7
             repostCount: 1
-            viewCount: 170
+            viewCount: 471
             quoteCount: 0
             replyCount: 1
             bookmarkCount: 0
-            mentionedAt: '2025-07-23T01:48:11+00:00'
-            type: note
-            account:
-              username: scattering_io
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 1
-          - tweetId: '1947719641343635542'
-            link: https://x.com/midoji7/status/1947719641343635542
-            likeCount: 0
-            repostCount: 5
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-22T18:05:24+00:00'
-            type: repost
-            account:
-              username: midoji7
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1947718231751372973'
-            link: https://x.com/artoriatech/status/1947718231751372973
-            likeCount: 17
-            repostCount: 5
-            viewCount: 1854
-            quoteCount: 1
-            replyCount: 6
-            bookmarkCount: 1
-            mentionedAt: '2025-07-22T17:59:47+00:00'
+            mentionedAt: '2025-08-12T23:18:13+00:00'
             type: quote
             account:
               username: artoriatech
               isVerified: false
             repostBreakdown:
-              smart: 1
+              smart: 0
               ct: 0
-          - tweetId: '1947626605259501611'
-            link: https://x.com/mathburn666/status/1947626605259501611
+            text: null
+          - tweetId: '1955304879989137514'
             likeCount: 0
-            repostCount: 4
-            viewCount: 0
+            repostCount: 0
+            viewCount: 169
             quoteCount: 0
             replyCount: 0
             bookmarkCount: 0
-            mentionedAt: '2025-07-22T11:55:42+00:00'
-            type: repost
+            mentionedAt: '2025-08-12T16:26:25+00:00'
+            type: note
             account:
-              username: mathburn666
+              username: laurabeni01
               isVerified: false
             repostBreakdown:
               smart: 0
               ct: 0
-          - tweetId: '1947624717890032076'
-            link: https://x.com/cryptoboys27/status/1947624717890032076
-            likeCount: 0
-            repostCount: 3
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-07-22T11:48:12+00:00'
-            type: repost
-            account:
-              username: cryptoboys27
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-          - tweetId: '1947624556048404813'
-            link: https://x.com/aixCB_Vc/status/1947624556048404813
-            likeCount: 17
-            repostCount: 3
-            viewCount: 1199
-            quoteCount: 0
-            replyCount: 5
+            text: "how to flip the GTM thinking from L1 -> AI infra \U0001F4DA\n\n\
+              1. compute = product\U0001F9E0\nL1/L2s focus on apps + chain abstraction\n\
+              DeAI focuses on single capabilities - inference, memory, data, orchestration.\
+              \ e.g. @soulgra_ph @heurist_ai @Covalent_HQ \n\n2. AI end-user personas\
+              \ ≠ just devs \U0001F64B\U0001F3FE‍♂️\nthink agents + researchers +\
+              \ data contributors.\nonboarding flows should be tailored for each.\n\
+              \n3. distribution via integrations \U0001F517\nmeet users where there\
+              \ is already traction - @bittensor_ , @SingularityNET @BotifydotCloud\
+              \ @Fetch_ai  or other AI marketplaces/platforms\n\n\U0001F4A1L1 GTM:\
+              \ grow devs → apps → users\n\U0001F4A1DeAI GTM: embed utility → users\
+              \ \n\nWho else is building AI infra like this? Drop your favs below\
+              \ \U0001F447"
+          - tweetId: '1955237840331149711'
+            likeCount: 93
+            repostCount: 15
+            viewCount: 4034
+            quoteCount: 9
+            replyCount: 10
             bookmarkCount: 1
-            mentionedAt: '2025-07-22T11:47:33+00:00'
-            type: reply
+            mentionedAt: '2025-08-12T12:00:02+00:00'
+            type: post
             account:
-              username: aixCB_Vc
+              username: ankr
               isVerified: false
             repostBreakdown:
               smart: 0
-              ct: 1
-          - tweetId: '1947621335472976357'
-            link: https://x.com/resdegen/status/1947621335472976357
+              ct: 0
+            text: 'Ankr''s enterprise arm, @Asphere_xyz, has delivered critical power
+              to the design, architecture, engineering, and infrastructure behind
+              Heurist Chain with one of the most experienced teams in the industry.
+
+
+              Pleasure working closely with @heurist_ai on this.
+
+
+              https://t.co/IA2lWyKDCd'
+          - tweetId: '1954960797563515324'
+            likeCount: 118
+            repostCount: 10
+            viewCount: 7089
+            quoteCount: 2
+            replyCount: 16
+            bookmarkCount: 25
+            mentionedAt: '2025-08-11T17:39:10+00:00'
+            type: note
+            account:
+              username: TheCryptoKazi
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: null
+          - tweetId: '1954668640223309935'
             likeCount: 0
-            repostCount: 5
+            repostCount: 10
             viewCount: 0
             quoteCount: 0
             replyCount: 0
             bookmarkCount: 0
-            mentionedAt: '2025-07-22T11:34:46+00:00'
+            mentionedAt: '2025-08-10T22:18:14+00:00'
             type: repost
+            account:
+              username: 0xbuse
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: null
+          - tweetId: '1954668640223309935'
+            likeCount: 0
+            repostCount: 13
+            viewCount: 0
+            quoteCount: 0
+            replyCount: 0
+            bookmarkCount: 0
+            mentionedAt: '2025-08-10T22:18:14+00:00'
+            type: repost
+            account:
+              username: 0xbuse
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: 'RT @yigitm44: 🧵ULTIMATE GUIDE TO BASE ECOSYSTEM 🟦
+
+
+              I have filtered out almost 50 tokens in @base  ecosystem so you don''t
+              have to. (+ Bonus…'
+          - tweetId: '1954653750754205950'
+            likeCount: 74
+            repostCount: 11
+            viewCount: 7351
+            quoteCount: 2
+            replyCount: 12
+            bookmarkCount: 52
+            mentionedAt: '2025-08-10T21:19:04+00:00'
+            type: note
+            account:
+              username: yigitm44
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 2
+            text: null
+          - tweetId: '1954653750754205950'
+            likeCount: 92
+            repostCount: 13
+            viewCount: 11074
+            quoteCount: 2
+            replyCount: 16
+            bookmarkCount: 64
+            mentionedAt: '2025-08-10T21:19:04+00:00'
+            type: note
+            account:
+              username: yigitm44
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 2
+            text: '🧵ULTIMATE GUIDE TO BASE ECOSYSTEM 🟦
+
+
+              I have filtered out almost 50 tokens in @base  ecosystem so you don''t
+              have to. (+ Bonus dexscreener Watchlist).
+
+
+              There are solid projects in the ecosystem that you may want to check
+              out before its too late 😉
+
+
+              📌 Before we start, note that this list intentionally excludes meme tokens
+              along with the @virtuals_io AI Agents as Virtuals ecosystem has their
+              own distinct universe on Base. I may have overlooked some projects in
+              the Base ecosystem. Respect to those who keep building.
+
+
+              Anyway, from lending protocols to AI agents. Here’s what’s shaping the
+              @base ecosystem today 👇
+
+
+              @AerodromeFi $AERO: Main Dex.
+
+
+              @virtuals_io $VIRTUAL: Agent Society, pioneering AI Agents onchain.
+
+
+              @MorphoLabs $MORPHO: Main lending and borrowing platform on Base
+
+
+              @KeetaNetwork $KTA: Keeta. L1 - Connect payment network. Enables participants
+              to create and manage digital or RWAs
+
+
+              @reserveprotocol $RSR: Asset-backed currency solutions
+
+
+              @zora $ZORA: Creator content rewarding platform
+
+
+              @ReiNetwork0x $REI: Contributes to AI agent development by providing
+              SDK/API access
+
+
+              @MoonwellDeFi $WELL: Lending and borrowing platform
+
+
+              @degentokenbase $DEGEN: Meme token born from Farcaster, working on the
+              DEGEN Chain
+
+
+              @AskVenice $VVV: Native token of https://t.co/04zfwv6Qjr infrastructure,
+              a decentralized ChatGPT alternative that does not store your conversations
+              on its own servers
+
+
+              @bankrbot $BNKR: BankrCoin, AI-assisted crypto transactions
+
+
+              @ResearchHub $RSC: Main DeSci project on Base. CEO @brian_armstrong
+              himself.
+
+
+              @SoSoValue $SOSO: On-chain spot index protocol
+
+
+              @clankeronbase $CLANKER: Provides the easiest token deployment
+
+
+              @Mamo_agent $MAMO: As their motto says, “personal finance companion”
+
+
+              @DefinitiveFi $EDGE: Provides CeFi-like trading experience
+
+
+              @ICN_ProtocoL $ICNT: DePIN infrastructure running on Base, enables access
+              to cloud services
+
+
+              @AukiNetwork $AUKI: DePIN project aiming to create smarter cities by
+              enabling smarter AI through shared spatial mapping
+
+
+              @GAME_Virtuals $GAME: The official AI Framework of @virtuals_io, powering
+              Butler, the universal consumer key to ACP’s agent network
+
+
+              @gizatechxyz $GIZA: Empowers the creation and operation of autonomous
+              AI agents, initially focused on optimizing financial strategies
+
+
+              @flaunchgg $FLAY: Token deployment
+
+
+              @GraphAIOfficial $GAI: Provides real-time structured blockchain intelligence
+              required to integrate RWAs into on-chain agentic AI applications
+
+
+              @SeamlessFi $SEAM: Lending and borrowing protocol built on Base
+
+
+              $DRB: Coin deployed by grok via Bankr bot
+
+
+              @flock_io $FLOCK: AI training platform
+
+
+              @CreatorBid $BID: AI Agent Launchpad
+
+
+              @indexy_xyz $INDEXY: Indexes on-chain assets and delivers blockchain
+              analytics for Base
+
+
+              @heurist_ai $HEU: AI infrastructure, full-stack infrastructure for the
+              AI economy
+
+
+              @noicedotso $NOICE: Enables tipping in various tokens integrated with
+              the Farcaster social network
+
+
+              @Veildotcash $VEIL: Provides privacy-layer solutions to protect transaction
+              data on Base
+
+
+              @fx_hash_ $FXH: Generative art NFT and token marketplace and creation
+              platform
+
+
+              @Truemarketsorg $TRUE: Prediction market protocol like Polymarket
+
+
+              @SuperChampsHQ $CHAMP: Anime-inspired universe spanning games, video,
+              social media, merchandise, and web3 ownership
+
+
+              @qrcoindotfun $QR: Daily onchain auctions, a nice ad dapp
+
+
+              @ZyfAI_ $ZFI: DeFi Agent built to automate and optimize yield farming
+              across protocols
+
+
+              @ArcadiaFi $AAA: Intelligent Liquidity Management for DEX ecosystems
+
+
+              @RFLOnBase $RFL: Enables AI to support users in improving their trading
+              and yield-seeking journey by offering tailored suggestions to help boost
+              their investment strategies
+
+
+              $FAIR: Autonomous agent that invests in the Farcaster ecosystem
+
+
+              @blaiapp $BLAI: AI-powered crypto advisor built on @JoinPond
+
+
+              @Kudai_IO $KUDAI: DeFAI Agent
+
+
+              @retakedottv $RETAKE: Tokenization of streams
+
+
+              @ratio1ai $R1: Decentralized AI compute network aiming to connect everyday
+              devices such as laptops, PCs or even cloud servers into a decentralized
+              supercomputer for AI
+
+
+              @loomlayai $LAY: Enables users to build trading agents with no coding
+              skills
+
+
+              @TalentProtocol $TALENT: Reputation infrastructure for builders and
+              creators
+
+
+              @CryptiqOfficial $TIQ: Privacy-first memory vaults combining encrypted
+              storage with bespoke AI tools, built on @JoinPond
+
+
+              ⚠️This list primarily covers Base-native tokens, although not all listed
+              tokens are native to Base. It is drafted based on market cap from higher
+              to lower at the time of preparation, which may vary by the time this
+              post is shared or read. Many projects have been filtered out, but this
+              does not mean due diligence has been conducted properly.
+
+
+              ⚠️I do not endorse any of these projects, their context, or their teams.
+              I make no claims regarding price movements, and the information provided
+              may be incomplete, inaccurate, or outdated.
+
+
+              ⚠️ The project descriptions here are intentionally short, meant only
+              to provide a basic idea in a few words. Many of these projects have
+              much more to offer than can be summarized in this list.
+
+
+              🪙📊 Bonus: I have created DexScreener list including all the tokens above
+              so you don''t have to:
+
+
+              https://t.co/iXC7IXLqpH
+
+
+              ⚠️Each reader is expected to apply their own judgment and conduct independent
+              research. Do not rely on contract addresses from Dexscreener or similar
+              sources based solely on this list it is intended for MONITORING purposes
+              only.
+
+
+              ALWAYS DYOR 💙'
+          - tweetId: '1954165546607349776'
+            likeCount: 8
+            repostCount: 0
+            viewCount: 353
+            quoteCount: 0
+            replyCount: 1
+            bookmarkCount: 0
+            mentionedAt: '2025-08-09T12:59:07+00:00'
+            type: quote
+            account:
+              username: artoriatech
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: null
+          - tweetId: '1954165546607349776'
+            likeCount: 10
+            repostCount: 0
+            viewCount: 491
+            quoteCount: 0
+            replyCount: 1
+            bookmarkCount: 0
+            mentionedAt: '2025-08-09T12:59:07+00:00'
+            type: quote
+            account:
+              username: artoriatech
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: null
+          - tweetId: '1953881847311839597'
+            likeCount: 9
+            repostCount: 4
+            viewCount: 1208
+            quoteCount: 0
+            replyCount: 4
+            bookmarkCount: 0
+            mentionedAt: '2025-08-08T18:11:48+00:00'
+            type: quote
             account:
               username: resdegen
               isVerified: false
             repostBreakdown:
               smart: 0
               ct: 0
-          - tweetId: '1947614730706681949'
-            link: https://x.com/midoji7/status/1947614730706681949
-            likeCount: 49
-            repostCount: 5
-            viewCount: 8306
-            quoteCount: 3
-            replyCount: 11
-            bookmarkCount: 7
-            mentionedAt: '2025-07-22T11:08:31+00:00'
-            type: note
-            account:
-              username: midoji7
-              isVerified: false
-            repostBreakdown:
-              smart: 2
-              ct: 2
-          - tweetId: '1947273827710361752'
-            link: https://x.com/ethimedes/status/1947273827710361752
+            text: null
+          - tweetId: '1953811828405837910'
             likeCount: 0
-            repostCount: 0
-            viewCount: 1
+            repostCount: 11
+            viewCount: 0
             quoteCount: 0
             replyCount: 0
             bookmarkCount: 0
-            mentionedAt: '2025-07-21T12:33:53+00:00'
-            type: quote
+            mentionedAt: '2025-08-08T13:33:34+00:00'
+            type: repost
             account:
-              username: ethimedes
+              username: artoriatech
               isVerified: false
             repostBreakdown:
               smart: 0
               ct: 0
+            text: null
+          - tweetId: '1953811828405837910'
+            likeCount: 0
+            repostCount: 12
+            viewCount: 0
+            quoteCount: 0
+            replyCount: 0
+            bookmarkCount: 0
+            mentionedAt: '2025-08-08T13:33:34+00:00'
+            type: repost
+            account:
+              username: artoriatech
+              isVerified: false
+            repostBreakdown:
+              smart: 0
+              ct: 0
+            text: 'RT @TheZKnomist: The AI Innovation on the ZKsync Elastic Network
+              has been interesting, especially with the news from @heurist_ai and
+              its pa…'
 test_4_search_account_query:
   input:
     query: Analyze the Twitter account @heurist_ai and show me their recent activity
   output:
     response: "**Twitter Account Analysis for @heurist_ai**\n\n**Account Statistics:**\n\
-      \n* **Follower Count:** 34,160\n* **Smart Follower Count (Engaged Followers):**\
-      \ 140\n* **Smart Following Count (Accounts @heurist_ai Engages with):** 0\n\
-      * **Average Engagement:** 0.3023 (30.23% of followers engage with the content\
-      \ on average)\n* **Average Reach:** 10,327.6 (average number of users who view\
-      \ @heurist_ai's tweets)\n\n**Recent Mentions (Last 3 Days):**\n\nHere's a breakdown\
-      \ of the 20 recent mentions of @heurist_ai, grouped by **Type**, **Engagement**,\
-      \ and **Mentioning Account**:\n\n### **Mention Types:**\n\n* **Reposts:** 13\n\
-      * **Quotes:** 3\n* **Notes (Original Tweets):** 3\n* **Replies:** 1\n\n### **Top\
-      \ Engaging Mentions:**\n\n1. **Tweet ID:** 1948397102100287659\n\t* **Type:**\
-      \ Quote\n\t* **Account:** @resdegen\n\t* **Engagement:**\n\t\t+ Likes: 50\n\t\
-      \t+ Reposts: 11\n\t\t+ Views: 20,691\n\t\t+ Quotes: 1\n\t\t+ Replies: 8\n\t\t\
-      + Bookmarks: 11\n2. **Tweet ID:** 1947614730706681949\n\t* **Type:** Note\n\t\
-      * **Account:** @midoji7\n\t* **Engagement:**\n\t\t+ Likes: 49\n\t\t+ Reposts:\
-      \ 5\n\t\t+ Views: 8,306\n\t\t+ Quotes: 3\n\t\t+ Replies: 11\n\t\t+ Bookmarks:\
-      \ 7\n\n### **Mentioning Accounts with Highest Engagement:**\n\n1. **@resdegen**\n\
-      \t* **Mention Type:** Quote\n\t* **Engagement:** 50 Likes, 11 Reposts, 20,691\
-      \ Views, etc. (see above)\n2. **@midoji7**\n\t* **Mention Type:** Note\n\t*\
-      \ **Engagement:** 49 Likes, 5 Reposts, 8,306 Views, etc. (see above)\n3. **@artoriatech**\n\
-      \t* **Mention Types:** Quote, Repost\n\t* **Combined Engagement:** 17 Likes,\
-      \ 14 Reposts, 2,458 Views, etc.\n\n**Insights:**\n\n* @heurist_ai has a relatively\
-      \ low engagement rate (0.3023) considering its large follower base, indicating\
-      \ potential for growth in interactive content.\n* The account is mostly mentioned\
-      \ in reposts, suggesting its content is widely shared but may not always spark\
-      \ direct conversations.\n* @resdegen and @midoji7 have shown significant engagement\
-      \ with @heurist_ai, potentially indicating influential or collaborative relationships."
+      \n* **Follower Count:** 34,475\n* **Smart Follower Count (Engaged):** 144\n\
+      * **Average Engagement:** 0.53 (indicating a moderate level of engagement)\n\
+      * **Average Reach:** 18,273 (average views per tweet)\n\n**Recent Activity (Mentions)\
+      \ - Last 9 days:**\n\n* **Total Mentions:** 25\n* **Unique Users Mentioning\
+      \ @heurist_ai:** 19\n* **Types of Mentions:**\n\t+ Quotes: 5\n\t+ Replies: 6\n\
+      \t+ Retweets (Reposts): 8\n\t+ Original Posts (Mentions in new tweets): 6\n\n\
+      **Top Mentions by Engagement (Likes + Reposts + Replies):**\n\n1. **Tweet ID:**\
+      \ 1955993646987403450\n\t* **Username:** @Gaianet_AI\n\t* **Type:** Post\n\t\
+      * **Text:** Partnership announcement with @heurist_ai for Web3 AI onboarding\n\
+      \t* **Engagement:** 169 Likes, 108 Reposts, 116 Replies, 4 Bookmarks\n2. **Tweet\
+      \ ID:** 1955521530063888848\n\t* **Username:** @CryptobuddyInfo\n\t* **Type:**\
+      \ Note\n\t* **Text:** Top 10 DePIN Coins by 7 Days Market Cap Growth (feat.\
+      \ @heurist_ai with +61.9% growth)\n\t* **Engagement:** 32 Likes, 7 Reposts,\
+      \ 5 Replies, 1 Bookmark\n3. **Tweet ID:** 1955237840331149711\n\t* **Username:**\
+      \ @ankr\n\t* **Type:** Post\n\t* **Text:** Collaboration with @heurist_ai on\
+      \ Heurist Chain infrastructure\n\t* **Engagement:** 93 Likes, 15 Reposts, 10\
+      \ Replies, 1 Bookmark\n\n**Insights and Observations:**\n\n* @heurist_ai has\
+      \ a moderate engagement rate, indicating a dedicated but not extremely large\
+      \ active community.\n* The account is frequently mentioned in tweets related\
+      \ to Web3, AI, and DePIN projects, showcasing its relevance in these spaces.\n\
+      * Partnership announcements (e.g., with @Gaianet_AI) and market performance\
+      \ updates (e.g., by @CryptobuddyInfo) generate the most engagement.\n* The variety\
+      \ of users mentioning @heurist_ai suggests a diverse interest base, from project\
+      \ collaborations to market analysis and community engagement."
     data: *id001
 test_5_get_trending_tokens_tool:
   input:
@@ -1163,205 +2104,205 @@ test_5_get_trending_tokens_tool:
           pageSize: 50
           data:
           - token: eth
-            current_count: 1579
-            previous_count: 1303
-            change_percent: 21.18
+            current_count: 1048
+            previous_count: 1035
+            change_percent: 1.26
           - token: btc
-            current_count: 1222
-            previous_count: 1086
-            change_percent: 12.52
-          - token: pump
-            current_count: 654
-            previous_count: 798
-            change_percent: -18.05
-          - token: sol
-            current_count: 473
-            previous_count: 601
-            change_percent: -21.3
-          - token: bonk
-            current_count: 458
-            previous_count: 342
-            change_percent: 33.92
-          - token: pengu
-            current_count: 434
-            previous_count: 733
-            change_percent: -40.79
-          - token: xrp
-            current_count: 280
-            previous_count: 274
-            change_percent: 2.19
-          - token: rekt
-            current_count: 252
-            previous_count: 507
-            change_percent: -50.3
-          - token: gp
-            current_count: 231
-            previous_count: 204
-            change_percent: 13.24
-          - token: hype
-            current_count: 214
-            previous_count: 234
-            change_percent: -8.55
-          - token: sbet
-            current_count: 208
-            previous_count: 64
-            change_percent: 225
-          - token: bmnr
-            current_count: 205
-            previous_count: 54
-            change_percent: 279.63
-          - token: pepe
-            current_count: 200
-            previous_count: 138
-            change_percent: 44.93
-          - token: usdc
-            current_count: 180
-            previous_count: 197
-            change_percent: -8.63
-          - token: ani
-            current_count: 170
-            previous_count: 209
-            change_percent: -18.66
-          - token: spx
-            current_count: 163
-            previous_count: 141
-            change_percent: 15.6
-          - token: giko
-            current_count: 162
-            previous_count: 126
-            change_percent: 28.57
+            current_count: 783
+            previous_count: 587
+            change_percent: 33.39
           - token: link
-            current_count: 156
-            previous_count: 167
-            change_percent: -6.59
-          - token: whites
-            current_count: 156
-            previous_count: 144
-            change_percent: 8.33
+            current_count: 647
+            previous_count: 310
+            change_percent: 108.71
+          - token: sol
+            current_count: 309
+            previous_count: 239
+            change_percent: 29.29
+          - token: xrp
+            current_count: 265
+            previous_count: 189
+            change_percent: 40.21
+          - token: troll
+            current_count: 201
+            previous_count: 230
+            change_percent: -12.61
+          - token: pengu
+            current_count: 166
+            previous_count: 190
+            change_percent: -12.63
+          - token: light
+            current_count: 136
+            previous_count: 174
+            change_percent: -21.84
+          - token: hype
+            current_count: 135
+            previous_count: 122
+            change_percent: 10.66
           - token: dog
-            current_count: 155
-            previous_count: 131
-            change_percent: 18.32
-          - token: bnkr
-            current_count: 152
-            previous_count: 197
-            change_percent: -22.84
-          - token: tsla
-            current_count: 150
-            previous_count: 273
-            change_percent: -45.05
-          - token: usdt
-            current_count: 140
-            previous_count: 99
-            change_percent: 41.41
+            current_count: 133
+            previous_count: 116
+            change_percent: 14.66
           - token: doge
-            current_count: 136
-            previous_count: 228
-            change_percent: -40.35
-          - token: mim
-            current_count: 136
-            previous_count: 242
-            change_percent: -43.8
-          - token: glxy
-            current_count: 131
-            previous_count: 121
-            change_percent: 8.26
-          - token: ena
-            current_count: 125
-            previous_count: 50
-            change_percent: 150
-          - token: ebzt
-            current_count: 124
-            previous_count: 0
-            change_percent: 100
-          - token: crv
+            current_count: 127
+            previous_count: 136
+            change_percent: -6.62
+          - token: rekt
             current_count: 122
-            previous_count: 69
-            change_percent: 76.81
-          - token: tao
-            current_count: 120
-            previous_count: 123
-            change_percent: -2.44
-          - token: mstr
-            current_count: 115
-            previous_count: 84
-            change_percent: 36.9
+            previous_count: 92
+            change_percent: 32.61
+          - token: mim
+            current_count: 108
+            previous_count: 57
+            change_percent: 89.47
           - token: avax
-            current_count: 111
+            current_count: 107
             previous_count: 120
-            change_percent: -7.5
-          - token: bnb
-            current_count: 104
-            previous_count: 158
-            change_percent: -34.18
-          - token: zora
-            current_count: 103
-            previous_count: 165
-            change_percent: -37.58
-          - token: emp
-            current_count: 102
-            previous_count: 153
-            change_percent: -33.33
-          - token: s
-            current_count: 101
-            previous_count: 153
-            change_percent: -33.99
-          - token: syrup
-            current_count: 101
-            previous_count: 30
-            change_percent: 236.67
-          - token: joe
-            current_count: 100
-            previous_count: 69
-            change_percent: 44.93
+            change_percent: -10.83
           - token: bitcoin
             current_count: 98
-            previous_count: 108
-            change_percent: -9.26
-          - token: sui
-            current_count: 94
+            previous_count: 112
+            change_percent: -12.5
+          - token: lolcoin
+            current_count: 95
+            previous_count: 66
+            change_percent: 43.94
+          - token: pump
+            current_count: 89
+            previous_count: 51
+            change_percent: 74.51
+          - token: s
+            current_count: 87
+            previous_count: 56
+            change_percent: 55.36
+          - token: giko
+            current_count: 85
+            previous_count: 78
+            change_percent: 8.97
+          - token: room
+            current_count: 83
+            previous_count: 78
+            change_percent: 6.41
+          - token: pepe
+            current_count: 81
+            previous_count: 95
+            change_percent: -14.74
+          - token: usdc
+            current_count: 81
             previous_count: 103
-            change_percent: -8.74
+            change_percent: -21.36
           - token: ada
-            current_count: 91
-            previous_count: 106
-            change_percent: -14.15
+            current_count: 77
+            previous_count: 81
+            change_percent: -4.94
+          - token: labubu
+            current_count: 77
+            previous_count: 28
+            change_percent: 175
+          - token: fork
+            current_count: 76
+            previous_count: 11
+            change_percent: 590.91
+          - token: sui
+            current_count: 76
+            previous_count: 76
+            change_percent: 0
+          - token: clippy
+            current_count: 75
+            previous_count: 108
+            change_percent: -30.56
+          - token: tao
+            current_count: 75
+            previous_count: 113
+            change_percent: -33.63
+          - token: bert
+            current_count: 73
+            previous_count: 62
+            change_percent: 17.74
+          - token: spx
+            current_count: 73
+            previous_count: 123
+            change_percent: -40.65
+          - token: gugo
+            current_count: 68
+            previous_count: 58
+            change_percent: 17.24
+          - token: bnb
+            current_count: 63
+            previous_count: 44
+            change_percent: 43.18
+          - token: cogsec
+            current_count: 61
+            previous_count: 77
+            change_percent: -20.78
+          - token: epic
+            current_count: 61
+            previous_count: 23
+            change_percent: 165.22
+          - token: kas
+            current_count: 57
+            previous_count: 38
+            change_percent: 50
+          - token: home
+            current_count: 56
+            previous_count: 43
+            change_percent: 30.23
+          - token: mstr
+            current_count: 55
+            previous_count: 48
+            change_percent: 14.58
+          - token: usdt
+            current_count: 54
+            previous_count: 21
+            change_percent: 157.14
+          - token: altt
+            current_count: 53
+            previous_count: 3
+            change_percent: 1666.67
           - token: uranus
-            current_count: 90
+            current_count: 50
+            previous_count: 51
+            change_percent: -1.96
+          - token: serv
+            current_count: 49
             previous_count: 26
-            change_percent: 246.15
+            change_percent: 88.46
+          - token: bmnr
+            current_count: 48
+            previous_count: 37
+            change_percent: 29.73
           - token: mog
-            current_count: 80
-            previous_count: 91
-            change_percent: -12.09
+            current_count: 48
+            previous_count: 25
+            change_percent: 92
+          - token: fartcoin
+            current_count: 47
+            previous_count: 25
+            change_percent: 88
+          - token: giga
+            current_count: 47
+            previous_count: 35
+            change_percent: 34.29
+          - token: open
+            current_count: 47
+            previous_count: 52
+            change_percent: -9.62
+          - token: crypto
+            current_count: 45
+            previous_count: 19
+            change_percent: 136.84
+          - token: wlfi
+            current_count: 44
+            previous_count: 34
+            change_percent: 29.41
+          - token: xmr
+            current_count: 44
+            previous_count: 33
+            change_percent: 33.33
           - token: tibbir
-            current_count: 80
-            previous_count: 54
-            change_percent: 48.15
-          - token: asp
-            current_count: 78
-            previous_count: 17
-            change_percent: 358.82
-          - token: strc
-            current_count: 78
-            previous_count: 26
-            change_percent: 200
-          - token: vine
-            current_count: 78
-            previous_count: 0
-            change_percent: 100
-          - token: googl
-            current_count: 71
-            previous_count: 133
-            change_percent: -46.62
-          - token: thq
-            current_count: 70
-            previous_count: 96
-            change_percent: -27.08
-          - token: moby
-            current_count: 69
-            previous_count: 29
-            change_percent: 137.93
+            current_count: 43
+            previous_count: 62
+            change_percent: -30.65
 test_6_get_trending_tokens_query:
   input:
     query: What are the trending tokens on Twitter in the last 24 hours?
@@ -1369,48 +2310,51 @@ test_6_get_trending_tokens_query:
     response: '**Trending Crypto Tokens on Twitter (Last 24 hours)**
 
 
-      Based on the provided ELFA API data, here are the top trending tokens, categorized
-      for clarity:
+      Based on the provided ELFA API data, here are the top trending crypto tokens
+      on Twitter in the last 24 hours, categorized by their percentage change:
 
 
-      **Top 5 Gainers (Highest % Increase)**
+      **Top 5 Gainers:**
 
 
-      1. **EBZT**: 100% increase (from 0 to 124 mentions)
+      1. **altt** (+1666.67%) - Current Count: 53, Previous Count: 3
 
-      2. **URANUS**: 246.15% increase (from 26 to 90 mentions)
+      2. **labubu** (+175%) - Current Count: 77, Previous Count: 28
 
-      3. **ASP**: 358.82% increase (from 17 to 78 mentions)
+      3. **epic** (+165.22%) - Current Count: 61, Previous Count: 23
 
-      4. **STRC**: 200% increase (from 26 to 78 mentions)
+      4. **pump** (+74.51%) - Current Count: 89, Previous Count: 51
 
-      5. **SYRUP**: 236.67% increase (from 30 to 101 mentions)
-
-
-      **Top 5 Tokens by Mention Count**
+      5. **mim** (+89.47%) - Current Count: 108, Previous Count: 57
 
 
-      1. **ETH**: 1,579 mentions (21.18% increase from 1,303)
-
-      2. **BTC**: 1,222 mentions (12.52% increase from 1,086)
-
-      3. **PUMP**: 654 mentions (-18.05% from 798)
-
-      4. **SOL**: 473 mentions (-21.3% from 601)
-
-      5. **BONK**: 458 mentions (33.92% increase from 342)
+      **Top 5 by Current Count:**
 
 
-      **Notable Mentions (Significant % Change or High Volume)**
+      1. **eth** - Current Count: 1048, Change: +1.26%
+
+      2. **btc** - Current Count: 783, Change: +33.39%
+
+      3. **link** - Current Count: 647, Change: +108.71%
+
+      4. **sol** - Current Count: 309, Change: +29.29%
+
+      5. **xrp** - Current Count: 265, Change: +40.21%
 
 
-      * **SBET**: 225% increase (from 64 to 208 mentions)
+      **Notable Mentions ( Significant Drop ):**
 
-      * **BMNR**: 279.63% increase (from 54 to 205 mentions)
 
-      * **PEPE**: 44.93% increase (from 138 to 200 mentions)
+      1. **fork** (despite a large percentage increase from a low base, highlighting
+      volatility)
 
-      * **USDT**: 41.41% increase (from 99 to 140 mentions)'
+      2. **spx** (-40.65%) - Current Count: 73, Previous Count: 123
+
+      3. **tao** (-33.63%) - Current Count: 75, Previous Count: 113
+
+      4. **clippy** (-30.56%) - Current Count: 75, Previous Count: 108
+
+      5. **tibbir** (-30.65%) - Current Count: 43, Previous Count: 62'
     data: *id002
 test_7_apidance_tweet_detail:
   input:
@@ -1438,6 +2382,7 @@ test_7_apidance_tweet_detail:
       quote_count: 4
       reply_count: 12
       retweet_count: 15
+      view_count: 13829
       created_at: Sat Apr 19 16:04:32 +0000 2025
       user:
         id_str: '1736748346566459392'
@@ -1446,13 +2391,13 @@ test_7_apidance_tweet_detail:
         location: Agent-native Cloud
         description: Hyperscaling onchain AI • API for GenAI • Mesh of specialized
           agents • ZK L2 for AI payment and interop •  Backed by @AmberGroup_io  https://t.co/RVIdwhpdo1
-        followers_count: 34160
-        friends_count: 268
+        followers_count: 34474
+        friends_count: 275
         created_at: Mon Dec 18 14:01:02 +0000 2023
-        favourites_count: 1473
+        favourites_count: 1553
         verified: true
-        statuses_count: 1412
-        media_count: 298
+        statuses_count: 1466
+        media_count: 316
         profile_image_url_https: https://pbs.twimg.com/profile_images/1856703682324160512/7jrP8hf2_normal.jpg
     - tweet_id: '1913625034478034984'
       user_id: '1736748346566459392'
@@ -1477,6 +2422,7 @@ test_7_apidance_tweet_detail:
       quote_count: 0
       reply_count: 0
       retweet_count: 3
+      view_count: 1157
       created_at: Sat Apr 19 16:05:36 +0000 2025
       user:
         id_str: '1736748346566459392'
@@ -1485,13 +2431,13 @@ test_7_apidance_tweet_detail:
         location: Agent-native Cloud
         description: Hyperscaling onchain AI • API for GenAI • Mesh of specialized
           agents • ZK L2 for AI payment and interop •  Backed by @AmberGroup_io  https://t.co/RVIdwhpdo1
-        followers_count: 34160
-        friends_count: 268
+        followers_count: 34474
+        friends_count: 275
         created_at: Mon Dec 18 14:01:02 +0000 2023
-        favourites_count: 1473
+        favourites_count: 1553
         verified: true
-        statuses_count: 1412
-        media_count: 298
+        statuses_count: 1466
+        media_count: 316
         profile_image_url_https: https://pbs.twimg.com/profile_images/1856703682324160512/7jrP8hf2_normal.jpg
     - tweet_id: '1913635740543520884'
       user_id: '1399243366886486016'
@@ -1513,6 +2459,7 @@ test_7_apidance_tweet_detail:
       quote_count: 0
       reply_count: 0
       retweet_count: 0
+      view_count: 22
       created_at: Sat Apr 19 16:48:08 +0000 2025
       user:
         id_str: '1399243366886486016'
@@ -1521,12 +2468,12 @@ test_7_apidance_tweet_detail:
         location: Atlanta, GA
         description: "\U0001F680 NFT crowdfunding - JumpStart \n\U0001F4A5 PFPS -\
           \ mint is live!\nhttps://t.co/sWo9ACWsVZ…\n#nft #crowdfunding #altcoin"
-        followers_count: 4674
-        friends_count: 1712
+        followers_count: 4794
+        friends_count: 1709
         created_at: Mon May 31 05:57:02 +0000 2021
-        favourites_count: 30568
+        favourites_count: 35769
         verified: true
-        statuses_count: 32248
+        statuses_count: 37392
         media_count: 445
         profile_image_url_https: https://pbs.twimg.com/profile_images/1682152266608828416/l3CRrWM3_normal.jpg
     - tweet_id: '1913655033914065398'
@@ -1546,6 +2493,7 @@ test_7_apidance_tweet_detail:
       quote_count: 0
       reply_count: 0
       retweet_count: 0
+      view_count: 49
       created_at: Sat Apr 19 18:04:48 +0000 2025
       user:
         id_str: '1878762026878504960'
@@ -1553,12 +2501,12 @@ test_7_apidance_tweet_detail:
         screen_name: CloneMgt68974
         location: New York, USA
         description: Talk about 🔥tech 🔥crypto 🔥
-        followers_count: 50
-        friends_count: 259
+        followers_count: 53
+        friends_count: 256
         created_at: Mon Jan 13 11:12:43 +0000 2025
         favourites_count: 0
         verified: false
-        statuses_count: 158
+        statuses_count: 178
         media_count: 0
         profile_image_url_https: https://pbs.twimg.com/profile_images/1878762361579786241/hr0guLXP_normal.jpg
     - tweet_id: '1913655086967820623'
@@ -1578,6 +2526,7 @@ test_7_apidance_tweet_detail:
       quote_count: 0
       reply_count: 0
       retweet_count: 0
+      view_count: 65
       created_at: Sat Apr 19 18:05:01 +0000 2025
       user:
         id_str: '1863707690901356544'
@@ -1586,12 +2535,12 @@ test_7_apidance_tweet_detail:
         location: Binan City, Philippines
         description: Lil Ass Aeon🪽 Went to the doc to get my test levels checked,
           I got 6900T. GME on roids💹🧲
-        followers_count: 2
+        followers_count: 1
         friends_count: 3
         created_at: Mon Dec 02 22:12:08 +0000 2024
-        favourites_count: 346
+        favourites_count: 340
         verified: false
-        statuses_count: 164
+        statuses_count: 195
         media_count: 0
         profile_image_url_https: https://pbs.twimg.com/profile_images/1863707969986125824/uWaIykv8_normal.jpg
-    next_cursor_str: LgAAAPAfHBlG0IDd1Y_1x4416MG0iabkzI417Iew8ajH1Y41nsWwlbTK1Y41JQQRFQ4AAA
+    next_cursor_str: ''
