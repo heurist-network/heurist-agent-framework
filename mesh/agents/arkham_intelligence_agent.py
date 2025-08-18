@@ -104,7 +104,7 @@ class ArkhamIntelligenceAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_address_intelligence",
-                    "description": "Get comprehensive intelligence about a blockchain address including entity identification, labels, and classification. Works across all supported chains including Bitcoin, Ethereum, Solana, and others.",
+                    "description": "Get the entity identification and labels of an address, and whether it's a smart contract. The data is missing for some addresses, which is normal.",
                     "parameters": {
                         "type": "object",
                         "properties": {
