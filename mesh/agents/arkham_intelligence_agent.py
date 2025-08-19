@@ -303,66 +303,39 @@ class ArkhamIntelligenceAgent(MeshAgent):
                 logger.error(f"Error getting token holders: {result['error']}")
                 return result
 
-            # Process the result to clean up the response
-            processed_result = self._process_token_holders_response(result)
-
-            logger.info(f"Successfully retrieved and processed token holders for {address}")
-            return {"status": "success", "data": processed_result}
-
-        except Exception as e:
-            logger.error(f"Exception in get_token_holders: {str(e)}")
-            return {"status": "error", "error": f"Failed to get token holders: {str(e)}"}
-
-    def _process_token_holders_response(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process token holders response to clean up and limit data."""
-        try:
-            processed_data = {}
-            
-            # Copy token information if it exists
-            if "token" in data:
-                processed_data["token"] = data["token"]
-            
-            # Copy total supply if it exists
-            if "totalSupply" in data:
-                processed_data["totalSupply"] = data["totalSupply"]
-            
             # Process addressTopHolders - limit to 20 items
-            if "addressTopHolders" in data and isinstance(data["addressTopHolders"], dict):
-                processed_data["addressTopHolders"] = {}
-                for chain, holders in data["addressTopHolders"].items():
-                    if isinstance(holders, list):
-                        # Limit to first 20 holders
-                        processed_data["addressTopHolders"][chain] = holders[:20]
-            
+            if "addressTopHolders" in result and isinstance(result["addressTopHolders"], dict):
+                for chain_key, holders in result["addressTopHolders"].items():
+                    if isinstance(holders, list) and len(holders) > 20:
+                        result["addressTopHolders"][chain_key] = holders[:20]
+
             # Process entityTopHolders - only keep name and type fields
-            if "entityTopHolders" in data and isinstance(data["entityTopHolders"], dict):
-                processed_data["entityTopHolders"] = {}
-                for chain, entities in data["entityTopHolders"].items():
+            if "entityTopHolders" in result and isinstance(result["entityTopHolders"], dict):
+                for chain_key, entities in result["entityTopHolders"].items():
                     if isinstance(entities, list):
-                        processed_entities = []
+                        cleaned_entities = []
                         for entity_holder in entities:
                             if isinstance(entity_holder, dict) and "entity" in entity_holder:
                                 entity = entity_holder.get("entity", {})
-                                # Only keep name and type fields
                                 cleaned_entity = {
                                     "entity": {
                                         "name": entity.get("name", "Unknown"),
-                                        "type": entity.get("type", "Unknown")
+                                        "type": entity.get("type", "Unknown"),
                                     }
                                 }
                                 # Copy other fields from entity_holder if they exist
                                 for key in ["balance", "usd", "pctOfCap"]:
                                     if key in entity_holder:
                                         cleaned_entity[key] = entity_holder[key]
-                                processed_entities.append(cleaned_entity)
-                        processed_data["entityTopHolders"][chain] = processed_entities
-            
-            return processed_data
-            
+                                cleaned_entities.append(cleaned_entity)
+                        result["entityTopHolders"][chain_key] = cleaned_entities
+
+            logger.info(f"Successfully retrieved and processed token holders for {address}")
+            return {"status": "success", "data": result}
+
         except Exception as e:
-            logger.warning(f"Error processing token holders response: {str(e)}")
-            # Return original data if processing fails
-            return data
+            logger.error(f"Exception in get_token_holders: {str(e)}")
+            return {"status": "error", "error": f"Failed to get token holders: {str(e)}"}
 
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
