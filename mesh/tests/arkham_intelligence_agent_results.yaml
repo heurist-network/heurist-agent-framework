@@ -3,26 +3,27 @@ address_intelligence_nlp:
     query: Analyze address 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea on ethereum
     raw_data_only: false
   output:
-    response: "Here is the analysis of the provided Ethereum address in clean text\
-      \ format:\n\n**Address Analysis: 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea\
-      \ (Ethereum)**\n\n* **Validation:** Valid Ethereum address\n* **Entity Identification:**\n\
-      \t+ **Name:** Heurist\n\t+ **Type:** Miscellaneous (Misc)\n\t+ **ID:** heurist\n\
-      \t+ **Website:** https://www.heurist.ai\n\t+ **Twitter:** https://x.com/heurist_ai\n\
-      * **Label:**\n\t+ **Name:** Heurist (HEU)\n\t+ **Address:** 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea\
-      \ (matches input)\n\t+ **Chain Type:** EVM (Ethereum Virtual Machine)\n* **Address\
-      \ Characteristics:**\n\t+ **Contract:** **Yes**, this address is associated\
-      \ with a smart contract.\n\t+ **User Address:** **No**, this address is not\
-      \ identified as a typical user address.\n\n**Next Steps:**\nIf you'd like to\
-      \ proceed with further analysis, please provide one of the following requests:\n\
-      \n1. **Portfolio Snapshot:** Request a snapshot of this address's token balances\
-      \ and USD values (optional: specify a time, e.g., \"2023-02-15\" for a specific\
-      \ date; otherwise, defaults to 7 days ago from the current UTC day start).\n\
-      2. **Token Holder Distribution:** Ask for the distribution of token holders\
-      \ related to this address (if applicable).\n3. **Change Address or Chain:**\
-      \ Analyze a different address or switch to another supported blockchain by providing\
-      \ the new address and chain (e.g., \"Analyze address 0x... on Binance Smart\
-      \ Chain\").\n4. **Other (please specify):** If you have a different inquiry\
-      \ related to this address or another topic within my scope."
+    response: "**Address Analysis: 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea on Ethereum**\n\
+      \n**Status:** Success\n\n**Summary:**\n\n* **Address:** 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea\n\
+      * **Chain:** Ethereum\n* **Entity Identification:**\n\t+ **Name:** Heurist\n\
+      \t+ **Type:** Miscellaneous (Misc)\n\t+ **Website:** https://www.heurist.ai\n\
+      \t+ **Twitter:** https://x.com/heurist_ai\n* **Label:**\n\t+ **Name:** Heurist\
+      \ (HEU)\n* **Address Type:**\n\t+ **Contract:** Yes\n\t+ **User Address:** No\
+      \ (indicating this address is likely associated with a smart contract rather\
+      \ than an individual user)\n\n**Additional Available Analysis (please respond\
+      \ with the desired action):**\n\n1. **Contract Metadata:** I can provide more\
+      \ detailed metadata about this contract on the Ethereum chain, such as its bytecode,\
+      \ ABI, deployment transaction, etc. if available. **Would you like me to retrieve\
+      \ contract metadata?**\n\n2. **Portfolio Snapshot:** To view token balances\
+      \ and USD values for this address, please specify:\n\t* **Time (optional, YYYY-MM-DD;\
+      \ default is 7 days ago from the current UTC day start):**\n\t* **Proceed with\
+      \ default time (7 days ago) or specify a custom time?**\n\n3. **Token Holder\
+      \ Distribution/Top Holders:** If you're interested in the distribution of token\
+      \ holders or the top holders for the token associated with this address (Heurist\
+      \ - HEU), **please let me know, and I'll guide you through the next steps.**\
+      \ \n\n**Respond with one of the following to proceed:**\n- Retrieve contract\
+      \ metadata\n- Portfolio snapshot with [specify time, if different from default]\n\
+      - Token holder distribution/top holders\n- Other (please specify)"
     data:
       status: success
       data:
@@ -43,7 +44,7 @@ address_intelligence_nlp:
           chainType: evm
         isUserAddress: false
         contract: true
-address_intelligence_solana:
+address_intelligence_base:
   input:
     tool: get_address_intelligence
     tool_arguments:
@@ -63,7 +64,7 @@ address_intelligence_solana:
           chainType: evm
         isUserAddress: false
         contract: false
-contract_metadata_base:
+contract_metadata_ethereum:
   input:
     tool: get_contract_metadata
     tool_arguments:
@@ -127,24 +128,30 @@ portfolio_snapshot_nlp:
     raw_data_only: false
   output:
     response: "**Portfolio Snapshot for 0x7d9d1821d15B9e0b8Ab98A058361233E255E405D**\n\
-      \n**Snapshot Time:** *Defaulted to 7 days ago from the current UTC day start\
-      \ (no specific time provided)*\n\n**Chain Distribution:**\n\n* **Arbitrum One:**\
-      \ \n\t+ **Ethereum (ETH):** 0.000820892746828 ETH ($3.20 USD @ $3901.17/ETH)\n\
-      \t+ **USDT0:** 0.284783 USDT0 ($0.28 USD @ $0.999027/USDT0)\n* **Base:**\n\t\
-      + **Bridged USDC (USDBC):** 0.161415 USDBC ($0.16 USD @ $1.001/USDBC)\n\t+ **Ethereum\
-      \ (ETH):** 0.00079485499032786 ETH ($3.10 USD @ $3901.17/ETH)\n\t+ **L2 Standard\
-      \ Bridged WETH (WETH):** 0.000825963921091042 WETH ($3.22 USD @ $3903.5/WETH)\n\
-      \t+ **USDC:** 93.02012 USDC ($93.00 USD @ $0.999806/USDC)\n* **Ethereum:**\n\
-      \t+ **Ankr Network (ANKR):** 344,827 ANKR ($5,566.91 USD @ $0.01614407/ANKR)\n\
-      \t+ **Ethereum (ETH):** 0.1490420791012679 ETH ($581.44 USD @ $3901.17/ETH)\n\
-      \t+ **Fluence (FLT):** 5,000 FLT ($179.27 USD @ $0.03585449/FLT)\n\t+ **USDC:**\
-      \ 0.259717 USDC ($0.26 USD @ $0.999806/USDC)\n\t+ **WETH:** 0.015684 WETH ($61.20\
-      \ USD @ $3901.86/WETH)\n* **Optimism:**\n\t+ **Ethereum (ETH):** 0.07949063456071855\
-      \ ETH ($310.11 USD @ $3901.17/ETH)\n\n**Chain Balance Summary (USD):**\n\n*\
-      \ Arbitrum One: $3.48 USD\n* Base: $96.49 USD\n* Ethereum: $6,328.08 USD\n*\
-      \ Optimism: $310.11 USD\n* **Total Portfolio Value:** $6,738.06 USD\n\n**Inactive\
-      \ Chains (No Balance):** Avalanche, Blast, BSC, Flare, Linea, Manta, Mantle,\
-      \ Polygon, Sonic"
+      \n**Default Time Frame: 7 days ago from current UTC day start (no specific time\
+      \ provided)**\n\n**Multichain Portfolio Overview:**\n\nThe specified address\
+      \ has assets across **5** blockchain networks, with a total USD value distributed\
+      \ as follows:\n\n1. **Base**: $96.99 (USD)\n2. **Ethereum**: $6,540.19 (USD)\n\
+      3. **Arbitrum One**: $3.79 (USD)\n4. **Optimism**: $339.81 (USD)\n\n**Detailed\
+      \ Breakdown by Chain:**\n\n### **Arbitrum One**\n- **Ethereum (ETH)**: 0.000820892746828\
+      \ ETH, valued at $3.51 (USD)\n- **USDT0**: 0.284783 USDT0, valued at $0.28 (USD)\n\
+      - **Total (Arbitrum One)**: $3.79 (USD)\n\n### **Base**\n- **Bridged USDC (Base)\
+      \ (USDBC)**: 0.161415 USDBC, valued at $0.16 (USD)\n- **Ethereum (ETH)**: 0.00079485499032786\
+      \ ETH, valued at $3.40 (USD)\n- **L2 Standard Bridged WETH (Base) (WETH)**:\
+      \ 0.000825963921091042 WETH, valued at $3.53 (USD)\n- **USDC**: 93.02012 USDC,\
+      \ valued at $93.00 (USD)\n- **Total (Base)**: $96.99 (USD)\n\n### **Ethereum**\n\
+      - **Ankr Network (ANKR)**: 344,827 ANKR, valued at $5,741.15 (USD)\n- **Ethereum\
+      \ (ETH)**: 0.1490420791012679 ETH, valued at $637.13 (USD)\n- **Fluence (FLT)**:\
+      \ 5,000 FLT, valued at $191.91 (USD)\n- **USDC**: 0.259717 USDC, valued at $0.26\
+      \ (USD)\n- **WETH**: 0.015684 WETH, valued at $67.04 (USD)\n- **Total (Ethereum)**:\
+      \ $6,540.19 (USD)\n\n### **Optimism**\n- **Ethereum (ETH)**: 0.07949063456071855\
+      \ ETH, valued at $339.81 (USD)\n- **Total (Optimism)**: $339.81 (USD)\n\n**Other\
+      \ Chains (No Balances):** Avalanche, Blast, BSC, Flare, Linea, Manta, Mantle,\
+      \ Polygon, Sonic\n\n**Note:** \n- The USD values are based on the prices at\
+      \ the time of the snapshot (7 days ago from the current UTC day start).\n- Prices\
+      \ may have fluctuated since then, affecting the current USD value of the holdings.\n\
+      - This snapshot only includes data from supported chains where the address has\
+      \ a balance."
     data:
       status: success
       data:
@@ -154,15 +161,15 @@ portfolio_snapshot_nlp:
             name: Ethereum
             symbol: eth
             balance: 0.000820892746828
-            price: 3901.17
-            usd: 3.202442157142989
+            price: 4274.81
+            usd: 3.509160523067803
           usdt0:
             id: usdt0
             name: USDT0
             symbol: usdt0
             balance: 0.284783
-            price: 0.999027
-            usd: 0.284505906141
+            price: 1
+            usd: 0.284783
         avalanche: {}
         base:
           bridged-usd-coin-base:
@@ -170,22 +177,22 @@ portfolio_snapshot_nlp:
             name: Bridged USDC (Base)
             symbol: usdbc
             balance: 0.161415
-            price: 1.001
-            usd: 0.16157641499999997
+            price: 1
+            usd: 0.161415
           ethereum:
             id: ethereum
             name: Ethereum
             symbol: eth
             balance: 0.00079485499032786
-            price: 3901.17
-            usd: 3.1008644426173375
+            price: 4274.81
+            usd: 3.3978540612034394
           l2-standard-bridged-weth-base:
             id: l2-standard-bridged-weth-base
             name: L2 Standard Bridged WETH (Base)
             symbol: weth
             balance: 0.000825963921091042
-            price: 3903.5
-            usd: 3.2241501659788825
+            price: 4276.02
+            usd: 3.5318382458637174
           usd-coin:
             id: usd-coin
             name: USDC
@@ -201,22 +208,22 @@ portfolio_snapshot_nlp:
             name: Ankr Network
             symbol: ankr
             balance: 344827
-            price: 0.01614407
-            usd: 5566.91122589
+            price: 0.01664936
+            usd: 5741.14886072
           ethereum:
             id: ethereum
             name: Ethereum
             symbol: eth
             balance: 0.1490420791012679
-            price: 3901.17
-            usd: 581.4384877274933
+            price: 4274.81
+            usd: 637.1265701628911
           fluence-2:
             id: fluence-2
             name: Fluence
             symbol: flt
             balance: 5000
-            price: 0.03585449
-            usd: 179.27245000000002
+            price: 0.03838273
+            usd: 191.91365
           usd-coin:
             id: usd-coin
             name: USDC
@@ -229,8 +236,8 @@ portfolio_snapshot_nlp:
             name: WETH
             symbol: weth
             balance: 0.015684
-            price: 3901.86
-            usd: 61.19677224
+            price: 4274.64
+            usd: 67.04345376
         flare: {}
         linea: {}
         manta: {}
@@ -241,17 +248,17 @@ portfolio_snapshot_nlp:
             name: Ethereum
             symbol: eth
             balance: 0.07949063456071855
-            price: 3901.17
-            usd: 310.10647882923837
+            price: 4274.81
+            usd: 339.80735952650525
         polygon: {}
         sonic: {}
-token_holders_solana:
+token_holders_usdc_ethereum:
   input:
     tool: get_token_holders
     tool_arguments:
       chain: ethereum
       address: '0xdd3b11ef34cd511a2da159034a05fcb94d806686'
-      groupByEntity: false
+      groupByEntity: true
   output:
     response: ''
     data:
@@ -278,7 +285,7 @@ token_holders_solana:
               isUserAddress: false
               contract: true
             balance: 141654008699085.03
-            usd: 145903628.9600576
+            usd: 141265451.75322342
             pctOfCap: 0.3367182692697355
           - address:
               address: '0x7130E2563974219f3DD152575C7468D7c2ad0d96'
@@ -289,9 +296,9 @@ token_holders_solana:
                 chainType: evm
               isUserAddress: false
               contract: true
-            balance: 15269113384450.572
-            usd: 15727186.785984091
-            pctOfCap: 0.03629540370451062
+            balance: 15401365719890.94
+            usd: 15359119.77372128
+            pctOfCap: 0.03660977375238522
           - address:
               address: '0x2b30C60D32B1CCeeECABfC59579F214a94DEdFca'
               chain: ethereum
@@ -302,7 +309,7 @@ token_holders_solana:
               isUserAddress: false
               contract: true
             balance: 13507555315819.389
-            usd: 13912781.975293973
+            usd: 13470504.091588099
             pctOfCap: 0.03210809697358955
           - address:
               address: '0x9fC4590E76495AB85F7eD343F1d5742066FA6d46'
@@ -310,7 +317,7 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 5000000000000
-            usd: 5150000.000000001
+            usd: 4986285
             pctOfCap: 0.011885236159642492
           - address:
               address: '0xee622C0448cE4582c9c5597a8b71A8feB7021A33'
@@ -318,7 +325,7 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 4107694248715.4316
-            usd: 4230925.076176895
+            usd: 4096426.843391205
             pctOfCap: 0.009764183243517629
           - address:
               address: '0x1920dbCFDF0fd291A71BeC0b66e20Ff8674b01A7'
@@ -338,7 +345,7 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 4009387084036.388
-            usd: 4129668.6965574804
+            usd: 3998389.3352648765
             pctOfCap: 0.00953050246983857
           - address:
               address: '0x2f5e39835218aA520fa8E82862BB6c75D0ECAE00'
@@ -346,7 +353,7 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 3596113027765.7407
-            usd: 3703996.418598713
+            usd: 3586248.889730579
             pctOfCap: 0.008548130518352565
           - address:
               address: '0xDC6c6676ab6cFeE009702eA64f6bc90d4157CC2A'
@@ -354,7 +361,7 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 3500000000069
-            usd: 3605000.00007107
+            usd: 3490399.500068811
             pctOfCap: 0.00831966531191376
           - address:
               address: '0x3154Cf16ccdb4C6d922629664174b904d80F2C35'
@@ -374,9 +381,9 @@ token_holders_solana:
                 chainType: evm
               isUserAddress: false
               contract: true
-            balance: 3381569269157.524
-            usd: 3483016.34723225
-            pctOfCap: 0.008038149870825368
+            balance: 3384157511096.9116
+            usd: 3374874.767043973
+            pctOfCap: 0.00804430224416295
           - address:
               address: '0xF12533a96712133d9Bb97C24de5BCf52F48851BD'
               chain: ethereum
@@ -397,16 +404,16 @@ token_holders_solana:
                 chainType: evm
               isUserAddress: false
               contract: true
-            balance: 3210859241725.6646
-            usd: 3307185.0189774344
-            pctOfCap: 0.007632364072656028
+            balance: 3326233584025.905
+            usd: 3317109.725304921
+            pctOfCap: 0.007906614333656385
           - address:
               address: '0xFfDd25D40d7dd2D73D7F2385F454188CC4edC714'
               chain: ethereum
               isUserAddress: false
               contract: false
             balance: 3111559468669.7183
-            usd: 3204906.2527298103
+            usd: 3103024.4610471576
             pctOfCap: 0.007396323821982263
           - address:
               address: '0x88C3d8eb33B8B652b6fADF5603e371D367Df5201'
@@ -414,7 +421,7 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 2620988952000.84
-            usd: 2699618.620560866
+            usd: 2613799.5793055017
             pctOfCap: 0.0062302145332687724
           - address:
               address: '0x6Bf609583Cd3cFA2393C535CA8C3F49fd23E00B3'
@@ -426,7 +433,7 @@ token_holders_solana:
               isUserAddress: false
               contract: true
             balance: 2535388054700.5625
-            usd: 2611449.6963415793
+            usd: 2528433.4852665183
             pctOfCap: 0.006026737157290552
           - address:
               address: '0x933522fbb4c067652730BBC8E25D7820F4D72a60'
@@ -434,23 +441,46 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 2500000084207
-            usd: 2575000.0867332104
+            usd: 2493142.58397602
             pctOfCap: 0.005942618279985263
+          - address:
+              address: '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb'
+              chain: ethereum
+              arkhamEntity:
+                name: Morpho
+                note: ''
+                id: morpho
+                type: lending-decentralized
+                service: null
+                addresses: null
+                website: https://morpho.org
+                twitter: https://twitter.com/MorphoLabs
+                crunchbase: https://www.crunchbase.com/organization/morpho-labs
+                linkedin: https://www.linkedin.com/company/morpho-labs
+              arkhamLabel:
+                name: Morpho Blue
+                address: '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb'
+                chainType: evm
+              isUserAddress: false
+              contract: true
+            balance: 2441265772867.176
+            usd: 2434569.380852201
+            pctOfCap: 0.005803004047795706
           - address:
               address: '0x8eF4fb956d0cb06CA9E3dB76040F08154E8d0122'
               chain: ethereum
               isUserAddress: false
               contract: false
-            balance: 2200000000000.232
-            usd: 2266000.000000239
-            pctOfCap: 0.005229503910243248
+            balance: 2200219025330.8906
+            usd: 2194183.824544408
+            pctOfCap: 0.005230024543799212
           - address:
               address: '0xB5af0b92Bac0f5E05027f7ff531cAc96a62cA4E1'
               chain: ethereum
               isUserAddress: false
               contract: false
             balance: 2179999900000
-            usd: 2245399.8970000003
+            usd: 2174020.1602743003
             pctOfCap: 0.005181962727899403
           - address:
               address: '0x8e0EDfD6d15f858AdBb41677B82aB64797D5AfC0'
@@ -470,16 +500,16 @@ token_holders_solana:
                 chainType: evm
               isUserAddress: false
               contract: true
-            balance: 2116514513059.2961
-            usd: 2180009.9484510752
-            pctOfCap: 0.005031054964604094
+            balance: 2118804275831.0703
+            usd: 2112992.3957024654
+            pctOfCap: 0.0050364978388625125
           - address:
               address: '0x6A162cfBc4eb7E918F095Ff47F9906707c8844C5'
               chain: ethereum
               isUserAddress: false
               contract: false
             balance: 2114728552279
-            usd: 2178170.4088473707
+            usd: 2108927.851860099
             pctOfCap: 0.0050268096514749575
           - address:
               address: '0xD6216fC19DB775Df9774a6E33526131dA7D19a2c'
@@ -502,17 +532,759 @@ token_holders_solana:
               isUserAddress: false
               contract: false
             balance: 2078330497220.4219
-            usd: 2140680.412137035
+            usd: 2072629.6366665463
             pctOfCap: 0.004940289755450383
+        entityTopHolders:
+          ethereum:
+          - entity:
+              name: '@Ars0nic'
+              type: individual
+            balance: 1000420000000.0001
+            usd: 997675.8479400002
+            pctOfCap: 0.0023780455917659085
+          - entity:
+              name: Base
+              type: smart-contract-platform
+            balance: 3384157511096.9116
+            usd: 3374874.767043973
+            pctOfCap: 0.00804430224416295
+          - entity:
+              name: '@bosscat1313'
+              type: individual
+            balance: 4009387084036.388
+            usd: 3998389.3352648765
+            pctOfCap: 0.00953050246983857
+          - entity:
+              name: '@Cashtronaut_eth'
+              type: individual
+            balance: 1000066951668.5491
+            usd: 997323.7680201223
+            pctOfCap: 0.002377206379206896
+          - entity:
+              name: Gate
+              type: cex
+            balance: 2831837958207.9614
+            usd: 2824070.2266885974
+            pctOfCap: 0.006731412579828286
+          - entity:
+              name: '@JpThaDudeAbides'
+              type: individual
+            balance: 1030879045204.1587
+            usd: 1028051.3439831637
+            pctOfCap: 0.0024504481808556387
+          - entity:
+              name: KuCoin
+              type: cex
+            balance: 4826142566123.429
+            usd: 4812904.457064553
+            pctOfCap: 0.011471968827695994
+          - entity:
+              name: '@mooncat2878'
+              type: individual
+            balance: 1970000000000
+            usd: 1964596.2900000003
+            pctOfCap: 0.004682783046899142
+          - entity:
+              name: Morpho
+              type: lending-decentralized
+            balance: 2441265772867.176
+            usd: 2434569.380852201
+            pctOfCap: 0.005803004047795706
+          - entity:
+              name: '@NVCOINTOGL'
+              type: individual
+            balance: 1251203961701.5657
+            usd: 1247771.909234618
+            pctOfCap: 0.0029741709137406777
+          - entity:
+              name: '@PatronReRenaiss'
+              type: individual
+            balance: 886871782122.013
+            usd: 884439.0928236524
+            pctOfCap: 0.002108136114768625
+          - entity:
+              name: '@rektmando'
+              type: individual
+            balance: 1481205774889
+            usd: 1477142.8274484796
+            pctOfCap: 0.003520896087116404
+          - entity:
+              name: Uniswap
+              type: dex
+            balance: 3326233584025.905
+            usd: 3317109.725304921
+            pctOfCap: 0.007906614333656385
+          - entity:
+              name: Wasabi Protocol
+              type: derivatives
+            balance: 2118804275831.0703
+            usd: 2112992.3957024654
+            pctOfCap: 0.0050364978388625125
+token_holders_usdc_base:
+  input:
+    tool: get_token_holders
+    tool_arguments:
+      chain: base
+      address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+      groupByEntity: true
+  output:
+    response: ''
+    data:
+      status: success
+      data:
+        token:
+          identifier:
+            chain: base
+            address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+            pricingID: usd-coin
+          name: USD Coin
+          symbol: usdc
+        totalSupply:
+          base: 3790828335.19075
+        addressTopHolders:
+          base:
           - address:
-              address: '0x31Bc4889E843FD189ed76932F2B36E024B1867E0'
-              chain: ethereum
+              address: '0x0B0A5886664376F59C351ba3f598C8A8B4D0A6f3'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x0B0A5886664376F59C351ba3f598C8A8B4D0A6f3'
+                chainType: evm
               isUserAddress: false
               contract: false
-            balance: 1992251021890
-            usd: 2052018.5525467
-            pctOfCap: 0.004735674776890347
-        entityTopHolders: {}
+            balance: 101000000.078868
+            usd: 101000000.078868
+            pctOfCap: 0.001477038724583976
+          - address:
+              address: '0xadBbE373B5b5F72C59c0311cFfBded51f0C5F434'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0xadBbE373B5b5F72C59c0311cFfBded51f0C5F434'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x21bD501F86A0B5cE0907651Df3368DA905B300A9'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x21bD501F86A0B5cE0907651Df3368DA905B300A9'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x336307F2d8390035Ba926a61a86b45CA9dC91E57'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x336307F2d8390035Ba926a61a86b45CA9dC91E57'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0xd5c41FD4a31Eaaf5559FfCC60Ec051fcB8eCC375'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0xd5c41FD4a31Eaaf5559FfCC60Ec051fcB8eCC375'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0xee81B5Afc73Cf528778E0ED98622e434E5eFADb4'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0xee81B5Afc73Cf528778E0ED98622e434E5eFADb4'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x122fDD9fEcbc82F7d4237C0549a5057E31c8EF8D'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x122fDD9fEcbc82F7d4237C0549a5057E31c8EF8D'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x7c41FDceD2Ea646eD85665D1a9b28e6632b61c41'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x7c41FDceD2Ea646eD85665D1a9b28e6632b61c41'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x9b4Fc9E22b46487F0810eF5dFa230b9f139E5179'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x9b4Fc9E22b46487F0810eF5dFa230b9f139E5179'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x7C310a03f4CFa19F7f3d7F36DD3E05828629fa78'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x7C310a03f4CFa19F7f3d7F36DD3E05828629fa78'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x27724B0d4fb98A89a092E6a4ADbC09154c182637'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x27724B0d4fb98A89a092E6a4ADbC09154c182637'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x607094ed3a8361bB5e94dD21bcBef2997b687478'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x607094ed3a8361bB5e94dD21bcBef2997b687478'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x67857eE12929E74082f1cAe64eF4221830c39113'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x67857eE12929E74082f1cAe64eF4221830c39113'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x49866A9CFE9129FbB0B93dCDb4b5eb758Ee3F9Be'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x49866A9CFE9129FbB0B93dCDb4b5eb758Ee3F9Be'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x57a7560D0eC28065762203c0d633943298eaC7C0'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x57a7560D0eC28065762203c0d633943298eaC7C0'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x1b4C15b991543a6082213a88276e7a83c9985676'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x1b4C15b991543a6082213a88276e7a83c9985676'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x95f90ce2e3abaeD29eEEbDb42E1FdB146e0F848a'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x95f90ce2e3abaeD29eEEbDb42E1FdB146e0F848a'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0xa2908F1758d1cC3990F4A2dA8DEA0aA2ecf1b913'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0xa2908F1758d1cC3990F4A2dA8DEA0aA2ecf1b913'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0xD451e3919950963e9C1CA2F78A987DBD7937C0FB'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0xD451e3919950963e9C1CA2F78A987DBD7937C0FB'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+          - address:
+              address: '0x8196f70b2c17Ba58d8Ef56AD62087Ee8231be33a'
+              chain: base
+              arkhamEntity:
+                name: Coinbase
+                note: ''
+                id: coinbase
+                type: cex
+                service: null
+                addresses: null
+                website: https://coinbase.com
+                twitter: https://twitter.com/coinbase
+                crunchbase: https://www.crunchbase.com/organization/coinbase
+                linkedin: https://www.linkedin.com/company/coinbase
+              arkhamLabel:
+                name: Cold Wallet
+                address: '0x8196f70b2c17Ba58d8Ef56AD62087Ee8231be33a'
+                chainType: evm
+              isUserAddress: false
+              contract: false
+            balance: 101000000
+            usd: 101000000
+            pctOfCap: 0.0014770387234305988
+        entityTopHolders:
+          base:
+          - entity:
+              name: '@0xWives'
+              type: individual
+            balance: 2091258.07474
+            usd: 2091258.07474
+            pctOfCap: 3.0582862941365364e-05
+          - entity:
+              name: Aerodrome Finance
+              type: dex
+            balance: 126423419.98247
+            usd: 126423419.98246996
+            pctOfCap: 0.0018488345233924545
+          - entity:
+              name: Alien Base
+              type: dex
+            balance: 2102045.382809
+            usd: 2102045.382809
+            pctOfCap: 3.074061810710286e-05
+          - entity:
+              name: Binance
+              type: cex
+            balance: 50912380.857592
+            usd: 50912380.857592
+            pctOfCap: 0.0007445500794921796
+          - entity:
+              name: Bitget
+              type: cex
+            balance: 6479655.530279
+            usd: 6479655.530279
+            pctOfCap: 9.475942705656747e-05
+          - entity:
+              name: Bybit
+              type: cex
+            balance: 13074973.888345
+            usd: 13074973.888345
+            pctOfCap: 0.00019121032416761894
+          - entity:
+              name: Ceffu
+              type: custodian
+            balance: 7579137.374622
+            usd: 7579137.374622
+            pctOfCap: 0.00011083840982689921
+          - entity:
+              name: Circle
+              type: stablecoin
+            balance: 12855519.329412
+            usd: 12855519.329412
+            pctOfCap: 0.00018800098870645632
+          - entity:
+              name: Coinbase
+              type: cex
+            balance: 2091275513.464964
+            usd: 2091275513.464964
+            pctOfCap: 0.0305831179678214
+          - entity:
+              name: Compound
+              type: lending-decentralized
+            balance: 2326031.396703
+            usd: 2326031.396703
+            pctOfCap: 3.401622222619497e-05
+          - entity:
+              name: Crypto.com
+              type: cex
+            balance: 7950741.630923
+            usd: 7950741.630923
+            pctOfCap: 0.00011627280464222798
+          - entity:
+              name: Curve.fi
+              type: dex
+            balance: 1894047.831098
+            usd: 1894047.831098
+            pctOfCap: 2.7698831589717668e-05
+          - entity:
+              name: Echo.xyz
+              type: misc
+            balance: 1925331.85
+            usd: 1925331.85
+            pctOfCap: 2.8156333642616565e-05
+          - entity:
+              name: Extra Finance
+              type: yield
+            balance: 6986820.498611
+            usd: 6986820.498611
+            pctOfCap: 0.00010217628148620923
+          - entity:
+              name: Fluid (Instadapp)
+              type: misc
+            balance: 4874701.19919
+            usd: 4874701.19919
+            pctOfCap: 7.128834095403176e-05
+          - entity:
+              name: Gains Network
+              type: derivatives
+            balance: 2816625.406491
+            usd: 2816625.406491
+            pctOfCap: 4.1190740542432264e-05
+          - entity:
+              name: Kraken
+              type: cex
+            balance: 5186699.049183
+            usd: 5186699.049183
+            pctOfCap: 7.585104299429663e-05
+          - entity:
+              name: KuCoin
+              type: cex
+            balance: 3891113.230509
+            usd: 3891113.2305090004
+            pctOfCap: 5.690420711598938e-05
+          - entity:
+              name: Moonwell
+              type: lending-decentralized
+            balance: 6405225.096791
+            usd: 6405225.096791
+            pctOfCap: 9.367094554702784e-05
+          - entity:
+              name: Morpho
+              type: lending-decentralized
+            balance: 81694892.88339
+            usd: 81694892.88339
+            pctOfCap: 0.0011947180227255632
+          - entity:
+              name: OKX
+              type: cex
+            balance: 5471031.858096
+            usd: 5471031.858096
+            pctOfCap: 8.000916744089359e-05
+          - entity:
+              name: Orderly Network
+              type: misc
+            balance: 5479750.261775
+            usd: 5479750.261775
+            pctOfCap: 8.013666664723402e-05
+          - entity:
+              name: PancakeSwap
+              type: dex
+            balance: 6074779.098462
+            usd: 6074779.098462
+            pctOfCap: 8.883845509619007e-05
+          - entity:
+              name: Spark
+              type: lending-decentralized
+            balance: 19264211.657043
+            usd: 19264211.657043
+            pctOfCap: 0.0002817226395427292
+          - entity:
+              name: Stargate
+              type: bridge
+            balance: 7423459.335968
+            usd: 7423459.335968
+            pctOfCap: 0.00010856175149541717
+          - entity:
+              name: Symm.io
+              type: derivatives
+            balance: 2489109.763005
+            usd: 2489109.763005
+            pctOfCap: 3.64011040279955e-05
+          - entity:
+              name: SynFutures
+              type: derivatives
+            balance: 1729646.379836
+            usd: 1729646.379836
+            pctOfCap: 2.529460080058735e-05
+          - entity:
+              name: Uniswap
+              type: dex
+            balance: 59350874.895028
+            usd: 59350874.895027995
+            pctOfCap: 0.0008679558464301125
+          - entity:
+              name: Wintermute
+              type: fund
+            balance: 8236226.520885
+            usd: 8236226.520885
+            pctOfCap: 0.00012044777729003191
+          - entity:
+              name: Yield Protocol
+              type: yield
+            balance: 1442064.683227
+            usd: 1442064.683227
+            pctOfCap: 2.1088964146712465e-05
 token_holders_solana_nlp:
   input:
     query: Show me the top holders of token 0xdAC17F958D2ee523a2206206994597C13D831ec7
@@ -520,10 +1292,9 @@ token_holders_solana_nlp:
     raw_data_only: false
   output:
     response: The token with the contract address 0xdAC17F958D2ee523a2206206994597C13D831ec7
-      is not on the Solana blockchain; it is actually a token on the Ethereum blockchain
-      (specifically Tether, USDT). Therefore, I cannot provide information about its
-      holders on Solana. If you would like to know about the top holders on Ethereum
-      or another supported chain, please let me know.
+      is a Tether (USDT) token on the Ethereum blockchain, not on Solana. Therefore,
+      I cannot provide information about its top holders on Solana. If you have another
+      token or address in mind, please let me know!
     data: {}
 portfolio_with_timestamp:
   input:
