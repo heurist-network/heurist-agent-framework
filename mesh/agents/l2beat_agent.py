@@ -1,11 +1,13 @@
 import asyncio
 import logging
 import os
+import time
 from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 from firecrawl import FirecrawlApp
 
+from core.llm import call_llm_async
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -38,7 +40,7 @@ class L2BeatAgent(MeshAgent):
         self.metadata.update(
             {
                 "name": "L2Beat Agent",
-                "version": "1.1.0",
+                "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Specialized agent for analyzing Layer 2 scaling solutions data from L2Beat. Provides comprehensive insights into L2 TVL, activity metrics, and transaction costs across different chains and categories (Rollups, Validiums & Optimiums, Others, Not Reviewed). Note: Cost data for Validiums & Optimiums is included in the 'Others' category.",
@@ -56,34 +58,126 @@ class L2BeatAgent(MeshAgent):
                     "Compare costs across different L2 categories",
                 ],
                 "credits": 2,
+                "large_model_id": "google/gemini-2.5-flash",
+                "small_model_id": "google/gemini-2.5-flash",
             }
         )
 
     def get_system_prompt(self) -> str:
-        return """You are an expert Layer 2 blockchain analyst specializing in L2Beat data interpretation.
+        return """You are an expert Layer 2 blockchain data analyst that extracts and interprets L2Beat metrics.
 
-        Analyze Layer 2 scaling data focusing on:
-        1. **Summary Data**: TVL (Total Value Locked), market share, chain types, security models across different categories (Rollups, Validiums & Optimiums, Others, Not Reviewed)
-        2. **Activity Metrics**: Transaction counts, active addresses, TPS (transactions per second) across all L2 categories
-        3. **Cost Analysis**: Transaction costs in USD for different operations across various L2 types
+        CRITICAL: Strip out ALL website artifacts and preserve ONLY L2 metrics data:
+        - Remove ALL logo URLs, image links (e.g., ![logo], https://l2beat.com/static/icons/)
+        - Remove navigation menus, headers, footers, social links, cookie notices
+        - Remove "View details", "Details", job postings, donation links
+        - Remove duplicate section headers and repeated explanations
+        - Remove all HTML artifacts and excessive whitespace
 
-        For all data:
-        - Present numbers with proper formatting (e.g., $1.5B for billions, 1.2M for millions)
-        - Calculate percentages and changes where relevant
-        - Compare metrics across different L2s when multiple are present
-        - Use **bold** for chain names and important metrics
-        - Format data in tables when comparing multiple chains
-        - Clearly identify the category of L2 being analyzed (Rollup, Validium, Optimium, etc.)
-        - Focus on actionable insights
+        CAPTURE ESSENTIAL L2 DATA:
+        - Chain/Project names (without logo references)
+        - TVL values and market share percentages
+        - Transaction metrics (UOPS, TPS, counts)
+        - Cost data in USD (per operation, calldata, blobs, compute, overhead)
+        - Stage information and security status
+        - Type classifications (Rollup, Validium, Optimium, etc.)
+        - DA Layer information
+        - Percentage changes and growth metrics
 
-        When analyzing:
+        FORMAT YOUR ANALYSIS:
+        - Use clean markdown tables for data comparison
+        - **Bold** chain names and key metrics
+        - Present numbers properly formatted ($1.5B for billions, 1.2M for millions)
+        - Group data by categories when relevant
+        - Calculate and highlight important ratios and trends
+
+        PROVIDE ACTIONABLE INSIGHTS:
         - Identify top performers and underperformers in each category
         - Note significant trends and differences between L2 types
-        - Provide context for the numbers based on L2 architecture type
         - Highlight cost-effectiveness and efficiency metrics
+        - Compare metrics across different L2s when multiple are present
         - Explain differences between Rollups, Validiums, Optimiums when relevant
         
-        Return clear, concise analysis that helps users make informed decisions about L2 usage."""
+        Focus on delivering clean, data-focused analysis without website clutter. Extract only the blockchain metrics that matter for informed L2 decisions."""
+
+    async def _process_with_llm(self, raw_content: str, context_info: Dict[str, str]) -> str:
+        """Process raw scraped content with LLM and track performance"""
+        start_time = time.time()
+
+        try:
+            messages = [
+                {"role": "system", "content": self.get_system_prompt()},
+                {
+                    "role": "user",
+                    "content": f"""Extract and format the L2Beat data from this {context_info.get("data_type", "page")} content.
+
+                Context:
+                - Data Type: {context_info.get("data_type", "unknown")}
+                - Category: {context_info.get("category", "unknown")}
+                - Source URL: {context_info.get("url", "unknown")}
+
+                Raw Content:
+                {raw_content[:50000]}""",  # Limit to avoid token limits
+                },
+            ]
+
+            response = await call_llm_async(
+                base_url=self.heurist_base_url,
+                api_key=self.heurist_api_key,
+                model_id=self.metadata["small_model_id"],
+                messages=messages,
+                max_tokens=25000,
+                temperature=0.1,
+            )
+
+            processed_content = response if isinstance(response, str) else response.get("content", raw_content)
+            processing_time = time.time() - start_time
+            logger.info(
+                f"LLM processing completed in {processing_time:.2f}s for {context_info.get('data_type', 'content')}"
+            )
+
+            return processed_content
+
+        except Exception as e:
+            processing_time = time.time() - start_time
+            logger.error(f"LLM processing failed after {processing_time:.2f}s: {str(e)}")
+            logger.warning("Falling back to raw content due to LLM processing failure")
+            return raw_content
+
+    async def _scrape_and_process(self, url: str, context_info: Dict[str, str]) -> Dict[str, Any]:
+        """Common method to scrape URL and process with LLM"""
+        try:
+            # Increase timeout for larger pages
+            category = context_info.get("category", "rollups")
+            wait_time = 15000 if category in ["others", "notReviewed"] else 10000
+            timeout_time = 30000 if category in ["others", "notReviewed"] else 20000
+
+            scrape_result = await asyncio.get_event_loop().run_in_executor(
+                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=timeout_time)
+            )
+
+            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
+
+            if not markdown_content:
+                return {"status": "error", "error": f"Failed to scrape {context_info['data_type']} page"}
+
+            # Process with LLM to clean and format the content
+            processed_content = await self._process_with_llm(markdown_content, context_info)
+
+            logger.info(f"Successfully processed {context_info['data_type']} data")
+
+            return {
+                "status": "success",
+                "data": {
+                    "content": processed_content,
+                    "source": url,
+                    "data_type": context_info.get("data_type", "L2 Data"),
+                    "category": context_info.get("category", "unknown"),
+                },
+            }
+
+        except Exception as e:
+            logger.error(f"Exception in _scrape_and_process for {context_info['data_type']}: {str(e)}")
+            return {"status": "error", "error": f"Failed to get {context_info['data_type']} data: {str(e)}"}
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -181,45 +275,24 @@ class L2BeatAgent(MeshAgent):
         """
         logger.info(f"Fetching L2Beat summary data for category: {category}")
 
-        try:
-            url = self._build_url("summary", category)
-            logger.info(f"Scraping URL: {url}")
+        url = self._build_url("summary", category)
+        logger.info(f"Scraping URL: {url}")
 
-            # Increase timeout for larger pages
-            wait_time = 15000 if category in ["others", "notReviewed"] else 10000
-            timeout_time = 30000 if category in ["others", "notReviewed"] else 20000
+        # Determine readable category name for response
+        category_names = {
+            "rollups": "Rollups",
+            "validiumsAndOptimiums": "Validiums & Optimiums",
+            "others": "Other L2s",
+            "notReviewed": "Not Reviewed L2s",
+        }
 
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=timeout_time)
-            )
+        context_info = {
+            "data_type": f"L2 Summary (TVL & Market Share) - {category_names.get(category, 'Rollups')}",
+            "category": category,
+            "url": url,
+        }
 
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-
-            if not markdown_content:
-                return {"status": "error", "error": f"Failed to scrape L2Beat summary data for category: {category}"}
-
-            # Determine readable category name for response
-            category_names = {
-                "rollups": "Rollups",
-                "validiumsAndOptimiums": "Validiums & Optimiums",
-                "others": "Other L2s",
-                "notReviewed": "Not Reviewed L2s",
-            }
-
-            logger.info(f"Successfully fetched L2Beat summary data for {category}")
-            return {
-                "status": "success",
-                "data": {
-                    "content": markdown_content,
-                    "source": url,
-                    "data_type": f"L2 Summary (TVL & Market Share) - {category_names.get(category, 'Rollups')}",
-                    "category": category,
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception in get_l2_summary: {str(e)}")
-            return {"status": "error", "error": f"Failed to fetch L2 summary data: {str(e)}"}
+        return await self._scrape_and_process(url, context_info)
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
@@ -232,45 +305,24 @@ class L2BeatAgent(MeshAgent):
         """
         logger.info(f"Fetching L2Beat activity data for category: {category}")
 
-        try:
-            url = self._build_url("activity", category)
-            logger.info(f"Scraping URL: {url}")
+        url = self._build_url("activity", category)
+        logger.info(f"Scraping URL: {url}")
 
-            # Increase timeout for larger pages
-            wait_time = 15000 if category in ["others", "notReviewed"] else 10000
-            timeout_time = 30000 if category in ["others", "notReviewed"] else 20000
+        # Determine readable category name for response
+        category_names = {
+            "rollups": "Rollups",
+            "validiumsAndOptimiums": "Validiums & Optimiums",
+            "others": "Other L2s",
+            "notReviewed": "Not Reviewed L2s",
+        }
 
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=timeout_time)
-            )
+        context_info = {
+            "data_type": f"L2 Activity Metrics - {category_names.get(category, 'Rollups')}",
+            "category": category,
+            "url": url,
+        }
 
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-
-            if not markdown_content:
-                return {"status": "error", "error": f"Failed to scrape L2Beat activity data for category: {category}"}
-
-            # Determine readable category name for response
-            category_names = {
-                "rollups": "Rollups",
-                "validiumsAndOptimiums": "Validiums & Optimiums",
-                "others": "Other L2s",
-                "notReviewed": "Not Reviewed L2s",
-            }
-
-            logger.info(f"Successfully fetched L2Beat activity data for {category}")
-            return {
-                "status": "success",
-                "data": {
-                    "content": markdown_content,
-                    "source": url,
-                    "data_type": f"L2 Activity Metrics - {category_names.get(category, 'Rollups')}",
-                    "category": category,
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception in get_l2_activity: {str(e)}")
-            return {"status": "error", "error": f"Failed to fetch L2 activity data: {str(e)}"}
+        return await self._scrape_and_process(url, context_info)
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
@@ -279,48 +331,26 @@ class L2BeatAgent(MeshAgent):
         Fetch L2 transaction costs for different operations.
 
         Args:
-            category: Type of L2s to fetch - 'rollups', 'validiumsAndOptimiums', or 'others'
+            category: Type of L2s to fetch - 'rollups' or 'others'
         """
         logger.info(f"Fetching L2Beat costs data for category: {category}")
 
-        try:
-            url = self._build_url("costs", category)
-            logger.info(f"Scraping URL: {url}")
+        url = self._build_url("costs", category)
+        logger.info(f"Scraping URL: {url}")
 
-            # Increase timeout for larger pages
-            wait_time = 15000 if category == "others" else 10000
-            timeout_time = 30000 if category == "others" else 20000
+        # Determine readable category name for response
+        category_names = {
+            "rollups": "Rollups",
+            "others": "Other L2s",
+        }
 
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=timeout_time)
-            )
+        context_info = {
+            "data_type": f"L2 Transaction Costs - {category_names.get(category, 'Rollups')}",
+            "category": category,
+            "url": url,
+        }
 
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-
-            if not markdown_content:
-                return {"status": "error", "error": f"Failed to scrape L2Beat costs data for category: {category}"}
-
-            # Determine readable category name for response
-            category_names = {
-                "rollups": "Rollups",
-                "validiumsAndOptimiums": "Validiums & Optimiums",
-                "others": "Other L2s",
-            }
-
-            logger.info(f"Successfully fetched L2Beat costs data for {category}")
-            return {
-                "status": "success",
-                "data": {
-                    "content": markdown_content,
-                    "source": url,
-                    "data_type": f"L2 Transaction Costs - {category_names.get(category, 'Rollups')}",
-                    "category": category,
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception in get_l2_costs: {str(e)}")
-            return {"status": "error", "error": f"Failed to fetch L2 costs data: {str(e)}"}
+        return await self._scrape_and_process(url, context_info)
 
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
