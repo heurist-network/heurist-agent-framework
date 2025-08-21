@@ -157,6 +157,15 @@
       "txid": "0xd8a484a402a4373221288fed84e9025ed48eba2a45a7294c19289f740ca00fcd"
     }
   },
+  "EvmTokenInfoAgent": {
+    "get_recent_large_trades": {
+      "chain": "bsc",
+      "tokenAddress": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "minUsdAmount": 5000,
+      "filter": "all",
+      "limit": 10
+    }
+  },
   "ExaSearchAgent": {
     "exa_answer_question": {
       "question": "What is the current state of DeFi?"
@@ -176,6 +185,12 @@
       "search_term": "What are the latest developments in zero knowledge proofs?"
     }
   },
+  "FirecrawlSearchDigestAgent": {
+    "firecrawl_web_search": {
+      "search_term": "What are the most recent developments in decentralized AI and blockchain integration?",
+      "limit": 5
+    }
+  },
   "FundingRateAgent": {
     "find_cross_exchange_opportunities": {},
     "find_spot_futures_opportunities": {},
@@ -187,6 +202,11 @@
   "GoplusAnalysisAgent": {
     "fetch_security_details": {
       "contract_address": "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0"
+    }
+  },
+  "L2BeatAgent": {
+    "get_l2_summary": {
+      "category": "rollups"
     }
   },
   "LetsBonkTokenInfoAgent": {
@@ -239,26 +259,6 @@
     },
     "fetch_token_clusters": {
       "address": "tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump"
-    }
-  },
-  "MindAiKolAgent": {
-    "get_best_initial_calls": {
-      "period": 720,
-      "token_symbol": "BTC"
-    },
-    "get_kol_statistics": {
-      "kol_name": "@agentcookiefun",
-      "period": 720
-    },
-    "get_token_statistics": {
-      "period": 720,
-      "token_symbol": "HEU"
-    },
-    "get_top_gainers": {
-      "kols_amount": 3,
-      "period": 720,
-      "token_category": "top100",
-      "tokens_amount": 5
     }
   },
   "MoniTwitterInsightAgent": {
