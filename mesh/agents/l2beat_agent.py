@@ -47,7 +47,7 @@ class L2BeatAgent(MeshAgent):
                 "external_apis": ["Firecrawl", "L2Beat"],
                 "tags": ["L2Beat"],
                 "recommended": True,
-                "image_url": "https://raw.githubusecontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/L2Beat.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/L2Beat.png",
                 "examples": [
                     "What's the current TVL and market share of top L2 solutions?",
                     "Show me the activity comparison between Arbitrum, Optimism, and Base",
