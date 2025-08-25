@@ -1,29 +1,19 @@
-import asyncio
+import json
 import logging
-import os
-import time
 from typing import Any, Dict, List, Optional
 
-from dotenv import load_dotenv
-from firecrawl import FirecrawlApp
+import aiohttp
+from bs4 import BeautifulSoup
 
-from core.llm import call_llm_async
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
-load_dotenv()
 logger = logging.getLogger(__name__)
 
 
 class L2BeatAgent(MeshAgent):
     def __init__(self):
         super().__init__()
-        self.api_key = os.getenv("FIRECRAWL_API_KEY")
-        if not self.api_key:
-            raise ValueError("FIRECRAWL_API_KEY environment variable is required")
-
-        self.app = FirecrawlApp(api_key=self.api_key)
-        self._api_clients["firecrawl"] = self.app
 
         self.l2beat_base_urls = {
             "summary": "https://l2beat.com/scaling/summary",
@@ -44,7 +34,7 @@ class L2BeatAgent(MeshAgent):
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Specialized agent for analyzing Layer 2 scaling solutions data from L2Beat. Provides comprehensive insights into L2 TVL, activity metrics, and transaction costs across different chains and categories (Rollups, Validiums & Optimiums, Others, Not Reviewed). Note: Cost data for Validiums & Optimiums is included in the 'Others' category.",
-                "external_apis": ["Firecrawl", "L2Beat"],
+                "external_apis": ["L2Beat"],
                 "tags": ["L2Beat"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/L2Beat.png",
@@ -64,120 +54,14 @@ class L2BeatAgent(MeshAgent):
         )
 
     def get_system_prompt(self) -> str:
-        return """You are an expert Layer 2 blockchain data analyst that extracts and interprets L2Beat metrics.
+        return """You are an expert Layer 2 blockchain analyst specializing in L2Beat data interpretation.
 
-        CRITICAL: Strip out ALL website artifacts and preserve ONLY L2 metrics data:
-        - Remove ALL logo URLs, image links (e.g., ![logo], https://l2beat.com/static/icons/)
-        - Remove navigation menus, headers, footers, social links, cookie notices
-        - Remove "View details", "Details", job postings, donation links
-        - Remove duplicate section headers and repeated explanations
-        - Remove all HTML artifacts and excessive whitespace
+        Analyze Layer 2 scaling data focusing on:
+        1. **Summary Data**: TVL (Total Value Locked), market share, chain types, security models
+        2. **Activity Metrics**: Transaction counts, active addresses, TPS (transactions per second)
+        3. **Cost Analysis**: Transaction costs in USD for different operations
 
-        CAPTURE ESSENTIAL L2 DATA:
-        - Chain/Project names (without logo references)
-        - TVL values and market share percentages
-        - Transaction metrics (UOPS, TPS, counts)
-        - Cost data in USD (per operation, calldata, blobs, compute, overhead)
-        - Stage information and security status
-        - Type classifications (Rollup, Validium, Optimium, etc.)
-        - DA Layer information
-        - Percentage changes and growth metrics
-
-        FORMAT YOUR ANALYSIS:
-        - Use clean markdown tables for data comparison
-        - **Bold** chain names and key metrics
-        - Present numbers properly formatted ($1.5B for billions, 1.2M for millions)
-        - Group data by categories when relevant
-        - Calculate and highlight important ratios and trends
-
-        PROVIDE ACTIONABLE INSIGHTS:
-        - Identify top performers and underperformers in each category
-        - Note significant trends and differences between L2 types
-        - Highlight cost-effectiveness and efficiency metrics
-        - Compare metrics across different L2s when multiple are present
-        - Explain differences between Rollups, Validiums, Optimiums when relevant
-
-        Focus on delivering clean, data-focused analysis without website clutter. Extract only the blockchain metrics that matter for informed L2 decisions."""
-
-    async def _process_with_llm(self, raw_content: str, context_info: Dict[str, str]) -> str:
-        """Process raw scraped content with LLM and track performance"""
-        start_time = time.time()
-
-        try:
-            messages = [
-                {"role": "system", "content": self.get_system_prompt()},
-                {
-                    "role": "user",
-                    "content": f"""Extract and format the L2Beat data from this {context_info.get("data_type", "page")} content.
-
-                Context:
-                - Data Type: {context_info.get("data_type", "unknown")}
-                - Category: {context_info.get("category", "unknown")}
-                - Source URL: {context_info.get("url", "unknown")}
-
-                Raw Content:
-                {raw_content[:50000]}""",  # Limit to avoid token limits
-                },
-            ]
-
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
-                messages=messages,
-                max_tokens=25000,
-                temperature=0.1,
-            )
-
-            processed_content = response if isinstance(response, str) else response.get("content", raw_content)
-            processing_time = time.time() - start_time
-            logger.info(
-                f"LLM processing completed in {processing_time:.2f}s for {context_info.get('data_type', 'content')}"
-            )
-
-            return processed_content
-
-        except Exception as e:
-            processing_time = time.time() - start_time
-            logger.error(f"LLM processing failed after {processing_time:.2f}s: {str(e)}")
-            logger.warning("Falling back to raw content due to LLM processing failure")
-            return raw_content
-
-    async def _scrape_and_process(self, url: str, context_info: Dict[str, str]) -> Dict[str, Any]:
-        """Common method to scrape URL and process with LLM"""
-        try:
-            # Increase timeout for larger pages
-            category = context_info.get("category", "rollups")
-            wait_time = 15000 if category in ["others", "notReviewed"] else 10000
-            timeout_time = 30000 if category in ["others", "notReviewed"] else 20000
-
-            scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=timeout_time)
-            )
-
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
-
-            if not markdown_content:
-                return {"status": "error", "error": f"Failed to scrape {context_info['data_type']} page"}
-
-            # Process with LLM to clean and format the content
-            processed_content = await self._process_with_llm(markdown_content, context_info)
-
-            logger.info(f"Successfully processed {context_info['data_type']} data")
-
-            return {
-                "status": "success",
-                "data": {
-                    "content": processed_content,
-                    "source": url,
-                    "data_type": context_info.get("data_type", "L2 Data"),
-                    "category": context_info.get("category", "unknown"),
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception in _scrape_and_process for {context_info['data_type']}: {str(e)}")
-            return {"status": "error", "error": f"Failed to get {context_info['data_type']} data: {str(e)}"}
+        Present data in clear, formatted tables with proper analysis and insights."""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -185,14 +69,14 @@ class L2BeatAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_l2_summary",
-                    "description": "Get comprehensive summary data for Layer 2 solutions including TVL, market share, chain type, stage, and security information. Can fetch data for different L2 categories.",
+                    "description": "Get comprehensive summary data for Layer 2 solutions including TVL, market share, chain type, and stage information.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "category": {
                                 "type": "string",
                                 "enum": ["rollups", "validiumsAndOptimiums", "others", "notReviewed"],
-                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums' (Validiums & Optimiums), 'others' (Other scaling solutions), 'notReviewed' (Not yet reviewed L2s)",
+                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums', 'others', 'notReviewed'",
                                 "default": "rollups",
                             }
                         },
@@ -204,14 +88,14 @@ class L2BeatAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_l2_activity",
-                    "description": "Get activity metrics for Layer 2 solutions including daily transactions, active addresses, TPS, and activity trends. Can fetch data for different L2 categories.",
+                    "description": "Get activity metrics for Layer 2 solutions including daily transactions and TPS data.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "category": {
                                 "type": "string",
                                 "enum": ["rollups", "validiumsAndOptimiums", "others", "notReviewed"],
-                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums' (Validiums & Optimiums), 'others' (Other scaling solutions), 'notReviewed' (Not yet reviewed L2s)",
+                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums', 'others', 'notReviewed'",
                                 "default": "rollups",
                             }
                         },
@@ -223,14 +107,14 @@ class L2BeatAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_l2_costs",
-                    "description": "Get transaction cost comparison across Layer 2 solutions for different operations. Costs are shown in USD. Note: Validiums & Optimiums costs are included in the 'others' category.",
+                    "description": "Get transaction cost comparison across Layer 2 solutions for different operations.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "category": {
                                 "type": "string",
                                 "enum": ["rollups", "others"],
-                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'others' (includes all non-rollup L2s including Validiums & Optimiums)",
+                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'others'",
                                 "default": "rollups",
                             }
                         },
@@ -240,139 +124,263 @@ class L2BeatAgent(MeshAgent):
             },
         ]
 
-    # ------------------------------------------------------------------------
-    #                      HELPER METHOD FOR URL CONSTRUCTION
-    # ------------------------------------------------------------------------
-
     def _build_url(self, data_type: str, category: str = "rollups") -> str:
         """Build URL with appropriate tab parameter based on category."""
         base_url = self.l2beat_base_urls[data_type]
 
-        # Default to rollups tab (no parameter needed for default)
         if category == "rollups":
             return base_url
 
-        # Validate category for the data type
         if category not in self.valid_tabs[data_type]:
             logger.warning(f"Invalid category '{category}' for {data_type}. Using default 'rollups'")
             return base_url
 
-        # Add tab parameter for non-default categories
         return f"{base_url}?tab={category}"
 
-    # ------------------------------------------------------------------------
-    #                      L2BEAT-SPECIFIC METHODS
-    # ------------------------------------------------------------------------
+    def filter_and_optimize_data(self, raw_data: Dict, requested_category: str) -> Dict:
+        """
+        STEP 1: Filter data to only include requested category
+        STEP 2: Apply all optimizations to that category
+        """
+        if not isinstance(raw_data, dict):
+            return raw_data
+        entries = None
+        if "entries" in raw_data:
+            entries = raw_data["entries"]
+        elif (
+            "pageProps" in raw_data
+            and "l2Data" in raw_data["pageProps"]
+            and "entries" in raw_data["pageProps"]["l2Data"]
+        ):
+            entries = raw_data["pageProps"]["l2Data"]["entries"]
+        else:
+            logger.warning("No entries found in data")
+            return raw_data
+        if requested_category not in entries:
+            logger.warning(f"Requested category '{requested_category}' not found in data")
+            return raw_data
+
+        category_entries = entries[requested_category]
+        if not isinstance(category_entries, list):
+            logger.warning(f"Category data is not a list: {type(category_entries)}")
+            return raw_data
+
+        optimized_entries = []
+        processed_count = 0
+
+        for i, entry in enumerate(category_entries):
+            if not isinstance(entry, dict):
+                continue
+
+            entry_name = entry.get("name", f"Entry_{i}")
+            tvs_order = entry.get("tvsOrder", 0)
+
+            stage_value = "Unknown"
+            if "stage" in entry and isinstance(entry["stage"], dict):
+                stage_value = entry["stage"].get("stage", "Unknown")
+            elif "stage" in entry:
+                stage_value = str(entry["stage"])
+            daily_change = 0.0
+            if "tvs" in entry and isinstance(entry["tvs"], dict):
+                daily_change = entry["tvs"].get("change", 0.0)
+
+            # Create optimized entry
+            optimized_entry = {
+                "id": entry.get("id"),
+                "name": entry_name,
+                "stage": stage_value,
+                "capability": entry.get("capability"),
+                "proofSystem": entry.get("proofSystem", {}).get("type")
+                if isinstance(entry.get("proofSystem"), dict)
+                else entry.get("proofSystem"),
+                "purposes": entry.get("purposes", []),
+                "totalValueSecured": {
+                    "tvs": tvs_order,
+                    "dailyChange": daily_change,
+                },
+                "activity": {
+                    "pastDayUops": entry.get("activity", {}).get("pastDayUops", 0),
+                    "change": entry.get("activity", {}).get("change", 0),
+                },
+            }
+
+            optimized_entries.append(optimized_entry)
+            processed_count += 1
+
+        result = {"entries": {requested_category: optimized_entries}}
+
+        return result
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def get_l2_summary(self, category: str = "rollups") -> Dict[str, Any]:
-        """
-        Fetch L2 summary data including TVL and market share.
+        try:
+            url = self._build_url("summary", category)
 
-        Args:
-            category: Type of L2s to fetch - 'rollups', 'validiumsAndOptimiums', 'others', or 'notReviewed'
-        """
-        logger.info(f"Fetching L2Beat summary data for category: {category}")
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                    text = await response.text()
 
-        url = self._build_url("summary", category)
-        logger.info(f"Scraping URL: {url}")
+            soup = BeautifulSoup(text, "html.parser")
+            script = soup.find("script", string=lambda s: s and "__SSR_DATA__" in s)
 
-        # Determine readable category name for response
-        category_names = {
-            "rollups": "Rollups",
-            "validiumsAndOptimiums": "Validiums & Optimiums",
-            "others": "Other L2s",
-            "notReviewed": "Not Reviewed L2s",
-        }
+            if not script:
+                return {"status": "error", "error": f"__SSR_DATA__ script not found in {url}"}
 
-        context_info = {
-            "data_type": f"L2 Summary (TVL & Market Share) - {category_names.get(category, 'Rollups')}",
-            "category": category,
-            "url": url,
-        }
+            script_content = script.string.strip()
+            if "=" not in script_content:
+                return {"status": "error", "error": f"No assignment in script in {url}"}
 
-        return await self._scrape_and_process(url, context_info)
+            data_str = script_content.split("=", 1)[1].strip()
+            if data_str.endswith(";"):
+                data_str = data_str[:-1].strip()
+
+            ssr_data = json.loads(data_str)
+            raw_props = ssr_data.get("props", {})
+
+            original_size = len(json.dumps(raw_props))
+            optimized_data = self.filter_and_optimize_data(raw_props, category)
+
+            # Generate final JSON
+            content = json.dumps(optimized_data, separators=(",", ":"))
+            optimized_size = len(content)
+
+            reduction_percent = ((original_size - optimized_size) / original_size * 100) if original_size > 0 else 0
+            logger.info(f"   Reduction: {reduction_percent:.1f}%")
+
+            category_names = {
+                "rollups": "Rollups",
+                "validiumsAndOptimiums": "Validiums & Optimiums",
+                "others": "Other L2s",
+                "notReviewed": "Not Reviewed L2s",
+            }
+
+            return {
+                "status": "success",
+                "data": {
+                    "content": content,
+                    "source": url,
+                    "data_type": f"L2 Summary (TVL & Market Share) - {category_names.get(category, 'Rollups')}",
+                    "category": category,
+                },
+            }
+
+        except Exception as e:
+            return {"status": "error", "error": f"Failed to fetch L2 summary data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def get_l2_activity(self, category: str = "rollups") -> Dict[str, Any]:
-        """
-        Fetch L2 activity metrics including transactions and active addresses.
+        try:
+            url = self._build_url("activity", category)
 
-        Args:
-            category: Type of L2s to fetch - 'rollups', 'validiumsAndOptimiums', 'others', or 'notReviewed'
-        """
-        logger.info(f"Fetching L2Beat activity data for category: {category}")
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                    text = await response.text()
 
-        url = self._build_url("activity", category)
-        logger.info(f"Scraping URL: {url}")
+            soup = BeautifulSoup(text, "html.parser")
+            script = soup.find("script", string=lambda s: s and "__SSR_DATA__" in s)
 
-        # Determine readable category name for response
-        category_names = {
-            "rollups": "Rollups",
-            "validiumsAndOptimiums": "Validiums & Optimiums",
-            "others": "Other L2s",
-            "notReviewed": "Not Reviewed L2s",
-        }
+            if not script:
+                return {"status": "error", "error": f"__SSR_DATA__ script not found in {url}"}
 
-        context_info = {
-            "data_type": f"L2 Activity Metrics - {category_names.get(category, 'Rollups')}",
-            "category": category,
-            "url": url,
-        }
+            script_content = script.string.strip()
+            if "=" not in script_content:
+                return {"status": "error", "error": f"No assignment in script in {url}"}
 
-        return await self._scrape_and_process(url, context_info)
+            data_str = script_content.split("=", 1)[1].strip()
+            if data_str.endswith(";"):
+                data_str = data_str[:-1].strip()
+
+            ssr_data = json.loads(data_str)
+            raw_props = ssr_data.get("props", {})
+            optimized_data = self.filter_and_optimize_data(raw_props, category)
+            content = json.dumps(optimized_data, separators=(",", ":"))
+
+            category_names = {
+                "rollups": "Rollups",
+                "validiumsAndOptimiums": "Validiums & Optimiums",
+                "others": "Other L2s",
+                "notReviewed": "Not Reviewed L2s",
+            }
+
+            return {
+                "status": "success",
+                "data": {
+                    "content": content,
+                    "source": url,
+                    "data_type": f"L2 Activity Metrics - {category_names.get(category, 'Rollups')}",
+                    "category": category,
+                },
+            }
+
+        except Exception as e:
+            logger.error(f"Exception: {str(e)}")
+            return {"status": "error", "error": f"Failed to fetch L2 activity data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def get_l2_costs(self, category: str = "rollups") -> Dict[str, Any]:
-        """
-        Fetch L2 transaction costs for different operations.
+        logger.info(f"Fetching L2Beat costs for category: {category}")
 
-        Args:
-            category: Type of L2s to fetch - 'rollups' or 'others'
-        """
-        logger.info(f"Fetching L2Beat costs data for category: {category}")
+        try:
+            url = self._build_url("costs", category)
 
-        url = self._build_url("costs", category)
-        logger.info(f"Scraping URL: {url}")
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                    text = await response.text()
 
-        # Determine readable category name for response
-        category_names = {
-            "rollups": "Rollups",
-            "others": "Other L2s",
-        }
+            soup = BeautifulSoup(text, "html.parser")
+            script = soup.find("script", string=lambda s: s and "__SSR_DATA__" in s)
 
-        context_info = {
-            "data_type": f"L2 Transaction Costs - {category_names.get(category, 'Rollups')}",
-            "category": category,
-            "url": url,
-        }
+            if not script:
+                return {"status": "error", "error": f"__SSR_DATA__ script not found in {url}"}
 
-        return await self._scrape_and_process(url, context_info)
+            script_content = script.string.strip()
+            if "=" not in script_content:
+                return {"status": "error", "error": f"No assignment in script in {url}"}
 
-    # ------------------------------------------------------------------------
-    #                      TOOL HANDLING LOGIC
-    # ------------------------------------------------------------------------
+            data_str = script_content.split("=", 1)[1].strip()
+            if data_str.endswith(";"):
+                data_str = data_str[:-1].strip()
+
+            ssr_data = json.loads(data_str)
+            raw_props = ssr_data.get("props", {})
+            optimized_data = self.filter_and_optimize_data(raw_props, category)
+            content = json.dumps(optimized_data, separators=(",", ":"))
+
+            category_names = {
+                "rollups": "Rollups",
+                "others": "Other L2s",
+            }
+
+            return {
+                "status": "success",
+                "data": {
+                    "content": content,
+                    "source": url,
+                    "data_type": f"L2 Transaction Costs - {category_names.get(category, 'Rollups')}",
+                    "category": category,
+                },
+            }
+
+        except Exception as e:
+            logger.error(f"Exception: {str(e)}")
+            return {"status": "error", "error": f"Failed to fetch L2 costs data: {str(e)}"}
+
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Handle execution of specific tools and return the data"""
-
-        logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
+        logger.info(f"Tool call: {tool_name} with args: {function_args}")
 
         category = function_args.get("category", "rollups")
 
         if tool_name == "get_l2_summary":
             result = await self.get_l2_summary(category=category)
-
         elif tool_name == "get_l2_activity":
             result = await self.get_l2_activity(category=category)
-
         elif tool_name == "get_l2_costs":
             result = await self.get_l2_costs(category=category)
-
         else:
             return {"status": "error", "error": f"Unsupported tool: {tool_name}"}
 
