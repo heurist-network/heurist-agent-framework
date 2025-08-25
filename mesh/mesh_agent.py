@@ -291,6 +291,10 @@ class MeshAgent(ABC):
         if session_context:
             input_payload["session_context"].update(session_context)
 
+        # Preserve selected top-level flags from original params
+        if "raw_data_only" in original_params and "raw_data_only" not in input_payload:
+            input_payload["raw_data_only"] = original_params["raw_data_only"]
+
         mod = import_module(module_name)
         agent_cls = getattr(mod, class_name)
         agent_instance = agent_cls()
