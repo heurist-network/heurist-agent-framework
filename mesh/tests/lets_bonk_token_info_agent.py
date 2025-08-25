@@ -235,7 +235,10 @@ async def run_agent():
                     "direct_tool_call": {"input": trades_all_tool_input, "output": trades_all_tool_output},
                 },
                 "specific_launchpad": {
-                    "natural_language_query": {"input": trades_raydium_query_input, "output": trades_raydium_query_output},
+                    "natural_language_query": {
+                        "input": trades_raydium_query_input,
+                        "output": trades_raydium_query_output,
+                    },
                     "direct_tool_call": {"input": trades_raydium_tool_input, "output": trades_raydium_tool_output},
                 },
             },
@@ -253,7 +256,10 @@ async def run_agent():
                     "direct_tool_call": {"input": buyers_all_tool_input, "output": buyers_all_tool_output},
                 },
                 "specific_launchpad": {
-                    "natural_language_query": {"input": buyers_raydium_query_input, "output": buyers_raydium_query_output},
+                    "natural_language_query": {
+                        "input": buyers_raydium_query_input,
+                        "output": buyers_raydium_query_output,
+                    },
                 },
             },
             "top_sellers": {
@@ -270,7 +276,10 @@ async def run_agent():
                     "direct_tool_call": {"input": ohlcv_all_tool_input, "output": ohlcv_all_tool_output},
                 },
                 "specific_launchpad": {
-                    "natural_language_query": {"input": ohlcv_raydium_query_input, "output": ohlcv_raydium_query_output},
+                    "natural_language_query": {
+                        "input": ohlcv_raydium_query_input,
+                        "output": ohlcv_raydium_query_output,
+                    },
                 },
             },
             "pair_address": {

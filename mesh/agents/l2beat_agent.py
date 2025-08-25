@@ -96,7 +96,7 @@ class L2BeatAgent(MeshAgent):
         - Highlight cost-effectiveness and efficiency metrics
         - Compare metrics across different L2s when multiple are present
         - Explain differences between Rollups, Validiums, Optimiums when relevant
-        
+
         Focus on delivering clean, data-focused analysis without website clutter. Extract only the blockchain metrics that matter for informed L2 decisions."""
 
     async def _process_with_llm(self, raw_content: str, context_info: Dict[str, str]) -> str:

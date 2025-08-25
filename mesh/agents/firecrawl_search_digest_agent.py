@@ -28,7 +28,7 @@ class FirecrawlSearchDigestAgent(MeshAgent):
             {
                 "name": "Firecrawl Search Digest Agent",
                 "version": "1.0.0",
-                "author": "Heurist team", 
+                "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Advanced web search agent that uses Firecrawl to perform research with intelligent query generation and content analysis, then processes results with a small and fast LLM for concise, relevant summaries.",
                 "external_apis": ["Firecrawl"],
@@ -37,7 +37,7 @@ class FirecrawlSearchDigestAgent(MeshAgent):
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Firecrawl.png",
                 "examples": [
                     "What are the most bizarre crypto projects that actually succeeded?",
-                    "Find stories of people who became millionaires from meme coins", 
+                    "Find stories of people who became millionaires from meme coins",
                     "The biggest scams in crypto history",
                     "Search for the weirdest NFT collections that sold for huge amounts",
                 ],
@@ -68,11 +68,11 @@ Return clear, focused summaries that extract only the most relevant information.
 
         try:
             # Just pass the raw results data to LLM - let it figure out the structure
-            formatted_content = f"Query: \"{search_query}\"\n\nWeb contents:\n\n{str(search_results)}"
+            formatted_content = f'Query: "{search_query}"\n\nWeb contents:\n\n{str(search_results)}'
 
             messages = [
                 {"role": "system", "content": self.get_system_prompt()},
-                {"role": "user", "content": formatted_content}
+                {"role": "user", "content": formatted_content},
             ]
 
             response = await call_llm_async(
@@ -84,7 +84,9 @@ Return clear, focused summaries that extract only the most relevant information.
                 temperature=0.7,
             )
 
-            processed_content = response if isinstance(response, str) else response.get("content", "Failed to process search results")
+            processed_content = (
+                response if isinstance(response, str) else response.get("content", "Failed to process search results")
+            )
             processing_time = time.time() - start_time
             logger.info(f"LLM processing completed in {processing_time:.2f}s for search results")
 
@@ -101,7 +103,7 @@ Return clear, focused summaries that extract only the most relevant information.
         try:
             messages = [
                 {"role": "system", "content": self.get_system_prompt()},
-                {"role": "user", "content": f"Web contents:\n\n{scraped_content}"}
+                {"role": "user", "content": f"Web contents:\n\n{scraped_content}"},
             ]
 
             response = await call_llm_async(
@@ -130,21 +132,21 @@ Return clear, focused summaries that extract only the most relevant information.
                         "type": "object",
                         "properties": {
                             "search_term": {
-                                "type": "string", 
-                                "description": "Search query WITHOUT time words. Remove 'recent', 'today', 'past week' from query - use time_filter instead. Supports operators: OR, AND, site:domain.com, quotes. Examples: 'coinbase listings' (not 'recent coinbase listings'), 'site:coinbase.com announcements', 'bitcoin OR ethereum price'."
+                                "type": "string",
+                                "description": "Search query WITHOUT time words. Remove 'recent', 'today', 'past week' from query - use time_filter instead. Supports operators: OR, AND, site:domain.com, quotes. Examples: 'coinbase listings' (not 'recent coinbase listings'), 'site:coinbase.com announcements', 'bitcoin OR ethereum price'.",
                             },
                             "time_filter": {
                                 "type": "string",
                                 "description": "REQUIRED for time-sensitive queries. Map: 'recent/past week'→'qdr:w', 'today/past day'→'qdr:d', 'past hour'→'qdr:h', 'past month'→'qdr:m', 'past year'→'qdr:y'. Always use when user mentions time periods.",
-                                "enum": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"]
+                                "enum": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"],
                             },
                             "limit": {
                                 "type": "integer",
                                 "description": "Number of results to return. Set based on user request: '5 results'�5, '10 items'�10, etc. Default is 10.",
                                 "minimum": 5,
                                 "maximum": 10,
-                                "default": 10
-                            }
+                                "default": 10,
+                            },
                         },
                         "required": ["search_term"],
                     },
@@ -201,52 +203,49 @@ Return clear, focused summaries that extract only the most relevant information.
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def firecrawl_web_search(self, search_term: str, time_filter: Optional[str] = None, limit: int = 10) -> Dict[str, Any]:
+    async def firecrawl_web_search(
+        self, search_term: str, time_filter: Optional[str] = None, limit: int = 10
+    ) -> Dict[str, Any]:
         """
         Execute a web search using Firecrawl with advanced filtering options and AI processing.
-        
+
         Args:
             search_term: Search query with optional operators (OR, AND, site:, quotes)
             time_filter: Time filter (qdr:h/d/w/m/y for past hour/day/week/month/year)
             limit: Number of results to return (5-10)
         """
-        logger.info(f"Executing Firecrawl web search for '{search_term}' with time_filter='{time_filter}', limit={limit}")
+        logger.info(
+            f"Executing Firecrawl web search for '{search_term}' with time_filter='{time_filter}', limit={limit}"
+        )
 
         try:
             scrape_options = ScrapeOptions(formats=["markdown"])
-            
+
             # Build search parameters
-            search_params = {
-                "query": search_term,
-                "limit": limit,
-                "scrape_options": scrape_options,
-                "timeout": 30000
-            }
-            
+            search_params = {"query": search_term, "limit": limit, "scrape_options": scrape_options, "timeout": 30000}
+
             # Add time filter if specified
             if time_filter:
                 search_params["tbs"] = time_filter
                 logger.info(f"Applied time filter: {time_filter}")
 
-            response = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.search(**search_params)
-            )
+            response = await asyncio.get_event_loop().run_in_executor(None, lambda: self.app.search(**search_params))
 
             data = getattr(response, "data", None) or (response.get("data") if isinstance(response, dict) else None)
 
             if isinstance(data, list) and data:
                 logger.info(f"Search completed successfully with {len(data)} results")
-                
+
                 # Process results with LLM
                 processed_summary = await self._process_search_results_with_llm(data, search_term)
-                
+
                 return {"status": "success", "data": {"processed_summary": processed_summary}}
             elif isinstance(response, list):
                 logger.info(f"Search completed with {len(response)} results")
-                
-                # Process results with LLM  
+
+                # Process results with LLM
                 processed_summary = await self._process_search_results_with_llm(response, search_term)
-                
+
                 return {"status": "success", "data": {"processed_summary": processed_summary}}
             else:
                 logger.warning("Search completed but no results were found")
@@ -342,7 +341,7 @@ Return clear, focused summaries that extract only the most relevant information.
             search_term = function_args.get("search_term")
             time_filter = function_args.get("time_filter")
             limit = function_args.get("limit", 10)
-            
+
             if not search_term:
                 return {"status": "error", "error": "Missing 'search_term' parameter"}
 

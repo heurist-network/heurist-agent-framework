@@ -524,8 +524,10 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         where_clause = "Trade: { Currency: { MintAddress: { is: $token_address } } }"
         if launchpad:
-            where_clause = "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } }"
-        query = f"""query ($token_address: String!, $limit: Int!{', $launchpad: String!' if launchpad else ''}) {{ Solana {{ DEXTradeByTokens(orderBy: {{ descending: Block_Time }} limit: {{ count: $limit }} where: {{ {where_clause} }}) {{ Block {{ Time }} Transaction {{ Signature }} Trade {{ Market {{ MarketAddress }} Dex {{ ProtocolName ProtocolFamily }} AmountInUSD PriceInUSD Amount Currency {{ Name Symbol MintAddress }} Side {{ Type Currency {{ Symbol MintAddress Name }} AmountInUSD Amount }} }} }} }} }}"""
+            where_clause = (
+                "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } }"
+            )
+        query = f"""query ($token_address: String!, $limit: Int!{", $launchpad: String!" if launchpad else ""}) {{ Solana {{ DEXTradeByTokens(orderBy: {{ descending: Block_Time }} limit: {{ count: $limit }} where: {{ {where_clause} }}) {{ Block {{ Time }} Transaction {{ Signature }} Trade {{ Market {{ MarketAddress }} Dex {{ ProtocolName ProtocolFamily }} AmountInUSD PriceInUSD Amount Currency {{ Name Symbol MintAddress }} Side {{ Type Currency {{ Symbol MintAddress Name }} AmountInUSD Amount }} }} }} }} }}"""
 
         variables = {
             "token_address": token_address,
@@ -620,8 +622,10 @@ class LetsBonkTokenInfoAgent(MeshAgent):
         """
         where_clause = "Trade: { Currency: { MintAddress: { is: $token_address } } }"
         if launchpad:
-            where_clause = "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } }"
-        query = f"""query ($token_address: String!{', $launchpad: String!' if launchpad else ''}) {{ Solana {{ DEXTradeByTokens(orderBy: {{ descending: Block_Time }} limit: {{ count: 1 }} where: {{ {where_clause} }}) {{ Block {{ Time }} Transaction {{ Signature }} Trade {{ Market {{ MarketAddress }} Dex {{ ProtocolName ProtocolFamily }} AmountInUSD PriceInUSD Amount Currency {{ Name Symbol MintAddress }} Side {{ Type Currency {{ Symbol MintAddress Name }} AmountInUSD Amount }} }} }} }} }}"""
+            where_clause = (
+                "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } }"
+            )
+        query = f"""query ($token_address: String!{", $launchpad: String!" if launchpad else ""}) {{ Solana {{ DEXTradeByTokens(orderBy: {{ descending: Block_Time }} limit: {{ count: 1 }} where: {{ {where_clause} }}) {{ Block {{ Time }} Transaction {{ Signature }} Trade {{ Market {{ MarketAddress }} Dex {{ ProtocolName ProtocolFamily }} AmountInUSD PriceInUSD Amount Currency {{ Name Symbol MintAddress }} Side {{ Type Currency {{ Symbol MintAddress Name }} AmountInUSD Amount }} }} }} }} }}"""
 
         variables = {
             "token_address": token_address,
@@ -718,7 +722,7 @@ class LetsBonkTokenInfoAgent(MeshAgent):
         if launchpad:
             where_clause = "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } Side: { Type: { is: buy } } }"
 
-        query = f"""query ($token_address: String!, $limit: Int!{', $launchpad: String!' if launchpad else ''}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} orderBy: {{ descendingByField: "buy_volume" }} limit: {{ count: $limit }}) {{ Trade {{ Currency {{ MintAddress Name Symbol }} Dex {{ ProtocolName }} }} Transaction {{ Signer }} buy_volume: sum(of: Trade_Side_AmountInUSD) }} }} }}"""
+        query = f"""query ($token_address: String!, $limit: Int!{", $launchpad: String!" if launchpad else ""}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} orderBy: {{ descendingByField: "buy_volume" }} limit: {{ count: $limit }}) {{ Trade {{ Currency {{ MintAddress Name Symbol }} Dex {{ ProtocolName }} }} Transaction {{ Signer }} buy_volume: sum(of: Trade_Side_AmountInUSD) }} }} }}"""
 
         variables = {
             "token_address": token_address,
@@ -802,7 +806,7 @@ class LetsBonkTokenInfoAgent(MeshAgent):
         if launchpad:
             where_clause = "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } Side: { Type: { is: sell } } }"
 
-        query = f"""query ($token_address: String!, $limit: Int!{', $launchpad: String!' if launchpad else ''}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} orderBy: {{ descendingByField: "sell_volume" }} limit: {{ count: $limit }}) {{ Trade {{ Currency {{ MintAddress Name Symbol }} Dex {{ ProtocolName }} }} Transaction {{ Signer }} sell_volume: sum(of: Trade_Side_AmountInUSD) }} }} }}"""
+        query = f"""query ($token_address: String!, $limit: Int!{", $launchpad: String!" if launchpad else ""}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} orderBy: {{ descendingByField: "sell_volume" }} limit: {{ count: $limit }}) {{ Trade {{ Currency {{ MintAddress Name Symbol }} Dex {{ ProtocolName }} }} Transaction {{ Signer }} sell_volume: sum(of: Trade_Side_AmountInUSD) }} }} }}"""
 
         variables = {
             "token_address": token_address,
@@ -886,7 +890,7 @@ class LetsBonkTokenInfoAgent(MeshAgent):
         if launchpad:
             where_clause = """Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } Side: { Currency: { MintAddress: { is: $wsol_address } } } } Transaction: { Result: { Success: true } }"""
 
-        query = f"""query ($token_address: String!, $limit: Int!, $wsol_address: String!{', $launchpad: String!' if launchpad else ''}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} limit: {{ count: $limit }} orderBy: {{ descendingByField: "Block_Timefield" }}) {{ Block {{ Timefield: Time(interval: {{ count: 1, in: minutes }}) }} Trade {{ open: Price(minimum: Block_Slot) high: Price(maximum: Trade_Price) low: Price(minimum: Trade_Price) close: Price(maximum: Block_Slot) Dex {{ ProtocolName }} }} volumeInUSD: sum(of: Trade_Side_AmountInUSD) count }} }} }}"""
+        query = f"""query ($token_address: String!, $limit: Int!, $wsol_address: String!{", $launchpad: String!" if launchpad else ""}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} limit: {{ count: $limit }} orderBy: {{ descendingByField: "Block_Timefield" }}) {{ Block {{ Timefield: Time(interval: {{ count: 1, in: minutes }}) }} Trade {{ open: Price(minimum: Block_Slot) high: Price(maximum: Trade_Price) low: Price(minimum: Trade_Price) close: Price(maximum: Block_Slot) Dex {{ ProtocolName }} }} volumeInUSD: sum(of: Trade_Side_AmountInUSD) count }} }} }}"""
 
         variables = {
             "token_address": token_address,
@@ -974,9 +978,11 @@ class LetsBonkTokenInfoAgent(MeshAgent):
         """
         where_clause = "Trade: { Currency: { MintAddress: { is: $token_address } } }"
         if launchpad:
-            where_clause = "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } }"
+            where_clause = (
+                "Trade: { Dex: { ProtocolName: { is: $launchpad } } Currency: { MintAddress: { is: $token_address } } }"
+            )
 
-        query = f"""query ($token_address: String!{', $launchpad: String!' if launchpad else ''}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} limit: {{ count: 10 }}) {{ Trade {{ Market {{ MarketAddress }} Currency {{ Name Symbol MintAddress }} Side {{ Currency {{ Name Symbol MintAddress }} }} Dex {{ ProtocolName ProtocolFamily }} }} count }} }} }}"""
+        query = f"""query ($token_address: String!{", $launchpad: String!" if launchpad else ""}) {{ Solana {{ DEXTradeByTokens(where: {{ {where_clause} }} limit: {{ count: 10 }}) {{ Trade {{ Market {{ MarketAddress }} Currency {{ Name Symbol MintAddress }} Side {{ Currency {{ Name Symbol MintAddress }} }} Dex {{ ProtocolName ProtocolFamily }} }} count }} }} }}"""
 
         variables = {
             "token_address": token_address,

@@ -141,7 +141,10 @@ async def run_agent():
         # Test direct tool call for token metrics with native_sol
         agent_input_direct_tool = {
             "tool": "query_token_metrics",
-            "tool_arguments": {"token_address": "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC", "quote_token": "native_sol"},
+            "tool_arguments": {
+                "token_address": "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC",
+                "quote_token": "native_sol",
+            },
         }
         agent_output_direct_tool = await agent.handle_message(agent_input_direct_tool)
         print(f"Result of direct tool call (token metrics with native_sol): {agent_output_direct_tool}")
@@ -161,7 +164,7 @@ async def run_agent():
 
         # Test native_sol specific functionality
         print("\nTesting native_sol specific functionality:")
-        
+
         # Test native SOL token metrics
         native_sol_metrics_input = {
             "tool": "query_token_metrics",
@@ -208,7 +211,9 @@ async def run_agent():
         print(f"Native SOL traders test: {native_sol_traders_output}")
 
         # Test price movement analysis
-        price_analysis_input = {"query": f"Analyze price movements and trading volume for token {test_token} in the last hour"}
+        price_analysis_input = {
+            "query": f"Analyze price movements and trading volume for token {test_token} in the last hour"
+        }
         price_analysis_output = await agent.handle_message(price_analysis_input)
         print(f"Price analysis result: {price_analysis_output}")
 
@@ -216,8 +221,8 @@ async def run_agent():
         direct_quote_address_input = {
             "tool": "query_token_metrics",
             "tool_arguments": {
-                "token_address": test_token, 
-                "quote_token": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"  # USDC direct address
+                "token_address": test_token,
+                "quote_token": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",  # USDC direct address
             },
             "raw_data_only": True,
         }
@@ -279,7 +284,7 @@ async def run_agent():
                 "price_analysis": {"input": price_analysis_input, "output": price_analysis_output},
                 "direct_quote_address": {"input": direct_quote_address_input, "output": direct_quote_address_output},
                 "large_batch_chunking": {"input": large_batch_input, "output": large_batch_output},
-            }
+            },
         }
 
         with open(output_file, "w", encoding="utf-8") as f:

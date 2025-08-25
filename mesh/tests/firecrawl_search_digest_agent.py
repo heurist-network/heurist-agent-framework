@@ -31,21 +31,14 @@ async def run_agent():
         # Test 3: Direct web search with time filter (past week)
         agent_input_search_recent = {
             "tool": "firecrawl_web_search",
-            "tool_arguments": {
-                "search_term": "Ethereum scaling solutions",
-                "time_filter": "qdr:w",
-                "limit": 5
-            },
+            "tool_arguments": {"search_term": "Ethereum scaling solutions", "time_filter": "qdr:w", "limit": 5},
         }
         agent_output_search_recent = await agent.handle_message(agent_input_search_recent)
 
         # Test 4: Direct web search with site-specific operator
         agent_input_search_site = {
             "tool": "firecrawl_web_search",
-            "tool_arguments": {
-                "search_term": "site:coindesk.com bitcoin news",
-                "limit": 5
-            },
+            "tool_arguments": {"search_term": "site:coindesk.com bitcoin news", "limit": 5},
         }
         agent_output_search_site = await agent.handle_message(agent_input_search_site)
 
@@ -55,7 +48,7 @@ async def run_agent():
             "tool_arguments": {
                 "search_term": "bitcoin OR ethereum price prediction",
                 "time_filter": "qdr:d",
-                "limit": 6
+                "limit": 6,
             },
         }
         agent_output_search_or = await agent.handle_message(agent_input_search_or)
@@ -117,9 +110,9 @@ async def run_agent():
         agent_input_complex_search = {
             "tool": "firecrawl_web_search",
             "tool_arguments": {
-                "search_term": "\"zero knowledge proofs\" AND (\"zkSync\" OR \"Polygon\") site:medium.com",
+                "search_term": '"zero knowledge proofs" AND ("zkSync" OR "Polygon") site:medium.com',
                 "time_filter": "qdr:m",
-                "limit": 8
+                "limit": 8,
             },
         }
         agent_output_complex_search = await agent.handle_message(agent_input_complex_search)
@@ -134,62 +127,62 @@ async def run_agent():
             "natural_language_query_with_analysis": {
                 "description": "Test natural language query processing with AI analysis",
                 "input": agent_input_query,
-                "output": agent_output_query
+                "output": agent_output_query,
             },
             "natural_language_query_raw_data": {
                 "description": "Test natural language query with raw data only",
                 "input": agent_input_query_raw,
-                "output": agent_output_query_raw
+                "output": agent_output_query_raw,
             },
             "web_search_with_time_filter": {
                 "description": "Test direct web search with time filtering (past week)",
                 "input": agent_input_search_recent,
-                "output": agent_output_search_recent
+                "output": agent_output_search_recent,
             },
             "web_search_site_specific": {
                 "description": "Test site-specific search using site: operator",
                 "input": agent_input_search_site,
-                "output": agent_output_search_site
+                "output": agent_output_search_site,
             },
             "web_search_with_or_operator": {
                 "description": "Test search with OR operator and time filter",
                 "input": agent_input_search_or,
-                "output": agent_output_search_or
+                "output": agent_output_search_or,
             },
             "extract_web_data_multiple_urls": {
                 "description": "Test data extraction from multiple specific URLs",
                 "input": agent_input_extract,
-                "output": agent_output_extract
+                "output": agent_output_extract,
             },
             "extract_web_data_wildcard": {
                 "description": "Test data extraction using wildcard pattern",
                 "input": agent_input_extract_wildcard,
-                "output": agent_output_extract_wildcard
+                "output": agent_output_extract_wildcard,
             },
             "scrape_url_default": {
                 "description": "Test URL scraping with default wait time",
                 "input": agent_input_scrape,
-                "output": agent_output_scrape
+                "output": agent_output_scrape,
             },
             "scrape_url_custom_wait": {
                 "description": "Test URL scraping with custom wait time",
                 "input": agent_input_scrape_custom_wait,
-                "output": agent_output_scrape_custom_wait
+                "output": agent_output_scrape_custom_wait,
             },
             "time_sensitive_natural_query": {
                 "description": "Test time-sensitive natural language query",
                 "input": agent_input_time_sensitive,
-                "output": agent_output_time_sensitive
+                "output": agent_output_time_sensitive,
             },
             "blockchain_projects_research": {
                 "description": "Test research query about specific blockchain projects",
                 "input": agent_input_blockchain_projects,
-                "output": agent_output_blockchain_projects
+                "output": agent_output_blockchain_projects,
             },
             "complex_search_multiple_operators": {
                 "description": "Test complex search with multiple operators and filters",
                 "input": agent_input_complex_search,
-                "output": agent_output_complex_search
+                "output": agent_output_complex_search,
             },
         }
 
@@ -207,6 +200,7 @@ async def run_agent():
     except Exception as e:
         print(f"Error during agent execution: {str(e)}")
         import traceback
+
         traceback.print_exc()
     finally:
         await agent.cleanup()
