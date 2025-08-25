@@ -10,6 +10,7 @@ from firecrawl.firecrawl import ScrapeOptions
 
 from core.llm import call_llm_async
 from decorators import with_cache, with_retry
+from mesh.agents.exa_search_agent import build_firecrawl_to_exa_fallback
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -44,6 +45,15 @@ class FirecrawlSearchAgent(MeshAgent):
                 "credits": 2,
             }
         )
+
+    # Timeout and fallback policy: 60s default; use shared fallback mapping
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 60
+
+    async def get_fallback_for_tool(
+        self, tool_name: Optional[str], function_args: Dict[str, Any], original_params: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        return build_firecrawl_to_exa_fallback(tool_name, function_args, original_params)
 
     def get_system_prompt(self) -> str:
         return """You are an expert research analyst that processes web search results and scraped content.
