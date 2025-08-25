@@ -124,7 +124,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
     For category-related requests:
     - Use get_categories_list to fetch all available categories
-    - Use get_category_data to get market data for all categories
+    - Use get_category_data to get market data for all categories (limited to 10 by default, specify limit parameter for more)
     - Use get_tokens_by_category to fetch tokens within a specific category
 
     When selecting tokens from search results, apply these criteria in order:
@@ -245,7 +245,14 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                                     "market_cap_change_24h_desc",
                                     "market_cap_change_24h_asc",
                                 ],
-                            }
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Number of categories to return (default: 10, max: 100)",
+                                "default": 10,
+                                "minimum": 1,
+                                "maximum": 100,
+                            },
                         },
                         "required": [],
                     },
@@ -348,14 +355,68 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             return self.pro_api_url, self.pro_headers
         return self.public_api_url, self.public_headers
 
+    @staticmethod
+    def preprocess_api_response(data: Any) -> Any:
+        """
+        Preprocess API response to remove unnecessary data like images, URLs, and advertisements.
+        """
+        # fmt: off
+        FIELDS_TO_REMOVE = {"image", "thumb", "small", "large", "icon", "logo", "img", "thumbnail", "image_url", "thumb_url", "small_image", "large_image", "icon_url", "logo_url", "img_url", "thumbnail_url", "images", "homepage", "official_forum_url", "chat_url", "announcement_url", "twitter_screen_name", "facebook_username", "bitcointalk_thread_identifier", "telegram_channel_identifier", "subreddit_url", "repos_url", "github", "bitbucket", "links", "urls", "blockchain_site", "official_forum", "chat", "announcement", "twitter", "facebook", "reddit", "telegram", "discord", "website", "whitepaper", "explorer", "source_code", "technical_doc", "repos", "social_links", "community_data", "developer_data", "public_interest_stats", "coingecko_rank", "coingecko_score", "developer_score", "community_score", "liquidity_score", "public_interest_score", "status_updates", "tickers", "sparkline_in_7d", "roi", "description", "genesis_date", "hashing_algorithm", "country_origin", "last_updated", "localization", "platforms", "detail_platforms", "asset_platform_id", "block_time_in_minutes", "mining_stats", "additional_notices", "ico_data", "market_data.sparkline_7d", "top_3_coins", "top_3_coins_id"}
+        # fmt: on
+
+        if isinstance(data, dict):
+            cleaned = {}
+            for key, value in data.items():
+                if key.lower() in FIELDS_TO_REMOVE:
+                    continue
+
+                if any(
+                    term in key.lower()
+                    for term in [
+                        "image",
+                        "thumb",
+                        "icon",
+                        "logo",
+                        "url",
+                        "link",
+                        "homepage",
+                        "website",
+                        "twitter",
+                        "facebook",
+                        "telegram",
+                        "discord",
+                        "reddit",
+                        "github",
+                        "repos",
+                    ]
+                ):
+                    continue
+
+                cleaned[key] = CoinGeckoTokenInfoAgent.preprocess_api_response(value)
+
+            if "market_data" in cleaned and isinstance(cleaned["market_data"], dict):
+                market_data = cleaned["market_data"]
+                for key in list(market_data.keys()):
+                    if "sparkline" in key.lower():
+                        del market_data[key]
+
+            return cleaned
+
+        elif isinstance(data, list):
+            return [CoinGeckoTokenInfoAgent.preprocess_api_response(item) for item in data]
+
+        else:
+            return data
+
     async def _api_request(self, url: str, method: str, headers: Dict, params: Dict = None) -> Dict:
-        """Perform an asynchronous API request with rate-limiting."""
+        """Perform an asynchronous API request with rate-limiting and preprocessing."""
         async with self._request_semaphore:
             try:
                 async with aiohttp.ClientSession() as session:
                     async with session.request(method, url, headers=headers, params=params, timeout=10) as response:
                         response.raise_for_status()
-                        return await response.json()
+                        data = await response.json()
+                        return self.preprocess_api_response(data)
             except aiohttp.ClientResponseError as e:
                 logger.error(f"API request error: {e.status}, message='{e.message}', url='{url}'")
                 return {"error": f"API request failed: {e.status}, message='{e.message}', url='{url}'"}
@@ -364,12 +425,13 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 return {"error": f"Request error: {str(e)}"}
 
     def _make_sync_request(self, url: str, headers: Dict, params: Dict = None, max_attempts: int = 3) -> Dict:
-        """Make synchronous API request with retry logic."""
+        """Make synchronous API request with retry logic and preprocessing."""
         for attempt in range(max_attempts):
             try:
                 response = requests.get(url, headers=headers, params=params)
                 response.raise_for_status()
-                return response.json()
+                data = response.json()
+                return self.preprocess_api_response(data)
             except requests.HTTPError:
                 if response.status_code == 429 and attempt < max_attempts - 1:
                     logger.warning(f"429 Too Many Requests, retrying after 5 seconds (attempt {attempt + 1})")
@@ -520,27 +582,35 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
     def get_category_data_tool(self):
         @tool
-        def get_category_data(order: str = "market_cap_desc") -> Dict[str, Any]:
-            """Get market data for all cryptocurrency categories from CoinGecko.
+        def get_category_data(order: str = "market_cap_desc", limit: int = 10) -> Dict[str, Any]:
+            """Get market data for cryptocurrency categories from CoinGecko.
 
             Args:
                 order: Sort order for categories (default: market_cap_desc)
+                limit: Number of categories to return (default: 10, max: 100)
 
             Returns:
                 Dictionary with category data or error message
             """
-            logger.info(f"Getting category data with order: {order}")
+            limit = max(1, min(limit, 100))
+
+            logger.info(f"Getting category data with order: {order}, limit: {limit}")
             try:
                 api_url, headers = self.get_api_config("/coins/categories")
                 params = {"order": order} if order else {}
                 category_data = self._make_sync_request(f"{api_url}/coins/categories", headers, params)
 
-                # Remove unwanted fields
-                for category in category_data:
-                    for field in ["top_3_coins", "updated_at", "top_3_coins_id"]:
-                        category.pop(field, None)
+                if isinstance(category_data, list):
+                    limited_data = category_data[:limit]
+                    return {
+                        "category_data": limited_data,
+                        "total_available": len(category_data),
+                        "returned_count": len(limited_data),
+                        "limit": limit,
+                    }
+                else:
+                    return {"category_data": category_data}
 
-                return {"category_data": category_data}
             except Exception as e:
                 logger.error(f"Error getting category data: {e}")
                 return {"error": f"Failed to fetch category data: {str(e)}"}
@@ -581,10 +651,11 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 }
                 response = requests.get(f"{api_url}/coins/markets", headers=headers, params=params)
                 response.raise_for_status()
+                data = self.preprocess_api_response(response.json())
                 return {
                     "category_tokens": {
                         "category_id": category_id,
-                        "tokens": response.json(),
+                        "tokens": data,
                         "pagination": {
                             "total": response.headers.get("x-total", "N/A"),
                             "per_page": response.headers.get("x-per-page", "N/A"),
@@ -776,8 +847,10 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def _get_category_data(self, order: Optional[str] = "market_cap_desc") -> dict:
-        """Get market data for all cryptocurrency categories"""
+    async def _get_category_data(self, order: Optional[str] = "market_cap_desc", limit: int = 10) -> dict:
+        """Get market data for cryptocurrency categories with limit"""
+        limit = max(1, min(limit, 100))
+
         try:
             api_url, headers = self.get_api_config("/coins/categories")
             url = f"{api_url}/coins/categories"
@@ -787,12 +860,17 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
-            # Remove unwanted fields
-            for category in response:
-                for field in ["top_3_coins", "updated_at", "top_3_coins_id"]:
-                    category.pop(field, None)
+            if isinstance(response, list):
+                limited_data = response[:limit]
+                return {
+                    "category_data": limited_data,
+                    "total_available": len(response),
+                    "returned_count": len(limited_data),
+                    "limit": limit,
+                }
+            else:
+                return {"category_data": response}
 
-            return {"category_data": response}
         except Exception as e:
             logger.error(f"Error: {e}")
             return {"error": f"Failed to fetch category data: {str(e)}"}
@@ -938,7 +1016,9 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 precision=function_args.get("precision", None),
             ),
             "get_categories_list": lambda: self._get_categories_list(),
-            "get_category_data": lambda: self._get_category_data(function_args.get("order", "market_cap_desc")),
+            "get_category_data": lambda: self._get_category_data(
+                function_args.get("order", "market_cap_desc"), function_args.get("limit", 10)
+            ),
             "get_tokens_by_category": lambda: self._get_tokens_by_category(
                 category_id=function_args["category_id"],
                 vs_currency=function_args.get("vs_currency", "usd"),
