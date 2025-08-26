@@ -54,8 +54,8 @@ Task:
 - Extract and Summarize: Identify the most relevant information from the search results.
 - Highlight and Contextualize: Highlight the key information by bolding it, and provide context from the original text for each extracted fact.
 - Quote: Always quote the original text for each piece of information you extract.
-- Timestamp: Always include a human-readable date/time of the article if available, add it to the end of each source URL.
-- Strictly Batch by Source URL: You MUST combine all extracted facts from a single source URL into a single, cohesive block. Do not list facts from the same source on separate lines with individual URLs. The format MUST be [Fact A] [Fact B] [Fact C] [Source URL].
+- Timestamp: Include a date/time of the article if available, use the original time format from the provided data, add it to the end of each source URL. If the timestamp is not available, do not include it.
+- Strictly Batch by Source URL: You MUST combine all extracted facts from a single source URL into a single, cohesive block. Do not list facts from the same source on separate lines with individual URLs. The format MUST be [Fact A] [Fact B] [Fact C] [Source URL] [Timestamp if available].
 - Disregard Irrelevant Info: Completely ignore any information that is not directly related to the query.
 - Mention Related Info: Note any other related, but less direct, information found in the results.
 - Concise Relevancy Evaluation: Conclude with a single, concise paragraph evaluating the overall relevancy of the search results to the original query. State whether the results are relevant, somewhat relevant, or irrelevant, and briefly explain why.
