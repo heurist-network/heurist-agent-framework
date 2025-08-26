@@ -14,12 +14,12 @@ load_dotenv()
 async def run_agent():
     agent = L2BeatAgent()
     try:
-        print("Starting L2Beat Agent tests with extended features...\n")
+        print("Starting L2Beat Agent tests (Updated - Summary & Costs only)...\n")
 
         # ====================================================================
-        # Test 1: L2 Summary - Rollups (Default)
+        # Test 1: L2 Summary - Rollups (Default, Natural Language)
         # ====================================================================
-        print("Test 1: L2 Summary for Rollups (default category)")
+        print("Test 1: L2 Summary for Rollups (natural language)")
         rollups_summary_input = {
             "query": "What's the current TVL and market share of the top Layer 2 Rollups?",
             "raw_data_only": False,
@@ -28,7 +28,7 @@ async def run_agent():
         print("✅ Completed\n")
 
         # ====================================================================
-        # Test 2: L2 Summary - Validiums and Optimiums
+        # Test 2: L2 Summary - Validiums and Optimiums (Direct Tool)
         # ====================================================================
         print("Test 2: L2 Summary for Validiums and Optimiums")
         validiums_summary_input = {
@@ -39,124 +39,91 @@ async def run_agent():
         print("✅ Completed\n")
 
         # ====================================================================
-        # Test 3: L2 Summary - Others
+        # Test 3: L2 Costs - Rollups (Natural Language)
         # ====================================================================
-        print("Test 3: L2 Summary for Other L2s")
-        others_summary_input = {
-            "tool": "get_l2_summary",
-            "tool_arguments": {"category": "others"},
-        }
-        others_summary_output = await agent.handle_message(others_summary_input)
-        print("✅ Completed\n")
-
-        # ====================================================================
-        # Test 4: L2 Summary - Not Reviewed
-        # ====================================================================
-        print("Test 4: L2 Summary for Not Reviewed L2s")
-        not_reviewed_summary_input = {
-            "tool": "get_l2_summary",
-            "tool_arguments": {"category": "notReviewed"},
-        }
-        not_reviewed_summary_output = await agent.handle_message(not_reviewed_summary_input)
-        print("✅ Completed\n")
-
-        # ====================================================================
-        # Test 5: L2 Activity - Rollups (Natural Language)
-        # ====================================================================
-        print("Test 5: L2 Activity for Rollups (natural language)")
-        rollups_activity_input = {
-            "query": "Show me the transaction activity comparison between Arbitrum, Optimism, and Base",
-            "raw_data_only": False,
-        }
-        rollups_activity_output = await agent.handle_message(rollups_activity_input)
-        print("✅ Completed\n")
-
-        # ====================================================================
-        # Test 6: L2 Activity - Validiums and Optimiums
-        # ====================================================================
-        print("Test 6: L2 Activity for Validiums and Optimiums")
-        validiums_activity_input = {
-            "tool": "get_l2_activity",
-            "tool_arguments": {"category": "validiumsAndOptimiums"},
-        }
-        validiums_activity_output = await agent.handle_message(validiums_activity_input)
-        print("✅ Completed\n")
-
-        # ====================================================================
-        # Test 7: L2 Activity - Others
-        # ====================================================================
-        print("Test 7: L2 Activity for Other L2s")
-        others_activity_input = {
-            "tool": "get_l2_activity",
-            "tool_arguments": {"category": "others"},
-        }
-        others_activity_output = await agent.handle_message(others_activity_input)
-        print("✅ Completed\n")
-
-        # ====================================================================
-        # Test 8: L2 Activity - Not Reviewed
-        # ====================================================================
-        print("Test 8: L2 Activity for Not Reviewed L2s")
-        not_reviewed_activity_input = {
-            "tool": "get_l2_activity",
-            "tool_arguments": {"category": "notReviewed"},
-        }
-        not_reviewed_activity_output = await agent.handle_message(not_reviewed_activity_input)
-        print("✅ Completed\n")
-
-        # ====================================================================
-        # Test 9: L2 Costs - Rollups (Natural Language)
-        # ====================================================================
-        print("Test 9: L2 Costs for Rollups (natural language)")
+        print("Test 3: L2 Costs for Rollups (natural language)")
         rollups_costs_input = {
-            "query": "Which Layer 2 Rollup has the lowest transaction costs for token swaps?",
+            "query": "Which Layer 2 Rollup has the lowest transaction costs right now?",
             "raw_data_only": False,
         }
         rollups_costs_output = await agent.handle_message(rollups_costs_input)
         print("✅ Completed\n")
 
         # ====================================================================
-        # Test 10: L2 Costs - Others (includes Validiums & Optimiums)
+        # Test 4: L2 Costs - Validiums and Optimiums (Direct Tool)
         # ====================================================================
-        print("Test 10: L2 Costs for Others (includes Validiums & Optimiums)")
-        others_costs_input = {
+        print("Test 4: L2 Costs for Validiums and Optimiums")
+        validiums_costs_input = {
             "tool": "get_l2_costs",
-            "tool_arguments": {"category": "others"},
+            "tool_arguments": {"category": "validiumsAndOptimiums"},
         }
-        others_costs_output = await agent.handle_message(others_costs_input)
+        validiums_costs_output = await agent.handle_message(validiums_costs_input)
         print("✅ Completed\n")
 
         # ====================================================================
-        # Test 11: Natural Language Query - Cross-Category Comparison
+        # Test 5: Complex Analysis Query - ZK Chains Costs
         # ====================================================================
-        print("Test 11: Natural language query for cross-category comparison")
-        cross_category_input = {
-            "query": "Compare the TVL between top Rollups and top Validiums/Optimiums. Which category has higher total value locked?",
+        print("Test 5: Complex query - Average transaction costs for ZK chains")
+        zk_costs_input = {
+            "query": "What are the average transaction costs for ZK chains (validity proof systems)?",
             "raw_data_only": False,
         }
-        cross_category_output = await agent.handle_message(cross_category_input)
+        zk_costs_output = await agent.handle_message(zk_costs_input)
         print("✅ Completed\n")
 
         # ====================================================================
-        # Test 12: Natural Language Query - Not Reviewed Projects
+        # Test 6: Cost Comparison Query
         # ====================================================================
-        print("Test 12: Natural language query about not reviewed projects")
-        not_reviewed_query_input = {
-            "query": "What are the not reviewed L2 projects and what's their activity level?",
+        print("Test 6: Cost comparison between major L2s")
+        cost_comparison_input = {
+            "query": "Compare the transaction costs between Arbitrum, Base, Optimism, and ZKsync Era",
             "raw_data_only": False,
         }
-        not_reviewed_query_output = await agent.handle_message(not_reviewed_query_input)
+        cost_comparison_output = await agent.handle_message(cost_comparison_input)
         print("✅ Completed\n")
 
         # ====================================================================
-        # Test 13: Direct Tool Call with Default (Backward Compatibility)
+        # Test 7: TVL vs Cost Analysis
         # ====================================================================
-        print("Test 13: Direct tool call without category (backward compatibility test)")
+        print("Test 7: TVL vs Cost analysis")
+        tvl_cost_analysis_input = {
+            "query": "Which L2s have both high TVL and low transaction costs?",
+            "raw_data_only": False,
+        }
+        tvl_cost_analysis_output = await agent.handle_message(tvl_cost_analysis_input)
+        print("✅ Completed\n")
+
+        # ====================================================================
+        # Test 8: Default Parameters Test
+        # ====================================================================
+        print("Test 8: Default parameters test (backward compatibility)")
         default_summary_input = {
             "tool": "get_l2_summary",
             "tool_arguments": {},  # No category specified, should default to rollups
         }
         default_summary_output = await agent.handle_message(default_summary_input)
+        print("✅ Completed\n")
+
+        # ====================================================================
+        # Test 9: Default Parameters Test - Costs
+        # ====================================================================
+        print("Test 9: Default parameters test - costs (backward compatibility)")
+        default_costs_input = {
+            "tool": "get_l2_costs",
+            "tool_arguments": {},  # No category specified, should default to rollups
+        }
+        default_costs_output = await agent.handle_message(default_costs_input)
+        print("✅ Completed\n")
+
+        # ====================================================================
+        # Test 10: Proof System Analysis
+        # ====================================================================
+        print("Test 10: Proof system analysis query")
+        proof_system_input = {
+            "query": "Compare the TVL and costs between Optimistic Rollups and Validity (ZK) Rollups",
+            "raw_data_only": False,
+        }
+        proof_system_output = await agent.handle_message(proof_system_input)
         print("✅ Completed\n")
 
         # ====================================================================
@@ -173,55 +140,17 @@ async def run_agent():
                         "input": rollups_summary_input,
                         "output": rollups_summary_output,
                     },
+                    "default_backward_compatibility": {
+                        "direct_tool": {
+                            "input": default_summary_input,
+                            "output": default_summary_output,
+                        },
+                    },
                 },
                 "validiums_and_optimiums": {
                     "direct_tool": {
                         "input": validiums_summary_input,
                         "output": validiums_summary_output,
-                    },
-                },
-                "others": {
-                    "direct_tool": {
-                        "input": others_summary_input,
-                        "output": others_summary_output,
-                    },
-                },
-                "not_reviewed": {
-                    "direct_tool": {
-                        "input": not_reviewed_summary_input,
-                        "output": not_reviewed_summary_output,
-                    },
-                },
-                "default_backward_compatibility": {
-                    "direct_tool": {
-                        "input": default_summary_input,
-                        "output": default_summary_output,
-                    },
-                },
-            },
-            "l2_activity": {
-                "rollups": {
-                    "natural_language": {
-                        "input": rollups_activity_input,
-                        "output": rollups_activity_output,
-                    },
-                },
-                "validiums_and_optimiums": {
-                    "direct_tool": {
-                        "input": validiums_activity_input,
-                        "output": validiums_activity_output,
-                    },
-                },
-                "others": {
-                    "direct_tool": {
-                        "input": others_activity_input,
-                        "output": others_activity_output,
-                    },
-                },
-                "not_reviewed": {
-                    "direct_tool": {
-                        "input": not_reviewed_activity_input,
-                        "output": not_reviewed_activity_output,
                     },
                 },
             },
@@ -231,25 +160,43 @@ async def run_agent():
                         "input": rollups_costs_input,
                         "output": rollups_costs_output,
                     },
+                    "default_backward_compatibility": {
+                        "direct_tool": {
+                            "input": default_costs_input,
+                            "output": default_costs_output,
+                        },
+                    },
                 },
-                "others": {
+                "validiums_and_optimiums": {
                     "direct_tool": {
-                        "input": others_costs_input,
-                        "output": others_costs_output,
+                        "input": validiums_costs_input,
+                        "output": validiums_costs_output,
                     },
                 },
             },
-            "cross_category_queries": {
-                "tvl_comparison": {
+            "complex_analysis_queries": {
+                "zk_chains_costs": {
                     "natural_language": {
-                        "input": cross_category_input,
-                        "output": cross_category_output,
+                        "input": zk_costs_input,
+                        "output": zk_costs_output,
                     },
                 },
-                "not_reviewed_analysis": {
+                "cost_comparison": {
                     "natural_language": {
-                        "input": not_reviewed_query_input,
-                        "output": not_reviewed_query_output,
+                        "input": cost_comparison_input,
+                        "output": cost_comparison_output,
+                    },
+                },
+                "tvl_vs_cost_analysis": {
+                    "natural_language": {
+                        "input": tvl_cost_analysis_input,
+                        "output": tvl_cost_analysis_output,
+                    },
+                },
+                "proof_system_comparison": {
+                    "natural_language": {
+                        "input": proof_system_input,
+                        "output": proof_system_output,
                     },
                 },
             },
@@ -259,7 +206,6 @@ async def run_agent():
             yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False, width=120)
 
         print(f"Results saved to {output_file}")
-
     finally:
         await agent.cleanup()
 
