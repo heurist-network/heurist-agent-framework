@@ -144,7 +144,7 @@ Return clear, focused summaries that extract only the most relevant information.
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": "Number of results to return. Set based on user request: '5 results'→5, '10 items'→10, etc. Default is 10.",
+                                "description": "Number of web page results to process.",
                                 "minimum": 5,
                                 "maximum": 10,
                                 "default": 10,
