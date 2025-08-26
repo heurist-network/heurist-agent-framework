@@ -107,7 +107,9 @@ class FirecrawlLogger:
         tasks.append(self._upload_with_retry(result_filename, result_content))
 
         # Append to history
-        history_entry = f"{date}--{datetime.now().strftime('%H:%M:%S')}--{request_id}--{search_query}\n"
+        history_entry = (
+            f"{date}--{datetime.now().strftime('%H:%M:%S')}--{request_id}--search--{len(raw_results)}--{search_query}\n"
+        )
         tasks.append(self._append_to_history(history_entry))
 
         # Execute all uploads
@@ -142,7 +144,7 @@ class FirecrawlLogger:
         tasks.append(self._upload_with_retry(result_filename, result_content))
 
         # Append to history
-        history_entry = f"{date}--{datetime.now().strftime('%H:%M:%S')}--{request_id}--{scrape_url}\n"
+        history_entry = f"{date}--{datetime.now().strftime('%H:%M:%S')}--{request_id}--scrape--1--{scrape_url}\n"
         tasks.append(self._append_to_history(history_entry))
 
         # Execute all uploads
@@ -173,7 +175,7 @@ class FirecrawlLogger:
         tasks.append(self._upload_with_retry(filename, content))
 
         # Append to history
-        history_entry = f"{date}--{datetime.now().strftime('%H:%M:%S')}--{request_id}--{combined_query}\n"
+        history_entry = f"{date}--{datetime.now().strftime('%H:%M:%S')}--{request_id}--extract--1--{combined_query}\n"
         tasks.append(self._append_to_history(history_entry))
 
         await asyncio.gather(*tasks, return_exceptions=True)
