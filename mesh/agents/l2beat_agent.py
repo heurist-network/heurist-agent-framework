@@ -17,14 +17,12 @@ class L2BeatAgent(MeshAgent):
 
         self.l2beat_base_urls = {
             "summary": "https://l2beat.com/scaling/summary",
-            "activity": "https://l2beat.com/scaling/activity",
             "costs": "https://l2beat.com/scaling/costs",
         }
 
         self.valid_tabs = {
-            "summary": ["rollups", "validiumsAndOptimiums", "others", "notReviewed"],
-            "activity": ["rollups", "validiumsAndOptimiums", "others", "notReviewed"],
-            "costs": ["rollups", "others"],
+            "summary": ["rollups", "validiumsAndOptimiums"],
+            "costs": ["rollups", "validiumsAndOptimiums"],
         }
 
         self.metadata.update(
@@ -33,18 +31,16 @@ class L2BeatAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Specialized agent for analyzing Layer 2 scaling solutions data from L2Beat. Provides comprehensive insights into L2 TVL, activity metrics, and transaction costs across different chains and categories (Rollups, Validiums & Optimiums, Others, Not Reviewed). Note: Cost data for Validiums & Optimiums is included in the 'Others' category.",
+                "description": "Specialized agent for analyzing Layer 2 scaling solutions data from L2Beat. Provides comprehensive insights into L2 TVL, and transaction costs across different chains and categories (Rollups, Validiums & Optimiums). Note: Cost data for Validiums & Optimiums is included in the 'validiumsAndOptimiums' category.",
                 "external_apis": ["L2Beat"],
                 "tags": ["L2Beat"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/L2Beat.png",
                 "examples": [
                     "What's the current TVL and market share of top L2 solutions?",
-                    "Show me the activity comparison between Arbitrum, Optimism, and Base",
                     "Which L2 has the lowest transaction costs right now?",
                     "Compare the costs of sending ETH vs swapping tokens on different L2s",
                     "What are the top Validiums and Optimiums by TVL?",
-                    "Show me activity metrics for non-reviewed L2s",
                     "Compare costs across different L2 categories",
                 ],
                 "credits": 2,
@@ -58,7 +54,6 @@ class L2BeatAgent(MeshAgent):
 
         Analyze Layer 2 scaling data focusing on:
         1. **Summary Data**: TVL (Total Value Locked), market share, chain types, security models
-        2. **Activity Metrics**: Transaction counts, active addresses, TPS (transactions per second)
         3. **Cost Analysis**: Transaction costs in USD for different operations
 
         Present data in clear, formatted tables with proper analysis and insights."""
@@ -75,27 +70,8 @@ class L2BeatAgent(MeshAgent):
                         "properties": {
                             "category": {
                                 "type": "string",
-                                "enum": ["rollups", "validiumsAndOptimiums", "others", "notReviewed"],
-                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums', 'others', 'notReviewed'",
-                                "default": "rollups",
-                            }
-                        },
-                        "required": [],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "get_l2_activity",
-                    "description": "Get activity metrics for Layer 2 solutions including daily transactions and TPS data.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "category": {
-                                "type": "string",
-                                "enum": ["rollups", "validiumsAndOptimiums", "others", "notReviewed"],
-                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums', 'others', 'notReviewed'",
+                                "enum": ["rollups", "validiumsAndOptimiums"],
+                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums'",
                                 "default": "rollups",
                             }
                         },
@@ -113,8 +89,8 @@ class L2BeatAgent(MeshAgent):
                         "properties": {
                             "category": {
                                 "type": "string",
-                                "enum": ["rollups", "others"],
-                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'others'",
+                                "enum": ["rollups", "validiumsAndOptimiums"],
+                                "description": "Category of L2s to fetch. Options: 'rollups' (default), 'validiumsAndOptimiums'",
                                 "default": "rollups",
                             }
                         },
@@ -251,8 +227,6 @@ class L2BeatAgent(MeshAgent):
             category_names = {
                 "rollups": "Rollups",
                 "validiumsAndOptimiums": "Validiums & Optimiums",
-                "others": "Other L2s",
-                "notReviewed": "Not Reviewed L2s",
             }
 
             return {
@@ -267,56 +241,6 @@ class L2BeatAgent(MeshAgent):
 
         except Exception as e:
             return {"status": "error", "error": f"Failed to fetch L2 summary data: {str(e)}"}
-
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
-    async def get_l2_activity(self, category: str = "rollups") -> Dict[str, Any]:
-        try:
-            url = self._build_url("activity", category)
-
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
-                    text = await response.text()
-
-            soup = BeautifulSoup(text, "html.parser")
-            script = soup.find("script", string=lambda s: s and "__SSR_DATA__" in s)
-
-            if not script:
-                return {"status": "error", "error": f"__SSR_DATA__ script not found in {url}"}
-
-            script_content = script.string.strip()
-            if "=" not in script_content:
-                return {"status": "error", "error": f"No assignment in script in {url}"}
-
-            data_str = script_content.split("=", 1)[1].strip()
-            if data_str.endswith(";"):
-                data_str = data_str[:-1].strip()
-
-            ssr_data = json.loads(data_str)
-            raw_props = ssr_data.get("props", {})
-            optimized_data = self.filter_and_optimize_data(raw_props, category)
-            content = json.dumps(optimized_data, separators=(",", ":"))
-
-            category_names = {
-                "rollups": "Rollups",
-                "validiumsAndOptimiums": "Validiums & Optimiums",
-                "others": "Other L2s",
-                "notReviewed": "Not Reviewed L2s",
-            }
-
-            return {
-                "status": "success",
-                "data": {
-                    "content": content,
-                    "source": url,
-                    "data_type": f"L2 Activity Metrics - {category_names.get(category, 'Rollups')}",
-                    "category": category,
-                },
-            }
-
-        except Exception as e:
-            logger.error(f"Exception: {str(e)}")
-            return {"status": "error", "error": f"Failed to fetch L2 activity data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
@@ -351,7 +275,7 @@ class L2BeatAgent(MeshAgent):
 
             category_names = {
                 "rollups": "Rollups",
-                "others": "Other L2s",
+                "validiumsAndOptimiums": "Validiums & Optimiums",
             }
 
             return {
@@ -377,8 +301,6 @@ class L2BeatAgent(MeshAgent):
 
         if tool_name == "get_l2_summary":
             result = await self.get_l2_summary(category=category)
-        elif tool_name == "get_l2_activity":
-            result = await self.get_l2_activity(category=category)
         elif tool_name == "get_l2_costs":
             result = await self.get_l2_costs(category=category)
         else:
