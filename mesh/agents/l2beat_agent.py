@@ -54,7 +54,7 @@ class L2BeatAgent(MeshAgent):
 
         Analyze Layer 2 scaling data focusing on:
         1. **Summary Data**: TVL (Total Value Locked), market share, chain types, security models
-        3. **Cost Analysis**: Transaction costs in USD for different operations
+        2. **Cost Analysis**: Transaction costs in USD for different operations
 
         Present data in clear, formatted tables with proper analysis and insights."""
 
