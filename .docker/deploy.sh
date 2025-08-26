@@ -31,7 +31,7 @@ fi
 # ─── 1) Update local repo with latest compose file etc. ─────────────────────────
 log "Running pre-deploy git pull in ${REPO_DIR}"
 cd "${REPO_DIR}"
-git reset --hard
+git reset --hard origin/main
 git pull origin main
 
 # ─── 2) Pull the exact image tag ─────────────────────────────────────────────
