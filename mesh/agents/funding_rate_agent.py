@@ -21,6 +21,7 @@ class FundingRateAgent(MeshAgent):
                 "description": "This agent can fetch funding rate data and identify arbitrage opportunities across cryptocurrency exchanges.",
                 "external_apis": ["Coinsider"],
                 "tags": ["Arbitrage"],
+                "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/FundingRate.png",
                 "examples": [
                     "What is the funding rate for BTC on Binance?",
