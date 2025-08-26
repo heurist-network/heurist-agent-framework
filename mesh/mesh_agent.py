@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 from abc import ABC, abstractmethod
+from importlib import import_module
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -130,8 +131,8 @@ class MeshAgent(ABC):
         # 1) DIRECT TOOL CALL
         # ---------------------
         if tool_name:
-            data = await self._handle_tool_logic(
-                tool_name=tool_name, function_args=tool_args, session_context=session_context
+            data = await self._execute_tool_with_policy(
+                tool_name=tool_name, function_args=tool_args, session_context=session_context, original_params=params
             )
             return {"response": "", "data": data}
 
@@ -158,8 +159,11 @@ class MeshAgent(ABC):
             tool_call_name = tool_call.function.name
             tool_call_args = json.loads(tool_call.function.arguments)
 
-            data = await self._handle_tool_logic(
-                tool_name=tool_call_name, function_args=tool_call_args, session_context=session_context
+            data = await self._execute_tool_with_policy(
+                tool_name=tool_call_name,
+                function_args=tool_call_args,
+                session_context=session_context,
+                original_params=params,
             )
 
             if raw_data_only:
@@ -208,6 +212,106 @@ class MeshAgent(ABC):
         # 3) NEITHER query NOR tool
         # ---------------------
         return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
+
+    # ---------------------
+    # Timeout/Fallback policy hooks (overridable by agents)
+    # ---------------------
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        """Default timeout in seconds for tool execution. None means no timeout."""
+        return None
+
+    def get_tool_timeout_seconds(self) -> Dict[str, int]:
+        """Per-tool timeout overrides in seconds. Keyed by tool name."""
+        return {}
+
+    async def get_fallback_for_tool(
+        self, tool_name: Optional[str], function_args: Dict[str, Any], original_params: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Return a fallback spec dict or None. The spec should be of the form:
+        {
+            "module": "mesh.agents.some_agent_module",
+            "class": "SomeAgentClass",
+            "input": {  # input dict for the fallback agent
+                # one of: 'query' or 'tool' + 'tool_arguments', plus optional flags
+                ...
+            },
+        }
+        """
+        return None
+
+    async def _execute_tool_with_policy(
+        self,
+        tool_name: str,
+        function_args: Dict[str, Any],
+        session_context: Optional[Dict[str, Any]],
+        original_params: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        """Run tool logic with timeout and fallback policy."""
+        # Resolve timeout
+        tool_timeouts = self.get_tool_timeout_seconds() or {}
+        timeout_seconds = tool_timeouts.get(tool_name, self.get_default_timeout_seconds())
+
+        async def _run_tool():
+            return await self._handle_tool_logic(
+                tool_name=tool_name, function_args=function_args, session_context=session_context
+            )
+
+        try:
+            if timeout_seconds:
+                return await asyncio.wait_for(_run_tool(), timeout=timeout_seconds)
+            return await _run_tool()
+        except asyncio.TimeoutError:
+            logger.warning(
+                f"Tool '{tool_name}' timed out after {timeout_seconds}s in agent '{self.agent_name}'. Attempting fallback."
+            )
+            fallback_spec = await self.get_fallback_for_tool(tool_name, function_args, original_params)
+            if not fallback_spec:
+                raise
+            return await self._invoke_fallback_agent(fallback_spec, session_context, original_params)
+
+    async def _invoke_fallback_agent(
+        self, fallback_spec: Dict[str, Any], session_context: Optional[Dict[str, Any]], original_params: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Instantiate and call a fallback agent locally with provided input."""
+        module_name = fallback_spec.get("module")
+        class_name = fallback_spec.get("class")
+        input_payload = dict(fallback_spec.get("input", {}))
+
+        if not module_name or not class_name:
+            raise ValueError("Fallback spec must include 'module' and 'class'")
+
+        # Preserve origin/task id and session context
+        if original_params.get("origin_task_id"):
+            input_payload.setdefault("origin_task_id", original_params.get("origin_task_id"))
+        if original_params.get("task_id") and not input_payload.get("origin_task_id"):
+            input_payload.setdefault("origin_task_id", original_params.get("task_id"))
+
+        input_payload.setdefault("session_context", {})
+        if session_context:
+            input_payload["session_context"].update(session_context)
+
+        # Preserve selected top-level flags from original params
+        if "raw_data_only" in original_params and "raw_data_only" not in input_payload:
+            input_payload["raw_data_only"] = original_params["raw_data_only"]
+
+        mod = import_module(module_name)
+        agent_cls = getattr(mod, class_name)
+        agent_instance = agent_cls()
+        if self.heurist_api_key:
+            agent_instance.set_heurist_api_key(self.heurist_api_key)
+
+        result = await agent_instance.call_agent(input_payload)
+
+        # Annotate fallback in result
+        if isinstance(result, dict):
+            result.setdefault("data", {})
+            if isinstance(result["data"], dict):
+                result["data"].setdefault("fallback", {})
+                result["data"]["fallback"].update(
+                    {"from_agent": self.agent_name, "to_agent": class_name, "reason": "timeout"}
+                )
+        return result
 
     async def call_agent(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Main entry point that handles the message flow with hooks."""
