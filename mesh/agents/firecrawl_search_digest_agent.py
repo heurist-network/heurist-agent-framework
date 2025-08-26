@@ -10,6 +10,7 @@ from firecrawl.firecrawl import ScrapeOptions
 
 from core.llm import call_llm_async
 from decorators import with_cache, with_retry
+from mesh.firecrawl_logger import FirecrawlLogger
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -24,6 +25,7 @@ class FirecrawlSearchDigestAgent(MeshAgent):
             raise ValueError("FIRECRAWL_API_KEY environment variable is required")
 
         self.app = FirecrawlApp(api_key=self.api_key)
+        self.firecrawl_logger = FirecrawlLogger()
         self.metadata.update(
             {
                 "name": "Firecrawl Search Digest Agent",
@@ -142,7 +144,7 @@ Return clear, focused summaries that extract only the most relevant information.
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": "Number of results to return. Set based on user request: '5 results'�5, '10 items'�10, etc. Default is 10.",
+                                "description": "Number of web page results to process.",
                                 "minimum": 5,
                                 "maximum": 10,
                                 "default": 10,
@@ -234,22 +236,25 @@ Return clear, focused summaries that extract only the most relevant information.
             data = getattr(response, "data", None) or (response.get("data") if isinstance(response, dict) else None)
 
             if isinstance(data, list) and data:
-                logger.info(f"Search completed successfully with {len(data)} results")
-
-                # Process results with LLM
-                processed_summary = await self._process_search_results_with_llm(data, search_term)
-
-                return {"status": "success", "data": {"processed_summary": processed_summary}}
+                results = data
             elif isinstance(response, list):
-                logger.info(f"Search completed with {len(response)} results")
-
-                # Process results with LLM
-                processed_summary = await self._process_search_results_with_llm(response, search_term)
-
-                return {"status": "success", "data": {"processed_summary": processed_summary}}
+                results = response
             else:
                 logger.warning("Search completed but no results were found")
                 return {"status": "no_data", "data": {"results": []}}
+
+            logger.info(f"Search completed successfully with {len(results)} results")
+            processed_summary = await self._process_search_results_with_llm(results, search_term)
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_search_operation(
+                        search_query=search_term, raw_results=results, llm_processed_result=processed_summary
+                    )
+                    logger.info(f"Logged to R2 with request ID: {request_id}")
+                except Exception as e:
+                    logger.error(f"Failed to log to R2: {str(e)}")
+
+            return {"status": "success", "data": {"processed_summary": processed_summary}}
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_web_search: {str(e)}")
@@ -275,20 +280,26 @@ Return clear, focused summaries that extract only the most relevant information.
 
             if isinstance(response, dict):
                 if "data" in response:
-                    logger.info("Data extraction completed successfully")
-                    return {
-                        "status": "success",
-                        "data": {"extracted_data": response.get("data", {}), "metadata": response.get("metadata", {})},
-                    }
+                    extracted_data = response.get("data", {})
                 elif "success" in response and response.get("success"):
-                    logger.info("Data extraction completed successfully")
-                    return {"status": "success", "data": {"extracted_data": response.get("data", {})}}
+                    extracted_data = response.get("data", {})
                 else:
                     logger.warning(f"Data extraction failed: {response.get('message', 'Unknown error')}")
                     return {"status": "error", "error": "Extraction failed", "details": response}
             else:
-                logger.info("Data extraction completed successfully")
-                return {"status": "success", "data": {"extracted_data": response}}
+                extracted_data = response
+
+            logger.info("Data extraction completed successfully")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_extract_operation(
+                        urls=urls, extraction_prompt=extraction_prompt, raw_extracted_data=extracted_data
+                    )
+                    logger.info(f"Logged to R2 with request ID: {request_id}")
+                except Exception as e:
+                    logger.error(f"Failed to log to R2: {str(e)}")
+
+            return {"status": "success", "data": {"extracted_data": extracted_data}}
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_extract_web_data: {str(e)}")
@@ -314,14 +325,16 @@ Return clear, focused summaries that extract only the most relevant information.
             # Process scraped content with LLM
             processed_summary = await self._process_scraped_content_with_llm(markdown_content)
             logger.info("Successfully processed scraped content")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_scrape_operation(
+                        scrape_url=url, raw_content=markdown_content, llm_processed_result=processed_summary
+                    )
+                    logger.info(f"Logged to R2 with request ID: {request_id}")
+                except Exception as e:
+                    logger.error(f"Failed to log to R2: {str(e)}")
 
-            return {
-                "status": "success",
-                "data": {
-                    "processed_content": processed_summary,
-                    "url": url,
-                },
-            }
+            return {"status": "success", "data": {"processed_content": processed_summary, "url": url}}
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_scrape_url: {str(e)}")
