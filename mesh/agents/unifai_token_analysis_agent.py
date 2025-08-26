@@ -32,6 +32,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
                 "description": "This agent provides token analysis using UnifAI's API, including GMGN trend analysis (GMGN is a memecoin trading platform) and comprehensive token analysis for various cryptocurrencies",
                 "external_apis": ["UnifAI"],
                 "tags": ["Token Analysis"],
+                "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Unifai.png",
                 "examples": [
                     "Show me trending tokens on GMGN",
