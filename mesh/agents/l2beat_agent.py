@@ -43,7 +43,7 @@ class L2BeatAgent(MeshAgent):
                     "Compare the costs of different L2 solutions",
                     "What are the top Validiums and Optimiums by TVL?",
                 ],
-                "credits": 2,
+                "credits": 1,
                 "large_model_id": "google/gemini-2.5-flash",
                 "small_model_id": "google/gemini-2.5-flash",
             }
@@ -146,21 +146,16 @@ class L2BeatAgent(MeshAgent):
         for i, entry in enumerate(category_entries):
             if not isinstance(entry, dict):
                 continue
-
             entry_name = entry.get("name", f"Entry_{i}")
             tvs_order = entry.get("tvsOrder", 0)
-
             stage_value = "Unknown"
             if "stage" in entry and isinstance(entry["stage"], dict):
                 stage_value = entry["stage"].get("stage", "Unknown")
             elif "stage" in entry:
                 stage_value = str(entry["stage"])
-
             daily_change = 0.0
             if "tvs" in entry and isinstance(entry["tvs"], dict):
                 daily_change = entry["tvs"].get("change", 0.0)
-
-            # Create optimized entry
             optimized_entry = {
                 "id": entry.get("id"),
                 "name": entry_name,
@@ -194,11 +189,8 @@ class L2BeatAgent(MeshAgent):
         if not isinstance(raw_data, dict):
             return raw_data
 
-        # Extract data from different possible structures
         entries = None
         costs_data = None
-
-        # Try different paths to find the data
         if "entries" in raw_data:
             entries = raw_data["entries"]
         elif (
@@ -207,14 +199,11 @@ class L2BeatAgent(MeshAgent):
             and "entries" in raw_data["pageProps"]["l2Data"]
         ):
             entries = raw_data["pageProps"]["l2Data"]["entries"]
-
-        # Also look for costs-specific data structure
         if "pageProps" in raw_data and "costsData" in raw_data["pageProps"]:
             costs_data = raw_data["pageProps"]["costsData"]
         elif "costsData" in raw_data:
             costs_data = raw_data["costsData"]
 
-        # If we have costs_data, use that instead
         if costs_data and isinstance(costs_data, dict):
             if "entries" in costs_data:
                 entries = costs_data["entries"]
@@ -241,17 +230,11 @@ class L2BeatAgent(MeshAgent):
                 continue
 
             entry_name = entry.get("name", f"Entry_{i}")
-
-            # Extract cost using costOrder field (primary method based on L2Beat structure)
             avg_cost_usd = 0.0
-
-            # First try costOrder field (this is the main cost field in L2Beat)
             if "costOrder" in entry:
                 cost_value = entry["costOrder"]
                 if isinstance(cost_value, (int, float)):
                     avg_cost_usd = float(cost_value)
-
-            # If costOrder not found, try other possible cost fields
             if avg_cost_usd == 0.0:
                 possible_cost_fields = [
                     "avgCostPerL2Tx",
@@ -260,10 +243,9 @@ class L2BeatAgent(MeshAgent):
                     "costPerTx",
                     "totalCost",
                     "cost",
-                    "UOPS",  # Based on your hint about UOPS key
+                    "UOPS",
                 ]
 
-                # First try direct fields
                 for field in possible_cost_fields:
                     if field in entry:
                         value = entry[field]
@@ -274,21 +256,17 @@ class L2BeatAgent(MeshAgent):
                             avg_cost_usd = float(value["usd"])
                             break
 
-                # If not found, try nested structures
                 if avg_cost_usd == 0.0:
                     nested_structures = ["costs", "data", "metrics", "fees"]
                     for struct in nested_structures:
                         if struct in entry and isinstance(entry[struct], dict):
                             costs_obj = entry[struct]
 
-                            # Check for costOrder in nested structure
                             if "costOrder" in costs_obj:
                                 cost_value = costs_obj["costOrder"]
                                 if isinstance(cost_value, (int, float)):
                                     avg_cost_usd = float(cost_value)
                                     break
-
-                            # Check other cost fields
                             for field in possible_cost_fields:
                                 if field in costs_obj:
                                     value = costs_obj[field]
@@ -301,7 +279,6 @@ class L2BeatAgent(MeshAgent):
                             if avg_cost_usd != 0.0:
                                 break
 
-                            # Also try "total" or "average" fields
                             for summary_field in ["total", "average", "avg"]:
                                 if summary_field in costs_obj:
                                     summary_data = costs_obj[summary_field]
@@ -314,7 +291,6 @@ class L2BeatAgent(MeshAgent):
                             if avg_cost_usd != 0.0:
                                 break
 
-            # Create simplified entry with only name and average cost
             optimized_entry = {
                 "id": entry.get("id"),
                 "name": entry_name,
@@ -355,8 +331,6 @@ class L2BeatAgent(MeshAgent):
 
             original_size = len(json.dumps(raw_props))
             optimized_data = self.filter_and_optimize_summary_data(raw_props, category)
-
-            # Generate final JSON
             content = json.dumps(optimized_data, separators=(",", ":"))
             optimized_size = len(content)
 
@@ -409,12 +383,10 @@ class L2BeatAgent(MeshAgent):
 
             ssr_data = json.loads(data_str)
             raw_props = ssr_data.get("props", {})
-
             original_size = len(json.dumps(raw_props))
             optimized_data = self.filter_and_optimize_costs_data(raw_props, category)
             content = json.dumps(optimized_data, separators=(",", ":"))
             optimized_size = len(content)
-
             reduction_percent = ((original_size - optimized_size) / original_size * 100) if original_size > 0 else 0
             logger.info(f"   Costs data reduction: {reduction_percent:.1f}%")
 
@@ -450,9 +422,7 @@ class L2BeatAgent(MeshAgent):
             result = await self.get_l2_costs(category=category)
         else:
             return {"status": "error", "error": f"Unsupported tool: {tool_name}"}
-
         errors = self._handle_error(result)
         if errors:
             return errors
-
         return result

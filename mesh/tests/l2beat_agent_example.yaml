@@ -1,619 +1,414 @@
-l2_summary:
-  rollups:
-    natural_language:
-      input:
-        query: ' What''s the current TVL and market share of the top Layer 2 Rollups?'
-        raw_data_only: false
-      output:
-        response: 'The L2Beat data provides a comprehensive overview of the current Layer 2 landscape, focusing on TVL, market
-          share, and key characteristics of various rollups.
+natural_language_tests:
+  tvl_growth_analysis:
+    input:
+      query: Show me the Layer 2 rollups with highest TVL growth in the last day. Which ones are gaining the most traction?
+      raw_data_only: false
+    output:
+      response: 'The following table summarizes the L2 rollups with the highest TVL growth in the last day, based on the provided
+        L2Beat data.
 
 
-          Here''s an analysis of the top Layer 2 rollups based on the provided data:
+        ### Layer 2 Rollups by Daily TVL Growth
 
 
-          ## Layer 2 Rollups: TVL and Market Share Analysis
+        | Rank | Rollup Name | Daily TVL Change (%) | Current TVL (USD) |
+
+        |---|---|---|---|
+
+        | 1 | Linea | 38.11% | $1,094,138,800 |
+
+        | 2 | Ink | 18.55% | $99,041,696 |
+
+        | 3 | INTMAX | 22.61% | $3,795,115.8 |
+
+        | 4 | Katana | 12.97% | $494,649,220 |
+
+        | 5 | Zk.Money v1 (Aztec v1) | 10.72% | $5,626,818 |
+
+        | 6 | Phala | 10.89% | $4,698.22 |
+
+        | 7 | Paradex | 10.09% | $66,698,984 |
+
+        | 8 | ZKsync Lite | 9.14% | $71,295,770 |
+
+        | 9 | Facet Bluebird | 7.09% | $2,059,248.5 |
+
+        | 10 | Loopring | 6.89% | $26,934,034 |
 
 
-          ### Top 5 Rollups by TVL
+        ### Analysis and Insights:
 
 
-          | Rank | Rollup Name | TVL (USD)        | Daily Change (%) | Proof System | Stage    |
+        *   **Linea Leads with Significant Growth:** Linea shows the most substantial daily TVL growth at an impressive 38.11%,
+        pushing its TVL over the $1 billion mark. This indicates a strong surge in user adoption and capital inflow to the
+        platform.
 
-          | :--- | :---------- | :--------------- | :--------------- | :----------- | :------- |
+        *   **Diverse Growth Across TVL Tiers:** We see growth across rollups with varying TVLs. While Linea is a major player,
+        smaller rollups like Ink, INTMAX, Zk.Money v1 (Aztec v1), and Phala are also experiencing significant percentage growth,
+        suggesting increasing interest in a broader range of L2 solutions.
 
-          | 1    | Arbitrum One | 19,569,523,000   | +1.33%           | Optimistic   | Stage 1  |
+        *   **Emerging Projects Gaining Traction:** Projects like INTMAX and Phala, with relatively smaller total TVLs but
+        high daily growth percentages, could be early indicators of emerging platforms gaining user trust and adoption.
 
-          | 2    | Base Chain   | 15,859,104,000   | +4.09%           | Optimistic   | Stage 1  |
+        *   **Established Players Still Growing:** Even well-established rollups like Arbitrum One (2.72%), Base Chain (5.20%),
+        and OP Mainnet (2.41%) are showing positive daily TVL changes, indicating continued confidence and usage.
 
-          | 3    | OP Mainnet   | 3,787,896,000    | +2.62%           | Optimistic   | Stage 1  |
+        *   **Focus on ZK-Rollups:** Several ZK-rollups (Linea, Ink, INTMAX, Katana, Zk.Money v1, Paradex, ZKsync Lite) appear
+        in the top growth list, suggesting a growing preference or increasing maturity of ZK-proof technologies.
 
-          | 4    | ZKsync Era   | 1,282,184,100    | +2.32%           | Validity     | Stage 0  |
+        *   **Activity vs. TVL Growth:** It''s interesting to note that while Linea has high TVL growth, its daily user operations
+        (uops) also increased (7.66%), reinforcing the idea of increased activity driving TVL. Conversely, some projects with
+        high TVL growth like INTMAX and Zk.Money v1 have 0 daily uops, which could mean the TVL increase is due to large,
+        infrequent deposits or specific events rather than consistent daily user interaction.
 
-          | 5    | Linea        | 1,042,397,060    | +48.56%          | Validity     | Stage 0  |
-
-
-          ### Summary Data
-
-
-          **Total Value Locked (TVL)**
-
-
-          *   **Arbitrum One** continues to lead the market with a TVL of over \$19.5 billion, demonstrating its established
-          position.
-
-          *   **Base Chain** is rapidly gaining ground, holding the second position with over \$15.8 billion TVL and showing
-          a significant daily increase of over 4%. This indicates strong user adoption and capital inflow.
-
-          *   **OP Mainnet** secures the third spot with a TVL of nearly \$3.8 billion, maintaining steady growth.
-
-          *   The top three rollups (Arbitrum One, Base Chain, OP Mainnet) are all **Optimistic Rollups** and are classified
-          as **Stage 1**, indicating a higher level of maturity in their security and decentralization features compared to
-          Stage 0.
-
-          *   **ZKsync Era** and **Linea** are the leading **Validity Rollups (ZK-Rollups)** by TVL, holding the fourth and
-          fifth positions respectively. Both are currently in **Stage 0**, signifying ongoing development towards full decentralization
-          and security features. Linea, in particular, has seen an impressive daily change of almost 49%, suggesting a recent
-          surge in activity or capital.
+        *   **Negative Growth for BOB and Cartesi PRT Honeypot:** BOB and Cartesi PRT Honeypot experienced negative TVL changes.
+        For BOB, this might indicate withdrawals or a decrease in new deposits, while Cartesi PRT Honeypot, being a bug bounty,
+        might see fluctuating TVL based on rewards and withdrawals.
 
 
-          **Market Share (Approximate based on Top 5)**
+        **Practical Implications for Users:**
 
 
-          The top 5 rollups alone account for a significant portion of the total L2 TVL, demonstrating a concentrated market
-          with a few dominant players. Arbitrum and Base together hold the majority of the market share among the listed rollups.
+        *   **For users prioritizing high growth and potential future adoption:** Linea, Ink, and other high-growth projects
+        could be attractive, but it''s important to consider their stage of development (Linea is Stage 0, Ink is Stage 1)
+        and associated risks.
+
+        *   **For users looking for established, yet growing platforms:** Arbitrum One, Base Chain, and OP Mainnet continue
+        to be strong contenders with consistent, albeit lower percentage, TVL growth.
+
+        *   **For users interested in specific use cases:** ZKsync Lite and Loopring (both appchains) show good growth, catering
+        to specific needs like payments, exchange, and NFTs.
 
 
-          **Chain Types and Security Models**
-
-
-          *   **Optimistic Rollups** (Arbitrum One, Base Chain, OP Mainnet, Unichain, BOB, Ink, Kinto, Facet Bluebird, Cartesi
-          PRT Honeypot) currently dominate the TVL landscape, particularly among the more mature Stage 1 rollups. They rely
-          on fraud proofs to ensure transaction validity.
-
-          *   **Validity Rollups (ZK-Rollups)** (ZKsync Era, Linea, Starknet, Katana, Scroll, Abstract, ZKsync Lite, Paradex,
-          Loopring, Polygon zkEVM, ZERO Network, Zk.Money v1 (Aztec v1), INTMAX, ZKBase, Phala, LaChain, Space and Time) are
-          gaining traction, with ZKsync Era and Linea leading the charge. These rollups use cryptographic proofs (zero-knowledge
-          proofs) to instantly verify transaction validity, offering faster finality. The majority of ZK-Rollups are still
-          in Stage 0, indicating that their full decentralization and security features are still under development or not
-          fully implemented.
-
-
-          **Capability and Purposes**
-
-
-          *   Most of the top rollups are classified as **"universal"**, meaning they support general-purpose smart contracts
-          and dApps, similar to Ethereum.
-
-          *   Some rollups also specify additional purposes, such as "Exchange" (Unichain, Paradex, Loopring, ZKBase), "Payments"
-          (ZKsync Lite, Zk.Money v1, INTMAX, ZKBase), "NFT" (ZKsync Lite, Loopring, ZKBase), "Privacy" (Zk.Money v1), "Bitcoin
-          DApps" (BOB), and "KYC-ed DeFi" (Kinto), indicating specialization or niche focus.
-
-
-          ### Activity Metrics (Past Day Uops - User Operations)
-
-
-          *   **Base Chain** stands out significantly in terms of activity, with 110.26 past day user operations per second
-          (Uops), indicating a very high volume of user interactions. Its daily change in activity is also positive at +2.76%.
-
-          *   **Arbitrum One** follows with 32.06 past day Uops, showing a healthy level of activity with a slight increase.
-
-          *   **OP Mainnet** has 26.78 past day Uops and a remarkable daily change of +121.60%, suggesting a recent surge
-          in usage or a significant event driving activity.
-
-          *   Other rollups like Unichain (10.85 Uops), Starknet (7.27 Uops), and Ink (6.86 Uops) also show notable activity.
-
-          *   Many ZK-Rollups, while having substantial TVL, show relatively lower Uops compared to the top Optimistic Rollups.
-          This could be due to different transaction batching mechanisms, higher complexity of ZK proofs, or simply lower
-          user adoption at present.
-
-
-          ### Insights
-
-
-          *   **Optimistic Rollups still dominate in TVL and established maturity (Stage 1),** with Arbitrum One and Base
-          Chain leading the pack.
-
-          *   **Base Chain is a significant growth story,** demonstrating strong TVL growth and the highest activity among
-          all listed rollups.
-
-          *   **ZK-Rollups are emerging,** with ZKsync Era and Linea as frontrunners in TVL. However, most are still in earlier
-          development stages (Stage 0), indicating their potential for future growth as they mature.
-
-          *   **Activity spikes can be significant,** as seen with OP Mainnet''s over 121% daily change in Uops, highlighting
-          dynamic shifts in user engagement.
-
-          *   The L2 landscape shows a clear distinction between mature, high-TVL Optimistic Rollups and a growing segment
-          of ZK-Rollups which are actively developing and attracting capital.
-
-
-          This data provides a snapshot of a highly dynamic and competitive Layer 2 ecosystem, with both established players
-          and new entrants vying for market share and user adoption.'
-        data: &id001
-          status: success
-          data:
-            content: '{"entries":{"rollups":[{"id":"arbitrum","name":"Arbitrum One","stage":"Stage 1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":19569523000,"dailyChange":0.013312989254529839},"activity":{"pastDayUops":32.056724537037034,"change":0.005313127140831098}},{"id":"base","name":"Base
-              Chain","stage":"Stage 1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":15859104000,"dailyChange":0.04085330640875684},"activity":{"pastDayUops":110.25931712962964,"change":0.027618860437902848}},{"id":"optimism","name":"OP
-              Mainnet","stage":"Stage 1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":3787896000,"dailyChange":0.026163971580329237},"activity":{"pastDayUops":26.78009259259259,"change":1.216013952325723}},{"id":"zksync2","name":"ZKsync
-              Era","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":1282184100,"dailyChange":0.023179100457850765},"activity":{"pastDayUops":0.436099537037037,"change":0.28958176466561714}},{"id":"linea","name":"Linea","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":1042397060,"dailyChange":0.4855552855718741},"activity":{"pastDayUops":2.249884259259259,"change":0.05434151791767672}},{"id":"unichain","name":"Unichain","stage":"Stage
-              1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":1034933200,"dailyChange":0.009721316978174466},"activity":{"pastDayUops":10.8515625,"change":0.17201709570519785}},{"id":"starknet","name":"Starknet","stage":"Stage
-              1","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":582678500,"dailyChange":0.02884119372936378},"activity":{"pastDayUops":7.271597222222222,"change":0.1948445648080881}},{"id":"katana","name":"Katana","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":468690270,"dailyChange":-0.008996288828667653},"activity":{"pastDayUops":0.622662037037037,"change":0.254032634032634}},{"id":"scroll","name":"Scroll","stage":"Stage
-              1","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":285497900,"dailyChange":0.0019039473410853436},"activity":{"pastDayUops":1.1572569444444445,"change":0.25301703071544046}},{"id":"abstract","name":"Abstract","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":265669870,"dailyChange":0.03864104697195536},"activity":{"pastDayUops":3.0259953703703704,"change":-0.25908481617824186}},{"id":"bob","name":"BOB","stage":"Stage
-              0","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Bitcoin DApps"],"totalValueSecured":{"tvs":200567810,"dailyChange":-0.059460323066737764},"activity":{"pastDayUops":0.1168287037037037,"change":0.007083707472812506}},{"id":"ink","name":"Ink","stage":"Stage
-              1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":98951736,"dailyChange":0.1941816580197926},"activity":{"pastDayUops":6.864189814814814,"change":0.00046897035702464507}},{"id":"zksync","name":"ZKsync
-              Lite","stage":"Stage 0","capability":"appchain","proofSystem":"Validity","purposes":["Payments","Exchange","NFT"],"totalValueSecured":{"tvs":71374270,"dailyChange":0.07388898183901627},"activity":{"pastDayUops":0.008090277777777778,"change":0}},{"id":"paradex","name":"Paradex","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":65127780,"dailyChange":0.09019480886876008},"activity":{"pastDayUops":1.219074074074074,"change":-0.1151881720430108}},{"id":"loopring","name":"Loopring","stage":"Stage
-              0","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange"],"totalValueSecured":{"tvs":27002130,"dailyChange":0.0542392183065834},"activity":{"pastDayUops":0.004872685185185185,"change":0}},{"id":"polygonzkevm","name":"Polygon
-              zkEVM","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":21019712,"dailyChange":0.05098423372049621},"activity":{"pastDayUops":0.08939814814814814,"change":-0.08947306377460806}},{"id":"kinto","name":"Kinto","stage":"Stage
-              1","capability":"appchain","proofSystem":"Optimistic","purposes":["KYC-ed DeFi"],"totalValueSecured":{"tvs":7819751,"dailyChange":-0.5204179071597631},"activity":{"pastDayUops":0.004594907407407408,"change":0}},{"id":"zeronetwork","name":"ZERO
-              Network","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":6682812,"dailyChange":-0.005306866180464387},"activity":{"pastDayUops":0.04850694444444444,"change":0.038404360753220956}},{"id":"aztec","name":"Zk.Money
-              v1 (Aztec v1)","stage":"Stage 2","capability":"appchain","proofSystem":"Validity","purposes":["Payments","Privacy"],"totalValueSecured":{"tvs":5629083,"dailyChange":0.08657987474885642},"activity":{"pastDayUops":0,"change":0}},{"id":"intmax","name":"INTMAX","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Payments"],"totalValueSecured":{"tvs":3987678.5,"dailyChange":0.2668858797393907},"activity":{"pastDayUops":0,"change":0}},{"id":"facet","name":"Facet
-              Bluebird","stage":"Stage 2","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":2081478.4,"dailyChange":0.0481678274349886},"activity":{"pastDayUops":0.003576388888888889,"change":0}},{"id":"zkspace","name":"ZKBase","stage":"Stage
-              0","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange","Payments"],"totalValueSecured":{"tvs":743776.3,"dailyChange":0.15872870666893468},"activity":{"pastDayUops":0,"change":0}},{"id":"phala","name":"Phala","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":4707.87,"dailyChange":0.08973679398359802},"activity":{"pastDayUops":0,"change":0}},{"id":"cartesi-prt-honeypot","name":"Cartesi
-              PRT Honeypot","stage":"Stage 2","capability":"appchain","proofSystem":"Optimistic","purposes":["Bug bounty"],"totalValueSecured":{"tvs":1531.31,"dailyChange":-0.26200149401190387},"activity":{"pastDayUops":0,"change":0}},{"id":"lachain","name":"LaChain","stage":"Stage
-              0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"sxt","name":"Space
-              and Time","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.01681712962962963,"change":-0.8282505910165485}}]}}'
-            source: https://l2beat.com/scaling/summary
-            data_type: L2 Summary (TVL & Market Share) - Rollups
-            category: rollups
-  validiums_and_optimiums:
-    direct_tool:
-      input:
-        tool: get_l2_summary
-        tool_arguments:
+        This analysis provides a snapshot of the most dynamic L2 rollups in terms of TVL growth over the past day, offering
+        valuable insights into current market trends and potential areas of interest for users.'
+      data: &id001
+        status: success
+        data:
+          content: '{"entries":{"rollups":[{"id":"arbitrum","name":"Arbitrum One","stage":"Stage 1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":19553767000,"dailyChange":0.027228282956485828},"activity":{"pastDayUops":36.76732638888889,"change":-0.02442127646244807}},{"id":"base","name":"Base
+            Chain","stage":"Stage 1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":15754827000,"dailyChange":0.05198576094427754},"activity":{"pastDayUops":128.27913194444446,"change":-0.07920588493817315}},{"id":"optimism","name":"OP
+            Mainnet","stage":"Stage 1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":3728018400,"dailyChange":0.024110654390292252},"activity":{"pastDayUops":13.878252314814814,"change":-0.0036279121556661575}},{"id":"zksync2","name":"ZKsync
+            Era","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":1257896200,"dailyChange":0.019109639482495888},"activity":{"pastDayUops":0.3328587962962963,"change":-0.18647280133518152}},{"id":"linea","name":"Linea","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":1094138800,"dailyChange":0.3811324632124473},"activity":{"pastDayUops":2.3253703703703703,"change":0.07656035665294914}},{"id":"unichain","name":"Unichain","stage":"Stage
+            1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":971915400,"dailyChange":0.030730566198085674},"activity":{"pastDayUops":13.630173611111111,"change":0.04908947727568336}},{"id":"starknet","name":"Starknet","stage":"Stage
+            1","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":573222140,"dailyChange":0.019300415635165713},"activity":{"pastDayUops":7.389895833333333,"change":0.0005657189959349385}},{"id":"katana","name":"Katana","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":494649220,"dailyChange":0.1297320407951188},"activity":{"pastDayUops":0.7365856481481482,"change":0.046554842953461684}},{"id":"scroll","name":"Scroll","stage":"Stage
+            1","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":282040900,"dailyChange":0.04785541603059862},"activity":{"pastDayUops":1.1603472222222222,"change":-0.17293096620908133}},{"id":"abstract","name":"Abstract","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":260966500,"dailyChange":0.06103831088014089},"activity":{"pastDayUops":3.350115740740741,"change":0.015218634145999443}},{"id":"bob","name":"BOB","stage":"Stage
+            0","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Bitcoin DApps"],"totalValueSecured":{"tvs":194695360,"dailyChange":-0.07021136457064614},"activity":{"pastDayUops":0.10836805555555555,"change":-0.12910426937029118}},{"id":"ink","name":"Ink","stage":"Stage
+            1","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":99041696,"dailyChange":0.18550779837471865},"activity":{"pastDayUops":9.390821759259259,"change":0.31352709482419483}},{"id":"zksync","name":"ZKsync
+            Lite","stage":"Stage 0","capability":"appchain","proofSystem":"Validity","purposes":["Payments","Exchange","NFT"],"totalValueSecured":{"tvs":71295770,"dailyChange":0.09138134765457573},"activity":{"pastDayUops":0.0059490740740740745,"change":0}},{"id":"paradex","name":"Paradex","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":66698984,"dailyChange":0.10094800494948863},"activity":{"pastDayUops":1.295949074074074,"change":-0.15248079324830643}},{"id":"loopring","name":"Loopring","stage":"Stage
+            0","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange"],"totalValueSecured":{"tvs":26934034,"dailyChange":0.06894143657705487},"activity":{"pastDayUops":0.003599537037037037,"change":0}},{"id":"polygonzkevm","name":"Polygon
+            zkEVM","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":20920634,"dailyChange":0.06219210309490664},"activity":{"pastDayUops":0.09296296296296297,"change":-0.030654115375331803}},{"id":"kinto","name":"Kinto","stage":"Stage
+            1","capability":"appchain","proofSystem":"Optimistic","purposes":["KYC-ed DeFi"],"totalValueSecured":{"tvs":12134251,"dailyChange":-0.2530939270048911},"activity":{"pastDayUops":0.0032523148148148147,"change":0}},{"id":"zeronetwork","name":"ZERO
+            Network","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":6637648,"dailyChange":0.06255538271350991},"activity":{"pastDayUops":0.050243055555555555,"change":-0.0334001336005344}},{"id":"aztec","name":"Zk.Money
+            v1 (Aztec v1)","stage":"Stage 2","capability":"appchain","proofSystem":"Validity","purposes":["Payments","Privacy"],"totalValueSecured":{"tvs":5626818,"dailyChange":0.10718702138856595},"activity":{"pastDayUops":0,"change":0}},{"id":"intmax","name":"INTMAX","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Payments"],"totalValueSecured":{"tvs":3795115.8,"dailyChange":0.22607484068459338},"activity":{"pastDayUops":0,"change":0}},{"id":"facet","name":"Facet
+            Bluebird","stage":"Stage 2","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":2059248.5,"dailyChange":0.07092283634555363},"activity":{"pastDayUops":0.0030787037037037037,"change":0}},{"id":"zkspace","name":"ZKBase","stage":"Stage
+            0","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange","Payments"],"totalValueSecured":{"tvs":787325.5,"dailyChange":0.06518373756714269},"activity":{"pastDayUops":0,"change":0}},{"id":"phala","name":"Phala","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":4698.22,"dailyChange":0.10888934520058458},"activity":{"pastDayUops":0,"change":0}},{"id":"cartesi-prt-honeypot","name":"Cartesi
+            PRT Honeypot","stage":"Stage 2","capability":"appchain","proofSystem":"Optimistic","purposes":["Bug bounty"],"totalValueSecured":{"tvs":1515.18,"dailyChange":-0.13700362244549247},"activity":{"pastDayUops":0,"change":0}},{"id":"lachain","name":"LaChain","stage":"Stage
+            0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"sxt","name":"Space
+            and Time","stage":"Stage 0","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}}]}}'
+          source: https://l2beat.com/scaling/summary
+          data_type: L2 Summary (TVL & Market Share) - Rollups
+          category: rollups
+  security_stage_comparison:
+    input:
+      query: Compare Stage 0 vs Stage 1 rollups. Which ZK rollups offer the best security guarantees currently?
+      raw_data_only: false
+    output:
+      response: "L2Beat categorizes rollups into different stages based on their security features and maturity. These stages\
+        \ are crucial for understanding the trust assumptions and the level of decentralization and security a Layer 2 solution\
+        \ offers.\n\n### Layer 2 Scaling Data: Rollup Stage Comparison\n\nLet's break down the differences between Stage 0\
+        \ and Stage 1 rollups and then identify which ZK rollups currently offer the best security guarantees, based on their\
+        \ stage and proof system.\n\n#### Understanding Rollup Stages:\n\n*   **Stage 0:** These rollups are the least mature\
+        \ in terms of security. They typically have a centralized operator that can upgrade the system, censor transactions,\
+        \ or even steal funds. While they use cryptographic proofs (optimistic or validity), the escape hatches and dispute\
+        \ mechanisms are often not fully decentralized or battle-tested. Users must trust the operator to a significant degree.\n\
+        *   **Stage 1:** These rollups have made significant progress towards decentralization and enhanced security. Key\
+        \ characteristics of Stage 1 rollups include:\n    *   **Permissionless dispute resolution:** Anyone can submit fraud\
+        \ proofs (for optimistic rollups) or validity proofs (for ZK rollups) to challenge invalid state transitions.\n  \
+        \  *   **Decentralized sequencers (or plans for them):** While some Stage 1 rollups might still have a centralized\
+        \ sequencer, there's a clear roadmap and often ongoing efforts to decentralize this component, which is crucial for\
+        \ censorship resistance.\n    *   **Established escape hatches:** Users have a clear and reliable way to withdraw\
+        \ their funds directly to Ethereum, even if the Layer 2 operator becomes malicious or unresponsive.\n    *   **Transparent\
+        \ upgrade mechanisms:** Upgrades are often time-locked or require multi-signature approvals, providing a degree of\
+        \ security and preventing immediate malicious changes.\n*   **Stage 2:** These are the most mature and secure rollups,\
+        \ aiming for full decentralization across all aspects, including sequencers, proposers, and upgrade mechanisms. They\
+        \ offer the highest level of security and censorship resistance, closely mirroring Ethereum's security guarantees.\
+        \ (Note: In the provided data, there are very few Stage 2 rollups, indicating the early stage of the ecosystem's maturity).\n\
+        \n#### Stage 0 vs. Stage 1 Rollups: Key Differences\n\n| Feature                 | Stage 0 Rollups               \
+        \                      | Stage 1 Rollups                                                                         \
+        \                           |\n| :---------------------- | :-------------------------------------------------- | :-----------------------------------------------------------------------------------------------------------------\
+        \ |\n| **Security Maturity**   | Lower. Higher reliance on the centralized operator. | Higher. Significant steps towards\
+        \ decentralization and trust minimization.                                         |\n| **Operator Control**    |\
+        \ Centralized operator has significant control.       | Operator control is reduced; mechanisms for user protection\
+        \ and permissionless operation are in place.             |\n| **Upgradeability**      | Often instant or easily controlled\
+        \ by the operator. | Usually time-locked or multi-sig controlled, providing a safety buffer and community oversight.\
+        \                    |\n| **Censorship Resistance** | More susceptible to censorship by the operator.     | Less susceptible\
+        \ due to permissionless dispute resolution and/or decentralized sequencer roadmaps.               |\n| **Fund Safety**\
+        \         | Higher trust in the operator not to steal funds.    | Funds are more secure due to established escape\
+        \ hatches and cryptographic guarantees enforceable on L1.         |\n| **Dispute Resolution**  | May be centralized\
+        \ or nascent.                      | Permissionless fraud proofs (Optimistic) or validity proofs (ZK) are in place\
+        \ and verifiable by anyone.            |\n| **Examples**            | ZKsync Era, Linea, Polygon zkEVM           \
+        \         | Arbitrum One, Base, OP Mainnet, Starknet, Scroll                                                     \
+        \              |\n\n#### Summary Data: TVL and Stage Distribution (Selected Rollups)\n\nLet's look at a selection\
+        \ of rollups from the provided data, categorized by their stage and proof system, along with their TVL.\n\n| Rollup\
+        \ Name     | Stage     | Capability | Proof System | Total Value Secured (TVL USD) |\n| :-------------- | :--------\
+        \ | :--------- | :----------- | :---------------------------- |\n| Arbitrum One    | Stage 1   | universal  | Optimistic\
+        \   | $19,553,767,000               |\n| Base Chain      | Stage 1   | universal  | Optimistic   | $15,754,827,000\
+        \               |\n| OP Mainnet      | Stage 1   | universal  | Optimistic   | $3,728,018,400                |\n|\
+        \ ZKsync Era      | Stage 0   | universal  | Validity     | $1,257,896,200                |\n| Linea           | Stage\
+        \ 0   | universal  | Validity     | $1,094,138,800                |\n| Unichain        | Stage 1   | universal  |\
+        \ Optimistic   | $971,915,400                 |\n| Starknet        | Stage 1   | universal  | Validity     | $573,222,140\
+        \                 |\n| Katana          | Stage 0   | universal  | Validity     | $494,649,220                  |\n\
+        | Scroll          | Stage 1   | universal  | Validity     | $282,040,900                 |\n| Abstract        | Stage\
+        \ 0   | universal  | Validity     | $260,966,500                 |\n| BOB             | Stage 0   | universal  | Optimistic\
+        \   | $194,695,360                 |\n| Ink             | Stage 1   | universal  | Optimistic   | $99,041,696    \
+        \              |\n| ZKsync Lite     | Stage 0   | appchain   | Validity     | $71,295,770                  |\n| Paradex\
+        \         | Stage 0   | universal  | Validity     | $66,698,984                  |\n| Loopring        | Stage 0  \
+        \ | appchain   | Validity     | $26,934,034                  |\n| Polygon zkEVM   | Stage 0   | universal  | Validity\
+        \     | $20,920,634                  |\n| Kinto           | Stage 1   | appchain   | Optimistic   | $12,134,251  \
+        \                |\n| ZERO Network    | Stage 0   | universal  | Validity     | $6,637,648                   |\n|\
+        \ Zk.Money v1     | Stage 2   | appchain   | Validity     | $5,626,818                   |\n| INTMAX          | Stage\
+        \ 0   | universal  | Validity     | $3,795,115.8                 |\n| Facet Bluebird  | Stage 2   | universal  | Optimistic\
+        \   | $2,059,248.5                 |\n| ZKBase          | Stage 0   | appchain   | Validity     | $787,325.5     \
+        \              |\n\n*Note: TVL data is dynamic and subject to change.*\n\n#### Cost Analysis: Average Transaction\
+        \ Costs (Past Day Uops)\n\nWhile the provided data gives \"pastDayUops\" (User Operations), it does not directly present\
+        \ the average transaction cost in USD. To provide a meaningful cost analysis, one would typically need the average\
+        \ gas price on the L2, the gas usage per transaction, and the ETH/USD conversion rate. L2Beat's summary data focuses\
+        \ on activity rather than direct cost.\n\nHowever, we can infer activity levels, which often correlate with network\
+        \ congestion and potentially higher costs. Higher Uops might indicate a more active chain, which *could* lead to higher\
+        \ costs during peak times, but this is not a direct cost metric.\n\n| Rollup Name     | Past Day Uops (User Operations)\
+        \ |\n| :-------------- | :------------------------------ |\n| Base Chain      | 128.28                          |\n\
+        | Arbitrum One    | 36.77                           |\n| OP Mainnet      | 13.88                           |\n| Unichain\
+        \        | 13.63                           |\n| Ink             | 9.39                            |\n| Starknet  \
+        \      | 7.39                            |\n| Abstract        | 3.35                            |\n| Linea       \
+        \    | 2.33                            |\n| Paradex         | 1.30                            |\n| Scroll        \
+        \  | 1.16                            |\n| Katana          | 0.74                            |\n| ZKsync Era      |\
+        \ 0.33                            |\n| BOB             | 0.11                            |\n| Polygon zkEVM   | 0.09\
+        \                            |\n| ZERO Network    | 0.05                            |\n| ZKsync Lite     | 0.0059\
+        \                          |\n| Loopring        | 0.0036                          |\n| Kinto           | 0.0033  \
+        \                        |\n| Facet Bluebird  | 0.0031                          |\n\n*Note: \"Uops\" here is a relative\
+        \ measure of activity and not a direct cost in USD per transaction. A higher number indicates more user operations\
+        \ on the network.*\n\n### Analysis and Insights:\n\n1.  **Dominance of Optimistic Rollups in TVL and Activity:**\n\
+        \    *   Arbitrum One and Base Chain, both Stage 1 Optimistic Rollups, command the vast majority of the Total Value\
+        \ Secured (TVL) and show very high user activity (Uops). This indicates a strong market preference and trust in these\
+        \ more mature optimistic solutions.\n    *   OP Mainnet, another Stage 1 Optimistic Rollup, also holds a significant\
+        \ TVL and activity.\n    *   This suggests that users prioritize the relatively higher security guarantees and battle-tested\
+        \ nature of Stage 1 optimistic rollups, even with their longer withdrawal periods.\n\n2.  **ZK Rollup Landscape: Mostly\
+        \ Stage 0, but Progressing:**\n    *   Most ZK rollups in the list, such as ZKsync Era, Linea, Polygon zkEVM, Katana,\
+        \ and Abstract, are currently classified as Stage 0. This means they still rely on a centralized operator for critical\
+        \ functions, or their security mechanisms are not yet fully permissionless and decentralized.\n    *   Despite being\
+        \ Stage 0, ZKsync Era and Linea have managed to attract substantial TVL, indicating strong anticipation and interest\
+        \ in ZK technology.\n    *   **Starknet and Scroll are notable exceptions as Stage 1 ZK Rollups.** This is a significant\
+        \ achievement, as they have implemented more robust security features and moved beyond the initial centralized trust\
+        \ assumptions.\n\n3.  **Security Guarantees: Stage 1 ZK Rollups are Key:**\n    *   **For users prioritizing the best\
+        \ security guarantees from ZK rollups *currently available*, Stage 1 ZK rollups are the clear choice.**\n    *   Based\
+        \ on the provided data, **Starknet** and **Scroll** are the only universal ZK rollups that have achieved Stage 1.\
+        \ This means they offer a higher degree of decentralization, permissionless proof verification, and more robust escape\
+        \ hatches compared to their Stage 0 counterparts.\n    *   While ZK rollups inherently offer stronger cryptographic\
+        \ finality (no fraud proofs needed, only validity proofs), their \"stage\" indicates the maturity of their *overall\
+        \ system decentralization and trust minimization*. A Stage 0 ZK rollup, despite its proof system, still carries significant\
+        \ operator risk.\n    *   Zk.Money v1 (Aztec v1) is a Stage 2 ZK rollup, but it's an appchain focused on privacy and\
+        \ payments, not a universal rollup, and has a much smaller TVL and no recent activity in the provided data.\n\n4.\
+        \  **Implications for User Choice:**\n    *   **For users prioritizing high TVL, established ecosystems, and proven\
+        \ activity, Stage 1 Optimistic Rollups (Arbitrum, Base, Optimism) are currently the most robust options.** They offer\
+        \ good security, albeit with the 7-day withdrawal challenge period.\n    *   **For users who specifically want the\
+        \ cryptographic finality of ZK proofs AND a higher degree of decentralization and trust minimization, Stage 1 ZK rollups\
+        \ like Starknet and Scroll are the most suitable choices.** These offer a significant security advantage over Stage\
+        \ 0 ZK rollups.\n    *   **Users considering Stage 0 ZK rollups (e.g., ZKsync Era, Linea, Polygon zkEVM) should be\
+        \ aware of the increased trust assumptions in the centralized operator.** While these projects are actively working\
+        \ towards Stage 1 and beyond, they are not yet there. Their high TVL reflects future potential and community excitement\
+        \ rather than current full decentralization.\n\n#### Which ZK rollups offer the best security guarantees currently?\n\
+        \nBased on the L2Beat staging model and the provided data, **Starknet** and **Scroll** currently offer the best security\
+        \ guarantees among the *universal ZK rollups* because they have achieved **Stage 1**.\n\nWhile all ZK rollups leverage\
+        \ validity proofs for cryptographic finality, a Stage 1 classification means that Starknet and Scroll have implemented\
+        \ more robust mechanisms for permissionless operation, dispute resolution (in the context of proof verification, not\
+        \ fraud proofs), and established escape hatches, significantly reducing reliance on a centralized operator compared\
+        \ to Stage 0 ZK rollups.\n\n**Zk.Money v1 (Aztec v1)** is also a ZK rollup and is classified as Stage 2, which is\
+        \ the highest security stage. However, it is an appchain focused on privacy and payments, not a universal EVM-compatible\
+        \ rollup, and has significantly lower TVL and no recent activity, making it a different category for most general\
+        \ users.\n\nTherefore, for general-purpose, universal ZK rollup usage with enhanced security, **Starknet and Scroll\
+        \ are the leading options currently.**"
+      data: *id001
+  cost_efficiency_analysis:
+    input:
+      query: Which Layer 2 solutions offer the most cost-effective transactions for DeFi users? Compare gas fees across different
+        rollup types.
+      raw_data_only: false
+    output:
+      response: "The provided data from L2Beat focuses on the summary of Layer 2 solutions, primarily rollups, detailing their\
+        \ Total Value Locked (TVL), daily change, and daily user operations (uops). It does _not_ directly provide average\
+        \ transaction costs per user operation in USD, which would be crucial for a direct cost analysis. However, we can\
+        \ infer some aspects and highlight the importance of factoring in transaction volume for cost-effectiveness.\n\nLet's\
+        \ break down the available data and then discuss how to approach cost analysis.\n\n## Layer 2 Scaling Data Analysis\
+        \ (Rollups)\n\n### 1. Summary Data: TVL, Market Share, Chain Types, Security Models, Stages\n\nThe table below summarizes\
+        \ the key metrics for the top Layer 2 rollups based on TVL, along with their characteristics.\n\n**Table 1: L2 Rollup\
+        \ Summary by TVL (Top 10)**\n\n| Rank | Project Name | TVL (USD) | Daily Change (%) | Market Share (Approx.) | Chain\
+        \ Type | Security Model | Stage | Past Day UOPs (Thousands) |\n|---|---|---|---|---|---|---|---|---|\n| 1 | Arbitrum\
+        \ One | 19,553,767,000 | 2.72 | 40.2% | Universal | Optimistic | Stage 1 | 36.77 |\n| 2 | Base Chain | 15,754,827,000\
+        \ | 5.20 | 32.4% | Universal | Optimistic | Stage 1 | 128.28 |\n| 3 | OP Mainnet | 3,728,018,400 | 2.41 | 7.7% | Universal\
+        \ | Optimistic | Stage 1 | 13.88 |\n| 4 | ZKsync Era | 1,257,896,200 | 1.91 | 2.6% | Universal | Validity | Stage\
+        \ 0 | 0.33 |\n| 5 | Linea | 1,094,138,800 | 38.11 | 2.2% | Universal | Validity | Stage 0 | 2.33 |\n| 6 | Unichain\
+        \ | 971,915,400 | 3.07 | 2.0% | Universal | Optimistic | Stage 1 | 13.63 |\n| 7 | Starknet | 573,222,140 | 1.93 |\
+        \ 1.2% | Universal | Validity | Stage 1 | 7.39 |\n| 8 | Katana | 494,649,220 | 12.97 | 1.0% | Universal | Validity\
+        \ | Stage 0 | 0.74 |\n| 9 | Scroll | 282,040,900 | 4.79 | 0.6% | Universal | Validity | Stage 1 | 1.16 |\n| 10 | Abstract\
+        \ | 260,966,500 | 6.10 | 0.5% | Universal | Validity | Stage 0 | 3.35 |\n| **Total Top 10** | | **44,071,442,460**\
+        \ | | **90.5%** | | | | |\n| **Overall Total TVL (Sum of all listed)** | | **48,690,000,000 (Approx)** | | **100%**\
+        \ | | | | |\n\n*Note: Market Share is an approximation based on the sum of TVL from the provided data.*\n\n**Analysis\
+        \ & Insights:**\n\n*   **TVL Dominance**: Arbitrum One and Base Chain significantly dominate the Layer 2 landscape\
+        \ in terms of TVL, collectively holding over 72% of the market share among the listed rollups. This indicates strong\
+        \ user and developer trust in these platforms.\n*   **Growth Trends**: Linea shows an exceptionally high daily TVL\
+        \ change (38.11%), suggesting rapid recent growth and adoption. Katana also exhibits strong growth.\n*   **Optimistic\
+        \ vs. ZK Rollups**: Optimistic Rollups (Arbitrum, Base, OP Mainnet) currently command the vast majority of TVL. However,\
+        \ ZK Rollups (ZKsync Era, Linea, Starknet) are gaining traction, with Linea showing impressive growth. This suggests\
+        \ a growing interest in the finality and security benefits of ZK proofs, even if they are generally in earlier \"\
+        Stage 0\" development.\n*   **Security Models**:\n    *   **Optimistic Rollups**: Rely on fraud proofs and a challenge\
+        \ period. They are generally simpler to implement and have been adopted earlier, leading to higher TVL.\n    *   **Validity\
+        \ Rollups (ZK Rollups)**: Rely on cryptographic proofs (zero-knowledge proofs) for immediate finality on the L1. They\
+        \ are more complex to build but offer stronger security guarantees and faster withdrawals. Many are still in earlier\
+        \ stages (Stage 0), indicating ongoing development and rollout.\n*   **Stages**:\n    *   **Stage 1**: Indicates a\
+        \ higher degree of decentralization and security features, often including a working fraud/validity proof system and\
+        \ an escape hatch for users.\n    *   **Stage 0**: Represents an earlier stage of development, where the rollup might\
+        \ still have centralized components or lack fully implemented decentralized security features. Many ZK rollups are\
+        \ in Stage 0, reflecting their newer and more complex technology.\n*   **Activity (UOPs)**: Base Chain stands out\
+        \ with a significantly higher number of user operations (128.28K) in the past day compared to other rollups. This\
+        \ suggests high user engagement and transaction volume, which is a key factor in driving down per-transaction costs.\
+        \ Arbitrum One and OP Mainnet also show substantial activity. ZK rollups generally have lower UOPs, which could be\
+        \ due to their newer status or specific use cases.\n*   **Chain Types**: Most top rollups are \"Universal,\" meaning\
+        \ they support general-purpose smart contracts and dApps, similar to Ethereum. A few (like ZKsync Lite, Loopring,\
+        \ Kinto, Aztec) are \"Appchain\" types, optimized for specific applications or use cases (e.g., payments, exchange,\
+        \ privacy).\n\n### 2. Cost Analysis: Average Transaction Costs per User Operation in USD\n\nThe provided data does\
+        \ **not directly contain the average transaction costs in USD**. To perform a robust cost analysis, we would need:\n\
+        \n1.  **Average Gas Price (Gwei)** on each L2.\n2.  **Average Gas Used** for common user operations (e.g., token transfer,\
+        \ swap, NFT mint).\n3.  **Current ETH Price (USD)**.\n4.  **Cost of L1 Data Submission**: A significant portion of\
+        \ L2 transaction costs comes from submitting transaction data to Ethereum L1. This varies based on L1 gas prices and\
+        \ the data compression efficiency of each rollup.\n\n**However, we can infer and discuss how these factors would play\
+        \ out for users based on the available data and general knowledge of L2s:**\n\n**General Principles for L2 Cost-Effectiveness:**\n\
+        \n*   **Batching Efficiency**: Rollups achieve cost savings by batching many L2 transactions into a single L1 transaction.\
+        \ The more transactions batched, the lower the amortized L1 cost per L2 transaction.\n*   **Data Compression**: How\
+        \ efficiently a rollup compresses transaction data before submitting it to L1 impacts costs. ZK-Rollups often have\
+        \ better compression for certain transaction types.\n*   **L1 Gas Prices**: The underlying cost of transacting on\
+        \ Ethereum L1 directly influences L2 costs. When L1 is congested, L2 costs rise.\n*   **Transaction Complexity**:\
+        \ More complex operations (e.g., complex DeFi swaps) consume more L2 gas than simple transfers.\n\n**Inference from\
+        \ Activity (UOPs) and Rollup Type:**\n\nWhile direct cost data is missing, we can make some informed inferences:\n\
+        \n*   **High Activity (Base Chain, Arbitrum One)**: Rollups with high daily user operations (like Base Chain with\
+        \ 128K uops and Arbitrum One with 36K uops) are likely to offer more cost-effective transactions. This is because\
+        \ the fixed cost of submitting data to L1 (which is shared by all transactions in a batch) is amortized over a larger\
+        \ number of transactions. Therefore, a user joining a highly active L2 is likely to benefit from lower per-transaction\
+        \ fees.\n*   **Optimistic Rollups vs. ZK-Rollups (General Trend)**:\n    *   Historically, **Optimistic Rollups**\
+        \ (Arbitrum, Optimism, Base) have generally offered lower transaction costs for basic operations due to their simpler\
+        \ proof mechanisms and earlier optimization.\n    *   **ZK-Rollups** (ZKsync Era, Linea, Starknet, Scroll) have faced\
+        \ higher proving costs, which can translate to higher transaction fees, especially for complex operations. However,\
+        \ ZK technology is rapidly advancing, and proving costs are decreasing. For simple transfers, some ZK-Rollups (e.g.,\
+        \ ZKsync Lite historically) have shown very competitive pricing.\n*   **Stage of Development (Stage 0 vs. Stage 1)**:\
+        \ Rollups in Stage 0 might still be optimizing their cost structures. As they mature to Stage 1, we often see further\
+        \ efficiencies and cost reductions.\n\n**Practical Comparison for Users (Hypothetical based on typical L2 behavior):**\n\
+        \n| Factor | Optimistic Rollups (e.g., Arbitrum, Base, OP Mainnet) | ZK-Rollups (e.g., ZKsync Era, Linea, Starknet,\
+        \ Scroll) |\n|---|---|---|\n| **Typical Cost (Simple Transfer)** | Generally very low (e.g., $0.01 - $0.10) | Low\
+        \ to Moderate (e.g., $0.05 - $0.50), improving rapidly |\n| **Typical Cost (Complex DeFi Swap)** | Moderate (e.g.,\
+        \ $0.10 - $1.00+) | Moderate to Higher (e.g., $0.20 - $2.00+), depending on complexity and proving costs |\n| **Withdrawal\
+        \ Time** | 7-day challenge period (can use bridges for faster, but more expensive, withdrawals) | Near-instant (once\
+        \ ZK proof is generated and verified on L1) |\n| **Security Model** | Fraud proofs (assume honest majority, potential\
+        \ for delays) | Validity proofs (cryptographically guaranteed, immediate finality) |\n| **Current Adoption (TVL/Activity)**\
+        \ | High (Arbitrum, Base lead) | Growing (ZKsync Era, Linea, Starknet gaining) |\n\n**Conclusion on Cost Analysis\
+        \ without direct data:**\n\nWhile we cannot provide exact average transaction costs from the given data, the high\
+        \ transaction volume on **Base Chain** and **Arbitrum One** strongly suggests they are likely among the most cost-effective\
+        \ solutions for users due to better amortization of L1 batching costs. Optimistic rollups, in general, have historically\
+        \ been cheaper for most common operations. ZK-rollups are rapidly improving their cost efficiency, but their proving\
+        \ costs can still be a factor, especially for more complex transactions.\n\n**To truly compare cost-effectiveness,\
+        \ users should:**\n\n1.  **Check current gas fees** directly on the L2Beat website (which usually provides this data)\
+        \ or through block explorers for each specific L2 before transacting.\n2.  **Consider the type of transaction** they\
+        \ need to perform (simple transfer vs. complex smart contract interaction).\n3.  **Factor in withdrawal times and\
+        \ security preferences** alongside cost.\n\nThe provided data is excellent for understanding market share, growth,\
+        \ and the general characteristics of L2s, but specific cost comparisons require more granular gas fee data."
+      data: *id001
+tool_call_tests:
+  rollups_summary_default:
+    input:
+      tool: get_l2_summary
+      tool_arguments:
+        category: rollups
+    output:
+      response: ''
+      data: *id001
+  validiums_summary:
+    input:
+      tool: get_l2_summary
+      tool_arguments:
+        category: validiumsAndOptimiums
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          content: '{"entries":{"validiumsAndOptimiums":[{"id":"sophon","name":"Sophon","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Gaming","Social","AI"],"totalValueSecured":{"tvs":107746470,"dailyChange":-0.023568254951011003},"activity":{"pastDayUops":1.0098958333333334,"change":0.06559278980020533}},{"id":"nova","name":"Arbitrum
+            Nova","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":45087088,"dailyChange":0.10807509346377797},"activity":{"pastDayUops":0.05288194444444445,"change":-0.10165159260715684}},{"id":"lens","name":"Lens","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Social"],"totalValueSecured":{"tvs":2525585.5,"dailyChange":0.07200983898112634},"activity":{"pastDayUops":0.24908564814814815,"change":0.13813527949653603}}]}}'
+          source: https://l2beat.com/scaling/summary?tab=validiumsAndOptimiums
+          data_type: L2 Summary (TVL & Market Share) - Validiums & Optimiums
           category: validiumsAndOptimiums
-      output:
-        response: ''
+  rollups_costs:
+    input:
+      tool: get_l2_costs
+      tool_arguments:
+        category: rollups
+    output:
+      response: ''
+      data: &id002
+        status: success
         data:
-          status: success
-          data:
-            content: '{"entries":{"validiumsAndOptimiums":[{"id":"sophon","name":"Sophon","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Gaming","Social","AI"],"totalValueSecured":{"tvs":109456190,"dailyChange":-0.043504612729797554},"activity":{"pastDayUops":1.065,"change":-0.45362238808628896}},{"id":"nova","name":"Arbitrum
-              Nova","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":45142708,"dailyChange":0.08791587391420985},"activity":{"pastDayUops":0.05938657407407407,"change":0.3089285714285712}},{"id":"lens","name":"Lens","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Social"],"totalValueSecured":{"tvs":2525884.8,"dailyChange":0.06113616148960399},"activity":{"pastDayUops":0.19284722222222223,"change":-0.1349807911950991}}]}}'
-            source: https://l2beat.com/scaling/summary?tab=validiumsAndOptimiums
-            data_type: L2 Summary (TVL & Market Share) - Validiums & Optimiums
-            category: validiumsAndOptimiums
-  others:
-    direct_tool:
-      input:
-        tool: get_l2_summary
-        tool_arguments:
-          category: others
-      output:
-        response: ''
-        data:
-          status: success
-          data:
-            content: '{"entries":{"others":[{"id":"polygon-pos","name":"Polygon PoS","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":4307159600,"dailyChange":0.026148399051013405},"activity":{"pastDayUops":44.3125,"change":-0.0017443270261180421}},{"id":"mantle","name":"Mantle","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":2201278500,"dailyChange":0.004820565677554178},"activity":{"pastDayUops":2.406574074074074,"change":0.0405088248687655}},{"id":"worldchain","name":"World
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Identity"],"totalValueSecured":{"tvs":675131460,"dailyChange":0.13258828568078207},"activity":{"pastDayUops":33.426458333333336,"change":0.016402246748127736}},{"id":"celo","name":"Celo","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":409730340,"dailyChange":0.011002854384915661},"activity":{"pastDayUops":16.223506944444445,"change":0.057710693456461515}},{"id":"blast","name":"Blast","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":351546200,"dailyChange":0.0042407957500973925},"activity":{"pastDayUops":4.540219907407407,"change":0.04395648262977758}},{"id":"mantapacific","name":"Manta
-              Pacific","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":303090980,"dailyChange":0.018179701199203535},"activity":{"pastDayUops":0.7754976851851851,"change":0.15542334885325038}},{"id":"fraxtal","name":"Fraxtal","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":247284020,"dailyChange":0.01699432066763884},"activity":{"pastDayUops":0.17206018518518518,"change":-0.25066787640506083}},{"id":"soneium","name":"Soneium","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":154529220,"dailyChange":0.05563475304047305},"activity":{"pastDayUops":7.339236111111111,"change":-0.6222520476165796}},{"id":"metis","name":"Metis
-              Andromeda","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":147714380,"dailyChange":0.012191714156929212},"activity":{"pastDayUops":0.43258101851851855,"change":0.23996416959723987}},{"id":"mode","name":"Mode
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":142398850,"dailyChange":-0.014592112576563454},"activity":{"pastDayUops":2.2913888888888887,"change":0.011206341747453719}},{"id":"lisk","name":"Lisk","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":137965680,"dailyChange":0.018955138351291145},"activity":{"pastDayUops":0.9744444444444444,"change":0.004629850603789842}},{"id":"zircuit","name":"Zircuit","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":111454384,"dailyChange":0.03642269191561476},"activity":{"pastDayUops":0.19344907407407408,"change":-0.04036286386863408}},{"id":"plumenetwork","name":"Plume
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","RWA"],"totalValueSecured":{"tvs":108595490,"dailyChange":-0.07249405671187914},"activity":{"pastDayUops":2.7838078703703704,"change":0.0599187393136027}},{"id":"apechain","name":"ApeChain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":91218790,"dailyChange":-0.0040397304543315915},"activity":{"pastDayUops":0.7370717592592593,"change":-0.8607385669081613}},{"id":"lyra","name":"Derive","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":86706130,"dailyChange":0.04292832124828849},"activity":{"pastDayUops":0.14418981481481483,"change":0.11421160897951887}},{"id":"sxnetwork","name":"SX
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Betting"],"totalValueSecured":{"tvs":84619450,"dailyChange":0.024134314042916438},"activity":{"pastDayUops":0.12092592592592592,"change":-0.05430847212165113}},{"id":"cronoszkevm","name":"Cronos
-              zkEVM","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":77076390,"dailyChange":0.08098269126527047},"activity":{"pastDayUops":0.0528587962962963,"change":0.005504183179216193}},{"id":"swell","name":"Swellchain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Restaking"],"totalValueSecured":{"tvs":76532016,"dailyChange":0.06908274585852747},"activity":{"pastDayUops":0.6370370370370371,"change":0.06133940106828151}},{"id":"galxegravity","name":"Gravity","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":65686260,"dailyChange":0.01558081511950582},"activity":{"pastDayUops":4.782569444444444,"change":-0.1726851184469752}},{"id":"corn","name":"Corn","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Bitcoin
-              DApps"],"totalValueSecured":{"tvs":62008572,"dailyChange":-0.14820359680378736},"activity":{"pastDayUops":0.04888888888888889,"change":0.02078298695021763}},{"id":"taiko","name":"Taiko
-              Alethia","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":47197764,"dailyChange":-0.022454456439459647},"activity":{"pastDayUops":6.364733796296297,"change":0.025268476396450135}},{"id":"immutablezkevm","name":"Immutable
-              zkEVM","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":46211388,"dailyChange":-0.012563000904628363},"activity":{"pastDayUops":0.8464699074074075,"change":0.07883052322579709}},{"id":"fuel","name":"Fuel
-              Ignition","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":43094452,"dailyChange":-0.0475270486308218},"activity":{"pastDayUops":1.0866319444444446,"change":0.060859444739488566}},{"id":"xlayer","name":"X
-              Layer","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":41629112,"dailyChange":-0.5032649778111142},"activity":{"pastDayUops":8.817662037037037,"change":-0.1508910758668347}},{"id":"aevo","name":"Aevo","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":40535164,"dailyChange":-0.05074684271270191},"activity":{"pastDayUops":0.05075231481481481,"change":1.3312068048910155}},{"id":"educhain","name":"EDU
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Social"],"totalValueSecured":{"tvs":39826400,"dailyChange":0.03125842197139961},"activity":{"pastDayUops":1.6580787037037037,"change":0.18318769718693728}},{"id":"zklinknova","name":"zkLink
-              Nova","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Interoperability"],"totalValueSecured":{"tvs":36145792,"dailyChange":0.1573457521970998},"activity":{"pastDayUops":0.009965277777777778,"change":0}},{"id":"immutablex","name":"Immutable
-              X","stage":"NotApplicable","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange"],"totalValueSecured":{"tvs":35359984,"dailyChange":0.06165147407491567},"activity":{"pastDayUops":0.7829861111111112,"change":-0.05249446763214649}},{"id":"eclipse","name":"Eclipse","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":35351940,"dailyChange":-0.01592735086369279},"activity":{"pastDayUops":13.095231481481482,"change":0.043794172647070084}},{"id":"morph","name":"Morph","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":32891650,"dailyChange":0.01830233090063449},"activity":{"pastDayUops":1.607199074074074,"change":0.8919301878823385}},{"id":"hashkey","name":"HashKey
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":30822002,"dailyChange":0.014406399836968342},"activity":{"pastDayUops":0.22503472222222223,"change":0.7804945054945056}},{"id":"lumia","name":"Lumia
-              Prism","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Restaking","RWA"],"totalValueSecured":{"tvs":29890070,"dailyChange":-0.027898562932379245},"activity":{"pastDayUops":0.022916666666666665,"change":-0.16701724863273038}},{"id":"sorare","name":"Sorare","stage":"NotApplicable","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange"],"totalValueSecured":{"tvs":25248170,"dailyChange":0.11055293534037336},"activity":{"pastDayUops":1.3188194444444445,"change":0.226095939053522}},{"id":"rss3","name":"RSS3
-              Value Sublayer","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","AI","Information"],"totalValueSecured":{"tvs":22130990,"dailyChange":-0.04035655685101869},"activity":{"pastDayUops":0.00011574074074074075,"change":0}},{"id":"orderly","name":"Orderly
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":21518916,"dailyChange":0.2501349830369284},"activity":{"pastDayUops":0.24631944444444445,"change":0.1578890097932535}},{"id":"karak","name":"K2","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":17981610,"dailyChange":0.07307775005411155},"activity":{"pastDayUops":0.005798611111111111,"change":0}},{"id":"cyber","name":"Cyber","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Social"],"totalValueSecured":{"tvs":17766400,"dailyChange":-0.19099655814716787},"activity":{"pastDayUops":0.11334490740740741,"change":0.0652670510170783}},{"id":"zora","name":"Zora","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","NFT"],"totalValueSecured":{"tvs":17413956,"dailyChange":0.03824048379004652},"activity":{"pastDayUops":0.11622685185185185,"change":0.031959716370362656}},{"id":"reya","name":"Reya","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":16069432,"dailyChange":0.0020709991462453115},"activity":{"pastDayUops":0.9325578703703704,"change":0.042139300265149116}},{"id":"silicon","name":"Silicon","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":15938216,"dailyChange":0.013965470547590453},"activity":{"pastDayUops":0.021944444444444444,"change":0.03663203936577353}},{"id":"lightlink","name":"LightLink","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":12800970,"dailyChange":0.027333425090797725},"activity":{"pastDayUops":0.837650462962963,"change":0.017432134171200486}},{"id":"bobanetwork","name":"Boba
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":12446678,"dailyChange":0.0311632778734241},"activity":{"pastDayUops":0.0920138888888889,"change":0.23600746268656736}},{"id":"soon","name":"Soon
-              Alpha Mainnet","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":8938414,"dailyChange":0.01617193769601588},"activity":{"pastDayUops":0.08421296296296296,"change":0.0046948356807512415}},{"id":"hemi","name":"Hemi","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Bitcoin
-              DApps"],"totalValueSecured":{"tvs":8746198,"dailyChange":0.09030836166926104},"activity":{"pastDayUops":1.920601851851852,"change":-0.010760380339205344}},{"id":"zkfair","name":"ZKFair","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":6371193.5,"dailyChange":0.013843129289079714},"activity":{"pastDayUops":0.5796296296296296,"change":0.000919374825118835}},{"id":"polynomial","name":"Polynomial","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Exchange"],"totalValueSecured":{"tvs":5706128,"dailyChange":-0.2987576761945492},"activity":{"pastDayUops":0.01747685185185185,"change":0.07703281027104114}},{"id":"shibarium","name":"Shibarium","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":5563868.5,"dailyChange":0.020616144606602216},"activity":{"pastDayUops":21.666203703703705,"change":-0.5646322168345341}},{"id":"sanko","name":"Sanko","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming","Social"],"totalValueSecured":{"tvs":5281264,"dailyChange":-0.1818420460889133},"activity":{"pastDayUops":0.03435185185185185,"change":0.07225433526011549}},{"id":"rari","name":"RARI
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","NFT"],"totalValueSecured":{"tvs":3612593.8,"dailyChange":0.057070245460992375},"activity":{"pastDayUops":0.12259259259259259,"change":0.4555448673904079}},{"id":"lasernet","name":"Lasernet","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":2927063.5,"dailyChange":-0.059863672590671047},"activity":{"pastDayUops":0.7833101851851851,"change":0.000739338735434858}},{"id":"mint","name":"Mint","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","NFT"],"totalValueSecured":{"tvs":2855505,"dailyChange":-0.012202520579395193},"activity":{"pastDayUops":0.16563657407407406,"change":-0.29699857542859953}},{"id":"superseed","name":"Superseed","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":2792272.8,"dailyChange":0.009911866310570172},"activity":{"pastDayUops":0.07393518518518519,"change":0.04841621532906615}},{"id":"ancient","name":"Ancient8","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":2586245.2,"dailyChange":0.002133186605392412},"activity":{"pastDayUops":0.00369212962962963,"change":0}},{"id":"xai","name":"Xai","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":2523268,"dailyChange":0.01853751287366512},"activity":{"pastDayUops":0.4332638888888889,"change":-0.0803812705743625}},{"id":"shape","name":"Shape","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":2165912.2,"dailyChange":0.02518852092574586},"activity":{"pastDayUops":0.40585648148148146,"change":0.07756130538995754}},{"id":"pepeunchained2","name":"Pepe
-              Unchained","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":2073778.9,"dailyChange":-0.13400106436519688},"activity":{"pastDayUops":0.022488425925925926,"change":0.2707652060170045}},{"id":"redstone","name":"Redstone","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":2006326.8,"dailyChange":0.08937856243696096},"activity":{"pastDayUops":0.07407407407407407,"change":-0.5863227974920819}},{"id":"superposition","name":"Superposition","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming","Social"],"totalValueSecured":{"tvs":1767452.6,"dailyChange":0.04902163570926232},"activity":{"pastDayUops":0.024652777777777777,"change":-0.03445149592021757}},{"id":"winr","name":"WINR","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":1662759.9,"dailyChange":0.1672242025858135},"activity":{"pastDayUops":0.31439814814814815,"change":-0.5943673749757343}},{"id":"fluence","name":"Fluence","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":1603828.2,"dailyChange":-0.04457305831564262},"activity":{"pastDayUops":0.18796296296296297,"change":0.0905183991404781}},{"id":"degen","name":"Degen
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Social"],"totalValueSecured":{"tvs":1314371.9,"dailyChange":-0.01814329796760894},"activity":{"pastDayUops":0.04425925925925926,"change":-0.06320431161195483}},{"id":"popapex","name":"Proof
-              of Play Apex","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":1253528.9,"dailyChange":0.08918200884845473},"activity":{"pastDayUops":0.8110416666666667,"change":-0.40662020610874483}},{"id":"metal","name":"Metal","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":1222482,"dailyChange":0.07105909284295953},"activity":{"pastDayUops":0.006296296296296296,"change":0}},{"id":"dbk","name":"DeBank
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":1101644.1,"dailyChange":0.0770242939618957},"activity":{"pastDayUops":0.021782407407407407,"change":0.2002551020408161}},{"id":"hychain","name":"HYCHAIN","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":1078988.1,"dailyChange":0.14614765327663237},"activity":{"pastDayUops":0.051041666666666666,"change":-0.03268260583461291}},{"id":"brine","name":"tanX","stage":"NotApplicable","capability":"appchain","proofSystem":"Validity","purposes":["Exchange"],"totalValueSecured":{"tvs":1025894.94,"dailyChange":-0.0402125333012997},"activity":{"pastDayUops":0.9317129629629629,"change":4.509547601122442}},{"id":"ternoa","name":"Ternoa","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Payments"],"totalValueSecured":{"tvs":951944.2,"dailyChange":0.07817339924620836},"activity":{"pastDayUops":0.41431712962962963,"change":-0.02841710997720115}},{"id":"funki","name":"Funki","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":893052.25,"dailyChange":0.029140001822612005},"activity":{"pastDayUops":0.0002546296296296296,"change":0}},{"id":"everclear","name":"Everclear
-              Hub","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Interoperability"],"totalValueSecured":{"tvs":740205.56,"dailyChange":-0.21615355396295355},"activity":{"pastDayUops":0.10976851851851852,"change":-0.004199916001680015}},{"id":"alienx","name":"AlienX","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming","AI","NFT"],"totalValueSecured":{"tvs":708100.25,"dailyChange":0.08458828317286615},"activity":{"pastDayUops":0.01929398148148148,"change":0.0018028846153845812}},{"id":"b3","name":"B3","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":670964.3,"dailyChange":0.0876009488404843},"activity":{"pastDayUops":0.07526620370370371,"change":-0.006568897036358101}},{"id":"river","name":"Towns","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":557834.75,"dailyChange":0.08911058008726158},"activity":{"pastDayUops":1.389548611111111,"change":-0.09650740135911084}},{"id":"popboss","name":"Proof
-              of Play Boss","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":485313.3,"dailyChange":0.07615987363705856},"activity":{"pastDayUops":0.6271180555555556,"change":-0.29989792358482026}},{"id":"ham","name":"Ham","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Social"],"totalValueSecured":{"tvs":443338.1,"dailyChange":0.011151543560213861},"activity":{"pastDayUops":0.0011111111111111111,"change":0}},{"id":"superlumio","name":"SuperLumio","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":302673.88,"dailyChange":0.07298083349764428},"activity":{"pastDayUops":2.3148148148148147e-05,"change":0}},{"id":"swan","name":"Swan
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","AI","Storage"],"totalValueSecured":{"tvs":263355.56,"dailyChange":0.08800212448224931},"activity":{"pastDayUops":0.0007754629629629629,"change":0}},{"id":"penchain","name":"Pentagon
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":259676.53,"dailyChange":-0.00019131684124917836},"activity":{"pastDayUops":0.002939814814814815,"change":0}},{"id":"oevnetwork","name":"OEV
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Oracles"],"totalValueSecured":{"tvs":253992.89,"dailyChange":0.0894134995407394},"activity":{"pastDayUops":0.000925925925925926,"change":0}},{"id":"myria","name":"Myria","stage":"NotApplicable","capability":"appchain","proofSystem":"Validity","purposes":["NFT","Exchange","Gaming"],"totalValueSecured":{"tvs":247305.44,"dailyChange":0.08932305413213038},"activity":{"pastDayUops":0.09501157407407407,"change":-0.0184144445773049}},{"id":"wirex","name":"Wirex
-              Pay Chain","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Payments"],"totalValueSecured":{"tvs":242353.1,"dailyChange":0.013535576713813002},"activity":{"pastDayUops":0.0004050925925925926,"change":0}},{"id":"arenaz","name":"Arena-Z","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":147375.02,"dailyChange":0.02118097077416836},"activity":{"pastDayUops":0.008275462962962964,"change":0}},{"id":"appchain","name":"Appchain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":123824.96,"dailyChange":0.10393051097311301},"activity":{"pastDayUops":0.10854166666666666,"change":0.5343586387434553}},{"id":"game7","name":"Game7","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":112688.85,"dailyChange":-0.674584930561335},"activity":{"pastDayUops":0.004733796296296297,"change":0}},{"id":"alephzero","name":"Aleph
-              Zero EVM","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Privacy"],"totalValueSecured":{"tvs":105309.29,"dailyChange":-0.544364097206385},"activity":{"pastDayUops":0.2412615740740741,"change":0.002259832676218876}},{"id":"form","name":"Form","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Social"],"totalValueSecured":{"tvs":97797.33,"dailyChange":0.05512885924185951},"activity":{"pastDayUops":0.0006828703703703704,"change":0}},{"id":"optopia","name":"Optopia","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","AI"],"totalValueSecured":{"tvs":71191.63,"dailyChange":0.07086049093595026},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"xchain","name":"XCHAIN","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":64208.89,"dailyChange":0.08427079375532975},"activity":{"pastDayUops":0.40435185185185185,"change":-0.04079951677557514}},{"id":"edgeless","name":"Edgeless","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":54027.28,"dailyChange":0.08942748439477377},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"syndicateframe","name":"Syndicate
-              Frame Chain","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","Social"],"totalValueSecured":{"tvs":39682.11,"dailyChange":0.0896041965104315},"activity":{"pastDayUops":8.101851851851852e-05,"change":0}},{"id":"muster","name":"Muster","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":38731.02,"dailyChange":0.08941887938793869},"activity":{"pastDayUops":2.3148148148148147e-05,"change":0}},{"id":"race","name":"Race
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","RWA"],"totalValueSecured":{"tvs":36704.65,"dailyChange":0.08061420571522437},"activity":{"pastDayUops":0.0013310185185185185,"change":0}},{"id":"molten","name":"Molten
-              Network","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":30917.21,"dailyChange":-0.14235120170435644},"activity":{"pastDayUops":0.018159722222222223,"change":-0.01568381430363852}},{"id":"deri","name":"Deri","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":26677.91,"dailyChange":0.08941364699579224},"activity":{"pastDayUops":0,"change":0}},{"id":"snaxchain","name":"SNAXchain","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":25998.06,"dailyChange":0.08941313125725991},"activity":{"pastDayUops":2.3148148148148147e-05,"change":0}},{"id":"ethernity","name":"Epic
-              Chain","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal","AI"],"totalValueSecured":{"tvs":17961.95,"dailyChange":0.08889208165561535},"activity":{"pastDayUops":0.004965277777777778,"change":0}},{"id":"automata","name":"Automata","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":7626.62,"dailyChange":0.30993864777778546},"activity":{"pastDayUops":0.0036574074074074074,"change":0}},{"id":"settlus","name":"Settlus","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":4005.3,"dailyChange":0.08941510542463615},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"wonder","name":"Wonder","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":2303.01,"dailyChange":0.08939324418291128},"activity":{"pastDayUops":0.0034837962962962965,"change":0}},{"id":"r0ar","name":"R0ar","stage":"NotApplicable","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":2011.06,"dailyChange":0.08941495124593724},"activity":{"pastDayUops":0.03384259259259259,"change":0.0034317089910773646}},{"id":"grvt","name":"GRVT","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Exchange"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"inevm","name":"inEVM","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Interoperability"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.028587962962962964,"change":0.09729009329187033}},{"id":"playblock","name":"PlayBlock","stage":"NotApplicable","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":2.1249305555555558,"change":0.37038059907593346}},{"id":"zkcandy","name":"zkCandy","stage":"NotApplicable","capability":"universal","proofSystem":"Validity","purposes":["Universal","Gaming"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.0008796296296296296,"change":0}}]}}'
-            source: https://l2beat.com/scaling/summary?tab=others
-            data_type: L2 Summary (TVL & Market Share) - Other L2s
-            category: others
-  not_reviewed:
-    direct_tool:
-      input:
-        tool: get_l2_summary
-        tool_arguments:
-          category: notReviewed
-      output:
-        response: ''
-        data: &id002
-          status: success
-          data:
-            content: '{"entries":{"notReviewed":[{"id":"moonchain","name":"MXCzkEVM Moonchain","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":3262120.5,"dailyChange":-0.11420729151539688},"activity":{"pastDayUops":0.09759259259259259,"change":-0.1078192783832399}},{"id":"prom","name":"Prom","stage":"UnderReview","capability":"universal","proofSystem":"Validity","purposes":["Gaming","NFT"],"totalValueSecured":{"tvs":2107077,"dailyChange":0.010311271425236246},"activity":{"pastDayUops":0.035,"change":-0.024201355275895398}},{"id":"onyx","name":"Onyx","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":243544.66,"dailyChange":0.3075470770219293},"activity":{"pastDayUops":2.5464814814814813,"change":-0.06390908665444162}},{"id":"soonbase","name":"soonBase","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":212803.64,"dailyChange":0.08836598094133974},"activity":{"pastDayUops":0.5656018518518519,"change":0.0009832036050798632}},{"id":"powerloom","name":"Powerloom","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":203867.72,"dailyChange":0.05168164935570818},"activity":{"pastDayUops":0.14047453703703705,"change":0.004053606882859162}},{"id":"gasp","name":"Gasp","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Interoperability"],"totalValueSecured":{"tvs":70259.69,"dailyChange":-0.4419772961750734},"activity":{"pastDayUops":0,"change":0}},{"id":"huddle01","name":"Huddle01","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Information"],"totalValueSecured":{"tvs":14145.03,"dailyChange":0.08930763460949054},"activity":{"pastDayUops":3.472222222222222e-05,"change":0}},{"id":"cheese","name":"CheeseChain","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":10748.73,"dailyChange":0.017237349040702732},"activity":{"pastDayUops":0,"change":0}},{"id":"henez","name":"Henez","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":7384.24,"dailyChange":0.08838893015906701},"activity":{"pastDayUops":2.3148148148148147e-05,"change":0}},{"id":"rarimo","name":"Rarimo","stage":"UnderReview","capability":"universal","proofSystem":"Validity","purposes":["Universal","Privacy"],"totalValueSecured":{"tvs":4747.66,"dailyChange":0.08941257457549323},"activity":{"pastDayUops":3.472222222222222e-05,"change":0}},{"id":"dodochain","name":"Birdlayer","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal","Interoperability"],"totalValueSecured":{"tvs":2387.48,"dailyChange":0.08946213203250863},"activity":{"pastDayUops":3.472222222222222e-05,"change":0}},{"id":"rufus","name":"Rufus","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Gaming"],"totalValueSecured":{"tvs":2267.85,"dailyChange":-0.05637571046959655},"activity":{"pastDayUops":3.472222222222222e-05,"change":0}},{"id":"forta","name":"Forta","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":671.36,"dailyChange":-0.013837069244102329},"activity":{"pastDayUops":2.8030092592592593,"change":0.04255813753260962}},{"id":"pmon","name":"PMON
-              Chain","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Gaming","NFT"],"totalValueSecured":{"tvs":643.51,"dailyChange":0.08073021631062738},"activity":{"pastDayUops":0,"change":0}},{"id":"reddiozkvm","name":"Reddio","stage":"UnderReview","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":312.04,"dailyChange":0.05862396525987257},"activity":{"pastDayUops":0,"change":0}},{"id":"kontos","name":"Kontos","stage":"UnderReview","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":24.02,"dailyChange":0.010517458981909922},"activity":{"pastDayUops":0,"change":0}},{"id":"bitlazer","name":"Bitlazer","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Bitcoin
-              DApps"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.00016203703703703703,"change":0}},{"id":"chainbounty","name":"Chainbounty","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"codex","name":"Codex","stage":"UnderReview","capability":"universal","proofSystem":null,"purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.03412037037037037,"change":0.0930663700407861}},{"id":"conwai","name":"ConWai","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["AI"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"flynet","name":"Flynet","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hpp","name":"HPP","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["AI"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":9.259259259259259e-05,"change":0}},{"id":"jetstreamchain","name":"Jetstream","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Exchange"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"layerai","name":"LayerAI","stage":"UnderReview","capability":"universal","proofSystem":"Validity","purposes":["AI"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"logx","name":"LogX","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Exchange"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"onchain","name":"Onchain
-              Chain","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Gaming","Social"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.0837037037037037,"change":0.09742033383915016}},{"id":"openzk","name":"OpenZK","stage":"UnderReview","capability":"universal","proofSystem":"Validity","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.00028935185185185184,"change":0}},{"id":"perennial","name":"Perennial","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.0022222222222222222,"change":0}},{"id":"sischain","name":"SIS
-              Chain","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.013229166666666667,"change":-0.09069212410501193}},{"id":"skynet","name":"Skynet","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Universal"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":1.1574074074074073e-05,"change":0}},{"id":"unite","name":"Unite","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Gaming"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0.0409375,"change":-0.96514481113947}},{"id":"vemphorizon","name":"VEMP
-              Horizon","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Gaming"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"xrone","name":"XR
-              One","stage":"UnderReview","capability":"universal","proofSystem":"Optimistic","purposes":["Gaming"],"totalValueSecured":{"tvs":-1,"dailyChange":0.0},"activity":{"pastDayUops":6.944444444444444e-05,"change":0}}]}}'
-            source: https://l2beat.com/scaling/summary?tab=notReviewed
-            data_type: L2 Summary (TVL & Market Share) - Not Reviewed L2s
-            category: notReviewed
-  default_backward_compatibility:
-    direct_tool:
-      input:
-        tool: get_l2_summary
-        tool_arguments: {}
-      output:
-        response: ''
-        data: *id001
-l2_activity:
-  rollups:
-    natural_language:
-      input:
-        query: Show me the transaction activity comparison between Arbitrum, Optimism, and Base
-        raw_data_only: false
-      output:
-        response: 'Given the current data, I can provide the past day''s transaction activity (User Operations) for Arbitrum
-          One, OP Mainnet (Optimism), and Base Chain.
-
-
-          Here''s the activity data:
-
-
-          | Rollup          | Past Day User Operations | Daily Change |
-
-          | :-------------- | :----------------------- | :----------- |
-
-          | Arbitrum One    | 0                        | 0            |
-
-          | OP Mainnet      | 0                        | 0            |
-
-          | Base Chain      | 0                        | 0            |
-
-
-          **Analysis:**
-
-
-          Based on the provided data, all three rollups (Arbitrum One, OP Mainnet, and Base Chain) show 0 user operations
-          for the past day, with no daily change. This suggests that the real-time activity data might not be available or
-          the `pastDayUops` field is not being populated with live transaction counts in the current dataset.
-
-
-          To provide a comprehensive transaction activity comparison, I would typically look for metrics like:
-
-
-          *   **Total Transactions (24h):** The absolute number of user operations.
-
-          *   **Average TPS (Transactions Per Second):** How many transactions the network processes per second.
-
-          *   **Active Addresses (24h):** The number of unique wallets interacting with the network.
-
-          *   **Transaction Fees (Average/Median):** The cost for a standard transaction.
-
-
-          If you can provide data that includes these metrics, I can offer a more in-depth analysis.'
-        data:
-          status: success
-          data:
-            content: '{"entries":{"rollups":[{"id":"ethereum","name":"Ethereum","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"base","name":"Base
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"arbitrum","name":"Arbitrum
-              One","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"optimism","name":"OP
-              Mainnet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"unichain","name":"Unichain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"starknet","name":"Starknet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ink","name":"Ink","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"abstract","name":"Abstract","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"linea","name":"Linea","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"paradex","name":"Paradex","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"scroll","name":"Scroll","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"katana","name":"Katana","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zksync2","name":"ZKsync
-              Era","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"bob","name":"BOB","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"polygonzkevm","name":"Polygon
-              zkEVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zeronetwork","name":"ZERO
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sxt","name":"Space
-              and Time","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zksync","name":"ZKsync
-              Lite","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"loopring","name":"Loopring","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"kinto","name":"Kinto","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"facet","name":"Facet
-              Bluebird","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lachain","name":"LaChain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"phala","name":"Phala","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}}]}}'
-            source: https://l2beat.com/scaling/activity
-            data_type: L2 Activity Metrics - Rollups
-            category: rollups
-  validiums_and_optimiums:
-    direct_tool:
-      input:
-        tool: get_l2_activity
-        tool_arguments:
-          category: validiumsAndOptimiums
-      output:
-        response: ''
-        data:
-          status: success
-          data:
-            content: '{"entries":{"validiumsAndOptimiums":[{"id":"ethereum","name":"Ethereum","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sophon","name":"Sophon","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lens","name":"Lens","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"nova","name":"Arbitrum
-              Nova","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}}]}}'
-            source: https://l2beat.com/scaling/activity?tab=validiumsAndOptimiums
-            data_type: L2 Activity Metrics - Validiums & Optimiums
-            category: validiumsAndOptimiums
-  others:
-    direct_tool:
-      input:
-        tool: get_l2_activity
-        tool_arguments:
-          category: others
-      output:
-        response: ''
-        data:
-          status: success
-          data:
-            content: '{"entries":{"others":[{"id":"ethereum","name":"Ethereum","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"polygon-pos","name":"Polygon
-              PoS","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"worldchain","name":"World
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"celo","name":"Celo","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"eclipse","name":"Eclipse","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"xlayer","name":"X
-              Layer","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"soneium","name":"Soneium","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"taiko","name":"Taiko
-              Alethia","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"galxegravity","name":"Gravity","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"blast","name":"Blast","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"plumenetwork","name":"Plume
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mantle","name":"Mantle","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mode","name":"Mode
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"playblock","name":"PlayBlock","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hemi","name":"Hemi","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"educhain","name":"EDU
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"morph","name":"Morph","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"river","name":"Towns","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sorare","name":"Sorare","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"fuel","name":"Fuel
-              Ignition","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lisk","name":"Lisk","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"reya","name":"Reya","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"brine","name":"tanX","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"immutablezkevm","name":"Immutable
-              zkEVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lightlink","name":"LightLink","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"popapex","name":"Proof
-              of Play Apex","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lasernet","name":"Lasernet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"immutablex","name":"Immutable
-              X","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mantapacific","name":"Manta
-              Pacific","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"apechain","name":"ApeChain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"swell","name":"Swellchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"popboss","name":"Proof
-              of Play Boss","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zkfair","name":"ZKFair","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"xai","name":"Xai","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"metis","name":"Metis
-              Andromeda","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ternoa","name":"Ternoa","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"shape","name":"Shape","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"xchain","name":"XCHAIN","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"winr","name":"WINR","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"orderly","name":"Orderly
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"alephzero","name":"Aleph
-              Zero EVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hashkey","name":"HashKey
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zircuit","name":"Zircuit","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"fluence","name":"Fluence","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"fraxtal","name":"Fraxtal","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mint","name":"Mint","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lyra","name":"Derive","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"rari","name":"RARI
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sxnetwork","name":"SX
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zora","name":"Zora","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"cyber","name":"Cyber","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"everclear","name":"Everclear
-              Hub","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"appchain","name":"Appchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"myria","name":"Myria","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"bobanetwork","name":"Boba
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"soon","name":"Soon
-              Alpha Mainnet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"b3","name":"B3","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"redstone","name":"Redstone","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"superseed","name":"Superseed","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"cronoszkevm","name":"Cronos
-              zkEVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hychain","name":"HYCHAIN","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"aevo","name":"Aevo","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"corn","name":"Corn","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"degen","name":"Degen
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sanko","name":"Sanko","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"r0ar","name":"R0ar","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"inevm","name":"inEVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"superposition","name":"Superposition","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lumia","name":"Lumia
-              Prism","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"pepeunchained2","name":"Pepe
-              Unchained","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"silicon","name":"Silicon","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"dbk","name":"DeBank
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"alienx","name":"AlienX","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"molten","name":"Molten
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"polynomial","name":"Polynomial","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zklinknova","name":"zkLink
-              Nova","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"arenaz","name":"Arena-Z","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"metal","name":"Metal","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"karak","name":"K2","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ethernity","name":"Epic
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"game7","name":"Game7","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ancient","name":"Ancient8","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"automata","name":"Automata","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"wonder","name":"Wonder","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"penchain","name":"Pentagon
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"race","name":"Race
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ham","name":"Ham","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"oevnetwork","name":"OEV
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zkcandy","name":"zkCandy","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"swan","name":"Swan
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"form","name":"Form","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"wirex","name":"Wirex
-              Pay Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"funki","name":"Funki","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"rss3","name":"RSS3
-              Value Sublayer","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"syndicateframe","name":"Syndicate
-              Frame Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"muster","name":"Muster","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"snaxchain","name":"SNAXchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"superlumio","name":"SuperLumio","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"optopia","name":"Optopia","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"edgeless","name":"Edgeless","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}}]}}'
-            source: https://l2beat.com/scaling/activity?tab=others
-            data_type: L2 Activity Metrics - Other L2s
-            category: others
-  not_reviewed:
-    direct_tool:
-      input:
-        tool: get_l2_activity
-        tool_arguments:
-          category: notReviewed
-      output:
-        response: ''
-        data:
-          status: success
-          data:
-            content: '{"entries":{"notReviewed":[{"id":"ethereum","name":"Ethereum","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"forta","name":"Forta","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"onyx","name":"Onyx","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"soonbase","name":"soonBase","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"powerloom","name":"Powerloom","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"moonchain","name":"MXCzkEVM
-              Moonchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"onchain","name":"Onchain
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"prom","name":"Prom","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sischain","name":"SIS
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"openzk","name":"OpenZK","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"bitlazer","name":"Bitlazer","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hpp","name":"HPP","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"dodochain","name":"Birdlayer","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"huddle01","name":"Huddle01","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"rarimo","name":"Rarimo","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"rufus","name":"Rufus","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"henez","name":"Henez","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"chainbounty","name":"Chainbounty","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"conwai","name":"ConWai","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"skynet","name":"Skynet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"reddiozkvm","name":"Reddio","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"codex","name":"Codex","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"perennial","name":"Perennial","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"unite","name":"Unite","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"xrone","name":"XR
-              One","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}}]}}'
-            source: https://l2beat.com/scaling/activity?tab=notReviewed
-            data_type: L2 Activity Metrics - Not Reviewed L2s
-            category: notReviewed
-l2_costs:
-  rollups:
-    natural_language:
-      input:
-        query: Which Layer 2 Rollup has the lowest transaction costs for token swaps?
-        raw_data_only: false
-      output:
-        response: 'I cannot currently retrieve live transaction cost data for specific operations like token swaps. The available
-          data provides a general overview of rollups but lacks the granular, real-time cost breakdowns needed to answer your
-          question directly.
-
-
-          Please refer to L2Beat''s "Costs" section for the most up-to-date and detailed transaction cost comparisons across
-          different Layer 2s and operation types.'
-        data:
-          status: success
-          data:
-            content: '{"entries":{"rollups":[{"id":"ink","name":"Ink","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"optimism","name":"OP
-              Mainnet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"unichain","name":"Unichain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"linea","name":"Linea","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"starknet","name":"Starknet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"base","name":"Base
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"scroll","name":"Scroll","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"arbitrum","name":"Arbitrum
-              One","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"bob","name":"BOB","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zksync2","name":"ZKsync
-              Era","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"abstract","name":"Abstract","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"katana","name":"Katana","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zeronetwork","name":"ZERO
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sxt","name":"Space
-              and Time","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zksync","name":"ZKsync
-              Lite","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"kinto","name":"Kinto","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"loopring","name":"Loopring","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"polygonzkevm","name":"Polygon
-              zkEVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"facet","name":"Facet
-              Bluebird","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lachain","name":"LaChain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"phala","name":"Phala","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"aztec","name":"Zk.Money
-              v1 (Aztec v1)","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"cartesi-prt-honeypot","name":"Cartesi
-              PRT Honeypot","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"paradex","name":"Paradex","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zkspace","name":"ZKBase","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}}]}}'
-            source: https://l2beat.com/scaling/costs
-            data_type: L2 Transaction Costs - Rollups
-            category: rollups
-  others:
-    direct_tool:
-      input:
-        tool: get_l2_costs
-        tool_arguments:
-          category: others
-      output:
-        response: ''
-        data:
-          status: success
-          data:
-            content: '{"entries":{"others":[{"id":"fuel","name":"Fuel Ignition","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"celo","name":"Celo","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"galxegravity","name":"Gravity","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"plumenetwork","name":"Plume
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"xchain","name":"XCHAIN","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"soneium","name":"Soneium","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mantle","name":"Mantle","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mode","name":"Mode
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"blast","name":"Blast","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"polygon-pos","name":"Polygon
-              PoS","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"sxnetwork","name":"SX
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lasernet","name":"Lasernet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"alephzero","name":"Aleph
-              Zero EVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lisk","name":"Lisk","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"worldchain","name":"World
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"river","name":"Towns","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"everclear","name":"Everclear
-              Hub","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hashkey","name":"HashKey
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"redstone","name":"Redstone","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mint","name":"Mint","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"corn","name":"Corn","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"orderly","name":"Orderly
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"reya","name":"Reya","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"lyra","name":"Derive","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"fluence","name":"Fluence","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"cyber","name":"Cyber","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"cronoszkevm","name":"Cronos
-              zkEVM","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"mantapacific","name":"Manta
-              Pacific","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"metis","name":"Metis
-              Andromeda","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"superseed","name":"Superseed","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"fraxtal","name":"Fraxtal","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"swell","name":"Swellchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zora","name":"Zora","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zircuit","name":"Zircuit","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hemi","name":"Hemi","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"arenaz","name":"Arena-Z","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"soon","name":"Soon
-              Alpha Mainnet","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"shape","name":"Shape","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"alienx","name":"AlienX","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"hychain","name":"HYCHAIN","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ethernity","name":"Epic
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"pepeunchained2","name":"Pepe
-              Unchained","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"polynomial","name":"Polynomial","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"taiko","name":"Taiko
-              Alethia","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"bobanetwork","name":"Boba
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"dbk","name":"DeBank
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"appchain","name":"Appchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"ancient","name":"Ancient8","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"zkcandy","name":"zkCandy","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"swan","name":"Swan
-              Chain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"automata","name":"Automata","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"aevo","name":"Aevo","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"karak","name":"K2","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"oevnetwork","name":"OEV
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"settlus","name":"Settlus","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"r0ar","name":"R0ar","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"wonder","name":"Wonder","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"metal","name":"Metal","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"funki","name":"Funki","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"optopia","name":"Optopia","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"race","name":"Race
-              Network","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"rss3","name":"RSS3
-              Value Sublayer","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"form","name":"Form","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"snaxchain","name":"SNAXchain","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"superlumio","name":"SuperLumio","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"edgeless","name":"Edgeless","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}},{"id":"grvt","name":"GRVT","stage":"Unknown","capability":null,"proofSystem":null,"purposes":[],"totalValueSecured":{"tvs":0,"dailyChange":0.0},"activity":{"pastDayUops":0,"change":0}}]}}'
-            source: https://l2beat.com/scaling/costs?tab=others
-            data_type: L2 Transaction Costs - Other L2s
-            category: others
-cross_category_queries:
-  tvl_comparison:
-    natural_language:
-      input:
-        query: Compare the TVL between top Rollups and top Validiums/Optimiums. Which category has higher total value locked?
-        raw_data_only: false
-      output:
-        response: 'Rollups have a significantly higher Total Value Locked (TVL) compared to Validiums/Optimiums.
-
-
-          Here''s a breakdown of the top Rollups and their TVL:
-
-
-          | Rollup Name | TVL (USD) |
-
-          | :---------- | :-------- |
-
-          | Arbitrum One | 19,569,523,000 |
-
-          | Base Chain | 15,859,104,000 |
-
-          | OP Mainnet | 3,787,896,000 |
-
-          | ZKsync Era | 1,282,184,100 |
-
-          | Linea | 1,042,397,060 |
-
-          | Unichain | 1,034,933,200 |
-
-          | Starknet | 582,678,500 |
-
-          | Katana | 468,690,270 |
-
-          | Scroll | 285,497,900 |
-
-          | Abstract | 265,669,870 |
-
-
-          The top two Rollups alone (Arbitrum One and Base Chain) command a combined TVL of over $35 billion, which far surpasses
-          the total TVL of all Validiums/Optimiums. The dominance of Rollups in terms of TVL is a clear indicator of their
-          current adoption and trust within the Layer 2 ecosystem.'
-        data: *id001
-  not_reviewed_analysis:
-    natural_language:
-      input:
-        query: What are the not reviewed L2 projects and what's their activity level?
-        raw_data_only: false
-      output:
-        response: "As an expert Layer 2 blockchain analyst, I've analyzed the \"Not Reviewed\" L2 projects from L2Beat, focusing\
-          \ on their activity levels. These projects are currently \"UnderReview\" by L2Beat, meaning their security and decentralization\
-          \ properties have not been fully assessed. Therefore, caution is advised when interpreting their data.\n\nHere's\
-          \ a breakdown of the activity for these projects:\n\n### Not Reviewed L2 Projects - Activity Analysis\n\n| Project\
-          \ Name         | TVS (Total Value Secured) | Daily Change (TVS) | Past Day UOPs (Units of Processing) | Daily Change\
-          \ (UOPs) | Proof System | Primary Purpose(s)       |\n| :------------------- | :------------------------ | :-----------------\
-          \ | :---------------------------------- | :------------------ | :----------- | :----------------------- |\n| MXCzkEVM\
-          \ Moonchain   | $3,262,120.50             | -11.42%            | 0.098                               | -10.78% \
-          \            | Optimistic   | Universal                |\n| Prom                 | $2,107,077.00             | +1.03%\
-          \             | 0.035                               | -2.42%              | Validity     | Gaming, NFT         \
-          \     |\n| Onyx                 | $243,544.66               | +30.75%            | 2.546                       \
-          \        | -6.39%              | Optimistic   | Universal                |\n| soonBase             | $212,803.64\
-          \               | +8.84%             | 0.566                               | +0.10%              | Optimistic  \
-          \ | Universal                |\n| Powerloom            | $203,867.72               | +5.17%             | 0.140\
-          \                               | +0.41%              | Optimistic   | Universal                |\n| Gasp      \
-          \           | $70,259.69                | -44.20%            | 0.000                               | 0.00%     \
-          \          | Optimistic   | Universal, Interoperability |\n| Forta                | $671.36                   |\
-          \ -1.38%             | 2.803                               | +4.26%              | Optimistic   | Universal    \
-          \            |\n| Codex                | N/A                       | 0.00%              | 0.034                \
-          \               | +9.31%              | *Null*       | Universal                |\n| Onchain Chain        | N/A\
-          \                       | 0.00%              | 0.084                               | +9.74%              | Optimistic\
-          \   | Gaming, Social           |\n| Perennial            | N/A                       | 0.00%              | 0.002\
-          \                               | 0.00%               | Optimistic   | Universal                |\n| SIS Chain \
-          \           | N/A                       | 0.00%              | 0.013                               | -9.07%    \
-          \          | Optimistic   | Universal                |\n| Unite                | N/A                       | 0.00%\
-          \              | 0.041                               | -96.51%             | Optimistic   | Gaming             \
-          \      |\n| Huddle01             | $14,145.03                | +8.93%             | 0.000                      \
-          \         | 0.00%               | Optimistic   | Information              |\n| CheeseChain          | $10,748.73\
-          \                | +1.72%             | 0.000                               | 0.00%               | Optimistic \
-          \  | Universal                |\n| Henez                | $7,384.24                 | +8.84%             | 0.000\
-          \                               | 0.00%               | Optimistic   | Universal                |\n| Rarimo    \
-          \           | $4,747.66                 | +8.94%             | 0.000                               | 0.00%     \
-          \          | Validity     | Universal, Privacy       |\n| Birdlayer            | $2,387.48                 | +8.95%\
-          \             | 0.000                               | 0.00%               | Optimistic   | Universal, Interoperability\
-          \ |\n| Rufus                | $2,267.85                 | -5.64%             | 0.000                           \
-          \    | 0.00%               | Optimistic   | Gaming                   |\n| PMON Chain           | $643.51       \
-          \            | +8.07%             | 0.000                               | 0.00%               | Optimistic   | Gaming,\
-          \ NFT              |\n| Reddio               | $312.04                   | +5.86%             | 0.000          \
-          \                     | 0.00%               | Validity     | Universal                |\n| Kontos              \
-          \ | $24.02                    | +1.05%             | 0.000                               | 0.00%               |\
-          \ Validity     | Universal                |\n| Bitlazer             | N/A                       | 0.00%        \
-          \      | 0.000                               | 0.00%               | Optimistic   | Bitcoin DApps            |\n\
-          | Chainbounty          | N/A                       | 0.00%              | 0.000                               |\
-          \ 0.00%               | Optimistic   | Universal                |\n| ConWai               | N/A                \
-          \       | 0.00%              | 0.000                               | 0.00%               | Optimistic   | AI   \
-          \                    |\n| Flynet               | N/A                       | 0.00%              | 0.000        \
-          \                       | 0.00%               | Optimistic   | Universal                |\n| HPP               \
-          \   | N/A                       | 0.00%              | 0.000                               | 0.00%             \
-          \  | Optimistic   | AI                       |\n| Jetstream            | N/A                       | 0.00%     \
-          \         | 0.000                               | 0.00%               | Optimistic   | Exchange                \
-          \ |\n| LayerAI              | N/A                       | 0.00%              | 0.000                           \
-          \    | 0.00%               | Validity     | AI                       |\n| LogX                 | N/A           \
-          \            | 0.00%              | 0.000                               | 0.00%               | Optimistic   | Exchange\
-          \                 |\n| OpenZK               | N/A                       | 0.00%              | 0.000           \
-          \                    | 0.00%               | Validity     | Universal                |\n| Skynet               |\
-          \ N/A                       | 0.00%              | 0.000                               | 0.00%               | Optimistic\
-          \   | Universal                |\n| VEMP Horizon         | N/A                       | 0.00%              | 0.000\
-          \                               | 0.00%               | Optimistic   | Gaming                   |\n| XR One    \
-          \           | N/A                       | 0.00%              | 0.000                               | 0.00%     \
-          \          | Optimistic   | Gaming                   |\n\n*Note: TVS (Total Value Secured) of -1 indicates that\
-          \ L2Beat does not have a value for it, hence represented as N/A in the table for clarity.*\n*UOPs (Units of Processing)\
-          \ is a metric used by L2Beat to standardize the measurement of activity across different L2s.*\n\n### Key Observations\
-          \ and Insights:\n\n1.  **Low Activity Across the Board**: The most striking observation is the extremely low activity\
-          \ levels for nearly all \"not reviewed\" projects. Many projects show 0.000 UOPs in the past day, indicating virtually\
-          \ no on-chain activity.\n2.  **Dominance of Optimistic Rollups**: The majority of these projects, especially those\
-          \ with some TVS, are built on an Optimistic proof system. There are a few Validity (ZK) rollups, notably Prom and\
-          \ Rarimo, and some without a specified proof system.\n3.  **Highest TVS Projects**:\n    *   **MXCzkEVM Moonchain**\
-          \ leads significantly in TVS with over $3.2 million, but shows a notable daily decrease in both TVS and UOPs. Its\
-          \ activity is still very low.\n    *   **Prom** follows with over $2.1 million TVS and a slight positive daily change,\
-          \ but also very low UOPs.\n    *   **Onyx** stands out with a substantial 30.75% daily increase in TVS, and a relatively\
-          \ higher UOP count (2.546) compared to most others, despite a slight daily decrease in UOPs. This suggests some\
-          \ recent interest or activity.\n4.  **Projects with Some Activity (UOPs > 0.1)**:\n    *   **Onyx (2.546 UOPs)**\
-          \ and **Forta (2.803 UOPs)** exhibit the highest UOPs among this group. Forta, despite a very low TVS, shows a positive\
-          \ daily change in UOPs, which could indicate early testing or development activity.\n    *   **soonBase (0.566 UOPs)**\
-          \ and **Powerloom (0.140 UOPs)** also show minimal but consistent activity.\n    *   **MXCzkEVM Moonchain (0.098\
-          \ UOPs)**, though leading in TVS, has very low actual transaction/processing activity.\n5.  **Zero Activity Projects**:\
-          \ A large number of projects, including Gasp, Huddle01, CheeseChain, Henez, Rarimo, Birdlayer, Rufus, PMON Chain,\
-          \ Reddio, Kontos, and many with N/A TVS, report 0 UOPs in the past day. This suggests they are either in very early\
-          \ development stages, inactive, or are not yet processing user operations.\n6.  **\"N/A\" TVS Projects**: Projects\
-          \ with \"N/A\" TVS (Total Value Secured) generally also show negligible or zero activity, indicating they are likely\
-          \ far from being production-ready or widely adopted.\n7.  **Purpose Diversity**: While \"Universal\" is a common\
-          \ purpose, some projects target specific niches like Gaming (Prom, Rufus, PMON Chain, Unite, VEMP Horizon, XR One),\
-          \ NFT (Prom, PMON Chain), AI (ConWai, HPP, LayerAI), Exchange (Jetstream, LogX), Interoperability (Gasp, Birdlayer),\
-          \ and even Bitcoin DApps (Bitlazer).\n\nIn conclusion, the \"not reviewed\" category on L2Beat largely comprises\
-          \ projects that are either in very nascent stages of development, have minimal to no user activity, or are undergoing\
-          \ L2Beat's assessment process. While some projects like MXCzkEVM Moonchain and Prom have attracted a notable TVS,\
-          \ their actual operational activity (UOPs) remains very low. Onyx and Forta show slightly more UOPs, which could\
-          \ be an early indicator of engagement, but overall, these projects are not yet contributing significantly to the\
-          \ broader Layer 2 scaling landscape in terms of transaction throughput. Investors and users should exercise extreme\
-          \ caution as these projects lack the rigorous security and decentralization review provided by L2Beat for their\
-          \ \"reviewed\" counterparts."
-        data: *id002
+          content: '{"entries":{"rollups":[{"id":"ink","name":"Ink","averageCostPerUserOp":6.175337347434145e-05},{"id":"optimism","name":"OP
+            Mainnet","averageCostPerUserOp":0.00014044551975847321},{"id":"unichain","name":"Unichain","averageCostPerUserOp":0.00015853328467450026},{"id":"linea","name":"Linea","averageCostPerUserOp":0.00023736905450692317},{"id":"starknet","name":"Starknet","averageCostPerUserOp":0.0002835887116766787},{"id":"base","name":"Base
+            Chain","averageCostPerUserOp":0.00034598452568399663},{"id":"scroll","name":"Scroll","averageCostPerUserOp":0.00044573692314715314},{"id":"arbitrum","name":"Arbitrum
+            One","averageCostPerUserOp":0.0004951757870195528},{"id":"bob","name":"BOB","averageCostPerUserOp":0.0005361212322990137},{"id":"zksync2","name":"ZKsync
+            Era","averageCostPerUserOp":0.0007643133459503167},{"id":"abstract","name":"Abstract","averageCostPerUserOp":0.00114171717060469},{"id":"katana","name":"Katana","averageCostPerUserOp":0.004257556583360208},{"id":"zeronetwork","name":"ZERO
+            Network","averageCostPerUserOp":0.005027984067931268},{"id":"sxt","name":"Space and Time","averageCostPerUserOp":0.01865933687369458},{"id":"zksync","name":"ZKsync
+            Lite","averageCostPerUserOp":0.03131819224858836},{"id":"kinto","name":"Kinto","averageCostPerUserOp":0.04711608166096204},{"id":"loopring","name":"Loopring","averageCostPerUserOp":0.06475004489636288},{"id":"polygonzkevm","name":"Polygon
+            zkEVM","averageCostPerUserOp":0.13927089327319928},{"id":"facet","name":"Facet Bluebird","averageCostPerUserOp":3.5208126020392587},{"id":"lachain","name":"LaChain","averageCostPerUserOp":4.323857128490195},{"id":"phala","name":"Phala","averageCostPerUserOp":15.743516527537306},{"id":"aztec","name":"Zk.Money
+            v1 (Aztec v1)","averageCostPerUserOp":0.0},{"id":"cartesi-prt-honeypot","name":"Cartesi PRT Honeypot","averageCostPerUserOp":0.0},{"id":"paradex","name":"Paradex","averageCostPerUserOp":0.0},{"id":"zkspace","name":"ZKBase","averageCostPerUserOp":0.0}]}}'
+          source: https://l2beat.com/scaling/costs
+          data_type: L2 Transaction Costs - Rollups
+          category: rollups
+  validiums_costs:
+    input:
+      tool: get_l2_costs
+      tool_arguments:
+        category: validiumsAndOptimiums
+    output:
+      response: ''
+      data:
+        error: __SSR_DATA__ script not found in https://l2beat.com/scaling/costs?tab=validiumsAndOptimiums
+  summary_empty_args:
+    input:
+      tool: get_l2_summary
+      tool_arguments: {}
+    output:
+      response: ''
+      data: *id001
+  costs_empty_args:
+    input:
+      tool: get_l2_costs
+      tool_arguments: {}
+    output:
+      response: ''
+      data: *id002
+  rollups_summary_cached:
+    input:
+      tool: get_l2_summary
+      tool_arguments:
+        category: rollups
+    output:
+      response: ''
+      data: *id001
+  validiums_costs_cached:
+    input:
+      tool: get_l2_costs
+      tool_arguments:
+        category: validiumsAndOptimiums
+    output:
+      response: ''
+      data:
+        error: __SSR_DATA__ script not found in https://l2beat.com/scaling/costs?tab=validiumsAndOptimiums
