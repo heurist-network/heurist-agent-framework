@@ -26,8 +26,9 @@ class EvmTokenInfoAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent analyzes large trades for EVM tokens across multiple chains using Bitquery API. It tracks whale movements by identifying actual traders with transaction details.",
+                "description": "This agent analyzes large trades for EVM tokens across multiple chains using Bitquery API. It tracks whale movements by identifying actual traders with transaction details. Trade types are shown from the trader's perspective (not DEX perspective).",
                 "external_apis": ["Bitquery"],
+                "recommended": True,
                 "tags": ["EVM"],
                 "supported_chains": ["ethereum", "eth", "bsc", "binance", "base", "arbitrum", "arb"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/EVM.png",
@@ -37,6 +38,8 @@ class EvmTokenInfoAgent(MeshAgent):
                     "Show recent whale sells for WETH on base with minimum $10,000",
                     "Large trades for 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 on ethereum above $50k",
                 ],
+                "large_model_id": "google/gemini-2.5-flash",
+                "small_model_id": "google/gemini-2.5-flash",
             }
         )
 
@@ -53,12 +56,14 @@ class EvmTokenInfoAgent(MeshAgent):
         - Shows actual trader addresses (Transaction.From) not DEX routers
         - Returns both buyers and sellers by default unless specifically requested
         - Sorted by USD amount in descending order
+        - Trade types are shown from the TRADER'S perspective (not DEX perspective)
 
         Important:
         - User must provide a valid token contract address (starting with 0x)
         - The 'Trader' field shows the actual wallet that initiated the transaction
-        - For buy trades: Trader is buying the specified token
-        - For sell trades: Trader is selling the specified token
+        - For buy trades: Trader is BUYING the specified token (spending other currency)
+        - For sell trades: Trader is SELLING the specified token (receiving other currency)
+        - Trade types are inverted from DEX perspective to show trader's actual action
         - Present the data in a clear and concise manner focusing on actual whale wallets
         - Supported chains: Ethereum, BSC, Base, and Arbitrum only"""
 
@@ -68,7 +73,7 @@ class EvmTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_recent_large_trades",
-                    "description": "Get recent large trades for a specific EVM token on supported chains. Shows actual whale wallet addresses (not DEX contracts) with transaction details. Perfect for tracking smart money movements and identifying accumulation or distribution patterns.",
+                    "description": "Get recent large trades for a specific EVM token on supported chains. Shows actual whale wallet addresses (not DEX contracts) with transaction details from the TRADER'S perspective. Perfect for tracking smart money movements and identifying accumulation or distribution patterns.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -87,7 +92,7 @@ class EvmTokenInfoAgent(MeshAgent):
                             },
                             "filter": {
                                 "type": "string",
-                                "description": "Filter by trade type: 'all' for both buys and sells (default), 'buy' for purchases only, 'sell' for sales only",
+                                "description": "Filter by trade type from TRADER perspective: 'all' for both buys and sells (default), 'buy' for purchases only, 'sell' for sales only",
                                 "enum": ["all", "buy", "sell"],
                                 "default": "all",
                             },
@@ -119,6 +124,7 @@ class EvmTokenInfoAgent(MeshAgent):
         """
         Get recent large trades for a specific EVM token.
         Returns actual trader addresses (Transaction.From) instead of DEX contracts.
+        Trade types are inverted to show from trader's perspective, not DEX perspective.
         """
         if not tokenAddress or not tokenAddress.startswith("0x"):
             return {"error": "Please provide a valid token contract address starting with '0x'"}
@@ -146,19 +152,22 @@ class EvmTokenInfoAgent(MeshAgent):
 
         limit = min(max(1, limit), 100)
 
+        dex_filter = filter
+        if filter == "buy":
+            dex_filter = "sell"
+        elif filter == "sell":
+            dex_filter = "buy"
+
         if filter == "all":
             query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{ EVM(network: {normalized_chain}) {{ DEXTradeByTokens( orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}} limit: {{count: $limit}} where: {{ Trade: {{ Currency: {{SmartContract: {{is: $token}}}}, Side: {{ AmountInUSD: {{gt: $minUsdAmount}} }} }} }} ) {{ Trade {{ Currency {{ Name Symbol }} Side {{ Type AmountInUSD Currency {{ Name Symbol }} }} }} Transaction {{ From Hash }} Block {{ Time }} }} }} }}"""
         else:
-            query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{ EVM(network: {normalized_chain}) {{ DEXTradeByTokens( orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}} limit: {{count: $limit}} where: {{ Trade: {{ Currency: {{SmartContract: {{is: $token}}}}, Side: {{ Type: {{is: {filter}}}, AmountInUSD: {{gt: $minUsdAmount}} }} }} }} ) {{ Trade {{ Currency {{ Name Symbol }} Side {{ Type AmountInUSD Currency {{ Name Symbol }} }} }} Transaction {{ From Hash }} Block {{ Time }} }} }} }}"""
+            query = f"""query getRecentLargeTrades($token: String!, $minUsdAmount: String!, $limit: Int!) {{ EVM(network: {normalized_chain}) {{ DEXTradeByTokens( orderBy: {{descendingByField: "Trade_Side_AmountInUSD"}} limit: {{count: $limit}} where: {{ Trade: {{ Currency: {{SmartContract: {{is: $token}}}}, Side: {{ Type: {{is: {dex_filter}}}, AmountInUSD: {{gt: $minUsdAmount}} }} }} }} ) {{ Trade {{ Currency {{ Name Symbol }} Side {{ Type AmountInUSD Currency {{ Name Symbol }} }} }} Transaction {{ From Hash }} Block {{ Time }} }} }} }}"""
 
         variables = {
             "token": tokenAddress.lower(),
             "minUsdAmount": str(minUsdAmount),
             "limit": limit,
         }
-
-        print("Generated query:", query)
-        print("Variables:", variables)
 
         result = await self._api_request(
             url=self.bitquery_url,
@@ -172,7 +181,14 @@ class EvmTokenInfoAgent(MeshAgent):
             for trade in trades:
                 if "Transaction" in trade and "From" in trade["Transaction"]:
                     trade["Trader"] = trade["Transaction"]["From"]
-                    trade["TradeType"] = trade["Trade"]["Side"]["Type"]
+
+                    dex_type = trade["Trade"]["Side"]["Type"]
+                    trade["TradeType"] = "sell" if dex_type == "buy" else "buy"
+
+                    trade["TraderAction"] = (
+                        f"Trader {trade['TradeType'].upper()}S {trade['Trade']['Currency']['Symbol']} "
+                        f"for {trade['Trade']['Side']['Currency']['Symbol']}"
+                    )
 
         return result
 
@@ -181,6 +197,7 @@ class EvmTokenInfoAgent(MeshAgent):
     ) -> Dict[str, Any]:
         """
         Handle execution of specific tools and return the data with actual trader addresses.
+        Trade types are shown from trader's perspective (inverted from DEX perspective).
         """
         if tool_name != "get_recent_large_trades":
             return {"error": f"Unsupported tool '{tool_name}'"}
