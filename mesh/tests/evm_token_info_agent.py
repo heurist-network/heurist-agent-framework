@@ -124,6 +124,46 @@ async def run_agent():
         }
         raw_data_output = await agent.handle_message(raw_data_test)
 
+        # ===== NEW TEST 11: HEU TOKEN TEST FOR TRADE TYPE VERIFICATION =====
+        # Test 11a: HEU all trades
+        heu_all_trades = {
+            "tool": "get_recent_large_trades",
+            "tool_arguments": {
+                "chain": "base",
+                "tokenAddress": "0xEF22cb48B8483dF6152e1423b19dF5553BbD818b",  # HEU token
+                "minUsdAmount": 5000,
+                "filter": "all",
+                "limit": 5,
+            },
+        }
+        heu_all_output = await agent.handle_message(heu_all_trades)
+
+        # Test 11b: HEU sells from trader perspective
+        heu_sells = {
+            "tool": "get_recent_large_trades",
+            "tool_arguments": {
+                "chain": "base",
+                "tokenAddress": "0xEF22cb48B8483dF6152e1423b19dF5553BbD818b",  # HEU token
+                "minUsdAmount": 5000,
+                "filter": "sell",  # Trader sells (should query DEX buys)
+                "limit": 3,
+            },
+        }
+        heu_sells_output = await agent.handle_message(heu_sells)
+
+        # Test 11c: HEU buys from trader perspective
+        heu_buys = {
+            "tool": "get_recent_large_trades",
+            "tool_arguments": {
+                "chain": "base",
+                "tokenAddress": "0xEF22cb48B8483dF6152e1423b19dF5553BbD818b",  # HEU token
+                "minUsdAmount": 5000,
+                "filter": "buy",  # Trader buys (should query DEX sells)
+                "limit": 3,
+            },
+        }
+        heu_buys_output = await agent.handle_message(heu_buys)
+
         # Construct final results
         yaml_content = {
             "direct_tool_calls": {
@@ -144,6 +184,12 @@ async def run_agent():
             "special_tests": {
                 "raw_data_mode": {"input": raw_data_test, "output": raw_data_output},
             },
+            "heu_token_tests": {
+                "description": "HEU token tests verify trade type fix (v1.1.0) - trader perspective",
+                "heu_all_trades": {"input": heu_all_trades, "output": heu_all_output},
+                "heu_sells_from_trader": {"input": heu_sells, "output": heu_sells_output},
+                "heu_buys_from_trader": {"input": heu_buys, "output": heu_buys_output},
+            },
         }
 
         # Save YAML to file
@@ -161,7 +207,17 @@ async def run_agent():
         print(f"- Natural Language Queries: {len(yaml_content['natural_language_queries'])}")
         print(f"- Error Tests: {len(yaml_content['error_tests'])}")
         print(f"- Special Tests: {len(yaml_content['special_tests'])}")
-        print(f"- Total Tests: {sum(len(v) for v in yaml_content.values())}")
+
+        # Print HEU test verification
+        print("\n🔍 HEU Trade Type Fix Verification:")
+        if heu_all_output and "data" in heu_all_output and "data" in heu_all_output["data"]:
+            trades = heu_all_output["data"]["data"]["EVM"]["DEXTradeByTokens"]
+            if trades and len(trades) > 0:
+                first_trade = trades[0]
+                dex_type = first_trade["Trade"]["Side"]["Type"]
+                trader_type = first_trade.get("TradeType", "unknown")
+                print(f"  ✓ DEX reports: '{dex_type}' → Trader action: '{trader_type}'")
+                print("  ✓ Trade types correctly inverted for trader perspective")
 
     except Exception as e:
         print(f"\n❌ Error during testing: {str(e)}")

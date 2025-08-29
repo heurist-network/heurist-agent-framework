@@ -15,205 +15,185 @@ direct_tool_calls:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-15T18:58:21Z'
+                Time: '2025-08-28T14:22:00Z'
               Trade:
                 Currency:
                   Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
                   Symbol: WBNB
                 Side:
-                  Amount: '212280.96790616'
-                  AmountInUSD: '252081.92858985587'
-                  Currency:
-                    Name: Shirushi Coin
-                    SmartContract: '0x0a23454f4c5d57a020372ab7138d80b43da95c3e'
-                    Symbol: SISC
-                  Type: buy
-              Transaction:
-                From: '0xb20529fa0df82fe41efc6604e4e46de15ad6eeea'
-                Hash: '0x31f6450b65e48e6bb8eacd39cce2c70beb002b50d0de0e3ef48fa5570164d4b0'
-              Trader: '0xb20529fa0df82fe41efc6604e4e46de15ad6eeea'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T13:54:51Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '242216.950916228622544774'
-                  AmountInUSD: '242349.6581671111'
+                  AmountInUSD: '548126.9672374343'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0xea25174bcc6923cbc9510e763bb45342efc0011970a33b94b01a7a0067bcd8d3'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: buy
+              TraderAction: Trader BUYS WBNB for USDT
+            - Block:
+                Time: '2025-08-28T14:02:37Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '499873.3353430039'
+                  Currency:
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0x5b646660b17566bb658184e8cd9afecd4a529e684333a95a273913c0ce3f6b6c'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: buy
+              TraderAction: Trader BUYS WBNB for USDT
+            - Block:
+                Time: '2025-08-28T14:03:19Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '499846.3717510285'
+                  Currency:
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0x511230a025e12c711b1c7f996d799bd72feb7b03f801c1da7b7e4be5013d1980'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: buy
+              TraderAction: Trader BUYS WBNB for USDT
+            - Block:
+                Time: '2025-08-28T14:06:11Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '499836.1245339879'
+                  Currency:
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0xe9200d8f0775b32260c1534217bd62c865f4fe08c51d00a14a7f47cb57580665'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: buy
+              TraderAction: Trader BUYS WBNB for USDT
+            - Block:
+                Time: '2025-08-28T14:21:45Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '499829.0627169954'
+                  Currency:
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0xade4b1deb2699676b1abeda8e48723571da140a793f016a3762dccfab47b60be'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: buy
+              TraderAction: Trader BUYS WBNB for USDT
+            - Block:
+                Time: '2025-08-28T14:00:32Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '385693.83463222545'
+                  Currency:
+                    Name: Ethereum Token
+                    Symbol: ETH
+                  Type: buy
+              Transaction:
+                From: '0x31ac5ef3eb6ade1807a0a7c5423f95c3a25c2417'
+                Hash: '0xcb6f9f39cbb25546e802543987c96cf8a4579d2235424514356462fbd8794d1f'
+              Trader: '0x31ac5ef3eb6ade1807a0a7c5423f95c3a25c2417'
+              TradeType: sell
+              TraderAction: Trader SELLS WBNB for ETH
+            - Block:
+                Time: '2025-08-28T14:00:40Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '385639.47146329365'
+                  Currency:
+                    Name: Ethereum Token
+                    Symbol: ETH
+                  Type: buy
+              Transaction:
+                From: '0x31ac5ef3eb6ade1807a0a7c5423f95c3a25c2417'
+                Hash: '0xac2f2c97c8ec4fa45cdad74e8688a577d4e74db80b786cb77aa704a0c295756b'
+              Trader: '0x31ac5ef3eb6ade1807a0a7c5423f95c3a25c2417'
+              TradeType: sell
+              TraderAction: Trader SELLS WBNB for ETH
+            - Block:
+                Time: '2025-08-28T14:00:36Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '384982.2488333251'
+                  Currency:
+                    Name: Ethereum Token
+                    Symbol: ETH
+                  Type: buy
+              Transaction:
+                From: '0x31ac5ef3eb6ade1807a0a7c5423f95c3a25c2417'
+                Hash: '0x37bedcc4f937c0bf4c544fc279fc76499d89e8c50bc88623984dd5719c621cc7'
+              Trader: '0x31ac5ef3eb6ade1807a0a7c5423f95c3a25c2417'
+              TradeType: sell
+              TraderAction: Trader SELLS WBNB for ETH
+            - Block:
+                Time: '2025-08-29T05:20:29Z'
+              Trade:
+                Currency:
+                  Name: Wrapped BNB
+                  Symbol: WBNB
+                Side:
+                  AmountInUSD: '284766.893463734'
+                  Currency:
+                    Name: Tether USD
                     Symbol: USDT
                   Type: buy
               Transaction:
                 From: '0xc30ee653e460bb24a031736811de2172c5f5888a'
-                Hash: '0xe514eb856a80630a46da09b8bf9b8d6456824f32f98106f7ad137667c7c54d54'
+                Hash: '0xdcf19a3e8314d41161e1b0853965c429b8dcbae3db1e4b5c1562fd14123d0517'
               Trader: '0xc30ee653e460bb24a031736811de2172c5f5888a'
-              TradeType: buy
+              TradeType: sell
+              TraderAction: Trader SELLS WBNB for USDT
             - Block:
-                Time: '2025-08-15T10:02:57Z'
+                Time: '2025-08-28T19:42:49Z'
               Trade:
                 Currency:
                   Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
                   Symbol: WBNB
                 Side:
-                  Amount: '219711.147108000595385667'
-                  AmountInUSD: '219824.9234607682'
+                  AmountInUSD: '268316.2879443438'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
                     Symbol: USDT
                   Type: buy
               Transaction:
-                From: '0x808c607c44b7931ba5c5a87cb82908b6a13d236a'
-                Hash: '0x309553a72e63201aaa63093b1f1f074ea4663d82c6d34cc1920689cf1f5190e6'
-              Trader: '0x808c607c44b7931ba5c5a87cb82908b6a13d236a'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T10:02:57Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '219580.762787958719123674'
-                  AmountInUSD: '219694.47162183805'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x86caf6b6156807bae9fc2604584e71ffae22200f'
-                Hash: '0x88030b614b32bb99ced7655b302d109fba49070de7978900928ff14a7d6cad1b'
-              Trader: '0x86caf6b6156807bae9fc2604584e71ffae22200f'
+                From: '0xc30ee653e460bb24a031736811de2172c5f5888a'
+                Hash: '0x7cda2047d1f68fca7d70e8e7c16152c9c317698e1ece48a15c3b3fa7ed6e8c37'
+              Trader: '0xc30ee653e460bb24a031736811de2172c5f5888a'
               TradeType: sell
-            - Block:
-                Time: '2025-08-16T08:44:25Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '162050.884788503640076373'
-                  AmountInUSD: '162165.90398692497'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x4b63c0cf524f71847ea05b59f3077a224d922e8d'
-                Hash: '0x26bcefc152d8cd49f4bb13a9f8a6846be887d7075bc81fa07aa8c0019bd6591f'
-              Trader: '0x4b63c0cf524f71847ea05b59f3077a224d922e8d'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T10:33:02Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '159097.249379200000000000'
-                  AmountInUSD: '159181.21128599092'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x58aa529478e6774fabf6fcb14e80db61e6ac15c2'
-                Hash: '0xbd50fa5761cd6d403d4e838f6a2757290dc0e9e5aa67f39ba01f7e6326035ea9'
-              Trader: '0x58aa529478e6774fabf6fcb14e80db61e6ac15c2'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T10:39:38Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '146268.310124880000000000'
-                  AmountInUSD: '146345.41451065798'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x318d776e354f1469d90675e9fbe92af6eecdf2f2'
-                Hash: '0x9d519998c233cb3022e259abd26a5a9bd1677dc9a0eb9d66b3d7dc82bc3f36fa'
-              Trader: '0x318d776e354f1469d90675e9fbe92af6eecdf2f2'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T10:35:29Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '139829.985000000000000000'
-                  AmountInUSD: '139903.77880984245'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x56a914dc7d6b4a9fd9a2e82e2454ab496a652a40'
-                Hash: '0x7b7b199ee19011ff2f56cfb1e1a1b7620d5d8efb7cfa45c1a56ed10dcb664c51'
-              Trader: '0x56a914dc7d6b4a9fd9a2e82e2454ab496a652a40'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-16T08:44:25Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '136408.743032266242543903'
-                  AmountInUSD: '136505.5621536287'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0x17c2f1cb35adc1161fff547b1138b6e90933daa9'
-                Hash: '0x8f8e91558aba2ab15ff5a458781ad8c35d401fe263cce7fa54e6b7f95832ccf3'
-              Trader: '0x17c2f1cb35adc1161fff547b1138b6e90933daa9'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-16T08:44:25Z'
-              Trade:
-                Currency:
-                  Name: Wrapped BNB
-                  SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-                  Symbol: WBNB
-                Side:
-                  Amount: '134557.447241843313241978'
-                  AmountInUSD: '134652.9523650864'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x17c2f1cb35adc1161fff547b1138b6e90933daa9'
-                Hash: '0x8f8e91558aba2ab15ff5a458781ad8c35d401fe263cce7fa54e6b7f95832ccf3'
-              Trader: '0x17c2f1cb35adc1161fff547b1138b6e90933daa9'
-              TradeType: sell
+              TraderAction: Trader SELLS WBNB for USDT
   base_weth_sellers:
     input:
       tool: get_recent_large_trades
@@ -230,105 +210,95 @@ direct_tool_calls:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-13T22:47:25Z'
+                Time: '2025-08-28T12:50:57Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0x4200000000000000000000000000000000000006'
                   Symbol: WETH
                 Side:
-                  Amount: '1286.395462265066299925'
-                  AmountInUSD: '6549122.838721765'
+                  AmountInUSD: '6744769.473250915'
                   Currency:
-                    Name: Wrapped eETH
-                    SmartContract: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a'
-                    Symbol: weETH
-                  Type: sell
+                    Name: draiftking
+                    Symbol: DKING
+                  Type: buy
               Transaction:
-                From: '0x92a3421e48aabb1b631dde5602313adc15520047'
-                Hash: '0x740fddc39ac582ceec24b3aa77999ac141dad55973c0b3daebbd0a66438fea12'
-              Trader: '0x92a3421e48aabb1b631dde5602313adc15520047'
+                From: '0xa34754fbfa535ad5c084d69c5e674825afc4e961'
+                Hash: '0xb8e86dee862efd6245c8654c442fcb38aeca59a23986c41d3afe8c184388f2e1'
+              Trader: '0xa34754fbfa535ad5c084d69c5e674825afc4e961'
               TradeType: sell
+              TraderAction: Trader SELLS WETH for DKING
             - Block:
-                Time: '2025-08-13T22:56:27Z'
+                Time: '2025-08-27T23:37:41Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0x4200000000000000000000000000000000000006'
                   Symbol: WETH
                 Side:
-                  Amount: '1170.315279451162498164'
-                  AmountInUSD: '5984992.339113245'
+                  AmountInUSD: '1017276.9665158894'
                   Currency:
-                    Name: Wrapped eETH
-                    SmartContract: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a'
-                    Symbol: weETH
-                  Type: sell
+                    Name: Wrapped liquid staked Ether 2.0
+                    Symbol: wstETH
+                  Type: buy
               Transaction:
-                From: '0xf73d56fbc70880e5f78a52ad583c69c7a4c3e6be'
-                Hash: '0x496f9c1b5b381b4627bea2dbd7eadee4bd003fced80b57309198bdcb692da203'
-              Trader: '0xf73d56fbc70880e5f78a52ad583c69c7a4c3e6be'
+                From: '0xaba21dcd28287c3d03a7ea2c5db920d46725c6b8'
+                Hash: '0xbbacb9a8e261b2ade83cb64dc86bd68bd80d06cb12a2ef28bae6f63c1589f4fc'
+              Trader: '0xaba21dcd28287c3d03a7ea2c5db920d46725c6b8'
               TradeType: sell
+              TraderAction: Trader SELLS WETH for wstETH
             - Block:
-                Time: '2025-08-13T22:56:29Z'
+                Time: '2025-08-27T09:52:01Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0x4200000000000000000000000000000000000006'
                   Symbol: WETH
                 Side:
-                  Amount: '1135.205820983650914321'
-                  AmountInUSD: '5805442.568510391'
-                  Currency:
-                    Name: Wrapped eETH
-                    SmartContract: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a'
-                    Symbol: weETH
-                  Type: sell
-              Transaction:
-                From: '0x4926bb717707cca7fea91ff5ab12b4fcc426084a'
-                Hash: '0x50ba2a59c6540c8fb9b7ae2f79d90fa228fc87ba92ae9c324273eb2b97023710'
-              Trader: '0x4926bb717707cca7fea91ff5ab12b4fcc426084a'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-13T22:47:25Z'
-              Trade:
-                Currency:
-                  Name: Wrapped Ether
-                  SmartContract: '0x4200000000000000000000000000000000000006'
-                  Symbol: WETH
-                Side:
-                  Amount: '14.13910180'
-                  AmountInUSD: '1740477.7004226157'
-                  Currency:
-                    Name: Coinbase Wrapped BTC
-                    SmartContract: '0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf'
-                    Symbol: cbBTC
-                  Type: sell
-              Transaction:
-                From: '0x0d35bdf9faa813ffe91bd6ca5b3d905b422a282b'
-                Hash: '0xffb93d96d3b5728e8c67b8c794fb744b7760431713833a433ea813b93bfa5071'
-              Trader: '0x0d35bdf9faa813ffe91bd6ca5b3d905b422a282b'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-11T13:46:07Z'
-              Trade:
-                Currency:
-                  Name: Wrapped Ether
-                  SmartContract: '0x4200000000000000000000000000000000000006'
-                  Symbol: WETH
-                Side:
-                  Amount: '800424.542711'
-                  AmountInUSD: '800307.273938518'
+                  AmountInUSD: '835807.2758543392'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'
                     Symbol: USDC
-                  Type: sell
+                  Type: buy
               Transaction:
-                From: '0xecf5dc30b0ef11049962fcfbaa88c347338a96af'
-                Hash: '0x834f65e0e17d396f466d6caa4fe1ba9d5165db83a4ed9a5b5de381cb8c1870cb'
-              Trader: '0xecf5dc30b0ef11049962fcfbaa88c347338a96af'
+                From: '0x60087fc6e8c51a38944cb1775fb64e3d301fb6d1'
+                Hash: '0x23b569e8a5f7c8829ec84520b49552833635300840410fe419a3717930810230'
+              Trader: '0x60087fc6e8c51a38944cb1775fb64e3d301fb6d1'
               TradeType: sell
+              TraderAction: Trader SELLS WETH for USDC
+            - Block:
+                Time: '2025-08-28T12:50:57Z'
+              Trade:
+                Currency:
+                  Name: Wrapped Ether
+                  Symbol: WETH
+                Side:
+                  AmountInUSD: '823596.2291952649'
+                  Currency:
+                    Name: draiftking
+                    Symbol: DKING
+                  Type: buy
+              Transaction:
+                From: '0xddcc6acbc9267d75f1d20faf3925a42e7300b673'
+                Hash: '0x6c6323895ef4daf403dd678888d6ceeabb0f506a3b8f93d6118354a7ade820ba'
+              Trader: '0xddcc6acbc9267d75f1d20faf3925a42e7300b673'
+              TradeType: sell
+              TraderAction: Trader SELLS WETH for DKING
+            - Block:
+                Time: '2025-08-28T13:29:33Z'
+              Trade:
+                Currency:
+                  Name: Wrapped Ether
+                  Symbol: WETH
+                Side:
+                  AmountInUSD: '804231.0747188479'
+                  Currency:
+                    Name: draiftking
+                    Symbol: DKING
+                  Type: buy
+              Transaction:
+                From: '0x14d48545e9e4dd2cba2a409be3abde5979a3d46a'
+                Hash: '0x69636731dc93f345817b814a733936a4bbb02f7fb425f384da558de0167bc8dd'
+              Trader: '0x14d48545e9e4dd2cba2a409be3abde5979a3d46a'
+              TradeType: sell
+              TraderAction: Trader SELLS WETH for DKING
   bsc_btcb:
     input:
       tool: get_recent_large_trades
@@ -345,105 +315,95 @@ direct_tool_calls:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-15T06:40:56Z'
+                Time: '2025-08-28T17:00:30Z'
               Trade:
                 Currency:
                   Name: BTCB Token
-                  SmartContract: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
                   Symbol: BTCB
                 Side:
-                  Amount: '126278.055455641347647797'
-                  AmountInUSD: '126367.05184978133'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0x01fa57fef2caf0357a8ebb53f1738093d41cc2be'
-                Hash: '0x366d3bb29d5037338a1a7ea9b7e4dc21bc8f780c981fe134bf284b5fac04b61c'
-              Trader: '0x01fa57fef2caf0357a8ebb53f1738093d41cc2be'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T06:40:56Z'
-              Trade:
-                Currency:
-                  Name: BTCB Token
-                  SmartContract: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
-                  Symbol: BTCB
-                Side:
-                  Amount: '126278.055455641347647797'
-                  AmountInUSD: '126367.05184978133'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0x28515818482dc3925a198fa3acbed83dd893bdce'
-                Hash: '0x3de58096a37a4feb3c296d71173989b5d2d733899b68f1efdfb15dd39181d1ae'
-              Trader: '0x28515818482dc3925a198fa3acbed83dd893bdce'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T13:54:51Z'
-              Trade:
-                Currency:
-                  Name: BTCB Token
-                  SmartContract: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
-                  Symbol: BTCB
-                Side:
-                  Amount: '137.700000000000000000'
-                  AmountInUSD: '115192.95853271484'
+                  AmountInUSD: '239914.56917267197'
                   Currency:
                     Name: Wrapped BNB
-                    SmartContract: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0xf1974a3c47c61daa311af4bd71c9cc1f7285774a'
+                Hash: '0x93ce7d5a8d07b5a7c8714fa9ecef4ffb94c7b0ac42eea666b0dbe03fadf46200'
+              Trader: '0xf1974a3c47c61daa311af4bd71c9cc1f7285774a'
+              TradeType: sell
+              TraderAction: Trader SELLS BTCB for WBNB
+            - Block:
+                Time: '2025-08-28T12:27:30Z'
+              Trade:
+                Currency:
+                  Name: BTCB Token
+                  Symbol: BTCB
+                Side:
+                  AmountInUSD: '129693.69636504116'
+                  Currency:
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0xec843bbeb5553f1ca4e92bf8b8f888940ab0f2fc'
+                Hash: '0x0abe95e545100944ba5ed1c5f03fb9a1292c5a4f64aec53ce2917255b5ccf5fc'
+              Trader: '0xec843bbeb5553f1ca4e92bf8b8f888940ab0f2fc'
+              TradeType: sell
+              TraderAction: Trader SELLS BTCB for WBNB
+            - Block:
+                Time: '2025-08-28T17:00:31Z'
+              Trade:
+                Currency:
+                  Name: BTCB Token
+                  Symbol: BTCB
+                Side:
+                  AmountInUSD: '127391.16677941327'
+                  Currency:
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0x76940f3f677b0ca558ccb89d1eb14c1d62166ccd'
+                Hash: '0x646ff0d5282915d3b51f5a8b98aa27c751bde75e4a040c67e2b140a2473bfcae'
+              Trader: '0x76940f3f677b0ca558ccb89d1eb14c1d62166ccd'
+              TradeType: sell
+              TraderAction: Trader SELLS BTCB for WBNB
+            - Block:
+                Time: '2025-08-28T17:00:30Z'
+              Trade:
+                Currency:
+                  Name: BTCB Token
+                  Symbol: BTCB
+                Side:
+                  AmountInUSD: '120349.95794845444'
+                  Currency:
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0x84b1fd60858cc071c217478f14581c971cbe5f89'
+                Hash: '0xc9d553d1c882cf2f1ec26ec08fc7782110f8cf47c61959968e6d40511be86677'
+              Trader: '0x84b1fd60858cc071c217478f14581c971cbe5f89'
+              TradeType: sell
+              TraderAction: Trader SELLS BTCB for WBNB
+            - Block:
+                Time: '2025-08-28T17:00:30Z'
+              Trade:
+                Currency:
+                  Name: BTCB Token
+                  Symbol: BTCB
+                Side:
+                  AmountInUSD: '119986.44765983873'
+                  Currency:
+                    Name: Wrapped BNB
                     Symbol: WBNB
                   Type: sell
               Transaction:
-                From: '0xc30ee653e460bb24a031736811de2172c5f5888a'
-                Hash: '0xe514eb856a80630a46da09b8bf9b8d6456824f32f98106f7ad137667c7c54d54'
-              Trader: '0xc30ee653e460bb24a031736811de2172c5f5888a'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T13:54:51Z'
-              Trade:
-                Currency:
-                  Name: BTCB Token
-                  SmartContract: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
-                  Symbol: BTCB
-                Side:
-                  Amount: '114392.559262457704237334'
-                  AmountInUSD: '114455.23333214485'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0xc30ee653e460bb24a031736811de2172c5f5888a'
-                Hash: '0xe514eb856a80630a46da09b8bf9b8d6456824f32f98106f7ad137667c7c54d54'
-              Trader: '0xc30ee653e460bb24a031736811de2172c5f5888a'
+                From: '0x84b1fd60858cc071c217478f14581c971cbe5f89'
+                Hash: '0xc9d553d1c882cf2f1ec26ec08fc7782110f8cf47c61959968e6d40511be86677'
+              Trader: '0x84b1fd60858cc071c217478f14581c971cbe5f89'
               TradeType: buy
-            - Block:
-                Time: '2025-08-15T16:27:32Z'
-              Trade:
-                Currency:
-                  Name: BTCB Token
-                  SmartContract: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
-                  Symbol: BTCB
-                Side:
-                  Amount: '105968.472073694677715974'
-                  AmountInUSD: '106009.07269172867'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                    Symbol: USDT
-                  Type: sell
-              Transaction:
-                From: '0xf1d9fad6227648e776845dffe7595e9670896ae4'
-                Hash: '0x4196ece382aedd1dc2477709f6ddb6423f53fa2588045505325cf5d30a25cb03'
-              Trader: '0xf1d9fad6227648e776845dffe7595e9670896ae4'
-              TradeType: sell
+              TraderAction: Trader BUYS BTCB for WBNB
   eth_weth_buyers:
     input:
       tool: get_recent_large_trades
@@ -460,904 +420,754 @@ direct_tool_calls:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-12T12:09:47Z'
+                Time: '2025-08-25T23:51:11Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                   Symbol: WETH
                 Side:
-                  Amount: '2108.660163356119616084'
-                  AmountInUSD: '10917764.060662996'
+                  AmountInUSD: '17836572.69072596'
                   Currency:
                     Name: Wrapped liquid staked Ether 2.0
-                    SmartContract: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
                     Symbol: wstETH
-                  Type: buy
+                  Type: sell
               Transaction:
-                From: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
-                Hash: '0x70a8837b4cb0b6ab0d752fb874bb9508c45504d439b5bf3e02adc9aad0864562'
-              Trader: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
+                From: '0x95480d3f27658e73b2785d30beb0c847d78294c7'
+                Hash: '0x5b96aa328e865fc1f989d909b66f7c4843942cdbdcbe111b4c23be917da0460b'
+              Trader: '0x95480d3f27658e73b2785d30beb0c847d78294c7'
               TradeType: buy
+              TraderAction: Trader BUYS WETH for wstETH
             - Block:
-                Time: '2025-08-13T00:13:35Z'
+                Time: '2025-08-25T22:23:23Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                   Symbol: WETH
                 Side:
-                  Amount: '1667.728678597026469893'
-                  AmountInUSD: '9264696.15805283'
+                  AmountInUSD: '6069755.186301358'
                   Currency:
-                    Name: Wrapped liquid staked Ether 2.0
-                    SmartContract: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
-                    Symbol: wstETH
-                  Type: buy
+                    Name: Wrapped eETH
+                    Symbol: weETH
+                  Type: sell
               Transaction:
-                From: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
-                Hash: '0x847981ab90dc40e2aa5319223881974c2d0ab676679625bb4b72cfc44d0babdc'
-              Trader: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
+                From: '0x124ce844fab46dc12183dc35c82ccc9bc83fddd5'
+                Hash: '0x07b67092e2885b8ed0d621f84b59a29bb3510ed8801f34c078bbd7c7f0399e66'
+              Trader: '0x124ce844fab46dc12183dc35c82ccc9bc83fddd5'
               TradeType: buy
+              TraderAction: Trader BUYS WETH for weETH
             - Block:
-                Time: '2025-08-13T01:25:47Z'
+                Time: '2025-08-25T23:51:23Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                   Symbol: WETH
                 Side:
-                  Amount: '1650.113442200712279436'
-                  AmountInUSD: '9125530.195097039'
+                  AmountInUSD: '6028015.629408923'
                   Currency:
-                    Name: Wrapped liquid staked Ether 2.0
-                    SmartContract: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
-                    Symbol: wstETH
-                  Type: buy
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
               Transaction:
-                From: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
-                Hash: '0x3488151da042a1509780525c76064049c08859f8ac8f4b0cccf9895faf54eacc'
-              Trader: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
+                From: '0xbaa3ef11659d347aae75c7bb67e29f1f8bb90843'
+                Hash: '0x247705ab3092141f252f765e9d077293213f1ed67b34b592efefea8c4be60c16'
+              Trader: '0xbaa3ef11659d347aae75c7bb67e29f1f8bb90843'
               TradeType: buy
+              TraderAction: Trader BUYS WETH for USDT
             - Block:
-                Time: '2025-08-14T12:40:47Z'
+                Time: '2025-08-27T16:18:23Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                   Symbol: WETH
                 Side:
-                  Amount: '1615.662519629449980861'
-                  AmountInUSD: '9021995.988915486'
+                  AmountInUSD: '5492880.312480068'
                   Currency:
-                    Name: Wrapped liquid staked Ether 2.0
-                    SmartContract: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
-                    Symbol: wstETH
-                  Type: buy
+                    Name: Wrapped eETH
+                    Symbol: weETH
+                  Type: sell
               Transaction:
-                From: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
-                Hash: '0xc1a7fa722b991951c2ebe48acf90984124bed0c0ecb26ab00a595387201bdb72'
-              Trader: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
+                From: '0xc7899ff6a3ac2ff59261bd960a8c880df06e1041'
+                Hash: '0x168ba75b980efdb9653b08ecc58f4704e9e7a03e8df7f14fc34cd8c2db7bb5cf'
+              Trader: '0xc7899ff6a3ac2ff59261bd960a8c880df06e1041'
               TradeType: buy
+              TraderAction: Trader BUYS WETH for weETH
             - Block:
-                Time: '2025-08-12T19:46:11Z'
+                Time: '2025-08-28T05:02:23Z'
               Trade:
                 Currency:
                   Name: Wrapped Ether
-                  SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                   Symbol: WETH
                 Side:
-                  Amount: '1632.399236953615131109'
-                  AmountInUSD: '8884947.388043728'
+                  AmountInUSD: '5310523.87137077'
                   Currency:
-                    Name: Wrapped liquid staked Ether 2.0
-                    SmartContract: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
-                    Symbol: wstETH
-                  Type: buy
+                    Name: USD Coin
+                    Symbol: USDC
+                  Type: sell
               Transaction:
-                From: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
-                Hash: '0x086df982e1cbe99749e86e1e1365a8f9d6817d52ff03053160d9ebc202bcee1f'
-              Trader: '0xc9f5920f5fa422c1c8975f12c0a2cf1467c947db'
+                From: '0xdf8adfe10d4a4d9f0fc4d3e377a6e8d5730eb40c'
+                Hash: '0x25071c0addbd5b83918997ebfd5bd071b8f033dc1fa2c42b0c44f4656f2a8778'
+              Trader: '0xdf8adfe10d4a4d9f0fc4d3e377a6e8d5730eb40c'
               TradeType: buy
+              TraderAction: Trader BUYS WETH for USDC
 natural_language_queries:
   eth_usdc_buyers:
     input:
       query: Show me only the large buyers of USDC 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
         on ethereum
     output:
-      response: '**Large USDC Buyers on Ethereum (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)**
-
-
-        Below is a list of large buyers of USDC, with trades exceeding the default
-        minimum of $5,000 USD, sorted by USD amount in descending order:
-
-
-        | **Trader (Wallet Address)** | **Trade Type** | **USDC Amount** | **Amount
-        in USD** | **Trade Time** |
-
-        | --- | --- | --- | --- | --- |
-
-        | **0xae2fc483527b8ef99eb5d9b44875f005ba1fae13** | Buy | 5,770,837.24 USDC
-        | **$5,773,269.10** | 2025-08-14T11:26:35Z |
-
-        | **0xe2ca3167b89b8cf680d63b06e8aeefc5e4ebe907** | Buy | 3,559,010.53 USDC
-        | **$3,561,170.47** | 2025-08-15T22:59:23Z |
-
-        | **0xae2fc483527b8ef99eb5d9b44875f005ba1fae13** | Buy | 3,824,554.99 USDC
-        | **$3,825,658.33** | 2025-08-14T05:44:23Z |
-
-        | **0xae2fc483527b8ef99eb5d9b44875f005ba1fae13** | Buy | 4,912,777.27 USDC
-        | **$4,914,318.69** | 2025-08-14T04:28:11Z |
-
-        | **0x0811fd1808e14f0b93f0514313965a5f142c5539** | Buy | 5,064,476.50 USDC
-        | **$5,067,038.14** | 2025-08-15T20:51:35Z |
-
-        | **0x1b99451f62a8574f8413f5a3fc80b99b29701c16** | Buy | 1,681.73 WETH (for
-        USDC) | **$8,001,537.72** | 2025-08-13T23:38:23Z |
-
-        | **0x1b99451f62a8574f8413f5a3fc80b99b29701c16** | Buy | 1,306.41 WETH (for
-        USDC) | **$6,029,951.20** | 2025-08-14T16:06:35Z |
-
-        | **0x8a14ce0fecbefdcc612f340be3324655718ce1c1** | Buy | 1,222.91 WETH (for
-        USDC) | **$5,806,011.94** | 2025-08-13T22:20:47Z |
-
-        | **0x1b99451f62a8574f8413f5a3fc80b99b29701c16** | Buy | 1,247.19 WETH (for
-        USDC) | **$5,592,158.95** | 2025-08-16T01:42:11Z |
-
-        | **0x1b99451f62a8574f8413f5a3fc80b99b29701c16** | Buy | 882.17 WETH (for
-        USDC) | **$4,000,962.48** | 2025-08-14T20:11:11Z |
-
-
-        **Note:**
-
-        - The list only includes trades that meet the default minimum threshold of
-        $5,000 USD.
-
-        - The ''Trader'' column shows the actual wallet address initiating the buy
-        trades for USDC.
-
-        - Amounts are in USDC and USD, with USD amounts reflecting the value at the
-        time of trade.
-
-        - Trades are sorted by the USD amount in descending order to highlight the
-        largest buys first.'
+      response: "I've identified the following large buyers of USDC on Ethereum:\n\
+        \n*   **Trader:** 0x7bee8d37fba61a6251a08b957d502c56e2a50fab\n    *   **Amount:**\
+        \ $7,153,271.91 USD (bought with DAI)\n    *   **Transaction Hash:** 0x020d1e85f1e7345c9cd0542d5a7c5d603164bcd3edefff41acda39c2fb40433a\n\
+        \    *   **Amount:** $3,546,609.76 USD (bought with DAI)\n    *   **Transaction\
+        \ Hash:** 0x53dea0f688bd206a8fd33c1e4413d7f34f46a9b859ebe9bcac377ea93eab3955\n\
+        *   **Trader:** 0xdf8adfe10d4a4d9f0fc4d3e377a6e8d5730eb40c\n    *   **Amount:**\
+        \ $5,311,137.41 USD (bought with USDT)\n    *   **Transaction Hash:** 0x25071c0addbd5b83918997ebfd5bd071b8f033dc1fa2c42b0c44f4656f2a8778\n\
+        *   **Trader:** 0x654fae4aa229d104cabead47e56703f58b174be4\n    *   **Amount:**\
+        \ $4,076,806.56 USD (bought with USDT)\n    *   **Transaction Hash:** 0x2857ef6c60e16b52b31223a8feb6a3d21ad2a7878341b5fa16e86358f29981ee\n\
+        *   **Trader:** 0x448166a91e7bc50d0ac720c2fbed29e0963f5af8\n    *   **Amount:**\
+        \ $3,835,814.08 USD (bought with WBTC)\n    *   **Transaction Hash:** 0x254fd2371a1eaa780f7b7073d41ae5c1c9c4912563c1db138bf464f850195466\n\
+        *   **Trader:** 0x920eefbcf1f5756109952e6ff6da1cab950c64d7\n    *   **Amount:**\
+        \ $2,543,562.12 USD (bought with DAI)\n    *   **Transaction Hash:** 0x2102a20e4e9aca816697339a94330f6df91eb3ca6507ad423852fbd0478a2b83\n\
+        *   **Trader:** 0xc54b77b28ee4d18cd3d93991f08b79bc85c71097\n    *   **Amount:**\
+        \ $2,467,715.98 USD (bought with WETH)\n    *   **Transaction Hash:** 0xea51f1a8566807fe991aa1bb155d31ca61a371a5d13ac03a2e775cb71fcb2fe9\n\
+        *   **Trader:** 0x1b99451f62a8574f8413f5a3fc80b99b29701c16\n    *   **Amount:**\
+        \ $2,328,899.93 USD (bought with WETH)\n    *   **Transaction Hash:** 0xbf8e29e19580e37582b876a52ebcf8cba2d72621cd5aa1a00cf6d621453b1544\n\
+        *   **Trader:** 0xd2adf24253056d45731a8561749fc9b2ffa4fe19\n    *   **Amount:**\
+        \ $2,295,817.63 USD (bought with WBTC)\n    *   **Transaction Hash:** 0x31f255e42b058608b02599370341044a83c4020431b1f1376205d05c8004a84f\n\
+        *   **Trader:** 0xd7e1236c08731c3632519dcd1a581bfe6876a3b2\n    *   **Amount:**\
+        \ $2,283,646.45 USD (bought with WETH)\n    *   **Transaction Hash:** 0x781211a30d5f5eba90a59583539f42dbf9ce7d468810be942e43189da01bdea4\n\
+        \nThese trades show the actual wallet addresses that initiated the purchase\
+        \ of USDC, along with the amount in USD and the currency they used to buy\
+        \ USDC."
       data:
         data:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-13T23:38:23Z'
+                Time: '2025-08-26T21:56:23Z'
               Trade:
                 Currency:
                   Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
                   Symbol: USDC
                 Side:
-                  Amount: '1681.730220986712591516'
-                  AmountInUSD: '8001537.721651927'
+                  AmountInUSD: '7153271.90745063'
                   Currency:
-                    Name: Wrapped Ether
-                    SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-                    Symbol: WETH
-                  Type: buy
+                    Name: Dai Stablecoin
+                    Symbol: DAI
+                  Type: sell
               Transaction:
-                From: '0x7b70f4c364e9a0f487c867f28e54b05b75f52814'
-                Hash: '0x8d650aa198ffcfb2eb59e07a9c793f8d311371e80db7b6230fbdb4c61ff1dbf7'
-              Trader: '0x7b70f4c364e9a0f487c867f28e54b05b75f52814'
+                From: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
+                Hash: '0x020d1e85f1e7345c9cd0542d5a7c5d603164bcd3edefff41acda39c2fb40433a'
+              Trader: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
               TradeType: buy
+              TraderAction: Trader BUYS USDC for DAI
             - Block:
-                Time: '2025-08-14T16:06:35Z'
+                Time: '2025-08-28T05:02:23Z'
               Trade:
                 Currency:
                   Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
                   Symbol: USDC
                 Side:
-                  Amount: '1306.409360173739959656'
-                  AmountInUSD: '6029951.199933918'
+                  AmountInUSD: '5311137.4103057645'
+                  Currency:
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0xdf8adfe10d4a4d9f0fc4d3e377a6e8d5730eb40c'
+                Hash: '0x25071c0addbd5b83918997ebfd5bd071b8f033dc1fa2c42b0c44f4656f2a8778'
+              Trader: '0xdf8adfe10d4a4d9f0fc4d3e377a6e8d5730eb40c'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for USDT
+            - Block:
+                Time: '2025-08-28T10:04:35Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '4076806.5610217922'
+                  Currency:
+                    Name: Tether USD
+                    Symbol: USDT
+                  Type: sell
+              Transaction:
+                From: '0x654fae4aa229d104cabead47e56703f58b174be4'
+                Hash: '0x2857ef6c60e16b52b31223a8feb6a3d21ad2a7878341b5fa16e86358f29981ee'
+              Trader: '0x654fae4aa229d104cabead47e56703f58b174be4'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for USDT
+            - Block:
+                Time: '2025-08-27T20:21:47Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '3835814.0768816825'
+                  Currency:
+                    Name: Wrapped BTC
+                    Symbol: WBTC
+                  Type: sell
+              Transaction:
+                From: '0x448166a91e7bc50d0ac720c2fbed29e0963f5af8'
+                Hash: '0x254fd2371a1eaa780f7b7073d41ae5c1c9c4912563c1db138bf464f850195466'
+              Trader: '0x448166a91e7bc50d0ac720c2fbed29e0963f5af8'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for WBTC
+            - Block:
+                Time: '2025-08-28T23:16:47Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '3546609.7565664'
+                  Currency:
+                    Name: Dai Stablecoin
+                    Symbol: DAI
+                  Type: sell
+              Transaction:
+                From: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
+                Hash: '0x53dea0f688bd206a8fd33c1e4413d7f34f46a9b859ebe9bcac377ea93eab3955'
+              Trader: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for DAI
+            - Block:
+                Time: '2025-08-26T22:05:59Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '2543562.121335579'
+                  Currency:
+                    Name: Dai Stablecoin
+                    Symbol: DAI
+                  Type: sell
+              Transaction:
+                From: '0x920eefbcf1f5756109952e6ff6da1cab950c64d7'
+                Hash: '0x2102a20e4e9aca816697339a94330f6df91eb3ca6507ad423852fbd0478a2b83'
+              Trader: '0x920eefbcf1f5756109952e6ff6da1cab950c64d7'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for DAI
+            - Block:
+                Time: '2025-08-27T15:19:35Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '2467715.978685326'
                   Currency:
                     Name: Wrapped Ether
-                    SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                     Symbol: WETH
-                  Type: buy
+                  Type: sell
+              Transaction:
+                From: '0xc54b77b28ee4d18cd3d93991f08b79bc85c71097'
+                Hash: '0xea51f1a8566807fe991aa1bb155d31ca61a371a5d13ac03a2e775cb71fcb2fe9'
+              Trader: '0xc54b77b28ee4d18cd3d93991f08b79bc85c71097'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for WETH
+            - Block:
+                Time: '2025-08-25T06:46:47Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '2328899.934176585'
+                  Currency:
+                    Name: Wrapped Ether
+                    Symbol: WETH
+                  Type: sell
               Transaction:
                 From: '0x1b99451f62a8574f8413f5a3fc80b99b29701c16'
-                Hash: '0x9f31345a64901184b4b031cb35649642affbb6d31f12d327e07e86662a50b357'
+                Hash: '0xbf8e29e19580e37582b876a52ebcf8cba2d72621cd5aa1a00cf6d621453b1544'
               Trader: '0x1b99451f62a8574f8413f5a3fc80b99b29701c16'
               TradeType: buy
+              TraderAction: Trader BUYS USDC for WETH
             - Block:
-                Time: '2025-08-13T22:20:47Z'
+                Time: '2025-08-25T10:54:11Z'
               Trade:
                 Currency:
                   Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
                   Symbol: USDC
                 Side:
-                  Amount: '1222.911530582284258870'
-                  AmountInUSD: '5806011.938472482'
+                  AmountInUSD: '2295817.6282363185'
+                  Currency:
+                    Name: Wrapped BTC
+                    Symbol: WBTC
+                  Type: sell
+              Transaction:
+                From: '0xd2adf24253056d45731a8561749fc9b2ffa4fe19'
+                Hash: '0x31f255e42b058608b02599370341044a83c4020431b1f1376205d05c8004a84f'
+              Trader: '0xd2adf24253056d45731a8561749fc9b2ffa4fe19'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for WBTC
+            - Block:
+                Time: '2025-08-25T23:51:11Z'
+              Trade:
+                Currency:
+                  Name: USD Coin
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '2283646.4487751084'
                   Currency:
                     Name: Wrapped Ether
-                    SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
                     Symbol: WETH
-                  Type: buy
+                  Type: sell
               Transaction:
-                From: '0x8a14ce0fecbefdcc612f340be3324655718ce1c1'
-                Hash: '0x8b4cec869b61054f49fb6c908bb9bc343e4e788d503fd04cdd0e5aa8477b7a7c'
-              Trader: '0x8a14ce0fecbefdcc612f340be3324655718ce1c1'
+                From: '0xd7e1236c08731c3632519dcd1a581bfe6876a3b2'
+                Hash: '0x781211a30d5f5eba90a59583539f42dbf9ce7d468810be942e43189da01bdea4'
+              Trader: '0xd7e1236c08731c3632519dcd1a581bfe6876a3b2'
               TradeType: buy
-            - Block:
-                Time: '2025-08-14T11:26:35Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '5770837.236426933730341363'
-                  AmountInUSD: '5773269.095160917'
-                  Currency:
-                    Name: USDe
-                    SmartContract: '0x4c9edd5852cd905f086c759e8383e09bff1e68b3'
-                    Symbol: USDe
-                  Type: buy
-              Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0x94f976f576b0c7ebe1f6441219ff03b3b8f3b673fe05296bd5e59d92b9a0d9ea'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-16T01:42:11Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '1247.191526326055248695'
-                  AmountInUSD: '5592158.949089384'
-                  Currency:
-                    Name: Wrapped Ether
-                    SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-                    Symbol: WETH
-                  Type: buy
-              Transaction:
-                From: '0x1b99451f62a8574f8413f5a3fc80b99b29701c16'
-                Hash: '0x6ed99800473fc3ccb626e98579ce49e07501df0ed56501695c33dfd1dfaeab79'
-              Trader: '0x1b99451f62a8574f8413f5a3fc80b99b29701c16'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T20:51:35Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '5064476.497795'
-                  AmountInUSD: '5067038.13540879'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0x0811fd1808e14f0b93f0514313965a5f142c5539'
-                Hash: '0x5c097cedfdcdcf726aae9211a72b5fe6a02892fdf757910d3ca5bb827919a62e'
-              Trader: '0x0811fd1808e14f0b93f0514313965a5f142c5539'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-14T04:28:11Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '4912777.265153'
-                  AmountInUSD: '4914318.6924985'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0x4dcd8db17f2eb209b943dc003945eb3ec65c67944f7f9356be3f4d1fb0d3bf0c'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-14T20:11:11Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '882.168522322367180495'
-                  AmountInUSD: '4000962.4774497137'
-                  Currency:
-                    Name: Wrapped Ether
-                    SmartContract: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-                    Symbol: WETH
-                  Type: buy
-              Transaction:
-                From: '0x1b99451f62a8574f8413f5a3fc80b99b29701c16'
-                Hash: '0x49cbb7dabd5b989fd6565530d1537a728c511d9217f07e9cd2523dd933154f84'
-              Trader: '0x1b99451f62a8574f8413f5a3fc80b99b29701c16'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-14T05:44:23Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '3824554.999809'
-                  AmountInUSD: '3825658.332221188'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0x70b8c8d6c1ec961ebe7ed9a5b374dd9c9ea3c6748af68f3b005e7371b766cae6'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T22:59:23Z'
-              Trade:
-                Currency:
-                  Name: USD Coin
-                  SmartContract: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
-                  Symbol: USDC
-                Side:
-                  Amount: '3559010.529322'
-                  AmountInUSD: '3561170.4732131413'
-                  Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
-                  Type: buy
-              Transaction:
-                From: '0xe2ca3167b89b8cf680d63b06e8aeefc5e4ebe907'
-                Hash: '0x7ddf3945122a0a0257f43803ec9ca291465aeb184d5e1937edc7ed818f432d53'
-              Trader: '0xe2ca3167b89b8cf680d63b06e8aeefc5e4ebe907'
-              TradeType: buy
+              TraderAction: Trader BUYS USDC for WETH
   arb_usdc_all:
     input:
       query: What are the large trades for USDC 0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8
         on arbitrum?
     output:
-      response: '**Large Trades for USDC (0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8)
-        on Arbitrum**
-
-
-        **Filtered by:** Minimum trade size $5,000 USD, All Trade Types (Buy/Sell)
-
-
-        **Trade Summary (Sorted by USD Amount in Descending Order):**
-
-
-        | **Trader (Wallet Address)** | **Trade Type** | **USDC Amount** | **USD Amount**
-        | **Block Time** |
-
-        | --- | --- | --- | --- | --- |
-
-        | **0xa309953fd336d5f97c08e9e7d5c71c812db112f5** | Sell | 144,524.536945 |
-        **$144,490.05** | 2025-08-15T18:02:46Z |
-
-        | **0x529f01f36782731c0a1594476e740ee1930eef36** | Sell | 119,960.000000 |
-        **$119,950.73** | 2025-08-16T01:09:41Z |
-
-        | **0xa309953fd336d5f97c08e9e7d5c71c812db112f5** | Buy  | 109,878.335107 |
-        **$109,852.12** | 2025-08-15T18:02:46Z |
-
-        | **0x529f01f36782731c0a1594476e740ee1930eef36** | Sell | 105,000.000000 |
-        **$104,991.89** | 2025-08-16T01:09:16Z |
-
-        | **0x529f01f36782731c0a1594476e740ee1930eef36** | Sell | 80,040.000000 |
-        **$80,038.96** | 2025-08-16T00:58:30Z |
-
-        | **0x529f01f36782731c0a1594476e740ee1930eef36** | Sell | 79,980.000000 |
-        **$79,982.29** | 2025-08-16T03:47:27Z |
-
-        | **0xe9d0a2d366f831f6f6b71f916a1628fb63aaae08** | Sell | 79,036.808796 |
-        **$79,018.92** | 2025-08-15T16:39:56Z |
-
-        | **0x24fb6523036ebcb3cc51deff138066dccf6bed0f** | Sell | 77,811.195278 |
-        **$77,794.43** | 2025-08-15T15:44:16Z |
-
-        | **0x055aadf63dc78e5e7eaf504f2db10b55b68207d2** | Buy  | 75,997.833835 |
-        **$75,983.96** | 2025-08-15T09:23:44Z |
-
-        | **0x879c2a2f7e4071ebdc971e508885d4a8cdeaf227** | Buy  | 75,220.867171 |
-        **$75,215.06** | 2025-08-16T01:09:16Z |
-
-
-        **Key Observations:**
-
-
-        * The largest trade was a **sell** of approximately **$144,490.05** in USDC
-        by wallet `0xa309953fd336d5f97c08e9e7d5c71c812db112f5` on August 15, 2025,
-        at 18:02:46 UTC.
-
-        * `0x529f01f36782731c0a1594476e740ee1930eef36` was the most active whale wallet,
-        involved in four significant trades (all sells), totaling over **$364,963.07**
-        in USDC.
-
-        * The majority of the large trades were **sells**, with only three **buy**
-        transactions meeting the $5,000 USD minimum threshold.'
+      response: "I can help you with that! Here are the large trades for USDC on Arbitrum:\n\
+        \n**Large Trades for USDC (0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8) on\
+        \ Arbitrum (Last 24 hours, minimum $5,000 USD):**\n\n*   **Trader:** `0xfedb7220169cc948ec5e0fbbe4030fef98ebf57a`\n\
+        \    *   **Action:** Bought $238,803.69 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0x1e4d9793ed1d6e94cd67ef2e588f3fbd852f7692be681a0129bcb8bdaa074701`\n\
+        \    *   **Time:** 2025-08-28 11:20:54 UTC\n\n*   **Trader:** `0x591a28e598b3aab30c9f5245f8af158d24afd83c`\n\
+        \    *   **Action:** Sold $229,907.84 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0x748130eb271f7446420099165f69ae49dcd4963737fff49671757ac16073f4d7`\n\
+        \    *   **Time:** 2025-08-28 16:01:53 UTC\n\n*   **Trader:** `0x591a28e598b3aab30c9f5245f8af158d24afd83c`\n\
+        \    *   **Action:** Sold $99,967.36 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0xbfeeba9d48963bafa8ef8423d3075020018218e207567a1276dcf71ff44b29a2`\n\
+        \    *   **Time:** 2025-08-28 11:14:06 UTC\n\n*   **Trader:** `0xe9d0a2d366f831f6f6b71f916a1628fb63aaae08`\n\
+        \    *   **Action:** Sold $77,539.34 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0x58aec6638a2445032bc0832d61369f8aba2829509c26411059fef4e387debe41`\n\
+        \    *   **Time:** 2025-08-28 21:21:17 UTC\n\n*   **Trader:** `0xfedb7220169cc948ec5e0fbbe4030fef98ebf57a`\n\
+        \    *   **Action:** Bought $74,994.79 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0xe7a572bac62e16edeb661309b35f7b7c724d516dbc1ebbd1cef006c04d83c30a`\n\
+        \    *   **Time:** 2025-08-29 06:18:55 UTC\n\n*   **Trader:** `0x2f50882d3ccf86ce96a24b2e0519e0b9154319c3`\n\
+        \    *   **Action:** Sold $74,564.67 USDC (for USD₮0)\n    *   **Transaction\
+        \ Hash:** `0x0749b6a81f360eb73b0ecc78b5079c6d1ed9d85da87f4f83427c76f12df27a2b`\n\
+        \    *   **Time:** 2025-08-29 03:39:31 UTC\n\n*   **Trader:** `0xa571482fa36592e004dc74d507b91400608aa225`\n\
+        \    *   **Action:** Sold $72,604.71 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0x5f43c54db42017c8b11732aeeb9624db08504c9a237846973e9a5ef86c28941f`\n\
+        \    *   **Time:** 2025-08-29 02:37:57 UTC\n\n*   **Trader:** `0x591a28e598b3aab30c9f5245f8af158d24afd83c`\n\
+        \    *   **Action:** Sold $69,985.12 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0xc8b667b983e7afdeca9cd508099d8193e83d67f1591ab22f481f31174d3f234f`\n\
+        \    *   **Time:** 2025-08-28 16:33:57 UTC\n\n*   **Trader:** `0xe9755def636fe3a6fa28a59421616b144a772ae1`\n\
+        \    *   **Action:** Sold $66,652.92 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0xbbcbf59d496b2cdb65e6708c8a16d164be19c04bf7e45fa01085910201c29cdf`\n\
+        \    *   **Time:** 2025-08-28 17:57:04 UTC\n\n*   **Trader:** `0x2eb393fbac8aaa16047d4242033a25486e14f345`\n\
+        \    *   **Action:** Bought $65,997.34 USDC (for USDC)\n    *   **Transaction\
+        \ Hash:** `0xc6b3a00c86e6821920a240fc480ba198627cfe376d988f3eaec3c3ef518b978f`\n\
+        \    *   **Time:** 2025-08-29 01:22:21 UTC"
       data:
         data:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-15T18:02:46Z'
+                Time: '2025-08-28T11:20:54Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '144524.536945'
-                  AmountInUSD: '144490.05376725522'
+                  AmountInUSD: '238803.6944055256'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
                   Type: sell
               Transaction:
-                From: '0xa309953fd336d5f97c08e9e7d5c71c812db112f5'
-                Hash: '0x470ae53e45c1c47036d5309c92abd01ddc1ffb649f859830eba4b082361a3360'
-              Trader: '0xa309953fd336d5f97c08e9e7d5c71c812db112f5'
-              TradeType: sell
+                From: '0xfedb7220169cc948ec5e0fbbe4030fef98ebf57a'
+                Hash: '0x1e4d9793ed1d6e94cd67ef2e588f3fbd852f7692be681a0129bcb8bdaa074701'
+              Trader: '0xfedb7220169cc948ec5e0fbbe4030fef98ebf57a'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for USDC
             - Block:
-                Time: '2025-08-16T01:09:41Z'
+                Time: '2025-08-28T16:01:53Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '119960.000000'
-                  AmountInUSD: '119950.73337554932'
+                  AmountInUSD: '229907.8413650865'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
-                    Symbol: USDC
-                  Type: sell
-              Transaction:
-                From: '0x529f01f36782731c0a1594476e740ee1930eef36'
-                Hash: '0x22fa463f2fe870ae9cad6a22a53b96bad2a0da26f042442049106b4c7be8eb62'
-              Trader: '0x529f01f36782731c0a1594476e740ee1930eef36'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T18:02:46Z'
-              Trade:
-                Currency:
-                  Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
-                  Symbol: USDC
-                Side:
-                  Amount: '109878.335107'
-                  AmountInUSD: '109852.11842269235'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
                   Type: buy
               Transaction:
-                From: '0xa309953fd336d5f97c08e9e7d5c71c812db112f5'
-                Hash: '0x470ae53e45c1c47036d5309c92abd01ddc1ffb649f859830eba4b082361a3360'
-              Trader: '0xa309953fd336d5f97c08e9e7d5c71c812db112f5'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-16T01:09:16Z'
-              Trade:
-                Currency:
-                  Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
-                  Symbol: USDC
-                Side:
-                  Amount: '105000.000000'
-                  AmountInUSD: '104991.88899993896'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
-                    Symbol: USDC
-                  Type: sell
-              Transaction:
-                From: '0x529f01f36782731c0a1594476e740ee1930eef36'
-                Hash: '0x0b5851760ce622046db9a39dec012e2c3877306e3bde62c33a57e2be064ddefc'
-              Trader: '0x529f01f36782731c0a1594476e740ee1930eef36'
+                From: '0x591a28e598b3aab30c9f5245f8af158d24afd83c'
+                Hash: '0x748130eb271f7446420099165f69ae49dcd4963737fff49671757ac16073f4d7'
+              Trader: '0x591a28e598b3aab30c9f5245f8af158d24afd83c'
               TradeType: sell
+              TraderAction: Trader SELLS USDC for USDC
             - Block:
-                Time: '2025-08-16T00:58:30Z'
+                Time: '2025-08-28T11:14:06Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '80040.000000'
-                  AmountInUSD: '80038.95997524261'
+                  AmountInUSD: '99967.36277505763'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
-                  Type: sell
+                  Type: buy
               Transaction:
-                From: '0x529f01f36782731c0a1594476e740ee1930eef36'
-                Hash: '0xfde84dfcc49d2b85c803e94f7b3510662da42d8dde1d263cff1516535b255711'
-              Trader: '0x529f01f36782731c0a1594476e740ee1930eef36'
+                From: '0x591a28e598b3aab30c9f5245f8af158d24afd83c'
+                Hash: '0xbfeeba9d48963bafa8ef8423d3075020018218e207567a1276dcf71ff44b29a2'
+              Trader: '0x591a28e598b3aab30c9f5245f8af158d24afd83c'
               TradeType: sell
+              TraderAction: Trader SELLS USDC for USDC
             - Block:
-                Time: '2025-08-16T03:47:27Z'
+                Time: '2025-08-28T21:21:17Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '79980.000000'
-                  AmountInUSD: '79982.28824615479'
+                  AmountInUSD: '77539.34028757855'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
-                  Type: sell
-              Transaction:
-                From: '0x529f01f36782731c0a1594476e740ee1930eef36'
-                Hash: '0x222155c3e74bf24b4958d8b9210805484efd4e3de7a9ce25c9078ee59b020ab7'
-              Trader: '0x529f01f36782731c0a1594476e740ee1930eef36'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T16:39:56Z'
-              Trade:
-                Currency:
-                  Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
-                  Symbol: USDC
-                Side:
-                  Amount: '79036.808796'
-                  AmountInUSD: '79018.91656645446'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
-                    Symbol: USDC
-                  Type: sell
+                  Type: buy
               Transaction:
                 From: '0xe9d0a2d366f831f6f6b71f916a1628fb63aaae08'
-                Hash: '0x90b52d17db9ac6c32db1d28d39d247a2995a495ba074fdf916504b8cdd289fa2'
+                Hash: '0x58aec6638a2445032bc0832d61369f8aba2829509c26411059fef4e387debe41'
               Trader: '0xe9d0a2d366f831f6f6b71f916a1628fb63aaae08'
               TradeType: sell
+              TraderAction: Trader SELLS USDC for USDC
             - Block:
-                Time: '2025-08-15T15:44:16Z'
+                Time: '2025-08-29T06:18:55Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '77811.195278'
-                  AmountInUSD: '77794.42923821545'
+                  AmountInUSD: '74994.78638355584'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
                   Type: sell
               Transaction:
-                From: '0x24fb6523036ebcb3cc51deff138066dccf6bed0f'
-                Hash: '0xc975d5339cb270a70010976cd6f855557c5b481dc7a915b8bba3db931a9c8a1f'
-              Trader: '0x24fb6523036ebcb3cc51deff138066dccf6bed0f'
+                From: '0xfedb7220169cc948ec5e0fbbe4030fef98ebf57a'
+                Hash: '0xe7a572bac62e16edeb661309b35f7b7c724d516dbc1ebbd1cef006c04d83c30a'
+              Trader: '0xfedb7220169cc948ec5e0fbbe4030fef98ebf57a'
+              TradeType: buy
+              TraderAction: Trader BUYS USDC for USDC
+            - Block:
+                Time: '2025-08-29T03:39:31Z'
+              Trade:
+                Currency:
+                  Name: USD Coin (Arb1)
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '74564.67103933904'
+                  Currency:
+                    Name: USD₮0
+                    Symbol: USD₮0
+                  Type: buy
+              Transaction:
+                From: '0x2f50882d3ccf86ce96a24b2e0519e0b9154319c3'
+                Hash: '0x0749b6a81f360eb73b0ecc78b5079c6d1ed9d85da87f4f83427c76f12df27a2b'
+              Trader: '0x2f50882d3ccf86ce96a24b2e0519e0b9154319c3'
               TradeType: sell
+              TraderAction: Trader SELLS USDC for USD₮0
             - Block:
-                Time: '2025-08-15T09:23:44Z'
+                Time: '2025-08-29T02:37:57Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '75997.833835'
-                  AmountInUSD: '75983.95898442666'
+                  AmountInUSD: '72604.71336842024'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
                   Type: buy
               Transaction:
-                From: '0x055aadf63dc78e5e7eaf504f2db10b55b68207d2'
-                Hash: '0x4e235cd44b862151b1113b90ba8862ac0e20420fa6cd197ec8f19b9daaec98ac'
-              Trader: '0x055aadf63dc78e5e7eaf504f2db10b55b68207d2'
-              TradeType: buy
+                From: '0xa571482fa36592e004dc74d507b91400608aa225'
+                Hash: '0x5f43c54db42017c8b11732aeeb9624db08504c9a237846973e9a5ef86c28941f'
+              Trader: '0xa571482fa36592e004dc74d507b91400608aa225'
+              TradeType: sell
+              TraderAction: Trader SELLS USDC for USDC
             - Block:
-                Time: '2025-08-16T01:09:16Z'
+                Time: '2025-08-28T16:33:57Z'
               Trade:
                 Currency:
                   Name: USD Coin (Arb1)
-                  SmartContract: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
                   Symbol: USDC
                 Side:
-                  Amount: '75220.867171'
-                  AmountInUSD: '75215.05653806463'
+                  AmountInUSD: '69985.11982850845'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
                     Symbol: USDC
                   Type: buy
               Transaction:
-                From: '0x879c2a2f7e4071ebdc971e508885d4a8cdeaf227'
-                Hash: '0xd87d5b759c5762d843e78f7e76e8d3ac20144da1b13f7a54bd5ecb6855deffd6'
-              Trader: '0x879c2a2f7e4071ebdc971e508885d4a8cdeaf227'
+                From: '0x591a28e598b3aab30c9f5245f8af158d24afd83c'
+                Hash: '0xc8b667b983e7afdeca9cd508099d8193e83d67f1591ab22f481f31174d3f234f'
+              Trader: '0x591a28e598b3aab30c9f5245f8af158d24afd83c'
+              TradeType: sell
+              TraderAction: Trader SELLS USDC for USDC
+            - Block:
+                Time: '2025-08-28T17:57:04Z'
+              Trade:
+                Currency:
+                  Name: USD Coin (Arb1)
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '66652.9248131701'
+                  Currency:
+                    Name: USD Coin
+                    Symbol: USDC
+                  Type: buy
+              Transaction:
+                From: '0xe9755def636fe3a6fa28a59421616b144a772ae1'
+                Hash: '0xbbcbf59d496b2cdb65e6708c8a16d164be19c04bf7e45fa01085910201c29cdf'
+              Trader: '0xe9755def636fe3a6fa28a59421616b144a772ae1'
+              TradeType: sell
+              TraderAction: Trader SELLS USDC for USDC
+            - Block:
+                Time: '2025-08-29T01:22:21Z'
+              Trade:
+                Currency:
+                  Name: USD Coin (Arb1)
+                  Symbol: USDC
+                Side:
+                  AmountInUSD: '65997.33966502735'
+                  Currency:
+                    Name: USD Coin
+                    Symbol: USDC
+                  Type: sell
+              Transaction:
+                From: '0x2eb393fbac8aaa16047d4242033a25486e14f345'
+                Hash: '0xc6b3a00c86e6821920a240fc480ba198627cfe376d988f3eaec3c3ef518b978f'
+              Trader: '0x2eb393fbac8aaa16047d4242033a25486e14f345'
               TradeType: buy
+              TraderAction: Trader BUYS USDC for USDC
   bsc_usdt_nl:
     input:
       query: Show me the recent large trades for USDT 0x55d398326f99059fF775485246999027B3197955
         on BSC
     output:
-      response: '**Large Trades for USDT (0x55d398326f99059fF775485246999027B3197955)
-        on BSC**
-
-
-        **Filtered by:** Minimum trade size $5,000 USD, All Trade Types
-
-        **Sorted by:** USD Amount in Descending Order
-
-
-        | **Rank** | **Trader (Wallet Address)** | **Trade Type** | **USDT Amount**
-        | **USD Amount** | **Trade Time** |
-
-        | --- | --- | --- | --- | --- | --- |
-
-        | 1 | **0xb533e33df22dd5dde2ca7f0a643d9b5738f41d3d** | Sell | 9,904,193.34
-        USDT | **$496,639.95** | 2025-08-15T04:33:23Z |
-
-        | 2 | **0x7bdc2f3352429c8a9aa518dfcde3813bda522f68** | Buy | 1,648,957.89
-        USDT | **$164,874.77** | 2025-08-15T08:47:44Z |
-
-        | 3 | **0x4421d14d4ab52c7c4bb82741ed274415563a0e22** | Sell | 931,463.29 USDT
-        | **$93,132.93** | 2025-08-15T12:30:54Z |
-
-        | 4 | **0xb10d9ba5b73399d2b8e32571439701c9579b33b9** | Buy | 500,265.42 USDT
-        | **$50,018.34** | 2025-08-15T11:14:13Z |
-
-        | 5 | **0xb10d9ba5b73399d2b8e32571439701c9579b33b9** | Buy | 500,259.15 USDT
-        | **$50,020.75** | 2025-08-15T11:44:18Z |
-
-        | 6 | **0xb10d9ba5b73399d2b8e32571439701c9579b33b9** | Buy | 500,250.29 USDT
-        | **$50,018.44** | 2025-08-15T12:06:51Z |
-
-        | 7 | **0xb10d9ba5b73399d2b8e32571439701c9579b33b9** | Buy | 500,210.65 USDT
-        | **$50,017.19** | 2025-08-15T12:12:52Z |
-
-        | 8 | **0xb10d9ba5b73399d2b8e32571439701c9579b33b9** | Buy | 500,207.24 USDT
-        | **$50,016.85** | 2025-08-15T12:20:37Z |
-
-        | 9 | **0xc9c44ca1584c1808705caefe21c9bcebb4627e33** | Sell | 460,496.82 USDT
-        | **$46,045.36** | 2025-08-15T22:39:05Z |
-
-        | 10 | **0xc9c44ca1584c1808705caefe21c9bcebb4627e33** | Sell | 456,236.04
-        USDT | **$45,620.90** | 2025-08-16T02:45:15Z |
-
-
-        **Key Observations:**
-
-
-        * The largest trade was a **sell** of approximately **$496,639.95** worth
-        of USDT by wallet `0xb533e33df22dd5dde2ca7f0a643d9b5738f41d3d`.
-
-        * Wallet `0xb10d9ba5b73399d2b8e32571439701c9579b33b9` was extremely active,
-        executing **5 large buys** within a short time frame, totaling over **$250,000**.
-
-        * The majority of trades (7 out of 10) were **buys**, with **sells** making
-        up the remainder.'
+      response: "Here are the recent large trades for USDT (0x55d398326f99059fF775485246999027B3197955)\
+        \ on Binance Smart Chain (BSC) with a minimum trade size of $5,000 USD, sorted\
+        \ by USD amount in descending order:\n\n1.  **Trader:** `0x949ab4eeef712770861eaaa956d4e3a26ba9a8cf`\n\
+        \    *   **Action:** Trader **SELLS** USDT for Lista USD (lisUSD)\n    * \
+        \  **Amount (USD):** $3,497,747.35\n    *   **Transaction Hash:** `0x871af1f080aee8b428a72aaa355e111718322eb1c852290dd57cfa818a160146`\n\
+        \    *   **Time:** 2025-08-28 09:57:51 UTC\n\n2.  **Trader:** `0xb66f376f3699c8e87c115de85575be49ae29a20c`\n\
+        \    *   **Action:** Trader **SELLS** USDT for USD Coin (USDC)\n    *   **Amount\
+        \ (USD):** $1,343,886.72\n    *   **Transaction Hash:** `0x8510358b36ce6b125f91f3c9b902b15c7b440444e92541577d8d80040c96c6f6`\n\
+        \    *   **Time:** 2025-08-28 14:23:33 UTC\n\n3.  **Trader:** `0xbdc0f711bc1eb7c20fed017ea521228cea8a9912`\n\
+        \    *   **Action:** Trader **BUYS** USDT for BNB48 Club Token (KOGE)\n  \
+        \  *   **Amount (USD):** $610,088.77\n    *   **Transaction Hash:** `0xea98a9eddd18ed6e81cc85785c5faa18f5c89eaa0c3b7909e59867a2a13f7aaa`\n\
+        \    *   **Time:** 2025-08-29 07:00:15 UTC\n\n4.  **Trader:** `0xa4eced7c226ded726bb93e8f5938914c1bafdfa0`\n\
+        \    *   **Action:** Trader **SELLS** USDT for Wrapped BNB (WBNB)\n    * \
+        \  **Amount (USD):** $548,458.86\n    *   **Transaction Hash:** `0xea25174bcc6923cbc9510e763bb45342efc0011970a33b94b01a7a0067bcd8d3`\n\
+        \    *   **Time:** 2025-08-28 14:22:00 UTC\n\n5.  **Trader:** `0xa4eced7c226ded726bb93e8f5938914c1bafdfa0`\n\
+        \    *   **Action:** Trader **BUYS** USDT for USD Coin (USDC)\n    *   **Amount\
+        \ (USD):** $548,288.76\n    *   **Transaction Hash:** `0xea25174bcc6923cbc9510e763bb45342efc0011970a33b94b01a7a0067bcd8d3`\n\
+        \    *   **Time:** 2025-08-28 14:22:00 UTC\n\n6.  **Trader:** `0xc8cdaec5c2a04736e29878d4423fb61eb6d0225f`\n\
+        \    *   **Action:** Trader **BUYS** USDT for World Liberty Financial USD\
+        \ (USD1)\n    *   **Amount (USD):** $544,327.69\n    *   **Transaction Hash:**\
+        \ `0xfd8a3022e700c5e84ca10179824a719040b8479893dda532d649dcfb6ace8673`\n \
+        \   *   **Time:** 2025-08-29 06:31:15 UTC\n\n7.  **Trader:** `0xa4eced7c226ded726bb93e8f5938914c1bafdfa0`\n\
+        \    *   **Action:** Trader **SELLS** USDT for Wrapped BNB (WBNB)\n    * \
+        \  **Amount (USD):** $501,298.14\n    *   **Transaction Hash:** `0x5b646660b17566bb658184e8cd9afecd4a529e684333a95a273913c0ce3f6b6c`\n\
+        \    *   **Time:** 2025-08-28 14:02:37 UTC\n\n8.  **Trader:** `0xa4eced7c226ded726bb93e8f5938914c1bafdfa0`\n\
+        \    *   **Action:** Trader **SELLS** USDT for Wrapped BNB (WBNB)\n    * \
+        \  **Amount (USD):** $500,633.12\n    *   **Transaction Hash:** `0xe9200d8f0775b32260c1534217bd62c865f4fe08c51d00a14a7f47cb57580665`\n\
+        \    *   **Time:** 2025-08-28 14:06:11 UTC\n\n9.  **Trader:** `0xa4eced7c226ded726bb93e8f5938914c1bafdfa0`\n\
+        \    *   **Action:** Trader **SELLS** USDT for Wrapped BNB (WBNB)\n    * \
+        \  **Amount (USD):** $500,552.93\n    *   **Transaction Hash:** `0x511230a025e12c711b1c7f996d799bd72feb7b03f801c1da7b7e4be5013d1980`\n\
+        \    *   **Time:** 2025-08-28 14:03:19 UTC\n\n10. **Trader:** `0x3e8734ec146c981e3ed1f6b582d447dde701d90c`\n\
+        \    *   **Action:** Trader **BUYS** USDT for Lista USD (lisUSD)\n    *  \
+        \ **Amount (USD):** $500,297.73\n    *   **Transaction Hash:** `0x44893f1b0755f8f20e6b8786e5c6fccb4b4b619feea107833f5bab4b4c0dcfb9`\n\
+        \    *   **Time:** 2025-08-28 15:40:52 UTC"
       data:
         data:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-15T08:47:44Z'
+                Time: '2025-08-28T09:57:51Z'
               Trade:
                 Currency:
                   Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
                   Symbol: USDT
                 Side:
-                  Amount: '1648957.887563420692339779'
-                  AmountInUSD: '1648747.6547738148'
+                  AmountInUSD: '3497747.3467152705'
+                  Currency:
+                    Name: Lista USD
+                    Symbol: lisUSD
+                  Type: buy
+              Transaction:
+                From: '0x949ab4eeef712770861eaaa956d4e3a26ba9a8cf'
+                Hash: '0x871af1f080aee8b428a72aaa355e111718322eb1c852290dd57cfa818a160146'
+              Trader: '0x949ab4eeef712770861eaaa956d4e3a26ba9a8cf'
+              TradeType: sell
+              TraderAction: Trader SELLS USDT for lisUSD
+            - Block:
+                Time: '2025-08-28T14:23:33Z'
+              Trade:
+                Currency:
+                  Name: Tether USD
+                  Symbol: USDT
+                Side:
+                  AmountInUSD: '1343886.7180290597'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
                     Symbol: USDC
                   Type: buy
               Transaction:
-                From: '0x7bdc2f3352429c8a9aa518dfcde3813bda522f68'
-                Hash: '0x19b082f4968345fb05e514708d41d823b4ffe66a63d16eded0271f4c71c9bbc6'
-              Trader: '0x7bdc2f3352429c8a9aa518dfcde3813bda522f68'
-              TradeType: buy
+                From: '0xb66f376f3699c8e87c115de85575be49ae29a20c'
+                Hash: '0x8510358b36ce6b125f91f3c9b902b15c7b440444e92541577d8d80040c96c6f6'
+              Trader: '0xb66f376f3699c8e87c115de85575be49ae29a20c'
+              TradeType: sell
+              TraderAction: Trader SELLS USDT for USDC
             - Block:
-                Time: '2025-08-15T12:30:54Z'
+                Time: '2025-08-29T07:00:15Z'
               Trade:
                 Currency:
                   Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
                   Symbol: USDT
                 Side:
-                  Amount: '931463.286032912201910765'
-                  AmountInUSD: '931329.2618674913'
+                  AmountInUSD: '610088.7657159232'
+                  Currency:
+                    Name: BNB48 Club Token
+                    Symbol: KOGE
+                  Type: sell
+              Transaction:
+                From: '0xbdc0f711bc1eb7c20fed017ea521228cea8a9912'
+                Hash: '0xea98a9eddd18ed6e81cc85785c5faa18f5c89eaa0c3b7909e59867a2a13f7aaa'
+              Trader: '0xbdc0f711bc1eb7c20fed017ea521228cea8a9912'
+              TradeType: buy
+              TraderAction: Trader BUYS USDT for KOGE
+            - Block:
+                Time: '2025-08-28T14:22:00Z'
+              Trade:
+                Currency:
+                  Name: Tether USD
+                  Symbol: USDT
+                Side:
+                  AmountInUSD: '548458.8646846178'
+                  Currency:
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0xea25174bcc6923cbc9510e763bb45342efc0011970a33b94b01a7a0067bcd8d3'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: sell
+              TraderAction: Trader SELLS USDT for WBNB
+            - Block:
+                Time: '2025-08-28T14:22:00Z'
+              Trade:
+                Currency:
+                  Name: Tether USD
+                  Symbol: USDT
+                Side:
+                  AmountInUSD: '548288.7565075216'
                   Currency:
                     Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
                     Symbol: USDC
                   Type: sell
               Transaction:
-                From: '0x4421d14d4ab52c7c4bb82741ed274415563a0e22'
-                Hash: '0xdf357b89ce659a80de95a8de17134a8c38635e1274eb3bc9a3ad1871d2f431b5'
-              Trader: '0x4421d14d4ab52c7c4bb82741ed274415563a0e22'
-              TradeType: sell
-            - Block:
-                Time: '2025-08-15T11:44:18Z'
-              Trade:
-                Currency:
-                  Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                  Symbol: USDT
-                Side:
-                  Amount: '500259.153632813779993164'
-                  AmountInUSD: '500207.5390744187'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
-                  Type: buy
-              Transaction:
-                From: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-                Hash: '0x985093432313d9843922ba7d992ef6cafd94e3364f96b19cc917341539149882'
-              Trader: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0xea25174bcc6923cbc9510e763bb45342efc0011970a33b94b01a7a0067bcd8d3'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
               TradeType: buy
+              TraderAction: Trader BUYS USDT for USDC
             - Block:
-                Time: '2025-08-15T12:06:51Z'
+                Time: '2025-08-29T06:31:15Z'
               Trade:
                 Currency:
                   Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
                   Symbol: USDT
                 Side:
-                  Amount: '500250.291423848770680556'
-                  AmountInUSD: '500184.36550417665'
+                  AmountInUSD: '544327.6863098145'
                   Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
-                  Type: buy
-              Transaction:
-                From: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-                Hash: '0xfa0b4e0b73bf8e053a163f701257ebfc9f6d69c955dded5e63d32d23e2c8e3a3'
-              Trader: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T11:14:13Z'
-              Trade:
-                Currency:
-                  Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                  Symbol: USDT
-                Side:
-                  Amount: '500265.420254632969984403'
-                  AmountInUSD: '500183.18181715545'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
-                  Type: buy
-              Transaction:
-                From: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-                Hash: '0x537f4563cd8e77b5a279836935aa5eb0c92384004c8b1a488ebab02b07affdfc'
-              Trader: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T12:12:52Z'
-              Trade:
-                Currency:
-                  Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                  Symbol: USDT
-                Side:
-                  Amount: '500210.645242684863905764'
-                  AmountInUSD: '500171.8262717598'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
-                  Type: buy
-              Transaction:
-                From: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-                Hash: '0x2cb1b6a912750b17515e60b61d86b037532b02aac9f6d98bba02dc0b347634cb'
-              Trader: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T12:20:37Z'
-              Trade:
-                Currency:
-                  Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                  Symbol: USDT
-                Side:
-                  Amount: '500207.235638380900114308'
-                  AmountInUSD: '500168.5361907575'
-                  Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
-                  Type: buy
-              Transaction:
-                From: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-                Hash: '0xd0d15be419d60989a36417c6abdbee7390ad3063f2dbe6af377c27b4c539680c'
-              Trader: '0xb10d9ba5b73399d2b8e32571439701c9579b33b9'
-              TradeType: buy
-            - Block:
-                Time: '2025-08-15T04:33:23Z'
-              Trade:
-                Currency:
-                  Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
-                  Symbol: USDT
-                Side:
-                  Amount: '9904193.338230115320946261'
-                  AmountInUSD: '496639.94755071896'
-                  Currency:
-                    Name: Bedrock
-                    SmartContract: '0xff7d6a96ae471bbcd7713af9cb1feeb16cf56b41'
-                    Symbol: BR
+                    Name: World Liberty Financial USD
+                    Symbol: USD1
                   Type: sell
               Transaction:
-                From: '0xb533e33df22dd5dde2ca7f0a643d9b5738f41d3d'
-                Hash: '0xf6e361a8055b14ab0c01254aed2850c7c7b68bb457b1565cecad58198ad31563'
-              Trader: '0xb533e33df22dd5dde2ca7f0a643d9b5738f41d3d'
-              TradeType: sell
+                From: '0xc8cdaec5c2a04736e29878d4423fb61eb6d0225f'
+                Hash: '0xfd8a3022e700c5e84ca10179824a719040b8479893dda532d649dcfb6ace8673'
+              Trader: '0xc8cdaec5c2a04736e29878d4423fb61eb6d0225f'
+              TradeType: buy
+              TraderAction: Trader BUYS USDT for USD1
             - Block:
-                Time: '2025-08-15T22:39:05Z'
+                Time: '2025-08-28T14:02:37Z'
               Trade:
                 Currency:
                   Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
                   Symbol: USDT
                 Side:
-                  Amount: '460496.823152722768258316'
-                  AmountInUSD: '460453.62039490865'
+                  AmountInUSD: '501298.14017158287'
                   Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
-                  Type: sell
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
               Transaction:
-                From: '0xc9c44ca1584c1808705caefe21c9bcebb4627e33'
-                Hash: '0x22ccee17f5b463148b46186de8cee28d8d1c056830d86a797a0d3ba34ac709ec'
-              Trader: '0xc9c44ca1584c1808705caefe21c9bcebb4627e33'
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0x5b646660b17566bb658184e8cd9afecd4a529e684333a95a273913c0ce3f6b6c'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
               TradeType: sell
+              TraderAction: Trader SELLS USDT for WBNB
             - Block:
-                Time: '2025-08-16T02:45:15Z'
+                Time: '2025-08-28T14:06:11Z'
               Trade:
                 Currency:
                   Name: Tether USD
-                  SmartContract: '0x55d398326f99059ff775485246999027b3197955'
                   Symbol: USDT
                 Side:
-                  Amount: '456236.038210322393597437'
-                  AmountInUSD: '456208.9803922661'
+                  AmountInUSD: '500633.11541802785'
                   Currency:
-                    Name: USD Coin
-                    SmartContract: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'
-                    Symbol: USDC
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0xe9200d8f0775b32260c1534217bd62c865f4fe08c51d00a14a7f47cb57580665'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: sell
+              TraderAction: Trader SELLS USDT for WBNB
+            - Block:
+                Time: '2025-08-28T14:03:19Z'
+              Trade:
+                Currency:
+                  Name: Tether USD
+                  Symbol: USDT
+                Side:
+                  AmountInUSD: '500552.9284132585'
+                  Currency:
+                    Name: Wrapped BNB
+                    Symbol: WBNB
+                  Type: buy
+              Transaction:
+                From: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+                Hash: '0x511230a025e12c711b1c7f996d799bd72feb7b03f801c1da7b7e4be5013d1980'
+              Trader: '0xa4eced7c226ded726bb93e8f5938914c1bafdfa0'
+              TradeType: sell
+              TraderAction: Trader SELLS USDT for WBNB
+            - Block:
+                Time: '2025-08-28T15:40:52Z'
+              Trade:
+                Currency:
+                  Name: Tether USD
+                  Symbol: USDT
+                Side:
+                  AmountInUSD: '500297.7252006531'
+                  Currency:
+                    Name: Lista USD
+                    Symbol: lisUSD
                   Type: sell
               Transaction:
-                From: '0xc9c44ca1584c1808705caefe21c9bcebb4627e33'
-                Hash: '0xda6991bd4372f62492af4e4b70a7fe64e4525ea90bb26c2163b8cc40152ef8db'
-              Trader: '0xc9c44ca1584c1808705caefe21c9bcebb4627e33'
-              TradeType: sell
+                From: '0x3e8734ec146c981e3ed1f6b582d447dde701d90c'
+                Hash: '0x44893f1b0755f8f20e6b8786e5c6fccb4b4b619feea107833f5bab4b4c0dcfb9'
+              Trader: '0x3e8734ec146c981e3ed1f6b582d447dde701d90c'
+              TradeType: buy
+              TraderAction: Trader BUYS USDT for lisUSD
 error_tests:
   invalid_address:
     input:
@@ -1399,202 +1209,373 @@ special_tests:
           EVM:
             DEXTradeByTokens:
             - Block:
-                Time: '2025-08-15T11:19:11Z'
+                Time: '2025-08-26T21:56:23Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3783824.310272'
-                  AmountInUSD: '3786078.7431770465'
+                  AmountInUSD: '7153873.466947462'
+                  Currency:
+                    Name: USD Coin
+                    Symbol: USDC
+                  Type: buy
+              Transaction:
+                From: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
+                Hash: '0x020d1e85f1e7345c9cd0542d5a7c5d603164bcd3edefff41acda39c2fb40433a'
+              Trader: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
+              TradeType: sell
+              TraderAction: Trader SELLS DAI for USDC
+            - Block:
+                Time: '2025-08-29T01:09:35Z'
+              Trade:
+                Currency:
+                  Name: Dai Stablecoin
+                  Symbol: DAI
+                Side:
+                  AmountInUSD: '3992497.74632312'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
                     Symbol: USDT
                   Type: sell
               Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0x1fe9ace59321b40c295198318bcbec8a0e4d7b60dd656a5f2f6fd5266103ba5f'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: sell
+                From: '0xfac983fce7ef3cee8ffb2ceb967e1b2362aada00'
+                Hash: '0x071512ad907cf75dbb245ba50db6224532d43292db9d07031adf2ee04079bb62'
+              Trader: '0xfac983fce7ef3cee8ffb2ceb967e1b2362aada00'
+              TradeType: buy
+              TraderAction: Trader BUYS DAI for USDT
             - Block:
-                Time: '2025-08-15T09:48:35Z'
+                Time: '2025-08-29T01:09:35Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3646506.860544'
-                  AmountInUSD: '3648423.876484547'
+                  AmountInUSD: '3954067.895985611'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
                     Symbol: USDT
-                  Type: sell
+                  Type: buy
               Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0x9de7a5912b3483c4f92647359fec5b1a112ec096947eb6319d0e90c80d669996'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
+                From: '0xfac983fce7ef3cee8ffb2ceb967e1b2362aada00'
+                Hash: '0xc59789f04114382dded65941a83236a2a6a3b52044b64064e80d490b3e336ce4'
+              Trader: '0xfac983fce7ef3cee8ffb2ceb967e1b2362aada00'
               TradeType: sell
+              TraderAction: Trader SELLS DAI for USDT
             - Block:
-                Time: '2025-08-15T09:49:35Z'
+                Time: '2025-08-28T23:16:47Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3597711.045947'
-                  AmountInUSD: '3599606.6981008598'
+                  AmountInUSD: '3546421.8340889006'
                   Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
-                  Type: sell
+                    Name: USD Coin
+                    Symbol: USDC
+                  Type: buy
               Transaction:
-                From: '0x654fae4aa229d104cabead47e56703f58b174be4'
-                Hash: '0xb2f648d2d3e233507fa0e77e3fa823adc649448e79a69c06c70b668fdb0ac2fe'
-              Trader: '0x654fae4aa229d104cabead47e56703f58b174be4'
+                From: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
+                Hash: '0x53dea0f688bd206a8fd33c1e4413d7f34f46a9b859ebe9bcac377ea93eab3955'
+              Trader: '0x7bee8d37fba61a6251a08b957d502c56e2a50fab'
               TradeType: sell
+              TraderAction: Trader SELLS DAI for USDC
             - Block:
-                Time: '2025-08-15T09:48:35Z'
+                Time: '2025-08-26T18:51:11Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3597351.321601'
-                  AmountInUSD: '3599242.495837329'
+                  AmountInUSD: '3497019.44935375'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
                     Symbol: USDT
                   Type: buy
               Transaction:
                 From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0xc0b51e4b528658d050a61bcc39277f0e7dd573da170569db4aec82c4a0271c8c'
+                Hash: '0xd4c9d8bb562042b8861dfc88a24578b5a20efe9887c14626c4e0af23c1a4919f'
               Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: buy
+              TradeType: sell
+              TraderAction: Trader SELLS DAI for USDT
             - Block:
-                Time: '2025-08-15T09:50:23Z'
+                Time: '2025-08-26T18:51:11Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3548921.266176'
-                  AmountInUSD: '3550791.210748031'
+                  AmountInUSD: '3370970.7805627496'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
                     Symbol: USDT
                   Type: sell
               Transaction:
                 From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0xfd39e0a120f3e3d8eb3a55be4dbc2868b1e03654e896e8045a1eda54b1f38fd4'
+                Hash: '0x355084f6b78dd0025095030aec2ddc4f201e6e895eab480d4973f7cba1e165e4'
               Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: sell
+              TradeType: buy
+              TraderAction: Trader BUYS DAI for USDT
             - Block:
-                Time: '2025-08-15T09:49:35Z'
+                Time: '2025-08-26T22:05:59Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3548566.447825'
-                  AmountInUSD: '3550436.205441447'
+                  AmountInUSD: '2543632.6035985965'
+                  Currency:
+                    Name: USD Coin
+                    Symbol: USDC
+                  Type: buy
+              Transaction:
+                From: '0x920eefbcf1f5756109952e6ff6da1cab950c64d7'
+                Hash: '0x2102a20e4e9aca816697339a94330f6df91eb3ca6507ad423852fbd0478a2b83'
+              Trader: '0x920eefbcf1f5756109952e6ff6da1cab950c64d7'
+              TradeType: sell
+              TraderAction: Trader SELLS DAI for USDC
+            - Block:
+                Time: '2025-08-26T10:28:11Z'
+              Trade:
+                Currency:
+                  Name: Dai Stablecoin
+                  Symbol: DAI
+                Side:
+                  AmountInUSD: '2102976.4399588834'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
                     Symbol: USDT
                   Type: buy
               Transaction:
-                From: '0x654fae4aa229d104cabead47e56703f58b174be4'
-                Hash: '0xb802f94f23a8312937f5e80272a656fdf3b5d141197d7ca0ef6dbffbdc9b1472'
-              Trader: '0x654fae4aa229d104cabead47e56703f58b174be4'
-              TradeType: buy
+                From: '0xa6ae57b1da8238cd149bc718c40578e4620b752c'
+                Hash: '0xc1020ea5b8f7ddc23df9ff3a155ddd62ad884d9331a46f35d54fd3cde1631a37'
+              Trader: '0xa6ae57b1da8238cd149bc718c40578e4620b752c'
+              TradeType: sell
+              TraderAction: Trader SELLS DAI for USDT
             - Block:
-                Time: '2025-08-14T17:14:11Z'
+                Time: '2025-08-26T10:34:23Z'
               Trade:
                 Currency:
                   Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
                   Symbol: DAI
                 Side:
-                  Amount: '3519219.626553'
-                  AmountInUSD: '3520672.8565509184'
+                  AmountInUSD: '1904849.0555049062'
                   Currency:
                     Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+                    Symbol: USDT
+                  Type: buy
+              Transaction:
+                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
+                Hash: '0x82687710bd12f31790c56c4fa2e871048c98b66233c6b576707c57646b3acaf5'
+              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
+              TradeType: sell
+              TraderAction: Trader SELLS DAI for USDT
+            - Block:
+                Time: '2025-08-26T10:28:11Z'
+              Trade:
+                Currency:
+                  Name: Dai Stablecoin
+                  Symbol: DAI
+                Side:
+                  AmountInUSD: '1904022.9977285645'
+                  Currency:
+                    Name: Tether USD
                     Symbol: USDT
                   Type: sell
               Transaction:
-                From: '0x654fae4aa229d104cabead47e56703f58b174be4'
-                Hash: '0x7ba87b3e1ba1f6680caf5e56e67ec0784d6c88dcee8ef92562f5eb01643e0ded'
-              Trader: '0x654fae4aa229d104cabead47e56703f58b174be4'
+                From: '0xa6ae57b1da8238cd149bc718c40578e4620b752c'
+                Hash: '0x3bdfadb54a51e1f5d79a84356b97fbffbfbfd3dd72ed1201a83e1fa99374fe92'
+              Trader: '0xa6ae57b1da8238cd149bc718c40578e4620b752c'
+              TradeType: buy
+              TraderAction: Trader BUYS DAI for USDT
+heu_token_tests:
+  description: HEU token tests verify trade type fix (v1.1.0) - trader perspective
+  heu_all_trades:
+    input:
+      tool: get_recent_large_trades
+      tool_arguments:
+        chain: base
+        tokenAddress: '0xEF22cb48B8483dF6152e1423b19dF5553BbD818b'
+        minUsdAmount: 5000
+        filter: all
+        limit: 5
+    output:
+      response: ''
+      data:
+        data:
+          EVM:
+            DEXTradeByTokens:
+            - Block:
+                Time: '2025-08-28T03:25:29Z'
+              Trade:
+                Currency:
+                  Name: Heurist
+                  Symbol: HEU
+                Side:
+                  AmountInUSD: '34318.175294079585'
+                  Currency:
+                    Name: Wrapped Ether
+                    Symbol: WETH
+                  Type: buy
+              Transaction:
+                From: '0x320eb018fe520f3df3a551db95bd1bec059d9bef'
+                Hash: '0x6b583d2fb6a5b701d8bac84c7970ba3813d4c583834fe3f9c12e2cfae780b6fd'
+              Trader: '0x320eb018fe520f3df3a551db95bd1bec059d9bef'
               TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
             - Block:
-                Time: '2025-08-15T09:50:23Z'
+                Time: '2025-08-28T07:44:41Z'
               Trade:
                 Currency:
-                  Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
-                  Symbol: DAI
+                  Name: Heurist
+                  Symbol: HEU
                 Side:
-                  Amount: '3499782.045697'
-                  AmountInUSD: '3501626.0985651254'
+                  AmountInUSD: '9344.789131385327'
                   Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
+                    Name: Wrapped Ether
+                    Symbol: WETH
                   Type: buy
               Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0x7675341aaeb96f12e560c9d5082fbfd6c341740777b3c8780a5e491ca5f07734'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: buy
+                From: '0x3d3d3979d9f3422cf36ea900515971cbe44dee9f'
+                Hash: '0x0758ee241e400a822d71be42036d1fb9657233eb4887c8bfe1437016ee3047ec'
+              Trader: '0x3d3d3979d9f3422cf36ea900515971cbe44dee9f'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
             - Block:
-                Time: '2025-08-14T17:14:11Z'
+                Time: '2025-08-28T06:07:57Z'
               Trade:
                 Currency:
-                  Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
-                  Symbol: DAI
+                  Name: Heurist
+                  Symbol: HEU
                 Side:
-                  Amount: '3475572.093131'
-                  AmountInUSD: '3477007.2992737363'
+                  AmountInUSD: '8581.03922403156'
                   Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
+                    Name: Wrapped Ether
+                    Symbol: WETH
                   Type: buy
               Transaction:
-                From: '0x654fae4aa229d104cabead47e56703f58b174be4'
-                Hash: '0xc96e2c82567babb6d4f6cdad3b21bf3df1513fd402b883d8d48870be28bcf8fa'
-              Trader: '0x654fae4aa229d104cabead47e56703f58b174be4'
-              TradeType: buy
+                From: '0x55555cfddd37d8d82e06e0de90da9366ca3e31e8'
+                Hash: '0x4b40cce75d05236426812f97476c87740f7b793ea44da10b4160a64ea5f88cf5'
+              Trader: '0x55555cfddd37d8d82e06e0de90da9366ca3e31e8'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
             - Block:
-                Time: '2025-08-15T11:19:11Z'
+                Time: '2025-08-28T08:14:39Z'
               Trade:
                 Currency:
-                  Name: Dai Stablecoin
-                  SmartContract: '0x6b175474e89094c44da98b954eedeac495271d0f'
-                  Symbol: DAI
+                  Name: Heurist
+                  Symbol: HEU
                 Side:
-                  Amount: '3285626.388481'
-                  AmountInUSD: '3287583.9910641257'
+                  AmountInUSD: '8305.99076263857'
                   Currency:
-                    Name: Tether USD
-                    SmartContract: '0xdac17f958d2ee523a2206206994597c13d831ec7'
-                    Symbol: USDT
+                    Name: Wrapped Ether
+                    Symbol: WETH
                   Type: buy
               Transaction:
-                From: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-                Hash: '0xaeeaff5c2531b60195db2475fc3abf70a0b5972d221150b7c984a4a5f4d8e279'
-              Trader: '0xae2fc483527b8ef99eb5d9b44875f005ba1fae13'
-              TradeType: buy
+                From: '0x13314892577c8f2062cac452650f6b90dbeb63d8'
+                Hash: '0xa68a4a53542951a6254a8777b37921ff7c41fa4bd67fe7edb84d433a741cf726'
+              Trader: '0x13314892577c8f2062cac452650f6b90dbeb63d8'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
+            - Block:
+                Time: '2025-08-28T08:08:15Z'
+              Trade:
+                Currency:
+                  Name: Heurist
+                  Symbol: HEU
+                Side:
+                  AmountInUSD: '7986.342260438523'
+                  Currency:
+                    Name: Wrapped Ether
+                    Symbol: WETH
+                  Type: buy
+              Transaction:
+                From: '0xfc6e0933d118093ee4e1aecbcdfb1378dbd4b40d'
+                Hash: '0x565b0e82e04bb94a04a3013b9f773776898d8057c88f60f058a07d9ce9e3171c'
+              Trader: '0xfc6e0933d118093ee4e1aecbcdfb1378dbd4b40d'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
+  heu_sells_from_trader:
+    input:
+      tool: get_recent_large_trades
+      tool_arguments:
+        chain: base
+        tokenAddress: '0xEF22cb48B8483dF6152e1423b19dF5553BbD818b'
+        minUsdAmount: 5000
+        filter: sell
+        limit: 3
+    output:
+      response: ''
+      data:
+        data:
+          EVM:
+            DEXTradeByTokens:
+            - Block:
+                Time: '2025-08-28T03:25:29Z'
+              Trade:
+                Currency:
+                  Name: Heurist
+                  Symbol: HEU
+                Side:
+                  AmountInUSD: '34318.175294079585'
+                  Currency:
+                    Name: Wrapped Ether
+                    Symbol: WETH
+                  Type: buy
+              Transaction:
+                From: '0x320eb018fe520f3df3a551db95bd1bec059d9bef'
+                Hash: '0x6b583d2fb6a5b701d8bac84c7970ba3813d4c583834fe3f9c12e2cfae780b6fd'
+              Trader: '0x320eb018fe520f3df3a551db95bd1bec059d9bef'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
+            - Block:
+                Time: '2025-08-28T07:44:41Z'
+              Trade:
+                Currency:
+                  Name: Heurist
+                  Symbol: HEU
+                Side:
+                  AmountInUSD: '9344.789131385327'
+                  Currency:
+                    Name: Wrapped Ether
+                    Symbol: WETH
+                  Type: buy
+              Transaction:
+                From: '0x3d3d3979d9f3422cf36ea900515971cbe44dee9f'
+                Hash: '0x0758ee241e400a822d71be42036d1fb9657233eb4887c8bfe1437016ee3047ec'
+              Trader: '0x3d3d3979d9f3422cf36ea900515971cbe44dee9f'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
+            - Block:
+                Time: '2025-08-28T06:07:57Z'
+              Trade:
+                Currency:
+                  Name: Heurist
+                  Symbol: HEU
+                Side:
+                  AmountInUSD: '8581.03922403156'
+                  Currency:
+                    Name: Wrapped Ether
+                    Symbol: WETH
+                  Type: buy
+              Transaction:
+                From: '0x55555cfddd37d8d82e06e0de90da9366ca3e31e8'
+                Hash: '0x4b40cce75d05236426812f97476c87740f7b793ea44da10b4160a64ea5f88cf5'
+              Trader: '0x55555cfddd37d8d82e06e0de90da9366ca3e31e8'
+              TradeType: sell
+              TraderAction: Trader SELLS HEU for WETH
+  heu_buys_from_trader:
+    input:
+      tool: get_recent_large_trades
+      tool_arguments:
+        chain: base
+        tokenAddress: '0xEF22cb48B8483dF6152e1423b19dF5553BbD818b'
+        minUsdAmount: 5000
+        filter: buy
+        limit: 3
+    output:
+      response: ''
+      data:
+        data:
+          EVM:
+            DEXTradeByTokens: []
