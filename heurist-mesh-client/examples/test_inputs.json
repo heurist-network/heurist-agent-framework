@@ -241,9 +241,6 @@
     "query_recently_created_tokens": {
       "limit": 5
     },
-    "query_bonding_curve_progress": {
-      "token_address": "F9WhPkcmLCVfgKucysxUWbqjrZfUYFsyQkxYnam9bonk"
-    },
     "query_tokens_above_95_percent": {
       "limit": 5
     }
