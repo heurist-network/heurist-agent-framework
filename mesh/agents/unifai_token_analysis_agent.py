@@ -166,7 +166,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             Dict containing token information or error details
         """
         try:
-            action = f"GMGNTrendTokenAnalysis/{self.gmgn_trend_id}/getgmgntokeninfo"
+            action = f"GMGNTrendTokenAnalysis/{self.gmgn_trend_id}/gmgntrend"
             payload = {"chain": chain, "address": address}
             data = {"action": action, "payload": payload}
 
