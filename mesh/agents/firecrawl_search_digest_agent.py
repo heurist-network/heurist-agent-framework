@@ -250,6 +250,14 @@ Return clear, focused summaries that extract only the most relevant information.
                 results = response
             else:
                 logger.warning("Search completed but no results were found")
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_search_operation(
+                            search_query=search_term, raw_results=[], llm_processed_result="No results found"
+                        )
+                        logger.info(f"Logged empty results to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "no_data", "data": {"results": []}}
 
             logger.info(f"Search completed successfully with {len(results)} results")
@@ -267,6 +275,14 @@ Return clear, focused summaries that extract only the most relevant information.
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_web_search: {str(e)}")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_search_operation(
+                        search_query=search_term, raw_results=[], llm_processed_result=f"Error: {str(e)}"
+                    )
+                    logger.info(f"Logged error to R2 with request ID: {request_id}")
+                except Exception as log_e:
+                    logger.error(f"Failed to log error to R2: {str(log_e)}")
             return {"status": "error", "error": f"Failed to execute search: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
@@ -294,6 +310,14 @@ Return clear, focused summaries that extract only the most relevant information.
                     extracted_data = response.get("data", {})
                 else:
                     logger.warning(f"Data extraction failed: {response.get('message', 'Unknown error')}")
+                    if self.firecrawl_logger.is_enabled():
+                        try:
+                            request_id = await self.firecrawl_logger.log_extract_operation(
+                                urls=urls, extraction_prompt=extraction_prompt, raw_extracted_data=response
+                            )
+                            logger.info(f"Logged failed extraction to R2 with request ID: {request_id}")
+                        except Exception as e:
+                            logger.error(f"Failed to log to R2: {str(e)}")
                     return {"status": "error", "error": "Extraction failed", "details": response}
             else:
                 extracted_data = response
@@ -312,6 +336,14 @@ Return clear, focused summaries that extract only the most relevant information.
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_extract_web_data: {str(e)}")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_extract_operation(
+                        urls=urls, extraction_prompt=extraction_prompt, raw_extracted_data={"error": str(e)}
+                    )
+                    logger.info(f"Logged error to R2 with request ID: {request_id}")
+                except Exception as log_e:
+                    logger.error(f"Failed to log error to R2: {str(log_e)}")
             return {"status": "error", "error": f"Failed to extract data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
@@ -329,6 +361,14 @@ Return clear, focused summaries that extract only the most relevant information.
 
             markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
             if not markdown_content:
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_scrape_operation(
+                            scrape_url=url, raw_content="", llm_processed_result="Failed to scrape - no content"
+                        )
+                        logger.info(f"Logged failed scrape to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "error", "error": "Failed to scrape URL - no content returned"}
 
             # Process scraped content with LLM
@@ -347,6 +387,14 @@ Return clear, focused summaries that extract only the most relevant information.
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_scrape_url: {str(e)}")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_scrape_operation(
+                        scrape_url=url, raw_content="", llm_processed_result=f"Error: {str(e)}"
+                    )
+                    logger.info(f"Logged error to R2 with request ID: {request_id}")
+                except Exception as log_e:
+                    logger.error(f"Failed to log error to R2: {str(log_e)}")
             return {"status": "error", "error": f"Failed to scrape URL: {str(e)}"}
 
     # ------------------------------------------------------------------------
