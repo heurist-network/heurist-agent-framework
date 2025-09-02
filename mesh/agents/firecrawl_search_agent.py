@@ -11,6 +11,7 @@ from firecrawl.firecrawl import ScrapeOptions
 from core.llm import call_llm_async
 from decorators import with_cache, with_retry
 from mesh.agents.exa_search_agent import build_firecrawl_to_exa_fallback
+from mesh.firecrawl_logger import FirecrawlLogger
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -25,6 +26,7 @@ class FirecrawlSearchAgent(MeshAgent):
             raise ValueError("FIRECRAWL_API_KEY environment variable is required")
 
         self.app = FirecrawlApp(api_key=self.api_key)
+        self.firecrawl_logger = FirecrawlLogger()
         self.metadata.update(
             {
                 "name": "Firecrawl Search Agent",
@@ -226,16 +228,48 @@ class FirecrawlSearchAgent(MeshAgent):
 
             if isinstance(data, list) and data:
                 logger.info(f"Search completed successfully with {len(data)} results")
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_search_operation(
+                            search_query=search_term, raw_results=data, llm_processed_result=str(data)
+                        )
+                        logger.info(f"Logged to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "success", "data": {"results": data}}
             elif isinstance(response, list):
                 logger.info(f"Search completed with {len(response)} results")
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_search_operation(
+                            search_query=search_term, raw_results=response, llm_processed_result=str(response)
+                        )
+                        logger.info(f"Logged to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "success", "data": {"results": response}}
             else:
                 logger.warning("Search completed but no results were found")
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_search_operation(
+                            search_query=search_term, raw_results=[], llm_processed_result="No results found"
+                        )
+                        logger.info(f"Logged empty results to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "no_data", "data": {"results": []}}
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_web_search: {str(e)}")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_search_operation(
+                        search_query=search_term, raw_results=[], llm_processed_result=f"Error: {str(e)}"
+                    )
+                    logger.info(f"Logged error to R2 with request ID: {request_id}")
+                except Exception as log_e:
+                    logger.error(f"Failed to log error to R2: {str(log_e)}")
             return {"status": "error", "error": f"Failed to execute search: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
@@ -258,22 +292,66 @@ class FirecrawlSearchAgent(MeshAgent):
             if isinstance(response, dict):
                 if "data" in response:
                     logger.info("Data extraction completed successfully")
+                    if self.firecrawl_logger.is_enabled():
+                        try:
+                            request_id = await self.firecrawl_logger.log_extract_operation(
+                                urls=urls,
+                                extraction_prompt=extraction_prompt,
+                                raw_extracted_data=response.get("data", {}),
+                            )
+                            logger.info(f"Logged to R2 with request ID: {request_id}")
+                        except Exception as e:
+                            logger.error(f"Failed to log to R2: {str(e)}")
                     return {
                         "status": "success",
                         "data": {"extracted_data": response.get("data", {}), "metadata": response.get("metadata", {})},
                     }
                 elif "success" in response and response.get("success"):
                     logger.info("Data extraction completed successfully")
+                    if self.firecrawl_logger.is_enabled():
+                        try:
+                            request_id = await self.firecrawl_logger.log_extract_operation(
+                                urls=urls,
+                                extraction_prompt=extraction_prompt,
+                                raw_extracted_data=response.get("data", {}),
+                            )
+                            logger.info(f"Logged to R2 with request ID: {request_id}")
+                        except Exception as e:
+                            logger.error(f"Failed to log to R2: {str(e)}")
                     return {"status": "success", "data": {"extracted_data": response.get("data", {})}}
                 else:
                     logger.warning(f"Data extraction failed: {response.get('message', 'Unknown error')}")
+                    if self.firecrawl_logger.is_enabled():
+                        try:
+                            request_id = await self.firecrawl_logger.log_extract_operation(
+                                urls=urls, extraction_prompt=extraction_prompt, raw_extracted_data=response
+                            )
+                            logger.info(f"Logged failed extraction to R2 with request ID: {request_id}")
+                        except Exception as e:
+                            logger.error(f"Failed to log to R2: {str(e)}")
                     return {"status": "error", "error": "Extraction failed", "details": response}
             else:
                 logger.info("Data extraction completed successfully")
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_extract_operation(
+                            urls=urls, extraction_prompt=extraction_prompt, raw_extracted_data=response
+                        )
+                        logger.info(f"Logged to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "success", "data": {"extracted_data": response}}
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_extract_web_data: {str(e)}")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_extract_operation(
+                        urls=urls, extraction_prompt=extraction_prompt, raw_extracted_data={"error": str(e)}
+                    )
+                    logger.info(f"Logged error to R2 with request ID: {request_id}")
+                except Exception as log_e:
+                    logger.error(f"Failed to log error to R2: {str(log_e)}")
             return {"status": "error", "error": f"Failed to extract data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
@@ -291,12 +369,29 @@ class FirecrawlSearchAgent(MeshAgent):
 
             markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
             if not markdown_content:
+                if self.firecrawl_logger.is_enabled():
+                    try:
+                        request_id = await self.firecrawl_logger.log_scrape_operation(
+                            scrape_url=url, raw_content="", llm_processed_result="Failed to scrape - no content"
+                        )
+                        logger.info(f"Logged failed scrape to R2 with request ID: {request_id}")
+                    except Exception as e:
+                        logger.error(f"Failed to log to R2: {str(e)}")
                 return {"status": "error", "error": "Failed to scrape URL - no content returned"}
 
             context_info = {"type": "webpage", "url": url, "purpose": "content analysis"}
 
             processed_content = await self._process_with_llm(markdown_content, context_info)
             logger.info("Successfully processed scraped content")
+
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_scrape_operation(
+                        scrape_url=url, raw_content=markdown_content, llm_processed_result=processed_content
+                    )
+                    logger.info(f"Logged to R2 with request ID: {request_id}")
+                except Exception as e:
+                    logger.error(f"Failed to log to R2: {str(e)}")
 
             return {
                 "status": "success",
@@ -309,6 +404,14 @@ class FirecrawlSearchAgent(MeshAgent):
 
         except Exception as e:
             logger.error(f"Exception in firecrawl_scrape_url: {str(e)}")
+            if self.firecrawl_logger.is_enabled():
+                try:
+                    request_id = await self.firecrawl_logger.log_scrape_operation(
+                        scrape_url=url, raw_content="", llm_processed_result=f"Error: {str(e)}"
+                    )
+                    logger.info(f"Logged error to R2 with request ID: {request_id}")
+                except Exception as log_e:
+                    logger.error(f"Failed to log error to R2: {str(log_e)}")
             return {"status": "error", "error": f"Failed to scrape URL: {str(e)}"}
 
     # ------------------------------------------------------------------------
