@@ -19,7 +19,6 @@ class PondWalletAnalysisAgent(MeshAgent):
         self.headers = {"Content-Type": "application/json"}
         self.model_ids = {
             "ethereum": 20,
-            "solana": 24,
             "base": 16,
         }
 
@@ -29,14 +28,14 @@ class PondWalletAnalysisAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent analyzes cryptocurrency wallet activities across Ethereum, Solana, and Base networks using the Cryptopond API.",
+                "description": "This agent analyzes cryptocurrency wallet activities across Ethereum and Base networks using the Cryptopond API.",
                 "external_apis": ["Cryptopond"],
                 "tags": ["Wallet Analysis"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/CryptoPond.png",
                 "examples": [
                     "Analyze Ethereum wallet 0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073",
-                    "What's the trading volume for Solana wallet 8gc59zf1ZQCxzkSuepV8WmuuobHCPpydJ2RLqwXyCASS?",
+                    "What's the trading volume for Ethereum wallet 0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073?",
                     "Check the transaction activity for Base wallet 0x97224Dd2aFB28F6f442E773853F229B3d8A0999a",
                 ],
                 "credits": 0,
@@ -44,7 +43,7 @@ class PondWalletAnalysisAgent(MeshAgent):
         )
 
     def get_system_prompt(self) -> str:
-        return """Analyze crypto wallet activity on Ethereum, Solana, and Base networks. Focus on trading volume, transaction count, gas fees, token diversity, profit and loss, and behavioral patterns over time.
+        return """Analyze crypto wallet activity on Ethereum or Base chain. Focus on trading volume, transaction count, gas fees, token diversity, profit and loss, and behavioral patterns over time.
 
             Identify trends such as accumulation, selling pressure, inactivity, or sudden activity spikes. Pay attention to timing, frequency, and consistency in wallet behavior.
 
@@ -65,23 +64,6 @@ class PondWalletAnalysisAgent(MeshAgent):
                             "address": {
                                 "type": "string",
                                 "description": "Ethereum wallet address (starts with 0x)",
-                            },
-                        },
-                        "required": ["address"],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "analyze_solana_wallet",
-                    "description": "Analyze a Solana wallet address for DEX trading frequency and volume and PnL over the last 30 days. Useful when analyzing trading patterns of a user wallet.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "address": {
-                                "type": "string",
-                                "description": "Solana wallet address",
                             },
                         },
                         "required": ["address"],
@@ -158,7 +140,6 @@ class PondWalletAnalysisAgent(MeshAgent):
 
         tool_map = {
             "analyze_ethereum_wallet": ("ethereum", True),
-            "analyze_solana_wallet": ("solana", False),
             "analyze_base_wallet": ("base", True),
         }
 
