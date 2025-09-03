@@ -1,6 +1,8 @@
 import logging
 import os
+import re
 import ssl
+import subprocess
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -42,6 +44,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                     "Tell me about Heurist",
                     "What are the latest developments for Ethereum?",
                     "Trending projects in the crypto space",
+                    "What's happening in the crypto market today?",
                 ],
                 "credits": 0,
             }
@@ -77,6 +80,11 @@ class AIXBTProjectInfoAgent(MeshAgent):
         The AixBT API may have limitations and may not contain information for all cryptocurrency projects.
         If information about a specific project is not available, suggest that the user try searching for
         name, ticker or Twitter handle.
+
+        IMPORTANT: For market summary requests:
+        - The market summary tool can provide data for 1-3 days maximum
+        - If a user requests more than 3 days (e.g., week, month), inform them that only the last 3 days of data are available and provide those 3 days
+        - Always mention the actual number of days returned when providing market summaries
 
         Format your response in clean text without markdown or special formatting. Be objective and informative in your analysis.
         If the information is not available or incomplete, clearly state what is missing but remain helpful.
@@ -118,6 +126,26 @@ class AIXBTProjectInfoAgent(MeshAgent):
                             "chain": {
                                 "type": "string",
                                 "description": "Filter projects by blockchain (e.g., 'ethereum', 'solana', 'base'). Returns projects with tokens deployed on the specified chain, useful for ecosystem-specific research.",
+                            },
+                        },
+                        "required": [],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_market_summary",
+                    "description": "Get a summary of recent market-wide news including macroeconomics, major crypto tokens important updates of trending crypto projects. This tool returns 10~15 bite-sized news about various topics like market trends, opportunities and catalysts. Useful for knowing what's going on in crypto.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "lookback_days": {
+                                "type": "integer",
+                                "description": "Number of days of market summaries to retrieve (1-3 days).",
+                                "default": 1,
+                                "minimum": 1,
+                                "maximum": 3,
                             },
                         },
                         "required": [],
@@ -199,6 +227,76 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 await self.session.close()
                 self.session = None
 
+    @with_cache(ttl_seconds=1800)
+    @with_retry(max_retries=3)
+    async def get_market_summary(self, lookback_days: Optional[int] = 1) -> Dict[str, Any]:
+        """Fetch market summary from aixbt.tech/market-insights"""
+        lookback_days = max(1, min(lookback_days or 1, 3))
+
+        try:
+            result = subprocess.run(
+                [
+                    "curl",
+                    "-s",
+                    "-L",
+                    "-H",
+                    "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                    "https://aixbt.tech/market-insights",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+
+            if result.returncode != 0 or not result.stdout:
+                logger.error(f"Curl failed: return_code={result.returncode}")
+                return {"error": "Failed to fetch market insights", "summaries": []}
+
+            summaries = []
+            processed_dates = set()
+            push_blocks = re.findall(r'self\.__next_f\.push\(\[1,"(.*?)"\]\)', result.stdout, re.DOTALL)
+
+            for block in push_blocks:
+                if not any(kw in block for kw in ["Bitcoin", "ETH", "DeFi", "Trump", "whale", "Institutional"]):
+                    continue
+                date_match = re.search(r"(\d+(?:st|nd|rd|th)\s+\w+\s+\d{4},\s+\w+)", block)
+                if not date_match or date_match.group(1) in processed_dates:
+                    continue
+                date = date_match.group(1)
+                news_pattern = r'\\"children\\":\\"([^\\]{50,}(?:Trump|Bitcoin|Loss|Profit|Launch|Market|ETH|SOL|DeFi|whale|TVL|liquidity|Institutional|ETF|APY|Portal|Pendle|Solana|BlackRock)[^\\]+)\\"'
+                matches = re.findall(news_pattern, block)
+                news_items = []
+                for match in matches:
+                    cleaned = match.replace("\\n", " ").replace("\\u0026", "&").replace('\\"', '"').strip()
+                    cleaned = re.sub(r"\s+", " ", cleaned)
+                    if (
+                        len(cleaned) > 50
+                        and cleaned not in news_items
+                        and not any(
+                            skip in cleaned
+                            for skip in ["className", "mb-", "block", "Current Meta Direction", "Opportunities"]
+                        )
+                    ):
+                        news_items.append(cleaned)
+                if news_items:
+                    summaries.append({"date": date, "news": news_items[:15]})
+                    processed_dates.add(date)
+                    if len(summaries) >= lookback_days:
+                        break
+
+            return {
+                "lookback_days": lookback_days,
+                "summaries": summaries[:lookback_days]
+                if summaries
+                else [{"date": "Recent", "news": ["No data found for the specified lookback period."]}],
+            }
+        except subprocess.TimeoutExpired:
+            logger.error("Curl timeout after 30s")
+            return {"error": "Request timed out", "summaries": []}
+        except Exception as e:
+            logger.error(f"Market summary error: {e}")
+            return {"error": str(e), "summaries": []}
+
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
@@ -206,20 +304,30 @@ class AIXBTProjectInfoAgent(MeshAgent):
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Handle AIXBT tool calls."""
-        if tool_name != "search_projects":
-            return {"error": f"Unsupported tool: {tool_name}", "data": {"projects": []}}
+        if tool_name == "search_projects":
+            result = await self.search_projects(
+                limit=function_args.get("limit", 10),
+                name=function_args.get("name"),
+                ticker=function_args.get("ticker"),
+                xHandle=function_args.get("xHandle"),
+                minScore=function_args.get("minScore"),
+                chain=function_args.get("chain"),
+            )
 
-        result = await self.search_projects(
-            limit=function_args.get("limit", 10),
-            name=function_args.get("name"),
-            ticker=function_args.get("ticker"),
-            xHandle=function_args.get("xHandle"),
-            minScore=function_args.get("minScore"),
-            chain=function_args.get("chain"),
-        )
+            if result.get("error"):
+                logger.warning(f"AIXBT error: {result['error']}")
+                return {"error": result["error"], "data": {"projects": []}}
 
-        if result.get("error"):
-            logger.warning(f"AIXBT error: {result['error']}")
-            return {"error": result["error"], "data": {"projects": []}}
+            return {"data": result}
 
-        return {"data": result}
+        elif tool_name == "get_market_summary":
+            result = await self.get_market_summary(lookback_days=function_args.get("lookback_days", 1))
+
+            if result.get("error"):
+                logger.warning(f"Market summary error: {result['error']}")
+                return {"error": result["error"], "data": {"summaries": []}}
+
+            return {"data": result}
+
+        else:
+            return {"error": f"Unsupported tool: {tool_name}", "data": {}}
