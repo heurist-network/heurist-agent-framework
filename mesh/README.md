@@ -267,7 +267,7 @@ Test inputs are stored in [test_inputs.json](../heurist-mesh-client/examples/tes
 
 | Agent ID | Description | Available Tools | Source Code | External APIs |
 |----------|-------------|-----------------|-------------|---------------|
-| AIXBTProjectInfoAgent | This agent can retrieve trending project information including fundamental analysis, social activity, and recent developments using the aixbt API | • search_projects | [Source](./agents/aixbt_project_info_agent.py) | aixbt |
+| AIXBTProjectInfoAgent | This agent can retrieve trending project information including fundamental analysis, social activity, and recent developments using the aixbt API | • search_projects<br>• get_market_summary | [Source](./agents/aixbt_project_info_agent.py) | aixbt |
 | AaveAgent | This agent can report the status of Aave v3 protocols deployed on Ethereum, Polygon, Avalanche, and Arbitrum with details on liquidity, borrowing rates, and more | • get_aave_reserves | [Source](./agents/aave_agent.py) | Aave |
 | AlloraPricePredictionAgent | This agent can predict the price of ETH/BTC with confidence intervals using Allora price prediction API | • get_allora_prediction | [Source](./agents/allora_price_prediction_agent.py) | Allora |
 | ArbusAgent | This agent provides professional-grade cryptocurrency analysis, sentiment tracking, and market intelligence using Arbus AI. Get AI-powered market insights and structured reports. | • ask_ai_assistant<br>• generate_report | [Source](./agents/arbus_agent.py) | Arbus AI |
