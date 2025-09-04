@@ -304,6 +304,7 @@ Test inputs are stored in [test_inputs.json](../heurist-mesh-client/examples/tes
 | UnifaiTokenAnalysisAgent | This agent provides token analysis using UnifAI's API, including GMGN trend analysis (GMGN is a memecoin trading platform) and comprehensive token analysis for various cryptocurrencies | • get_gmgn_trend<br>• get_gmgn_token_info<br>• analyze_token | [Source](./agents/unifai_token_analysis_agent.py) | UnifAI |
 | UnifaiWeb3NewsAgent | This agent fetches the latest Web3 and cryptocurrency news using UnifAI's API | • get_web3_news | [Source](./agents/unifai_web3_news_agent.py) | UnifAI |
 | ZerionWalletAnalysisAgent | This agent can fetch and analyze the token and NFT holdings of a crypto wallet (must be EVM chain) | • fetch_wallet_tokens<br>• fetch_wallet_nfts | [Source](./agents/zerion_wallet_analysis_agent.py) | Zerion |
+| ZoraAgent | This agent provides access to Zora protocol data including trending collections, coin holders, coin information, and community comments | • explore_collections<br>• get_coin_holders<br>• get_coin_info<br>• get_coin_comments | [Source](./agents/zora_agent.py) | Zora |
 ---  
 
 _This document is a work-in-progress. Please feel free to update and improve it as the system evolves._
