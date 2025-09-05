@@ -1006,20 +1006,39 @@ wheels = [
 ]
 
 [[package]]
-name = "firecrawl-py"
-version = "2.8.0"
+name = "firecrawl"
+version = "4.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
+    { name = "httpx" },
     { name = "nest-asyncio" },
     { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "requests" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/11/83/64127a0faafb027c2870c3919aae13fd6f8f8066d000bea93c880ab9772a/firecrawl_py-2.8.0.tar.gz", hash = "sha256:657795b6ddd63f0bd38b38bf0571187e0a66becda23d97c032801895257403c9", size = 37941, upload-time = "2025-06-06T20:34:09.999Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/03/27/fcd8c317a826054d7f0d6e80bb7d6386c1facb1e1013a25d3e3d776677c4/firecrawl-4.3.1.tar.gz", hash = "sha256:25e3bd6cc8bd79b9565f7b036dec99626caf873ea7084438eb159a90d7ffe120", size = 131867, upload-time = "2025-09-01T15:44:53.617Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/74/e6/e69bd2156856f2b1849244ca3b1d993676175b16acbf704ad85580ebaa3c/firecrawl_py-2.8.0-py3-none-any.whl", hash = "sha256:f2e148086aa1ca42f603a56009577b4f66a2c23893eaa71f7c9c0082b4fdcf60", size = 173118, upload-time = "2025-06-06T20:34:07.893Z" },
+    { url = "https://files.pythonhosted.org/packages/96/94/56c3fdec718784738f5c21a60d69b2a300ebaa926f12cf41fdeed084ed3a/firecrawl-4.3.1-py3-none-any.whl", hash = "sha256:9162ecb7ea8b8119dcbac183bc17b7381f642bfbf9689f2e1f781282e5938fd0", size = 167256, upload-time = "2025-09-01T15:44:52.049Z" },
+]
+
+[[package]]
+name = "firecrawl-py"
+version = "4.3.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "httpx" },
+    { name = "nest-asyncio" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "requests" },
+    { name = "websockets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/75/05/281631bbc0dc9e3bddcaf55256daeb0ebdd540b561160c891dc5db3c37d9/firecrawl_py-4.3.1.tar.gz", hash = "sha256:f6416d54a1d6ee357f8ed2d4be278cce3c5deeb600decd07164ac324cb195e1e", size = 131873, upload-time = "2025-09-01T15:44:47.193Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/c6/b5e59f0c23def46f2c06f1824b48c79f3ab3e5853cbb59bfd5529dcb8a83/firecrawl_py-4.3.1-py3-none-any.whl", hash = "sha256:0ed9a19f52988f646cd0f77e2251a16e78cce3eeda769321f6cc41e4d9498c45", size = 167291, upload-time = "2025-09-01T15:44:45.625Z" },
 ]
 
 [[package]]
@@ -1692,6 +1711,7 @@ dependencies = [
     { name = "boto3" },
     { name = "duckduckgo-search" },
     { name = "fastapi" },
+    { name = "firecrawl" },
     { name = "firecrawl-py" },
     { name = "loguru" },
     { name = "mcp" },
@@ -1719,7 +1739,8 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.38.13" },
     { name = "duckduckgo-search", specifier = "==7.4.3" },
     { name = "fastapi", specifier = "==0.115.12" },
-    { name = "firecrawl-py", specifier = "==2.8.0" },
+    { name = "firecrawl", specifier = ">=4.3.1" },
+    { name = "firecrawl-py", specifier = "==4.3.1" },
     { name = "loguru", specifier = "==0.7.3" },
     { name = "mcp", specifier = "==1.6.0" },
     { name = "openai", specifier = "==1.71.0" },
@@ -2820,6 +2841,14 @@ name = "safe-pysha3"
 version = "1.0.4"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/fd/73/67ba7ed2177b0b17d10665418fb5deafa03d76b8d4b2cb30883b81b00edf/safe-pysha3-1.0.4.tar.gz", hash = "sha256:e429146b1edd198b2ca934a2046a65656c5d31b0ec894bbd6055127f4deaff17", size = 827688, upload-time = "2023-05-04T10:43:09.971Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e3/e5/3a4d4edd5ed4013c463c3eafe7d2a2e7067c9bd574dfce5fceec0414beb9/safe_pysha3-1.0.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9e6253f44cc665d5a07c0bdff84ec9545e28410fac26295f0fac30fdce6245b0", size = 190188, upload-time = "2025-06-20T15:16:08.081Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/a4/c85447525e820fcd95e53b2f20696170b02d0ac073bf9c41927c8bff39e2/safe_pysha3-1.0.4-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:3251f444cf3fd0cffadd71fd3f66cec0354c3c6f5553916c1d7f73fd99c2732b", size = 184231, upload-time = "2025-06-20T15:16:09.321Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/f9/435b5dd88cc14d983ff1e7b26ddd3621791a0918e580fcb083a166e990a3/safe_pysha3-1.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:941d3c3b19c71c764121e950f44df9bfed5b31d84d04bd1620e9a046a9cb6e17", size = 190419, upload-time = "2025-06-20T15:16:10.315Z" },
+    { url = "https://files.pythonhosted.org/packages/49/c6/4540238e4d0fc325e3f5b077f289182536b0355b0bdac4459a65ec20902f/safe_pysha3-1.0.4-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:c9f8bb82919a4afcefb9a034809b5f17b58e99b37da90937da2d366cd76bcca4", size = 184468, upload-time = "2025-06-20T15:16:11.26Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/97/812d5bbf90f0c5ef97503f17d19ec3a7e17e7d0e6910182119e601c5e879/safe_pysha3-1.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cde1eb8c19cd8f0a6e6bbf4903ed5119e700d1d856392435f31d5fed953c1f0a", size = 190534, upload-time = "2025-06-20T15:16:12.303Z" },
+    { url = "https://files.pythonhosted.org/packages/db/49/cdb76dd9592117169a4503f50cfa228ca745408ef0412a116638b4b6b262/safe_pysha3-1.0.4-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:224bc7b1fce08301cb4af7dd3d6c48ce1dfc7e97b9c0f1ac8d62aafb92e62a15", size = 367215, upload-time = "2025-06-20T15:16:13.517Z" },
+]
 
 [[package]]
 name = "scikit-learn"

@@ -9,7 +9,8 @@ dependencies = [
     "boto3>=1.38.13",
     "duckduckgo-search==7.4.3", # ddg agent
     "fastapi==0.115.12", # for mesh api server
-    "firecrawl-py==2.8.0", # firecrawl agent
+    "firecrawl>=4.3.1",
+    "firecrawl-py==4.3.1", # firecrawl agent
     "loguru==0.7.3",
     "mcp==1.6.0",
     "openai==1.71.0",
