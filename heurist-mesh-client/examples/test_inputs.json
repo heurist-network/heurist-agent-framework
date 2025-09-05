@@ -3,6 +3,9 @@
     "search_projects": {
       "limit": 1,
       "name": "heurist"
+    },
+    "get_market_summary": {
+      "lookback_days": 1
     }
   },
   "AaveAgent": {
@@ -207,6 +210,9 @@
   "L2BeatAgent": {
     "get_l2_summary": {
       "category": "rollups"
+    },
+    "get_l2_costs": {
+      "category": "rollups"
     }
   },
   "LetsBonkTokenInfoAgent": {
@@ -277,9 +283,6 @@
     },
     "analyze_ethereum_wallet": {
       "address": "0x73AF3bcf944a6559933396c1577B257e2054D935"
-    },
-    "analyze_solana_wallet": {
-      "address": "7g275uQ9JuvTa7EC3TERyAsQUGwid9eDYK2JgpSLrmjK"
     }
   },
   "PumpFunTokenAgent": {
@@ -378,6 +381,26 @@
     },
     "fetch_wallet_tokens": {
       "wallet_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D"
+    }
+  },
+  "ZoraAgent": {
+    "explore_collections": {
+      "list_type": "TOP_GAINERS",
+      "count": 10
+    },
+    "get_coin_holders": {
+      "address": "0xd769d56f479e9e72a77bb1523e866a33098feec5",
+      "chain_id": 8453,
+      "count": 10
+    },
+    "get_coin_info": {
+      "collection_address": "0xd769d56f479e9e72a77bb1523e866a33098feec5",
+      "chain_id": 8453
+    },
+    "get_coin_comments": {
+      "address": "0xd769d56f479e9e72a77bb1523e866a33098feec5",
+      "chain": 8453,
+      "count": 10
     }
   }
 }
