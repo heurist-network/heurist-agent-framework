@@ -166,6 +166,10 @@ class MeshAgent(ABC):
                 original_params=params,
             )
 
+            # If the tool returned an error (including timeout-as-error), do not attempt LLM
+            if isinstance(data, dict) and ("error" in data or data.get("status") == "error"):
+                return {"response": "", "data": data}
+
             if raw_data_only:
                 return {"response": "", "data": data}
 
@@ -267,7 +271,11 @@ class MeshAgent(ABC):
             )
             fallback_spec = await self.get_fallback_for_tool(tool_name, function_args, original_params)
             if not fallback_spec:
-                raise
+                # Return explicit timeout error payload if no fallback provided
+                return {
+                    "status": "error",
+                    "error": f"Tool '{tool_name}' timed out after {timeout_seconds}s",
+                }
             return await self._invoke_fallback_agent(fallback_spec, session_context, original_params)
 
     async def _invoke_fallback_agent(

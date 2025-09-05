@@ -50,6 +50,15 @@ class AIXBTProjectInfoAgent(MeshAgent):
             }
         )
 
+    # Timeout policy: 10s, no fallback (return error on timeout)
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
+    async def get_fallback_for_tool(
+        self, tool_name: Optional[str], function_args: Dict[str, Any], original_params: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        return None
+
     # Keep the original session management to maintain SSL behavior
     async def __aenter__(self):
         # Create session with SSL verification disabled
