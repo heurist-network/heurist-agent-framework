@@ -159,7 +159,9 @@ class FundingRateAgent(MeshAgent):
                 return {"error": response["error"]}
 
             if isinstance(response, dict) and "data" in response and isinstance(response["data"], list):
-                formatted_rates = self.format_funding_rates(response["data"])
+                # Filter for Binance only (exchange = 1)
+                binance_data = [rate for rate in response["data"] if rate.get("exchange") == 1]
+                formatted_rates = self.format_funding_rates(binance_data)
                 logger.info(f"Successfully retrieved {len(formatted_rates)} funding rates")
                 return {"status": "success", "data": {"funding_rates": formatted_rates}}
             else:
@@ -228,7 +230,7 @@ class FundingRateAgent(MeshAgent):
 
             # Filter out trading pairs with arbitrage opportunities
             opportunities = []
-            funding_rate_period = "1d"  # Using 1-day average funding rate
+            funding_rate_period = "latest"  # Changed from "1d" to "latest"
 
             for symbol, exchanges_data in symbols_map.items():
                 # Skip if the trading pair is only listed on one exchange
@@ -307,7 +309,7 @@ class FundingRateAgent(MeshAgent):
 
             funding_data = all_rates_result.get("data", {}).get("funding_rates", [])
             opportunities = []
-            funding_rate_period = "1d"  # Using 1-day average funding rate
+            funding_rate_period = "latest"  # Changed from "1d" to "latest"
             excluded_symbols = ["1000LUNC", "1000SHIB", "1000BTT"]  # Symbols to exclude
 
             for item in funding_data:
@@ -368,9 +370,7 @@ class FundingRateAgent(MeshAgent):
                     "name": exchange_name,
                 },
                 "rates": {
-                    "1h": rate.get("rates", {}).get("1h", "N/A"),
-                    "1d": rate.get("rates", {}).get("1d", "N/A"),
-                    "7d": rate.get("rates", {}).get("7d", "N/A"),
+                    "latest": rate.get("rates", {}).get("latest", "N/A"),  # Changed to only use "latest"
                 },
                 "funding_interval": rate.get("funding_interval", 8),
                 "last_updated": rate.get("updated_at", "N/A"),
