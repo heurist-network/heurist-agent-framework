@@ -12,7 +12,9 @@ dependencies = [
     "firecrawl-py==2.8.0", # firecrawl agent
     "loguru==0.7.3",
     "mcp==1.6.0",
+    "numpy>=2.2.4",
     "openai==1.71.0",
+    "pandas>=2.2.3",
     "psycopg2-binary==2.9.10", # core embeddings
     "pydash==8.0.5", # sol wallet agent
     "pyethash", # to build web3-ethereum-defi
@@ -23,10 +25,12 @@ dependencies = [
     "scikit-learn==1.6.1", # for core embeddings
     "smolagents==1.9.2", # for coingecko, zkignite
     "spaceandtime==1.1.70", # for spaceandtime agent
+    "stockstats>=0.6.5",
     "tenacity==8.5.0", # sol wallet agent
     "tiktoken==0.9.0", # core embeddings
     "uvicorn==0.34.0", # for mesh api server
     "web3-ethereum-defi==0.28.1", # aave agent
+    "yfinance>=0.2.65",
 ]
 
 # required for spaceandtime agent as it uses old deps
