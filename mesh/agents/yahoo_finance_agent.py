@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
@@ -179,6 +180,30 @@ class YahooFinanceAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                       PRIVATE HELPERS
     # ------------------------------------------------------------------------
+
+    def _validate_symbol(self, symbol: str) -> tuple[bool, Optional[str]]:
+        """
+        Validate if a symbol is supported (stock or crypto).
+        Returns (is_valid, error_message)
+        """
+        # Basic validation
+        if not symbol or not isinstance(symbol, str):
+            return False, "Symbol must be a non-empty string"
+        
+        symbol = symbol.upper().strip()
+        
+        if symbol.endswith("-USD"):
+            if symbol in SUPPORTED_CRYPTO_TOKENS:
+                return True, None
+            else:
+                # For crypto not in the top 30 list, we can still try to fetch it
+                # Yahoo Finance supports many more crypto pairs
+                return True, None  # Allow all crypto pairs with -USD suffix
+        
+        if re.match(r'^[A-Z][A-Z0-9\.]{0,4}$', symbol):
+            return True, None
+        
+        return False, f"Invalid symbol format: {symbol}. Use stock tickers (e.g., AAPL) or crypto with -USD suffix (e.g., BTC-USD)"
 
     async def _download_history_df(
         self,
