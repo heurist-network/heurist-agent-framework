@@ -402,5 +402,17 @@
       "chain": 8453,
       "count": 10
     }
+  },
+  "YahooFinanceAgent": {
+    "fetch_price_history": {
+      "symbol": "AAPL",
+      "interval": "1d",
+      "period": "6mo"
+    },
+    "indicator_snapshot": {
+      "symbol": "BTC-USD",
+      "interval": "1d",
+      "period": "6mo"
+    }
   }
 }

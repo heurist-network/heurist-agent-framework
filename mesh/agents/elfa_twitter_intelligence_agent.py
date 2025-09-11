@@ -100,8 +100,8 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                             },
                             "limit": {
                                 "type": "number",
-                                "description": "Maximum number of results (minimum: 20, maximum: 30)",
-                                "default": 20,
+                                "description": "Maximum number of results (minimum: 10, maximum: 20)",
+                                "default": 10,
                             },
                         },
                         "required": ["keywords"],
@@ -219,15 +219,8 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 tweet_id_to_index[tweet_id] = i
         if tweet_ids:
             logger.info(f"Fetching text for {len(tweet_ids)} tweets")
-            if len(tweet_ids) > 20:
-                batch_size = 2
-                delay = 3.0
-            elif len(tweet_ids) > 10:
-                batch_size = 3
-                delay = 2.0
-            else:
-                batch_size = 5
-                delay = 1.0
+            batch_size = 5
+            delay = 2.0
 
             tweet_texts = await self._fetch_batch_tweet_texts(tweet_ids, batch_size, delay)
             for tweet_id, text_result in zip(tweet_ids, tweet_texts):
@@ -253,11 +246,11 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def search_mentions(self, keywords: List[str], days_ago: int = 29, limit: int = 20) -> Dict:
-        if limit < 20:
+    async def search_mentions(self, keywords: List[str], days_ago: int = 29, limit: int = 10) -> Dict:
+        if limit < 10:
+            limit = 10
+        elif limit > 20:
             limit = 20
-        elif limit > 30:
-            limit = 30
         if days_ago > 29:
             days_ago = 29
         if len(keywords) > 5:
