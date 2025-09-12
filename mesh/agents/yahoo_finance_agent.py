@@ -17,56 +17,42 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 ALLOWED_INTERVALS = {"1h", "1d"}
-# TODO: the list is currently unused. Define the exact list of supported crypto tokens.
-SUPPORTED_CRYPTO_TOKENS = [
-    "BTC-USD",  # Bitcoin
-    "ETH-USD",  # Ethereum
-    "USDT-USD",  # Tether
-    "XRP-USD",  # XRP
-    "BNB-USD",  # BNB
-    "SOL-USD",  # Solana
-    "USDC-USD",  # USD Coin
-    "STETH-USD",  # Lido Staked ETH
-    "DOGE-USD",  # Dogecoin
-    "TRX-USD",  # TRON
-    "ADA-USD",  # Cardano
-    "WTRX-USD",  # Wrapped TRON
-    "WSTETH-USD",  # Lido wstETH
-    "LINK-USD",  # Chainlink
-    "WETH-USD",  # WETH
-    "WBTC-USD",  # Wrapped Bitcoin
-    "WBETH-USD",  # Wrapped Beacon ETH
-    "BCH-USD",  # Bitcoin Cash
-    "DOT-USD",  # Polkadot
-    "LTC-USD",  # Litecoin
-    "AVAX-USD",  # Avalanche
-    "UNI-USD",  # Uniswap
-    "MATIC-USD",  # Polygon
-    "ATOM-USD",  # Cosmos
-    "FIL-USD",  # Filecoin
-    "VET-USD",  # VeChain
-    "ETC-USD",  # Ethereum Classic
-    "ALGO-USD",  # Algorand
-    "XLM-USD",  # Stellar
-    "HBAR-USD",  # Hedera
-]
+
+
+SUPPORTED_CRYPTO_TOKENS = {
+    "BTC-USD",
+    "ETH-USD",
+    "XRP-USD",
+    "USDT-USD",
+    "SOL-USD",
+    "BNB-USD",
+    "USDC-USD",
+    "DOGE-USD",
+    "STETH-USD",
+    "TRX-USD",
+    "ADA-USD",
+    "WTRX-USD",
+    "LINK-USD",
+    "WBETH-USD",
+    "WETH-USD",
+    "WBTC-USD",
+    "XLM-USD",
+    "AVAX-USD",
+    "BCH-USD",
+    "HBAR-USD",
+    "LEO-USD",
+    "LTC-USD",
+    "CRO-USD",
+    "TON11419-USD",
+    "SUI20947-USD",
+    "HYPE32196-USD",
+    "USDE29470-USD",
+    "WEETH-USD",
+    "AETHWETH-USD",
+}
 
 
 class YahooFinanceAgent(MeshAgent):
-    """
-    A Yahoo Finance agent integrating yfinance and stockstats to:
-      - Fetch 1h/1d OHLCV data for stocks and major cryptocurrencies
-      - Compute technical indicators (MACD/Signal/Hist, RSI, Bollinger Bands, EMAs/SMAs)
-      - Return rule-based trading signals (buy/sell/neutral) with rationale and confidence
-
-    Supports:
-      - Stock symbols (e.g., AAPL, TSLA, GOOGL)
-      - Top 30 major crypto tokens with -USD suffix (e.g., BTC-USD, ETH-USD, SOL-USD)
-      - Only 1h and 1d intervals
-
-    Note: Data may be delayed and this is not investment advice.
-    """
-
     def __init__(self):
         super().__init__()
         self.metadata.update(
@@ -91,28 +77,25 @@ class YahooFinanceAgent(MeshAgent):
 
     def get_system_prompt(self) -> str:
         return """You are a Yahoo Finance Assistant providing market data and technical analysis.
-        Deliver concise numeric answers without markdown unless specifically requested.
 
         Protocol:
         - Support intervals: 1h and 1d only
         - Prices: 2-4 significant figures; percentages: two decimals (e.g., 5.25%)
         - Use the latest completed candle data
         - Always mention symbol and interval in responses
-        - Data may be delayed; this is not investment advice
 
         Supported Assets:
-        - All major stock symbols (e.g., AAPL, TSLA, GOOGL, MSFT)
-        - Top 30 major crypto tokens using -USD suffix (e.g., BTC-USD, ETH-USD, SOL-USD)
+        - All major stock symbols
+        - Established cryptocurrencies with large market caps
+        - Recently launched tokens and memecoins typically unavailable
 
         Important notes:
-        - Data may be delayed and should not be considered as investment advice
-        - Intraday data (1h) typically has limited history (around 60 days)
-        - Always mention the symbol and interval when providing analysis
-        - If an invalid interval or empty data, return an informative error
-        - If both period and start/end provided, start/end takes precedence
+        - Intraday data limited to ~60 days
+        - Start/end dates override period if both provided
+        - Provide actionable trading insights
 
         If the user's query is out of your scope, return a brief error message.
-        Format your response in clean text without markdown formatting unless specifically requested."""
+        Format responses in clean text without markdown unless requested."""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -126,7 +109,7 @@ class YahooFinanceAgent(MeshAgent):
                         "properties": {
                             "symbol": {
                                 "type": "string",
-                                "description": "Stock ticker (e.g., AAPL, TSLA) or crypto symbol with -USD suffix (e.g., BTC-USD, ETH-USD)",
+                                "description": "Stock ticker or crypto with -USD suffix",
                             },
                             "interval": {
                                 "type": "string",
@@ -139,8 +122,8 @@ class YahooFinanceAgent(MeshAgent):
                                 "description": "Rolling window: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max. If start_date or end_date is provided, they take precedence.",
                                 "default": "6mo",
                             },
-                            "start_date": {"type": "string", "description": "YYYY-MM-DD (optional)"},
-                            "end_date": {"type": "string", "description": "YYYY-MM-DD (optional)"},
+                            "start_date": {"type": "string"},
+                            "end_date": {"type": "string"},
                         },
                         "required": ["symbol"],
                     },
@@ -156,7 +139,7 @@ class YahooFinanceAgent(MeshAgent):
                         "properties": {
                             "symbol": {
                                 "type": "string",
-                                "description": "Stock ticker (e.g., AAPL, TSLA) or crypto symbol with -USD suffix (e.g., BTC-USD, ETH-USD)",
+                                "description": "Stock ticker or crypto with -USD suffix",
                             },
                             "interval": {
                                 "type": "string",
@@ -169,8 +152,8 @@ class YahooFinanceAgent(MeshAgent):
                                 "description": "History window to support indicator calculations",
                                 "default": "6mo",
                             },
-                            "start_date": {"type": "string", "description": "YYYY-MM-DD (optional)"},
-                            "end_date": {"type": "string", "description": "YYYY-MM-DD (optional)"},
+                            "start_date": {"type": "string"},
+                            "end_date": {"type": "string"},
                         },
                         "required": ["symbol"],
                     },
@@ -183,30 +166,23 @@ class YahooFinanceAgent(MeshAgent):
     # ------------------------------------------------------------------------
 
     def _validate_symbol(self, symbol: str) -> tuple[bool, Optional[str]]:
-        """
-        Validate if a symbol is supported (stock or crypto).
-        Returns (is_valid, error_message)
-        """
-        # Basic validation
+        """Validate if a symbol is supported."""
         if not symbol or not isinstance(symbol, str):
             return False, "Symbol must be a non-empty string"
 
         symbol = symbol.upper().strip()
 
         if symbol.endswith("-USD"):
-            if symbol in SUPPORTED_CRYPTO_TOKENS:
-                return True, None
-            else:
-                # For crypto not in the top 30 list, we can still try to fetch it
-                # Yahoo Finance supports many more crypto pairs
-                return True, None  # Allow all crypto pairs with -USD suffix
+            if symbol not in SUPPORTED_CRYPTO_TOKENS:
+                logger.info(f"Token {symbol} may be a newer or smaller cap token - attempting to fetch")
+            return True, None
 
         if re.match(r"^[A-Z][A-Z0-9\.]{0,4}$", symbol):
             return True, None
 
         return (
             False,
-            f"Invalid symbol format: {symbol}. Use stock tickers (e.g., AAPL) or crypto with -USD suffix (e.g., BTC-USD). Only major large-cap crypto tokens are supported.",
+            f"Invalid symbol: {symbol}. Use stock tickers or crypto pairs with -USD suffix.",
         )
 
     async def _download_history_df(
@@ -217,9 +193,7 @@ class YahooFinanceAgent(MeshAgent):
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> pd.DataFrame:
-        """
-        Download historical bars using yfinance in a thread (non-blocking).
-        """
+        """Download historical bars using yfinance."""
         if interval not in ALLOWED_INTERVALS:
             logger.error(f"Invalid interval: {interval}")
             return pd.DataFrame()
@@ -243,7 +217,6 @@ class YahooFinanceAgent(MeshAgent):
             if df is None or df.empty:
                 return pd.DataFrame()
 
-            # Handle potential MultiIndex columns
             if isinstance(df.columns, pd.MultiIndex):
                 try:
                     if symbol in df.columns.get_level_values(1):
@@ -253,7 +226,6 @@ class YahooFinanceAgent(MeshAgent):
                 except Exception:
                     df.columns = [" ".join([str(c) for c in col if c]).strip() for col in df.columns.values]
 
-            # Standardize & keep core columns
             wanted = ["Open", "High", "Low", "Close", "Volume"]
             keep = [c for c in wanted if c in df.columns]
             if not keep:
@@ -265,9 +237,7 @@ class YahooFinanceAgent(MeshAgent):
 
     @staticmethod
     def _wrap_stockstats(ohlcv_df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Prepare a lowercase OHLCV copy and wrap with stockstats.
-        """
+        """Prepare OHLCV for stockstats."""
         cols = [c for c in ["Open", "High", "Low", "Close", "Volume"] if c in ohlcv_df.columns]
         df = ohlcv_df[cols].copy()
         df.columns = [c.lower() for c in df.columns]
@@ -296,9 +266,7 @@ class YahooFinanceAgent(MeshAgent):
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """
-        Fetch OHLCV bars and return JSON-friendly records.
-        """
+        """Fetch OHLCV bars and return JSON-friendly records."""
         logger.info(
             f"[yahoo_finance] fetch_price_history symbol={symbol} interval={interval} period={period} start={start_date} end={end_date}"
         )
@@ -316,7 +284,6 @@ class YahooFinanceAgent(MeshAgent):
         if df is None or df.empty:
             return {"status": "no_data", "error": f"No historical data returned for {symbol} at {interval} interval."}
 
-        # Convert to records
         out = df.copy()
         out.index.name = "timestamp"
         out = out.reset_index()
@@ -356,12 +323,9 @@ class YahooFinanceAgent(MeshAgent):
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """
-        Compute core indicators on the latest completed candle and return a rule-based trading signal.
-        """
+        """Compute indicators and return trading signals."""
         logger.info(f"[yahoo_finance] indicator_snapshot symbol={symbol} interval={interval} period={period}")
 
-        # Validate symbol
         is_valid, error_msg = self._validate_symbol(symbol)
         if not is_valid:
             return {"status": "error", "error": error_msg}
@@ -372,7 +336,6 @@ class YahooFinanceAgent(MeshAgent):
                 "error": f"Unsupported interval '{interval}'. Only {sorted(ALLOWED_INTERVALS)} are supported.",
             }
 
-        # Need sufficient history for indicators (200-period SMA requires at least 200 candles)
         df = await self._download_history_df(
             symbol=symbol, interval=interval, period=period, start_date=start_date, end_date=end_date
         )
@@ -380,12 +343,11 @@ class YahooFinanceAgent(MeshAgent):
         if df is None or df.empty or len(df) < 50:
             return {
                 "status": "no_data",
-                "error": f"Insufficient historical data for {symbol} at {interval} interval. Need at least 50 candles for technical analysis.",
+                "error": f"Insufficient historical data for {symbol}. Need at least 50 candles.",
             }
 
         ss = self._wrap_stockstats(df)
 
-        # Compute indicators safely
         def _get_series(name: str) -> Optional[pd.Series]:
             try:
                 s = ss[name]
@@ -394,7 +356,6 @@ class YahooFinanceAgent(MeshAgent):
                 logger.warning(f"[yahoo_finance] indicator '{name}' unavailable: {e}")
                 return None
 
-        # Pull series
         close = df["Close"].astype(float)
         rsi = _get_series("rsi")
         macd = _get_series("macd")
@@ -407,11 +368,9 @@ class YahooFinanceAgent(MeshAgent):
         sma50 = _get_series("close_50_sma")
         sma200 = _get_series("close_200_sma")
 
-        # Require at least 2 rows for crossover detection
         if len(close) < 2:
-            return {"status": "no_data", "error": f"Not enough candles to compute technical analysis for {symbol}."}
+            return {"status": "no_data", "error": "Not enough candles for analysis."}
 
-        # Extract latest values
         last = {
             "timestamp": close.index[-1].isoformat()
             if isinstance(close.index[-1], (pd.Timestamp, datetime))
@@ -429,7 +388,6 @@ class YahooFinanceAgent(MeshAgent):
             "sma_200": float(sma200.iloc[-1]) if sma200 is not None and not np.isnan(sma200.iloc[-1]) else None,
         }
 
-        # Previous values for crossover detection
         prev = {
             "macd": float(macd.iloc[-2]) if macd is not None and not np.isnan(macd.iloc[-2]) else None,
             "macds": float(macds.iloc[-2]) if macds is not None and not np.isnan(macds.iloc[-2]) else None,
@@ -437,7 +395,6 @@ class YahooFinanceAgent(MeshAgent):
             "sma_200": float(sma200.iloc[-2]) if sma200 is not None and not np.isnan(sma200.iloc[-2]) else None,
         }
 
-        # Crossover detection functions
         def cross_up(a, b, a_prev, b_prev) -> bool:
             if None in (a, b, a_prev, b_prev):
                 return False
@@ -448,18 +405,15 @@ class YahooFinanceAgent(MeshAgent):
                 return False
             return a < b and a_prev >= b_prev
 
-        # Detect important crossovers
         macd_bullish_cross = cross_up(last["macd"], last["macds"], prev["macd"], prev["macds"])
         macd_bearish_cross = cross_down(last["macd"], last["macds"], prev["macd"], prev["macds"])
         golden_cross = cross_up(last["sma_50"], last["sma_200"], prev["sma_50"], prev["sma_200"])
         death_cross = cross_down(last["sma_50"], last["sma_200"], prev["sma_50"], prev["sma_200"])
 
-        # Market regime (bullish if price above 200-SMA)
         regime = None
         if last["close"] is not None and last["sma_200"] is not None:
             regime = "bullish" if last["close"] >= last["sma_200"] else "bearish"
 
-        # RSI conditions
         rsi_state = None
         if last["rsi"] is not None:
             if last["rsi"] >= 70:
@@ -471,7 +425,6 @@ class YahooFinanceAgent(MeshAgent):
             else:
                 rsi_state = "bearish_momentum"
 
-        # Bollinger Band position
         boll_state = None
         if last["boll_ub"] is not None and last["boll_lb"] is not None:
             if last["close"] > last["boll_ub"]:
@@ -481,19 +434,17 @@ class YahooFinanceAgent(MeshAgent):
             else:
                 boll_state = "within_bands"
 
-        # Generate trading signal
         action = "neutral"
         confidence = 0.4
         rationale: List[str] = []
 
-        # Bullish signals
         if regime == "bullish":
             if macd_bullish_cross or (
                 last["ema_10"] and last["close"] > last["ema_10"] and last["rsi"] and last["rsi"] > 50
             ):
                 action = "buy"
                 confidence = 0.65
-                rationale.append("Bullish trend confirmed (price ≥ 200-SMA) with momentum signals.")
+                rationale.append("Bullish trend confirmed with momentum signals.")
 
             if golden_cross:
                 confidence += 0.15
@@ -503,14 +454,13 @@ class YahooFinanceAgent(MeshAgent):
                 confidence += 0.05
                 rationale.append("Price breaking above upper Bollinger Band suggests strong momentum.")
 
-        # Bearish signals
         elif regime == "bearish":
             if macd_bearish_cross or (
                 last["ema_10"] and last["close"] < last["ema_10"] and last["rsi"] and last["rsi"] < 50
             ):
                 action = "sell"
                 confidence = 0.65
-                rationale.append("Bearish trend confirmed (price < 200-SMA) with negative momentum signals.")
+                rationale.append("Bearish trend confirmed with negative momentum signals.")
 
             if death_cross:
                 confidence += 0.15
@@ -520,7 +470,6 @@ class YahooFinanceAgent(MeshAgent):
                 confidence += 0.05
                 rationale.append("Price breaking below lower Bollinger Band suggests strong selling pressure.")
 
-        # Additional considerations
         if rsi_state == "overbought" and action == "buy":
             confidence -= 0.1
             rationale.append("RSI overbought condition suggests caution.")
@@ -528,7 +477,6 @@ class YahooFinanceAgent(MeshAgent):
             confidence -= 0.1
             rationale.append("RSI oversold condition suggests potential bounce.")
 
-        # Cap confidence
         confidence = float(max(0.0, min(0.9, confidence)))
 
         snapshot = {
@@ -577,9 +525,7 @@ class YahooFinanceAgent(MeshAgent):
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Execute tools and return data.
-        """
+        """Execute tools and return data."""
         logger.info(f"[yahoo_finance] Handling tool call: {tool_name} args={function_args}")
 
         try:
