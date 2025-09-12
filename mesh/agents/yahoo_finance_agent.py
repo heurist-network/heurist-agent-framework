@@ -17,6 +17,7 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 ALLOWED_INTERVALS = {"1h", "1d"}
+# TODO: the list is currently unused. Define the exact list of supported crypto tokens.
 SUPPORTED_CRYPTO_TOKENS = [
     "BTC-USD",  # Bitcoin
     "ETH-USD",  # Ethereum
@@ -91,18 +92,18 @@ class YahooFinanceAgent(MeshAgent):
     def get_system_prompt(self) -> str:
         return """You are a Yahoo Finance Assistant providing market data and technical analysis.
         Deliver concise numeric answers without markdown unless specifically requested.
-        
+
         Protocol:
         - Support intervals: 1h and 1d only
         - Prices: 2-4 significant figures; percentages: two decimals (e.g., 5.25%)
         - Use the latest completed candle data
         - Always mention symbol and interval in responses
         - Data may be delayed; this is not investment advice
-        
+
         Supported Assets:
         - All major stock symbols (e.g., AAPL, TSLA, GOOGL, MSFT)
         - Top 30 major crypto tokens using -USD suffix (e.g., BTC-USD, ETH-USD, SOL-USD)
-        
+
         Important notes:
         - Data may be delayed and should not be considered as investment advice
         - Intraday data (1h) typically has limited history (around 60 days)
@@ -119,7 +120,7 @@ class YahooFinanceAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "fetch_price_history",
-                    "description": "Use this to obtain historical price performance (OHLCV data) for stocks and cryptocurrencies using Yahoo Finance. Supports all major stock symbols (e.g., AAPL, TSLA, GOOGL) and top 30 major crypto tokens with -USD suffix (e.g., BTC-USD, ETH-USD, SOL-USD). Only supports '1h' and '1d' intervals. For intraday data, Yahoo typically limits history to ≈60 days. Data may be delayed and is not investment advice.",
+                    "description": "Use this to obtain historical price performance (OHLCV data) for stocks and cryptocurrencies using Yahoo Finance. Supports all major stock symbols and top 30 large-cap major crypto tokens. Only supports '1h' and '1d' intervals. Intraday data is limited to 60 days.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -130,7 +131,7 @@ class YahooFinanceAgent(MeshAgent):
                             "interval": {
                                 "type": "string",
                                 "enum": ["1h", "1d"],
-                                "description": "Candlestick interval (only 1h or 1d supported)",
+                                "description": "Candlestick interval",
                                 "default": "1d",
                             },
                             "period": {
@@ -149,7 +150,7 @@ class YahooFinanceAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "indicator_snapshot",
-                    "description": "Use this to compute technical indicators and get trading signals for stocks and cryptocurrencies. Supports all major stock symbols (e.g., AAPL, TSLA) and top 30 major crypto tokens with -USD suffix (e.g., BTC-USD, ETH-USD). Returns a core set of technical indicators including RSI(14), MACD(12,26,9) [macd, macds, macdh], Bollinger Bands(20,2) [boll, boll_ub, boll_lb], and moving averages [close_10_ema, close_50_sma, close_200_sma]. Provides rule-based action signal (buy/sell/neutral) with confidence level and rationale. Data may be delayed and is not investment advice.",
+                    "description": "Use this to compute technical indicators and get trading signals for stocks and cryptocurrencies. Supports all major stock symbols and top 30 large-cap major crypto tokens. Returns a core set of technical indicators including RSI(14), MACD(12,26,9) [macd, macds, macdh], Bollinger Bands(20,2) [boll, boll_ub, boll_lb], and moving averages [close_10_ema, close_50_sma, close_200_sma]. Provides rule-based action signal (buy/sell/neutral) with confidence level and rationale.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -160,12 +161,12 @@ class YahooFinanceAgent(MeshAgent):
                             "interval": {
                                 "type": "string",
                                 "enum": ["1h", "1d"],
-                                "description": "Candlestick interval for analysis (only 1h or 1d supported)",
+                                "description": "Candlestick interval for analysis",
                                 "default": "1d",
                             },
                             "period": {
                                 "type": "string",
-                                "description": "History window to support indicator calculations (default: 6mo)",
+                                "description": "History window to support indicator calculations",
                                 "default": "6mo",
                             },
                             "start_date": {"type": "string", "description": "YYYY-MM-DD (optional)"},
@@ -189,9 +190,9 @@ class YahooFinanceAgent(MeshAgent):
         # Basic validation
         if not symbol or not isinstance(symbol, str):
             return False, "Symbol must be a non-empty string"
-        
+
         symbol = symbol.upper().strip()
-        
+
         if symbol.endswith("-USD"):
             if symbol in SUPPORTED_CRYPTO_TOKENS:
                 return True, None
@@ -199,11 +200,14 @@ class YahooFinanceAgent(MeshAgent):
                 # For crypto not in the top 30 list, we can still try to fetch it
                 # Yahoo Finance supports many more crypto pairs
                 return True, None  # Allow all crypto pairs with -USD suffix
-        
-        if re.match(r'^[A-Z][A-Z0-9\.]{0,4}$', symbol):
+
+        if re.match(r"^[A-Z][A-Z0-9\.]{0,4}$", symbol):
             return True, None
-        
-        return False, f"Invalid symbol format: {symbol}. Use stock tickers (e.g., AAPL) or crypto with -USD suffix (e.g., BTC-USD)"
+
+        return (
+            False,
+            f"Invalid symbol format: {symbol}. Use stock tickers (e.g., AAPL) or crypto with -USD suffix (e.g., BTC-USD). Only major large-cap crypto tokens are supported.",
+        )
 
     async def _download_history_df(
         self,
