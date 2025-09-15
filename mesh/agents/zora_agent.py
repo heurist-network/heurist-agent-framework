@@ -262,6 +262,29 @@ class ZoraAgent(MeshAgent):
             },
         ]
 
+    def _preprocess(self, data: Any) -> Any:
+        """
+        Recursively remove mediaContent fields from response data.
+
+        Args:
+            data: The data to clean (can be dict, list, or primitive)
+
+        Returns:
+            Cleaned data with mediaContent removed
+        """
+        if isinstance(data, dict):
+            cleaned = {}
+            for key, value in data.items():
+                if key == "mediaContent":
+                    continue
+                else:
+                    cleaned[key] = self._preprocess(value)
+            return cleaned
+        elif isinstance(data, list):
+            return [self._preprocess(item) for item in data]
+        else:
+            return data
+
     # ------------------------------------------------------------------------
     #                      ZORA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
@@ -289,10 +312,12 @@ class ZoraAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
+            cleaned_response = self._preprocess(response)
+
             return {
                 "list_type": list_type,
-                "count": len(response) if isinstance(response, list) else 0,
-                "collections": response,
+                "count": len(cleaned_response) if isinstance(cleaned_response, list) else 0,
+                "collections": cleaned_response,
             }
 
         except Exception as e:
@@ -320,14 +345,18 @@ class ZoraAgent(MeshAgent):
             params = {"chainId": chain_id, "address": address, "count": min(count, 100)}
             logger.info(f"Getting coin holders for {address} on chain {chain_id}")
             response = await self._api_request(url=url, method="GET", headers=self.headers, params=params)
+
             if "error" in response:
                 return {"error": response["error"]}
+
+            # Remove mediaContent from response
+            cleaned_response = self._preprocess(response)
 
             return {
                 "address": address,
                 "chain_id": chain_id,
-                "holder_count": len(response) if isinstance(response, list) else 0,
-                "holders": response,
+                "holder_count": len(cleaned_response) if isinstance(cleaned_response, list) else 0,
+                "holders": cleaned_response,
             }
 
         except Exception as e:
@@ -361,7 +390,10 @@ class ZoraAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
-            return {"collection_address": collection_address, "chain_id": chain_id, "coin_data": response}
+            # Remove mediaContent from response
+            cleaned_response = self._preprocess(response)
+
+            return {"collection_address": collection_address, "chain_id": chain_id, "coin_data": cleaned_response}
 
         except Exception as e:
             logger.error(f"Error getting coin info: {e}")
@@ -392,11 +424,13 @@ class ZoraAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
+            cleaned_response = self._preprocess(response)
+
             return {
                 "address": address,
                 "chain": chain,
-                "comment_count": len(response) if isinstance(response, list) else 0,
-                "comments": response,
+                "comment_count": len(cleaned_response) if isinstance(cleaned_response, list) else 0,
+                "comments": cleaned_response,
             }
 
         except Exception as e:
@@ -414,7 +448,7 @@ class ZoraAgent(MeshAgent):
             identifier: User identifier (username/handle)
 
         Returns:
-            Dict containing profile data (excluding image URL) or error
+            Dict containing profile data (excluding image URL and mediaContent) or error
         """
         try:
             url = f"{self.base_url}/profile"
@@ -425,13 +459,11 @@ class ZoraAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
-            # Remove image URL if present
-            if isinstance(response, dict) and "profileImageUrl" in response:
-                response.pop("profileImageUrl", None)
+            cleaned_response = self._preprocess(response)
 
             return {
                 "identifier": identifier,
-                "profile_data": response,
+                "profile_data": cleaned_response,
             }
 
         except Exception as e:
@@ -469,10 +501,11 @@ class ZoraAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
+            cleaned_response = self._preprocess(response)
             return {
                 "identifier": identifier,
-                "coin_count": len(response) if isinstance(response, list) else 0,
-                "coins": response,
+                "coin_count": len(cleaned_response) if isinstance(cleaned_response, list) else 0,
+                "coins": cleaned_response,
             }
 
         except Exception as e:
@@ -521,11 +554,12 @@ class ZoraAgent(MeshAgent):
             if "error" in response:
                 return {"error": response["error"]}
 
+            cleaned_response = self._preprocess(response)
             return {
                 "identifier": identifier,
-                "balance_count": len(response) if isinstance(response, list) else 0,
+                "balance_count": len(cleaned_response) if isinstance(cleaned_response, list) else 0,
                 "sort_option": sort_option,
-                "balances": response,
+                "balances": cleaned_response,
             }
 
         except Exception as e:
