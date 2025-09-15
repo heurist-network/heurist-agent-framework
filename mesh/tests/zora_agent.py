@@ -68,6 +68,57 @@ async def run_agent():
         query_volume = {"query": "What are the top volume collections in the last 24 hours?"}
         output_volume = await agent.handle_message(query_volume)
 
+        # ========== NEW PROFILE TESTS ==========
+
+        # Test 13: Natural language query - get user profile
+        query_profile = {"query": "Get profile information for user kazonomics"}
+        output_profile = await agent.handle_message(query_profile)
+
+        # Test 14: Direct tool call - get profile
+        tool_profile = {"tool": "get_profile", "tool_arguments": {"identifier": "kazonomics"}}
+        output_tool_profile = await agent.handle_message(tool_profile)
+
+        # Test 15: Natural language query - get coins created by user
+        query_profile_coins = {"query": "Show me coins created by kazonomics"}
+        output_profile_coins = await agent.handle_message(query_profile_coins)
+
+        # Test 16: Direct tool call - get profile coins with custom parameters
+        tool_profile_coins = {
+            "tool": "get_profile_coins",
+            "tool_arguments": {"identifier": "kazonomics", "count": 20, "chain_ids": [8453]},
+        }
+        output_tool_profile_coins = await agent.handle_message(tool_profile_coins)
+
+        # Test 17: Natural language query - get user's coin balances
+        query_profile_balances = {"query": "What coins does kazonomics hold?"}
+        output_profile_balances = await agent.handle_message(query_profile_balances)
+
+        # Test 18: Direct tool call - get profile balances with custom sort
+        tool_profile_balances = {
+            "tool": "get_profile_balances",
+            "tool_arguments": {
+                "identifier": "kazonomics",
+                "count": 25,
+                "sort_option": "MARKET_CAP",
+                "exclude_hidden": True,
+                "chain_ids": [8453],
+            },
+        }
+        output_tool_profile_balances = await agent.handle_message(tool_profile_balances)
+
+        # Test 19: Get profile balances sorted by balance amount
+        tool_balances_by_amount = {
+            "tool": "get_profile_balances",
+            "tool_arguments": {
+                "identifier": "kazonomics",
+                "count": 15,
+                "sort_option": "BALANCE",
+                "exclude_hidden": True,
+                "chain_ids": [8453],
+            },
+        }
+        output_balances_by_amount = await agent.handle_message(tool_balances_by_amount)
+
         # Save results to YAML
         script_dir = Path(__file__).parent
         current_file = Path(__file__).stem
@@ -87,6 +138,14 @@ async def run_agent():
             "test_raw_featured": {"input": raw_featured, "output": output_raw_featured},
             "test_last_traded": {"input": tool_last_traded, "output": output_last_traded},
             "test_volume_query": {"input": query_volume, "output": output_volume},
+            # New profile tests
+            "test_profile_query": {"input": query_profile, "output": output_profile},
+            "test_profile_tool": {"input": tool_profile, "output": output_tool_profile},
+            "test_profile_coins_query": {"input": query_profile_coins, "output": output_profile_coins},
+            "test_profile_coins_tool": {"input": tool_profile_coins, "output": output_tool_profile_coins},
+            "test_profile_balances_query": {"input": query_profile_balances, "output": output_profile_balances},
+            "test_profile_balances_tool": {"input": tool_profile_balances, "output": output_tool_profile_balances},
+            "test_balances_by_amount": {"input": tool_balances_by_amount, "output": output_balances_by_amount},
         }
 
         with open(output_file, "w", encoding="utf-8") as f:

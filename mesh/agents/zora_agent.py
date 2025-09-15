@@ -21,7 +21,7 @@ class ZoraAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent provides access to Zora protocol data including trending collections, coin holders, coin information, and community comments",
+                "description": "This agent provides access to Zora protocol data including trending collections, coin holders, coin information, community comments, and user profiles",
                 "external_apis": ["Zora"],
                 "tags": ["Social"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Zora.png",
@@ -32,18 +32,24 @@ class ZoraAgent(MeshAgent):
                     "Show me comments for this Zora coin",
                     "What's the coin info for collection 0xd769d56f479e9e72a77bb1523e866a33098feec5?",
                     "Show me the top volume collections in the last 24 hours",
+                    "Get profile information for user balraj",
+                    "Show me coins created by kazonomics",
+                    "What coins does kazonomics hold?",
                 ],
             }
         )
 
     def get_system_prompt(self) -> str:
-        return """You are a helpful assistant that can access Zora protocol data to provide information about NFT collections, coins, holders, and community activity.
+        return """You are a helpful assistant that can access Zora protocol data to provide information about NFT collections, coins, holders, community activity, and user profiles.
         
         You can help users with:
         - Exploring trending collections (top gainers, most valuable creators, top volume, featured)
         - Getting coin holder information for specific addresses
         - Retrieving detailed coin/collection information
         - Showing community comments on coins
+        - Getting user profile information (handle, display name, bio)
+        - Retrieving coins created by users
+        - Showing coin balances held by users
         
         When users ask about Zora data without specifying counts, default to 10 items.
         For chain IDs, Base = 8453 is the most common, but confirm with users if unclear.
@@ -163,6 +169,94 @@ class ZoraAgent(MeshAgent):
                             },
                         },
                         "required": ["address"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_profile",
+                    "description": "Get detailed information about a user's profile including handle, display name, and bio",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "identifier": {
+                                "type": "string",
+                                "description": "User identifier (username/handle, e.g., 'balraj' or 'kazonomics')",
+                            },
+                        },
+                        "required": ["identifier"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_profile_coins",
+                    "description": "Get coins created by a specific user",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "identifier": {
+                                "type": "string",
+                                "description": "User identifier (username/handle, e.g., 'balraj' or 'kazonomics')",
+                            },
+                            "count": {
+                                "type": "integer",
+                                "description": "Number of coins to retrieve",
+                                "default": 30,
+                                "minimum": 1,
+                                "maximum": 100,
+                            },
+                            "chain_ids": {
+                                "type": "array",
+                                "items": {"type": "integer"},
+                                "description": "Array of chain IDs to filter by (e.g., [8453] for Base)",
+                                "default": [8453],
+                            },
+                        },
+                        "required": ["identifier"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_profile_balances",
+                    "description": "Get all coin balances held by a specific user",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "identifier": {
+                                "type": "string",
+                                "description": "User identifier (username/handle, e.g., 'balraj' or 'kazonomics')",
+                            },
+                            "count": {
+                                "type": "integer",
+                                "description": "Number of balances to retrieve",
+                                "default": 30,
+                                "minimum": 1,
+                                "maximum": 100,
+                            },
+                            "sort_option": {
+                                "type": "string",
+                                "description": "Sort option for the results",
+                                "enum": ["BALANCE", "MARKET_CAP", "USD_VALUE", "PRICE_CHANGE"],
+                                "default": "USD_VALUE",
+                            },
+                            "exclude_hidden": {
+                                "type": "boolean",
+                                "description": "Whether to exclude hidden coins",
+                                "default": True,
+                            },
+                            "chain_ids": {
+                                "type": "array",
+                                "items": {"type": "integer"},
+                                "description": "Array of chain IDs to filter by (e.g., [8453] for Base)",
+                                "default": [8453],
+                            },
+                        },
+                        "required": ["identifier"],
                     },
                 },
             },
@@ -309,6 +403,135 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error getting coin comments: {e}")
             return {"error": f"Failed to get coin comments: {str(e)}"}
 
+    @monitor_execution()
+    @with_cache(ttl_seconds=600)
+    @with_retry(max_retries=3)
+    async def get_profile(self, identifier: str) -> Dict[str, Any]:
+        """
+        Get detailed information about a user's profile.
+
+        Args:
+            identifier: User identifier (username/handle)
+
+        Returns:
+            Dict containing profile data (excluding image URL) or error
+        """
+        try:
+            url = f"{self.base_url}/profile"
+            params = {"identifier": identifier}
+            logger.info(f"Getting profile for {identifier}")
+            response = await self._api_request(url=url, method="GET", headers=self.headers, params=params)
+
+            if "error" in response:
+                return {"error": response["error"]}
+
+            # Remove image URL if present
+            if isinstance(response, dict) and "profileImageUrl" in response:
+                response.pop("profileImageUrl", None)
+
+            return {
+                "identifier": identifier,
+                "profile_data": response,
+            }
+
+        except Exception as e:
+            logger.error(f"Error getting profile: {e}")
+            return {"error": f"Failed to get profile: {str(e)}"}
+
+    @monitor_execution()
+    @with_cache(ttl_seconds=600)
+    @with_retry(max_retries=3)
+    async def get_profile_coins(self, identifier: str, count: int = 30, chain_ids: List[int] = None) -> Dict[str, Any]:
+        """
+        Get coins created by a specific user.
+
+        Args:
+            identifier: User identifier (username/handle)
+            count: Number of coins to retrieve
+            chain_ids: List of chain IDs to filter by
+
+        Returns:
+            Dict containing user's created coins or error
+        """
+        try:
+            if chain_ids is None:
+                chain_ids = [8453]
+
+            url = f"{self.base_url}/profileCoins"
+            params = {
+                "identifier": identifier,
+                "count": min(count, 100),
+                "chainIds": ",".join(str(id) for id in chain_ids),
+            }
+            logger.info(f"Getting coins created by {identifier}")
+            response = await self._api_request(url=url, method="GET", headers=self.headers, params=params)
+
+            if "error" in response:
+                return {"error": response["error"]}
+
+            return {
+                "identifier": identifier,
+                "coin_count": len(response) if isinstance(response, list) else 0,
+                "coins": response,
+            }
+
+        except Exception as e:
+            logger.error(f"Error getting profile coins: {e}")
+            return {"error": f"Failed to get profile coins: {str(e)}"}
+
+    @monitor_execution()
+    @with_cache(ttl_seconds=600)
+    @with_retry(max_retries=3)
+    async def get_profile_balances(
+        self,
+        identifier: str,
+        count: int = 30,
+        sort_option: str = "USD_VALUE",
+        exclude_hidden: bool = True,
+        chain_ids: List[int] = None,
+    ) -> Dict[str, Any]:
+        """
+        Get all coin balances held by a specific user.
+
+        Args:
+            identifier: User identifier (username/handle)
+            count: Number of balances to retrieve
+            sort_option: Sort option (BALANCE, MARKET_CAP, USD_VALUE, PRICE_CHANGE)
+            exclude_hidden: Whether to exclude hidden coins
+            chain_ids: List of chain IDs to filter by
+
+        Returns:
+            Dict containing user's coin balances or error
+        """
+        try:
+            if chain_ids is None:
+                chain_ids = [8453]
+
+            url = f"{self.base_url}/profileBalances"
+            params = {
+                "identifier": identifier,
+                "count": min(count, 100),
+                "sortOption": sort_option,
+                "excludeHidden": str(exclude_hidden).lower(),
+                "chainIds": ",".join(str(id) for id in chain_ids),
+            }
+            logger.info(f"Getting coin balances for {identifier}")
+            response = await self._api_request(url=url, method="GET", headers=self.headers, params=params)
+
+            if "error" in response:
+                return {"error": response["error"]}
+
+            return {
+                "identifier": identifier,
+                "balance_count": len(response) if isinstance(response, list) else 0,
+                "sort_option": sort_option,
+                "balances": response,
+            }
+
+        except Exception as e:
+            logger.error(f"Error getting profile balances: {e}")
+            return {"error": f"Failed to get profile balances: {str(e)}"}
+
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
     # ------------------------------------------------------------------------
@@ -324,7 +547,6 @@ class ZoraAgent(MeshAgent):
             result = await self.explore_collections(list_type=list_type, count=count)
             if errors := self._handle_error(result):
                 return errors
-
             return result
 
         elif tool_name == "get_coin_holders":
@@ -336,7 +558,6 @@ class ZoraAgent(MeshAgent):
             result = await self.get_coin_holders(address=address, chain_id=chain_id, count=count)
             if errors := self._handle_error(result):
                 return errors
-
             return result
 
         elif tool_name == "get_coin_info":
@@ -356,6 +577,45 @@ class ZoraAgent(MeshAgent):
             if not address:
                 return {"error": "Address parameter is required"}
             result = await self.get_coin_comments(address=address, chain=chain, count=count)
+            if errors := self._handle_error(result):
+                return errors
+            return result
+
+        elif tool_name == "get_profile":
+            identifier = function_args.get("identifier")
+            if not identifier:
+                return {"error": "Identifier parameter is required"}
+            result = await self.get_profile(identifier=identifier)
+            if errors := self._handle_error(result):
+                return errors
+            return result
+
+        elif tool_name == "get_profile_coins":
+            identifier = function_args.get("identifier")
+            count = function_args.get("count", 10)
+            chain_ids = function_args.get("chain_ids", [8453])
+            if not identifier:
+                return {"error": "Identifier parameter is required"}
+            result = await self.get_profile_coins(identifier=identifier, count=count, chain_ids=chain_ids)
+            if errors := self._handle_error(result):
+                return errors
+            return result
+
+        elif tool_name == "get_profile_balances":
+            identifier = function_args.get("identifier")
+            count = function_args.get("count", 10)
+            sort_option = function_args.get("sort_option", "USD_VALUE")
+            exclude_hidden = function_args.get("exclude_hidden", True)
+            chain_ids = function_args.get("chain_ids", [8453])
+            if not identifier:
+                return {"error": "Identifier parameter is required"}
+            result = await self.get_profile_balances(
+                identifier=identifier,
+                count=count,
+                sort_option=sort_option,
+                exclude_hidden=exclude_hidden,
+                chain_ids=chain_ids,
+            )
             if errors := self._handle_error(result):
                 return errors
             return result
