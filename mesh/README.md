@@ -305,7 +305,7 @@ Test inputs are stored in [test_inputs.json](../heurist-mesh-client/examples/tes
 | UnifaiWeb3NewsAgent | This agent fetches the latest Web3 and cryptocurrency news using UnifAI's API | • get_web3_news | [Source](./agents/unifai_web3_news_agent.py) | UnifAI |
 | YahooFinanceAgent | This agent uses Yahoo Finance to obtain historical price performance and technical analysis for stocks and cryptocurrencies. Provides OHLCV data and technical indicators with trading signals. | • fetch_price_history<br>• indicator_snapshot | [Source](./agents/yahoo_finance_agent.py) | Yahoo Finance |
 | ZerionWalletAnalysisAgent | This agent can fetch and analyze the token and NFT holdings of a crypto wallet (must be EVM chain) | • fetch_wallet_tokens<br>• fetch_wallet_nfts | [Source](./agents/zerion_wallet_analysis_agent.py) | Zerion |
-| ZoraAgent | This agent provides access to Zora protocol data including trending collections, coin holders, coin information, and community comments | • explore_collections<br>• get_coin_holders<br>• get_coin_info<br>• get_coin_comments | [Source](./agents/zora_agent.py) | Zora |
+| ZoraAgent | This agent provides access to Zora protocol data including trending collections, coin holders, coin information, community comments, and user profiles | • explore_collections<br>• get_coin_holders<br>• get_coin_info<br>• get_coin_comments<br>• get_profile<br>• get_profile_coins<br>• get_profile_balances | [Source](./agents/zora_agent.py) | Zora |
 ---  
 
 _This document is a work-in-progress. Please feel free to update and improve it as the system evolves._
