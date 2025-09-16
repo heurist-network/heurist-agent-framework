@@ -2,86 +2,60 @@ import asyncio
 import sys
 from pathlib import Path
 
-import yaml
-from dotenv import load_dotenv
-
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.agents.firecrawl_search_agent import FirecrawlSearchAgent  # noqa: E402
 
-load_dotenv()
+from mesh.agents.firecrawl_search_agent import FirecrawlSearchAgent
+from mesh.tests._test_agents import test_agent
 
-
-async def run_agent():
-    agent = FirecrawlSearchAgent()
-    try:
-        # Example for natural language query with analysis
-        agent_input_query = {
+TEST_CASES = {
+    "natural_language_query_with_analysis": {
+        "input": {
             "query": "What are the latest developments in zero knowledge proofs?",
             "raw_data_only": False,
-        }
-        agent_output_query = await agent.handle_message(agent_input_query)
-
-        # Example for natural language query with raw data only
-        agent_input_query_raw = {
+        },
+        "description": "Natural language query with AI analysis for zero knowledge proofs",
+    },
+    "natural_language_query_raw_data": {
+        "input": {
             "query": "What are the latest developments in zero knowledge proofs?",
             "raw_data_only": True,
-        }
-        agent_output_query_raw = await agent.handle_message(agent_input_query_raw)
-
-        # Example for direct tool (no LLM analysis, always returns raw data)
-        agent_input_search = {
+        },
+        "description": "Natural language query with raw data only for zero knowledge proofs",
+    },
+    "direct_search": {
+        "input": {
             "tool": "firecrawl_web_search",
             "tool_arguments": {"search_term": "zero knowledge proofs recent advancements"},
-        }
-        agent_output_search = await agent.handle_message(agent_input_search)
-
-        # Example for direct tool (no LLM analysis, always returns raw data)
-        agent_input_extract = {
+        },
+        "description": "Direct tool call for web search about zero knowledge proofs",
+    },
+    "direct_extract": {
+        "input": {
             "tool": "firecrawl_extract_web_data",
             "tool_arguments": {
                 "urls": ["https://ethereum.org/en/zero-knowledge-proofs/"],
                 "extraction_prompt": "Extract information about how zero knowledge proofs are being used in blockchain technology",
                 "enable_web_search": False,
             },
-        }
-        agent_output_extract = await agent.handle_message(agent_input_extract)
-
-        # NEW: Example for scraping Heurist.ai services and offerings (with response generation)
-        agent_input_scrape_heurist = {
+        },
+        "description": "Direct tool call to extract web data from Ethereum.org about zero knowledge proofs",
+    },
+    "scrape_heurist_homepage": {
+        "input": {
             "query": "Scap me data of heurist.ai and generate a response about their services and offerings",
             "raw_data_only": False,
-        }
-        agent_output_scrape_heurist = await agent.handle_message(agent_input_scrape_heurist)
-
-        # NEW: Natural language query about Heurist services
-        agent_input_heurist_query = {
+        },
+        "description": "Scrape Heurist.ai homepage and generate response about services",
+    },
+    "heurist_services_query": {
+        "input": {
             "query": "What services and products does Heurist.ai offer? What makes them unique in the AI space?",
             "raw_data_only": False,
-        }
-        agent_output_heurist_query = await agent.handle_message(agent_input_heurist_query)
-
-        script_dir = Path(__file__).parent
-        current_file = Path(__file__).stem
-        base_filename = f"{current_file}_example"
-        output_file = script_dir / f"{base_filename}.yaml"
-
-        yaml_content = {
-            "natural_language_query_with_analysis": {"input": agent_input_query, "output": agent_output_query},
-            "natural_language_query_raw_data": {"input": agent_input_query_raw, "output": agent_output_query_raw},
-            "direct_search": {"input": agent_input_search, "output": agent_output_search},
-            "direct_extract": {"input": agent_input_extract, "output": agent_output_extract},
-            "scrape_heurist_homepage": {"input": agent_input_scrape_heurist, "output": agent_output_scrape_heurist},
-            "heurist_services_query": {"input": agent_input_heurist_query, "output": agent_output_heurist_query},
-        }
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False)
-
-        print(f"Results saved to {output_file}")
-
-    finally:
-        await agent.cleanup()
+        },
+        "description": "Natural language query about Heurist services and uniqueness in AI space",
+    },
+}
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent())
+    asyncio.run(test_agent(FirecrawlSearchAgent, TEST_CASES))

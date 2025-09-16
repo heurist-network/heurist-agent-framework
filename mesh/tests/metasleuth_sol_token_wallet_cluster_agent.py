@@ -2,76 +2,51 @@ import asyncio
 import sys
 from pathlib import Path
 
-import yaml
-from dotenv import load_dotenv
-
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.agents.metasleuth_sol_token_wallet_cluster_agent import MetaSleuthSolTokenWalletClusterAgent  # noqa: E402
 
-load_dotenv()
+from mesh.agents.metasleuth_sol_token_wallet_cluster_agent import MetaSleuthSolTokenWalletClusterAgent
+from mesh.tests._test_agents import test_agent
 
-
-async def run_agent():
-    agent = MetaSleuthSolTokenWalletClusterAgent()
-    try:
-        # Example for direct fetch_token_clusters tool
-        agent_input_clusters = {
+TEST_CASES = {
+    "direct_token_clusters": {
+        "input": {
             "tool": "fetch_token_clusters",
             "tool_arguments": {"address": "tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump", "page": 1, "page_size": 10},
             "raw_data_only": True,
-        }
-        agent_output_clusters = await agent.handle_message(agent_input_clusters)
-
-        # Example for direct fetch_cluster_details tool
-        agent_input_details = {
+        },
+        "description": "Direct tool call to fetch token clusters with pagination",
+    },
+    "direct_cluster_details": {
+        "input": {
             "tool": "fetch_cluster_details",
             "tool_arguments": {"cluster_uuid": "13axGrDoFlaj8E0ruhYfi1", "page": 1, "page_size": 10},
             "raw_data_only": True,
-        }
-        agent_output_details = await agent.handle_message(agent_input_details)
-
-        # Example for natural language query - token analysis
-        agent_input_nl_token = {
+        },
+        "description": "Direct tool call to fetch cluster details with pagination",
+    },
+    "nl_token_analysis": {
+        "input": {
             "query": "Analyze the wallet clusters of this Solana token: tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump",
             "raw_data_only": False,
-        }
-        agent_output_nl_token = await agent.handle_message(agent_input_nl_token)
-
-        # Example for natural language query - cluster details
-        agent_input_nl_cluster = {
+        },
+        "description": "Natural language query for token wallet cluster analysis",
+    },
+    "nl_cluster_details": {
+        "input": {
             "query": "Show me the details of wallet cluster with UUID 0j7eWWwixWixBYPg5oeVX6",
             "raw_data_only": False,
-        }
-        agent_output_nl_cluster = await agent.handle_message(agent_input_nl_cluster)
-
-        # Example with raw data only
-        agent_input_raw = {
+        },
+        "description": "Natural language query for specific cluster details",
+    },
+    "raw_data_query": {
+        "input": {
             "query": "Get token cluster data for tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump",
             "raw_data_only": True,
-        }
-        agent_output_raw = await agent.handle_message(agent_input_raw)
-
-        script_dir = Path(__file__).parent
-        current_file = Path(__file__).stem
-        base_filename = f"{current_file}_example"
-        output_file = script_dir / f"{base_filename}.yaml"
-
-        yaml_content = {
-            "direct_token_clusters": {"input": agent_input_clusters, "output": agent_output_clusters},
-            "direct_cluster_details": {"input": agent_input_details, "output": agent_output_details},
-            "nl_token_analysis": {"input": agent_input_nl_token, "output": agent_output_nl_token},
-            "nl_cluster_details": {"input": agent_input_nl_cluster, "output": agent_output_nl_cluster},
-            "raw_data_query": {"input": agent_input_raw, "output": agent_output_raw},
-        }
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False)
-
-        print(f"Results saved to {output_file}")
-
-    finally:
-        await agent.cleanup()
+        },
+        "description": "Natural language query with raw data flag for token clusters",
+    },
+}
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent())
+    asyncio.run(test_agent(MetaSleuthSolTokenWalletClusterAgent, TEST_CASES))

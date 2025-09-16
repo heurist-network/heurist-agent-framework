@@ -2,60 +2,34 @@ import asyncio
 import sys
 from pathlib import Path
 
-import yaml
-from dotenv import load_dotenv
-
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.agents.truth_social_agent import TruthSocialAgent  # noqa: E402
 
-load_dotenv()
+from mesh.agents.truth_social_agent import TruthSocialAgent
+from mesh.tests._test_agents import test_agent
 
-
-async def run_agent():
-    agent = TruthSocialAgent()
-    try:
-        # Test with a natural language query
-        agent_input_query = {
-            "query": "What has Donald Trump posted recently on Truth Social?",
-        }
-        agent_output_query = await agent.handle_message(agent_input_query)
-
-        # Test direct tool call
-        agent_input_direct = {
+TEST_CASES = {
+    "trump_posts_query": {
+        "input": {"query": "What has Donald Trump posted recently on Truth Social?"},
+        "description": "Natural language query for Donald Trump's recent Truth Social posts",
+    },
+    "trump_posts_direct": {
+        "input": {
             "tool": "get_trump_posts",
             "tool_arguments": {"max_posts": 5},
             "raw_data_only": False,
-        }
-        agent_output_direct = await agent.handle_message(agent_input_direct)
-
-        agent_input_direct_2 = {
+        },
+        "description": "Direct tool call for Trump posts with max 5 posts and formatted response",
+    },
+    "trump_posts_direct_raw": {
+        "input": {
             "tool": "get_trump_posts",
             "tool_arguments": {"max_posts": 5},
             "raw_data_only": True,
-        }
-        agent_output_direct_2 = await agent.handle_message(agent_input_direct_2)
-
-        script_dir = Path(__file__).parent
-        current_file = Path(__file__).stem
-        base_filename = f"{current_file}_example"
-        output_file = script_dir / f"{base_filename}.yaml"
-
-        yaml_content = {
-            "input_query": agent_input_query,
-            "output_query": agent_output_query,
-            "input_direct": agent_input_direct,
-            "output_direct": agent_output_direct,
-            "input_direct_2": agent_input_direct_2,
-            "output_direct_2": agent_output_direct_2,
-        }
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False)
-
-        print(f"Results saved to {output_file}")
-    finally:
-        await agent.cleanup()
+        },
+        "description": "Direct tool call for Trump posts with max 5 posts and raw data",
+    },
+}
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent())
+    asyncio.run(test_agent(TruthSocialAgent, TEST_CASES))

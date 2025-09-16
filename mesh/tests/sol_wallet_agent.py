@@ -2,79 +2,49 @@ import asyncio
 import sys
 from pathlib import Path
 
-import yaml
-from dotenv import load_dotenv
-
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.agents.sol_wallet_agent import SolWalletAgent  # noqa: E402
 
-load_dotenv()
+from mesh.agents.sol_wallet_agent import SolWalletAgent
+from mesh.tests._test_agents import test_agent
 
-
-async def run_agent():
-    ca = "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump"
-    wallet = "DbDi7soBXALYRMZSyJMEAfpaK3rD1hr5HuCYzuDrcEEN"
-
-    agent = SolWalletAgent()
-    try:
-        agent_input_query = {
-            "query": f"Give me the holders of this {ca}",
+TEST_CASES = {
+    "token_holders_query": {
+        "input": {
+            "query": "Give me the holders of this 4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
             "raw_data_only": False,
-        }
-        agent_output_query = await agent.handle_message(agent_input_query)
-        print(agent_output_query)
-
-        agent_input_query_raw = {
-            "query": f"Show me the txs of this wallet {wallet}",
+        },
+        "description": "Natural language query for token holders",
+    },
+    "wallet_transactions_raw": {
+        "input": {
+            "query": "Show me the txs of this wallet DbDi7soBXALYRMZSyJMEAfpaK3rD1hr5HuCYzuDrcEEN",
             "raw_data_only": True,
-        }
-        agent_output_query_raw = await agent.handle_message(agent_input_query_raw)
-        print(agent_output_query_raw)
-
-        agent_input_assets = {
+        },
+        "description": "Natural language query for wallet transactions with raw data flag",
+    },
+    "get_wallet_assets": {
+        "input": {
             "tool": "get_wallet_assets",
-            "tool_arguments": {"owner_address": wallet},
-        }
-        agent_output_assets = await agent.handle_message(agent_input_assets)
-        print(f"Result of get_wallet_assets: {agent_output_assets}")
-
-        agent_input_tx = {
+            "tool_arguments": {"owner_address": "DbDi7soBXALYRMZSyJMEAfpaK3rD1hr5HuCYzuDrcEEN"},
+        },
+        "description": "Direct tool call to get wallet assets",
+    },
+    "get_tx_history": {
+        "input": {
             "tool": "get_tx_history",
-            "tool_arguments": {"owner_address": wallet},
-        }
-        agent_output_tx = await agent.handle_message(agent_input_tx)
-        print(f"Result of get_tx_history: {agent_output_tx}")
-
-        agent_input_holders = {
+            "tool_arguments": {"owner_address": "DbDi7soBXALYRMZSyJMEAfpaK3rD1hr5HuCYzuDrcEEN"},
+        },
+        "description": "Direct tool call to get transaction history",
+    },
+    "analyze_common_holdings": {
+        "input": {
             "tool": "analyze_common_holdings_of_top_holders",
-            "tool_arguments": {"token_address": ca},
-        }
-        agent_output_holders = await agent.handle_message(agent_input_holders)
-        print(f"Result of analyze_common_holdings_of_top_holders: {agent_output_holders}")
-
-        script_dir = Path(__file__).parent
-        current_file = Path(__file__).stem
-        base_filename = f"{current_file}_example"
-        output_file = script_dir / f"{base_filename}.yaml"
-
-        yaml_content = {
-            "natural_language_query_with_analysis": {"input": agent_input_query, "output": agent_output_query},
-            "natural_language_query_raw_data": {"input": agent_input_query_raw, "output": agent_output_query_raw},
-            "get_wallet_assets_test": {"input": agent_input_assets, "output": agent_output_assets},
-            "get_tx_history_test": {"input": agent_input_tx, "output": agent_output_tx},
-            "analyze_common_holdings_of_top_holders": {"input": agent_input_holders, "output": agent_output_holders},
-        }
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False)
-
-        print(f"Results saved to {output_file}")
-
-    except Exception as e:
-        print(f"Error: {str(e)}")
-    finally:
-        await agent.cleanup()
+            "tool_arguments": {"token_address": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump"},
+        },
+        "description": "Direct tool call to analyze common holdings of top holders",
+    },
+}
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent())
+    asyncio.run(test_agent(SolWalletAgent, TEST_CASES))
