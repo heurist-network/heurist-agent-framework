@@ -1,47 +1,31 @@
+# test_duckduckgo_search_agent.py
+"""Test suite for DuckDuckGo Search Agent"""
+
 import asyncio
 import sys
 from pathlib import Path
 
-import yaml
-from dotenv import load_dotenv
-
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.agents.duckduckgo_search_agent import DuckDuckGoSearchAgent  # noqa: E402
 
-load_dotenv()
+from mesh.agents.duckduckgo_search_agent import DuckDuckGoSearchAgent
+from mesh.tests._test_agents import test_agent
 
-
-async def run_agent():
-    agent = DuckDuckGoSearchAgent()
-    try:
-        # Direct tool call input
-        agent_input = {
+# Define test cases - exact conversion from original file
+TEST_CASES = {
+    "ai_developments_search": {
+        "input": {
             "query": "What are the latest developments in artificial intelligence?",
-            "tool": "search_web",  # Specify the tool name
-            "tool_arguments": {  # Provide tool-specific arguments
-                "search_term": "What are the latest developments in artificial intelligence?",  # Changed from "query" to "search_term"
+            "tool": "search_web",
+            "tool_arguments": {
+                "search_term": "What are the latest developments in artificial intelligence?",
                 "max_results": 3,
             },
-            "raw_data_only": False,  # Set to True if you only want the raw data without LLM analysis
-        }
-
-        agent_output = await agent.handle_message(agent_input)
-
-        script_dir = Path(__file__).parent
-        current_file = Path(__file__).stem
-        base_filename = f"{current_file}_example"
-        output_file = script_dir / f"{base_filename}.yaml"
-
-        yaml_content = {"input": agent_input, "output": agent_output}
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False)
-
-        print(f"Results saved to {output_file}")
-
-    finally:
-        await agent.cleanup()
+            "raw_data_only": False,
+        },
+        "description": "Direct tool call to search web for AI developments with 3 max results",
+    },
+}
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent())
+    asyncio.run(test_agent(DuckDuckGoSearchAgent, TEST_CASES))

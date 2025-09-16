@@ -1,487 +1,3338 @@
-creation:
-  input:
-    query: Show me the latest Solana token creations in the last hour
-  output:
-    response: "**Latest Solana Token Creations (Last Hour)**\n\nHere's a concise overview\
-      \ of the newly created tokens on Pump.fun within the last hour, based on the\
-      \ provided data (note: the data seems to span a 4-hour window, but we'll focus\
-      \ on the \"latest\" aspect, highlighting the most recent creations):\n\n**Top\
-      \ 3 Latest Token Creations (within the 1-hour mark, if applicable, or the most\
-      \ recent from the data set):**\n\n1. **Yeti Pacu jalur**\n\t* **Token Details:**\
-      \ [EQatYwZYjd5rsQKEy6t9QgNh1kJGHR3uaQ8BKoiPpump](https://solscan.io/token/EQatYwZYjd5rsQKEy6t9QgNh1kJGHR3uaQ8BKoiPpump)\n\
-      \t* **Symbol:** Pacu\n\t* **Initial Supply:** 1,000,000,000.000000\n\t* **Creation\
-      \ Timestamp:** 2025-07-11T10:00:00Z\n\t* **Signer:** H2sQHUr6S9GqrZVZ1twghpG7sFKAAwTHZpHD2dPWihcr\n\
-      \n2. **Claude Dog**\n\t* **Token Details:** [8kMGwFq2ytZ9PsiFwv9CHT3nLYK4fr1ThwmXLg8wpump](https://solscan.io/token/8kMGwFq2ytZ9PsiFwv9CHT3nLYK4fr1ThwmXLg8wpump)\n\
-      \t* **Symbol:** DOGGO\n\t* **Initial Supply:** 1,000,000,000.000000\n\t* **Creation\
-      \ Timestamp:** 2025-07-11T09:00:00Z\n\t* **Signer:** C9pxiDi8eiaL9Tu5apVY8GWzGY6DHpzXG5zpLJGQbykc\n\
-      \n3. **NASCLUCK**\n\t* **Token Details:** [8s2fZioxQTPzHMXyZjAGCEYCX6EtE85N4ko5Cpgupump](https://solscan.io/token/8s2fZioxQTPzHMXyZjAGCEYCX6EtE85N4ko5Cpgupump)\n\
-      \t* **Symbol:** NASCLUCK\n\t* **Initial Supply:** 1,000,000,000.000000\n\t*\
-      \ **Creation Timestamp:** 2025-07-11T09:00:00Z\n\t* **Signer:** 5bvKKEVpC6m8JAccHuw6Cb4PT4KETttv7Q9HNHWsQyyZ\n\
-      \n**Note:** Since the provided data does not strictly fall within the last hour\
-      \ (ending at the time of query), the top 3 tokens listed are the most recent\
-      \ from the dataset, with the first one being the only one created at the 10:00:00\
-      \ Zulu time mark, indicating it's the most recent if we consider the hour leading\
-      \ up to the data's end time.\n\n**Full List of Tokens Created in the Provided\
-      \ Time Frame:**\n- Yeti Pacu jalur (Pacu) - 10:00:00Z\n- Claude Dog (DOGGO)\
-      \ - 09:00:00Z\n- NASCLUCK (NASCLUCK) - 09:00:00Z\n- SUPERMAGA (SMAGA) - 09:00:00Z\n\
-      - You will buy this D@G (D@G) - 09:00:00Z\n- SATU BATANG SISA (SATU) - 09:00:00Z\n\
-      - KITRIX (KITRIX) - 08:00:00Z\n- Republic of Kenya (KENYA) - 08:00:00Z\n- Pump\
-      \ Day (PUMPD) - 06:00:00Z\n- pjon (pjon) - 04:00:00Z"
-    data:
-      tokens:
-      - name: Yeti Pacu jalur
-        symbol: Pacu
-        mint_address: EQatYwZYjd5rsQKEy6t9QgNh1kJGHR3uaQ8BKoiPpump
-        amount: '1000000000.000000'
-        signer: H2sQHUr6S9GqrZVZ1twghpG7sFKAAwTHZpHD2dPWihcr
-      - name: Claude Dog
-        symbol: DOGGO
-        mint_address: 8kMGwFq2ytZ9PsiFwv9CHT3nLYK4fr1ThwmXLg8wpump
-        amount: '1000000000.000000'
-        signer: C9pxiDi8eiaL9Tu5apVY8GWzGY6DHpzXG5zpLJGQbykc
-      - name: NASCLUCK
-        symbol: NASCLUCK
-        mint_address: 8s2fZioxQTPzHMXyZjAGCEYCX6EtE85N4ko5Cpgupump
-        amount: '1000000000.000000'
-        signer: 5bvKKEVpC6m8JAccHuw6Cb4PT4KETttv7Q9HNHWsQyyZ
-      - name: SUPERMAGA
-        symbol: SMAGA
-        mint_address: 7wnBrHeHFzpNvNezE2ETXrEd1szRhwabVNASRKEKpump
-        amount: '1000000000.000000'
-        signer: HkzvD6GP3yeRKhDajNkG4g41qU6MdcHoFipaSeY1amL2
-      - name: You will buy this D@G
-        symbol: D@G
-        mint_address: GanbS574UV8GEJfMXBFvSBwhhFpu5ERqjhQLwPTxXXiX
-        amount: '1000000000.000000'
-        signer: HyF3gui8takahPszgQYM1caHwEC8gT4gpnLnPFitQjrz
-      - name: SATU BATANG SISA
-        symbol: SATU
-        mint_address: HAXRzrE2RVojgNQHdyRohDGFhZHiFeJpeeNRnbohw1J8
-        amount: '1000000000.000000'
-        signer: 5JzRjmLSy5YR4ReFRpCK9k3WuToUpc7vkBhWPyy89kQ4
-      - name: KITRIX
-        symbol: KITRIX
-        mint_address: 7wQq1xwmgfea37ToXB21zaALDNrMWABBqLxdVr6Upump
-        amount: '1000000000.000000'
-        signer: CyzJbh5ktA6WF8jR1XHLFd4oxeJZGzCV6MhZD8A8Deov
-      - name: Republic of Kenya
-        symbol: KENYA
-        mint_address: xjRJrUm8E2jfjjCHgx5JHiASoNW7wiVtJhMMTHSpump
-        amount: '1000000000.000000'
-        signer: 7CpLGzarU2WGTrRw9HARKctVHEKE47MvqTwB3zYkjsDP
-      - name: 'Pump Day '
-        symbol: PUMPD
-        mint_address: 5eN5idGasAaozqDTC2kFZnPcJgFZgWcrdiSYh9wfpump
-        amount: '1000000000.000000'
-        signer: D6Tm1YVtPfpvtSb2BUj6ophk6aNuUCph4fm4TnoY6HZM
-      - name: pjon
-        symbol: pjon
-        mint_address: 4CTtXnXbQjx2Fr9954HPJUoVSe2o9U8dE7uAJisZDhV7
-        amount: '1000000000.000000'
-        signer: CkYzGwRzEBwk3fX7SAmrhBazoLvzXozNmMfA4tFguDLt
-graduated_tokens:
-  input:
-    query: Show me all tokens that have graduated on Pump.fun in the last 48 hours
-  output:
-    response: "**Recently Graduated Tokens on Pump.fun (Last 48 hours)**\n\nBelow\
-      \ is the list of tokens that have graduated on Pump.fun within the last 48 hours,\
-      \ along with their initial price data and market capitalization. The list is\
-      \ ordered by market capitalization in descending order for ease of analysis.\n\
-      \n### Top Graduated Tokens by Market Capitalization\n\n1. **Kolscan (KOL)**\n\
-      \t* **Mint Address:** [GjND9Vb2Nb1NYxQxDa7XBHywTpcqaPNfM4jL7phxpump](https://solscan.io/token/GjND9Vb2Nb1NYxQxDa7XBHywTpcqaPNfM4jL7phxpump)\n\
-      \t* **Price (USD):** $0.025812461040517244\n\t* **Market Cap (USD):** $25,812,461.04\n\
-      2. **Kolscan (KOL)**\n\t* **Mint Address:** [6csAo2ud5RpMT7C8k48WXaAKEjwCCaDXgQbY1hfApump](https://solscan.io/token/6csAo2ud5RpMT7C8k48WXaAKEjwCCaDXgQbY1hfApump)\n\
-      \t* **Price (USD):** $0.025550442572444557\n\t* **Market Cap (USD):** $25,550,442.57\n\
-      3. **hardest hit (PANICANS)**\n\t* **Mint Address:** [4r1sJoVfuYuSFEDfMYqZGhncvG6GkrXEX6vWjYwbpump](https://solscan.io/token/4r1sJoVfuYuSFEDfMYqZGhncvG6GkrXEX6vWjYwbpump)\n\
-      \t* **Price (USD):** $0.007498559374694744\n\t* **Market Cap (USD):** $7,498,559.37\n\
-      \n**Full List of Graduated Tokens (by Market Cap, descending):**\n\n| **Rank**\
-      \ | **Token Name** | **Symbol** | **Mint Address** | **Price (USD)** | **Market\
-      \ Cap (USD)** |\n| --- | --- | --- | --- | --- | --- |\n| 1. | Kolscan | KOL\
-      \ | [GjND9Vb2Nb1NYxQxDa7XBHywTpcqaPNfM4jL7phxpump](https://solscan.io/token/GjND9Vb2Nb1NYxQxDa7XBHywTpcqaPNfM4jL7phxpump)\
-      \ | $0.025812461040517244 | $25,812,461.04 |\n| 2. | Kolscan | KOL | [6csAo2ud5RpMT7C8k48WXaAKEjwCCaDXgQbY1hfApump](https://solscan.io/token/6csAo2ud5RpMT7C8k48WXaAKEjwCCaDXgQbY1hfApump)\
-      \ | $0.025550442572444557 | $25,550,442.57 |\n| 3. | hardest hit | PANICANS\
-      \ | [4r1sJoVfuYuSFEDfMYqZGhncvG6GkrXEX6vWjYwbpump](https://solscan.io/token/4r1sJoVfuYuSFEDfMYqZGhncvG6GkrXEX6vWjYwbpump)\
-      \ | $0.007498559374694744 | $7,498,559.37 |\n| ... | ... | ... | ... | ... |\
-      \ ... |\n| 30. | FartCorn | FartCorn | [uUE5PzP8DhQ373GA1bTDx8coTKtJSxz6i46Nh2mpump](https://solscan.io/token/uUE5PzP8DhQ373GA1bTDx8coTKtJSxz6i46Nh2mpump)\
-      \ | $7.51853886655765e-05 | $75,185.39 |\n| 31. | Toly ALT | Sheldon | [DTqdy6nHQWExoxnsYwjk4Q78cpvXkZoyvFUYSNW9bk2H](https://solscan.io/token/DTqdy6nHQWExoxnsYwjk4Q78cpvXkZoyvFUYSNW9bk2H)\
-      \ | $7.522290645672329e-05 | $75,229.07 |\n| **Last** | Australian Durry Cartel\
-      \ | ADC | [CuLf13vL8ZNMWsoJVaRLsex3qMGbeVijTTsCycqnpump](https://solscan.io/token/CuLf13vL8ZNMWsoJVaRLsex3qMGbeVijTTsCycqnpump)\
-      \ | $7.222515946162735e-05 | $72,225.16 |\n\n**Observations and Insights:**\n\
-      \n- **Market Dominance:** The top two spots are dominated by **Kolscan (KOL)**\
-      \ with nearly identical market capitalizations, suggesting a strong market presence\
-      \ or coordinated listing strategy.\n- **Price and Market Cap Range:** Prices\
-      \ range from approximately $0.0258 (for Kolscan) down to $7.22e-05 (for Australian\
-      \ Durry Cartel), with market capitalizations spanning from $25.8 million to\
-      \ $72,225.\n- **Token Diversity:** The list showcases a diverse range of token\
-      \ names and symbols, indicating a wide array of projects and ideas being launched\
-      \ on Pump.fun.\n- **No Tokens Without Price Data:** All listed tokens have available\
-      \ price data, suggesting effective market engagement or liquidity provision\
-      \ post-graduation.\n\n**Limitations:**\n- **Graduation Timestamps:** The provided\
-      \ data does not include specific graduation timestamps for each token, which\
-      \ could offer insights into the velocity of graduations within the 48-hour window.\n\
-      - **Initial Supply Amounts:** Information on the initial supply amounts of these\
-      \ tokens is not provided, which is crucial for a deeper market cap analysis.\n\
-      - **Signer Information:** Details about the signers (creators) of these tokens\
-      \ are not included, which could be useful for analyzing patterns in successful\
-      \ token launches."
-    data:
-      graduated_tokens:
-      - price_usd: 0.025812461040517244
-        market_cap_usd: 25812461.040517244
-        token_info:
-          name: Kolscan
-          symbol: KOL
-          mint_address: GjND9Vb2Nb1NYxQxDa7XBHywTpcqaPNfM4jL7phxpump
-          decimals: 6
-      - price_usd: 0.025550442572444557
-        market_cap_usd: 25550442.57244456
-        token_info:
-          name: Kolscan
-          symbol: KOL
-          mint_address: 6csAo2ud5RpMT7C8k48WXaAKEjwCCaDXgQbY1hfApump
-          decimals: 6
-      - price_usd: 0.007498559374694744
-        market_cap_usd: 7498559.374694744
-        token_info:
-          name: hardest hit
-          symbol: PANICANS
-          mint_address: 4r1sJoVfuYuSFEDfMYqZGhncvG6GkrXEX6vWjYwbpump
-          decimals: 6
-      - price_usd: 0.0025539024972438392
-        market_cap_usd: 2553902.4972438393
-        token_info:
-          name: Kolscan
-          symbol: KOL
-          mint_address: UrWRdgH1YPv84oYyLFPqhNTpKubzazdgME4TNWFpump
-          decimals: 6
-      - price_usd: 0.002474619636846202
-        market_cap_usd: 2474619.636846202
-        token_info:
-          name: kolscan
-          symbol: kolscan
-          mint_address: 6caJzZLEqFHrk5Wh22zoeAt3k5BuQN71ahtaCYTZpump
-          decimals: 6
-      - price_usd: 0.0014350659858315502
-        market_cap_usd: 1435065.98583155
-        token_info:
-          name: TITDAQ
-          symbol: TITDAQ
-          mint_address: 5FrgzK4QF6egUVHXSjYmeVdVtWb7aidopK3iFCmqSsYP
-          decimals: 6
-      - price_usd: 0.0011113380536599356
-        market_cap_usd: 1111338.0536599355
-        token_info:
-          name: Big Dog
-          symbol: BIGDOG
-          mint_address: 95om4GyaHicmVVttoRbmUPGSF63s95TkWPRnnsMjpump
-          decimals: 6
-      - price_usd: 0.0010394346271964572
-        market_cap_usd: 1039434.6271964572
-        token_info:
-          name: everything is grok
-          symbol: EIG
-          mint_address: oRRMQqkrk8YQp6ehJBSQUg4PUZuud8oUUEgk6t7pump
-          decimals: 6
-      - price_usd: 0.000762055031512501
-        market_cap_usd: 762055.0315125011
-        token_info:
-          name: German jeets
-          symbol: Jeezi
-          mint_address: C6oUFNiFAZ1mBBUHhyNKpqp8oHTyajMSCRcSb52ypump
-          decimals: 6
-      - price_usd: 0.0005467127458661907
-        market_cap_usd: 546712.7458661908
-        token_info:
-          name: Domino
-          symbol: Domino
-          mint_address: 7NCy2yCKuWCG2neDSzrZxcBweLDqprFK7rCUZ2npump
-          decimals: 6
-      - price_usd: 0.0005006874268808954
-        market_cap_usd: 500687.4268808954
-        token_info:
-          name: THE SYMBOL OF HOPE
-          symbol: SUPERTRUMP
-          mint_address: D1PB3PRqFF5eknAWkpJuDrrc1Yh7mNL8JcWUrYqvpump
-          decimals: 6
-      - price_usd: 0.0004976864035416015
-        market_cap_usd: 497686.4035416015
-        token_info:
-          name: THE SYMBOL OF HOPE
-          symbol: SUPERTRUMP
-          mint_address: CnurSQUqid3HWKRg8MnWSC84b2Se7gYjKknnXEWRpump
-          decimals: 6
-      - price_usd: 0.00033265292232086217
-        market_cap_usd: 332652.9223208622
-        token_info:
-          name: FLOOPY COIN
-          symbol: FLOOPY
-          mint_address: Fo4Pj5GogamGK9qeEXTkyt5xA8xJexZZcJdWL4mQjh1K
-          decimals: 6
-      - price_usd: 0.0003320340219670323
-        market_cap_usd: 332034.0219670323
-        token_info:
-          name: hardest hit
-          symbol: PANICANS
-          mint_address: HCYtCtCeiUAbYeSt4o9QX3jrYXyYzVLh33MQGpXdpump
-          decimals: 6
-      - price_usd: 0.0003209272592625719
-        market_cap_usd: 320927.2592625719
-        token_info:
-          name: earth bundle
-          symbol: void
-          mint_address: aJtaM97922iU46seCfzrn2ktjSxidA4Gkzbw9jkpump
-          decimals: 6
-      - price_usd: 0.00032178079449154707
-        market_cap_usd: 321780.79449154704
-        token_info:
-          name: DexMev
-          symbol: DMEV
-          mint_address: 9gu6FHh86bj7gc8vRdTNdAc38tzuuve5REmEeon2pump
-          decimals: 6
-      - price_usd: 0.00030177108375073236
-        market_cap_usd: 301771.08375073236
-        token_info:
-          name: WinRAR
-          symbol: WinRAR
-          mint_address: HGoodUrCQcmSuLn7bWbQvbmkiRy1Jr3TyUCe84Vfpump
-          decimals: 6
-      - price_usd: 0.00030030474560129077
-        market_cap_usd: 300304.7456012908
-        token_info:
-          name: NALA ON SOL
-          symbol: NALAS
-          mint_address: GoNhVbssiGouTYBUDLVzFpXqF8aKTEqLS3HxYPffpump
-          decimals: 6
-      - price_usd: 0.00028577709842918193
-        market_cap_usd: 285777.0984291819
-        token_info:
-          name: BitFartRocket
-          symbol: BFR
-          mint_address: KMX6pUWEbfgybcAKMbraTEvcChzD74AuDZysSqBpump
-          decimals: 6
-      - price_usd: 0.00024432509464356717
-        market_cap_usd: 244325.09464356716
-        token_info:
-          name: Domino
-          symbol: Domino
-          mint_address: 98rhL2zNip7mHphDcjNgiPhn13edeHBqmFPrXMLpump
-          decimals: 6
-      - price_usd: 0.000243723536221432
-        market_cap_usd: 243723.536221432
-        token_info:
-          name: Fear of Having a Job
-          symbol: Jobaphobia
-          mint_address: uK4JC9hgxMxqLCSD9P9wQ27MUwijjbwDi6dmi4Ppump
-          decimals: 6
-      - price_usd: 0.00021825707688098882
-        market_cap_usd: 218257.0768809888
-        token_info:
-          name: SUPERMAN TRUMP
-          symbol: ST
-          mint_address: 9T28eVAez978TzpobSbMXEdgUbqaGUhpWZqiZP6XKZjr
-          decimals: 6
-      - price_usd: 0.00020419960179676519
-        market_cap_usd: 204199.60179676517
-        token_info:
-          name: BTC RollerCoaster Guy
-          symbol: BTC GUY
-          mint_address: 29AsstyhDeZTEtEE9E6ujosf33wisaFGQoPsWM6RdYrA
-          decimals: 6
-      - price_usd: 0.00020386770767295907
-        market_cap_usd: 203867.70767295908
-        token_info:
-          name: Jewish Intuition
-          symbol: jewlon
-          mint_address: SShzPVeF4S5njzuKpuB9QJHsFs7qq8vvNHWkYi4pump
-          decimals: 6
-      - price_usd: 0.00019787961111224423
-        market_cap_usd: 197879.61111224422
-        token_info:
-          name: FART DAO
-          symbol: FARTDAO
-          mint_address: 2aDmb7EvkT7EWTjG2yP6akkk2XfN71r88Snqp4yapump
-          decimals: 6
-      - price_usd: 0.00018516913681348445
-        market_cap_usd: 185169.13681348445
-        token_info:
-          name: bitten
-          symbol: bitten
-          mint_address: DPoX38dh2uonKzXMAxAvv41FBjiscBpnHXRHLXQVpump
-          decimals: 6
-      - price_usd: 0.00017116694885616578
-        market_cap_usd: 171166.94885616578
-        token_info:
-          name: DOUG THE PUG
-          symbol: DOUG
-          mint_address: Ars75tQdiT2NchT99XxrUoCPH6nyYA9HXYaQ1euF6Y38
-          decimals: 6
-      - price_usd: 0.00016651063889420748
-        market_cap_usd: 166510.63889420748
-        token_info:
-          name: crypto rn
-          symbol: cryptorn
-          mint_address: 3GJzGVdZMAPmBq4PLifnto6mDSGP3wqK8wJScQiipump
-          decimals: 6
-      - price_usd: 0.00016430134795646523
-        market_cap_usd: 164301.34795646524
-        token_info:
-          name: dephyneai
-          symbol: dphyai
-          mint_address: 8K7RyMz4tqtFN9HyXv7imjGGpC9aXbXjarBWSmbNpump
-          decimals: 6
-      - price_usd: 0.00014164495215090542
-        market_cap_usd: 141644.95215090542
-        token_info:
-          name: USDT ON SOLANA
-          symbol: USDT
-          mint_address: e5kQex4d5VYYTbbapwAmMJM15bb27j93p1U4gLupump
-          decimals: 6
-      - price_usd: 0.00012963551809592571
-        market_cap_usd: 129635.51809592571
-        token_info:
-          name: 1 BTC = 1 DIG
-          symbol: DIG
-          mint_address: 8vcVwZUsB6DsxPF82ovMkMppSxy1hrufrtoRrgX9pump
-          decimals: 6
-      - price_usd: 0.00012116205499064614
-        market_cap_usd: 121162.05499064614
-        token_info:
-          name: Delusionaire
-          symbol: Delusion
-          mint_address: EN6wcMwgBcNHp7eEBmBaSerYME1eiNokM8Y7v1kvpump
-          decimals: 6
-      - price_usd: 0.00011967573084390479
-        market_cap_usd: 119675.73084390479
-        token_info:
-          name: '#1 net worth company'
-          symbol: NVDA
-          mint_address: 7Fcperr9jhYChmW1npSLNC1Qhi7rvdZyA3NuHKk3pump
-          decimals: 6
-      - price_usd: 0.00011422146436077534
-        market_cap_usd: 114221.46436077534
-        token_info:
-          name: 'SONYO AI '
-          symbol: SONYO
-          mint_address: FX7YthMqcbArPZmLXCzUMVk9t8jf4aT94LFY1f8spump
-          decimals: 6
-      - price_usd: 0.00010442361041827513
-        market_cap_usd: 104423.61041827513
-        token_info:
-          name: mike shills
-          symbol: mike
-          mint_address: 8btzoaR9S4u9Tt1QH3pj8LSD1UnEb6Khxo5zEH2Hpump
-          decimals: 6
-      - price_usd: 0.00010119908853742306
-        market_cap_usd: 101199.08853742306
-        token_info:
-          name: This Coin
-          symbol: THIS
-          mint_address: eFuZnWjMuFHmqUUkmV3Hs7YXtxdfhCRHDjxRaojpump
-          decimals: 6
-      - price_usd: 9.989706812839578e-05
-        market_cap_usd: 99897.06812839578
-        token_info:
-          name: HUGE FART
-          symbol: HART
-          mint_address: 6k3JtHfuQVVMnB6jk7aWHhhVwa7VUKE8YRs5j66Zpump
-          decimals: 6
-      - price_usd: 9.863447494494357e-05
-        market_cap_usd: 98634.47494494356
-        token_info:
-          name: bitcoin fentanyl fork
-          symbol: bitfent
-          mint_address: EF8GjM2Z3pgntm3xGLUvx6Y7ZFjg7g8xvM5axYGNpump
-          decimals: 6
-      - price_usd: 9.725175871116583e-05
-        market_cap_usd: 97251.75871116582
-        token_info:
-          name: Job
-          symbol: Job
-          mint_address: JNrdVwQbWux6UVqC5GHakydiFTpYHmJhkCAewMopump
-          decimals: 6
-      - price_usd: 9.531261147429286e-05
-        market_cap_usd: 95312.61147429286
-        token_info:
-          name: PANGBOY'S STREAM
-          symbol: PBstream
-          mint_address: FHmaAhPEpizqhRotL4fSy9jt83sRRsvi62pdYg1xpump
-          decimals: 6
-      - price_usd: 9.551008660836977e-05
-        market_cap_usd: 95510.08660836976
-        token_info:
-          name: TITDAQ
-          symbol: TITDAQ
-          mint_address: 84icU8hTn96BjKHguczVNkt4mrHSmtkV7g8y6BMHpump
-          decimals: 6
-      - price_usd: 9.263419316239475e-05
-        market_cap_usd: 92634.19316239475
-        token_info:
-          name: TT
-          symbol: TEST
-          mint_address: J86qA5n6cwYirCNwrf5CTCjjD56Jdwgua8EqZLB1hJKo
-          decimals: 6
-      - price_usd: 9.066722257392922e-05
-        market_cap_usd: 90667.22257392922
-        token_info:
-          name: CannedCoin
-          symbol: CNND
-          mint_address: 2D4HTL2qKGmUmZoPaKwQ5QyCGozcs56WMVUcWLctpump
-          decimals: 6
-      - price_usd: 8.800594160451876e-05
-        market_cap_usd: 88005.94160451875
-        token_info:
-          name: FCK School
-          symbol: FCK
-          mint_address: 53uhKkXxPxBTt6Hjn4nvT4BPKsv3eAD39h6N2j3Ppump
-          decimals: 6
-      - price_usd: 8.329308960267171e-05
-        market_cap_usd: 83293.08960267171
-        token_info:
-          name: Bitpup
-          symbol: Bitpup
-          mint_address: 6rhj2VuBR6zrp5GifRDrKwWvot81VTCqVSVoW6g4pump
-          decimals: 6
-      - price_usd: 8.025263285797122e-05
-        market_cap_usd: 80252.63285797121
-        token_info:
-          name: Satoshi Dog
-          symbol: dogbert
-          mint_address: 43diBYs9uLZf16hCyUWZpyotZdF4EzLVfAddYHTXpump
-          decimals: 6
-      - price_usd: 7.547041014298261e-05
-        market_cap_usd: 75470.41014298261
-        token_info:
-          name: Chill couple Elon Trump
-          symbol: ELT
-          mint_address: APKPdFombZhMPjNfxymcrJkdYwtSJscyRMBonTJk3D8e
-          decimals: 6
-      - price_usd: 7.51853886655765e-05
-        market_cap_usd: 75185.3886655765
-        token_info:
-          name: FartCorn
-          symbol: FartCorn
-          mint_address: uUE5PzP8DhQ373GA1bTDx8coTKtJSxz6i46Nh2mpump
-          decimals: 6
-      - price_usd: 7.522290645672329e-05
-        market_cap_usd: 75222.90645672329
-        token_info:
-          name: Toly ALT
-          symbol: Sheldon
-          mint_address: DTqdy6nHQWExoxnsYwjk4Q78cpvXkZoyvFUYSNW9bk2H
-          decimals: 6
-      - price_usd: 7.314411687665278e-05
-        market_cap_usd: 73144.11687665278
-        token_info:
-          name: equation
-          symbol: equation
-          mint_address: WXegYh1ubfGK7qZwHm8Pu1GG22hHArExGpHLtL8pump
-          decimals: 6
-      - price_usd: 7.222515946162735e-05
-        market_cap_usd: 72225.15946162735
-        token_info:
-          name: Australian Durry Cartel
-          symbol: ADC
-          mint_address: CuLf13vL8ZNMWsoJVaRLsex3qMGbeVijTTsCycqnpump
-          decimals: 6
-      timeframe_hours: 48
-      tokens_without_price_data: []
+metadata:
+  agent: PumpFunTokenAgent
+  test_file: pumpfun_token_agent.py
+  timestamp: '2025-09-16T17:14:49.566968'
+  total_tests: 3
+  passed: 3
+  failed: 0
+results:
+  token_creation:
+    input:
+      query: Show me the latest Solana token creations in the last hour
+    output:
+      response: "Here are the latest Solana token creations on Pump.fun in the last\
+        \ hour:\n\n*   **BEACH VIBES THAI** (BEACH)\n    *   Mint Address: [FFxtURqz75RMctZcdn8rnaPbkQtYNGg2Azscd7ckpump](https://solscan.io/token/FFxtURqz75RMctZcdn8rnaPbkQtYNGg2Azscd7ckpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 07:00:00\
+        \ UTC\n    *   Signer: oUWpvVyYFvfatxjxn2kcqGX7d1jFTKHEkJzmdRKf3Sa\n\n*  \
+        \ **Disable Dev** (DDEV)\n    *   Mint Address: [6Jemkxt88JkGcNU3tbT11X2mhLKzXLdL5N8uHqdepump](https://solscan.io/token/6Jemkxt88JkGcNU3tbT11X2mhLKzXLdL5N8uHqdepump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 07:00:00\
+        \ UTC\n    *   Signer: HJGfXMsacuCaWg2rEE3F5dLRZhfYdm1pVA3JLg9vZcEj\n\n* \
+        \  **OSLO** (OSLO)\n    *   Mint Address: [Fo3G8goaGTpZ2AG4AwDRJRCbinhoDypN6vHmtEuHz4aY](https://solscan.io/token/Fo3G8goaGTpZ2AG4AwDRJRCbinhoDypN6vHmtEuHz4aY)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 07:00:00\
+        \ UTC\n    *   Signer: BPdXLKmDfhX4ZgytNiM1SFnYWcGYKVub3xqJz9jBR3ES\n\n* \
+        \  **Hide and Seek** (HAS)\n    *   Mint Address: [2HXmjLZMuu6HbiLjMZBy6tQfoFe1VZrxpxAPgUWQpump](https://solscan.io/token/2HXmjLZMuu6HbiLjMZBy6tQfoFe1VZrxpxAPgUWQpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 07:00:00\
+        \ UTC\n    *   Signer: FqjzuMyfczm38Vxn4B8PFTgu1Yo8Tn5M7FFYrE2HZCre\n\n* \
+        \  **Pumpers for Daughter** (Pumpers )\n    *   Mint Address: [87h1ETBpCeHuQXPGsQYbUBFdJuhmEB6kortdCi6bpump](https://solscan.io/token/87h1ETBpCeHuQXPGsQYbUBFdJuhmEB6kortdCi6bpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 06:00:00\
+        \ UTC\n    *   Signer: EeBuD3DYt64oZ9SZp2V7FkV8sMNVYDcvruNPSEymnBs6\n\n* \
+        \  **Pump Dare Live** (DARES)\n    *   Mint Address: [Dsyf6vqa5Vny8F5MDs74BxsGZnKVkcbfQaTTPh4kpump](https://solscan.io/token/Dsyf6vqa5Vny8F5MDs74BxsGZnKVkcbfQaTTPh4kpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 06:00:00\
+        \ UTC\n    *   Signer: 7nKmAhPB2AeQyoC2fGTVMAxEDSxiRP9B5vzjvvioxX4N\n\n* \
+        \  **TRENCH RADIO FUTURE** (TRF)\n    *   Mint Address: [C8vDaqnkLEgub2Rih7c4Kn3dKCiAb6q28g9VqoLDpump](https://solscan.io/token/C8vDaqnkLEgub2Rih7c4Kn3dKCiAb6q28g9VqoLDpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 06:00:00\
+        \ UTC\n    *   Signer: E2Qfj7cZRVTFF1G5ruJLk1v9EhSZpbsRsi3AHMzfNWt2\n\n* \
+        \  **CAT LOUNGE ROOM** (CAT)\n    *   Mint Address: [7EhyMmGRJCZjjGo45y3xXdkCkGS8e5opFvvcw7wNpump](https://solscan.io/token/7EhyMmGRJCZjjGo45y3xXdkCkGS8e5opFvvcw7wNpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 06:00:00\
+        \ UTC\n    *   Signer: 7SQaKAeeHqKD51vj6suSPEdZDoQ67pyVCe3UVhfFqP3c\n\n* \
+        \  **Sleepy Hippo** (ZZZ)\n    *   Mint Address: [HomgtF1o5Hw1k3v4cLQxeTxEs4RTu2Hd69K9TB6Kpump](https://solscan.io/token/HomgtF1o5Hw1k3v4cLQxeTxEs4RTu2Hd69K9TB6Kpump)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 06:00:00\
+        \ UTC\n    *   Signer: Dq3fi8ZmBhkrwHFBChLk2pqV8iAGW9uuJP7coshGzqT6\n\n* \
+        \  **Road Trip** (ROADTRIP)\n    *   Mint Address: [9TpeyyoF6mYuYUGzB63umg1Msiv5Uwhm9P8bmrgTMM6w](https://solscan.io/token/9TpeyyoF6mYuYUGzB63umg1Msiv5Uwhm9P8bmrgTMM6w)\n\
+        \    *   Initial Supply: 1,000,000,000\n    *   Created: 2025-09-16 06:00:00\
+        \ UTC\n    *   Signer: 5c2BGc5AdVdZfuxRvupTQWTHD7nsRTzq3Y3damo5fNxx"
+      data:
+        tokens:
+        - block_time: '2025-09-16T07:00:00Z'
+          token_info:
+            name: BEACH VIBES THAI
+            symbol: BEACH
+            mint_address: FFxtURqz75RMctZcdn8rnaPbkQtYNGg2Azscd7ckpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: oUWpvVyYFvfatxjxn2kcqGX7d1jFTKHEkJzmdRKf3Sa
+        - block_time: '2025-09-16T07:00:00Z'
+          token_info:
+            name: Disable Dev
+            symbol: DDEV
+            mint_address: 6Jemkxt88JkGcNU3tbT11X2mhLKzXLdL5N8uHqdepump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: HJGfXMsacuCaWg2rEE3F5dLRZhfYdm1pVA3JLg9vZcEj
+        - block_time: '2025-09-16T07:00:00Z'
+          token_info:
+            name: OSLO
+            symbol: OSLO
+            mint_address: Fo3G8goaGTpZ2AG4AwDRJRCbinhoDypN6vHmtEuHz4aY
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: BPdXLKmDfhX4ZgytNiM1SFnYWcGYKVub3xqJz9jBR3ES
+        - block_time: '2025-09-16T07:00:00Z'
+          token_info:
+            name: Hide and Seek
+            symbol: HAS
+            mint_address: 2HXmjLZMuu6HbiLjMZBy6tQfoFe1VZrxpxAPgUWQpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: FqjzuMyfczm38Vxn4B8PFTgu1Yo8Tn5M7FFYrE2HZCre
+        - block_time: '2025-09-16T06:00:00Z'
+          token_info:
+            name: Pumpers for Daughter
+            symbol: 'Pumpers '
+            mint_address: 87h1ETBpCeHuQXPGsQYbUBFdJuhmEB6kortdCi6bpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: EeBuD3DYt64oZ9SZp2V7FkV8sMNVYDcvruNPSEymnBs6
+        - block_time: '2025-09-16T06:00:00Z'
+          token_info:
+            name: Pump Dare Live
+            symbol: DARES
+            mint_address: Dsyf6vqa5Vny8F5MDs74BxsGZnKVkcbfQaTTPh4kpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: 7nKmAhPB2AeQyoC2fGTVMAxEDSxiRP9B5vzjvvioxX4N
+        - block_time: '2025-09-16T06:00:00Z'
+          token_info:
+            name: TRENCH RADIO FUTURE
+            symbol: TRF
+            mint_address: C8vDaqnkLEgub2Rih7c4Kn3dKCiAb6q28g9VqoLDpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: E2Qfj7cZRVTFF1G5ruJLk1v9EhSZpbsRsi3AHMzfNWt2
+        - block_time: '2025-09-16T06:00:00Z'
+          token_info:
+            name: 'CAT LOUNGE ROOM '
+            symbol: CAT
+            mint_address: 7EhyMmGRJCZjjGo45y3xXdkCkGS8e5opFvvcw7wNpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: 7SQaKAeeHqKD51vj6suSPEdZDoQ67pyVCe3UVhfFqP3c
+        - block_time: '2025-09-16T06:00:00Z'
+          token_info:
+            name: Sleepy Hippo
+            symbol: ZZZ
+            mint_address: HomgtF1o5Hw1k3v4cLQxeTxEs4RTu2Hd69K9TB6Kpump
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: Dq3fi8ZmBhkrwHFBChLk2pqV8iAGW9uuJP7coshGzqT6
+        - block_time: '2025-09-16T06:00:00Z'
+          token_info:
+            name: Road Trip
+            symbol: ROADTRIP
+            mint_address: 9TpeyyoF6mYuYUGzB63umg1Msiv5Uwhm9P8bmrgTMM6w
+            program_address: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+            decimals: 6
+          amount: '1000000000.000000'
+          signer: 5c2BGc5AdVdZfuxRvupTQWTHD7nsRTzq3Y3damo5fNxx
+    description: Natural language query for latest token creations in last hour
+    status: success
+  graduated_tokens:
+    input:
+      query: Show me all tokens that have graduated on Pump.fun in the last 48 hours
+    output:
+      response: "Here are the tokens that have graduated on Pump.fun in the last 48\
+        \ hours, along with their initial price and market cap after graduation:\n\
+        \n*   **Goon Szn** ([8hraSbpENAAzx1Rrdisiw6h6zJw2223iRsriPK37pump](https://solscan.io/token/8hraSbpENAAzx1Rrdisiw6h6zJw2223iRsriPK37pump))\n\
+        \    *   Initial Price: $0.0224\n    *   Market Cap: $22,406,269.61\n\n* \
+        \  **Elon Matrix** ([3vmHhN51quzmvSHAsWHXkUPD8UdPofxg6rjhYqDgpump](https://solscan.io/token/3vmHhN51quzmvSHAsWHXkUPD8UdPofxg6rjhYqDgpump))\n\
+        \    *   Initial Price: $0.0149\n    *   Market Cap: $14,999,198.06\n\n* \
+        \  **GMAN** ([3hg8k1KGU3EoSU5npfgF2n6nuKKpBPgDrNZcjhZopump](https://solscan.io/token/3hg8k1KGU3EoSU5npfgF2n6nuKKpBPgDrNZcjhZopump))\n\
+        \    *   Initial Price: $0.0033\n    *   Market Cap: $3,378,012.95\n\n*  \
+        \ **UNEMPLOYED** ([ExfkY8EwGfNkJWns2CApCGa6PsQYuJiM6NudRcFNpump](https://solscan.io/token/ExfkY8EwGfNkJWns2CApCGa6PsQYuJiM6NudRcFNpump))\n\
+        \    *   Initial Price: $0.0024\n    *   Market Cap: $2,414,536.89\n\n*  \
+        \ **GAZA COIN** ([39obbRw71cnYaCMvnWB5FeHyEaqJsWN3G4zAq1Ncpump](https://solscan.io/token/39obbRw71cnYaCMvnWB5FeHyEaqJsWN3G4zAq1Ncpump))\n\
+        \    *   Initial Price: $0.0021\n    *   Market Cap: $2,122,442.16\n\n*  \
+        \ **CLIPR COIN** ([GWGvWrFc2Wq4NBgTZ2QGCBoMmR6hTsJcTzHJZGgHpump](https://solscan.io/token/GWGvWrFc2Wq4NBgTZ2QGCBoMmR6hTsJcTzHJZGgHpump))\n\
+        \    *   Initial Price: $0.0020\n    *   Market Cap: $2,084,256.62\n\n*  \
+        \ **Spizee** ([6QhnCcNEbXvRWxpUAkzkEU8UcMD6GZfL9s4oEPfUpump](https://solscan.io/token/6QhnCcNEbXvRWxpUAkzkEU8UcMD6GZfL9s4oEPfUpump))\n\
+        \    *   Initial Price: $0.0017\n    *   Market Cap: $1,720,299.83\n\n*  \
+        \ **StreamQuest** ([9EnydDKQL2KeE4Eq9FcWuDMpaBs8q4iyt2MPayWSpump](https://solscan.io/token/9EnydDKQL2KeE4Eq9FcWuDMpaBs8q4iyt2MPayWSpump))\n\
+        \    *   Initial Price: $0.0016\n    *   Market Cap: $1,685,730.20\n\n*  \
+        \ **Vibe Coding Meta** ([7PzU4m13VqkdgWcserfBdxX4cAPQXaZuFNuKarnT1deV](https://solscan.io/token/7PzU4m13VqkdgWcserfBdxX4cAPQXaZuFNuKarnT1deV))\n\
+        \    *   Initial Price: $0.0014\n    *   Market Cap: $1,430,592.29\n\n*  \
+        \ **I’m homeless Live** ([FDvPpogccJkvP4cW79ikndf3LByM6dZRhhRvG6Bppump](https://solscan.io/token/FDvPpogccJkvP4cW79ikndf3LByM6dZRhhRvG6Bppump))\n\
+        \    *   Initial Price: $0.0010\n    *   Market Cap: $1,043,870.27\n\n*  \
+        \ **Catching Pedophiles** ([8cQynx5ZaJKwdHsuXmSn3Y16RXta7ZTyTS1hW55Gpump](https://solscan.io/token/8cQynx5ZaJKwdHsuXmSn3Y16RXta7ZTyTS1hW55Gpump))\n\
+        \    *   Initial Price: $0.00099\n    *   Market Cap: $999,182.10\n\n*   **Clipper\
+        \ Market** ([FtFkxxif4AdTJi1rkCa9zb9ZDpdLNN9gS9dUmto8pump](https://solscan.io/token/FtFkxxif4AdTJi1rkCa9zb9ZDpdLNN9gS9dUmto8pump))\n\
+        \    *   Initial Price: $0.00092\n    *   Market Cap: $925,118.46\n\n*   **Fridge\
+        \ Theory** ([14pDfAoP7G5AdE89dEPb8d27yK6S14WxmSkJfj1ppump](https://solscan.io/token/14pDfAoP7G5AdE89dEPb8d27yK6S14WxmSkJfj1ppump))\n\
+        \    *   Initial Price: $0.00086\n    *   Market Cap: $864,585.04\n\n*   **donuts**\
+        \ ([BBERcRDEemKM9m7yHgVRQf9adgZPhwDzVC4JWZi2pump](https://solscan.io/token/BBERcRDEemKM9m7yHgVRQf9adgZPhwDzVC4JWZi2pump))\n\
+        \    *   Initial Price: $0.00083\n    *   Market Cap: $832,383.97\n\n*   **Ray\
+        \ William Johnson** ([HFpknET1EmUudpvExSoN69hZRgUjDUE2BaumbnnQpump](https://solscan.io/token/HFpknET1EmUudpvExSoN69hZRgUjDUE2BaumbnnQpump))\n\
+        \    *   Initial Price: $0.00077\n    *   Market Cap: $772,048.46\n\n*   **WALKING\
+        \ ACROSS AMERICA** ([3BrXeqzNKUKsM6MgkWFZX4E2cY8SiwYNwwmVzP2Rpump](https://solscan.io/token/3BrXeqzNKUKsM6MgkWFZX4E2cY8SiwYNwwmVzP2Rpump))\n\
+        \    *   Initial Price: $0.00074\n    *   Market Cap: $741,016.38\n\n*   **Agony**\
+        \ ([8XX7ESF9e8eWhhkveYNWGPNbrKfTBDV9ywwsi3oxpump](https://solscan.io/token/8XX7ESF9e8eWhhkveYNWGPNbrKfTBDV9ywwsi3oxpump))\n\
+        \    *   Initial Price: $0.00072\n    *   Market Cap: $723,969.14\n\n*   **OGshoots**\
+        \ ([HowC3YzQwCgya7xRbgJVGAFHaAe9RVvGxF3SeQGmpump](https://solscan.io/token/HowC3YzQwCgya7xRbgJVGAFHaAe9RVvGxF3SeQGmpump))\n\
+        \    *   Initial Price: $0.00064\n    *   Market Cap: $647,901.74\n\n*   **Derek\
+        \ Graz After Dark** ([9poaLQTZTro9qWEzNCtsaV15TXYr9Ha9eWvy9oG5pump](https://solscan.io/token/9poaLQTZTro9qWEzNCtsaV15TXYr9Ha9eWvy9oG5pump))\n\
+        \    *   Initial Price: $0.00064\n    *   Market Cap: $649,564.49\n\n*   **Clout\
+        \ Index** ([DS46KMU89Gi86wWr5P3BKJJcNbMRQ72Z5Xah3Lgdpump](https://solscan.io/token/DS46KMU89Gi86wWr5P3BKJJcNbMRQ72Z5Xah3Lgdpump))\n\
+        \    *   Initial Price: $0.00058\n    *   Market Cap: $586,126.19\n\n*   **120\
+        \ HOURS** ([Gd3GkHW1jzwZa4UPmTELG97xzP82ZGmq5Q78d9eCpump](https://solscan.io/token/Gd3GkHW1jzwZa4UPmTELG97xzP82ZGmq5Q78d9eCpump))\n\
+        \    *   Initial Price: $0.00053\n    *   Market Cap: $535,505.68\n\n*   **AUSSIE\
+        \ BAG WORKERS** ([9h5y3WCqfeNt2fiAP7iM2ZRp9apFb58ipvTzcWi9pump](https://solscan.io/token/9h5y3WCqfeNt2fiAP7iM2ZRp9apFb58ipvTzcWi9pump))\n\
+        \    *   Initial Price: $0.00050\n    *   Market Cap: $504,976.59\n\n*   **Building\
+        \ a business from scratch** ([46xN3btxa44YJsV783ZShKXbA556bXcKPZLMX21kpump](https://solscan.io/token/46xN3btxa44YJsV783ZShKXbA556bXcKPZLMX21kpump))\n\
+        \    *   Initial Price: $0.00049\n    *   Market Cap: $498,718.78\n\n*   **FutureBets**\
+        \ ([DJ2VPpbX2aCgWNqvbddU4PbGF3LJjeeAMxPvXgaApump](https://solscan.io/token/DJ2VPpbX2aCgWNqvbddU4PbGF3LJjeeAMxPvXgaApump))\n\
+        \    *   Initial Price: $0.00047\n    *   Market Cap: $472,201.01\n\n*   **Impossible**\
+        \ ([9cqx5w7dcJC3yeoMSpUWnGeiY2Dsp5pHmUcaKySdpump](https://solscan.io/token/9cqx5w7dcJC3yeoMSpUWnGeiY2Dsp5pHmUcaKySdpump))\n\
+        \    *   Initial Price: $0.00046\n    *   Market Cap: $468,326.35\n\n*   **RATWELL**\
+        \ ([4zLj7pCr1kQSRPNReQAqbpwvtEdKrkwj2peHYTyB92sS](https://solscan.io/token/4zLj7pCr1kQSRPNReQAqbpwvtEdKrkwj2peHYTyB92sS))\n\
+        \    *   Initial Price: $0.00046\n    *   Market Cap: $461,269.90\n\n*   **McDegen**\
+        \ ([CwSYzhxB2tQuitPtLP42Dm5nFXUgzTRRNYbC3ew4pump](https://solscan.io/token/CwSYzhxB2tQuitPtLP42Dm5nFXUgzTRRNYbC3ew4pump))\n\
+        \    *   Initial Price: $0.00042\n    *   Market Cap: $428,454.69\n\n*   **Off\
+        \ The Streets** ([7QsV99yRUfiourLZqiVXEcvDEfFJ98w1VXhxuF77pump](https://solscan.io/token/7QsV99yRUfiourLZqiVXEcvDEfFJ98w1VXhxuF77pump))\n\
+        \    *   Initial Price: $0.00040\n    *   Market Cap: $400,555.51\n\n*   **moderatorbot.fun**\
+        \ ([HXsVkgdfLPscaNvBE4asbsuhwaQkZArfaWL6Fc1GZ5iw](https://solscan.io/token/HXsVkgdfLPscaNvBE4asbsuhwaQkZArfaWL6Fc1GZ5iw))\n\
+        \    *   Initial Price: $0.00040\n    *   Market Cap: $402,958.36\n\n*   **DEBT**\
+        \ ([2rQP1haH6sYmwWZZZFtFXpoy5ujgNvih4LxBZjEDpump](https://solscan.io/token/2rQP1haH6sYmwWZZZFtFXpoy5ujgNvih4LxBZjEDpump))\n\
+        \    *   Initial Price: $0.00038\n    *   Market Cap: $381,793.90\n\n*   **Jason\
+        \ Applebaum** ([CeNzreGGYTsoHfoFBz6D81kfQK5aHYbG5XA5YjEpump](https://solscan.io/token/CeNzreGGYTsoHfoFBz6D81kfQK5aHYbG5XA5YjEpump))\n\
+        \    *   Initial Price: $0.00036\n    *   Market Cap: $360,688.05\n\n*   **THE\
+        \ DEGENERATE SHOW** ([BD4F3Dtr58pChicGBVk2s649dFEWvvUSXxRtef4Bpump](https://solscan.io/token/BD4F3Dtr58pChicGBVk2s649dFEWvvUSXxRtef4Bpump))\n\
+        \    *   Initial Price: $0.00033\n    *   Market Cap: $337,320.61\n\n*   **Bastrin**\
+        \ ([3WN36y3qwuazyMRHBjnUG6BP9jWQi1JccEN6NxaDpump](https://solscan.io/token/3WN36y3qwuazyMRHBjnUG6BP9jWQi1JccEN6NxaDpump))\n\
+        \    *   Initial Price: $0.00033\n    *   Market Cap: $336,447.84\n\n*   **GeorgePlaysClashRoyale**\
+        \ ([6nR8wBnfsmXfcdDr1hovJKjvFQxNSidN6XFyfAFZpump](https://solscan.io/token/6nR8wBnfsmXfcdDr1hovJKjvFQxNSidN6XFyfAFZpump))\n\
+        \    *   Initial Price: $0.00033\n    *   Market Cap: $333,910.79\n\n*   **creativity\
+        \ and collaboration** ([BBk1eEdB6vz53g25H8eguRcpBbHN1w8VeFrRMKKepump](https://solscan.io/token/BBk1eEdB6vz53g25H8eguRcpBbHN1w8VeFrRMKKepump))\n\
+        \    *   Initial Price: $0.00033\n    *   Market Cap: $333,265.01\n\n*   **AI\
+        \ Satoshi\\'s Vision** ([HG2jGUnmVyLYE7MJSakh7NHJ9L89ENNN9QEtKYdjpump](https://solscan.io/token/HG2jGUnmVyLYE7MJSakh7NHJ9L89ENNN9QEtKYdjpump))\n\
+        \    *   Initial Price: $0.00033\n    *   Market Cap: $330,840.81\n\n*   **Block\
+        \ Stranding** ([GavDagRZgxrFBDGhDYuLfQcQS9mkApyYGfz8tDdGpump](https://solscan.io/token/GavDagRZgxrFBDGhDYuLfQcQS9mkApyYGfz8tDdGpump))\n\
+        \    *   Initial Price: $0.00031\n    *   Market Cap: $316,508.86\n\n*   **Food\
+        \ for Folks** ([tyTaDrjPqeTAT7WKnYnn8djoBF6WEkemoRprgmqpump](https://solscan.io/token/tyTaDrjPqeTAT7WKnYnn8djoBF6WEkemoRprgmqpump))\n\
+        \    *   Initial Price: $0.00031\n    *   Market Cap: $310,416.33\n\n*   **SESH**\
+        \ ([xZyi146mBikJqhrk7pRCbYdUCAsYXk2btWKWqG2pump](https://solscan.io/token/xZyi146mBikJqhrk7pRCbYdUCAsYXk2btWKWqG2pump))\n\
+        \    *   Initial Price: $0.00030\n    *   Market Cap: $308,304.85\n\n*   **ONBOARDING\
+        \ THE WORLD LIVE** ([9kWwazCt6Nk5dYufj7sDc4vjqBJpwmB94C8qBaJTpump](https://solscan.io/token/9kWwazCt6Nk5dYufj7sDc4vjqBJpwmB94C8qBaJTpump))\n\
+        \    *   Initial Price: $0.00029\n    *   Market Cap: $295,278.76\n\n*   **Biel’s\
+        \ livestream token!** ([2UT4eY6GRrvUPrXPG9htNq9NQSvMUoewP7V4opFAAyGT](https://solscan.io/token/2UT4eY6GRrvUPrXPG9htNq9NQSvMUoewP7V4opFAAyGT))\n\
+        \    *   Initial Price: $0.00029\n    *   Market Cap: $291,953.31\n\n*   **Wizard\
+        \ Of SoHo** ([CmNVtW51bDDv89C2WypP8oAnmycbkfhk1equwmPCpump](https://solscan.io/token/CmNVtW51bDDv89C2WypP8oAnmycbkfhk1equwmPCpump))\n\
+        \    *   Initial Price: $0.00028\n    *   Market Cap: $288,210.23\n\n*   **Strategic\
+        \ Sealed Packs Strategy** ([DqYKsprSxF6aMGpj3GyZDw3SnBoesD7oZ4RvkTvkpump](https://solscan.io/token/DqYKsprSxF6aMGpj3GyZDw3SnBoesD7oZ4RvkTvkpump))\n\
+        \    *   Initial Price: $0.00028\n    *   Market Cap: $287,095.13\n\n*   **Save\
+        \ All Pets** ([BEtPRp8ctri2aHDKDmvday2C3SBBqQ4Yv98Nbhfqpump](https://solscan.io/token/BEtPRp8ctri2aHDKDmvday2C3SBBqQ4Yv98Nbhfqpump))\n\
+        \    *   Initial Price: $0.00028\n    *   Market Cap: $282,641.66\n\n*   **THIS\
+        \ MIGHT CHANGE YOU.** ([FHNguaddUzJB3oq9qfNieDkzgjwL1m6KkKrzuQ3Rpump](https://solscan.io/token/FHNguaddUzJB3oq9qfNieDkzgjwL1m6KkKrzuQ3Rpump))\n\
+        \    *   Initial Price: $0.00027\n    *   Market Cap: $271,705.14\n\n*   **DUMB\
+        \ MONEY** ([87Ex7EJ9EqZX44DtXU3B9gGYtKJk8JDS9eLRAKspump](https://solscan.io/token/87Ex7EJ9EqZX44DtXU3B9gGYtKJk8JDS9eLRAKspump))\n\
+        \    *   Initial Price: $0.00025\n    *   Market Cap: $257,752.95\n\n*   **m00n**\
+        \ ([Gm4YGNiHkUEfn7heeMJN5gFKaWeVYydmVsLx2X6pump](https://solscan.io/token/Gm4YGNiHkUEfn7heeMJN5gFKaWeVYydmVsLx2X6pump))\n\
+        \    *   Initial Price: $0.00025\n    *   Market Cap: $255,928.84\n\n*   **Klutch_Trades**\
+        \ ([FhQ3e67eandDusiXZRMiHL4jExpEKgkNqWuN4GvLpump](https://solscan.io/token/FhQ3e67eandDusiXZRMiHL4jExpEKgkNqWuN4GvLpump))\n\
+        \    *   Initial Price: $0.00024\n    *   Market Cap: $247,725.44\n\n*   **The\
+        \ Pump Lobby** ([4WegBLE4BpFM89EHuRy95proKMjrvydbtiTzrNVqpump](https://solscan.io/token/4WegBLE4BpFM89EHuRy95proKMjrvydbtiTzrNVqpump))\n\
+        \    *   Initial Price: $0.00024\n    *   Market Cap: $247,736.34\n\n*   **RAID**\
+        \ ([4aMaHDH1dHwAorLJfV8TgJ1VSmPvmm8SSadaqFf8pump](https://solscan.io/token/4aMaHDH1dHwAorLJfV8TgJ1VSmPvmm8SSadaqFf8pump))\n\
+        \    *   Initial Price: $0.00024\n    *   Market Cap: $243,320.46\n\n*   **COEN\
+        \ THE DAWNWALKER** ([4PD4FjRJ6AS7oQgjk7N2Cjemhcdbz9ekrnXoz17BwbJT](https://solscan.io/token/4PD4FjRJ6AS7oQgjk7N2Cjemhcdbz9ekrnXoz17BwbJT))\n\
+        \    *   Initial Price: $0.00024\n    *   Market Cap: $244,720.78\n\n*   **LEMMY\
+        \ COOKE** ([6CyZdSA6hbZzVCp3g9patFTqsDA4inPUfKj4Drm3pump](https://solscan.io/token/6CyZdSA6hbZzVCp3g9patFTqsDA4inPUfKj4Drm3pump))\n\
+        \    *   Initial Price: $0.00023\n    *   Market Cap: $235,881.65\n\n*   **Living\
+        \ Off Pumpfun Rewards** ([6SVBPAHNQQm4aGMemgMv2WEFTCaXCSqxCyoMucYspump](https://solscan.io/token/6SVBPAHNQQm4aGMemgMv2WEFTCaXCSqxCyoMucYspump))\n\
+        \    *   Initial Price: $0.00023\n    *   Market Cap: $232,078.26\n\n*   **SPIN\
+        \ TO WIN** ([EmoLj5qADaE26tkTgqKYmKoYvVAoEymH4MiLY5wJkCvC](https://solscan.io/token/EmoLj5qADaE26tkTgqKYmKoYvVAoEymH4MiLY5wJkCvC))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $227,549.52\n\n*   **The\
+        \ Tales of Stu & McLovin** ([2or4j3h6wFKZ76BCssLCALjvgbntpScUSxreeftmpump](https://solscan.io/token/2or4j3h6wFKZ76BCssLCALjvgbntpScUSxreeftmpump))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $226,860.43\n\n*   **Nothing**\
+        \ ([FWniEyoZsRfasbzqCFw4KiBmaR3hwk8BYeNEM4H2pump](https://solscan.io/token/FWniEyoZsRfasbzqCFw4KiBmaR3hwk8BYeNEM4H2pump))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $227,027.71\n\n*   **Roberto\
+        \ Vs The World** ([H2bzYFpQTS21q4T4vfNNPGPDF48fYsuR536FqVdrpump](https://solscan.io/token/H2bzYFpQTS21q4T4vfNNPGPDF48fYsuR536FqVdrpump))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $222,744.24\n\n*   **IRL\
+        \ Subway Surfer** ([2VTR4jrsv7pC9bePD8rkC4RiwSZ6UyQc25YQ9vk2pump](https://solscan.io/token/2VTR4jrsv7pC9bePD8rkC4RiwSZ6UyQc25YQ9vk2pump))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $223,483.06\n\n*   **Lenny\
+        \ Miller** ([3hmYntg4RnNvZFYeZS6RoSre7BsStmz3mBNw2dk5pump](https://solscan.io/token/3hmYntg4RnNvZFYeZS6RoSre7BsStmz3mBNw2dk5pump))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $222,853.98\n\n*   **Anubis.Chat**\
+        \ ([8V4bgosncXFtn9nZ6ZtQCine9U8wjVYxhqn1wwSjpump](https://solscan.io/token/8V4bgosncXFtn9nZ6ZtQCine9U8wjVYxhqn1wwSjpump))\n\
+        \    *   Initial Price: $0.00022\n    *   Market Cap: $221,496.59\n\n*   **Walking\
+        \ till $20M MC** ([BYQ137q2GyWDumh6NXFqZpbFReT6tDcFTAr93nxCDxy9](https://solscan.io/token/BYQ137q2GyWDumh6NXFqZpbFReT6tDcFTAr93nxCDxy9))\n\
+        \    *   Initial Price: $0.00021\n    *   Market Cap: $217,552.57\n\n*   **Meta\
+        \ Glass Pranks** ([Hdfk5qYXr4WJKPEDhEyu6oZEdLH9AaN4sUhGgscCpump](https://solscan.io/token/Hdfk5qYXr4WJKPEDhEyu6oZEdLH9AaN4sUhGgscCpump))\n\
+        \    *   Initial Price: $0.00020\n    *   Market Cap: $202,782.36\n\n*   **Bedroom\
+        \ Session** ([C1eAyMCEFTiAHwX5xQSbi9bCZWD17AiXn9gnrSeFpump](https://solscan.io/token/C1eAyMCEFTiAHwX5xQSbi9bCZWD17AiXn9gnrSeFpump))\n\
+        \    *   Initial Price: $0.00019\n    *   Market Cap: $194,170.42\n\n*   **Pump\
+        \ Island** ([C5GSdUxecU7D2TcUNHhSNzhbFFLGEg6Gaqp7FktJpump](https://solscan.io/token/C5GSdUxecU7D2TcUNHhSNzhbFFLGEg6Gaqp7FktJpump))\n\
+        \    *   Initial Price: $0.00019\n    *   Market Cap: $192,523.09\n\n*   **Zaza**\
+        \ ([ze2CABGownWwaGDZB2U1Lviq3f5xpT8s5azbLukpump](https://solscan.io/token/ze2CABGownWwaGDZB2U1Lviq3f5xpT8s5azbLukpump))\n\
+        \    *   Initial Price: $0.00019\n    *   Market Cap: $191,110.16\n\n*   **Threat\
+        \ Research & History Trail** ([3dQugtW8ne2PHcjoGFek2j8Ht7o87jKqaSPNWuC2pump](https://solscan.io/token/3dQugtW8ne2PHcjoGFek2j8Ht7o87jKqaSPNWuC2pump))\n\
+        \    *   Initial Price: $0.00018\n    *   Market Cap: $189,158.08\n\n*   **minecraft\
+        \ live until i beat it** ([AdsBLfK3Pf5CSbsT637YH8FUCJoZiyCeaw46QhhRpump](https://solscan.io/token/AdsBLfK3Pf5CSbsT637YH8FUCJoZiyCeaw46QhhRpump))\n\
+        \    *   Initial Price: $0.00018\n    *   Market Cap: $187,504.26\n\n*   **kson\
+        \ ONAIR** ([Aqps6Jfw8HybYMLvFXxonz96xiDfffzsVFtAAdiCpump](https://solscan.io/token/Aqps6Jfw8HybYMLvFXxonz96xiDfffzsVFtAAdiCpump))\n\
+        \    *   Initial Price: $0.00017\n    *   Market Cap: $174,001.05\n\n*   **Npc\
+        \ Live** ([qtaGxzPUm9dSpHNviCBs5tN88DfMW6ZFsYcR69Zpump](https://solscan.io/token/qtaGxzPUm9dSpHNviCBs5tN88DfMW6ZFsYcR69Zpump))\n\
+        \    *   Initial Price: $0.00017\n    *   Market Cap: $172,939.79\n\n*   **Nodemind**\
+        \ ([5jH9JTf7PVVXUTVWtPESov1EWuiGbdwndBVv5seLpump](https://solscan.io/token/5jH9JTf7PVVXUTVWtPESov1EWuiGbdwndBVv5seLpump))\n\
+        \    *   Initial Price: $0.00017\n    *   Market Cap: $171,052.73\n\n*   **Pumping\
+        \ to 10M** ([5Tm7CUqAKy5QwsPHutvUwJU81pmLxD3BJ1CdhFeupump](https://solscan.io/token/5Tm7CUqAKy5QwsPHutvUwJU81pmLxD3BJ1CdhFeupump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $169,843.49\n\n*   **Techman\
+        \ Prime** ([5HnZKqdCN3wxYziFnGF7EUwjQ1qPyEN5y67bsz4Npump](https://solscan.io/token/5HnZKqdCN3wxYziFnGF7EUwjQ1qPyEN5y67bsz4Npump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $169,580.70\n\n*   **BEING\
+        \ LAMPS UNTIL 10M MC** ([BZyWVPEVHWXBrFHtpHtSpbdxskjFTAAspnPmJbfGpump](https://solscan.io/token/BZyWVPEVHWXBrFHtpHtSpbdxskjFTAAspnPmJbfGpump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $169,041.18\n\n*   **Macrohard**\
+        \ ([AGVThMvTdy7bGv6bHxGMzNRqeJVFXztS5SqG45ozpump](https://solscan.io/token/AGVThMvTdy7bGv6bHxGMzNRqeJVFXztS5SqG45ozpump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $168,262.38\n\n*   **Live\
+        \ Adventures in SKID ROW** ([6h59DPjRkdqi1NHoosN8gLyVqSKntGi3vRWU3LuFpump](https://solscan.io/token/6h59DPjRkdqi1NHoosN8gLyVqSKntGi3vRWU3LuFpump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $166,996.80\n\n*   **CEICE\
+        \ LIVE** ([4kFMiD5Bj3ivGrqEiGV9SZHadj3cRuceTfd2cooRpump](https://solscan.io/token/4kFMiD5Bj3ivGrqEiGV9SZHadj3cRuceTfd2cooRpump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $165,426.72\n\n*   **TipFun.Me**\
+        \ ([2BLzB3fGYN1GYcjnvs9Kh13yjHoFRe29h7K6Gc2Xpump](https://solscan.io/token/2BLzB3fGYN1GYcjnvs9Kh13yjHoFRe29h7K6Gc2Xpump))\n\
+        \    *   Initial Price: $0.00016\n    *   Market Cap: $162,901.58\n\n*   **COEN\
+        \ THE DAWNWALKER** ([8KQudcxji4qUKWXwHd3tP8vrkJcBt97HR4xSyhqv5v7f](https://solscan.io/token/8KQudcxji4qUKWXwHd3tP8vrkJcBt97HR4xSyhqv5v7f))\n\
+        \    *   Initial Price: $0.00015\n    *   Market Cap: $155,661.72\n\n*   **AikoPOV**\
+        \ ([DU7cSUQKaQPCZYVd6c1aTZFfYbbw6VhtXyQmRx4Vpump](https://solscan.io/token/DU7cSUQKaQPCZYVd6c1aTZFfYbbw6VhtXyQmRx4Vpump))\n\
+        \    *   Initial Price: $0.00015\n    *   Market Cap: $155,282.55\n\n*   **CryptoPunks\
+        \ 404** ([126AB1un49xM3sTfgskpQtvvKeEJ4PNQGd1S6aEcpump](https://solscan.io/token/126AB1un49xM3sTfgskpQtvvKeEJ4PNQGd1S6aEcpump))\n\
+        \    *   Initial Price: $0.00015\n    *   Market Cap: $152,214.41\n\n*   **MrOwl**\
+        \ ([YLrMSqWFkpT2MmAC7rqbzqgKR5jXZDPiqxTJ2cspump](https://solscan.io/token/YLrMSqWFkpT2MmAC7rqbzqgKR5jXZDPiqxTJ2cspump))\n\
+        \    *   Initial Price: $0.00015\n    *   Market Cap: $150,531.41\n\n*   **Infinity\
+        \ Chain** ([D8CaDSk2DFdUcWiQm7Ky9PBq5jaUaxqtPrgRu7uRpump](https://solscan.io/token/D8CaDSk2DFdUcWiQm7Ky9PBq5jaUaxqtPrgRu7uRpump))\n\
+        \    *   Initial Price: $0.00015\n    *   Market Cap: $150,460.50\n\n*   **Family**\
+        \ ([5aATGe5quq7ARmTykUYCkTa9kEqdmsBdRM9iejcVpump](https://solscan.io/token/5aATGe5quq7ARmTykUYCkTa9kEqdmsBdRM9iejcVpump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $149,609.60\n\n*   **Official\
+        \ Pump Therapist** ([8yNP4SP56LQ2rgdGGGezY5F6RRfw34i6Bg7WVeucpump](https://solscan.io/token/8yNP4SP56LQ2rgdGGGezY5F6RRfw34i6Bg7WVeucpump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $148,868.69\n\n*   **DOWNBAD**\
+        \ ([EJ1CwktvSNjkRDDU8aPj5RKXUdztvnbpsxfHVApfpump](https://solscan.io/token/EJ1CwktvSNjkRDDU8aPj5RKXUdztvnbpsxfHVApfpump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $148,432.65\n\n*   **LiveBetsFun**\
+        \ ([3GD52FB1JWduWM62oJVGEZUsSUXvzAAUtzE5bBzFpump](https://solscan.io/token/3GD52FB1JWduWM62oJVGEZUsSUXvzAAUtzE5bBzFpump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $144,772.61\n\n*   **MIMU\
+        \ (FIRST VTUBER)** ([GnULw58pnvfX75bSntDvgfZCbQcYrcDNChyjE9TXvMUD](https://solscan.io/token/GnULw58pnvfX75bSntDvgfZCbQcYrcDNChyjE9TXvMUD))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $143,977.35\n\n*   **CITADEL\
+        \ WOLF** ([6XJi6hSNVoLEd5hb5yRb77taxsQ3HsbHvmqFJzZ3pump](https://solscan.io/token/6XJi6hSNVoLEd5hb5yRb77taxsQ3HsbHvmqFJzZ3pump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $144,284.10\n\n*   **GoFunMe**\
+        \ ([6GABuJboHPWA28Ke9oCVwxSUDsCYqEgP5WDWTsE6pump](https://solscan.io/token/6GABuJboHPWA28Ke9oCVwxSUDsCYqEgP5WDWTsE6pump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $142,076.00\n\n*   **KING\
+        \ OF THE PILL** ([HMCn6Ja3QEttjUQSavVBGEFp2kXZ2zbUaTsGTaVDpump](https://solscan.io/token/HMCn6Ja3QEttjUQSavVBGEFp2kXZ2zbUaTsGTaVDpump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $141,468.84\n\n*   **TwitchrDotFun**\
+        \ ([8ZzNR7prJTV9oCiBqJy9MgQfpe4cSwJ2PFysdfwNpump](https://solscan.io/token/8ZzNR7prJTV9oCiBqJy9MgQfpe4cSwJ2PFysdfwNpump))\n\
+        \    *   Initial Price: $0.00014\n    *   Market Cap: $140,751.69\n\n*   **DAILY\
+        \ HONK GROW** ([4VaPvjv7jXCqqinEByDtxcCaMho4n6D5uD4fyA2Spump](https://solscan.io/token/4VaPvjv7jXCqqinEByDtxcCaMho4n6D5uD4fyA2Spump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $138,997.73\n\n*   **Homeless\
+        \ To Millionaire LIVE** ([3vVoK4DeoxNWZ2RkayGF3pabE7rP4h6EbK1g9gFppump](https://solscan.io/token/3vVoK4DeoxNWZ2RkayGF3pabE7rP4h6EbK1g9gFppump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $136,762.06\n\n*   **Hitchhiking\
+        \ to Florida** ([GFFuTd3pLeoEozPSGVq5vCfFCA4frSDTDXcyCCRTpump](https://solscan.io/token/GFFuTd3pLeoEozPSGVq5vCfFCA4frSDTDXcyCCRTpump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $136,561.56\n\n*   **Peep**\
+        \ ([E3rd6YKiqpeLc1Scu7sbxXFeUen2gW3r6uA5vLT5pump](https://solscan.io/token/E3rd6YKiqpeLc1Scu7sbxXFeUen2gW3r6uA5vLT5pump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $133,931.33\n\n*   **BET\
+        \ MORE** ([4isxLfrSADvP3egEDLZV6fUm435hjXRumJmXgB6jpump](https://solscan.io/token/4isxLfrSADvP3egEDLZV6fUm435hjXRumJmXgB6jpump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $133,108.43\n\n*   **GooseWayneTV**\
+        \ ([GNGmeDfABw44mkqivMDGMWoS83MihHyiooWiHUd3pump](https://solscan.io/token/GNGmeDfABw44mkqivMDGMWoS83MihHyiooWiHUd3pump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $132,806.68\n\n*   **pumpfundme**\
+        \ ([AxNdMDpNGowJpCFuC8rsUXBQdozHpmdQSBgYuezopump](https://solscan.io/token/AxNdMDpNGowJpCFuC8rsUXBQdozHpmdQSBgYuezopump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $132,583.58\n\n*   **SleepWork**\
+        \ ([HNMVp3f1ANCwffRTF4kt53Z4mWPp7rjs24K14e1Fpump](https://solscan.io/token/HNMVp3f1ANCwffRTF4kt53Z4mWPp7rjs24K14e1Fpump))\n\
+        \    *   Initial Price: $0.00013\n    *   Market Cap: $130,889.59\n\n*   **Survive\
+        \ The Streets** ([336waPEcZFkuFKqFAFrQcQpQFHZCK6DSqZuT94Bopump](https://solscan.io/token/336waPEcZFkuFKqFAFrQcQpQFHZCK6DSqZuT94Bopump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $128,103.48\n\n*   **need\
+        \ money for porsche** ([FP9EZ3uMdyayL1dHuvi39JDrDw1RB8nzC1mQXbojpump](https://solscan.io/token/FP9EZ3uMdyayL1dHuvi39JDrDw1RB8nzC1mQXbojpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $127,635.52\n\n*   **Free\
+        \ Advice** ([6FnWYGAjRsFNsbeh3PZTZMXw46UfNqyA6QhhtZBQpump](https://solscan.io/token/6FnWYGAjRsFNsbeh3PZTZMXw46UfNqyA6QhhtZBQpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $126,960.48\n\n*   **Edo\
+        \ builds LEGO** ([GY2mfATJMLpznsEeQYdqNU8shsUQzG2rBrY6Eg9Hpump](https://solscan.io/token/GY2mfATJMLpznsEeQYdqNU8shsUQzG2rBrY6Eg9Hpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $127,072.65\n\n*   **GACHA**\
+        \ ([ETALxGSfDmdRwaDmMeLVGJsSheEweydMbhUgZBdyn5ze](https://solscan.io/token/ETALxGSfDmdRwaDmMeLVGJsSheEweydMbhUgZBdyn5ze))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $124,875.17\n\n*   **Draw\
+        \ My Coin** ([3dTAAYaPVE8B1LA46dGX7EsLAxLkixdEqnvmZjptpump](https://solscan.io/token/3dTAAYaPVE8B1LA46dGX7EsLAxLkixdEqnvmZjptpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $124,956.50\n\n*   **67coin**\
+        \ ([8ZAtuYB4BGYXCpVu9p1npyf1dAochWSBhifVGEHbpump](https://solscan.io/token/8ZAtuYB4BGYXCpVu9p1npyf1dAochWSBhifVGEHbpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $123,898.07\n\n*   **uncat**\
+        \ ([PUsEjVCeNGZhvEH8Xw6GiSr6UWXbvvoPVAsMuszpump](https://solscan.io/token/PUsEjVCeNGZhvEH8Xw6GiSr6UWXbvvoPVAsMuszpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $124,263.99\n\n*   **DIVINE\
+        \ TIME** ([GY2C52MnhWstRbQB9JuDVHQ58Wf6k2BTq5ZZ32Fqpump](https://solscan.io/token/GY2C52MnhWstRbQB9JuDVHQ58Wf6k2BTq5ZZ32Fqpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $124,255.08\n\n*   **JEFE\
+        \ TOKEN** ([DTLYtCJ6cBHbA1ZTkkL9SAVmUVemdCCuH2QeNNXPpump](https://solscan.io/token/DTLYtCJ6cBHbA1ZTkkL9SAVmUVemdCCuH2QeNNXPpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $124,499.77\n\n*   **Large\
+        \ Eating Model** ([9gysAR3MdZnzJ9Tve9Zay9CUzhKnEk9FhmdxUrtppump](https://solscan.io/token/9gysAR3MdZnzJ9Tve9Zay9CUzhKnEk9FhmdxUrtppump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $122,391.07\n\n*   **DJT\
+        \ GOLDEN STATUE** ([6Rfzk4BpScyvZtDkueM5Li8hgMrdfnrKnJPKbRE8pump](https://solscan.io/token/6Rfzk4BpScyvZtDkueM5Li8hgMrdfnrKnJPKbRE8pump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $121,784.81\n\n*   **Derek\
+        \ graz** ([Fgb6MECxrucgHoTh1KUhJXm9vdV9cDRgTfV2V1rvpump](https://solscan.io/token/Fgb6MECxrucgHoTh1KUhJXm9vdV9cDRgTfV2V1rvpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $120,936.60\n\n*   **Grind**\
+        \ ([DHBNecdXb4Yaffuf9nLryt4EJr3LounXaLa9VSKHpump](https://solscan.io/token/DHBNecdXb4Yaffuf9nLryt4EJr3LounXaLa9VSKHpump))\n\
+        \    *   Initial Price: $0.00012\n    *   Market Cap: $121,326.51\n\n*   **RoXsaOS**\
+        \ ([FrUtcpGDDjPUNQT9qCJBmiSYjAfQaVog556i96ENpump](https://solscan.io/token/FrUtcpGDDjPUNQT9qCJBmiSYjAfQaVog556i96ENpump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $119,928.94\n\n*   **READING\
+        \ ENTIRE BIBLE ON STREAM** ([536JBGsiouD8stKtLj6qJR8JhAy3eJXBHHZCJW1ypump](https://solscan.io/token/536JBGsiouD8stKtLj6qJR8JhAy3eJXBHHZCJW1ypump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $119,678.81\n\n*   **Matan\
+        \ University** ([5Va9w9KBGeztV8uFwFKM4bynD3UYCC7tFGH7uUSEpump](https://solscan.io/token/5Va9w9KBGeztV8uFwFKM4bynD3UYCC7tFGH7uUSEpump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $118,694.82\n\n*   **Getting\
+        \ a Virgin Laid** ([CgWoEDsiMU8iD1P6EYvwLgxyveq7wWmibeNwabVtpump](https://solscan.io/token/CgWoEDsiMU8iD1P6EYvwLgxyveq7wWmibeNwabVtpump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $119,317.77\n\n*   **GRAZZZZ**\
+        \ ([Hph9H2V7GrmurYEEKZKLkon4tkDNqzZcPhsnwcFWpump](https://solscan.io/token/Hph9H2V7GrmurYEEKZKLkon4tkDNqzZcPhsnwcFWpump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $117,981.87\n\n*   **COEN\
+        \ THE DAWNWALKER** ([82GwKsNrbHrycptaQt3AVv6upKdzXF4nSTdjd6pMWMid](https://solscan.io/token/82GwKsNrbHrycptaQt3AVv6upKdzXF4nSTdjd6pMWMid))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $117,371.95\n\n*   **Liminal**\
+        \ ([8CzzwFH9WowYwRK2oJK1MHTUqjtb7TC9fG8nbv2obAP9](https://solscan.io/token/8CzzwFH9WowYwRK2oJK1MHTUqjtb7TC9fG8nbv2obAP9))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $116,434.84\n\n*   **huzz**\
+        \ ([CuyrYgPicrArYKzdRnURuM772LUfC63aVTZqahDmpump](https://solscan.io/token/CuyrYgPicrArYKzdRnURuM772LUfC63aVTZqahDmpump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $115,927.03\n\n*   **DUST**\
+        \ ([66WEyo25yTx1KxSfnUofXE9ZBYuS5bJx46SCbHgspump](https://solscan.io/token/66WEyo25yTx1KxSfnUofXE9ZBYuS5bJx46SCbHgspump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $116,084.94\n\n*   **bool**\
+        \ ([4FNvs1EhWvDWe6KNXcLbjbGj8FypFqD2UVUpmhpLHtRr](https://solscan.io/token/4FNvs1EhWvDWe6KNXcLbjbGj8FypFqD2UVUpmhpLHtRr))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $113,792.72\n\n*   **Pay\
+        \ It Forward** ([8zPkx8gtmt95PyuFLLVQfFufRwxoFMu4N7rxw9jGpump](https://solscan.io/token/8zPkx8gtmt95PyuFLLVQfFufRwxoFMu4N7rxw9jGpump))\n\
+        \    *   Initial Price: $0.00011\n    *   Market Cap: $110,477.76\n\n*   **LandCoin**\
+        \ ([2AmxjuPBs7kwKFeQk143xhqAprSBc36f26guZx81pump](https://solscan.io/token/2AmxjuPBs7kwKFeQk143xhqAprSBc36f26guZx81pump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $109,566.79\n\n*   **godsplanlive**\
+        \ ([jboZsXyhf3kurHDRSoVanCUAVCd4noC7RBucKAVpump](https://solscan.io/token/jboZsXyhf3kurHDRSoVanCUAVCd4noC7RBucKAVpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $109,128.99\n\n*   **Most\
+        \ Viewed Live** ([3YiQu6kGgcVrTtL6wwpZ5yf8qqaQYaLEP9KVho7dpump](https://solscan.io/token/3YiQu6kGgcVrTtL6wwpZ5yf8qqaQYaLEP9KVho7dpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $107,189.49\n\n*   **Bomo\
+        \ Solana** ([a74dxP2bKgu5fSk16poNL1muFvoMx9xvPo5h8G6W7Qu](https://solscan.io/token/a74dxP2bKgu5fSk16poNL1muFvoMx9xvPo5h8G6W7Qu))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $106,571.78\n\n*   **Help\
+        \ The Wiener Dogs** ([3JEqSGLPJrHfcUyZxj43ikAhYqmAdp8y8MiGyjjBpump](https://solscan.io/token/3JEqSGLPJrHfcUyZxj43ikAhYqmAdp8y8MiGyjjBpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $106,493.90\n\n*   **Save\
+        \ The Pets** ([3eY2NTMAhzJik1q1tgZGKWc4Krm3EhLQEbTENX74pump](https://solscan.io/token/3eY2NTMAhzJik1q1tgZGKWc4Krm3EhLQEbTENX74pump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $106,561.87\n\n*   **GlowUp**\
+        \ ([HdFyPUfJTLZB6gzSfEXMDYmkgHeNrAXFSHnF8cAypump](https://solscan.io/token/HdFyPUfJTLZB6gzSfEXMDYmkgHeNrAXFSHnF8cAypump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $106,950.47\n\n*   **Homelander\
+        \ Blow** ([BPcEmH1Amv1ZAJhBpTxnTpkMg1bbkbrM7RwKycWipump](https://solscan.io/token/BPcEmH1Amv1ZAJhBpTxnTpkMg1bbkbrM7RwKycWipump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $106,799.01\n\n*   **BRETT\
+        \ GAMBLES LIVE** ([3wc3PqoY9AaWagJjJ8dc1uTHFPhpRfWZ2ZjpvghvjqtH](https://solscan.io/token/3wc3PqoY9AaWagJjJ8dc1uTHFPhpRfWZ2ZjpvghvjqtH))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $104,471.84\n\n*   **Infinite\
+        \ CS2 Case Opening** ([H5JB2mKTMVACxNHKaTFp86XmtvbUZwSUXbLNfNhmpump](https://solscan.io/token/H5JB2mKTMVACxNHKaTFp86XmtvbUZwSUXbLNfNhmpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $104,958.05\n\n*   **Collector**\
+        \ ([BnKToHNfkrkQ8CB9G4WmUaBgMnzLCXMTBfGZEup9pump](https://solscan.io/token/BnKToHNfkrkQ8CB9G4WmUaBgMnzLCXMTBfGZEup9pump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $103,412.99\n\n*   **itsbritneyloh**\
+        \ ([7pLZA1dHVSJED8Bq276pvuFBRe8u47pZ44TodM6tpump](https://solscan.io/token/7pLZA1dHVSJED8Bq276pvuFBRe8u47pZ44TodM6tpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $103,071.88\n\n*   **PUMPGUY**\
+        \ ([2ozEwJmhUaabqjmRS5TUvcSkqmGXJqKJRoV14crupump](https://solscan.io/token/2ozEwJmhUaabqjmRS5TUvcSkqmGXJqKJRoV14crupump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $102,951.69\n\n*   **Sleepy\
+        \ Fed** ([9c2ZAuGws4REyYPcDJaGqKcbgYKy6Hfgkjth66naoNv](https://solscan.io/token/9c2ZAuGws4REyYPcDJaGqKcbgYKy6Hfgkjth66naoNv))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $102,460.67\n\n*   **forever\
+        \ coin** ([6UBMsPWPuv9RjmVxzMDPVCxYftNhUxsbC5RQH2uWpump](https://solscan.io/token/6UBMsPWPuv9RjmVxzMDPVCxYftNhUxsbC5RQH2uWpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $101,684.79\n\n*   **KushKlicker**\
+        \ ([FetiqGccf3ECSponQGEnx2QvpXrE57kvww1RdbjXpump](https://solscan.io/token/FetiqGccf3ECSponQGEnx2QvpXrE57kvww1RdbjXpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $100,990.98\n\n*   **Dudeman**\
+        \ ([BvVGPQB5GXkMKyPGKz95TDkKUdLY5CvxT9LsnWqEgKjk](https://solscan.io/token/BvVGPQB5GXkMKyPGKz95TDkKUdLY5CvxT9LsnWqEgKjk))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $100,733.31\n\n*   **SURVIVING\
+        \ IN MEXICO** ([5PWHg3LptQmxua3K8Uef5ugBHHYL8ZBAhFSgC8Ltpump](https://solscan.io/token/5PWHg3LptQmxua3K8Uef5ugBHHYL8ZBAhFSgC8Ltpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $100,721.41\n\n*   **Nepal\
+        \ Token** ([H6xRBRw3QxGeHRuT9thoJC6t3E19VNvvoCnjcjanpump](https://solscan.io/token/H6xRBRw3QxGeHRuT9thoJC6t3E19VNvvoCnjcjanpump))\n\
+        \    *   Initial Price: $0.00010\n    *   Market Cap: $100,236.54\n\n*   **polybro\
+        \ AI** ([8rpw6v6KLZ44payDUMW6njRGz5jRtxaqPgUGqMzapump](https://solscan.io/token/8rpw6v6KLZ44payDUMW6njRGz5jRtxaqPgUGqMzapump))\n\
+        \    *   Initial Price: $0.000099\n    *   Market Cap: $99,271.18\n\n*   **Official\
+        \ Leonardo DeCaprio** ([HmXVjmNwfrT4bWjFoZJ7xgKusu53bbV3HvMQAWnHpump](https://solscan.io/token/HmXVjmNwfrT4bWjFoZJ7xgKusu53bbV3HvMQAWnHpump))\n\
+        \    *   Initial Price: $0.000099\n    *   Market Cap: $99,446.57\n\n*   **T-Wayne**\
+        \ ([CWqLRXaavTBLfR8ienny2eXcSvGie8RK6Ymc4R1qpump](https://solscan.io/token/CWqLRXaavTBLfR8ienny2eXcSvGie8RK6Ymc4R1qpump))\n\
+        \    *   Initial Price: $0.000098\n    *   Market Cap: $98,860.09\n\n*   **StrawberryTabby**\
+        \ ([2QmLCuRyPpQ15iUSYJWqECXZRhXj7rsJq3d5NwDBpump](https://solscan.io/token/2QmLCuRyPpQ15iUSYJWqECXZRhXj7rsJq3d5NwDBpump))\n\
+        \    *   Initial Price: $0.000098\n    *   Market Cap: $98,651.43\n\n*   **JannisZ**\
+        \ ([2Q8NFrukdQY4dLny7ULMhcopvdDsdg3YjNZcLcvnpump](https://solscan.io/token/2Q8NFrukdQY4dLny7ULMhcopvdDsdg3YjNZcLcvnpump))\n\
+        \    *   Initial Price: $0.000097\n    *   Market Cap: $97,892.45\n\n*   **Game\
+        \ is Game** ([HqGhj6QBFgz79jChkp5KcYmY21yNdqUfUM5UWR2Cpump](https://solscan.io/token/HqGhj6QBFgz79jChkp5KcYmY21yNdqUfUM5UWR2Cpump))\n\
+        \    *   Initial Price: $0.000097\n    *   Market Cap: $97,781.67\n\n*   **Pump\
+        \ Elements** ([HPRhPxjDCLSXXQBHhUURhz7LV1c61Ffhr8XAFdvtpump](https://solscan.io/token/HPRhPxjDCLSXXQBHhUURhz7LV1c61Ffhr8XAFdvtpump))\n\
+        \    *   Initial Price: $0.000097\n    *   Market Cap: $97,520.46\n\n*   **BRAINROTBOYS**\
+        \ ([E2KzUiphhwwDSMTpdf3JGU3MXXD1CwYyBLa1No1apump](https://solscan.io/token/E2KzUiphhwwDSMTpdf3JGU3MXXD1CwYyBLa1No1apump))\n\
+        \    *   Initial Price: $0.000097\n    *   Market Cap: $97,096.57\n\n*   **Climbing\
+        \ a crane** ([3o8cLAb3odMMP1z2Zbe9YMgL9RKnohRc15JRc3fWpump](https://solscan.io/token/3o8cLAb3odMMP1z2Zbe9YMgL9RKnohRc15JRc3fWpump))\n\
+        \    *   Initial Price: $0.000095\n    *   Market Cap: $95,313.49\n\n*   **Modric\
+        \ Shaoline** ([6PUbR2CEhKGwPEDRh1EoqAHz1Sbc4qtF5vWDg7aRpump](https://solscan.io/token/6PUbR2CEhKGwPEDRh1EoqAHz1Sbc4qtF5vWDg7aRpump))\n\
+        \    *   Initial Price: $0.000029\n    *   Market Cap: $29,953.34\n\n*   **QTCLAPS**\
+        \ ([BCH6gpv3Z9Dvd3W78kEbtYBe4XW2eLLR1E3i9VBopump](https://solscan.io/token/BCH6gpv3Z9Dvd3W78kEbtYBe4XW2eLLR1E3i9VBopump))\n\
+        \    *   Initial Price: $0.0000052\n    *   Market Cap: $5,279.49\n\n*   **Marlon**\
+        \ ([DCoE21bdSMLjyA3Fndo3AsL8ZU7ihUaNeuV8u2zSpump](https://solscan.io/token/DCoE21bdSMLjyA3Fndo3AsL8ZU7ihUaNeuV8u2zSpump))\n\
+        \    *   Initial Price: $0.0000043\n    *   Market Cap: $4,305.31\n\n*   **plews**\
+        \ ([PshivRmYWAC9E3Gd4tD3Ajb9kynfdW9eNUSYJadpump](https://solscan.io/token/PshivRmYWAC9E3Gd4tD3Ajb9kynfdW9eNUSYJadpump))\n\
+        \    *   Initial Price: $0.0000042\n    *   Market Cap: $4,231.68\n\nPlease\
+        \ note that price data was not available for the following tokens:\n*   [F1LGEyNVRRMXGojc3F2z5YVDDdqMej6PUWer9Vvwpump](https://solscan.io/token/F1LGEyNVRRMXGojc3F2z5YVDDdqMej6PUWer9Vvwpump)\n\
+        *   [jiaLptpqVAtcJwjmgekcox4akMJzadMkwNd7T4mpump](https://solscan.io/token/jiaLptpqVAtcJwjmgekcox4akMJzadMkwNd7T4mpump)\n\
+        *   [7ZKpBgVZ7zc45dpFmbkUaT43P1asgkcGUb3L9PWopump](https://solscan.io/token/7ZKpBgVZ7zc45dpFmbkUaT43P1asgkcGUb3L9PWopump)\n\
+        *   [HhZ2LYNVRRMXGojc3F2z5YVDDdqMej6PUWer9Vvwpump](https://solscan.io/token/HhZ2LYNVRRMXGojc3F2z5YVDDdqMej6PUWer9Vvwpump)\n\
+        *   [3irmuQutoXxKtEjPyoCEaCmDzffSbLEgpChJU3Jvpump](https://solscan.io/token/3irmuQutoXxKtEjPyoCEaCmDzffSbLEgpChJU3Jvpump)"
+      data:
+        graduated_tokens:
+        - price_usd: 0.02240626961200462
+          market_cap_usd: 22406269.61200462
+          token_info:
+            name: Goon Szn
+            symbol: GOONSZN
+            mint_address: 8hraSbpENAAzx1Rrdisiw6h6zJw2223iRsriPK37pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaka3kvi4tl2hrpdqghsw327i63zc2gp5acgur7bzy3qpo6ebutji
+        - price_usd: 0.014999198058561243
+          market_cap_usd: 14999198.058561243
+          token_info:
+            name: Elon Matrix
+            symbol: Elonrix
+            mint_address: 3vmHhN51quzmvSHAsWHXkUPD8UdPofxg6rjhYqDgpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicomo6pmmbsfj2ujwvlf2nryzv735ypsse4ramhccftyduymmoy4e
+        - price_usd: 0.0033780129505749964
+          market_cap_usd: 3378012.9505749964
+          token_info:
+            name: GMAN
+            symbol: GMAN
+            mint_address: 3hg8k1KGU3EoSU5npfgF2n6nuKKpBPgDrNZcjhZopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicj47npm7as4ijnmtj7ylr3rwrs2rc4mrcramegew7bugxpecqxu4
+        - price_usd: 0.0024145368859419887
+          market_cap_usd: 2414536.885941989
+          token_info:
+            name: UNEMPLOYED
+            symbol: UNEMPLOYED
+            mint_address: ExfkY8EwGfNkJWns2CApCGa6PsQYuJiM6NudRcFNpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiezjv5xybhmgg4nybgd3vmmtpypxdwk45hm4cezaljfgq665m3s6m
+        - price_usd: 0.0021224421555968856
+          market_cap_usd: 2122442.155596886
+          token_info:
+            name: GAZA COIN
+            symbol: GAZA
+            mint_address: 39obbRw71cnYaCMvnWB5FeHyEaqJsWN3G4zAq1Ncpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicnn5nlztt4e5kuadijeulexuerjnwleilv7o42iadv45c6keftqu
+        - price_usd: 0.002084256618937459
+          market_cap_usd: 2084256.618937459
+          token_info:
+            name: CLIPR COIN
+            symbol: $CLIPR
+            mint_address: GWGvWrFc2Wq4NBgTZ2QGCBoMmR6hTsJcTzHJZGgHpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibuo7y5ykant5xeimcjmts4ozvsdg6ilmql4lcvh2shamwe6r5jiq
+        - price_usd: 0.001720299827180614
+          market_cap_usd: 1720299.827180614
+          token_info:
+            name: Spizee
+            symbol: SPIZEE
+            mint_address: 6QhnCcNEbXvRWxpUAkzkEU8UcMD6GZfL9s4oEPfUpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif4mlruyhbyjmmgd4f6ddafw5wgfcfnvk7lgh27ruj42pmksexoj4
+        - price_usd: 0.0016857302013163443
+          market_cap_usd: 1685730.2013163443
+          token_info:
+            name: StreamQuest
+            symbol: QUEST
+            mint_address: 9EnydDKQL2KeE4Eq9FcWuDMpaBs8q4iyt2MPayWSpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaztdc5qxtresx5uskgtlmj3euu4nn66vuggbauuq5jwrnltt67na
+        - price_usd: 0.001430592287949669
+          market_cap_usd: 1430592.287949669
+          token_info:
+            name: Vibe Coding Meta
+            symbol: VIBECODER
+            mint_address: 7PzU4m13VqkdgWcserfBdxX4cAPQXaZuFNuKarnT1deV
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreid5vpw46eby42jrx4alflx7uu6leimsuqzyurl4midnbistp3t2nm
+        - price_usd: 0.0010438702732892772
+          market_cap_usd: 1043870.2732892772
+          token_info:
+            name: 'I’m homeless Live '
+            symbol: kareem
+            mint_address: FDvPpogccJkvP4cW79ikndf3LByM6dZRhhRvG6Bppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmeyJgE3B3RwBzCuhdGGe1PUk5Auz6AwmPegK9DddGCEor
+        - price_usd: 0.0009991820959944955
+          market_cap_usd: 999182.0959944954
+          token_info:
+            name: Catching Pedophiles
+            symbol: Pedos
+            mint_address: 8cQynx5ZaJKwdHsuXmSn3Y16RXta7ZTyTS1hW55Gpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiemitc3pzvkgavhzuxnnb2imbv67olo3d2cdh5qzpig6qnvkrd3ra
+        - price_usd: 0.0009251184593358366
+          market_cap_usd: 925118.4593358366
+          token_info:
+            name: Clipper Market
+            symbol: CLIPPER
+            mint_address: FtFkxxif4AdTJi1rkCa9zb9ZDpdLNN9gS9dUmto8pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiav7u6uoa6mhu476ftzojrd74opwfkeezobfhbmbytemdsgtm3vpi
+        - price_usd: 0.0008645850436113088
+          market_cap_usd: 864585.0436113088
+          token_info:
+            name: Fridge Theory
+            symbol: FRIENDS
+            mint_address: 14pDfAoP7G5AdE89dEPb8d27yK6S14WxmSkJfj1ppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmYAS3TempBvGqfVNrJ9hgiBzvjRifitHXv1KgZ1Z7e3QA
+        - price_usd: 0.0008323839730102648
+          market_cap_usd: 832383.9730102648
+          token_info:
+            name: donuts
+            symbol: donuts
+            mint_address: BBERcRDEemKM9m7yHgVRQf9adgZPhwDzVC4JWZi2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifpnftnranci4mdjfu7k75t273yu52ddupkd4a2jwlxad4xknjh4u
+        - price_usd: 0.0007720484557208169
+          market_cap_usd: 772048.4557208169
+          token_info:
+            name: Ray William Johnson
+            symbol: RWJ
+            mint_address: HFpknET1EmUudpvExSoN69hZRgUjDUE2BaumbnnQpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiguwix2hxpqcq6kbtkce7jxlqojgfkaptukyzrrlnf6glfwnek2k4
+        - price_usd: 0.0007410163796180708
+          market_cap_usd: 741016.3796180708
+          token_info:
+            name: WALKING ACROSS AMERICA
+            symbol: walkusa
+            mint_address: 3BrXeqzNKUKsM6MgkWFZX4E2cY8SiwYNwwmVzP2Rpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmeNhka5wPqMC6mm6tnd73VZp8KBwmzo1Pvszq4WQ96LX6
+        - price_usd: 0.0007239691405567447
+          market_cap_usd: 723969.1405567448
+          token_info:
+            name: Agony
+            symbol: AGONY
+            mint_address: 8XX7ESF9e8eWhhkveYNWGPNbrKfTBDV9ywwsi3oxpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic66evsb437adkgg475wiu37vekxsr33e77d5a42adzhxmfb5yu2i
+        - price_usd: 0.0006479017361035448
+          market_cap_usd: 647901.7361035447
+          token_info:
+            name: OGshoots
+            symbol: OG
+            mint_address: HowC3YzQwCgya7xRbgJVGAFHaAe9RVvGxF3SeQGmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic7uvn5d3xt5tkeb7unbu6fnjhdyhrk4hyy3xedgcokxkfv46a2de
+        - price_usd: 0.0006495644936787096
+          market_cap_usd: 649564.4936787096
+          token_info:
+            name: Derek Graz After Dark
+            symbol: DerekGraz
+            mint_address: 9poaLQTZTro9qWEzNCtsaV15TXYr9Ha9eWvy9oG5pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmQFqtLviVG9L7Eko1ua1KWNbUW2FMKE6QSEiv2jctWZq7
+        - price_usd: 0.0005861261867355395
+          market_cap_usd: 586126.1867355396
+          token_info:
+            name: Clout Index
+            symbol: CLOUT
+            mint_address: DS46KMU89Gi86wWr5P3BKJJcNbMRQ72Z5Xah3Lgdpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidvczrlncwagcsga4vy6gadwpje5umcbfbr3mif4rbbq3g2xyhnum
+        - price_usd: 0.0005355056829266515
+          market_cap_usd: 535505.6829266514
+          token_info:
+            name: 120 HOURS
+            symbol: '120'
+            mint_address: Gd3GkHW1jzwZa4UPmTELG97xzP82ZGmq5Q78d9eCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihzn7wmdpqb5e4ioezzzsri6mupr7culz6gajqdbdionkfwuhg63u
+        - price_usd: 0.000504976586561979
+          market_cap_usd: 504976.58656197897
+          token_info:
+            name: AUSSIE BAG WORKERS
+            symbol: AUSBAGWORK
+            mint_address: 9h5y3WCqfeNt2fiAP7iM2ZRp9apFb58ipvTzcWi9pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihkilndb4wgxrvajk4sne2aezwaleruv4337wtnvakjsl2rbqvdey
+        - price_usd: 0.000498718783955994
+          market_cap_usd: 498718.78395599395
+          token_info:
+            name: Building a business from scratch
+            symbol: BUSINESS
+            mint_address: 46xN3btxa44YJsV783ZShKXbA556bXcKPZLMX21kpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidgbak4ewdzyylo3pesv4mh7mzh6a3jcm7ouxifqzjevkmaacomcq
+        - price_usd: 0.00047220101450151566
+          market_cap_usd: 472201.01450151566
+          token_info:
+            name: FutureBets
+            symbol: FUTURE
+            mint_address: DJ2VPpbX2aCgWNqvbddU4PbGF3LJjeeAMxPvXgaApump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicnpqqyhxeomma4oqua22fxmoy6qfzia4mwq3kswbkoegsbkhx3w4
+        - price_usd: 0.0004683263483580155
+          market_cap_usd: 468326.3483580155
+          token_info:
+            name: Impossible
+            symbol: IMP
+            mint_address: 9cqx5w7dcJC3yeoMSpUWnGeiY2Dsp5pHmUcaKySdpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiadskhrzfjjulwhmhgjksfyir7zqk4deqi6wpb3hwxsyahc5u473i
+        - price_usd: 0.0004612698963031427
+          market_cap_usd: 461269.8963031427
+          token_info:
+            name: RATWELL
+            symbol: RATWELL
+            mint_address: 4zLj7pCr1kQSRPNReQAqbpwvtEdKrkwj2peHYTyB92sS
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiemnckhjxacj6uxgymbszecvnwymsdjdhlw2hkiwf3zim7qtufv2e
+        - price_usd: 0.0004284546896142873
+          market_cap_usd: 428454.68961428734
+          token_info:
+            name: McDegen
+            symbol: McDegen
+            mint_address: CwSYzhxB2tQuitPtLP42Dm5nFXUgzTRRNYbC3ew4pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicvzpeghb5epsa2zhbicsr6dh5po6wxtkg57hk3f7eb7c3onvws44
+        - price_usd: 0.00040055551023919777
+          market_cap_usd: 400555.51023919776
+          token_info:
+            name: Off The Streets
+            symbol: OTS
+            mint_address: 7QsV99yRUfiourLZqiVXEcvDEfFJ98w1VXhxuF77pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreieyl6d23u45qvbyifxalynaqeczx7eyhukuitbq7zp3l7a44w4c3e
+        - price_usd: 0.00040295836191607504
+          market_cap_usd: 402958.36191607505
+          token_info:
+            name: moderatorbot.fun
+            symbol: MODBOT
+            mint_address: HXsVkgdfLPscaNvBE4asbsuhwaQkZArfaWL6Fc1GZ5iw
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig3c6jev6qikle7vfgtzftrzgxftuascvdcsr2qr76sfalghvbahq
+        - price_usd: 0.0003817939017983468
+          market_cap_usd: 381793.9017983468
+          token_info:
+            name: DEBT
+            symbol: DEBT
+            mint_address: 2rQP1haH6sYmwWZZZFtFXpoy5ujgNvih4LxBZjEDpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiahp72mydtt5ejfsbpjgq6nwcwz4a6jchgp3zt7w5st76sztstkxm
+        - price_usd: 0.0003606880537635667
+          market_cap_usd: 360688.0537635667
+          token_info:
+            name: Jason Applebaum
+            symbol: APPLE
+            mint_address: CeNzreGGYTsoHfoFBz6D81kfQK5aHYbG5XA5YjEpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigtjghxi2sdyhlfbsqcidrdrzvdsp7etgqtnpe2boeyoj4icbrpzu
+        - price_usd: 0.00033732061252424167
+          market_cap_usd: 337320.6125242417
+          token_info:
+            name: THE DEGENERATE SHOW
+            symbol: MAGNET
+            mint_address: BD4F3Dtr58pChicGBVk2s649dFEWvvUSXxRtef4Bpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicdyw5e3gujip5ytqesh23tvgli3ocwecbiiqgdgshs7uxp4xtiau
+        - price_usd: 0.0003364478383951894
+          market_cap_usd: 336447.8383951894
+          token_info:
+            name: Bastrin
+            symbol: Bastrin
+            mint_address: 3WN36y3qwuazyMRHBjnUG6BP9jWQi1JccEN6NxaDpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig272ioxem4eeobmhshudcvfs4xy5nnwb35ob3pehspm4l5q4k2l4
+        - price_usd: 0.00033391079048472464
+          market_cap_usd: 333910.7904847246
+          token_info:
+            name: GeorgePlaysClashRoyale
+            symbol: Clash
+            mint_address: 6nR8wBnfsmXfcdDr1hovJKjvFQxNSidN6XFyfAFZpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreie27uswjubbbbxnxds725de6nxo5dcucxbviynue2uzwqwybjvym4
+        - price_usd: 0.000333265014672971
+          market_cap_usd: 333265.01467297104
+          token_info:
+            name: creativity and collaboration
+            symbol: cnc
+            mint_address: BBk1eEdB6vz53g25H8eguRcpBbHN1w8VeFrRMKKepump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiajzsxnatjl3wko2rvykh6vdar2vz5g7q2457psvvrgptr44vlksq
+        - price_usd: 0.00033084081405349854
+          market_cap_usd: 330840.81405349856
+          token_info:
+            name: AI Satoshi's Vision
+            symbol: GOODTECH
+            mint_address: HG2jGUnmVyLYE7MJSakh7NHJ9L89ENNN9QEtKYdjpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicavmyelgjuqsbyx65y76fr2fjutvifr5snfa665hs24qkwyhhcoi
+        - price_usd: 0.00031650886019553884
+          market_cap_usd: 316508.86019553884
+          token_info:
+            name: Block Stranding
+            symbol: STRAND
+            mint_address: GavDagRZgxrFBDGhDYuLfQcQS9mkApyYGfz8tDdGpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidlg4mc26gacuy4hbz5yqsqzo6hcakms5qzi4a4mvpqy67ycsjcuu
+        - price_usd: 0.00031041632870000606
+          market_cap_usd: 310416.32870000607
+          token_info:
+            name: Food for Folks
+            symbol: FFF
+            mint_address: tyTaDrjPqeTAT7WKnYnn8djoBF6WEkemoRprgmqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZPvoUQRhAW8XSwpoEbH2wxNHUhYk8euVbBkYCL3YZSba
+        - price_usd: 0.00030830484713512374
+          market_cap_usd: 308304.84713512374
+          token_info:
+            name: SESH
+            symbol: SESH
+            mint_address: xZyi146mBikJqhrk7pRCbYdUCAsYXk2btWKWqG2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihe3gk342d7rsknwg7ordbbsadorgg5jxddefuaohshrk6dkcjsdq
+        - price_usd: 0.00029527876294126523
+          market_cap_usd: 295278.76294126525
+          token_info:
+            name: ONBOARDING THE WORLD LIVE
+            symbol: WORLD
+            mint_address: 9kWwazCt6Nk5dYufj7sDc4vjqBJpwmB94C8qBaJTpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmcgbHfgtbhQG2U392U53EipyzsuWV55hjkgyiJpud3WAS
+        - price_usd: 0.0002919533079453246
+          market_cap_usd: 291953.3079453246
+          token_info:
+            name: Biel’s livestream token!
+            symbol: BIEL
+            mint_address: 2UT4eY6GRrvUPrXPG9htNq9NQSvMUoewP7V4opFAAyGT
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmRjVvYMrHZuqFStK5nRfGwKybgEPimshdvKzRPcezkqPh
+        - price_usd: 0.00028821022911622627
+          market_cap_usd: 288210.22911622626
+          token_info:
+            name: Wizard Of SoHo
+            symbol: WIZARD
+            mint_address: CmNVtW51bDDv89C2WypP8oAnmycbkfhk1equwmPCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigxrepuccn72du26jpeydv3syhmzzgoky36ahoz42htx5zicjxkam
+        - price_usd: 0.0002870951318297599
+          market_cap_usd: 287095.1318297599
+          token_info:
+            name: Strategic Sealed Packs Strategy
+            symbol: PACKZ
+            mint_address: DqYKsprSxF6aMGpj3GyZDw3SnBoesD7oZ4RvkTvkpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmaW7w6FWwHFZpw5DRqaSEK2EkiEJNpW5QYpP7xKtD94R9
+        - price_usd: 0.00028264166253484343
+          market_cap_usd: 282641.66253484343
+          token_info:
+            name: Save All Pets
+            symbol: SAP
+            mint_address: BEtPRp8ctri2aHDKDmvday2C3SBBqQ4Yv98Nbhfqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigatqdkf3qbbgmqemi36rrvjmqviabswda5yek3rtjnet4xv653qm
+        - price_usd: 0.000271705142867162
+          market_cap_usd: 271705.142867162
+          token_info:
+            name: THIS MIGHT CHANGE YOU.
+            symbol: CHANGE
+            mint_address: FHNguaddUzJB3oq9qfNieDkzgjwL1m6KkKrzuQ3Rpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidxajc4cxrae22oi5d5b2fbjvo5iwejbo3ko7rnfuk763h4ifaxt4
+        - price_usd: 0.0002577529475793589
+          market_cap_usd: 257752.94757935894
+          token_info:
+            name: DUMB MONEY
+            symbol: DUMB
+            mint_address: 87Ex7EJ9EqZX44DtXU3B9gGYtKJk8JDS9eLRAKspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmUDeFEdY2BBTrXHFsxUwM333VRfN4aSmxWCmjL3PRTaA5
+        - price_usd: 0.000255928844900602
+          market_cap_usd: 255928.844900602
+          token_info:
+            name: m00n
+            symbol: m00n
+            mint_address: Gm4YGNiHkUEfn7heeMJN5gFKaWeVYydmVsLx2X6pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigqlze6yrdtazib7zyx5i3fc3c6v423heroqmasn6jty7qustwtlm
+        - price_usd: 0.0002477254379626487
+          market_cap_usd: 247725.4379626487
+          token_info:
+            name: Klutch_Trades
+            symbol: Klutch
+            mint_address: FhQ3e67eandDusiXZRMiHL4jExpEKgkNqWuN4GvLpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigt7thgb7a4scyaquzu4fto75q64r2snf47k5aa4q47lj2s6uhf2a
+        - price_usd: 0.0002477363406943236
+          market_cap_usd: 247736.3406943236
+          token_info:
+            name: The Pump Lobby
+            symbol: LOBBY
+            mint_address: 4WegBLE4BpFM89EHuRy95proKMjrvydbtiTzrNVqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiegn4ic53h4p5odzuna3eeosiu3wm2l2b7dkqz4ge6clod5jubecq
+        - price_usd: 0.0002433204618779197
+          market_cap_usd: 243320.4618779197
+          token_info:
+            name: RAID
+            symbol: RAID
+            mint_address: 4aMaHDH1dHwAorLJfV8TgJ1VSmPvmm8SSadaqFf8pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig62kat2ztgpjadbzlxcede5i4f2ipewn42ti2prdpqpuupbc2ij4
+        - price_usd: 0.00024472077785811616
+          market_cap_usd: 244720.77785811617
+          token_info:
+            name: COEN THE DAWNWALKER
+            symbol: COEN
+            mint_address: 4PD4FjRJ6AS7oQgjk7N2Cjemhcdbz9ekrnXoz17BwbJT
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreieidvw22jwlr5sqd6rwuceit6xjkqruzycnktadadsg5izlczm6vy
+        - price_usd: 0.00023588164782588228
+          market_cap_usd: 235881.64782588228
+          token_info:
+            name: LEMMY COOKE
+            symbol: LEMMY
+            mint_address: 6CyZdSA6hbZzVCp3g9patFTqsDA4inPUfKj4Drm3pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicz4hcjr5c6kevidajmdi3xrbomt2zywriwcwkvgp2wgzvuq3j75u
+        - price_usd: 0.00023207826253591622
+          market_cap_usd: 232078.26253591623
+          token_info:
+            name: Living Off Pumpfun Rewards
+            symbol: LOPR
+            mint_address: 6SVBPAHNQQm4aGMemgMv2WEFTCaXCSqxCyoMucYspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmec45hW5zjsjZYPKqaKtw9x59TbmmX31AY5TUJVQmF1iJ
+        - price_usd: 0.00022754952083256332
+          market_cap_usd: 227549.5208325633
+          token_info:
+            name: SPIN TO WIN
+            symbol: SPIN
+            mint_address: EmoLj5qADaE26tkTgqKYmKoYvVAoEymH4MiLY5wJkCvC
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreib33xc3wrqfuhfxr34ewiod7whzqrwdbus2zypi5us26v7iwbwzey
+        - price_usd: 0.00022686042605700587
+          market_cap_usd: 226860.42605700588
+          token_info:
+            name: The Tales of Stu & McLovin
+            symbol: TALES
+            mint_address: 2or4j3h6wFKZ76BCssLCALjvgbntpScUSxreeftmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidbeg2vnqot7uhdqg3zqryhbnlzam6de3yix63c3wuins6kxw246q
+        - price_usd: 0.0002270277099918271
+          market_cap_usd: 227027.7099918271
+          token_info:
+            name: Nothing
+            symbol: Nothing
+            mint_address: FWniEyoZsRfasbzqCFw4KiBmaR3hwk8BYeNEM4H2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidrilexnrbzwj3aszbbf4ia3rz2xgcqbsufd3es5dz26xccqp5opu
+        - price_usd: 0.00022274423860052249
+          market_cap_usd: 222744.23860052248
+          token_info:
+            name: Roberto Vs The World
+            symbol: ROBERTOA
+            mint_address: H2bzYFpQTS21q4T4vfNNPGPDF48fYsuR536FqVdrpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidzylnyns7nnnynt4sbqrmcymrb3xdchf6ndsnxgfs5tlxb7ubioq
+        - price_usd: 0.00022348306229691192
+          market_cap_usd: 223483.06229691193
+          token_info:
+            name: IRL Subway Surfer
+            symbol: Subway
+            mint_address: 2VTR4jrsv7pC9bePD8rkC4RiwSZ6UyQc25YQ9vk2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibf3i5hhylpmda7tjdlxlofoekaqyhlpc7o7rsoc5rpz272unf5fu
+        - price_usd: 0.00022285397708351096
+          market_cap_usd: 222853.97708351095
+          token_info:
+            name: Lenny Miller
+            symbol: LENNY
+            mint_address: 3hmYntg4RnNvZFYeZS6RoSre7BsStmz3mBNw2dk5pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiezdyk4qiwykk556m5kxlwe73lzozd42vfswh7txmpwvqisknzy3m
+        - price_usd: 0.00022149658500831155
+          market_cap_usd: 221496.58500831155
+          token_info:
+            name: Anubis.Chat
+            symbol: ANUBIS
+            mint_address: 8V4bgosncXFtn9nZ6ZtQCine9U8wjVYxhqn1wwSjpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibrhkw4vswcen3njsx7qv3nh3624tbo32mueyp6ekbcouso4k5tmy
+        - price_usd: 0.0002175525740435456
+          market_cap_usd: 217552.57404354558
+          token_info:
+            name: Walking till $20M MC
+            symbol: WALK
+            mint_address: BYQ137q2GyWDumh6NXFqZpbFReT6tDcFTAr93nxCDxy9
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmR6YbhPeRRGoxxKPbgjN8e9WoFfetZSoJNU4DChYVKtRg
+        - price_usd: 0.00020278236159740665
+          market_cap_usd: 202782.36159740665
+          token_info:
+            name: Meta Glass Pranks
+            symbol: Pranks
+            mint_address: Hdfk5qYXr4WJKPEDhEyu6oZEdLH9AaN4sUhGgscCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibodrefwthbalvorxy423yqhfdac2jekzsjnywzgh4lontumyllii
+        - price_usd: 0.00019417042488132098
+          market_cap_usd: 194170.42488132097
+          token_info:
+            name: Bedroom Session
+            symbol: Bedroom
+            mint_address: C1eAyMCEFTiAHwX5xQSbi9bCZWD17AiXn9gnrSeFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreib5saafinei7o2nub5uasmsn2d2oli2cns7xxkqvhtjmwnq2bjbqi
+        - price_usd: 0.00019252308815860924
+          market_cap_usd: 192523.08815860923
+          token_info:
+            name: Pump Island
+            symbol: ISLAND
+            mint_address: C5GSdUxecU7D2TcUNHhSNzhbFFLGEg6Gaqp7FktJpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidg6mggt7bzj2hliu47cy3zm42g5i44dsqfkrcty7aytufxl5a6si
+        - price_usd: 0.0001911101563750279
+          market_cap_usd: 191110.1563750279
+          token_info:
+            name: 'Zaza '
+            symbol: 'Zaza '
+            mint_address: ze2CABGownWwaGDZB2U1Lviq3f5xpT8s5azbLukpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmXbW9huBgZc1JMnkMJMptRMzQJuKVg7ygeRiw2bi2XprJ
+        - price_usd: 0.00018915807947837381
+          market_cap_usd: 189158.0794783738
+          token_info:
+            name: Threat Research & History Trail
+            symbol: THRT
+            mint_address: 3dQugtW8ne2PHcjoGFek2j8Ht7o87jKqaSPNWuC2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigg2p72t74lgsx7zpxkidr7sdn2mdxcgqv77zot6b4doswekgapsi
+        - price_usd: 0.00018750425692643316
+          market_cap_usd: 187504.25692643315
+          token_info:
+            name: minecraft live until i beat it
+            symbol: minecraft
+            mint_address: AdsBLfK3Pf5CSbsT637YH8FUCJoZiyCeaw46QhhRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihrxtj4mb4ldl3ilwkgtgbovkkgqpgu2c3fcll7erki54irfsnzwq
+        - price_usd: 0.000174001051088116
+          market_cap_usd: 174001.05108811602
+          token_info:
+            name: kson ONAIR
+            symbol: PIZZA
+            mint_address: Aqps6Jfw8HybYMLvFXxonz96xiDfffzsVFtAAdiCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreia3h3vorbzquiabn2gqycos5mxxyahs5v5nkty2pelhe26agpljui
+        - price_usd: 0.00017293978514056578
+          market_cap_usd: 172939.78514056577
+          token_info:
+            name: Npc Live
+            symbol: NPC
+            mint_address: qtaGxzPUm9dSpHNviCBs5tN88DfMW6ZFsYcR69Zpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreieu4m2hznf3abbc4sznpmoom35yqssthppknya57kfyyqfwhls6um
+        - price_usd: 0.00017105272807342348
+          market_cap_usd: 171052.72807342347
+          token_info:
+            name: Nodemind
+            symbol: Nodemind
+            mint_address: 5jH9JTf7PVVXUTVWtPESov1EWuiGbdwndBVv5seLpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifjsnxbdbonec2p5sca25zjhy3b4j7hyrxsc4ifkihvl5q7j7fhyu
+        - price_usd: 0.00016984349428758686
+          market_cap_usd: 169843.49428758686
+          token_info:
+            name: Pumping to 10M
+            symbol: Pumping
+            mint_address: 5Tm7CUqAKy5QwsPHutvUwJU81pmLxD3BJ1CdhFeupump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmcJEDPfc1fcRDX7xCEEkW5QCajbKMbJP8Ef1Fu3ZPGP2F
+        - price_usd: 0.00016958070115636437
+          market_cap_usd: 169580.70115636438
+          token_info:
+            name: Techman Prime
+            symbol: TECH
+            mint_address: 5HnZKqdCN3wxYziFnGF7EUwjQ1qPyEN5y67bsz4Npump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicgcpsikzd3opgfgqh7eascv7ejmo2tghportdsbjeic4mt6mqbym
+        - price_usd: 0.00016904117938465466
+          market_cap_usd: 169041.17938465465
+          token_info:
+            name: BEING LAMPS UNTIL 10M MC
+            symbol: LAMPS
+            mint_address: BZyWVPEVHWXBrFHtpHtSpbdxskjFTAAspnPmJbfGpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihqr7vd362e5cnfth5wvgvda4kwi7grksj7c2he7zpfpssurdq5qu
+        - price_usd: 0.00016826237707229073
+          market_cap_usd: 168262.37707229072
+          token_info:
+            name: Macrohard
+            symbol: Macrohard
+            mint_address: AGVThMvTdy7bGv6bHxGMzNRqeJVFXztS5SqG45ozpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiavgx7o5oba2xxok7ubanavk7cmstn6q7w5jftkcecaixlr5lcume
+        - price_usd: 0.00016699679953617746
+          market_cap_usd: 166996.79953617745
+          token_info:
+            name: Live Adventures in SKID ROW
+            symbol: LASR
+            mint_address: 6h59DPjRkdqi1NHoosN8gLyVqSKntGi3vRWU3LuFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZ6zBniMHAtPuP2CxASo33ZzunFvBdGbDXKTP2GLk3rE1
+        - price_usd: 0.00016542671738522963
+          market_cap_usd: 165426.71738522963
+          token_info:
+            name: CEICE LIVE
+            symbol: CEICE
+            mint_address: 4kFMiD5Bj3ivGrqEiGV9SZHadj3cRuceTfd2cooRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihj43x37ag5e3ngscbt2mwhcyniyflgoifywfdel2dgqiovpzx6jm
+        - price_usd: 0.00016290157511014364
+          market_cap_usd: 162901.57511014363
+          token_info:
+            name: TipFun.Me
+            symbol: TIP
+            mint_address: 2BLzB3fGYN1GYcjnvs9Kh13yjHoFRe29h7K6Gc2Xpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreih6q3ier6rlhtvphx2e6wjl3llkqtb6mjchoc6et55qnzs54w7uwy
+        - price_usd: 0.00015566172167264886
+          market_cap_usd: 155661.72167264886
+          token_info:
+            name: COEN THE DAWNWALKER
+            symbol: COEN
+            mint_address: 8KQudcxji4qUKWXwHd3tP8vrkJcBt97HR4xSyhqv5v7f
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic3a3qepe4upfhwlzeadmgb2b545qyuy4ci7sms7kf7hofvlqf55q
+        - price_usd: 0.00015528254979776528
+          market_cap_usd: 155282.54979776527
+          token_info:
+            name: AikoPOV
+            symbol: AIKO
+            mint_address: DU7cSUQKaQPCZYVd6c1aTZFfYbbw6VhtXyQmRx4Vpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaekcinrzo4qhhqftfej2irz7c5cu75jrxfpyoedpvm62c3d2st3m
+        - price_usd: 0.00015221440710965815
+          market_cap_usd: 152214.40710965815
+          token_info:
+            name: CryptoPunks 404
+            symbol: PUNKS
+            mint_address: 126AB1un49xM3sTfgskpQtvvKeEJ4PNQGd1S6aEcpump
+            decimals: 6
+            fungible: true
+            uri: https://gateway.pinata.cloud/ipfs/QmVXzM2rvT5LEYHjbAbd6qhy17nn9DvBxwG1QzCLNBDQw9
+        - price_usd: 0.00015053140964478044
+          market_cap_usd: 150531.40964478045
+          token_info:
+            name: MrOwl
+            symbol: MrOwl
+            mint_address: YLrMSqWFkpT2MmAC7rqbzqgKR5jXZDPiqxTJ2cspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigcpymuiaax6uxw65n5xmyn73looymejokfmixwqxmhoramburmsm
+        - price_usd: 0.00015046049667689234
+          market_cap_usd: 150460.49667689233
+          token_info:
+            name: Infinity Chain
+            symbol: iChain
+            mint_address: D8CaDSk2DFdUcWiQm7Ky9PBq5jaUaxqtPrgRu7uRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihvri262bgb575moa7iiob5ugcasg5zjbr6p5wdnp7imqdsak4v4q
+        - price_usd: 0.0001496096024232441
+          market_cap_usd: 149609.6024232441
+          token_info:
+            name: Family
+            symbol: FAMILY
+            mint_address: 5aATGe5quq7ARmTykUYCkTa9kEqdmsBdRM9iejcVpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiabhnf4qzpkcayvmcpd3ifrldqd4oes4s3k7zy3md7hyeivud3hqu
+        - price_usd: 0.00014886869023199133
+          market_cap_usd: 148868.69023199132
+          token_info:
+            name: Official Pump Therapist
+            symbol: THERAPY
+            mint_address: 8yNP4SP56LQ2rgdGGGezY5F6RRfw34i6Bg7WVeucpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihwtb7k6lldlkiayzz6uznytltxfo45tduksab33fvo4jlclm7nqq
+        - price_usd: 0.00014843265170994162
+          market_cap_usd: 148432.65170994162
+          token_info:
+            name: DOWNBAD
+            symbol: DOWNBAD
+            mint_address: EJ1CwktvSNjkRDDU8aPj5RKXUdztvnbpsxfHVApfpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaydswihvabyjwbtwt3m6o74izpotxea347tmnpzmqvf2egfd4f6u
+        - price_usd: 0.00014477261245246842
+          market_cap_usd: 144772.61245246843
+          token_info:
+            name: LiveBetsFun
+            symbol: BETS
+            mint_address: 3GD52FB1JWduWM62oJVGEZUsSUXvzAAUtzE5bBzFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidc7nfdmbnhvznfgqysvrzhwl32au77roehsnedpvcftc34j7q4si
+        - price_usd: 0.0001439773489952397
+          market_cap_usd: 143977.3489952397
+          token_info:
+            name: MIMU (FIRST VTUBER)
+            symbol: MIMU
+            mint_address: GnULw58pnvfX75bSntDvgfZCbQcYrcDNChyjE9TXvMUD
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihkewkfavwrwepte2fdfz6fiin4vgqj6x6pj3cbpiis75z3465que
+        - price_usd: 0.0001442840996630128
+          market_cap_usd: 144284.09966301278
+          token_info:
+            name: CITADEL WOLF
+            symbol: CITADEL
+            mint_address: 6XJi6hSNVoLEd5hb5yRb77taxsQ3HsbHvmqFJzZ3pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihnm2kjvuttn5jf3udbzhflazdq7qw2o3s42yikbw7qhnxgmapg64
+        - price_usd: 0.00014207599777136943
+          market_cap_usd: 142075.99777136944
+          token_info:
+            name: GoFunMe
+            symbol: gofunme
+            mint_address: 6GABuJboHPWA28Ke9oCVwxSUDsCYqEgP5WDWTsE6pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibmdmitn5rnff3d5r5lpm5xrb2rnjb4okzzwgyxeddrsajk5wnldy
+        - price_usd: 0.00014146884206873953
+          market_cap_usd: 141468.84206873953
+          token_info:
+            name: KING OF THE PILL
+            symbol: PILL
+            mint_address: HMCn6Ja3QEttjUQSavVBGEFp2kXZ2zbUaTsGTaVDpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmdBZZ56nqArzX3n7NSw2paBYBrKzLrAQFcWbvtJGULE7m
+        - price_usd: 0.00014075169022617628
+          market_cap_usd: 140751.6902261763
+          token_info:
+            name: TwitchrDotFun
+            symbol: TWITCHR
+            mint_address: 8ZzNR7prJTV9oCiBqJy9MgQfpe4cSwJ2PFysdfwNpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifqg4pst225iziey5gpr6br5ybkgxx3jx6tltd5nf4ntrd76r5n5i
+        - price_usd: 0.00013899773165578858
+          market_cap_usd: 138997.73165578858
+          token_info:
+            name: DAILY HONK GROW
+            symbol: DAHOG
+            mint_address: 4VaPvjv7jXCqqinEByDtxcCaMho4n6D5uD4fyA2Spump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibb7np5h3b2buk4wc6b5uq664e46otvmzstamwnrhywewgga4mj3a
+        - price_usd: 0.00013676205804904844
+          market_cap_usd: 136762.05804904844
+          token_info:
+            name: Homeless To Millionaire LIVE
+            symbol: MILLIONS
+            mint_address: 3vVoK4DeoxNWZ2RkayGF3pabE7rP4h6EbK1g9gFppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreielcdabre2gmc4dczhet4gkmk6iifnykefpodgj2ugfeg6co523c4
+        - price_usd: 0.00013656155916268967
+          market_cap_usd: 136561.55916268966
+          token_info:
+            name: Hitchhiking to Florida
+            symbol: Hitchhiker
+            mint_address: GFFuTd3pLeoEozPSGVq5vCfFCA4frSDTDXcyCCRTpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreia3rdd6ay4rd2yedtys67nnmfnv2rbmkbjqgwtzj2vrbgzxghfzwi
+        - price_usd: 0.0001339313336417943
+          market_cap_usd: 133931.33364179428
+          token_info:
+            name: Peep
+            symbol: PEEP
+            mint_address: E3rd6YKiqpeLc1Scu7sbxXFeUen2gW3r6uA5vLT5pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmUfm84tsnTyGA2gWq4B9NtaXPd8QEYEY64s43UiVrLDLW
+        - price_usd: 0.00013310842747124202
+          market_cap_usd: 133108.42747124203
+          token_info:
+            name: BET MORE
+            symbol: BET
+            mint_address: 4isxLfrSADvP3egEDLZV6fUm435hjXRumJmXgB6jpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif32nm557lrhdhbwtwoxfbek44ltmhtor43qrgmcrchds7yto3mge
+        - price_usd: 0.0001328066779113237
+          market_cap_usd: 132806.6779113237
+          token_info:
+            name: GooseWayneTV
+            symbol: GooseWayne
+            mint_address: GNGmeDfABw44mkqivMDGMWoS83MihHyiooWiHUd3pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiahy4fdxhxgzspz6pwrwma2dzbh3uqwa5xbuvg3gscqz7kjvum4cq
+        - price_usd: 0.00013258357618002402
+          market_cap_usd: 132583.576180024
+          token_info:
+            name: pumpfundme
+            symbol: pumpfundme
+            mint_address: AxNdMDpNGowJpCFuC8rsUXBQdozHpmdQSBgYuezopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaoszltduqez3lalue5murmpa4cvoht7dvtx4lcuy25idz5uxrooy
+        - price_usd: 0.00013088958788024405
+          market_cap_usd: 130889.58788024406
+          token_info:
+            name: SleepWork
+            symbol: SLEEPWORK
+            mint_address: HNMVp3f1ANCwffRTF4kt53Z4mWPp7rjs24K14e1Fpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicaxn6537nqgtjv2bwyclf5y3cmfbjo2wcixljpfta6lmng5ehjgu
+        - price_usd: 0.00012810347571454777
+          market_cap_usd: 128103.47571454776
+          token_info:
+            name: Survive The Streets
+            symbol: Survive
+            mint_address: 336waPEcZFkuFKqFAFrQcQpQFHZCK6DSqZuT94Bopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmcXg8Mo2wRbsiM8FCsHh4B52cVFgFAiyVHQTtVzi7YVkc
+        - price_usd: 0.000127635518367953
+          market_cap_usd: 127635.51836795299
+          token_info:
+            name: need money for porsche
+            symbol: PORSCHE
+            mint_address: FP9EZ3uMdyayL1dHuvi39JDrDw1RB8nzC1mQXbojpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihgchq5wyvrjcnh3lwawoqgq3hmqa2l3j3ftfchvnaipuyi6wepoq
+        - price_usd: 0.00012696047674746417
+          market_cap_usd: 126960.47674746417
+          token_info:
+            name: Free Advice
+            symbol: Advice
+            mint_address: 6FnWYGAjRsFNsbeh3PZTZMXw46UfNqyA6QhhtZBQpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif5gwsao6epskw52vnb4becmoxg4z65spg4vnn3nxs52f7fwvhyvi
+        - price_usd: 0.0001270726461218295
+          market_cap_usd: 127072.6461218295
+          token_info:
+            name: Edo builds LEGO
+            symbol: LEGO
+            mint_address: GY2mfATJMLpznsEeQYdqNU8shsUQzG2rBrY6Eg9Hpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic36qkphg3bflq76ihg5srd6lgvjp63wznkwlp7dyx2rqp62yhdoi
+        - price_usd: 0.0001248751692770521
+          market_cap_usd: 124875.1692770521
+          token_info:
+            name: GACHA
+            symbol: GACHA
+            mint_address: ETALxGSfDmdRwaDmMeLVGJsSheEweydMbhUgZBdyn5ze
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiagsuqiphud2orxeujuqyn6l6duvpfs7yk2k3tkxupo6ydrfivqbi
+        - price_usd: 0.0001249564977122645
+          market_cap_usd: 124956.4977122645
+          token_info:
+            name: Draw My Coin
+            symbol: DMC
+            mint_address: 3dTAAYaPVE8B1LA46dGX7EsLAxLkixdEqnvmZjptpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig6fwin3i25ezeatgefbubaqrvtvcqbv6bxhhltkjc6osnbbtfswi
+        - price_usd: 0.0001238980712982231
+          market_cap_usd: 123898.0712982231
+          token_info:
+            name: 67coin
+            symbol: '67'
+            mint_address: 8ZAtuYB4BGYXCpVu9p1npyf1dAochWSBhifVGEHbpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicqndldxbmkfub4mivdwkbpgstrogpivihxnul5ei4twuk3anmtgm
+        - price_usd: 0.00012426398667450179
+          market_cap_usd: 124263.98667450178
+          token_info:
+            name: uncat
+            symbol: UNCAT
+            mint_address: PUsEjVCeNGZhvEH8Xw6GiSr6UWXbvvoPVAsMuszpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZ3iYugcDE9VwHFP5ajdZqnY4f4qPpmQeVJdoqXRtcfnw
+        - price_usd: 0.0001242550778211553
+          market_cap_usd: 124255.0778211553
+          token_info:
+            name: DIVINE TIME
+            symbol: $DIVINE
+            mint_address: GY2C52MnhWstRbQB9JuDVHQ58Wf6k2BTq5ZZ32Fqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZJbT2eKpEFdvpC74FnKp7zTPZ8DPu6nSbkWQSeR5CfHu
+        - price_usd: 0.00012449976793241287
+          market_cap_usd: 124499.76793241287
+          token_info:
+            name: JEFE TOKEN
+            symbol: JEFE
+            mint_address: DTLYtCJ6cBHbA1ZTkkL9SAVmUVemdCCuH2QeNNXPpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibmpfnssrsxqorkg7qlpoijo2ekfps2w4to5zvwezmtytqkhqawri
+        - price_usd: 0.00012239106660195034
+          market_cap_usd: 122391.06660195034
+          token_info:
+            name: Large Eating Model
+            symbol: LEM
+            mint_address: 9gysAR3MdZnzJ9Tve9Zay9CUzhKnEk9FhmdxUrtppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmaycW3MyAvvRxxa3tupoSHjpvCUUcvBZm3LUhWMgWPdmj
+        - price_usd: 0.00012178481358317087
+          market_cap_usd: 121784.81358317086
+          token_info:
+            name: DJT GOLDEN STATUE
+            symbol: DJTGST
+            mint_address: 6Rfzk4BpScyvZtDkueM5Li8hgMrdfnrKnJPKbRE8pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig6wlmdung7cx4v6prmcz7chrgxvf3aihloc55ni6ir3myhscu4by
+        - price_usd: 0.00012093660128434884
+          market_cap_usd: 120936.60128434884
+          token_info:
+            name: Derek graz
+            symbol: DEREK
+            mint_address: Fgb6MECxrucgHoTh1KUhJXm9vdV9cDRgTfV2V1rvpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif6wghpmvtfnfqsxavdaqbk5chyald3oqo4kqogvvuvanygmn66pm
+        - price_usd: 0.00012132650726073678
+          market_cap_usd: 121326.50726073678
+          token_info:
+            name: Grind
+            symbol: Grind
+            mint_address: DHBNecdXb4Yaffuf9nLryt4EJr3LounXaLa9VSKHpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmes2Uo6kuYJeiL3CncdFMM34qDtEua5UjLdkjko5Xcq37
+        - price_usd: 0.00011992894301867492
+          market_cap_usd: 119928.94301867491
+          token_info:
+            name: RoXsaOS
+            symbol: RoXsaOS
+            mint_address: FrUtcpGDDjPUNQT9qCJBmiSYjAfQaVog556i96ENpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig5ebsoe6pjywngpjpv3wxzgurlqfjyfsc5o3b4x4k4je7xggelma
+        - price_usd: 0.00011967881229475254
+          market_cap_usd: 119678.81229475254
+          token_info:
+            name: READING ENTIRE BIBLE ON STREAM
+            symbol: BIBLE
+            mint_address: 536JBGsiouD8stKtLj6qJR8JhAy3eJXBHHZCJW1ypump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmTkm7Uy3PuvhD714Rh5NyepiEik8gkaqRchsfXYQKTEza
+        - price_usd: 0.00011869482312540589
+          market_cap_usd: 118694.82312540589
+          token_info:
+            name: Matan University
+            symbol: Matan
+            mint_address: 5Va9w9KBGeztV8uFwFKM4bynD3UYCC7tFGH7uUSEpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiecfn3j3uuoj63dhullv7kgpfxppqak3n43fgfo3n5umkzqabmukm
+        - price_usd: 0.00011931776731308321
+          market_cap_usd: 119317.76731308321
+          token_info:
+            name: Getting a Virgin Laid
+            symbol: VIRGIN
+            mint_address: CgWoEDsiMU8iD1P6EYvwLgxyveq7wWmibeNwabVtpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifzf6maffim6bqei4kmkqtxk65gcoqknimfnyvpicbchvbe3fhujq
+        - price_usd: 0.00011798186586705874
+          market_cap_usd: 117981.86586705873
+          token_info:
+            name: GRAZZZZ
+            symbol: GRAZGANG
+            mint_address: Hph9H2V7GrmurYEEKZKLkon4tkDNqzZcPhsnwcFWpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreighjnoezffb5sp4hvxno4zcmc3tqchc4vqwdzg2kw3xpnkkz4wqpi
+        - price_usd: 0.000117371954348443
+          market_cap_usd: 117371.954348443
+          token_info:
+            name: COEN THE DAWNWALKER
+            symbol: COEN
+            mint_address: 82GwKsNrbHrycptaQt3AVv6upKdzXF4nSTdjd6pMWMid
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic3a3qepe4upfhwlzeadmgb2b545qyuy4ci7sms7kf7hofvlqf55q
+        - price_usd: 0.00011643483894416939
+          market_cap_usd: 116434.83894416939
+          token_info:
+            name: Liminal
+            symbol: LIMINAL
+            mint_address: 8CzzwFH9WowYwRK2oJK1MHTUqjtb7TC9fG8nbv2obAP9
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicdjz5e7wz3zqyqng5vewpyojux4vqadeccfeinuewavuqxhhdivy
+        - price_usd: 0.00011592703342782877
+          market_cap_usd: 115927.03342782878
+          token_info:
+            name: huzz
+            symbol: huzz
+            mint_address: CuyrYgPicrArYKzdRnURuM772LUfC63aVTZqahDmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibbl4as4qrxc5zbumlhgumbyhtvqyx3w3qytqhfleqa5nwiqk4yie
+        - price_usd: 0.00011608494486233927
+          market_cap_usd: 116084.94486233927
+          token_info:
+            name: DUST
+            symbol: DUST
+            mint_address: 66WEyo25yTx1KxSfnUofXE9ZBYuS5bJx46SCbHgspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiakrqtn3uvriw3tazr4tqwsbg7sglhbkwvxjrnrqu7slpfhtah4zq
+        - price_usd: 0.00011379272418806067
+          market_cap_usd: 113792.72418806067
+          token_info:
+            name: bool
+            symbol: BOOL
+            mint_address: 4FNvs1EhWvDWe6KNXcLbjbGj8FypFqD2UVUpmhpLHtRr
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreide5nlewo7h2as2ym2lqm4vlpvqvkd3mecugzfwlupi5n7i33p52e
+        - price_usd: 0.00011047775709312737
+          market_cap_usd: 110477.75709312738
+          token_info:
+            name: Pay It Forward
+            symbol: Bless
+            mint_address: 8zPkx8gtmt95PyuFLLVQfFufRwxoFMu4N7rxw9jGpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmapkn7CZvVoxq5BtpsyQ8tEQCbZ5nS3C3JwxEWv17Nrgp
+        - price_usd: 0.00010956678598499764
+          market_cap_usd: 109566.78598499764
+          token_info:
+            name: LandCoin
+            symbol: LAND
+            mint_address: 2AmxjuPBs7kwKFeQk143xhqAprSBc36f26guZx81pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidnz25olrhoj4kr2tjvsynxv6bplgrgj3f7kmcj2oefvqfezxpxke
+        - price_usd: 0.0001091289860615475
+          market_cap_usd: 109128.98606154749
+          token_info:
+            name: godsplanlive
+            symbol: GODSPLAN
+            mint_address: jboZsXyhf3kurHDRSoVanCUAVCd4noC7RBucKAVpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmXEHXpcyY94sSY6z679rDKnS8Q6UjCa7S1XLJ6MFy2neR
+        - price_usd: 0.00010718949017211284
+          market_cap_usd: 107189.49017211284
+          token_info:
+            name: Most Viewed Live
+            symbol: LIVE
+            mint_address: 3YiQu6kGgcVrTtL6wwpZ5yf8qqaQYaLEP9KVho7dpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifgjiyxoss5xcmrnviigmsc4hxavxak2jfwi2txjwqjsu5pqql6mm
+        - price_usd: 0.00010657177722918515
+          market_cap_usd: 106571.77722918516
+          token_info:
+            name: Bomo Solana
+            symbol: 'BOMO '
+            mint_address: a74dxP2bKgu5fSk16poNL1muFvoMx9xvPo5h8G6W7Qu
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidnms2a2qexfoqzqqjos6bnedutnkhq3ttqgkrv2nwnleflvnp63y
+        - price_usd: 0.00010649389583181431
+          market_cap_usd: 106493.89583181431
+          token_info:
+            name: Help The Wiener Dogs
+            symbol: Winerdogs
+            mint_address: 3JEqSGLPJrHfcUyZxj43ikAhYqmAdp8y8MiGyjjBpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic7zxseqtwkbk6slvohemocg7fb6wki7p5ropqldlojdvdfy2woxa
+        - price_usd: 0.00010656187172310045
+          market_cap_usd: 106561.87172310046
+          token_info:
+            name: Save The Pets
+            symbol: $PETS
+            mint_address: 3eY2NTMAhzJik1q1tgZGKWc4Krm3EhLQEbTENX74pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiew5sazbagdsjz2dxn4nwhxxfamcllmybgyxmszhvirgyxqprianq
+        - price_usd: 0.00010695046679353422
+          market_cap_usd: 106950.46679353421
+          token_info:
+            name: GlowUp
+            symbol: GLOWUP
+            mint_address: HdFyPUfJTLZB6gzSfEXMDYmkgHeNrAXFSHnF8cAypump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibkduiexzsgrfbwql532kenjvffbjh4z73tweuldwloybd2scniaq
+        - price_usd: 0.00010679901307757512
+          market_cap_usd: 106799.01307757512
+          token_info:
+            name: Homelander Blow
+            symbol: blowlander
+            mint_address: BPcEmH1Amv1ZAJhBpTxnTpkMg1bbkbrM7RwKycWipump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiakaoou2jukul7ncjryu5oxbvb3vlc2zbcjhcwah6in4iwdxo2siq
+        - price_usd: 0.00010447184080407674
+          market_cap_usd: 104471.84080407674
+          token_info:
+            name: BRETT GAMBLES LIVE
+            symbol: GAMBLER
+            mint_address: 3wc3PqoY9AaWagJjJ8dc1uTHFPhpRfWZ2ZjpvghvjqtH
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmUkaTMaoUnYc3FpYzRps6LcZqPrYWwYsXjwAwzvRbLCG8
+        - price_usd: 0.00010495804825467709
+          market_cap_usd: 104958.0482546771
+          token_info:
+            name: Infinite CS2 Case Opening
+            symbol: meztal
+            mint_address: H5JB2mKTMVACxNHKaTFp86XmtvbUZwSUXbLNfNhmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiagcogw5frzkfn6xpkrthdvpkznhpodjmbb67ovxpoisvohwjjrje
+        - price_usd: 0.00010341298672925201
+          market_cap_usd: 103412.986729252
+          token_info:
+            name: Collector
+            symbol: collect
+            mint_address: BnKToHNfkrkQ8CB9G4WmUaBgMnzLCXMTBfGZEup9pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibmegfkqqr4zrw6lwxjqzgusc2mj6lmt3y3igrvqnm6mmjrhwjfem
+        - price_usd: 0.00010307187667314967
+          market_cap_usd: 103071.87667314967
+          token_info:
+            name: itsbritneyloh
+            symbol: Bloh
+            mint_address: 7pLZA1dHVSJED8Bq276pvuFBRe8u47pZ44TodM6tpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmTnhoiZSrFg1EM52mte5r7su5pL6G67zDkG4PbMDAmrMk
+        - price_usd: 0.00010295168996567735
+          market_cap_usd: 102951.68996567735
+          token_info:
+            name: PUMPGUY
+            symbol: PUMPGUY
+            mint_address: 2ozEwJmhUaabqjmRS5TUvcSkqmGXJqKJRoV14crupump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmW5fXgMoC71CsXNqVLMR4Tuf1JiJtQrzTJUqbbmDmnZd5
+        - price_usd: 0.00010246067363537095
+          market_cap_usd: 102460.67363537094
+          token_info:
+            name: Sleepy Fed
+            symbol: RATES
+            mint_address: 9c2ZAuGws4REyYPcDJaGqKcbgYKy6Hfgkjth66naoNv
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigi2dumamrsx5dpq4wg6gl42saw7p25rpi5vfp7tmtx35mzjnq5ju
+        - price_usd: 0.00010168479076085846
+          market_cap_usd: 101684.79076085845
+          token_info:
+            name: forever coin
+            symbol: forever
+            mint_address: 6UBMsPWPuv9RjmVxzMDPVCxYftNhUxsbC5RQH2uWpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreielzv3now55bke4ft622pqpxbnktpemt3qbikf6qgkd63b5nfidve
+        - price_usd: 0.00010099098290782817
+          market_cap_usd: 100990.98290782818
+          token_info:
+            name: KushKlicker
+            symbol: KUSH
+            mint_address: FetiqGccf3ECSponQGEnx2QvpXrE57kvww1RdbjXpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiduhbfgsu66tmfpvvyuyjbgb32cgq3hcoctct5ksduimkps2wpxru
+        - price_usd: 0.00010073330793138421
+          market_cap_usd: 100733.3079313842
+          token_info:
+            name: Dudeman
+            symbol: DUDEMAN
+            mint_address: BvVGPQB5GXkMKyPGKz95TDkKUdLY5CvxT9LsnWqEgKjk
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibbpy2agqseonm2nwbyt4thdbkhjevcje5kizas6e5bdjs4priwzy
+        - price_usd: 0.00010072140683359841
+          market_cap_usd: 100721.40683359842
+          token_info:
+            name: SURVIVING IN MEXICO
+            symbol: SURVIVOR
+            mint_address: 5PWHg3LptQmxua3K8Uef5ugBHHYL8ZBAhFSgC8Ltpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifjdeylocppzvtw2yf4fgyxhmkpv23u4zowvame34ifqu4dhczgom
+        - price_usd: 0.00010023654316520977
+          market_cap_usd: 100236.54316520978
+          token_info:
+            name: Nepal Token
+            symbol: NPL
+            mint_address: H6xRBRw3QxGeHRuT9thoJC6t3E19VNvvoCnjcjanpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreialg6ciqto3rxewekjwmj7ihxrklv7mhnmwlllubfo4tbnwnxgba4
+        - price_usd: 9.927117554465393e-05
+          market_cap_usd: 99271.17554465393
+          token_info:
+            name: polybro AI
+            symbol: polybro
+            mint_address: 8rpw6v6KLZ44payDUMW6njRGz5jRtxaqPgUGqMzapump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiblzgnjzw3l4okuv4nudibhhrz7c27zmd2unur3xwth2owdmouktm
+        - price_usd: 9.944656992281204e-05
+          market_cap_usd: 99446.56992281204
+          token_info:
+            name: Official Leonardo DeCaprio
+            symbol: LDC
+            mint_address: HmXVjmNwfrT4bWjFoZJ7xgKusu53bbV3HvMQAWnHpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreib3uwwdyxfcjrc326gbgzjq7sjfxi3mhufnjmrha5fcnirfhfdn2q
+        - price_usd: 9.886009133806233e-05
+          market_cap_usd: 98860.09133806232
+          token_info:
+            name: T-Wayne
+            symbol: twayne
+            mint_address: CWqLRXaavTBLfR8ienny2eXcSvGie8RK6Ymc4R1qpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmdiji6TMnX3SufqDnbEvMMnVBgwNNbuVnF5qg1RtYov4n
+        - price_usd: 9.86514345665013e-05
+          market_cap_usd: 98651.4345665013
+          token_info:
+            name: StrawberryTabby
+            symbol: Tabby
+            mint_address: 2QmLCuRyPpQ15iUSYJWqECXZRhXj7rsJq3d5NwDBpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihu7jt6ldra3endlt5fqubxbe7uy7qyhqua4r3ewhoxn7tk4cpqia
+        - price_usd: 9.789244770869564e-05
+          market_cap_usd: 97892.44770869565
+          token_info:
+            name: JannisZ
+            symbol: JannisZ
+            mint_address: 2Q8NFrukdQY4dLny7ULMhcopvdDsdg3YjNZcLcvnpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreie6ophnwbbsolwuabonmypf3ezqnmd4tvmirjxvin2jxbloudipke
+        - price_usd: 9.778167136981023e-05
+          market_cap_usd: 97781.67136981022
+          token_info:
+            name: Game is Game
+            symbol: Life&Scars
+            mint_address: HqGhj6QBFgz79jChkp5KcYmY21yNdqUfUM5UWR2Cpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif6b6vlkt4wan5ch4zefvoq6r2t3ru7bucmujpesfbhb5r5oiucju
+        - price_usd: 9.752046003417701e-05
+          market_cap_usd: 97520.46003417701
+          token_info:
+            name: Pump Elements
+            symbol: ELEMENTS
+            mint_address: HPRhPxjDCLSXXQBHhUURhz7LV1c61Ffhr8XAFdvtpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicfjzu447y2gx67gqggtdoobbc55sfextonbplhinycfh6prikpne
+        - price_usd: 9.709656863719307e-05
+          market_cap_usd: 97096.56863719306
+          token_info:
+            name: BRAINROTBOYS
+            symbol: BRB
+            mint_address: E2KzUiphhwwDSMTpdf3JGU3MXXD1CwYyBLa1No1apump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihrmylkatd3pkhs66wazvayqikfqz34ckblvyncbv237rp4wmcoem
+        - price_usd: 9.531348745674247e-05
+          market_cap_usd: 95313.48745674247
+          token_info:
+            name: Climbing a crane
+            symbol: climb
+            mint_address: 3o8cLAb3odMMP1z2Zbe9YMgL9RKnohRc15JRc3fWpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihilmevv3jfv3wmyxyzo6euzt5qiir647zqsowuqmy3yz4hv2q2ju
+        - price_usd: 2.995334340512348e-05
+          market_cap_usd: 29953.34340512348
+          token_info:
+            name: Modric Shaoline
+            symbol: MODRIC
+            mint_address: 6PUbR2CEhKGwPEDRh1EoqAHz1Sbc4qtF5vWDg7aRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiebblctznmide34utb3ha5wv7kk2vnmcsqp6qe3s74f7ej6rwb3ka
+        - price_usd: 5.279485492950848e-06
+          market_cap_usd: 5279.485492950848
+          token_info:
+            name: QTCLAPS
+            symbol: QTCLAPS
+            mint_address: BCH6gpv3Z9Dvd3W78kEbtYBe4XW2eLLR1E3i9VBopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibbhofyfv5s5q3nusa3p2zrdnwhxhqlzak76dxnlbbcc55c6qonaa
+        - price_usd: 4.305307595236648e-06
+          market_cap_usd: 4305.307595236648
+          token_info:
+            name: Marlon
+            symbol: MLN
+            mint_address: DCoE21bdSMLjyA3Fndo3AsL8ZU7ihUaNeuV8u2zSpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicni7sjx2fg7j65b6cogtrtlt5nhxy7t4hqqf3r7yqjzt5tthyr6i
+        - price_usd: 4.2316755076583715e-06
+          market_cap_usd: 4231.675507658371
+          token_info:
+            name: plews
+            symbol: PLEWS
+            mint_address: PshivRmYWAC9E3Gd4tD3Ajb9kynfdW9eNUSYJadpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmQCWKygdsYckmT7TA6aAoWLvWpvUNifBaLE8osFKPhkjT
+        tokens_without_price_data:
+        - F1LGEyNVRRMXGojc3F2z5YVDDdqMej6PUWer9Vvwpump
+        - jiaLptpqVAtcJwjmgekcox4akMJzadMkwNd7T4mpump
+        - 7ZKpBgVZ7zc45dpFmbkUaT43P1asgkcGUb3L9PWopump
+        - HhZ2LYjcci9fm7FGrBvdGD5JbLmJrSFdsYuUqTVVpump
+        - 3irmuQutoXxKtEjPyoCEaCmDzffSbLEgpChJU3Jvpump
+        timeframe_hours: 48
+        start_time: '2025-09-14T00:00:00Z'
+    description: Natural language query for tokens that graduated in last 48 hours
+    status: success
+  graduated_tokens_direct:
+    input:
+      tool: query_latest_graduated_tokens
+      tool_arguments:
+        timeframe: 24
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        graduated_tokens:
+        - price_usd: 0.02240626961200462
+          market_cap_usd: 22406269.61200462
+          token_info:
+            name: Goon Szn
+            symbol: GOONSZN
+            mint_address: 8hraSbpENAAzx1Rrdisiw6h6zJw2223iRsriPK37pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaka3kvi4tl2hrpdqghsw327i63zc2gp5acgur7bzy3qpo6ebutji
+        - price_usd: 0.014999198058561243
+          market_cap_usd: 14999198.058561243
+          token_info:
+            name: Elon Matrix
+            symbol: Elonrix
+            mint_address: 3vmHhN51quzmvSHAsWHXkUPD8UdPofxg6rjhYqDgpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicomo6pmmbsfj2ujwvlf2nryzv735ypsse4ramhccftyduymmoy4e
+        - price_usd: 0.0033780129505749964
+          market_cap_usd: 3378012.9505749964
+          token_info:
+            name: GMAN
+            symbol: GMAN
+            mint_address: 3hg8k1KGU3EoSU5npfgF2n6nuKKpBPgDrNZcjhZopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicj47npm7as4ijnmtj7ylr3rwrs2rc4mrcramegew7bugxpecqxu4
+        - price_usd: 0.002307588066145772
+          market_cap_usd: 2307588.066145772
+          token_info:
+            name: UNEMPLOYED
+            symbol: UNEMPLOYED
+            mint_address: ExfkY8EwGfNkJWns2CApCGa6PsQYuJiM6NudRcFNpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiezjv5xybhmgg4nybgd3vmmtpypxdwk45hm4cezaljfgq665m3s6m
+        - price_usd: 0.0022620026474699964
+          market_cap_usd: 2262002.6474699965
+          token_info:
+            name: GAZA COIN
+            symbol: GAZA
+            mint_address: 39obbRw71cnYaCMvnWB5FeHyEaqJsWN3G4zAq1Ncpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicnn5nlztt4e5kuadijeulexuerjnwleilv7o42iadv45c6keftqu
+        - price_usd: 0.002084256618937459
+          market_cap_usd: 2084256.618937459
+          token_info:
+            name: CLIPR COIN
+            symbol: $CLIPR
+            mint_address: GWGvWrFc2Wq4NBgTZ2QGCBoMmR6hTsJcTzHJZGgHpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibuo7y5ykant5xeimcjmts4ozvsdg6ilmql4lcvh2shamwe6r5jiq
+        - price_usd: 0.001720299827180614
+          market_cap_usd: 1720299.827180614
+          token_info:
+            name: Spizee
+            symbol: SPIZEE
+            mint_address: 6QhnCcNEbXvRWxpUAkzkEU8UcMD6GZfL9s4oEPfUpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif4mlruyhbyjmmgd4f6ddafw5wgfcfnvk7lgh27ruj42pmksexoj4
+        - price_usd: 0.0016857302013163443
+          market_cap_usd: 1685730.2013163443
+          token_info:
+            name: StreamQuest
+            symbol: QUEST
+            mint_address: 9EnydDKQL2KeE4Eq9FcWuDMpaBs8q4iyt2MPayWSpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaztdc5qxtresx5uskgtlmj3euu4nn66vuggbauuq5jwrnltt67na
+        - price_usd: 0.001430592287949669
+          market_cap_usd: 1430592.287949669
+          token_info:
+            name: Vibe Coding Meta
+            symbol: VIBECODER
+            mint_address: 7PzU4m13VqkdgWcserfBdxX4cAPQXaZuFNuKarnT1deV
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreid5vpw46eby42jrx4alflx7uu6leimsuqzyurl4midnbistp3t2nm
+        - price_usd: 0.0010438702732892772
+          market_cap_usd: 1043870.2732892772
+          token_info:
+            name: 'I’m homeless Live '
+            symbol: kareem
+            mint_address: FDvPpogccJkvP4cW79ikndf3LByM6dZRhhRvG6Bppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmeyJgE3B3RwBzCuhdGGe1PUk5Auz6AwmPegK9DddGCEor
+        - price_usd: 0.0009991820959944955
+          market_cap_usd: 999182.0959944954
+          token_info:
+            name: Catching Pedophiles
+            symbol: Pedos
+            mint_address: 8cQynx5ZaJKwdHsuXmSn3Y16RXta7ZTyTS1hW55Gpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiemitc3pzvkgavhzuxnnb2imbv67olo3d2cdh5qzpig6qnvkrd3ra
+        - price_usd: 0.0009251184593358366
+          market_cap_usd: 925118.4593358366
+          token_info:
+            name: Clipper Market
+            symbol: CLIPPER
+            mint_address: FtFkxxif4AdTJi1rkCa9zb9ZDpdLNN9gS9dUmto8pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiav7u6uoa6mhu476ftzojrd74opwfkeezobfhbmbytemdsgtm3vpi
+        - price_usd: 0.0008645850436113088
+          market_cap_usd: 864585.0436113088
+          token_info:
+            name: Fridge Theory
+            symbol: FRIENDS
+            mint_address: 14pDfAoP7G5AdE89dEPb8d27yK6S14WxmSkJfj1ppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmYAS3TempBvGqfVNrJ9hgiBzvjRifitHXv1KgZ1Z7e3QA
+        - price_usd: 0.0008323839730102648
+          market_cap_usd: 832383.9730102648
+          token_info:
+            name: donuts
+            symbol: donuts
+            mint_address: BBERcRDEemKM9m7yHgVRQf9adgZPhwDzVC4JWZi2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifpnftnranci4mdjfu7k75t273yu52ddupkd4a2jwlxad4xknjh4u
+        - price_usd: 0.0007720484557208169
+          market_cap_usd: 772048.4557208169
+          token_info:
+            name: Ray William Johnson
+            symbol: RWJ
+            mint_address: HFpknET1EmUudpvExSoN69hZRgUjDUE2BaumbnnQpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiguwix2hxpqcq6kbtkce7jxlqojgfkaptukyzrrlnf6glfwnek2k4
+        - price_usd: 0.0007410163796180708
+          market_cap_usd: 741016.3796180708
+          token_info:
+            name: WALKING ACROSS AMERICA
+            symbol: walkusa
+            mint_address: 3BrXeqzNKUKsM6MgkWFZX4E2cY8SiwYNwwmVzP2Rpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmeNhka5wPqMC6mm6tnd73VZp8KBwmzo1Pvszq4WQ96LX6
+        - price_usd: 0.0007239691405567447
+          market_cap_usd: 723969.1405567448
+          token_info:
+            name: Agony
+            symbol: AGONY
+            mint_address: 8XX7ESF9e8eWhhkveYNWGPNbrKfTBDV9ywwsi3oxpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic66evsb437adkgg475wiu37vekxsr33e77d5a42adzhxmfb5yu2i
+        - price_usd: 0.0006495644936787096
+          market_cap_usd: 649564.4936787096
+          token_info:
+            name: Derek Graz After Dark
+            symbol: DerekGraz
+            mint_address: 9poaLQTZTro9qWEzNCtsaV15TXYr9Ha9eWvy9oG5pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmQFqtLviVG9L7Eko1ua1KWNbUW2FMKE6QSEiv2jctWZq7
+        - price_usd: 0.0005861261867355395
+          market_cap_usd: 586126.1867355396
+          token_info:
+            name: Clout Index
+            symbol: CLOUT
+            mint_address: DS46KMU89Gi86wWr5P3BKJJcNbMRQ72Z5Xah3Lgdpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidvczrlncwagcsga4vy6gadwpje5umcbfbr3mif4rbbq3g2xyhnum
+        - price_usd: 0.0005355056829266515
+          market_cap_usd: 535505.6829266514
+          token_info:
+            name: 120 HOURS
+            symbol: '120'
+            mint_address: Gd3GkHW1jzwZa4UPmTELG97xzP82ZGmq5Q78d9eCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihzn7wmdpqb5e4ioezzzsri6mupr7culz6gajqdbdionkfwuhg63u
+        - price_usd: 0.000504976586561979
+          market_cap_usd: 504976.58656197897
+          token_info:
+            name: AUSSIE BAG WORKERS
+            symbol: AUSBAGWORK
+            mint_address: 9h5y3WCqfeNt2fiAP7iM2ZRp9apFb58ipvTzcWi9pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihkilndb4wgxrvajk4sne2aezwaleruv4337wtnvakjsl2rbqvdey
+        - price_usd: 0.000498718783955994
+          market_cap_usd: 498718.78395599395
+          token_info:
+            name: Building a business from scratch
+            symbol: BUSINESS
+            mint_address: 46xN3btxa44YJsV783ZShKXbA556bXcKPZLMX21kpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidgbak4ewdzyylo3pesv4mh7mzh6a3jcm7ouxifqzjevkmaacomcq
+        - price_usd: 0.00047220101450151566
+          market_cap_usd: 472201.01450151566
+          token_info:
+            name: FutureBets
+            symbol: FUTURE
+            mint_address: DJ2VPpbX2aCgWNqvbddU4PbGF3LJjeeAMxPvXgaApump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicnpqqyhxeomma4oqua22fxmoy6qfzia4mwq3kswbkoegsbkhx3w4
+        - price_usd: 0.0004683263483580155
+          market_cap_usd: 468326.3483580155
+          token_info:
+            name: Impossible
+            symbol: IMP
+            mint_address: 9cqx5w7dcJC3yeoMSpUWnGeiY2Dsp5pHmUcaKySdpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiadskhrzfjjulwhmhgjksfyir7zqk4deqi6wpb3hwxsyahc5u473i
+        - price_usd: 0.0004612698963031427
+          market_cap_usd: 461269.8963031427
+          token_info:
+            name: RATWELL
+            symbol: RATWELL
+            mint_address: 4zLj7pCr1kQSRPNReQAqbpwvtEdKrkwj2peHYTyB92sS
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiemnckhjxacj6uxgymbszecvnwymsdjdhlw2hkiwf3zim7qtufv2e
+        - price_usd: 0.0004284546896142873
+          market_cap_usd: 428454.68961428734
+          token_info:
+            name: McDegen
+            symbol: McDegen
+            mint_address: CwSYzhxB2tQuitPtLP42Dm5nFXUgzTRRNYbC3ew4pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicvzpeghb5epsa2zhbicsr6dh5po6wxtkg57hk3f7eb7c3onvws44
+        - price_usd: 0.00040295836191607504
+          market_cap_usd: 402958.36191607505
+          token_info:
+            name: moderatorbot.fun
+            symbol: MODBOT
+            mint_address: HXsVkgdfLPscaNvBE4asbsuhwaQkZArfaWL6Fc1GZ5iw
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig3c6jev6qikle7vfgtzftrzgxftuascvdcsr2qr76sfalghvbahq
+        - price_usd: 0.0003817939017983468
+          market_cap_usd: 381793.9017983468
+          token_info:
+            name: DEBT
+            symbol: DEBT
+            mint_address: 2rQP1haH6sYmwWZZZFtFXpoy5ujgNvih4LxBZjEDpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiahp72mydtt5ejfsbpjgq6nwcwz4a6jchgp3zt7w5st76sztstkxm
+        - price_usd: 0.0003606880537635667
+          market_cap_usd: 360688.0537635667
+          token_info:
+            name: Jason Applebaum
+            symbol: APPLE
+            mint_address: CeNzreGGYTsoHfoFBz6D81kfQK5aHYbG5XA5YjEpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigtjghxi2sdyhlfbsqcidrdrzvdsp7etgqtnpe2boeyoj4icbrpzu
+        - price_usd: 0.00034891279343893467
+          market_cap_usd: 348912.79343893466
+          token_info:
+            name: Food for Folks
+            symbol: FFF
+            mint_address: tyTaDrjPqeTAT7WKnYnn8djoBF6WEkemoRprgmqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZPvoUQRhAW8XSwpoEbH2wxNHUhYk8euVbBkYCL3YZSba
+        - price_usd: 0.00033732061252424167
+          market_cap_usd: 337320.6125242417
+          token_info:
+            name: THE DEGENERATE SHOW
+            symbol: MAGNET
+            mint_address: BD4F3Dtr58pChicGBVk2s649dFEWvvUSXxRtef4Bpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicdyw5e3gujip5ytqesh23tvgli3ocwecbiiqgdgshs7uxp4xtiau
+        - price_usd: 0.0003364478383951894
+          market_cap_usd: 336447.8383951894
+          token_info:
+            name: Bastrin
+            symbol: Bastrin
+            mint_address: 3WN36y3qwuazyMRHBjnUG6BP9jWQi1JccEN6NxaDpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig272ioxem4eeobmhshudcvfs4xy5nnwb35ob3pehspm4l5q4k2l4
+        - price_usd: 0.00033391079048472464
+          market_cap_usd: 333910.7904847246
+          token_info:
+            name: GeorgePlaysClashRoyale
+            symbol: Clash
+            mint_address: 6nR8wBnfsmXfcdDr1hovJKjvFQxNSidN6XFyfAFZpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreie27uswjubbbbxnxds725de6nxo5dcucxbviynue2uzwqwybjvym4
+        - price_usd: 0.000333265014672971
+          market_cap_usd: 333265.01467297104
+          token_info:
+            name: creativity and collaboration
+            symbol: cnc
+            mint_address: BBk1eEdB6vz53g25H8eguRcpBbHN1w8VeFrRMKKepump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiajzsxnatjl3wko2rvykh6vdar2vz5g7q2457psvvrgptr44vlksq
+        - price_usd: 0.00033084081405349854
+          market_cap_usd: 330840.81405349856
+          token_info:
+            name: AI Satoshi's Vision
+            symbol: GOODTECH
+            mint_address: HG2jGUnmVyLYE7MJSakh7NHJ9L89ENNN9QEtKYdjpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicavmyelgjuqsbyx65y76fr2fjutvifr5snfa665hs24qkwyhhcoi
+        - price_usd: 0.00031650886019553884
+          market_cap_usd: 316508.86019553884
+          token_info:
+            name: Block Stranding
+            symbol: STRAND
+            mint_address: GavDagRZgxrFBDGhDYuLfQcQS9mkApyYGfz8tDdGpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidlg4mc26gacuy4hbz5yqsqzo6hcakms5qzi4a4mvpqy67ycsjcuu
+        - price_usd: 0.00030830484713512374
+          market_cap_usd: 308304.84713512374
+          token_info:
+            name: SESH
+            symbol: SESH
+            mint_address: xZyi146mBikJqhrk7pRCbYdUCAsYXk2btWKWqG2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihe3gk342d7rsknwg7ordbbsadorgg5jxddefuaohshrk6dkcjsdq
+        - price_usd: 0.00029527876294126523
+          market_cap_usd: 295278.76294126525
+          token_info:
+            name: ONBOARDING THE WORLD LIVE
+            symbol: WORLD
+            mint_address: 9kWwazCt6Nk5dYufj7sDc4vjqBJpwmB94C8qBaJTpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmcgbHfgtbhQG2U392U53EipyzsuWV55hjkgyiJpud3WAS
+        - price_usd: 0.0002935979992357649
+          market_cap_usd: 293597.9992357649
+          token_info:
+            name: Off The Streets
+            symbol: OTS
+            mint_address: 7QsV99yRUfiourLZqiVXEcvDEfFJ98w1VXhxuF77pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreieyl6d23u45qvbyifxalynaqeczx7eyhukuitbq7zp3l7a44w4c3e
+        - price_usd: 0.0002919533079453246
+          market_cap_usd: 291953.3079453246
+          token_info:
+            name: Biel’s livestream token!
+            symbol: BIEL
+            mint_address: 2UT4eY6GRrvUPrXPG9htNq9NQSvMUoewP7V4opFAAyGT
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmRjVvYMrHZuqFStK5nRfGwKybgEPimshdvKzRPcezkqPh
+        - price_usd: 0.00028821022911622627
+          market_cap_usd: 288210.22911622626
+          token_info:
+            name: Wizard Of SoHo
+            symbol: WIZARD
+            mint_address: CmNVtW51bDDv89C2WypP8oAnmycbkfhk1equwmPCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigxrepuccn72du26jpeydv3syhmzzgoky36ahoz42htx5zicjxkam
+        - price_usd: 0.0002870951318297599
+          market_cap_usd: 287095.1318297599
+          token_info:
+            name: Strategic Sealed Packs Strategy
+            symbol: PACKZ
+            mint_address: DqYKsprSxF6aMGpj3GyZDw3SnBoesD7oZ4RvkTvkpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmaW7w6FWwHFZpw5DRqaSEK2EkiEJNpW5QYpP7xKtD94R9
+        - price_usd: 0.00028264166253484343
+          market_cap_usd: 282641.66253484343
+          token_info:
+            name: Save All Pets
+            symbol: SAP
+            mint_address: BEtPRp8ctri2aHDKDmvday2C3SBBqQ4Yv98Nbhfqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigatqdkf3qbbgmqemi36rrvjmqviabswda5yek3rtjnet4xv653qm
+        - price_usd: 0.000271705142867162
+          market_cap_usd: 271705.142867162
+          token_info:
+            name: THIS MIGHT CHANGE YOU.
+            symbol: CHANGE
+            mint_address: FHNguaddUzJB3oq9qfNieDkzgjwL1m6KkKrzuQ3Rpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidxajc4cxrae22oi5d5b2fbjvo5iwejbo3ko7rnfuk763h4ifaxt4
+        - price_usd: 0.0002577529475793589
+          market_cap_usd: 257752.94757935894
+          token_info:
+            name: DUMB MONEY
+            symbol: DUMB
+            mint_address: 87Ex7EJ9EqZX44DtXU3B9gGYtKJk8JDS9eLRAKspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmUDeFEdY2BBTrXHFsxUwM333VRfN4aSmxWCmjL3PRTaA5
+        - price_usd: 0.000255928844900602
+          market_cap_usd: 255928.844900602
+          token_info:
+            name: m00n
+            symbol: m00n
+            mint_address: Gm4YGNiHkUEfn7heeMJN5gFKaWeVYydmVsLx2X6pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigqlze6yrdtazib7zyx5i3fc3c6v423heroqmasn6jty7qustwtlm
+        - price_usd: 0.0002477254379626487
+          market_cap_usd: 247725.4379626487
+          token_info:
+            name: Klutch_Trades
+            symbol: Klutch
+            mint_address: FhQ3e67eandDusiXZRMiHL4jExpEKgkNqWuN4GvLpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigt7thgb7a4scyaquzu4fto75q64r2snf47k5aa4q47lj2s6uhf2a
+        - price_usd: 0.0002477363406943236
+          market_cap_usd: 247736.3406943236
+          token_info:
+            name: The Pump Lobby
+            symbol: LOBBY
+            mint_address: 4WegBLE4BpFM89EHuRy95proKMjrvydbtiTzrNVqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiegn4ic53h4p5odzuna3eeosiu3wm2l2b7dkqz4ge6clod5jubecq
+        - price_usd: 0.0002433204618779197
+          market_cap_usd: 243320.4618779197
+          token_info:
+            name: RAID
+            symbol: RAID
+            mint_address: 4aMaHDH1dHwAorLJfV8TgJ1VSmPvmm8SSadaqFf8pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig62kat2ztgpjadbzlxcede5i4f2ipewn42ti2prdpqpuupbc2ij4
+        - price_usd: 0.00024472077785811616
+          market_cap_usd: 244720.77785811617
+          token_info:
+            name: COEN THE DAWNWALKER
+            symbol: COEN
+            mint_address: 4PD4FjRJ6AS7oQgjk7N2Cjemhcdbz9ekrnXoz17BwbJT
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreieidvw22jwlr5sqd6rwuceit6xjkqruzycnktadadsg5izlczm6vy
+        - price_usd: 0.00023588164782588228
+          market_cap_usd: 235881.64782588228
+          token_info:
+            name: LEMMY COOKE
+            symbol: LEMMY
+            mint_address: 6CyZdSA6hbZzVCp3g9patFTqsDA4inPUfKj4Drm3pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicz4hcjr5c6kevidajmdi3xrbomt2zywriwcwkvgp2wgzvuq3j75u
+        - price_usd: 0.00023207826253591622
+          market_cap_usd: 232078.26253591623
+          token_info:
+            name: Living Off Pumpfun Rewards
+            symbol: LOPR
+            mint_address: 6SVBPAHNQQm4aGMemgMv2WEFTCaXCSqxCyoMucYspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmec45hW5zjsjZYPKqaKtw9x59TbmmX31AY5TUJVQmF1iJ
+        - price_usd: 0.00022754952083256332
+          market_cap_usd: 227549.5208325633
+          token_info:
+            name: SPIN TO WIN
+            symbol: SPIN
+            mint_address: EmoLj5qADaE26tkTgqKYmKoYvVAoEymH4MiLY5wJkCvC
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreib33xc3wrqfuhfxr34ewiod7whzqrwdbus2zypi5us26v7iwbwzey
+        - price_usd: 0.00022686042605700587
+          market_cap_usd: 226860.42605700588
+          token_info:
+            name: The Tales of Stu & McLovin
+            symbol: TALES
+            mint_address: 2or4j3h6wFKZ76BCssLCALjvgbntpScUSxreeftmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidbeg2vnqot7uhdqg3zqryhbnlzam6de3yix63c3wuins6kxw246q
+        - price_usd: 0.0002270277099918271
+          market_cap_usd: 227027.7099918271
+          token_info:
+            name: Nothing
+            symbol: Nothing
+            mint_address: FWniEyoZsRfasbzqCFw4KiBmaR3hwk8BYeNEM4H2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidrilexnrbzwj3aszbbf4ia3rz2xgcqbsufd3es5dz26xccqp5opu
+        - price_usd: 0.00022274423860052249
+          market_cap_usd: 222744.23860052248
+          token_info:
+            name: Roberto Vs The World
+            symbol: ROBERTOA
+            mint_address: H2bzYFpQTS21q4T4vfNNPGPDF48fYsuR536FqVdrpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidzylnyns7nnnynt4sbqrmcymrb3xdchf6ndsnxgfs5tlxb7ubioq
+        - price_usd: 0.00022285397708351096
+          market_cap_usd: 222853.97708351095
+          token_info:
+            name: Lenny Miller
+            symbol: LENNY
+            mint_address: 3hmYntg4RnNvZFYeZS6RoSre7BsStmz3mBNw2dk5pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiezdyk4qiwykk556m5kxlwe73lzozd42vfswh7txmpwvqisknzy3m
+        - price_usd: 0.00022149658500831155
+          market_cap_usd: 221496.58500831155
+          token_info:
+            name: Anubis.Chat
+            symbol: ANUBIS
+            mint_address: 8V4bgosncXFtn9nZ6ZtQCine9U8wjVYxhqn1wwSjpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibrhkw4vswcen3njsx7qv3nh3624tbo32mueyp6ekbcouso4k5tmy
+        - price_usd: 0.0002175525740435456
+          market_cap_usd: 217552.57404354558
+          token_info:
+            name: Walking till $20M MC
+            symbol: WALK
+            mint_address: BYQ137q2GyWDumh6NXFqZpbFReT6tDcFTAr93nxCDxy9
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmR6YbhPeRRGoxxKPbgjN8e9WoFfetZSoJNU4DChYVKtRg
+        - price_usd: 0.00020278236159740665
+          market_cap_usd: 202782.36159740665
+          token_info:
+            name: Meta Glass Pranks
+            symbol: Pranks
+            mint_address: Hdfk5qYXr4WJKPEDhEyu6oZEdLH9AaN4sUhGgscCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibodrefwthbalvorxy423yqhfdac2jekzsjnywzgh4lontumyllii
+        - price_usd: 0.00019417042488132098
+          market_cap_usd: 194170.42488132097
+          token_info:
+            name: Bedroom Session
+            symbol: Bedroom
+            mint_address: C1eAyMCEFTiAHwX5xQSbi9bCZWD17AiXn9gnrSeFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreib5saafinei7o2nub5uasmsn2d2oli2cns7xxkqvhtjmwnq2bjbqi
+        - price_usd: 0.00019252308815860924
+          market_cap_usd: 192523.08815860923
+          token_info:
+            name: Pump Island
+            symbol: ISLAND
+            mint_address: C5GSdUxecU7D2TcUNHhSNzhbFFLGEg6Gaqp7FktJpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidg6mggt7bzj2hliu47cy3zm42g5i44dsqfkrcty7aytufxl5a6si
+        - price_usd: 0.0001911101563750279
+          market_cap_usd: 191110.1563750279
+          token_info:
+            name: 'Zaza '
+            symbol: 'Zaza '
+            mint_address: ze2CABGownWwaGDZB2U1Lviq3f5xpT8s5azbLukpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmXbW9huBgZc1JMnkMJMptRMzQJuKVg7ygeRiw2bi2XprJ
+        - price_usd: 0.00018915807947837381
+          market_cap_usd: 189158.0794783738
+          token_info:
+            name: Threat Research & History Trail
+            symbol: THRT
+            mint_address: 3dQugtW8ne2PHcjoGFek2j8Ht7o87jKqaSPNWuC2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigg2p72t74lgsx7zpxkidr7sdn2mdxcgqv77zot6b4doswekgapsi
+        - price_usd: 0.00018750425692643316
+          market_cap_usd: 187504.25692643315
+          token_info:
+            name: minecraft live until i beat it
+            symbol: minecraft
+            mint_address: AdsBLfK3Pf5CSbsT637YH8FUCJoZiyCeaw46QhhRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihrxtj4mb4ldl3ilwkgtgbovkkgqpgu2c3fcll7erki54irfsnzwq
+        - price_usd: 0.000174001051088116
+          market_cap_usd: 174001.05108811602
+          token_info:
+            name: kson ONAIR
+            symbol: PIZZA
+            mint_address: Aqps6Jfw8HybYMLvFXxonz96xiDfffzsVFtAAdiCpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreia3h3vorbzquiabn2gqycos5mxxyahs5v5nkty2pelhe26agpljui
+        - price_usd: 0.00017293978514056578
+          market_cap_usd: 172939.78514056577
+          token_info:
+            name: Npc Live
+            symbol: NPC
+            mint_address: qtaGxzPUm9dSpHNviCBs5tN88DfMW6ZFsYcR69Zpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreieu4m2hznf3abbc4sznpmoom35yqssthppknya57kfyyqfwhls6um
+        - price_usd: 0.00017105272807342348
+          market_cap_usd: 171052.72807342347
+          token_info:
+            name: Nodemind
+            symbol: Nodemind
+            mint_address: 5jH9JTf7PVVXUTVWtPESov1EWuiGbdwndBVv5seLpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifjsnxbdbonec2p5sca25zjhy3b4j7hyrxsc4ifkihvl5q7j7fhyu
+        - price_usd: 0.00016984349428758686
+          market_cap_usd: 169843.49428758686
+          token_info:
+            name: Pumping to 10M
+            symbol: Pumping
+            mint_address: 5Tm7CUqAKy5QwsPHutvUwJU81pmLxD3BJ1CdhFeupump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmcJEDPfc1fcRDX7xCEEkW5QCajbKMbJP8Ef1Fu3ZPGP2F
+        - price_usd: 0.00016958070115636437
+          market_cap_usd: 169580.70115636438
+          token_info:
+            name: Techman Prime
+            symbol: TECH
+            mint_address: 5HnZKqdCN3wxYziFnGF7EUwjQ1qPyEN5y67bsz4Npump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicgcpsikzd3opgfgqh7eascv7ejmo2tghportdsbjeic4mt6mqbym
+        - price_usd: 0.00016904117938465466
+          market_cap_usd: 169041.17938465465
+          token_info:
+            name: BEING LAMPS UNTIL 10M MC
+            symbol: LAMPS
+            mint_address: BZyWVPEVHWXBrFHtpHtSpbdxskjFTAAspnPmJbfGpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihqr7vd362e5cnfth5wvgvda4kwi7grksj7c2he7zpfpssurdq5qu
+        - price_usd: 0.00016826237707229073
+          market_cap_usd: 168262.37707229072
+          token_info:
+            name: Macrohard
+            symbol: Macrohard
+            mint_address: AGVThMvTdy7bGv6bHxGMzNRqeJVFXztS5SqG45ozpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiavgx7o5oba2xxok7ubanavk7cmstn6q7w5jftkcecaixlr5lcume
+        - price_usd: 0.00016699679953617746
+          market_cap_usd: 166996.79953617745
+          token_info:
+            name: Live Adventures in SKID ROW
+            symbol: LASR
+            mint_address: 6h59DPjRkdqi1NHoosN8gLyVqSKntGi3vRWU3LuFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZ6zBniMHAtPuP2CxASo33ZzunFvBdGbDXKTP2GLk3rE1
+        - price_usd: 0.00016542671738522963
+          market_cap_usd: 165426.71738522963
+          token_info:
+            name: CEICE LIVE
+            symbol: CEICE
+            mint_address: 4kFMiD5Bj3ivGrqEiGV9SZHadj3cRuceTfd2cooRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihj43x37ag5e3ngscbt2mwhcyniyflgoifywfdel2dgqiovpzx6jm
+        - price_usd: 0.00016290157511014364
+          market_cap_usd: 162901.57511014363
+          token_info:
+            name: TipFun.Me
+            symbol: TIP
+            mint_address: 2BLzB3fGYN1GYcjnvs9Kh13yjHoFRe29h7K6Gc2Xpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreih6q3ier6rlhtvphx2e6wjl3llkqtb6mjchoc6et55qnzs54w7uwy
+        - price_usd: 0.00015566172167264886
+          market_cap_usd: 155661.72167264886
+          token_info:
+            name: COEN THE DAWNWALKER
+            symbol: COEN
+            mint_address: 8KQudcxji4qUKWXwHd3tP8vrkJcBt97HR4xSyhqv5v7f
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic3a3qepe4upfhwlzeadmgb2b545qyuy4ci7sms7kf7hofvlqf55q
+        - price_usd: 0.00015528254979776528
+          market_cap_usd: 155282.54979776527
+          token_info:
+            name: AikoPOV
+            symbol: AIKO
+            mint_address: DU7cSUQKaQPCZYVd6c1aTZFfYbbw6VhtXyQmRx4Vpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaekcinrzo4qhhqftfej2irz7c5cu75jrxfpyoedpvm62c3d2st3m
+        - price_usd: 0.00015221440710965815
+          market_cap_usd: 152214.40710965815
+          token_info:
+            name: CryptoPunks 404
+            symbol: PUNKS
+            mint_address: 126AB1un49xM3sTfgskpQtvvKeEJ4PNQGd1S6aEcpump
+            decimals: 6
+            fungible: true
+            uri: https://gateway.pinata.cloud/ipfs/QmVXzM2rvT5LEYHjbAbd6qhy17nn9DvBxwG1QzCLNBDQw9
+        - price_usd: 0.00015053140964478044
+          market_cap_usd: 150531.40964478045
+          token_info:
+            name: MrOwl
+            symbol: MrOwl
+            mint_address: YLrMSqWFkpT2MmAC7rqbzqgKR5jXZDPiqxTJ2cspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigcpymuiaax6uxw65n5xmyn73looymejokfmixwqxmhoramburmsm
+        - price_usd: 0.00015046049667689234
+          market_cap_usd: 150460.49667689233
+          token_info:
+            name: Infinity Chain
+            symbol: iChain
+            mint_address: D8CaDSk2DFdUcWiQm7Ky9PBq5jaUaxqtPrgRu7uRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihvri262bgb575moa7iiob5ugcasg5zjbr6p5wdnp7imqdsak4v4q
+        - price_usd: 0.0001496096024232441
+          market_cap_usd: 149609.6024232441
+          token_info:
+            name: Family
+            symbol: FAMILY
+            mint_address: 5aATGe5quq7ARmTykUYCkTa9kEqdmsBdRM9iejcVpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiabhnf4qzpkcayvmcpd3ifrldqd4oes4s3k7zy3md7hyeivud3hqu
+        - price_usd: 0.00014886869023199133
+          market_cap_usd: 148868.69023199132
+          token_info:
+            name: Official Pump Therapist
+            symbol: THERAPY
+            mint_address: 8yNP4SP56LQ2rgdGGGezY5F6RRfw34i6Bg7WVeucpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihwtb7k6lldlkiayzz6uznytltxfo45tduksab33fvo4jlclm7nqq
+        - price_usd: 0.00014843265170994162
+          market_cap_usd: 148432.65170994162
+          token_info:
+            name: DOWNBAD
+            symbol: DOWNBAD
+            mint_address: EJ1CwktvSNjkRDDU8aPj5RKXUdztvnbpsxfHVApfpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaydswihvabyjwbtwt3m6o74izpotxea347tmnpzmqvf2egfd4f6u
+        - price_usd: 0.00014477261245246842
+          market_cap_usd: 144772.61245246843
+          token_info:
+            name: LiveBetsFun
+            symbol: BETS
+            mint_address: 3GD52FB1JWduWM62oJVGEZUsSUXvzAAUtzE5bBzFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidc7nfdmbnhvznfgqysvrzhwl32au77roehsnedpvcftc34j7q4si
+        - price_usd: 0.0001439773489952397
+          market_cap_usd: 143977.3489952397
+          token_info:
+            name: MIMU (FIRST VTUBER)
+            symbol: MIMU
+            mint_address: GnULw58pnvfX75bSntDvgfZCbQcYrcDNChyjE9TXvMUD
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihkewkfavwrwepte2fdfz6fiin4vgqj6x6pj3cbpiis75z3465que
+        - price_usd: 0.0001442840996630128
+          market_cap_usd: 144284.09966301278
+          token_info:
+            name: CITADEL WOLF
+            symbol: CITADEL
+            mint_address: 6XJi6hSNVoLEd5hb5yRb77taxsQ3HsbHvmqFJzZ3pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihnm2kjvuttn5jf3udbzhflazdq7qw2o3s42yikbw7qhnxgmapg64
+        - price_usd: 0.00014207599777136943
+          market_cap_usd: 142075.99777136944
+          token_info:
+            name: GoFunMe
+            symbol: gofunme
+            mint_address: 6GABuJboHPWA28Ke9oCVwxSUDsCYqEgP5WDWTsE6pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibmdmitn5rnff3d5r5lpm5xrb2rnjb4okzzwgyxeddrsajk5wnldy
+        - price_usd: 0.00014146884206873953
+          market_cap_usd: 141468.84206873953
+          token_info:
+            name: KING OF THE PILL
+            symbol: PILL
+            mint_address: HMCn6Ja3QEttjUQSavVBGEFp2kXZ2zbUaTsGTaVDpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmdBZZ56nqArzX3n7NSw2paBYBrKzLrAQFcWbvtJGULE7m
+        - price_usd: 0.00014075169022617628
+          market_cap_usd: 140751.6902261763
+          token_info:
+            name: TwitchrDotFun
+            symbol: TWITCHR
+            mint_address: 8ZzNR7prJTV9oCiBqJy9MgQfpe4cSwJ2PFysdfwNpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifqg4pst225iziey5gpr6br5ybkgxx3jx6tltd5nf4ntrd76r5n5i
+        - price_usd: 0.00013899773165578858
+          market_cap_usd: 138997.73165578858
+          token_info:
+            name: DAILY HONK GROW
+            symbol: DAHOG
+            mint_address: 4VaPvjv7jXCqqinEByDtxcCaMho4n6D5uD4fyA2Spump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibb7np5h3b2buk4wc6b5uq664e46otvmzstamwnrhywewgga4mj3a
+        - price_usd: 0.00013676205804904844
+          market_cap_usd: 136762.05804904844
+          token_info:
+            name: Homeless To Millionaire LIVE
+            symbol: MILLIONS
+            mint_address: 3vVoK4DeoxNWZ2RkayGF3pabE7rP4h6EbK1g9gFppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreielcdabre2gmc4dczhet4gkmk6iifnykefpodgj2ugfeg6co523c4
+        - price_usd: 0.00013656155916268967
+          market_cap_usd: 136561.55916268966
+          token_info:
+            name: Hitchhiking to Florida
+            symbol: Hitchhiker
+            mint_address: GFFuTd3pLeoEozPSGVq5vCfFCA4frSDTDXcyCCRTpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreia3rdd6ay4rd2yedtys67nnmfnv2rbmkbjqgwtzj2vrbgzxghfzwi
+        - price_usd: 0.0001339313336417943
+          market_cap_usd: 133931.33364179428
+          token_info:
+            name: Peep
+            symbol: PEEP
+            mint_address: E3rd6YKiqpeLc1Scu7sbxXFeUen2gW3r6uA5vLT5pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmUfm84tsnTyGA2gWq4B9NtaXPd8QEYEY64s43UiVrLDLW
+        - price_usd: 0.00013310842747124202
+          market_cap_usd: 133108.42747124203
+          token_info:
+            name: BET MORE
+            symbol: BET
+            mint_address: 4isxLfrSADvP3egEDLZV6fUm435hjXRumJmXgB6jpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif32nm557lrhdhbwtwoxfbek44ltmhtor43qrgmcrchds7yto3mge
+        - price_usd: 0.0001328066779113237
+          market_cap_usd: 132806.6779113237
+          token_info:
+            name: GooseWayneTV
+            symbol: GooseWayne
+            mint_address: GNGmeDfABw44mkqivMDGMWoS83MihHyiooWiHUd3pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiahy4fdxhxgzspz6pwrwma2dzbh3uqwa5xbuvg3gscqz7kjvum4cq
+        - price_usd: 0.00013258357618002402
+          market_cap_usd: 132583.576180024
+          token_info:
+            name: pumpfundme
+            symbol: pumpfundme
+            mint_address: AxNdMDpNGowJpCFuC8rsUXBQdozHpmdQSBgYuezopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiaoszltduqez3lalue5murmpa4cvoht7dvtx4lcuy25idz5uxrooy
+        - price_usd: 0.00012810347571454777
+          market_cap_usd: 128103.47571454776
+          token_info:
+            name: Survive The Streets
+            symbol: Survive
+            mint_address: 336waPEcZFkuFKqFAFrQcQpQFHZCK6DSqZuT94Bopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmcXg8Mo2wRbsiM8FCsHh4B52cVFgFAiyVHQTtVzi7YVkc
+        - price_usd: 0.000127635518367953
+          market_cap_usd: 127635.51836795299
+          token_info:
+            name: need money for porsche
+            symbol: PORSCHE
+            mint_address: FP9EZ3uMdyayL1dHuvi39JDrDw1RB8nzC1mQXbojpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihgchq5wyvrjcnh3lwawoqgq3hmqa2l3j3ftfchvnaipuyi6wepoq
+        - price_usd: 0.00012696047674746417
+          market_cap_usd: 126960.47674746417
+          token_info:
+            name: Free Advice
+            symbol: Advice
+            mint_address: 6FnWYGAjRsFNsbeh3PZTZMXw46UfNqyA6QhhtZBQpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif5gwsao6epskw52vnb4becmoxg4z65spg4vnn3nxs52f7fwvhyvi
+        - price_usd: 0.0001270726461218295
+          market_cap_usd: 127072.6461218295
+          token_info:
+            name: Edo builds LEGO
+            symbol: LEGO
+            mint_address: GY2mfATJMLpznsEeQYdqNU8shsUQzG2rBrY6Eg9Hpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic36qkphg3bflq76ihg5srd6lgvjp63wznkwlp7dyx2rqp62yhdoi
+        - price_usd: 0.0001248751692770521
+          market_cap_usd: 124875.1692770521
+          token_info:
+            name: GACHA
+            symbol: GACHA
+            mint_address: ETALxGSfDmdRwaDmMeLVGJsSheEweydMbhUgZBdyn5ze
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiagsuqiphud2orxeujuqyn6l6duvpfs7yk2k3tkxupo6ydrfivqbi
+        - price_usd: 0.0001249564977122645
+          market_cap_usd: 124956.4977122645
+          token_info:
+            name: Draw My Coin
+            symbol: DMC
+            mint_address: 3dTAAYaPVE8B1LA46dGX7EsLAxLkixdEqnvmZjptpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig6fwin3i25ezeatgefbubaqrvtvcqbv6bxhhltkjc6osnbbtfswi
+        - price_usd: 0.0001238980712982231
+          market_cap_usd: 123898.0712982231
+          token_info:
+            name: 67coin
+            symbol: '67'
+            mint_address: 8ZAtuYB4BGYXCpVu9p1npyf1dAochWSBhifVGEHbpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicqndldxbmkfub4mivdwkbpgstrogpivihxnul5ei4twuk3anmtgm
+        - price_usd: 0.00012426398667450179
+          market_cap_usd: 124263.98667450178
+          token_info:
+            name: uncat
+            symbol: UNCAT
+            mint_address: PUsEjVCeNGZhvEH8Xw6GiSr6UWXbvvoPVAsMuszpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZ3iYugcDE9VwHFP5ajdZqnY4f4qPpmQeVJdoqXRtcfnw
+        - price_usd: 0.0001242550778211553
+          market_cap_usd: 124255.0778211553
+          token_info:
+            name: DIVINE TIME
+            symbol: $DIVINE
+            mint_address: GY2C52MnhWstRbQB9JuDVHQ58Wf6k2BTq5ZZ32Fqpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmZJbT2eKpEFdvpC74FnKp7zTPZ8DPu6nSbkWQSeR5CfHu
+        - price_usd: 0.00012449976793241287
+          market_cap_usd: 124499.76793241287
+          token_info:
+            name: JEFE TOKEN
+            symbol: JEFE
+            mint_address: DTLYtCJ6cBHbA1ZTkkL9SAVmUVemdCCuH2QeNNXPpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibmpfnssrsxqorkg7qlpoijo2ekfps2w4to5zvwezmtytqkhqawri
+        - price_usd: 0.00012178481358317087
+          market_cap_usd: 121784.81358317086
+          token_info:
+            name: DJT GOLDEN STATUE
+            symbol: DJTGST
+            mint_address: 6Rfzk4BpScyvZtDkueM5Li8hgMrdfnrKnJPKbRE8pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig6wlmdung7cx4v6prmcz7chrgxvf3aihloc55ni6ir3myhscu4by
+        - price_usd: 0.00012093660128434884
+          market_cap_usd: 120936.60128434884
+          token_info:
+            name: Derek graz
+            symbol: DEREK
+            mint_address: Fgb6MECxrucgHoTh1KUhJXm9vdV9cDRgTfV2V1rvpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif6wghpmvtfnfqsxavdaqbk5chyald3oqo4kqogvvuvanygmn66pm
+        - price_usd: 0.00012132650726073678
+          market_cap_usd: 121326.50726073678
+          token_info:
+            name: Grind
+            symbol: Grind
+            mint_address: DHBNecdXb4Yaffuf9nLryt4EJr3LounXaLa9VSKHpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmes2Uo6kuYJeiL3CncdFMM34qDtEua5UjLdkjko5Xcq37
+        - price_usd: 0.00011992894301867492
+          market_cap_usd: 119928.94301867491
+          token_info:
+            name: RoXsaOS
+            symbol: RoXsaOS
+            mint_address: FrUtcpGDDjPUNQT9qCJBmiSYjAfQaVog556i96ENpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreig5ebsoe6pjywngpjpv3wxzgurlqfjyfsc5o3b4x4k4je7xggelma
+        - price_usd: 0.00011967881229475254
+          market_cap_usd: 119678.81229475254
+          token_info:
+            name: READING ENTIRE BIBLE ON STREAM
+            symbol: BIBLE
+            mint_address: 536JBGsiouD8stKtLj6qJR8JhAy3eJXBHHZCJW1ypump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmTkm7Uy3PuvhD714Rh5NyepiEik8gkaqRchsfXYQKTEza
+        - price_usd: 0.00011869482312540589
+          market_cap_usd: 118694.82312540589
+          token_info:
+            name: Matan University
+            symbol: Matan
+            mint_address: 5Va9w9KBGeztV8uFwFKM4bynD3UYCC7tFGH7uUSEpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiecfn3j3uuoj63dhullv7kgpfxppqak3n43fgfo3n5umkzqabmukm
+        - price_usd: 0.00011931776731308321
+          market_cap_usd: 119317.76731308321
+          token_info:
+            name: Getting a Virgin Laid
+            symbol: VIRGIN
+            mint_address: CgWoEDsiMU8iD1P6EYvwLgxyveq7wWmibeNwabVtpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifzf6maffim6bqei4kmkqtxk65gcoqknimfnyvpicbchvbe3fhujq
+        - price_usd: 0.00011798186586705874
+          market_cap_usd: 117981.86586705873
+          token_info:
+            name: GRAZZZZ
+            symbol: GRAZGANG
+            mint_address: Hph9H2V7GrmurYEEKZKLkon4tkDNqzZcPhsnwcFWpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreighjnoezffb5sp4hvxno4zcmc3tqchc4vqwdzg2kw3xpnkkz4wqpi
+        - price_usd: 0.000117371954348443
+          market_cap_usd: 117371.954348443
+          token_info:
+            name: COEN THE DAWNWALKER
+            symbol: COEN
+            mint_address: 82GwKsNrbHrycptaQt3AVv6upKdzXF4nSTdjd6pMWMid
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic3a3qepe4upfhwlzeadmgb2b545qyuy4ci7sms7kf7hofvlqf55q
+        - price_usd: 0.00011592703342782877
+          market_cap_usd: 115927.03342782878
+          token_info:
+            name: huzz
+            symbol: huzz
+            mint_address: CuyrYgPicrArYKzdRnURuM772LUfC63aVTZqahDmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibbl4as4qrxc5zbumlhgumbyhtvqyx3w3qytqhfleqa5nwiqk4yie
+        - price_usd: 0.00011608494486233927
+          market_cap_usd: 116084.94486233927
+          token_info:
+            name: DUST
+            symbol: DUST
+            mint_address: 66WEyo25yTx1KxSfnUofXE9ZBYuS5bJx46SCbHgspump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiakrqtn3uvriw3tazr4tqwsbg7sglhbkwvxjrnrqu7slpfhtah4zq
+        - price_usd: 0.00011347984965601934
+          market_cap_usd: 113479.84965601935
+          token_info:
+            name: SleepWork
+            symbol: SLEEPWORK
+            mint_address: HNMVp3f1ANCwffRTF4kt53Z4mWPp7rjs24K14e1Fpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicaxn6537nqgtjv2bwyclf5y3cmfbjo2wcixljpfta6lmng5ehjgu
+        - price_usd: 0.00011395439921904042
+          market_cap_usd: 113954.39921904042
+          token_info:
+            name: ISRAEL COIN
+            symbol: ISRAEL
+            mint_address: 38tH6nbw5cryQ6ahe5PfNhWsgU6ZLA2YhfZ9TNmypump
+            decimals: 6
+            fungible: true
+            uri: https://metadata.uxento.io/data/c8b74382-f8d1-4cb1-9ec4-115bce394e6c
+        - price_usd: 0.00011379272418806067
+          market_cap_usd: 113792.72418806067
+          token_info:
+            name: bool
+            symbol: BOOL
+            mint_address: 4FNvs1EhWvDWe6KNXcLbjbGj8FypFqD2UVUpmhpLHtRr
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreide5nlewo7h2as2ym2lqm4vlpvqvkd3mecugzfwlupi5n7i33p52e
+        - price_usd: 0.00011047775709312737
+          market_cap_usd: 110477.75709312738
+          token_info:
+            name: Pay It Forward
+            symbol: Bless
+            mint_address: 8zPkx8gtmt95PyuFLLVQfFufRwxoFMu4N7rxw9jGpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmapkn7CZvVoxq5BtpsyQ8tEQCbZ5nS3C3JwxEWv17Nrgp
+        - price_usd: 0.00010956678598499764
+          market_cap_usd: 109566.78598499764
+          token_info:
+            name: LandCoin
+            symbol: LAND
+            mint_address: 2AmxjuPBs7kwKFeQk143xhqAprSBc36f26guZx81pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidnz25olrhoj4kr2tjvsynxv6bplgrgj3f7kmcj2oefvqfezxpxke
+        - price_usd: 0.00010718949017211284
+          market_cap_usd: 107189.49017211284
+          token_info:
+            name: Most Viewed Live
+            symbol: LIVE
+            mint_address: 3YiQu6kGgcVrTtL6wwpZ5yf8qqaQYaLEP9KVho7dpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifgjiyxoss5xcmrnviigmsc4hxavxak2jfwi2txjwqjsu5pqql6mm
+        - price_usd: 0.00010657177722918515
+          market_cap_usd: 106571.77722918516
+          token_info:
+            name: Bomo Solana
+            symbol: 'BOMO '
+            mint_address: a74dxP2bKgu5fSk16poNL1muFvoMx9xvPo5h8G6W7Qu
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidnms2a2qexfoqzqqjos6bnedutnkhq3ttqgkrv2nwnleflvnp63y
+        - price_usd: 0.00010649389583181431
+          market_cap_usd: 106493.89583181431
+          token_info:
+            name: Help The Wiener Dogs
+            symbol: Winerdogs
+            mint_address: 3JEqSGLPJrHfcUyZxj43ikAhYqmAdp8y8MiGyjjBpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic7zxseqtwkbk6slvohemocg7fb6wki7p5ropqldlojdvdfy2woxa
+        - price_usd: 0.00010656187172310045
+          market_cap_usd: 106561.87172310046
+          token_info:
+            name: Save The Pets
+            symbol: $PETS
+            mint_address: 3eY2NTMAhzJik1q1tgZGKWc4Krm3EhLQEbTENX74pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiew5sazbagdsjz2dxn4nwhxxfamcllmybgyxmszhvirgyxqprianq
+        - price_usd: 0.00010695046679353422
+          market_cap_usd: 106950.46679353421
+          token_info:
+            name: GlowUp
+            symbol: GLOWUP
+            mint_address: HdFyPUfJTLZB6gzSfEXMDYmkgHeNrAXFSHnF8cAypump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibkduiexzsgrfbwql532kenjvffbjh4z73tweuldwloybd2scniaq
+        - price_usd: 0.00010679901307757512
+          market_cap_usd: 106799.01307757512
+          token_info:
+            name: Homelander Blow
+            symbol: blowlander
+            mint_address: BPcEmH1Amv1ZAJhBpTxnTpkMg1bbkbrM7RwKycWipump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiakaoou2jukul7ncjryu5oxbvb3vlc2zbcjhcwah6in4iwdxo2siq
+        - price_usd: 0.00010447184080407674
+          market_cap_usd: 104471.84080407674
+          token_info:
+            name: BRETT GAMBLES LIVE
+            symbol: GAMBLER
+            mint_address: 3wc3PqoY9AaWagJjJ8dc1uTHFPhpRfWZ2ZjpvghvjqtH
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmUkaTMaoUnYc3FpYzRps6LcZqPrYWwYsXjwAwzvRbLCG8
+        - price_usd: 0.00010495804825467709
+          market_cap_usd: 104958.0482546771
+          token_info:
+            name: Infinite CS2 Case Opening
+            symbol: meztal
+            mint_address: H5JB2mKTMVACxNHKaTFp86XmtvbUZwSUXbLNfNhmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiagcogw5frzkfn6xpkrthdvpkznhpodjmbb67ovxpoisvohwjjrje
+        - price_usd: 0.00010341298672925201
+          market_cap_usd: 103412.986729252
+          token_info:
+            name: Collector
+            symbol: collect
+            mint_address: BnKToHNfkrkQ8CB9G4WmUaBgMnzLCXMTBfGZEup9pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibmegfkqqr4zrw6lwxjqzgusc2mj6lmt3y3igrvqnm6mmjrhwjfem
+        - price_usd: 0.00010307187667314967
+          market_cap_usd: 103071.87667314967
+          token_info:
+            name: itsbritneyloh
+            symbol: Bloh
+            mint_address: 7pLZA1dHVSJED8Bq276pvuFBRe8u47pZ44TodM6tpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmTnhoiZSrFg1EM52mte5r7su5pL6G67zDkG4PbMDAmrMk
+        - price_usd: 0.00010295168996567735
+          market_cap_usd: 102951.68996567735
+          token_info:
+            name: PUMPGUY
+            symbol: PUMPGUY
+            mint_address: 2ozEwJmhUaabqjmRS5TUvcSkqmGXJqKJRoV14crupump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmW5fXgMoC71CsXNqVLMR4Tuf1JiJtQrzTJUqbbmDmnZd5
+        - price_usd: 0.00010246067363537095
+          market_cap_usd: 102460.67363537094
+          token_info:
+            name: Sleepy Fed
+            symbol: RATES
+            mint_address: 9c2ZAuGws4REyYPcDJaGqKcbgYKy6Hfgkjth66naoNv
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigi2dumamrsx5dpq4wg6gl42saw7p25rpi5vfp7tmtx35mzjnq5ju
+        - price_usd: 0.00010168479076085846
+          market_cap_usd: 101684.79076085845
+          token_info:
+            name: forever coin
+            symbol: forever
+            mint_address: 6UBMsPWPuv9RjmVxzMDPVCxYftNhUxsbC5RQH2uWpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreielzv3now55bke4ft622pqpxbnktpemt3qbikf6qgkd63b5nfidve
+        - price_usd: 0.00010073330793138421
+          market_cap_usd: 100733.3079313842
+          token_info:
+            name: Dudeman
+            symbol: DUDEMAN
+            mint_address: BvVGPQB5GXkMKyPGKz95TDkKUdLY5CvxT9LsnWqEgKjk
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibbpy2agqseonm2nwbyt4thdbkhjevcje5kizas6e5bdjs4priwzy
+        - price_usd: 0.00010072140683359841
+          market_cap_usd: 100721.40683359842
+          token_info:
+            name: SURVIVING IN MEXICO
+            symbol: SURVIVOR
+            mint_address: 5PWHg3LptQmxua3K8Uef5ugBHHYL8ZBAhFSgC8Ltpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreifjdeylocppzvtw2yf4fgyxhmkpv23u4zowvame34ifqu4dhczgom
+        - price_usd: 9.927117554465393e-05
+          market_cap_usd: 99271.17554465393
+          token_info:
+            name: polybro AI
+            symbol: polybro
+            mint_address: 8rpw6v6KLZ44payDUMW6njRGz5jRtxaqPgUGqMzapump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiblzgnjzw3l4okuv4nudibhhrz7c27zmd2unur3xwth2owdmouktm
+        - price_usd: 9.944656992281204e-05
+          market_cap_usd: 99446.56992281204
+          token_info:
+            name: Official Leonardo DeCaprio
+            symbol: LDC
+            mint_address: HmXVjmNwfrT4bWjFoZJ7xgKusu53bbV3HvMQAWnHpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreib3uwwdyxfcjrc326gbgzjq7sjfxi3mhufnjmrha5fcnirfhfdn2q
+        - price_usd: 9.886009133806233e-05
+          market_cap_usd: 98860.09133806232
+          token_info:
+            name: T-Wayne
+            symbol: twayne
+            mint_address: CWqLRXaavTBLfR8ienny2eXcSvGie8RK6Ymc4R1qpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/Qmdiji6TMnX3SufqDnbEvMMnVBgwNNbuVnF5qg1RtYov4n
+        - price_usd: 9.86514345665013e-05
+          market_cap_usd: 98651.4345665013
+          token_info:
+            name: StrawberryTabby
+            symbol: Tabby
+            mint_address: 2QmLCuRyPpQ15iUSYJWqECXZRhXj7rsJq3d5NwDBpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihu7jt6ldra3endlt5fqubxbe7uy7qyhqua4r3ewhoxn7tk4cpqia
+        - price_usd: 9.789244770869564e-05
+          market_cap_usd: 97892.44770869565
+          token_info:
+            name: JannisZ
+            symbol: JannisZ
+            mint_address: 2Q8NFrukdQY4dLny7ULMhcopvdDsdg3YjNZcLcvnpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreie6ophnwbbsolwuabonmypf3ezqnmd4tvmirjxvin2jxbloudipke
+        - price_usd: 9.778167136981023e-05
+          market_cap_usd: 97781.67136981022
+          token_info:
+            name: Game is Game
+            symbol: Life&Scars
+            mint_address: HqGhj6QBFgz79jChkp5KcYmY21yNdqUfUM5UWR2Cpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreif6b6vlkt4wan5ch4zefvoq6r2t3ru7bucmujpesfbhb5r5oiucju
+        - price_usd: 9.752046003417701e-05
+          market_cap_usd: 97520.46003417701
+          token_info:
+            name: Pump Elements
+            symbol: ELEMENTS
+            mint_address: HPRhPxjDCLSXXQBHhUURhz7LV1c61Ffhr8XAFdvtpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicfjzu447y2gx67gqggtdoobbc55sfextonbplhinycfh6prikpne
+        - price_usd: 9.709656863719307e-05
+          market_cap_usd: 97096.56863719306
+          token_info:
+            name: BRAINROTBOYS
+            symbol: BRB
+            mint_address: E2KzUiphhwwDSMTpdf3JGU3MXXD1CwYyBLa1No1apump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihrmylkatd3pkhs66wazvayqikfqz34ckblvyncbv237rp4wmcoem
+        - price_usd: 9.531348745674247e-05
+          market_cap_usd: 95313.48745674247
+          token_info:
+            name: Climbing a crane
+            symbol: climb
+            mint_address: 3o8cLAb3odMMP1z2Zbe9YMgL9RKnohRc15JRc3fWpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreihilmevv3jfv3wmyxyzo6euzt5qiir647zqsowuqmy3yz4hv2q2ju
+        - price_usd: 7.395816088120902e-05
+          market_cap_usd: 73958.16088120901
+          token_info:
+            name: IRL Subway Surfer
+            symbol: Subway
+            mint_address: 2VTR4jrsv7pC9bePD8rkC4RiwSZ6UyQc25YQ9vk2pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibf3i5hhylpmda7tjdlxlofoekaqyhlpc7o7rsoc5rpz272unf5fu
+        - price_usd: 6.363112444156036e-05
+          market_cap_usd: 63631.12444156036
+          token_info:
+            name: Liminal
+            symbol: LIMINAL
+            mint_address: 8CzzwFH9WowYwRK2oJK1MHTUqjtb7TC9fG8nbv2obAP9
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicdjz5e7wz3zqyqng5vewpyojux4vqadeccfeinuewavuqxhhdivy
+        - price_usd: 4.697366321735654e-05
+          market_cap_usd: 46973.66321735654
+          token_info:
+            name: godsplanlive
+            symbol: GODSPLAN
+            mint_address: jboZsXyhf3kurHDRSoVanCUAVCd4noC7RBucKAVpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmXEHXpcyY94sSY6z679rDKnS8Q6UjCa7S1XLJ6MFy2neR
+        - price_usd: 1.758979510985418e-05
+          market_cap_usd: 17589.79510985418
+          token_info:
+            name: Large Eating Model
+            symbol: LEM
+            mint_address: 9gysAR3MdZnzJ9Tve9Zay9CUzhKnEk9FhmdxUrtppump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmaycW3MyAvvRxxa3tupoSHjpvCUUcvBZm3LUhWMgWPdmj
+        - price_usd: 8.64777113063038e-06
+          market_cap_usd: 8647.771130630379
+          token_info:
+            name: Surviving off fees
+            symbol: Survive
+            mint_address: 4ds2UTNNhQ9ZRbFLmDr3zpKLPYbELm9NJpMbioSypump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmXWkKnULXkjGnjq4kAh3sThkiP79ZjuWeSphmd9dw41n6
+        - price_usd: 6.49914422053381e-06
+          market_cap_usd: 6499.144220533811
+          token_info:
+            name: KushKlicker
+            symbol: KUSH
+            mint_address: FetiqGccf3ECSponQGEnx2QvpXrE57kvww1RdbjXpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiduhbfgsu66tmfpvvyuyjbgb32cgq3hcoctct5ksduimkps2wpxru
+        - price_usd: 6.110176674333864e-06
+          market_cap_usd: 6110.176674333864
+          token_info:
+            name: Modric Shaoline
+            symbol: MODRIC
+            mint_address: 6PUbR2CEhKGwPEDRh1EoqAHz1Sbc4qtF5vWDg7aRpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiebblctznmide34utb3ha5wv7kk2vnmcsqp6qe3s74f7ej6rwb3ka
+        - price_usd: 5.279485492950848e-06
+          market_cap_usd: 5279.485492950848
+          token_info:
+            name: QTCLAPS
+            symbol: QTCLAPS
+            mint_address: BCH6gpv3Z9Dvd3W78kEbtYBe4XW2eLLR1E3i9VBopump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreibbhofyfv5s5q3nusa3p2zrdnwhxhqlzak76dxnlbbcc55c6qonaa
+        - price_usd: 5.266708110880657e-06
+          market_cap_usd: 5266.708110880657
+          token_info:
+            name: EU FNCS Winner
+            symbol: Stormyrite
+            mint_address: CQqz97LDpHGJMCu9aHuv8utBDk5fNH6jmkus7Q12pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreigjsdjpvz2ymqpx6zhsstpbtxqj3lnirlzeu76obhbjhe2mpw2vwa
+        - price_usd: 4.434452202724626e-06
+          market_cap_usd: 4434.452202724627
+          token_info:
+            name: ShiftFDN
+            symbol: SHIFT
+            mint_address: FWn46VVcTSi1xR5tWFWZnzeFYh3bgXfuNeCTvtn4pump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreidslnuxhfhdz5qezsrhtah4sno7hbb5veqj3jrh3vitumqrdqqsoa
+        - price_usd: 4.33654564511479e-06
+          market_cap_usd: 4336.54564511479
+          token_info:
+            name: Marlon3LG
+            symbol: Marlon
+            mint_address: 8k92HwkCELSgkaGNzcrQVCmrUrJzjHFicLrsswYFpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreiavjzk3isuh25xmyc23fcvxubfxej4uhtvkpzrpmdugrpzwpghv44
+        - price_usd: 4.277448928786051e-06
+          market_cap_usd: 4277.4489287860515
+          token_info:
+            name: OGshoots
+            symbol: OG
+            mint_address: HowC3YzQwCgya7xRbgJVGAFHaAe9RVvGxF3SeQGmpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreic7uvn5d3xt5tkeb7unbu6fnjhdyhrk4hyy3xedgcokxkfv46a2de
+        - price_usd: 4.305307595236648e-06
+          market_cap_usd: 4305.307595236648
+          token_info:
+            name: Marlon
+            symbol: MLN
+            mint_address: DCoE21bdSMLjyA3Fndo3AsL8ZU7ihUaNeuV8u2zSpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/bafkreicni7sjx2fg7j65b6cogtrtlt5nhxy7t4hqqf3r7yqjzt5tthyr6i
+        - price_usd: 4.2316755076583715e-06
+          market_cap_usd: 4231.675507658371
+          token_info:
+            name: plews
+            symbol: PLEWS
+            mint_address: PshivRmYWAC9E3Gd4tD3Ajb9kynfdW9eNUSYJadpump
+            decimals: 6
+            fungible: true
+            uri: https://ipfs.io/ipfs/QmQCWKygdsYckmT7TA6aAoWLvWpvUNifBaLE8osFKPhkjT
+        tokens_without_price_data:
+        - H6xRBRw3QxGeHRuT9thoJC6t3E19VNvvoCnjcjanpump
+        - F1LGEyNVRRMXGojc3F2z5YVDDdqMej6PUWer9Vvwpump
+        - jiaLptpqVAtcJwjmgekcox4akMJzadMkwNd7T4mpump
+        - 7ZKpBgVZ7zc45dpFmbkUaT43P1asgkcGUb3L9PWopump
+        - HhZ2LYjcci9fm7FGrBvdGD5JbLmJrSFdsYuUqTVVpump
+        - 3irmuQutoXxKtEjPyoCEaCmDzffSbLEgpChJU3Jvpump
+        - FjQCFGdMmHTyCfit6xqH3bghN6z8DqtZgGt7rSTVpump
+        timeframe_hours: 24
+        start_time: '2025-09-15T00:00:00Z'
+    description: Direct tool call for graduated tokens with 24 hour timeframe
+    status: success

@@ -1,32 +1,43 @@
-input:
-  query: What are the latest developments in artificial intelligence?
-  tool: search_web
-  tool_arguments:
-    search_term: What are the latest developments in artificial intelligence?
-    max_results: 3
-  raw_data_only: false
-output:
-  response: ''
-  data:
+metadata:
+  agent: DuckDuckGoSearchAgent
+  test_file: duckduckgo_search_agent.py
+  timestamp: '2025-09-16T17:05:44.857639'
+  total_tests: 1
+  passed: 1
+  failed: 0
+results:
+  ai_developments_search:
+    input:
+      query: What are the latest developments in artificial intelligence?
+      tool: search_web
+      tool_arguments:
+        search_term: What are the latest developments in artificial intelligence?
+        max_results: 3
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          search_term: What are the latest developments in artificial intelligence?
+          results:
+          - title: 3 Latest Developments in Artificial Intelligence - TechSpective
+            link: https://techspective.net/2022/09/20/3-latest-developments-in-artificial-intelligence/
+            snippet: In this article, we will explore three of the latest and most
+              profound developments in the world of artificial intelligence. 1. Deep
+              Learning Chips The first development is the creation of new chips that
+              help run deep neural networks faster. These chips can be used to train
+              models to recognize images, speech and text more efficiently.
+          - title: 5 Big Advances Last Year In Artificial Intelligence - Forbes
+            link: https://www.forbes.com/sites/johnwerner/2025/01/02/5-big-advances-last-year-in-artificial-intelligence/
+            snippet: Perhaps the new year is a good time to look back on the old year,
+              and see where we've come within the annual cycle. There will never be
+              another year like 2024 again for artificial intelligence.
+          - title: The 10 Biggest AI Trends Of 2025 Everyone Must Be Ready For Today
+              - Forbes
+            link: https://www.forbes.com/sites/bernardmarr/2024/09/24/the-10-biggest-ai-trends-of-2025-everyone-must-be-ready-for-today/
+            snippet: 'Discover the 10 major AI trends set to reshape 2025: from augmented
+              working and real-time decision-making to advanced AI legislation and
+              sustainable AI initiatives.'
+    description: Direct tool call to search web for AI developments with 3 max results
     status: success
-    data:
-      search_term: What are the latest developments in artificial intelligence?
-      results:
-      - title: The Top Artificial Intelligence Trends | IBM
-        link: https://www.ibm.com/think/insights/artificial-intelligence-trends
-        snippet: The release of OpenAI's o1 introduced a new avenue for increasing
-          model performance. Its head-turning improvement over prior state-of-the-art
-          performance on highly technical math and coding benchmarks initiated an
-          arms race in so-called "reasoning models." Their enhanced performance on
-          tasks requiring logical decision-making figures to play an important role
-          in the development of agentic ...
-      - title: Future of AI in 2025 [Top Trends and Predictions] - GeeksforGeeks
-        link: https://www.geeksforgeeks.org/blogs/future-of-ai/
-        snippet: Latest Developments in Artificial Intelligence AI technology is becoming
-          more adult, nimble, and safe, with wonderful new features that truly extend
-          its use in everyday living.
-      - title: What's next for AI in 2025 - MIT Technology Review
-        link: https://www.technologyreview.com/2025/01/08/1109188/whats-next-for-ai-in-2025/
-        snippet: You already know that agents and small language models are the next
-          big things. Here are five other hot trends you should watch out for this
-          year.

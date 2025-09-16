@@ -1,61 +1,42 @@
+# test_exa_search_agent.py
+"""Test suite for Exa Search Agent"""
+
 import asyncio
 import sys
 from pathlib import Path
 
-import yaml
-from dotenv import load_dotenv
-
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from mesh.agents.exa_search_agent import ExaSearchAgent  # noqa: E402
 
-load_dotenv()
+from mesh.agents.exa_search_agent import ExaSearchAgent
+from mesh.tests._test_agents import test_agent
 
-
-async def run_agent():
-    agent = ExaSearchAgent()
-    try:
-        # Natural language query
-        agent_input = {
+# Define test cases - exact conversion from original file
+TEST_CASES = {
+    "natural_language_query": {
+        "input": {
             "query": "What are the latest developments in quantum computing?",
             "raw_data_only": False,
-        }
-        agent_output = await agent.handle_message(agent_input)
-
-        # Direct search tool call
-        agent_input_search = {
+        },
+        "description": "Natural language query for quantum computing developments",
+    },
+    "direct_search": {
+        "input": {
             "tool": "exa_web_search",
             "tool_arguments": {"search_term": "quantum computing breakthroughs 2024", "limit": 5},
             "raw_data_only": False,
-        }
-        agent_output_search = await agent.handle_message(agent_input_search)
-
-        # Direct answer tool call
-        agent_input_answer = {
+        },
+        "description": "Direct search tool call for quantum computing breakthroughs",
+    },
+    "direct_answer": {
+        "input": {
             "tool": "exa_answer_question",
             "tool_arguments": {"question": "What is quantum supremacy?"},
             "raw_data_only": False,
-        }
-        agent_output_answer = await agent.handle_message(agent_input_answer)
-
-        script_dir = Path(__file__).parent
-        current_file = Path(__file__).stem
-        base_filename = f"{current_file}_example"
-        output_file = script_dir / f"{base_filename}.yaml"
-
-        yaml_content = {
-            "natural_language_query": {"input": agent_input, "output": agent_output},
-            "direct_search": {"input": agent_input_search, "output": agent_output_search},
-            "direct_answer": {"input": agent_input_answer, "output": agent_output_answer},
-        }
-
-        with open(output_file, "w", encoding="utf-8") as f:
-            yaml.dump(yaml_content, f, allow_unicode=True, sort_keys=False)
-
-        print(f"Results saved to {output_file}")
-
-    finally:
-        await agent.cleanup()
+        },
+        "description": "Direct answer tool call for quantum supremacy definition",
+    },
+}
 
 
 if __name__ == "__main__":
-    asyncio.run(run_agent())
+    asyncio.run(test_agent(ExaSearchAgent, TEST_CASES))
