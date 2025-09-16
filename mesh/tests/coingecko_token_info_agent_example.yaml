@@ -1,2101 +1,1961 @@
-natural_language_query:
-  input:
-    query: Get information about $HEURIST
-  output:
-    response: "### Heurist ($HEU) Overview\n- **Current Price:** $0.0522\n- **Market\
-      \ Cap:** $8.94M\n- **Market Cap Rank:** 1,874\n- **Fully Diluted Valuation:**\
-      \ $51.72M\n- **24h Trading Volume:** $214,925\n\n### Price Insights\n- **All-Time\
-      \ High (ATH):** $0.4611 (down 88.68% from ATH)\n- **24h Price Change:** -$0.0025\
-      \ (-4.58%)\n- **24h High:** $0.0574\n- **24h Low:** $0.0516\n\n### Supply Details\n\
-      - **Total Supply:** 1 Billion HEU\n- **Circulating Supply:** 172.84 Million\
-      \ HEU\n\n### Categories\n- **Heurist** is categorized under:\n  - Artificial\
-      \ Intelligence (AI)\n  - Ethereum Ecosystem\n  - ZkSync Ecosystem\n  - DePIN\n\
-      \  - Base Ecosystem\n  - AI Agents\n  - AI Framework\n  - Made in USA  \n\n\
-      ### Summary\nHeurist is positioned in several growing sectors, particularly\
-      \ AI and blockchain ecosystems, indicating potential for future growth despite\
-      \ its current low market cap ranking."
-    data: {}
-token_info_tool:
-  input:
-    tool: get_token_info
-    tool_arguments:
-      coingecko_id: bitcoin
-    raw_data_only: true
-  output:
-    response: ''
-    data:
-      token_info:
-        id: bitcoin
-        name: Bitcoin
-        symbol: BTC
-        market_cap_rank: 1
-        categories:
-        - Smart Contract Platform
-        - Layer 1 (L1)
-        - FTX Holdings
-        - Proof of Work (PoW)
-        - Bitcoin Ecosystem
-        - GMCI 30 Index
-        - GMCI Index
-        - Coinbase 50 Index
-      market_metrics:
-        current_price_usd: 111500
-        market_cap_usd: 2216922348746
-        fully_diluted_valuation_usd: 2216922348746
-        total_volume_usd: 49173764586
-      price_metrics:
-        ath_usd: 124128
-        ath_change_percentage: -10.17026
-        ath_date: '2025-08-14T00:37:02.582Z'
-        high_24h_usd: 114927
-        low_24h_usd: 111139
-        price_change_24h: -3196.8543803375
-        price_change_percentage_24h: -2.78722
-      supply_info:
-        total_supply: 19911234.0
-        max_supply: 21000000.0
-        circulating_supply: 19911234.0
-trending_coins_tool:
-  input:
-    tool: get_trending_coins
-    tool_arguments: {}
-    raw_data_only: true
-  output:
-    response: ''
-    data:
-      trending_coins:
-      - name: Ethereum
-        symbol: ETH
-        market_cap_rank: 2
-        price_usd: 4577.737756736491
-      - name: Bitcoin
-        symbol: BTC
-        market_cap_rank: 1
-        price_usd: 111288.39958348466
-      - name: Pudgy Penguins
-        symbol: PENGU
-        market_cap_rank: 65
-        price_usd: 0.03188571809052709
-      - name: Hyperliquid
-        symbol: HYPE
-        market_cap_rank: 15
-        price_usd: 44.943064327008905
-      - name: Solana
-        symbol: SOL
-        market_cap_rank: 6
-        price_usd: 199.44522012511928
-      - name: Bio Protocol
-        symbol: BIO
-        market_cap_rank: 186
-        price_usd: 0.23647599376324874
-      - name: Pi Network
-        symbol: PI
-        market_cap_rank: 54
-        price_usd: 0.3436367470087743
-      - name: Chainlink
-        symbol: LINK
-        market_cap_rank: 13
-        price_usd: 25.01070620871889
-      - name: Arbitrum
-        symbol: ARB
-        market_cap_rank: 51
-        price_usd: 0.5513906007194219
-      - name: Ontology
-        symbol: ONT
-        market_cap_rank: 334
-        price_usd: 0.21388158735840643
-price_multi_tool:
-  input:
-    tool: get_token_price_multi
-    tool_arguments:
-      ids: bitcoin,ethereum
-      vs_currencies: usd
-      include_market_cap: true
-      include_24hr_vol: true
-      include_24hr_change: true
-    raw_data_only: true
-  output:
-    response: ''
-    data:
-      price_data:
-        bitcoin:
-          usd: 111510
-          usd_market_cap: 2220277950045.8657
-          usd_24h_vol: 48925800787.599976
-          usd_24h_change: -2.7781790614296873
-        ethereum:
-          usd: 4601.81
-          usd_market_cap: 554184693928.2925
-          usd_24h_vol: 47557788892.63756
-          usd_24h_change: -3.532812176022156
-categories_list_tool:
-  input:
-    tool: get_categories_list
-    tool_arguments: {}
-    raw_data_only: true
-  output:
-    response: ''
-    data:
-      categories:
-      - category_id: 4chan-themed
-        name: 4chan-Themed
-      - category_id: 8bit-chain-ecosystem
-        name: 8Bit Chain Ecosystem
-      - category_id: aave-tokens
-        name: Aave Tokens
-      - category_id: abstract-ecosystem
-        name: Abstract Ecosystem
-      - category_id: account-abstraction
-        name: Account Abstraction
-      - category_id: action-games
-        name: Action Games
-      - category_id: adidas-ecosystem
-        name: Adidas Ecosystem
-      - category_id: adventure-games
-        name: Adventure Games
-      - category_id: aelf-ecosystem
-        name: Aelf Ecosystem
-      - category_id: ai-agent-launchpad
-        name: AI Agent Launchpad
-      - category_id: ai-agents
-        name: AI Agents
-      - category_id: ai-applications
-        name: AI Applications
-      - category_id: ai-framework
-        name: AI Framework
-      - category_id: ai-meme-coins
-        name: AI Meme
-      - category_id: airdao-ecosystem
-        name: AirDAO Ecosystem
-      - category_id: airdropped-tokens-by-nft-projects
-        name: Airdropped Tokens by NFT Projects
-      - category_id: alameda-research-portfolio
-        name: Alameda Research Portfolio
-      - category_id: alephium-ecosystem
-        name: Alephium Ecosystem
-      - category_id: algorand-ecosystem
-        name: Algorand Ecosystem
-      - category_id: algorithmic-stablecoin
-        name: Algorithmic Stablecoin
-      - category_id: alienx-ecosystem
-        name: AlienX Ecosystem
-      - category_id: alleged-sec-securities
-        name: Alleged SEC Securities
-      - category_id: alveychain-ecosystem
-        name: Alveychain Ecosystem
-      - category_id: analytics
-        name: Analytics
-      - category_id: ancient8-ecosystem
-        name: Ancient8 Ecosystem
-      - category_id: andreessen-horowitz-a16z-portfolio
-        name: Andreessen Horowitz (a16z) Portfolio
-      - category_id: animal-racing
-        name: Animal Racing
-      - category_id: anime-themed-coins
-        name: Anime-Themed
-      - category_id: animoca-brands
-        name: Animoca Brands Portfolio
-      - category_id: apechain-ecosystem
-        name: ApeChain Ecosystem
-      - category_id: apex-chain-ecosystem
-        name: Apex Chain Ecosystem
-      - category_id: appchains
-        name: Appchains
-      - category_id: aptos-ecosystem
-        name: Aptos Ecosystem
-      - category_id: arbitrum-ecosystem
-        name: Arbitrum Ecosystem
-      - category_id: arbitrum-nova-ecosystem
-        name: Arbitrum Nova Ecosystem
-      - category_id: arcade-games
-        name: Arcade Games
-      - category_id: archway-ecosystem
-        name: Archway Ecosystem
-      - category_id: art
-        name: Art
-      - category_id: art-blocks-ecosystem
-        name: Art Blocks Ecosystem
-      - category_id: artela-ecosystem
-        name: Artela Ecosystem
-      - category_id: artificial-intelligence
-        name: Artificial Intelligence (AI)
-      - category_id: asc-20
-        name: ASC-20
-      - category_id: asset-manager
-        name: Asset Manager
-      - category_id: astar-ecosystem
-        name: Astar Ecosystem
-      - category_id: astar-zkevm-ecosystem
-        name: Astar zkEVM Ecosystem
-      - category_id: atomicals-arc-20
-        name: Atomicals (ARC-20)
-      - category_id: augmented-reality
-        name: Augmented Reality
-      - category_id: aurora-ecosystem
-        name: Aurora Ecosystem
-      - category_id: automated-market-maker-amm
-        name: Automated Market Maker (AMM)
-      - category_id: avalanche-ecosystem
-        name: Avalanche Ecosystem
-      - category_id: avalanche-subnet
-        name: Avalanche L1
-      - category_id: axie-infinity
-        name: Axie Infinity Ecosystem
-      - category_id: azuki-ecosystem
-        name: Azuki Ecosystem
-      - category_id: xstocks-ecosystem
-        name: BackedFi xStocks Ecosystem
-      - category_id: bagsapp-ecosystem
-        name: BagsApp Ecosystem
-      - category_id: bahamut-ecosystem
-        name: Bahamut Ecosystem
-      - category_id: base-ecosystem
-        name: Base Ecosystem
-      - category_id: base-meme-coins
-        name: Base Meme
-      - category_id: bayblon-genesis-ecosystem
-        name: Bayblon Genesis Ecosystem
-      - category_id: beam-ecosystem
-        name: Beam Ecosystem
-      - category_id: beamprivacy-ecosystem
-        name: BeamPrivacy Ecosystem
-      - category_id: believe-app-ecosystem
-        name: Believe.app Ecosystem
-      - category_id: berachain-ecosystem
-        name: Berachain Ecosystem
-      - category_id: bevm-ecosystem
-        name: BEVM Ecosystem
-      - category_id: big-data
-        name: Big Data
-      - category_id: binance-alpha-spotlight
-        name: Binance Alpha Spotlight
-      - category_id: binance-hodler-airdrops
-        name: Binance HODLer Airdrops
-      - category_id: binance-launchpad
-        name: Binance Launchpad
-      - category_id: binance-launchpool
-        name: Binance Launchpool
-      - category_id: binance-megadrop
-        name: Binance Megadrop
-      - category_id: binance-peg-tokens
-        name: Binance-Peg Tokens
-      - category_id: binance-wallet-ido
-        name: Binance Wallet IDO
-      - category_id: bitcichain-ecosystem
-        name: Bitcichain Ecosystem
-      - category_id: bitcoin-ecosystem
-        name: Bitcoin Ecosystem
-      - category_id: bitcoin-fork
-        name: Bitcoin Fork
-      - category_id: bitcoin-layer-2
-        name: Bitcoin Sidechains
-      - category_id: bitgert-ecosystem
-        name: Bitgert Ecosystem
-      - category_id: bitlayer-ecosystem
-        name: Bitlayer Ecosystem
-      - category_id: bitrock-ecosystem
-        name: Bitrock Ecosystem
-      - category_id: bitstarters-launchpad
-        name: BitStarters Launchpad
-      - category_id: bittensor-ecosystem
-        name: Bittensor Ecosystem
-      - category_id: bittensor-subnets
-        name: Bittensor Subnets
-      - category_id: bittorrent-ecosystem
-        name: BitTorrent Ecosystem
-      - category_id: blast-ecosystem
-        name: Blast Ecosystem
-      - category_id: blockchain-capital-portfolio
-        name: Blockchain Capital Portfolio
-      - category_id: binance-smart-chain
-        name: BNB Chain Ecosystem
-      - category_id: boba-bnb-ecosystem
-        name: Boba BNB Ecosystem
-      - category_id: boba-network-ecosystem
-        name: Boba Network Ecosystem
-      - category_id: letsbonk-fun-ecosystem
-        name: BONK.fun Ecosystem
-      - category_id: bored-ape-ecosystem
-        name: Bored Ape Ecosystem
-      - category_id: botanix-ecosystem
-        name: Botanix Ecosystem
-      - category_id: bouncebit-ecosystem
-        name: BounceBit Ecosystem
-      - category_id: brc-20
-        name: BRC-20
-      - category_id: breeding
-        name: Breeding
-      - category_id: bridged-dai
-        name: Bridged DAI
-      - category_id: bridged-frax
-        name: Bridged FRAX
-      - category_id: bridged-stablecoins
-        name: Bridged Stablecoin
-      - category_id: bridged-tokens
-        name: Bridged-Tokens
-      - category_id: bridged-usdc
-        name: Bridged USDC
-      - category_id: bridged-usdt
-        name: Bridged USDT
-      - category_id: bridged-wavax
-        name: Bridged WAVAX
-      - category_id: bridged-wbnb
-        name: Bridged WBNB
-      - category_id: bridged-wbtc
-        name: Bridged WBTC
-      - category_id: bridged-weth
-        name: Bridged WETH
-      - category_id: bridged-wsteth
-        name: Bridged wstETH
-      - category_id: bridge-governance-tokens
-        name: Bridge Governance Tokens
-      - category_id: bsquared-network-ecosystem
-        name: BSquared Network Ecosystem
-      - category_id: btcfi
-        name: BTCfi Protocol
-      - category_id: business-services
-        name: Business Services
-      - category_id: camelot-launchpad
-        name: Camelot Launchpad
-      - category_id: canto-ecosystem
-        name: Canto Ecosystem
-      - category_id: capital-launchpad
-        name: Capital Launchpad
-      - category_id: cardano-ecosystem
-        name: Cardano Ecosystem
-      - category_id: card-games
-        name: Card Games
-      - category_id: cat-themed-coins
-        name: Cat-Themed
-      - category_id: cefi
-        name: CeFi
-      - category_id: celebrity-themed-coins
-        name: Celebrity-Themed
-      - category_id: celer-network
-        name: Celer Network
-      - category_id: celo-ecosystem
-        name: Celo Ecosystem
-      - category_id: centralized-exchange-cex-product
-        name: Centralized Exchange (CEX) Product
-      - category_id: centralized-exchange-token-cex
-        name: Centralized Exchange (CEX) Token
-      - category_id: chain-abstraction
-        name: Chain Abstraction
-      - category_id: chaingpt-pad
-        name: ChainGPT Launchpad
-      - category_id: charity
-        name: Charity
-      - category_id: chiliz-ecosystem
-        name: Chiliz Ecosystem
-      - category_id: chinese-meme
-        name: Chinese Meme
-      - category_id: christmas-themed
-        name: Christmas Themed
-      - category_id: chromia-ecosystem
-        name: Chromia Ecosystem
-      - category_id: circle-ventures-portfolio
-        name: Circle Ventures Portfolio
-      - category_id: clanker-ecosystem
-        name: Clanker Ecosystem
-      - category_id: cny-stablecoin
-        name: CNY Stablecoin
-      - category_id: coinbase-50-index
-        name: Coinbase 50 Index
-      - category_id: coinbase-ventures-portfolio
-        name: Coinbase Ventures Portfolio
-      - category_id: collectibles
-        name: Collectibles
-      - category_id: combo-ecosystem
-        name: Combo Ecosystem
-      - category_id: commodity-backed-stablecoin
-        name: Commodity-backed Stablecoin
-      - category_id: communication
-        name: Communication
-      - category_id: compound-tokens
-        name: Compound Tokens
-      - category_id: conflux-ecosystem
-        name: Conflux Ecosystem
-      - category_id: consensys-portofolio
-        name: Consensys Portfolio
-      - category_id: core-ecosystem
-        name: Core Ecosystem
-      - category_id: corn-ecosystem
-        name: Corn Ecosystem
-      - category_id: cosmos-ecosystem
-        name: Cosmos Ecosystem
-      - category_id: country-themed-meme-coins
-        name: Country-Themed Meme
-      - category_id: creatorbid-ecosystem
-        name: CreatorBid Ecosystem
-      - category_id: cronos-ecosystem
-        name: Cronos Ecosystem
-      - category_id: cronos-zkevm-ecosystem
-        name: Cronos zkEVM Ecosystem
-      - category_id: cross-chain-communication
-        name: Cross-chain Communication
-      - category_id: crypto-backed-stablecoin
-        name: Crypto-backed Stablecoin
-      - category_id: asset-backed-tokens
-        name: Crypto-Backed Tokens
-      - category_id: ctokens
-        name: cToken
-      - category_id: curve-ecosystem
-        name: Curve Ecosystem
-      - category_id: cyber-ecosystem
-        name: Cyber Ecosystem
-      - category_id: cyberkongz-ecosystem
-        name: CyberKongz Ecosystem
-      - category_id: cybersecurity
-        name: Cybersecurity
-      - category_id: daomaker-ecosystem
-        name: DaoMaker Launchpad
-      - category_id: daos-fun-ecosystem
-        name: daos.fun Ecosystem
-      - category_id: data-availability
-        name: Data Availability
-      - category_id: decentralized-exchange
-        name: Decentralized Exchange (DEX)
-      - category_id: decentralized-finance-defi
-        name: Decentralized Finance (DeFi)
-      - category_id: identity
-        name: Decentralized Identifier (DID)
-      - category_id: decentralized-lottery
-        name: Decentralized Lottery
-      - category_id: decentralized-science-desci
-        name: Decentralized Science (DeSci)
-      - category_id: deepbrain-chain-ecosystem
-        name: DeepBrain Chain Ecosystem
-      - category_id: defai
-        name: DeFAI
-      - category_id: defiance-capital-portfolio
-        name: DeFiance Capital Portfolio
-      - category_id: defi-index
-        name: DeFi Index
-      - category_id: defimetachain-ecosystem
-        name: DefiMetaChain Ecosystem
-      - category_id: defiverse-ecosystem
-        name: Defiverse Ecosystem
-      - category_id: degen-ecosystem
-        name: Degen Ecosystem
-      - category_id: delabs
-        name: DeLabs
-      - category_id: delphi-ventures-portfolio
-        name: Delphi Ventures Portfolio
-      - category_id: depin
-        name: DePIN
-      - category_id: decentralized-derivatives
-        name: Derivatives
-      - category_id: desci-meme
-        name: Desci Meme
-      - category_id: dex-aggregator
-        name: Dex Aggregator
-      - category_id: dfk-chain-ecosystem
-        name: DFK Chain Ecosystem
-      - category_id: dinari-ecosystem
-        name: Dinari Ecosystem
-      - category_id: directed-acyclic-graph-dag
-        name: Directed Acyclic Graph (DAG)
-      - category_id: discord-bots
-        name: Discord Bots
-      - category_id: dmex-ecosystem
-        name: DMEX Ecosystem
-      - category_id: dn-404
-        name: ' DN-404'
-      - category_id: dogechain-ecosystem
-        name: Dogechain Ecosystem
-      - category_id: dog-themed-coins
-        name: Dog-Themed
-      - category_id: doodles-llc
-        name: Doodles LLC
-      - category_id: dragonfly-capital-portfolio
-        name: DragonFly Capital Portfolio
-      - category_id: drc-20
-        name: DRC-20
-      - category_id: duckchain-ecosystem
-        name: DuckChain Ecosystem
-      - category_id: duck-themed-coins
-        name: Duck-Themed
-      - category_id: dwf-labs-portfolio
-        name: DWF Labs Portfolio
-      - category_id: eclipse-ecosystem
-        name: Eclipse Ecosystem
-      - category_id: e-commerce
-        name: E-commerce
-      - category_id: edgeware-ecosystem
-        name: Edgeware Ecosystem
-      - category_id: education
-        name: Education
-      - category_id: edu-chain-ecosystem
-        name: EDU Chain Ecosystem
-      - category_id: egirl-capital-portfolio
-        name: eGirl Capital Portfolio
-      - category_id: elastos-smart-contract-chain-ecosystem
-        name: Elastos Smart Contract Chain Ecosystem
-      - category_id: electroneum-ecosystem
-        name: Electroneum Ecosystem
-      - category_id: elon-musk-inspired-coins
-        name: Elon Musk-Inspired
-      - category_id: elysium-ecosystem
-        name: Elysium Ecosystem
-      - category_id: emoji-themed
-        name: Emoji-Themed
-      - category_id: endurance-ecosystem
-        name: Endurance Ecosystem
-      - category_id: energi-ecosystem
-        name: Energi Ecosystem
-      - category_id: energy
-        name: Energy
-      - category_id: entertainment
-        name: Entertainment
-      - category_id: enuls-ecosystem
-        name: ENULS Ecosystem
-      - category_id: eos-ecosystem
-        name: EOS Ecosystem
-      - category_id: erc20i
-        name: ERC20i
-      - category_id: erc-404
-        name: ERC 404
-      - category_id: ergo-ecosystem
-        name: Ergo Ecosystem
-      - category_id: etf
-        name: ETF
-      - category_id: ethereum-classic-ecosystem
-        name: Ethereum Classic Ecosystem
-      - category_id: ethereum-ecosystem
-        name: Ethereum Ecosystem
-      - category_id: ethereum-pos-iou
-        name: Ethereum PoS IOU
-      - category_id: ethereumpow-ecosystem
-        name: EthereumPoW Ecosystem
-      - category_id: ether-fi-ecosystem
-        name: Ether.fi Ecosystem
-      - category_id: etherlink-ecosystem
-        name: Etherlink Ecosystem
-      - category_id: eur-stablecoin
-        name: EUR Stablecoin
-      - category_id: eventum-ecosystem
-        name: Eventum Ecosystem
-      - category_id: evmos-ecosystem
-        name: Evmos Ecosystem
-      - category_id: exchange-based-tokens
-        name: Exchange-based Tokens
-      - category_id: f1-partnership
-        name: F1 Partnership
-      - category_id: fan-token
-        name: Fan Token
-      - category_id: fantom-ecosystem
-        name: Fantom Ecosystem
-      - category_id: farcaster-ecosystem
-        name: Farcaster Ecosystem
-      - category_id: farming-as-a-service-faas
-        name: Farming-as-a-Service (FaaS)
-      - category_id: farming-games
-        name: Farming Games
-      - category_id: fiat-backed-stablecoin
-        name: Fiat-backed Stablecoin
-      - category_id: fighting-games
-        name: Fighting Games
-      - category_id: fixed-interest
-        name: Fixed Interest
-      - category_id: flare-network-ecosystem
-        name: Flare Network Ecosystem
-      - category_id: flaunch-ecosystem
-        name: Flaunch Ecosystem
-      - category_id: flooring-protocol
-        name: Floor Protocol Tokens
-      - category_id: flow-ecosystem
-        name: Flow Ecosystem
-      - category_id: flow-evm-ecosystem
-        name: Flow EVM Ecosystem
-      - category_id: four-meme-ecosystem
-        name: Four.meme Ecosystem
-      - category_id: fractionalized-nft
-        name: Fractionalized NFT
-      - category_id: fraxtal-ecosystem
-        name: Fraxtal Ecosystem
-      - category_id: friend-tech
-        name: Friend.tech Ecosystem
-      - category_id: frog-themed-coins
-        name: Frog-Themed
-      - category_id: ftx-holdings
-        name: FTX Holdings
-      - category_id: fuse-ecosystem
-        name: Fuse Ecosystem
-      - category_id: galachain-ecosystem
-        name: GalaChain Ecosystem
-      - category_id: galaxy-digital-portfolio
-        name: Galaxy Digital Portfolio
-      - category_id: gambling
-        name: Gambling (GambleFi)
-      - category_id: game-studio
-        name: Game Studio
-      - category_id: gaming-blockchains
-        name: Gaming Blockchains
-      - category_id: gaming
-        name: Gaming (GameFi)
-      - category_id: gaming-governance-token
-        name: Gaming Governance Token
-      - category_id: gaming-marketplace
-        name: Gaming Marketplace
-      - category_id: gaming-platform
-        name: Gaming Platform
-      - category_id: gaming-utility-token
-        name: Gaming Utility Token
-      - category_id: gbp-stablecoin
-        name: GBP Stablecoin
-      - category_id: genesys-network-ecosystem
-        name: Genesys Network Ecosystem
-      - category_id: gig-economy
-        name: Gig Economy
-      - category_id: glue-ecosystem
-        name: Glue Ecosystem
-      - category_id: gmci-30-index
-        name: GMCI 30 Index
-      - category_id: gmci-defi-index
-        name: GMCI DeFi Index
-      - category_id: gmci-depin-index
-        name: GMCI DePIN Index
-      - category_id: gmci-index
-        name: GMCI Index
-      - category_id: gmci-layer-1-index
-        name: GMCI Layer 1 Index
-      - category_id: gmci-layer-2-index
-        name: GMCI Layer 2 Index
-      - category_id: gmci-meme-index
-        name: GMCI Meme Index
-      - category_id: xdai-ecosystem
-        name: Gnosis Chain Ecosystem
-      - category_id: goat-ecosystem
-        name: Goat Ecosystem
-      - category_id: gotchiverse
-        name: Gotchiverse
-      - category_id: governance
-        name: Governance
-      - category_id: graphite-network-ecosystem
-        name: Graphite Network Ecosystem
-      - category_id: graphlinq-ecosystem
-        name: GraphLinq Ecosystem
-      - category_id: gravity-alpha-ecosystem
-        name: Gravity Alpha Ecosystem
-      - category_id: guild-scholarship
-        name: Guild and Scholarship
-      - category_id: gunz-ecosystem
-        name: GUNZ Ecosystem
-      - category_id: ham-ecosystem
-        name: Ham Ecosystem
-      - category_id: haqq-network-ecosystem
-        name: Haqq Network Ecosystem
-      - category_id: harmony-ecosystem
-        name: Harmony Ecosystem
-      - category_id: hashkey-chain-ecosystem
-        name: HashKey Chain Ecosystem
-      - category_id: haven1-ecosystem
-        name: Haven1 Ecosystem
-      - category_id: healthcare
-        name: Healthcare
-      - category_id: heco-chain-ecosystem
-        name: HECO Chain Ecosystem
-      - category_id: hedera-ecosystem
-        name: Hedera Ecosystem
-      - category_id: hela-ecosystem
-        name: HeLa Ecosystem
-      - category_id: hemi-ecosystem
-        name: Hemi Ecosystem
-      - category_id: humanode-ecosystem
-        name: Humanode Ecosystem
-      - category_id: huobi-eco-chain-ecosystem
-        name: Huobi ECO Chain Ecosystem
-      - category_id: hybrid-token-standards
-        name: Hybrid Token Standards
-      - category_id: hydra-ecosystem
-        name: Hydra Ecosystem
-      - category_id: hydration-ecosystem
-        name: Hydration Ecosystem
-      - category_id: hyperevm-ecosystem
-        name: HyperEVM Ecosystem
-      - category_id: hyperliquid-ecosystem
-        name: Hyperliquid Ecosystem
-      - category_id: hyperunit-ecosystem
-        name: Hyperunit Ecosystem
-      - category_id: hyperxpad-launchpad
-        name: HyperXpad Launchpad
-      - category_id: icb-network-ecosystem
-        name: ICB Network Ecosystem
-      - category_id: idr-stablecoin
-        name: IDR Stablecoin
-      - category_id: immutable-ecosystem
-        name: Immutable zkEVM Ecosystem
-      - category_id: impossible-launchpad
-        name: Impossible Finance Launchpad
-      - category_id: index-coin
-        name: Index
-      - category_id: defi-pulse-index-dpi
-        name: Index Coop Defi Index
-      - category_id: index-coop-index
-        name: Index Coop Index
-      - category_id: index-coop-metaverse-index
-        name: Index Coop Metaverse Index
-      - category_id: inevm-ecosystem
-        name: inEVM Ecosystem
-      - category_id: infofi
-        name: InfoFi
-      - category_id: infrastructure
-        name: Infrastructure
-      - category_id: initia-ecosystem
-        name: Initia Ecosystem
-      - category_id: injective-ecosystem
-        name: Injective Ecosystem
-      - category_id: ink-ecosystem
-        name: Ink Ecosystem
-      - category_id: inscriptions
-        name: Inscriptions
-      - category_id: insurance
-        name: Insurance
-      - category_id: intent
-        name: Intent
-      - category_id: internet-computer-ecosystem
-        name: Internet Computer Ecosystem
-      - category_id: internet-of-things-iot
-        name: Internet of Things (IOT)
-      - category_id: interoperability
-        name: Interoperability
-      - category_id: iota-ecosystem
-        name: IOTA Ecosystem
-      - category_id: iota-evm-ecosystem
-        name: IOTA EVM Ecosystem
-      - category_id: iotex-ecosystem
-        name: IoTeX Ecosystem
-      - category_id: iou-tokens
-        name: IOU tokens
-      - category_id: ip
-        name: IP
-      - category_id: jack-butcher-ecosystem
-        name: Jack Butcher Ecosystem
-      - category_id: jibchain-ecosystem
-        name: Jibchain Ecosystem
-      - category_id: jpy-stablecoin
-        name: JPY Stablecoin
-      - category_id: juno-ecosystem
-        name: Juno Ecosystem
-      - category_id: kadena-ecosystem
-        name: Kadena Ecosystem
-      - category_id: klaytn-ecosystem
-        name: Kaia Ecosystem
-      - category_id: kardiachain-ecosystem
-        name: KardiaChain Ecosystem
-      - category_id: kaspa-ecosystem
-        name: Kaspa Ecosystem
-      - category_id: katana-ecosystem
-        name: Katana Ecosystem
-      - category_id: kava-ecosystem
-        name: Kava Ecosystem
-      - category_id: kinto-ecosystem
-        name: Kinto Ecosystem
-      - category_id: kommunitas
-        name: Kommunitas Launchpad
-      - category_id: kroma-ecosystem
-        name: Kroma Ecosystem
-      - category_id: krw-stablecoin
-        name: KRW Stablecoin
-      - category_id: kucoin-community-chain-ecosystem
-        name: Kucoin Community Chain Ecosystem
-      - category_id: kujira-ecosystem
-        name: Kujira Ecosystem
-      - category_id: laika-ecosystem
-        name: Laika Ecosystem
-      - category_id: large-cap
-        name: Large-Cap PFP
-      - category_id: larissa-ecosystem
-        name: Larissa Ecosystem
-      - category_id: launchpad
-        name: Launchpad
-      - category_id: layer-0-l0
-        name: Layer 0 (L0)
-      - category_id: layer-1
-        name: Layer 1 (L1)
-      - category_id: layer-2
-        name: Layer 2 (L2)
-      - category_id: layer-3-l3
-        name: Layer 3 (L3)
-      - category_id: legal
-        name: Legal
-      - category_id: lending-borrowing
-        name: Lending/Borrowing Protocols
-      - category_id: lens-ecosystem
-        name: Lens Ecosystem
-      - category_id: leveraged-token
-        name: Leveraged Token
-      - category_id: lightlink-ecosystem
-        name: LightLink Ecosystem
-      - category_id: linea-ecosystem
-        name: Linea Ecosystem
-      - category_id: liquid-restaked-eth
-        name: Liquid Restaked ETH
-      - category_id: liquid-restaked-sol
-        name: Liquid Restaked SOL
-      - category_id: liquid-restaking-governance-token
-        name: Liquid Restaking Governance Tokens
-      - category_id: liquid-restaking-tokens
-        name: Liquid Restaking Tokens
-      - category_id: liquid-staked-apt
-        name: "Liquid Staked APT\t"
-      - category_id: liquid-staked-btc
-        name: Liquid Staked BTC
-      - category_id: liquid-staked-eth
-        name: Liquid Staked ETH
-      - category_id: liquid-staked-sol
-        name: Liquid Staked SOL
-      - category_id: liquid-staked-sui
-        name: Liquid Staked SUI
-      - category_id: liquid-staking
-        name: Liquid Staking
-      - category_id: liquid-staking-governance-tokens
-        name: Liquid Staking Governance Tokens
-      - category_id: liquid-staking-tokens
-        name: Liquid Staking Tokens
-      - category_id: lisk-ecosystem
-        name: Lisk Ecosystem
-      - category_id: loopring-ecosystem
-        name: Loopring Ecosystem
-      - category_id: lp-tokens
-        name: LP Tokens
-      - category_id: lrtfi
-        name: LRTfi
-      - category_id: lsdfi
-        name: LSDFi
-      - category_id: lukso-ecosystem
-        name: Lukso Ecosystem
-      - category_id: lung-ecosystem
-        name: Lung Ecosystem
-      - category_id: made-in-china
-        name: Made in China
-      - category_id: made-in-usa
-        name: Made in USA
-      - category_id: mainnetz-ecosystem
-        name: Mainnetz Ecosystem
-      - category_id: manta-network-ecosystem
-        name: Manta Network Ecosystem
-      - category_id: mantle-ecosystem
-        name: Mantle Ecosystem
-      - category_id: mantra-ecosystem
-        name: Mantra Ecosystem
-      - category_id: manufacturing
-        name: Manufacturing
-      - category_id: marketing
-        name: Marketing
-      - category_id: market-making-solution
-        name: Market-Making Solution
-      - category_id: mascot-themed
-        name: Mascot-Themed
-      - category_id: massa-ecosystem
-        name: Massa Ecosystem
-      - category_id: masternodes
-        name: Masternodes
-      - category_id: maxxchain-ecosystem
-        name: MaxxChain Ecosystem
-      - category_id: media
-        name: Media
-      - category_id: meme-token
-        name: Meme
-      - category_id: memecoin-nfts
-        name: Memecoin NFTs
-      - category_id: memecore-ecosystem
-        name: MemeCore Ecosystem
-      - category_id: memeland-ecosystem
-        name: Memeland Ecosystem
-      - category_id: memorial-themed
-        name: Memorial Themed
-      - category_id: merlin-chain-ecosystem
-        name: Merlin Chain Ecosystem
-      - category_id: metagovernance
-        name: Metagovernance
-      - category_id: metaverse
-        name: Metaverse
-      - category_id: meter-ecosystem
-        name: Meter Ecosystem
-      - category_id: metis-ecosystem
-        name: Metis Ecosystem
-      - category_id: mev-protection
-        name: MEV Protection
-      - category_id: mezo-ecosystem
-        name: Mezo Ecosystem
-      - category_id: mid-cap
-        name: Mid-Cap PFP
-      - category_id: migaloo-ecosystem
-        name: Migaloo Ecosystem
-      - category_id: milady-and-derivatives
-        name: Milady And Derivatives
-      - category_id: milkomeda-cardano-ecosystem
-        name: Milkomeda (Cardano) Ecosystem
-      - category_id: mint-ecosystem
-        name: Mint Ecosystem
-      - category_id: massively-multiplayer-online-mmo
-        name: MMO
-      - category_id: mobile-mining
-        name: Mobile Mining
-      - category_id: mode-ecosystem
-        name: Mode Ecosystem
-      - category_id: modular-blockchain
-        name: Modular Blockchain
-      - category_id: moonbeam-ecosystem
-        name: Moonbeam Ecosystem
-      - category_id: moonchain-ecosystem
-        name: Moonchain Ecosystem
-      - category_id: moonriver-ecosystem
-        name: Moonriver Ecosystem
-      - category_id: moonshot-ecosystem
-        name: Moonshot Ecosystem
-      - category_id: morph-l2-ecosystem
-        name: Morph L2 Ecosystem
-      - category_id: morpho-ecosystem
-        name: Morpho Ecosystem
-      - category_id: movement-ecosystem
-        name: Movement Ecosystem
-      - category_id: move-to-earn
-        name: Move To Earn
-      - category_id: multicoin-capital-portfolio
-        name: Multicoin Capital Portfolio
-      - category_id: multivac-ecosystem
-        name: MultiVAC Ecosystem
-      - category_id: multiversx-ecosystem
-        name: MultiversX Ecosystem
-      - category_id: murad-picks
-        name: Murad Picks
-      - category_id: music
-        name: Music
-      - category_id: nahmii-ecosystem
-        name: Nahmii Ecosystem
-      - category_id: name-service
-        name: Name Service
-      - category_id: near-protocol-ecosystem
-        name: Near Protocol Ecosystem
-      - category_id: neo-ecosystem
-        name: NEO Ecosystem
-      - category_id: neon-ecosystem
-        name: Neon Ecosystem
-      - category_id: non-fungible-tokens-nft
-        name: NFT
-      - category_id: nft-aggregator
-        name: NFT Aggregator
-      - category_id: nft-amm
-        name: NFT AMM
-      - category_id: nft-collections-that-received-airdrops
-        name: NFT Collections That Received Airdrops
-      - category_id: nftfi
-        name: NFTFi
-      - category_id: nft-index
-        name: NFT Index
-      - category_id: nft-launchpad
-        name: NFT Launchpad
-      - category_id: nft-lending-borrowing
-        name: NFT Lending/Borrowing
-      - category_id: nft-marketplace
-        name: NFT Marketplace
-      - category_id: nike-ecosystem
-        name: Nike Ecosystem
-      - category_id: nounsdao
-        name: NounsDAO
-      - category_id: oasis-emerald-ecosystem
-        name: Oasis Emerald Ecosystem
-      - category_id: oasis-sapphire-ecosystem
-        name: Oasis Sapphire Ecosystem
-      - category_id: oasys-ecosystem
-        name: Oasys Ecosystem
-      - category_id: ocm-ecosystem
-        name: OCM Ecosystem
-      - category_id: oec-ecosystem
-        name: OEC Ecosystem
-      - category_id: ohm-fork
-        name: Ohm Fork
-      - category_id: okt-chain-ecosystem
-        name: OKT Chain Ecosystem
-      - category_id: okx-ventures-portfolio
-        name: OKX Ventures Portfolio
-      - category_id: olympus-pro
-        name: Olympus Pro Ecosystem
-      - category_id: omnia-ecosystem
-        name: Omnia Ecosystem
-      - category_id: onchain-ecosystem
-        name: Onchain Ecosystem
-      - category_id: on-chain-gaming
-        name: On-chain Gaming
-      - category_id: ondo-tokenized-stocks
-        name: Ondo Tokenized Stocks
-      - category_id: opbnb-ecosystem
-        name: opBNB Ecosystem
-      - category_id: opinions-fun-ecosystem
-        name: Opinions.fun Ecosystem
-      - category_id: optimism-ecosystem
-        name: Optimism Ecosystem
-      - category_id: superchain-ecosystem
-        name: Optimism Superchain Ecosystem
-      - category_id: decentralized-options
-        name: Options
-      - category_id: oracle
-        name: Oracle
-      - category_id: oraichain-ecosystem
-        name: Oraichain Ecosystem
-      - category_id: orange-cap-games
-        name: Orange Cap Games
-      - category_id: osmosis-ecosytem
-        name: Osmosis Ecosystem
-      - category_id: outlier-ventures-portfolio
-        name: Outlier Ventures Portfolio
-      - category_id: paal-ai
-        name: PAAL AI Launchpad
-      - category_id: pantera-capital-portfolio
-        name: Pantera Capital Portfolio
-      - category_id: paradigm-portfolio
-        name: Paradigm Portfolio
-      - category_id: parallel-ecosystem
-        name: Parallel Ecosystem
-      - category_id: parallel-evm
-        name: Parallelized EVM
-      - category_id: parex-network-ecosystem
-        name: Parex Network Ecosystem
-      - category_id: parody-meme-coins
-        name: Parody Meme
-      - category_id: payment-solutions
-        name: Payment Solutions
-      - category_id: peaq-ecosystem
-        name: Peaq Ecosystem
-      - category_id: decentralized-perpetuals
-        name: Perpetuals
-      - category_id: pfp-avatar
-        name: PFP / Avatar
-      - category_id: platon-network-ecosystem
-        name: PlatON Network Ecosystem
-      - category_id: play-to-earn
-        name: Play To Earn
-      - category_id: plume-network-ecosystem
-        name: Plume Network Ecosystem
-      - category_id: politifi
-        name: PolitiFi
-      - category_id: dot-ecosystem
-        name: Polkadot Ecosystem
-      - category_id: polychain-capital-portfolio
-        name: Polychain Capital Portfolio
-      - category_id: polygon-ecosystem
-        name: Polygon Ecosystem
-      - category_id: polygon-zkevm-ecosystem
-        name: Polygon zkEVM Ecosystem
-      - category_id: poolz-finance-launchpad
-        name: Poolz Finance Launchpad
-      - category_id: prediction-markets
-        name: Prediction Markets
-      - category_id: prestocks-ecosystem
-        name: PreStocks Ecosystem
-      - category_id: privacy-coins
-        name: Privacy
-      - category_id: privacy-blockchain
-        name: Privacy Blockchain
-      - category_id: proof-ecosystem
-        name: Proof Ecosystem
-      - category_id: proof-of-memes-ecosystem
-        name: Proof of Memes Ecosystem
-      - category_id: proof-of-stake-pos
-        name: Proof of Stake (PoS)
-      - category_id: proof-of-work-pow
-        name: Proof of Work (PoW)
-      - category_id: provenance-ecosystem
-        name: Provenance Ecosystem
-      - category_id: pudgy-ecosystem
-        name: Pudgy Ecosystem
-      - category_id: pulsechain-ecosystem
-        name: PulseChain Ecosystem
-      - category_id: puma-ecosystem
-        name: Puma Ecosystem
-      - category_id: pump-fun
-        name: Pump.fun Ecosystem
-      - category_id: pump-science-ecosystem
-        name: Pump Science Ecosystem
-      - category_id: pundi-aifx-omnilayer-ecosystem
-        name: Pundi AIFX Omnilayer Ecosystem
-      - category_id: puzzle-games
-        name: ' Puzzle Games'
-      - category_id: qitmeer-network-ecosystem
-        name: Qitmeer Network Ecosystem
-      - category_id: ql1-ecosystem
-        name: QL1 Ecosystem
-      - category_id: q-mainnet-ecosystem
-        name: Q Mainnet Ecosystem
-      - category_id: quai-network-ecosystem
-        name: Quai Network Ecosystem
-      - category_id: qubic-chain-ecosystem
-        name: Qubic Ecosystem
-      - category_id: quest-to-earn
-        name: Quest-to-Earn
-      - category_id: racing-games
-        name: Racing Games
-      - category_id: radix-ecosystem
-        name: Radix Ecosystem
-      - category_id: rari-ecosystem
-        name: Rari Ecosystem
-      - category_id: reactive-network-ecosystem
-        name: Reactive Network Ecosystem
-      - category_id: re-al-ecosystem
-        name: Re.al Ecosystem
-      - category_id: realt-tokens
-        name: RealT Tokens
-      - category_id: real-world-assets-rwa
-        name: Real World Assets (RWA)
-      - category_id: rebase-tokens
-        name: Rebase Tokens
-      - category_id: recruitment-solutions
-        name: Recruitment
-      - category_id: redbelly-network-ecosystem
-        name: Redbelly Network Ecosystem
-      - category_id: reddit-points
-        name: Reddit Points
-      - category_id: redstone-ecosystem
-        name: Redstone Ecosystem
-      - category_id: eco-friendly
-        name: Regenerative Finance (ReFi)
-      - category_id: rehypothecated-tokens
-        name: Rehypothecated Tokens
-      - category_id: restaking
-        name: Restaking
-      - category_id: retail
-        name: Retail
-      - category_id: rollup
-        name: Rollup
-      - category_id: rollups-as-a-service-raas
-        name: Rollups-as-a-Service (RaaS)
-      - category_id: rollux-ecosystem
-        name: Rollux Ecosystem
-      - category_id: ronin-ecosystem
-        name: Ronin Ecosystem
-      - category_id: rootstock-ecosystem
-        name: Rootstock Ecosystem
-      - category_id: rpg
-        name: RPG
-      - category_id: rss3-vsl-ecosystem
-        name: RSS3 VSL Ecosystem
-      - category_id: runes
-        name: Runes
-      - category_id: rwa-protocol
-        name: RWA Protocol
-      - category_id: saakuru-ecosystem
-        name: Saakuru Ecosystem
-      - category_id: saga-ecosystem
-        name: Saga Ecosystem
-      - category_id: sanko-ecosystem
-        name: Sanko Ecosystem
-      - category_id: scroll-ecosystem
-        name: Scroll Ecosystem
-      - category_id: secret-ecosystem
-        name: Secret Ecosystem
-      - category_id: sei-ecosystem
-        name: Sei Ecosystem (Deprecating)
-      - category_id: seigniorage
-        name: Seigniorage
-      - category_id: sei-v2-ecosystem
-        name: Sei Network Ecosystem
-      - category_id: sequoia-capital-portfolio
-        name: Sequoia Capital Portfolio
-      - category_id: sgd-stablcoin
-        name: SGD Stablcoin
-      - category_id: shibarium
-        name: Shibarium Ecosystem
-      - category_id: shido-network-ecosystem
-        name: Shido Network Ecosystem
-      - category_id: shimmerevm-ecosystem
-        name: ShimmerEVM Ecosystem
-      - category_id: shooting-games
-        name: Shooting Games
-      - category_id: sidechain
-        name: SideChain
-      - category_id: simulation-games
-        name: Simulation Games
-      - category_id: skale-ecosystem
-        name: Skale Ecosystem
-      - category_id: smartbch-ecosystem
-        name: SmartBCH Ecosystem
-      - category_id: smart-contract-platform
-        name: Smart Contract Platform
-      - category_id: socialfi
-        name: SocialFi
-      - category_id: software
-        name: Software as a service
-      - category_id: solana-ecosystem
-        name: Solana Ecosystem
-      - category_id: solana-meme-coins
-        name: Solana Meme
-      - category_id: token-2022
-        name: Solana Token-2022
-      - category_id: soneium-ecosystem
-        name: Soneium Ecosystem
-      - category_id: songbird-ecosystem
-        name: Songbird Ecosystem
-      - category_id: sonic-ecosystem
-        name: Sonic Ecosystem
-      - category_id: sonic-svm-ecosystem
-        name: Sonic SVM Ecosystem
-      - category_id: sora-ecosystem
-        name: Sora Ecosystem
-      - category_id: spl22
-        name: SPL22
-      - category_id: spore-fun-ecosystem
-        name: Spore.fun Ecosystem
-      - category_id: sports
-        name: Sports
-      - category_id: sports-games
-        name: Sports Games
-      - category_id: src-20
-        name: SRC-20
-      - category_id: stablecoin-protocol
-        name: Stablecoin Protocol
-      - category_id: stablecoins
-        name: Stablecoins
-      - category_id: stacks-ecosystem
-        name: Stacks Ecosystem
-      - category_id: starknet-ecosystem
-        name: Starknet Ecosystem
-      - category_id: stellar-ecosystem
-        name: Stellar Ecosystem
-      - category_id: step-network-ecosystem
-        name: Step Network Ecosystem
-      - category_id: sticker-themed-coin
-        name: Sticker-Themed Coins
-      - category_id: stock-market-themed
-        name: Stock market-themed
-      - category_id: storage
-        name: Storage
-      - category_id: story-ecosystem
-        name: Story Ecosystem
-      - category_id: strategy-games
-        name: Strategy Games
-      - category_id: stx-city-ecosystem
-        name: STX.CITY Ecosystem
-      - category_id: sui-ecosystem
-        name: Sui Ecosystem
-      - category_id: sui-meme
-        name: Sui Meme
-      - category_id: sun-pump-ecosystem
-        name: Sun Pump Ecosystem
-      - category_id: superseed-ecosystem
-        name: Superseed Ecosystem
-      - category_id: supra-ecosystem
-        name: Supra Ecosystem
-      - category_id: swellchain-ecosystem
-        name: Swellchain Ecosystem
-      - category_id: sx-rollup-ecosystem
-        name: SX Rollup Ecosystem
-      - category_id: synthetic
-        name: Synthetic
-      - category_id: synths
-        name: Synthetic Asset
-      - category_id: synthetic-dollar
-        name: Synthetic Dollar
-      - category_id: synthetic-issuer
-        name: Synthetic Issuer
-      - category_id: syscoin-nevm-ecosystem
-        name: Syscoin NEVM Ecosystem
-      - category_id: tac-ecosystem
-        name: TAC Ecosystem
-      - category_id: tap-to-earn
-        name: Tap to Earn
-      - category_id: taraxa-ecosystem
-        name: Taraxa Ecosystem
-      - category_id: telegram_apps
-        name: Telegram Apps
-      - category_id: telos-ecosystem
-        name: Telos Ecosystem
-      - category_id: tempcategory
-        name: tempCategory
-      - category_id: tenet-ecosystem
-        name: Tenet Ecosystem
-      - category_id: terminal-of-truths
-        name: Terminal of Truths
-      - category_id: terra-classic-ecosystem
-        name: Terra Classic Ecosystem
-      - category_id: terra-ecosystem
-        name: Terra Ecosystem
-      - category_id: terraport-launchpad
-        name: Terraport Launchpad
-      - category_id: tezos-ecosystem
-        name: Tezos Ecosystem
-      - category_id: the-boy-s-club
-        name: The Boy’s Club
-      - category_id: theta-ecosystem
-        name: Theta Ecosystem
-      - category_id: thundercore-ecosystem
-        name: ThunderCore Ecosystem
-      - category_id: tiktok-meme
-        name: TikTok Meme
-      - category_id: time-fun-ecosystem
-        name: Time.fun Ecosystem
-      - category_id: titanchain-ecosystem
-        name: Titanchain Ecosystem
-      - category_id: tokenfi-launchpad
-        name: TokenFi Launchpad
-      - category_id: tokenized-products
-        name: Tokenized Assets
-      - category_id: tokenized-btc
-        name: Tokenized BTC
-      - category_id: tokenized-commodities
-        name: Tokenized Commodities
-      - category_id: tokenized-exchange-traded-funds-etfs
-        name: Tokenized Exchange-Traded Funds (ETFs)
-      - category_id: tokenized-gold
-        name: Tokenized Gold
-      - category_id: real-estate
-        name: Tokenized Real Estate
-      - category_id: tokenized-silver
-        name: Tokenized Silver
-      - category_id: tokenized-stock
-        name: Tokenized Stock
-      - category_id: tokenized-t-bills
-        name: Tokenized Treasury Bills (T-Bills)
-      - category_id: tokenized-treasury-bonds-t-bonds
-        name: Tokenized Treasury Bonds (T-Bonds)
-      - category_id: tokensets
-        name: TokenSets Ecosystem
-      - category_id: token-standards
-        name: Token Standards
-      - category_id: ton-ecosystem
-        name: TON Ecosystem
-      - category_id: ton-meme-coins
-        name: TON Meme
-      - category_id: tourism
-        name: Tourism
-      - category_id: tower-defense-games
-        name: Tower Defense Games
-      - category_id: tradable-ecosystem
-        name: Tradable Ecosystem
-      - category_id: trading-bots
-        name: Trading Bots
-      - category_id: tron-ecosystem
-        name: Tron Ecosystem
-      - category_id: tron-meme
-        name: TRON Meme
-      - category_id: try-stablecoins
-        name: TRY Stablecoin
-      - category_id: ultron-ecosystem
-        name: Ultron Ecosystem
-      - category_id: unichain-ecosystem
-        name: Unichain Ecosystem
-      - category_id: units-network-ecosystem
-        name: Unit0 Network Ecosystem
-      - category_id: usd-stablecoin
-        name: USD Stablecoin
-      - category_id: us-treasury-backed-stablecoin
-        name: US Treasury-backed Stablecoin
-      - category_id: uton-ecosystem
-        name: UTON Ecosystem
-      - category_id: vana-ecosystem
-        name: Vana Ecosystem
-      - category_id: vanar-chain-ecosystem
-        name: Vanar Chain Ecosystem
-      - category_id: vechain-ecosystem
-        name: VeChain Ecosystem
-      - category_id: velas-ecosystem
-        name: Velas Ecosystem
-      - category_id: venom-ecosystem
-        name: Venom Ecosystem
-      - category_id: venture-capital-portfolios
-        name: Venture Capital Portfolios
-      - category_id: viction-ecosystem
-        name: Viction Ecosystem
-      - category_id: virtual-reality
-        name: Virtual Reality
-      - category_id: virtuals-protocol-ecosystem
-        name: Virtuals Protocol Ecosystem
-      - category_id: voi-network-ecosystem
-        name: Voi Network Ecosystem
-      - category_id: vpn
-        name: VPN
-      - category_id: vyvo-smart-chain-ecosystem
-        name: Vyvo Smart Chain Ecosystem
-      - category_id: wallets
-        name: Wallets
-      - category_id: wall-street-bets-themed-coins
-        name: Wall Street Bets Themed
-      - category_id: wanchain-ecosystem
-        name: Wanchain Ecosystem
-      - category_id: waves-ecosystem
-        name: Waves Ecosystem
-      - category_id: wax-ecosystem
-        name: Wax Ecosystem
-      - category_id: web-2-brands
-        name: Web 2 Brands
-      - category_id: wemix-ecosystem
-        name: WEMIX Ecosystem
-      - category_id: wojak-themed
-        name: Wojak-Themed
-      - category_id: world-chain-ecosystem
-        name: World Chain Ecosystem
-      - category_id: world-liberty-financial-portfolio
-        name: World Liberty Financial Portfolio
-      - category_id: wormhole-assets
-        name: Wormhole Assets
-      - category_id: wrapped-tokens
-        name: Wrapped-Tokens
-      - category_id: xai-ecosystem
-        name: XAI Ecosystem
-      - category_id: xdc-ecosystem
-        name: XDC Ecosystem
-      - category_id: x-layer-ecosystem
-        name: X Layer Ecosystem
-      - category_id: xrp-ledger-ecosystem
-        name: XRP Ledger Ecosystem
-      - category_id: xrpl-evm-ecosystem
-        name: XRPL EVM Ecosystem
-      - category_id: xt-smart-chain-ecosystem
-        name: XT Smart Chain Ecosystem
-      - category_id: yearn-yfi-partnerships-mergers
-        name: Yearn Ecosystem
-      - category_id: yearn-vault-tokens
-        name: Yearn Vault Tokens
-      - category_id: yield-aggregator
-        name: Yield Aggregator
-      - category_id: yield-bearing-tokens
-        name: Yield-Bearing
-      - category_id: yield-bearing-stablecoins
-        name: Yield-Bearing Stablecoin
-      - category_id: yield-farming
-        name: Yield Farming
-      - category_id: yield-optimizer
-        name: Yield Optimizer
-      - category_id: yield-tokenization-product
-        name: Yield Tokenization Product
-      - category_id: yield-tokenization
-        name: Yield Tokenization Protocol
-      - category_id: binance-labs-portfolio
-        name: YZi Labs (Prev. Binance Labs) Portfolio
-      - category_id: zano-ecosystem
-        name: Zano Ecosystem
-      - category_id: zedxion-ecosystem
-        name: Zedxion Ecosystem
-      - category_id: zenon-ecosystem
-        name: Zenon Ecosystem
-      - category_id: zero-knowledge-zk
-        name: Zero Knowledge (ZK)
-      - category_id: zero-network-ecosystem
-        name: Zero Network Ecosystem
-      - category_id: zetachain-ecosystem
-        name: ZetaChain Ecosystem
-      - category_id: ziliqa-evm-ecosystem
-        name: Ziliqa EVM Ecosystem
-      - category_id: zilliqa-ecosystem
-        name: Zilliqa Ecosystem
-      - category_id: zircuit-ecosystem
-        name: Zircuit Ecosystem
-      - category_id: zklink-nova-ecosystem
-        name: zkLink Nova Ecosystem
-      - category_id: zksync-ecosystem
-        name: ZkSync Ecosystem
-      - category_id: zodiac-themed
-        name: Zodiac-Themed
-      - category_id: zoo-themed
-        name: Zoo-Themed
-      - category_id: zora-creator-coins
-        name: Zora Creator Coins
-      - category_id: zora-ecosystem
-        name: Zora Ecosystem
-category_data_tool:
-  input:
-    tool: get_category_data
-    tool_arguments:
-      order: market_cap_desc
-    raw_data_only: true
-  output:
-    response: ''
-    data:
-      category_data:
-      - id: smart-contract-platform
-        name: Smart Contract Platform
-        market_cap: 3292495244644.07
-        market_cap_change_24h: -3.6539959232807973
-        content: Smart contract platforms are usually blockchains that host smart
-          contracts or decentralized applications. Users can interact with different
-          smart contracts on these platforms to perform various actions such as lending
-          and borrowing funds, staking their assets or minting NFTs. Smart contracts
-          are programs that are stored on the blockchain and are automatically executed
-          when certain conditions are met.
-        volume_24h: 126874130890.12943
-        updated_at: '2025-08-25T09:11:49.963Z'
-      - id: layer-1
-        name: Layer 1 (L1)
-        market_cap: 3209135245718.901
-        market_cap_change_24h: -3.5925922897925915
-        content: Layer 1 serves as the primary and autonomous chain on which transactions
-          are directly executed and confirmed, as well as providing the essential
-          infrastructure for the blockchain network.
-        volume_24h: 125299205951.11514
-        updated_at: '2025-08-25T09:10:34.358Z'
-      - id: proof-of-work-pow
-        name: Proof of Work (PoW)
-        market_cap: 2285427407768.9473
-        market_cap_change_24h: -3.6237308204170593
-        content: Proof of Work (PoW) is a blockchain consensus mechanism to validate
-          transactions and create new blocks through computational efforts by miners.
-        volume_24h: 54065902653.25074
-        updated_at: '2025-08-25T09:10:43.072Z'
-      - id: proof-of-stake-pos
-        name: Proof of Stake (PoS)
-        market_cap: 925314183497.6659
-        market_cap_change_24h: -3.5837958619232606
-        content: Proof of Stake (PoS) is a blockchain consensus mechanism where validators
-          are selected to create new blocks based on the amount of cryptocurrency
-          they hold and are willing to stake as collateral.
-        volume_24h: 74210758063.69365
-        updated_at: '2025-08-25T09:10:30.112Z'
-      - id: world-liberty-financial-portfolio
-        name: World Liberty Financial Portfolio
-        market_cap: 884537677859.9034
-        market_cap_change_24h: -3.0775133512115116
-        content: The World Liberty Financial portfolio includes purchases made by
-          the World Liberty Financial project. World Liberty Financial is a DeFi project
-          associated with U.S. presidential candidate Donald Trump and his family
-          members.
-        volume_24h: 180701801282.9821
-        updated_at: '2025-08-25T09:10:11.878Z'
-      - id: made-in-usa
-        name: Made in USA
-        market_cap: 528087795635.72253
-        market_cap_change_24h: -3.7048122326079027
-        content: Refers to cryptocurrencies that have significant connections to the
-          United States, either through their founding team or company headquarters.
-        volume_24h: 56093739947.39509
-        updated_at: '2025-08-25T09:11:56.683Z'
-      - id: alleged-sec-securities
-        name: Alleged SEC Securities
-        market_cap: 319156320333.65985
-        market_cap_change_24h: -2.7737416882330126
-        content: "Tokens and cryptocurrencies alleged to be securities by the U.S.\
-          \ Securities and Exchange Commission (SEC). \r\n\r\nNote: The labeling of\
-          \ these cryptocurrencies as securities by the SEC doesn't equate to the\
-          \ legal classification till proven in a court."
-        volume_24h: 21472696810.302547
-        updated_at: '2025-08-25T09:10:31.198Z'
-      - id: usd-stablecoin
-        name: USD Stablecoin
-        market_cap: 281432475909.01227
-        market_cap_change_24h: -0.04022508188730203
-        content: A USD stablecoin is a type of cryptocurrency that is designed to
-          maintain a stable value by being pegged to the United States dollar.
-        volume_24h: 143035145012.96356
-        updated_at: '2025-08-25T09:10:25.395Z'
-      - id: stablecoins
-        name: Stablecoins
-        market_cap: 280626117207.5765
-        market_cap_change_24h: -0.03795835964528438
-        content: A stablecoin is a type of cryptocurrency that is designed to maintain
-          a stable value by being pegged to an external reference, such as a fiat
-          currency.
-        volume_24h: 141107510396.9061
-        updated_at: '2025-08-25T09:10:18.731Z'
-      - id: fiat-backed-stablecoin
-        name: Fiat-backed Stablecoin
-        market_cap: 270828574710.0348
-        market_cap_change_24h: -0.00451354731860622
-        content: 'A fiat-backed stablecoin is designed to maintain a stable value
-          by being pegged to a reserve of fiat currency, such as the US dollar, euro,
-          or other national currencies. '
-        volume_24h: 140559485443.22308
-        updated_at: '2025-08-25T09:11:29.869Z'
-      total_available: 596
-      returned_count: 10
-      limit: 10
-tokens_by_category_tool:
-  input:
-    tool: get_tokens_by_category
-    tool_arguments:
-      category_id: layer-1
-      vs_currency: usd
-      order: market_cap_desc
-      per_page: 10
-      page: 1
-    raw_data_only: false
-  output:
-    response: ''
-    data:
-      category_tokens:
-        category_id: layer-1
-        tokens:
-        - id: bitcoin
-          symbol: btc
+metadata:
+  agent: CoinGeckoTokenInfoAgent
+  test_file: coingecko_token_info_agent.py
+  timestamp: '2025-09-16T17:05:38.642494'
+  total_tests: 10
+  passed: 10
+  failed: 0
+results:
+  natural_language_query:
+    input:
+      query: Get information about $HEURIST
+    output:
+      response: '### Heurist ($HEURIST) Overview
+
+        - **Current Price**: $0.0219
+
+        - **Market Cap**: $3.89M
+
+        - **Fully Diluted Valuation**: $21.87M
+
+        - **24h Trading Volume**: $473,983
+
+        - **Market Cap Rank**: 2593
+
+
+        ### Price Performance
+
+        - **All-Time High (ATH)**: $0.4611 (down 95.3% from ATH)
+
+        - **24h High**: $0.0232
+
+        - **24h Low**: $0.0213
+
+        - **Price Change (24h)**: -$0.0009 (-4.0%)
+
+
+        ### Supply Metrics
+
+        - **Total Supply**: 1,000,000,000 HEU
+
+        - **Circulating Supply**: 177,907,051 HEU
+
+
+        ### Categories
+
+        Heurist is categorized under several sectors:
+
+        - Artificial Intelligence (AI)
+
+        - Ethereum Ecosystem
+
+        - ZkSync Ecosystem
+
+        - DePIN
+
+        - Base Ecosystem
+
+        - AI Agents
+
+        - AI Framework
+
+        - Made in USA
+
+
+        ### Insights
+
+        Heurist is currently trading significantly below its all-time high, indicating
+        a high potential for growth within its categories, particularly in the expanding
+        AI and Ethereum sectors.'
+      data: {}
+    description: Natural language query for HEURIST token information
+    status: success
+  get_token_info_tool:
+    input:
+      tool: get_token_info
+      tool_arguments:
+        coingecko_id: bitcoin
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        token_info:
+          id: bitcoin
           name: Bitcoin
-          current_price: 111512
-          market_cap: 2220277950046
+          symbol: BTC
           market_cap_rank: 1
-          fully_diluted_valuation: 2220277950046
-          total_volume: 48566058935
-          high_24h: 114927
-          low_24h: 111139
-          price_change_24h: -3184.718864500537
-          price_change_percentage_24h: -2.77664
-          market_cap_change_24h: -63516173714.02051
-          market_cap_change_percentage_24h: -2.78117
-          circulating_supply: 19911234.0
-          total_supply: 19911234.0
-          max_supply: 21000000.0
-          ath: 124128
-          ath_change_percentage: -10.17026
+          categories:
+          - Smart Contract Platform
+          - Layer 1 (L1)
+          - FTX Holdings
+          - Proof of Work (PoW)
+          - Bitcoin Ecosystem
+          - GMCI 30 Index
+          - GMCI Index
+          - Coinbase 50 Index
+        market_metrics:
+          current_price_usd: 115680
+          market_cap_usd: 2304070504580
+          fully_diluted_valuation_usd: 2304070504580
+          total_volume_usd: 40668038218
+        price_metrics:
+          ath_usd: 124128
+          ath_change_percentage: -6.81614
           ath_date: '2025-08-14T00:37:02.582Z'
-          atl: 67.81
-          atl_change_percentage: 164338.19324
-          atl_date: '2013-07-06T00:00:00.000Z'
-        - id: ethereum
-          symbol: eth
-          name: Ethereum
-          current_price: 4601.12
-          market_cap: 554184693928
-          market_cap_rank: 2
-          fully_diluted_valuation: 554184693928
-          total_volume: 47765896209
-          high_24h: 4946.05
-          low_24h: 4568.58
-          price_change_24h: -169.2165566819358
-          price_change_percentage_24h: -3.54727
-          market_cap_change_24h: -21387177378.530396
-          market_cap_change_percentage_24h: -3.71581
-          circulating_supply: 120707098.1711658
-          total_supply: 120707098.1711658
-          max_supply: null
-          ath: 4946.05
-          ath_change_percentage: -6.90503
-          ath_date: '2025-08-24T19:21:03.333Z'
-          atl: 0.432979
-          atl_change_percentage: 1063352.02636
-          atl_date: '2015-10-20T00:00:00.000Z'
-        - id: binancecoin
-          symbol: bnb
-          name: BNB
-          current_price: 860.3
-          market_cap: 119752400217
-          market_cap_rank: 5
-          fully_diluted_valuation: 119752400217
-          total_volume: 2100006313
-          high_24h: 881.64
-          low_24h: 855.03
-          price_change_24h: -7.63467274412676
-          price_change_percentage_24h: -0.87963
-          market_cap_change_24h: -1138391029.3355713
-          market_cap_change_percentage_24h: -0.94167
-          circulating_supply: 139287324.17
-          total_supply: 139287324.17
-          max_supply: 200000000.0
-          ath: 899.77
-          ath_change_percentage: -4.20413
-          ath_date: '2025-08-22T23:42:55.728Z'
-          atl: 0.0398177
-          atl_change_percentage: 2164621.09686
-          atl_date: '2017-10-19T00:00:00.000Z'
-        - id: solana
-          symbol: sol
-          name: Solana
-          current_price: 199.52
-          market_cap: 107754476862
-          market_cap_rank: 6
-          fully_diluted_valuation: 121262784922
-          total_volume: 12740033630
-          high_24h: 212.69
-          low_24h: 198.96
-          price_change_24h: -8.507268678508694
-          price_change_percentage_24h: -4.08958
-          market_cap_change_24h: -4646235369.406952
-          market_cap_change_percentage_24h: -4.13364
-          circulating_supply: 540437399.9805946
-          total_supply: 608187669.8416396
-          max_supply: null
-          ath: 293.31
-          ath_change_percentage: -31.77655
-          ath_date: '2025-01-19T11:15:27.957Z'
-          atl: 0.500801
-          atl_change_percentage: 39857.4792
-          atl_date: '2020-05-11T19:35:23.449Z'
-        - id: tron
-          symbol: trx
-          name: TRON
-          current_price: 0.352192
-          market_cap: 33345692466
-          market_cap_rank: 9
-          fully_diluted_valuation: 33345753313
-          total_volume: 1475176586
-          high_24h: 0.368238
-          low_24h: 0.35224
-          price_change_24h: -0.013522019810044139
-          price_change_percentage_24h: -3.69743
-          market_cap_change_24h: -1275519403.5315132
-          market_cap_change_percentage_24h: -3.68421
-          circulating_supply: 94668233427.815
-          total_supply: 94668406171.41505
-          max_supply: null
-          ath: 0.431288
-          ath_change_percentage: -18.17306
-          ath_date: '2024-12-04T00:10:40.323Z'
-          atl: 0.00180434
-          atl_change_percentage: 19458.93734
-          atl_date: '2017-11-12T00:00:00.000Z'
-        - id: cardano
-          symbol: ada
-          name: Cardano
-          current_price: 0.869974
-          market_cap: 31697958562
-          market_cap_rank: 11
-          fully_diluted_valuation: 39107720068
-          total_volume: 2750109037
-          high_24h: 0.958741
-          low_24h: 0.867904
-          price_change_24h: -0.03192095080289736
-          price_change_percentage_24h: -3.53932
-          market_cap_change_24h: -1311815170.4049149
-          market_cap_change_percentage_24h: -3.97402
-          circulating_supply: 36473824933.83167
-          total_supply: 45000000000.0
-          max_supply: 45000000000.0
-          ath: 3.09
-          ath_change_percentage: -71.72363
-          ath_date: '2021-09-02T06:00:10.474Z'
-          atl: 0.01925275
-          atl_change_percentage: 4433.72465
-          atl_date: '2020-03-13T02:22:55.044Z'
-        - id: hyperliquid
-          symbol: hype
-          name: Hyperliquid
-          current_price: 45.12
-          market_cap: 15014628775
-          market_cap_rank: 15
-          fully_diluted_valuation: 44977138794
-          total_volume: 396244708
-          high_24h: 47.26
-          low_24h: 43.49
-          price_change_24h: 1.081
-          price_change_percentage_24h: 2.4542
-          market_cap_change_24h: 314429423
-          market_cap_change_percentage_24h: 2.13895
-          circulating_supply: 333772999.4341414
-          total_supply: 999835210.4341414
-          max_supply: 1000000000.0
-          ath: 49.75
-          ath_change_percentage: -9.32166
-          ath_date: '2025-07-14T05:06:23.602Z'
-          atl: 3.81
-          atl_change_percentage: 1084.51494
-          atl_date: '2024-11-29T09:30:30.871Z'
-        - id: sui
-          symbol: sui
-          name: Sui
-          current_price: 3.48
-          market_cap: 12239786265
-          market_cap_rank: 19
-          fully_diluted_valuation: 34852077076
-          total_volume: 2138716312
-          high_24h: 3.84
-          low_24h: 3.48
-          price_change_24h: -0.19155962512180835
-          price_change_percentage_24h: -5.21135
-          market_cap_change_24h: -674675853.7587967
-          market_cap_change_percentage_24h: -5.22419
-          circulating_supply: 3511924479.569998
-          total_supply: 10000000000.0
-          max_supply: 10000000000.0
-          ath: 5.35
-          ath_change_percentage: -34.72269
-          ath_date: '2025-01-04T22:56:18.063Z'
-          atl: 0.364846
-          atl_change_percentage: 856.59333
-          atl_date: '2023-10-19T10:40:30.078Z'
-        - id: bitcoin-cash
-          symbol: bch
-          name: Bitcoin Cash
-          current_price: 565.97
-          market_cap: 11256226945
-          market_cap_rank: 21
-          fully_diluted_valuation: 11256226945
-          total_volume: 255994405
-          high_24h: 599.39
-          low_24h: 565.13
-          price_change_24h: -27.53388453991306
-          price_change_percentage_24h: -4.63923
-          market_cap_change_24h: -564580847.4603138
-          market_cap_change_percentage_24h: -4.77616
-          circulating_supply: 19916156.14665078
-          total_supply: 19916156.14665078
+          high_24h_usd: 115995
+          low_24h_usd: 114509
+          price_change_24h: 810.863
+          price_change_percentage_24h: 0.7059
+        supply_info:
+          total_supply: 19921612.0
           max_supply: 21000000.0
-          ath: 3785.82
-          ath_change_percentage: -85.02958
-          ath_date: '2017-12-20T00:00:00.000Z'
-          atl: 76.93
-          atl_change_percentage: 636.66692
-          atl_date: '2018-12-16T00:00:00.000Z'
-        - id: avalanche-2
-          symbol: avax
-          name: Avalanche
-          current_price: 24.24
-          market_cap: 10231654027
-          market_cap_rank: 22
-          fully_diluted_valuation: 11099137118
-          total_volume: 982412415
-          high_24h: 26.49
-          low_24h: 24.18
-          price_change_24h: -1.2589258671487613
-          price_change_percentage_24h: -4.93626
-          market_cap_change_24h: -538322524.6660786
-          market_cap_change_percentage_24h: -4.99836
-          circulating_supply: 422276596.0335201
-          total_supply: 458078999.632708
-          max_supply: 720000000.0
-          ath: 144.96
-          ath_change_percentage: -83.21943
-          ath_date: '2021-11-21T14:18:56.538Z'
-          atl: 2.8
-          atl_change_percentage: 768.4311
-          atl_date: '2020-12-31T13:15:21.540Z'
-trending_pools_tool:
-  input:
-    tool: get_trending_pools
-    tool_arguments:
-      include: base_token
-      pools: 4
-    raw_data_only: false
-  output:
-    response: ''
-    data:
-      trending_pools:
-        data:
-        - id: bsc_0x578079f54b972e4a3fbe52c3b6bbdb02c9d58260
-          type: pool
-          attributes:
-            trending_rank: 0
-            address: '0x578079f54b972e4a3fbe52c3b6bbdb02c9d58260'
-            name: AGI / WBNB
-            pool_created_at: '2025-08-12T06:14:04Z'
-            fdv_usd: '1387165.85711342'
-            market_cap_usd: null
-            volume_usd:
-              h24: '70030.4938619832'
-            reserve_in_usd: '51065.8767'
-          relationships:
-            network:
-              data:
-                id: bsc
-                type: network
-            dex:
-              data:
-                id: pancakeswap_v2
-                type: dex
-            base_token:
-              data:
-                id: bsc_0xc2da04c41519dda050ce2e05e28f8aeb74a4b52d
-                type: token
-            quote_token:
-              data:
-                id: bsc_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c
-                type: token
-        - id: solana_GA3oYtotvuVY27DcfaTUHSet3v2DAQexVZbvAQPb22ch
-          type: pool
-          attributes:
-            trending_rank: 1
-            address: GA3oYtotvuVY27DcfaTUHSet3v2DAQexVZbvAQPb22ch
-            name: BananaGuy / SOL
-            pool_created_at: '2025-08-19T15:45:50Z'
-            fdv_usd: '121737.604890367'
-            market_cap_usd: null
-            volume_usd:
-              h24: '90785.7433156975'
-            reserve_in_usd: '21603.1336'
-          relationships:
-            network:
-              data:
-                id: solana
-                type: network
-            dex:
-              data:
-                id: raydium
-                type: dex
-            base_token:
-              data:
-                id: solana_BANANEcQx72LrK5YeCz6xsdKXbS8zgNbkEseUeJ8Torr
-                type: token
-            quote_token:
-              data:
-                id: solana_So11111111111111111111111111111111111111112
-                type: token
-        - id: solana_GerGm1amASyEm8j41hU9HucAtSk3UwrA2Ggh5J1KGbuW
-          type: pool
-          attributes:
-            trending_rank: 2
-            address: GerGm1amASyEm8j41hU9HucAtSk3UwrA2Ggh5J1KGbuW
-            name: BABYSOL / SOL
-            pool_created_at: '2025-08-24T16:36:34Z'
-            fdv_usd: '262044.13570279'
-            market_cap_usd: null
-            volume_usd:
-              h24: '6563264.09276048'
-            reserve_in_usd: '71622.1395'
-          relationships:
-            network:
-              data:
-                id: solana
-                type: network
-            dex:
-              data:
-                id: pumpswap
-                type: dex
-            base_token:
-              data:
-                id: solana_13RbxjgWhXhgSN4krVwadunLSAJjph7b9QFU4GWEpump
-                type: token
-            quote_token:
-              data:
-                id: solana_So11111111111111111111111111111111111111112
-                type: token
-        - id: bsc_0xcbb86aa862e98c17a647100436c848d0c0050043
-          type: pool
-          attributes:
-            trending_rank: 3
-            address: '0xcbb86aa862e98c17a647100436c848d0c0050043'
-            name: ARTY / USDT
-            pool_created_at: '2023-12-23T12:43:58Z'
-            fdv_usd: '4133039.34850772'
-            market_cap_usd: '3800031.45669274'
-            volume_usd:
-              h24: '111488.453354298'
-            reserve_in_usd: '81965.5228'
-          relationships:
-            network:
-              data:
-                id: bsc
-                type: network
-            dex:
-              data:
-                id: pancakeswap_v2
-                type: dex
-            base_token:
-              data:
-                id: bsc_0x617cab4aaae1f8dfb3ee138698330776a1e1b324
-                type: token
-            quote_token:
-              data:
-                id: bsc_0x55d398326f99059ff775485246999027b3197955
-                type: token
-        included:
-        - id: bsc_0xc2da04c41519dda050ce2e05e28f8aeb74a4b52d
-          type: token
-          attributes:
-            address: '0xc2da04c41519dda050ce2e05e28f8aeb74a4b52d'
-            name: AGI
-            symbol: AGI
-            decimals: 18
-            coingecko_coin_id: null
-        - id: solana_BANANEcQx72LrK5YeCz6xsdKXbS8zgNbkEseUeJ8Torr
-          type: token
-          attributes:
-            address: BANANEcQx72LrK5YeCz6xsdKXbS8zgNbkEseUeJ8Torr
-            name: BananaGuy
-            symbol: BananaGuy
-            decimals: 6
-            coingecko_coin_id: null
-        - id: solana_13RbxjgWhXhgSN4krVwadunLSAJjph7b9QFU4GWEpump
-          type: token
-          attributes:
-            address: 13RbxjgWhXhgSN4krVwadunLSAJjph7b9QFU4GWEpump
-            name: Baby Solana
-            symbol: BABYSOL
-            decimals: 6
-            coingecko_coin_id: null
-        - id: bsc_0x617cab4aaae1f8dfb3ee138698330776a1e1b324
-          type: token
-          attributes:
-            address: '0x617cab4aaae1f8dfb3ee138698330776a1e1b324'
-            name: Artyfact
-            symbol: ARTY
-            decimals: 6
-            coingecko_coin_id: artyfact
-top_holders_tool:
-  input:
-    tool: get_top_token_holders
-    tool_arguments:
-      network: base
-      address: '0xEF22cb48B8483dF6152e1423b19dF5553BbD818b'
-    raw_data_only: false
-  output:
-    response: ''
-    data:
-      top_holders:
-        data:
-          id: base_0xef22cb48b8483df6152e1423b19df5553bbd818b
-          type: top_holder
-          attributes:
-            last_updated_at: '2025-08-23T15:44:46.361Z'
-            holders:
-            - rank: 1
-              address: '0xfa13536bc4181db19fe93da82115f43f5c95761c'
-              label: Staked Heurist Token (STHEU)
-              amount: '26488721.0'
-              percentage: '15.4816'
-              value: '1402478.32'
-            - rank: 2
-              address: '0xf314fa643d4819021d7a3c3b2f9f8b6386761ce5'
-              label: null
-              amount: '8198474.0'
-              percentage: '4.7917'
-              value: '434078.42'
-            - rank: 3
-              address: '0xbeb7381f574e941650dc91e710ca0bd4864b3d31'
-              label: null
-              amount: '8126511.0'
-              percentage: '4.7496'
-              value: '430268.25'
-            - rank: 4
-              address: '0x0d0707963952f2fba59dd06f2b425ace40b492fe'
-              label: Hot Wallet
-              amount: '7420919.0'
-              percentage: '4.3372'
-              value: '392909.8'
-            - rank: 5
-              address: '0x4e3ae00e8323558fa5cac04b152238924aa31b60'
-              label: Hot Wallet
-              amount: '6444001.0'
-              percentage: '3.7663'
-              value: '341185.66'
-            - rank: 6
-              address: '0xcfc4f31d615f81d2f2508a06fb43e5b1c154ada2'
-              label: null
-              amount: '4654584.0'
-              percentage: '2.7204'
-              value: '246442.75'
-            - rank: 7
-              address: '0x5f619a8bc66b775d2d85419210c0b934a11f8016'
-              label: null
-              amount: '4240042.0'
-              percentage: '2.4781'
-              value: '224494.3'
-            - rank: 8
-              address: '0x89f9f593d2957bec9dc1ac58068a115961109ae9'
-              label: null
-              amount: '4000004.0'
-              percentage: '2.3378'
-              value: '211785.19'
-            - rank: 9
-              address: '0xd72a3cf959e023bc3d8d62b9f5a7120c07a7de67'
-              label: null
-              amount: '3500000.0'
-              percentage: '2.0456'
-              value: '185311.86'
-            - rank: 10
-              address: '0xfb39f454bfc710e92e6fcc5737acd734029cbf8e'
-              label: null
-              amount: '2876033.0'
-              percentage: '1.6809'
-              value: '152275.15'
-raw_data_query:
-  input:
-    query: Compare Bitcoin and Ethereum prices
-    raw_data_only: true
-  output:
-    response: "### Price Comparison: Bitcoin vs Ethereum\n\n- **Bitcoin (BTC)**  \n\
-      \  - **Price:** $111,515  \n  - **Market Cap:** $2.22 Trillion  \n  - **24h\
-      \ Trading Volume:** $48.57 Billion  \n  - **24h Price Change:** -2.77%  \n\n\
-      - **Ethereum (ETH)**  \n  - **Price:** $4,601.68  \n  - **Market Cap:** $554.18\
-      \ Billion  \n  - **24h Trading Volume:** $47.83 Billion  \n  - **24h Price Change:**\
-      \ -3.54%  \n\n### Key Insights:\n- Bitcoin is currently priced significantly\
-      \ higher than Ethereum, with a difference of approximately $106,913.32.\n- Bitcoin's\
-      \ market cap is more than four times that of Ethereum, indicating its dominance\
-      \ in the cryptocurrency market.\n- Both cryptocurrencies have experienced a\
-      \ decline in price over the last 24 hours, with Ethereum facing a slightly steeper\
-      \ drop."
-    data: {}
+          circulating_supply: 19921612.0
+    description: Direct tool call for Bitcoin token info with raw data
+    status: success
+  get_trending_coins_tool:
+    input:
+      tool: get_trending_coins
+      tool_arguments: {}
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        trending_coins:
+        - name: Avantis
+          symbol: AVNT
+          market_cap_rank: 265
+          price_usd: 1.1219506839015967
+        - name: Pump.fun
+          symbol: PUMP
+          market_cap_rank: 56
+          price_usd: 0.008193349006458147
+        - name: Linea
+          symbol: LINEA
+          market_cap_rank: 205
+          price_usd: 0.02759180238131305
+        - name: World Liberty Financial
+          symbol: WLFI
+          market_cap_rank: 36
+          price_usd: 0.22224375652243397
+        - name: Zora
+          symbol: ZORA
+          market_cap_rank: 285
+          price_usd: 0.07943696491265187
+        - name: Saros
+          symbol: SAROS
+          market_cap_rank: 119
+          price_usd: 0.4027922150134843
+        - name: Aethir
+          symbol: ATH
+          market_cap_rank: 147
+          price_usd: 0.0611210581374818
+        - name: Hyperliquid
+          symbol: HYPE
+          market_cap_rank: 16
+          price_usd: 53.23055442145549
+        - name: Ethena
+          symbol: ENA
+          market_cap_rank: 41
+          price_usd: 0.7036588481135745
+        - name: Solana
+          symbol: SOL
+          market_cap_rank: 6
+          price_usd: 235.46007379686287
+    description: Direct tool call for trending coins with raw data
+    status: success
+  get_token_price_multi_tool:
+    input:
+      tool: get_token_price_multi
+      tool_arguments:
+        ids: bitcoin,ethereum
+        vs_currencies: usd
+        include_market_cap: true
+        include_24hr_vol: true
+        include_24hr_change: true
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        price_data:
+          bitcoin:
+            usd: 115674
+            usd_market_cap: 2304390312668.9214
+            usd_24h_vol: 40606774751.84104
+            usd_24h_change: 0.7014078922417841
+          ethereum:
+            usd: 4510.72
+            usd_market_cap: 544436292606.5253
+            usd_24h_vol: 27861746874.983322
+            usd_24h_change: -0.192225926183328
+    description: Direct tool call for multi-token price data with market metrics
+    status: success
+  get_categories_list_tool:
+    input:
+      tool: get_categories_list
+      tool_arguments: {}
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        categories:
+        - category_id: 4chan-themed
+          name: 4chan-Themed
+        - category_id: 8bit-chain-ecosystem
+          name: 8Bit Chain Ecosystem
+        - category_id: aave-tokens
+          name: Aave Tokens
+        - category_id: abstract-ecosystem
+          name: Abstract Ecosystem
+        - category_id: account-abstraction
+          name: Account Abstraction
+        - category_id: action-games
+          name: Action Games
+        - category_id: adidas-ecosystem
+          name: Adidas Ecosystem
+        - category_id: adventure-games
+          name: Adventure Games
+        - category_id: aelf-ecosystem
+          name: Aelf Ecosystem
+        - category_id: ai-agent-launchpad
+          name: AI Agent Launchpad
+        - category_id: ai-agents
+          name: AI Agents
+        - category_id: ai-applications
+          name: AI Applications
+        - category_id: ai-framework
+          name: AI Framework
+        - category_id: ai-meme-coins
+          name: AI Meme
+        - category_id: airdao-ecosystem
+          name: AirDAO Ecosystem
+        - category_id: airdropped-tokens-by-nft-projects
+          name: Airdropped Tokens by NFT Projects
+        - category_id: alameda-research-portfolio
+          name: Alameda Research Portfolio
+        - category_id: alephium-ecosystem
+          name: Alephium Ecosystem
+        - category_id: algorand-ecosystem
+          name: Algorand Ecosystem
+        - category_id: algorithmic-stablecoin
+          name: Algorithmic Stablecoin
+        - category_id: alienx-ecosystem
+          name: AlienX Ecosystem
+        - category_id: alleged-sec-securities
+          name: Alleged SEC Securities
+        - category_id: alveychain-ecosystem
+          name: Alveychain Ecosystem
+        - category_id: analytics
+          name: Analytics
+        - category_id: ancient8-ecosystem
+          name: Ancient8 Ecosystem
+        - category_id: andreessen-horowitz-a16z-portfolio
+          name: Andreessen Horowitz (a16z) Portfolio
+        - category_id: animal-racing
+          name: Animal Racing
+        - category_id: anime-themed-coins
+          name: Anime-Themed
+        - category_id: animoca-brands
+          name: Animoca Brands Portfolio
+        - category_id: apechain-ecosystem
+          name: ApeChain Ecosystem
+        - category_id: apex-chain-ecosystem
+          name: Apex Chain Ecosystem
+        - category_id: appchains
+          name: Appchains
+        - category_id: aptos-ecosystem
+          name: Aptos Ecosystem
+        - category_id: arbitrum-ecosystem
+          name: Arbitrum Ecosystem
+        - category_id: arbitrum-nova-ecosystem
+          name: Arbitrum Nova Ecosystem
+        - category_id: arcade-games
+          name: Arcade Games
+        - category_id: archway-ecosystem
+          name: Archway Ecosystem
+        - category_id: art
+          name: Art
+        - category_id: art-blocks-ecosystem
+          name: Art Blocks Ecosystem
+        - category_id: artela-ecosystem
+          name: Artela Ecosystem
+        - category_id: artificial-intelligence
+          name: Artificial Intelligence (AI)
+        - category_id: asc-20
+          name: ASC-20
+        - category_id: asset-manager
+          name: Asset Manager
+        - category_id: astar-ecosystem
+          name: Astar Ecosystem
+        - category_id: astar-zkevm-ecosystem
+          name: Astar zkEVM Ecosystem
+        - category_id: atomicals-arc-20
+          name: Atomicals (ARC-20)
+        - category_id: augmented-reality
+          name: Augmented Reality
+        - category_id: aurora-ecosystem
+          name: Aurora Ecosystem
+        - category_id: automated-market-maker-amm
+          name: Automated Market Maker (AMM)
+        - category_id: avalanche-ecosystem
+          name: Avalanche Ecosystem
+        - category_id: avalanche-subnet
+          name: Avalanche L1
+        - category_id: axie-infinity
+          name: Axie Infinity Ecosystem
+        - category_id: azuki-ecosystem
+          name: Azuki Ecosystem
+        - category_id: xstocks-ecosystem
+          name: BackedFi xStocks Ecosystem
+        - category_id: bagsapp-ecosystem
+          name: BagsApp Ecosystem
+        - category_id: bahamut-ecosystem
+          name: Bahamut Ecosystem
+        - category_id: base-ecosystem
+          name: Base Ecosystem
+        - category_id: base-meme-coins
+          name: Base Meme
+        - category_id: bayblon-genesis-ecosystem
+          name: Bayblon Genesis Ecosystem
+        - category_id: beam-ecosystem
+          name: Beam Ecosystem
+        - category_id: beamprivacy-ecosystem
+          name: BeamPrivacy Ecosystem
+        - category_id: believe-app-ecosystem
+          name: Believe.app Ecosystem
+        - category_id: berachain-ecosystem
+          name: Berachain Ecosystem
+        - category_id: besc-hyperchain-ecosystem
+          name: BESC HyperChain Ecosystem
+        - category_id: bevm-ecosystem
+          name: BEVM Ecosystem
+        - category_id: big-data
+          name: Big Data
+        - category_id: binance-alpha-spotlight
+          name: Binance Alpha Spotlight
+        - category_id: binance-hodler-airdrops
+          name: Binance HODLer Airdrops
+        - category_id: binance-launchpad
+          name: Binance Launchpad
+        - category_id: binance-launchpool
+          name: Binance Launchpool
+        - category_id: binance-megadrop
+          name: Binance Megadrop
+        - category_id: binance-peg-tokens
+          name: Binance-Peg Tokens
+        - category_id: binance-wallet-ido
+          name: Binance Wallet IDO
+        - category_id: bitcichain-ecosystem
+          name: Bitcichain Ecosystem
+        - category_id: bitcoin-ecosystem
+          name: Bitcoin Ecosystem
+        - category_id: bitcoin-fork
+          name: Bitcoin Fork
+        - category_id: bitcoin-layer-2
+          name: Bitcoin Sidechains
+        - category_id: bitgert-ecosystem
+          name: Bitgert Ecosystem
+        - category_id: bitlayer-ecosystem
+          name: Bitlayer Ecosystem
+        - category_id: bitrock-ecosystem
+          name: Bitrock Ecosystem
+        - category_id: bitstarters-launchpad
+          name: BitStarters Launchpad
+        - category_id: bittensor-ecosystem
+          name: Bittensor Ecosystem
+        - category_id: bittensor-subnets
+          name: Bittensor Subnets
+        - category_id: bittorrent-ecosystem
+          name: BitTorrent Ecosystem
+        - category_id: blast-ecosystem
+          name: Blast Ecosystem
+        - category_id: blockchain-capital-portfolio
+          name: Blockchain Capital Portfolio
+        - category_id: binance-smart-chain
+          name: BNB Chain Ecosystem
+        - category_id: boba-bnb-ecosystem
+          name: Boba BNB Ecosystem
+        - category_id: boba-network-ecosystem
+          name: Boba Network Ecosystem
+        - category_id: letsbonk-fun-ecosystem
+          name: BONK.fun Ecosystem
+        - category_id: bored-ape-ecosystem
+          name: Bored Ape Ecosystem
+        - category_id: botanix-ecosystem
+          name: Botanix Ecosystem
+        - category_id: bouncebit-ecosystem
+          name: BounceBit Ecosystem
+        - category_id: brc-20
+          name: BRC-20
+        - category_id: breeding
+          name: Breeding
+        - category_id: bridged-dai
+          name: Bridged DAI
+        - category_id: bridged-frax
+          name: Bridged FRAX
+        - category_id: bridged-stablecoins
+          name: Bridged Stablecoin
+        - category_id: bridged-tokens
+          name: Bridged-Tokens
+        - category_id: bridged-usdc
+          name: Bridged USDC
+        - category_id: bridged-usdt
+          name: Bridged USDT
+        - category_id: bridged-wavax
+          name: Bridged WAVAX
+        - category_id: bridged-wbnb
+          name: Bridged WBNB
+        - category_id: bridged-wbtc
+          name: Bridged WBTC
+        - category_id: bridged-weth
+          name: Bridged WETH
+        - category_id: bridged-wsteth
+          name: Bridged wstETH
+        - category_id: bridge-governance-tokens
+          name: Bridge Governance Tokens
+        - category_id: bsquared-network-ecosystem
+          name: BSquared Network Ecosystem
+        - category_id: btcfi
+          name: BTCfi Protocol
+        - category_id: business-services
+          name: Business Services
+        - category_id: camelot-launchpad
+          name: Camelot Launchpad
+        - category_id: canto-ecosystem
+          name: Canto Ecosystem
+        - category_id: capital-launchpad
+          name: Capital Launchpad
+        - category_id: cardano-ecosystem
+          name: Cardano Ecosystem
+        - category_id: card-games
+          name: Card Games
+        - category_id: cat-themed-coins
+          name: Cat-Themed
+        - category_id: cefi
+          name: CeFi
+        - category_id: celebrity-themed-coins
+          name: Celebrity-Themed
+        - category_id: celer-network
+          name: Celer Network
+        - category_id: celo-ecosystem
+          name: Celo Ecosystem
+        - category_id: centralized-exchange-cex-product
+          name: Centralized Exchange (CEX) Product
+        - category_id: centralized-exchange-token-cex
+          name: Centralized Exchange (CEX) Token
+        - category_id: chain-abstraction
+          name: Chain Abstraction
+        - category_id: chaingpt-pad
+          name: ChainGPT Launchpad
+        - category_id: charity
+          name: Charity
+        - category_id: chiliz-ecosystem
+          name: Chiliz Ecosystem
+        - category_id: chinese-meme
+          name: Chinese Meme
+        - category_id: christmas-themed
+          name: Christmas Themed
+        - category_id: chromia-ecosystem
+          name: Chromia Ecosystem
+        - category_id: circle-ventures-portfolio
+          name: Circle Ventures Portfolio
+        - category_id: clanker-ecosystem
+          name: Clanker Ecosystem
+        - category_id: cny-stablecoin
+          name: CNY Stablecoin
+        - category_id: codex-ecosystem
+          name: Codex Ecosystem
+        - category_id: coinbase-50-index
+          name: Coinbase 50 Index
+        - category_id: coinbase-ventures-portfolio
+          name: Coinbase Ventures Portfolio
+        - category_id: collectibles
+          name: Collectibles
+        - category_id: combo-ecosystem
+          name: Combo Ecosystem
+        - category_id: commodity-backed-stablecoin
+          name: Commodity-backed Stablecoin
+        - category_id: communication
+          name: Communication
+        - category_id: compound-tokens
+          name: Compound Tokens
+        - category_id: conflux-ecosystem
+          name: Conflux Ecosystem
+        - category_id: consensys-portofolio
+          name: Consensys Portfolio
+        - category_id: core-ecosystem
+          name: Core Ecosystem
+        - category_id: corn-ecosystem
+          name: Corn Ecosystem
+        - category_id: cosmos-ecosystem
+          name: Cosmos Ecosystem
+        - category_id: country-themed-meme-coins
+          name: Country-Themed Meme
+        - category_id: creatorbid-ecosystem
+          name: CreatorBid Ecosystem
+        - category_id: cronos-ecosystem
+          name: Cronos Ecosystem
+        - category_id: cronos-zkevm-ecosystem
+          name: Cronos zkEVM Ecosystem
+        - category_id: cross-chain-communication
+          name: Cross-chain Communication
+        - category_id: crypto-backed-stablecoin
+          name: Crypto-backed Stablecoin
+        - category_id: asset-backed-tokens
+          name: Crypto-Backed Tokens
+        - category_id: ctokens
+          name: cToken
+        - category_id: curve-ecosystem
+          name: Curve Ecosystem
+        - category_id: cyber-ecosystem
+          name: Cyber Ecosystem
+        - category_id: cyberkongz-ecosystem
+          name: CyberKongz Ecosystem
+        - category_id: cybersecurity
+          name: Cybersecurity
+        - category_id: daomaker-ecosystem
+          name: DaoMaker Launchpad
+        - category_id: daos-fun-ecosystem
+          name: daos.fun Ecosystem
+        - category_id: data-availability
+          name: Data Availability
+        - category_id: decentralized-exchange
+          name: Decentralized Exchange (DEX)
+        - category_id: decentralized-finance-defi
+          name: Decentralized Finance (DeFi)
+        - category_id: identity
+          name: Decentralized Identifier (DID)
+        - category_id: decentralized-lottery
+          name: Decentralized Lottery
+        - category_id: decentralized-science-desci
+          name: Decentralized Science (DeSci)
+        - category_id: deepbrain-chain-ecosystem
+          name: DeepBrain Chain Ecosystem
+        - category_id: defai
+          name: DeFAI
+        - category_id: defiance-capital-portfolio
+          name: DeFiance Capital Portfolio
+        - category_id: defi-index
+          name: DeFi Index
+        - category_id: defimetachain-ecosystem
+          name: DefiMetaChain Ecosystem
+        - category_id: defiverse-ecosystem
+          name: Defiverse Ecosystem
+        - category_id: degen-ecosystem
+          name: Degen Ecosystem
+        - category_id: delabs
+          name: DeLabs
+        - category_id: delphi-ventures-portfolio
+          name: Delphi Ventures Portfolio
+        - category_id: depin
+          name: DePIN
+        - category_id: decentralized-derivatives
+          name: Derivatives
+        - category_id: desci-meme
+          name: Desci Meme
+        - category_id: dex-aggregator
+          name: Dex Aggregator
+        - category_id: dfk-chain-ecosystem
+          name: DFK Chain Ecosystem
+        - category_id: dinari-ecosystem
+          name: Dinari Ecosystem
+        - category_id: directed-acyclic-graph-dag
+          name: Directed Acyclic Graph (DAG)
+        - category_id: discord-bots
+          name: Discord Bots
+        - category_id: dmex-ecosystem
+          name: DMEX Ecosystem
+        - category_id: dn-404
+          name: ' DN-404'
+        - category_id: dogechain-ecosystem
+          name: Dogechain Ecosystem
+        - category_id: dog-themed-coins
+          name: Dog-Themed
+        - category_id: doodles-llc
+          name: Doodles LLC
+        - category_id: dragonfly-capital-portfolio
+          name: DragonFly Capital Portfolio
+        - category_id: drc-20
+          name: DRC-20
+        - category_id: duckchain-ecosystem
+          name: DuckChain Ecosystem
+        - category_id: duck-themed-coins
+          name: Duck-Themed
+        - category_id: dwf-labs-portfolio
+          name: DWF Labs Portfolio
+        - category_id: eclipse-ecosystem
+          name: Eclipse Ecosystem
+        - category_id: e-commerce
+          name: E-commerce
+        - category_id: edgeware-ecosystem
+          name: Edgeware Ecosystem
+        - category_id: education
+          name: Education
+        - category_id: edu-chain-ecosystem
+          name: EDU Chain Ecosystem
+        - category_id: egirl-capital-portfolio
+          name: eGirl Capital Portfolio
+        - category_id: elastos-smart-contract-chain-ecosystem
+          name: Elastos Smart Contract Chain Ecosystem
+        - category_id: electroneum-ecosystem
+          name: Electroneum Ecosystem
+        - category_id: elon-musk-inspired-coins
+          name: Elon Musk-Inspired
+        - category_id: elysium-ecosystem
+          name: Elysium Ecosystem
+        - category_id: emoji-themed
+          name: Emoji-Themed
+        - category_id: endurance-ecosystem
+          name: Endurance Ecosystem
+        - category_id: energi-ecosystem
+          name: Energi Ecosystem
+        - category_id: energy
+          name: Energy
+        - category_id: entertainment
+          name: Entertainment
+        - category_id: enuls-ecosystem
+          name: ENULS Ecosystem
+        - category_id: eos-ecosystem
+          name: EOS Ecosystem
+        - category_id: erc20i
+          name: ERC20i
+        - category_id: erc-404
+          name: ERC 404
+        - category_id: ergo-ecosystem
+          name: Ergo Ecosystem
+        - category_id: etf
+          name: ETF
+        - category_id: ethereum-classic-ecosystem
+          name: Ethereum Classic Ecosystem
+        - category_id: ethereum-ecosystem
+          name: Ethereum Ecosystem
+        - category_id: ethereum-pos-iou
+          name: Ethereum PoS IOU
+        - category_id: ethereumpow-ecosystem
+          name: EthereumPoW Ecosystem
+        - category_id: ether-fi-ecosystem
+          name: Ether.fi Ecosystem
+        - category_id: etherlink-ecosystem
+          name: Etherlink Ecosystem
+        - category_id: eur-stablecoin
+          name: EUR Stablecoin
+        - category_id: eventum-ecosystem
+          name: Eventum Ecosystem
+        - category_id: evmos-ecosystem
+          name: Evmos Ecosystem
+        - category_id: exchange-based-tokens
+          name: Exchange-based Tokens
+        - category_id: f1-partnership
+          name: F1 Partnership
+        - category_id: fan-token
+          name: Fan Token
+        - category_id: fantom-ecosystem
+          name: Fantom Ecosystem
+        - category_id: farcaster-ecosystem
+          name: Farcaster Ecosystem
+        - category_id: farming-as-a-service-faas
+          name: Farming-as-a-Service (FaaS)
+        - category_id: farming-games
+          name: Farming Games
+        - category_id: fiat-backed-stablecoin
+          name: Fiat-backed Stablecoin
+        - category_id: fighting-games
+          name: Fighting Games
+        - category_id: fixed-interest
+          name: Fixed Interest
+        - category_id: flare-network-ecosystem
+          name: Flare Network Ecosystem
+        - category_id: flaunch-ecosystem
+          name: Flaunch Ecosystem
+        - category_id: flooring-protocol
+          name: Floor Protocol Tokens
+        - category_id: flow-ecosystem
+          name: Flow Ecosystem
+        - category_id: flow-evm-ecosystem
+          name: Flow EVM Ecosystem
+        - category_id: four-meme-ecosystem
+          name: Four.meme Ecosystem
+        - category_id: fractionalized-nft
+          name: Fractionalized NFT
+        - category_id: fraxtal-ecosystem
+          name: Fraxtal Ecosystem
+        - category_id: friend-tech
+          name: Friend.tech Ecosystem
+        - category_id: frog-themed-coins
+          name: Frog-Themed
+        - category_id: ftx-holdings
+          name: FTX Holdings
+        - category_id: fuse-ecosystem
+          name: Fuse Ecosystem
+        - category_id: galachain-ecosystem
+          name: GalaChain Ecosystem
+        - category_id: galaxy-digital-portfolio
+          name: Galaxy Digital Portfolio
+        - category_id: gambling
+          name: Gambling (GambleFi)
+        - category_id: game-studio
+          name: Game Studio
+        - category_id: gaming-blockchains
+          name: Gaming Blockchains
+        - category_id: gaming
+          name: Gaming (GameFi)
+        - category_id: gaming-governance-token
+          name: Gaming Governance Token
+        - category_id: gaming-marketplace
+          name: Gaming Marketplace
+        - category_id: gaming-platform
+          name: Gaming Platform
+        - category_id: gaming-utility-token
+          name: Gaming Utility Token
+        - category_id: gbp-stablecoin
+          name: GBP Stablecoin
+        - category_id: genesys-network-ecosystem
+          name: Genesys Network Ecosystem
+        - category_id: gig-economy
+          name: Gig Economy
+        - category_id: glue-ecosystem
+          name: Glue Ecosystem
+        - category_id: gmci-30-index
+          name: GMCI 30 Index
+        - category_id: gmci-defi-index
+          name: GMCI DeFi Index
+        - category_id: gmci-depin-index
+          name: GMCI DePIN Index
+        - category_id: gmci-index
+          name: GMCI Index
+        - category_id: gmci-layer-1-index
+          name: GMCI Layer 1 Index
+        - category_id: gmci-layer-2-index
+          name: GMCI Layer 2 Index
+        - category_id: gmci-meme-index
+          name: GMCI Meme Index
+        - category_id: xdai-ecosystem
+          name: Gnosis Chain Ecosystem
+        - category_id: goat-ecosystem
+          name: Goat Ecosystem
+        - category_id: gotchiverse
+          name: Gotchiverse
+        - category_id: governance
+          name: Governance
+        - category_id: graphite-network-ecosystem
+          name: Graphite Network Ecosystem
+        - category_id: graphlinq-ecosystem
+          name: GraphLinq Ecosystem
+        - category_id: gravity-alpha-ecosystem
+          name: Gravity Alpha Ecosystem
+        - category_id: guild-scholarship
+          name: Guild and Scholarship
+        - category_id: gunz-ecosystem
+          name: GUNZ Ecosystem
+        - category_id: ham-ecosystem
+          name: Ham Ecosystem
+        - category_id: haqq-network-ecosystem
+          name: Haqq Network Ecosystem
+        - category_id: harmony-ecosystem
+          name: Harmony Ecosystem
+        - category_id: hashkey-chain-ecosystem
+          name: HashKey Chain Ecosystem
+        - category_id: haven1-ecosystem
+          name: Haven1 Ecosystem
+        - category_id: healthcare
+          name: Healthcare
+        - category_id: heco-chain-ecosystem
+          name: HECO Chain Ecosystem
+        - category_id: hedera-ecosystem
+          name: Hedera Ecosystem
+        - category_id: hela-ecosystem
+          name: HeLa Ecosystem
+        - category_id: hemi-ecosystem
+          name: Hemi Ecosystem
+        - category_id: humanode-ecosystem
+          name: Humanode Ecosystem
+        - category_id: huobi-eco-chain-ecosystem
+          name: Huobi ECO Chain Ecosystem
+        - category_id: hybrid-token-standards
+          name: Hybrid Token Standards
+        - category_id: hydra-ecosystem
+          name: Hydra Ecosystem
+        - category_id: hydration-ecosystem
+          name: Hydration Ecosystem
+        - category_id: hyperevm-ecosystem
+          name: HyperEVM Ecosystem
+        - category_id: hyperliquid-ecosystem
+          name: Hyperliquid Ecosystem
+        - category_id: hyperunit-ecosystem
+          name: Hyperunit Ecosystem
+        - category_id: hyperxpad-launchpad
+          name: HyperXpad Launchpad
+        - category_id: icb-network-ecosystem
+          name: ICB Network Ecosystem
+        - category_id: idr-stablecoin
+          name: IDR Stablecoin
+        - category_id: immutable-ecosystem
+          name: Immutable zkEVM Ecosystem
+        - category_id: impossible-launchpad
+          name: Impossible Finance Launchpad
+        - category_id: index-coin
+          name: Index
+        - category_id: defi-pulse-index-dpi
+          name: Index Coop Defi Index
+        - category_id: index-coop-index
+          name: Index Coop Index
+        - category_id: index-coop-metaverse-index
+          name: Index Coop Metaverse Index
+        - category_id: inevm-ecosystem
+          name: inEVM Ecosystem
+        - category_id: infofi
+          name: InfoFi
+        - category_id: infrastructure
+          name: Infrastructure
+        - category_id: initia-ecosystem
+          name: Initia Ecosystem
+        - category_id: injective-ecosystem
+          name: Injective Ecosystem
+        - category_id: ink-ecosystem
+          name: Ink Ecosystem
+        - category_id: inscriptions
+          name: Inscriptions
+        - category_id: insurance
+          name: Insurance
+        - category_id: intent
+          name: Intent
+        - category_id: internet-computer-ecosystem
+          name: Internet Computer Ecosystem
+        - category_id: internet-of-things-iot
+          name: Internet of Things (IOT)
+        - category_id: interoperability
+          name: Interoperability
+        - category_id: iota-ecosystem
+          name: IOTA Ecosystem
+        - category_id: iota-evm-ecosystem
+          name: IOTA EVM Ecosystem
+        - category_id: iotex-ecosystem
+          name: IoTeX Ecosystem
+        - category_id: iou-tokens
+          name: IOU tokens
+        - category_id: ip
+          name: IP
+        - category_id: jack-butcher-ecosystem
+          name: Jack Butcher Ecosystem
+        - category_id: jibchain-ecosystem
+          name: Jibchain Ecosystem
+        - category_id: jpy-stablecoin
+          name: JPY Stablecoin
+        - category_id: juno-ecosystem
+          name: Juno Ecosystem
+        - category_id: kadena-ecosystem
+          name: Kadena Ecosystem
+        - category_id: klaytn-ecosystem
+          name: Kaia Ecosystem
+        - category_id: kardiachain-ecosystem
+          name: KardiaChain Ecosystem
+        - category_id: kaspa-ecosystem
+          name: Kaspa Ecosystem
+        - category_id: katana-ecosystem
+          name: Katana Ecosystem
+        - category_id: kava-ecosystem
+          name: Kava Ecosystem
+        - category_id: kinto-ecosystem
+          name: Kinto Ecosystem
+        - category_id: kommunitas
+          name: Kommunitas Launchpad
+        - category_id: kroma-ecosystem
+          name: Kroma Ecosystem
+        - category_id: krw-stablecoin
+          name: KRW Stablecoin
+        - category_id: kucoin-community-chain-ecosystem
+          name: Kucoin Community Chain Ecosystem
+        - category_id: kujira-ecosystem
+          name: Kujira Ecosystem
+        - category_id: laika-ecosystem
+          name: Laika Ecosystem
+        - category_id: large-cap
+          name: Large-Cap PFP
+        - category_id: larissa-ecosystem
+          name: Larissa Ecosystem
+        - category_id: launchpad
+          name: Launchpad
+        - category_id: layer-0-l0
+          name: Layer 0 (L0)
+        - category_id: layer-1
+          name: Layer 1 (L1)
+        - category_id: layer-2
+          name: Layer 2 (L2)
+        - category_id: layer-3-l3
+          name: Layer 3 (L3)
+        - category_id: legal
+          name: Legal
+        - category_id: lending-borrowing
+          name: Lending/Borrowing Protocols
+        - category_id: lens-ecosystem
+          name: Lens Ecosystem
+        - category_id: leveraged-token
+          name: Leveraged Token
+        - category_id: lightlink-ecosystem
+          name: LightLink Ecosystem
+        - category_id: linea-ecosystem
+          name: Linea Ecosystem
+        - category_id: liquid-restaked-eth
+          name: Liquid Restaked ETH
+        - category_id: liquid-restaked-sol
+          name: Liquid Restaked SOL
+        - category_id: liquid-restaking-governance-token
+          name: Liquid Restaking Governance Tokens
+        - category_id: liquid-restaking-tokens
+          name: Liquid Restaking Tokens
+        - category_id: liquid-staked-apt
+          name: "Liquid Staked APT\t"
+        - category_id: liquid-staked-btc
+          name: Liquid Staked BTC
+        - category_id: liquid-staked-eth
+          name: Liquid Staked ETH
+        - category_id: liquid-staked-sol
+          name: Liquid Staked SOL
+        - category_id: liquid-staked-sui
+          name: Liquid Staked SUI
+        - category_id: liquid-staking
+          name: Liquid Staking
+        - category_id: liquid-staking-governance-tokens
+          name: Liquid Staking Governance Tokens
+        - category_id: liquid-staking-tokens
+          name: Liquid Staking Tokens
+        - category_id: lisk-ecosystem
+          name: Lisk Ecosystem
+        - category_id: loopring-ecosystem
+          name: Loopring Ecosystem
+        - category_id: lp-tokens
+          name: LP Tokens
+        - category_id: lrtfi
+          name: LRTfi
+        - category_id: lsdfi
+          name: LSDFi
+        - category_id: lukso-ecosystem
+          name: Lukso Ecosystem
+        - category_id: lung-ecosystem
+          name: Lung Ecosystem
+        - category_id: made-in-china
+          name: Made in China
+        - category_id: made-in-usa
+          name: Made in USA
+        - category_id: mainnetz-ecosystem
+          name: Mainnetz Ecosystem
+        - category_id: manta-network-ecosystem
+          name: Manta Network Ecosystem
+        - category_id: mantle-ecosystem
+          name: Mantle Ecosystem
+        - category_id: mantra-ecosystem
+          name: Mantra Ecosystem
+        - category_id: manufacturing
+          name: Manufacturing
+        - category_id: marketing
+          name: Marketing
+        - category_id: market-making-solution
+          name: Market-Making Solution
+        - category_id: mascot-themed
+          name: Mascot-Themed
+        - category_id: massa-ecosystem
+          name: Massa Ecosystem
+        - category_id: masternodes
+          name: Masternodes
+        - category_id: maxxchain-ecosystem
+          name: MaxxChain Ecosystem
+        - category_id: media
+          name: Media
+        - category_id: meme-token
+          name: Meme
+        - category_id: memecoin-nfts
+          name: Memecoin NFTs
+        - category_id: memecore-ecosystem
+          name: MemeCore Ecosystem
+        - category_id: memeland-ecosystem
+          name: Memeland Ecosystem
+        - category_id: memorial-themed
+          name: Memorial Themed
+        - category_id: merlin-chain-ecosystem
+          name: Merlin Chain Ecosystem
+        - category_id: metagovernance
+          name: Metagovernance
+        - category_id: metaverse
+          name: Metaverse
+        - category_id: meter-ecosystem
+          name: Meter Ecosystem
+        - category_id: metis-ecosystem
+          name: Metis Ecosystem
+        - category_id: mev-protection
+          name: MEV Protection
+        - category_id: mezo-ecosystem
+          name: Mezo Ecosystem
+        - category_id: mid-cap
+          name: Mid-Cap PFP
+        - category_id: migaloo-ecosystem
+          name: Migaloo Ecosystem
+        - category_id: milady-and-derivatives
+          name: Milady And Derivatives
+        - category_id: milkomeda-cardano-ecosystem
+          name: Milkomeda (Cardano) Ecosystem
+        - category_id: mint-ecosystem
+          name: Mint Ecosystem
+        - category_id: massively-multiplayer-online-mmo
+          name: MMO
+        - category_id: mobile-mining
+          name: Mobile Mining
+        - category_id: mode-ecosystem
+          name: Mode Ecosystem
+        - category_id: modular-blockchain
+          name: Modular Blockchain
+        - category_id: moonbeam-ecosystem
+          name: Moonbeam Ecosystem
+        - category_id: moonchain-ecosystem
+          name: Moonchain Ecosystem
+        - category_id: moonriver-ecosystem
+          name: Moonriver Ecosystem
+        - category_id: moonshot-ecosystem
+          name: Moonshot Ecosystem
+        - category_id: morph-l2-ecosystem
+          name: Morph L2 Ecosystem
+        - category_id: morpho-ecosystem
+          name: Morpho Ecosystem
+        - category_id: movement-ecosystem
+          name: Movement Ecosystem
+        - category_id: move-to-earn
+          name: Move To Earn
+        - category_id: multicoin-capital-portfolio
+          name: Multicoin Capital Portfolio
+        - category_id: multivac-ecosystem
+          name: MultiVAC Ecosystem
+        - category_id: multiversx-ecosystem
+          name: MultiversX Ecosystem
+        - category_id: murad-picks
+          name: Murad Picks
+        - category_id: music
+          name: Music
+        - category_id: nahmii-ecosystem
+          name: Nahmii Ecosystem
+        - category_id: name-service
+          name: Name Service
+        - category_id: near-protocol-ecosystem
+          name: Near Protocol Ecosystem
+        - category_id: neo-ecosystem
+          name: NEO Ecosystem
+        - category_id: neon-ecosystem
+          name: Neon Ecosystem
+        - category_id: non-fungible-tokens-nft
+          name: NFT
+        - category_id: nft-aggregator
+          name: NFT Aggregator
+        - category_id: nft-amm
+          name: NFT AMM
+        - category_id: nft-collections-that-received-airdrops
+          name: NFT Collections That Received Airdrops
+        - category_id: nftfi
+          name: NFTFi
+        - category_id: nft-index
+          name: NFT Index
+        - category_id: nft-launchpad
+          name: NFT Launchpad
+        - category_id: nft-lending-borrowing
+          name: NFT Lending/Borrowing
+        - category_id: nft-marketplace
+          name: NFT Marketplace
+        - category_id: nike-ecosystem
+          name: Nike Ecosystem
+        - category_id: nounsdao
+          name: NounsDAO
+        - category_id: oasis-emerald-ecosystem
+          name: Oasis Emerald Ecosystem
+        - category_id: oasis-sapphire-ecosystem
+          name: Oasis Sapphire Ecosystem
+        - category_id: oasys-ecosystem
+          name: Oasys Ecosystem
+        - category_id: ocm-ecosystem
+          name: OCM Ecosystem
+        - category_id: oec-ecosystem
+          name: OEC Ecosystem
+        - category_id: ohm-fork
+          name: Ohm Fork
+        - category_id: okt-chain-ecosystem
+          name: OKT Chain Ecosystem
+        - category_id: okx-ventures-portfolio
+          name: OKX Ventures Portfolio
+        - category_id: olympus-pro
+          name: Olympus Pro Ecosystem
+        - category_id: omnia-ecosystem
+          name: Omnia Ecosystem
+        - category_id: onchain-ecosystem
+          name: Onchain Ecosystem
+        - category_id: on-chain-gaming
+          name: On-chain Gaming
+        - category_id: ondo-tokenized-stocks
+          name: Ondo Tokenized Stocks
+        - category_id: opbnb-ecosystem
+          name: opBNB Ecosystem
+        - category_id: opinions-fun-ecosystem
+          name: Opinions.fun Ecosystem
+        - category_id: optimism-ecosystem
+          name: Optimism Ecosystem
+        - category_id: superchain-ecosystem
+          name: Optimism Superchain Ecosystem
+        - category_id: decentralized-options
+          name: Options
+        - category_id: oracle
+          name: Oracle
+        - category_id: oraichain-ecosystem
+          name: Oraichain Ecosystem
+        - category_id: orange-cap-games
+          name: Orange Cap Games
+        - category_id: osmosis-ecosytem
+          name: Osmosis Ecosystem
+        - category_id: outlier-ventures-portfolio
+          name: Outlier Ventures Portfolio
+        - category_id: paal-ai
+          name: PAAL AI Launchpad
+        - category_id: pantera-capital-portfolio
+          name: Pantera Capital Portfolio
+        - category_id: paradigm-portfolio
+          name: Paradigm Portfolio
+        - category_id: parallel-ecosystem
+          name: Parallel Ecosystem
+        - category_id: parallel-evm
+          name: Parallelized EVM
+        - category_id: parex-network-ecosystem
+          name: Parex Network Ecosystem
+        - category_id: parody-meme-coins
+          name: Parody Meme
+        - category_id: payment-solutions
+          name: Payment Solutions
+        - category_id: peaq-ecosystem
+          name: Peaq Ecosystem
+        - category_id: decentralized-perpetuals
+          name: Perpetuals
+        - category_id: pfp-avatar
+          name: PFP / Avatar
+        - category_id: platon-network-ecosystem
+          name: PlatON Network Ecosystem
+        - category_id: play-to-earn
+          name: Play To Earn
+        - category_id: plume-network-ecosystem
+          name: Plume Network Ecosystem
+        - category_id: politifi
+          name: PolitiFi
+        - category_id: dot-ecosystem
+          name: Polkadot Ecosystem
+        - category_id: polychain-capital-portfolio
+          name: Polychain Capital Portfolio
+        - category_id: polygon-ecosystem
+          name: Polygon Ecosystem
+        - category_id: polygon-zkevm-ecosystem
+          name: Polygon zkEVM Ecosystem
+        - category_id: poolz-finance-launchpad
+          name: Poolz Finance Launchpad
+        - category_id: prediction-markets
+          name: Prediction Markets
+        - category_id: prestocks-ecosystem
+          name: PreStocks Ecosystem
+        - category_id: privacy-coins
+          name: Privacy
+        - category_id: privacy-blockchain
+          name: Privacy Blockchain
+        - category_id: proof-ecosystem
+          name: Proof Ecosystem
+        - category_id: proof-of-memes-ecosystem
+          name: Proof of Memes Ecosystem
+        - category_id: proof-of-stake-pos
+          name: Proof of Stake (PoS)
+        - category_id: proof-of-work-pow
+          name: Proof of Work (PoW)
+        - category_id: provenance-ecosystem
+          name: Provenance Ecosystem
+        - category_id: pudgy-ecosystem
+          name: Pudgy Ecosystem
+        - category_id: pulsechain-ecosystem
+          name: PulseChain Ecosystem
+        - category_id: puma-ecosystem
+          name: Puma Ecosystem
+        - category_id: pump-fun-creator
+          name: Pump.fun Creator
+        - category_id: pump-fun
+          name: Pump.fun Ecosystem
+        - category_id: pump-science-ecosystem
+          name: Pump Science Ecosystem
+        - category_id: pundi-aifx-omnilayer-ecosystem
+          name: Pundi AIFX Omnilayer Ecosystem
+        - category_id: puzzle-games
+          name: ' Puzzle Games'
+        - category_id: qitmeer-network-ecosystem
+          name: Qitmeer Network Ecosystem
+        - category_id: ql1-ecosystem
+          name: QL1 Ecosystem
+        - category_id: q-mainnet-ecosystem
+          name: Q Mainnet Ecosystem
+        - category_id: quai-network-ecosystem
+          name: Quai Network Ecosystem
+        - category_id: quantum-resistant
+          name: Quantum-Resistant
+        - category_id: qubic-chain-ecosystem
+          name: Qubic Ecosystem
+        - category_id: quest-to-earn
+          name: Quest-to-Earn
+        - category_id: racing-games
+          name: Racing Games
+        - category_id: radix-ecosystem
+          name: Radix Ecosystem
+        - category_id: rari-ecosystem
+          name: Rari Ecosystem
+        - category_id: reactive-network-ecosystem
+          name: Reactive Network Ecosystem
+        - category_id: re-al-ecosystem
+          name: Re.al Ecosystem
+        - category_id: realt-tokens
+          name: RealT Tokens
+        - category_id: real-world-assets-rwa
+          name: Real World Assets (RWA)
+        - category_id: rebase-tokens
+          name: Rebase Tokens
+        - category_id: recruitment-solutions
+          name: Recruitment
+        - category_id: redbelly-network-ecosystem
+          name: Redbelly Network Ecosystem
+        - category_id: reddit-points
+          name: Reddit Points
+        - category_id: redstone-ecosystem
+          name: Redstone Ecosystem
+        - category_id: eco-friendly
+          name: Regenerative Finance (ReFi)
+        - category_id: rehypothecated-tokens
+          name: Rehypothecated Tokens
+        - category_id: restaking
+          name: Restaking
+        - category_id: retail
+          name: Retail
+        - category_id: robotics
+          name: Robotics
+        - category_id: rollup
+          name: Rollup
+        - category_id: rollups-as-a-service-raas
+          name: Rollups-as-a-Service (RaaS)
+        - category_id: rollux-ecosystem
+          name: Rollux Ecosystem
+        - category_id: ronin-ecosystem
+          name: Ronin Ecosystem
+        - category_id: rootstock-ecosystem
+          name: Rootstock Ecosystem
+        - category_id: rpg
+          name: RPG
+        - category_id: rss3-vsl-ecosystem
+          name: RSS3 VSL Ecosystem
+        - category_id: runes
+          name: Runes
+        - category_id: rwa-protocol
+          name: RWA Protocol
+        - category_id: saakuru-ecosystem
+          name: Saakuru Ecosystem
+        - category_id: saga-ecosystem
+          name: Saga Ecosystem
+        - category_id: sanko-ecosystem
+          name: Sanko Ecosystem
+        - category_id: scroll-ecosystem
+          name: Scroll Ecosystem
+        - category_id: secret-ecosystem
+          name: Secret Ecosystem
+        - category_id: sei-ecosystem
+          name: Sei Ecosystem (Deprecating)
+        - category_id: seigniorage
+          name: Seigniorage
+        - category_id: sei-v2-ecosystem
+          name: Sei Network Ecosystem
+        - category_id: sequoia-capital-portfolio
+          name: Sequoia Capital Portfolio
+        - category_id: sgd-stablcoin
+          name: SGD Stablcoin
+        - category_id: shibarium
+          name: Shibarium Ecosystem
+        - category_id: shido-network-ecosystem
+          name: Shido Network Ecosystem
+        - category_id: shimmerevm-ecosystem
+          name: ShimmerEVM Ecosystem
+        - category_id: shooting-games
+          name: Shooting Games
+        - category_id: sidechain
+          name: SideChain
+        - category_id: simulation-games
+          name: Simulation Games
+        - category_id: skale-ecosystem
+          name: Skale Ecosystem
+        - category_id: smartbch-ecosystem
+          name: SmartBCH Ecosystem
+        - category_id: smart-contract-platform
+          name: Smart Contract Platform
+        - category_id: socialfi
+          name: SocialFi
+        - category_id: software
+          name: Software as a service
+        - category_id: solana-ecosystem
+          name: Solana Ecosystem
+        - category_id: solana-meme-coins
+          name: Solana Meme
+        - category_id: token-2022
+          name: Solana Token-2022
+        - category_id: somnia-ecosystem
+          name: Somnia Ecosystem
+        - category_id: soneium-ecosystem
+          name: Soneium Ecosystem
+        - category_id: songbird-ecosystem
+          name: Songbird Ecosystem
+        - category_id: sonic-ecosystem
+          name: Sonic Ecosystem
+        - category_id: sonic-svm-ecosystem
+          name: Sonic SVM Ecosystem
+        - category_id: sora-ecosystem
+          name: Sora Ecosystem
+        - category_id: spl22
+          name: SPL22
+        - category_id: spore-fun-ecosystem
+          name: Spore.fun Ecosystem
+        - category_id: sports
+          name: Sports
+        - category_id: sports-games
+          name: Sports Games
+        - category_id: src-20
+          name: SRC-20
+        - category_id: stablecoin-issuer
+          name: Stablecoin Issuer
+        - category_id: stablecoins
+          name: Stablecoins
+        - category_id: stacks-ecosystem
+          name: Stacks Ecosystem
+        - category_id: starknet-ecosystem
+          name: Starknet Ecosystem
+        - category_id: stellar-ecosystem
+          name: Stellar Ecosystem
+        - category_id: step-network-ecosystem
+          name: Step Network Ecosystem
+        - category_id: sticker-themed-coin
+          name: Sticker-Themed Coins
+        - category_id: stock-market-themed
+          name: Stock market-themed
+        - category_id: storage
+          name: Storage
+        - category_id: story-ecosystem
+          name: Story Ecosystem
+        - category_id: strategy-games
+          name: Strategy Games
+        - category_id: stx-city-ecosystem
+          name: STX.CITY Ecosystem
+        - category_id: sui-ecosystem
+          name: Sui Ecosystem
+        - category_id: sui-meme
+          name: Sui Meme
+        - category_id: sun-pump-ecosystem
+          name: Sun Pump Ecosystem
+        - category_id: superseed-ecosystem
+          name: Superseed Ecosystem
+        - category_id: supra-ecosystem
+          name: Supra Ecosystem
+        - category_id: swellchain-ecosystem
+          name: Swellchain Ecosystem
+        - category_id: sx-rollup-ecosystem
+          name: SX Rollup Ecosystem
+        - category_id: synthetic
+          name: Synthetic
+        - category_id: synths
+          name: Synthetic Asset
+        - category_id: synthetic-dollar
+          name: Synthetic Dollar
+        - category_id: synthetic-issuer
+          name: Synthetic Issuer
+        - category_id: syscoin-nevm-ecosystem
+          name: Syscoin NEVM Ecosystem
+        - category_id: tac-ecosystem
+          name: TAC Ecosystem
+        - category_id: tap-to-earn
+          name: Tap to Earn
+        - category_id: taraxa-ecosystem
+          name: Taraxa Ecosystem
+        - category_id: telegram_apps
+          name: Telegram Apps
+        - category_id: telos-ecosystem
+          name: Telos Ecosystem
+        - category_id: tempcategory
+          name: tempCategory
+        - category_id: tenet-ecosystem
+          name: Tenet Ecosystem
+        - category_id: terminal-of-truths
+          name: Terminal of Truths
+        - category_id: terra-classic-ecosystem
+          name: Terra Classic Ecosystem
+        - category_id: terra-ecosystem
+          name: Terra Ecosystem
+        - category_id: terraport-launchpad
+          name: Terraport Launchpad
+        - category_id: tezos-ecosystem
+          name: Tezos Ecosystem
+        - category_id: the-boy-s-club
+          name: The Boy’s Club
+        - category_id: theta-ecosystem
+          name: Theta Ecosystem
+        - category_id: thundercore-ecosystem
+          name: ThunderCore Ecosystem
+        - category_id: tiktok-meme
+          name: TikTok Meme
+        - category_id: time-fun-ecosystem
+          name: Time.fun Ecosystem
+        - category_id: titanchain-ecosystem
+          name: Titanchain Ecosystem
+        - category_id: tokenfi-launchpad
+          name: TokenFi Launchpad
+        - category_id: tokenized-products
+          name: Tokenized Assets
+        - category_id: tokenized-btc
+          name: Tokenized BTC
+        - category_id: tokenized-commodities
+          name: Tokenized Commodities
+        - category_id: tokenized-exchange-traded-funds-etfs
+          name: Tokenized Exchange-Traded Funds (ETFs)
+        - category_id: tokenized-gold
+          name: Tokenized Gold
+        - category_id: tokenized-private-credit
+          name: Tokenized Private Credit
+        - category_id: real-estate
+          name: Tokenized Real Estate
+        - category_id: tokenized-silver
+          name: Tokenized Silver
+        - category_id: tokenized-stock
+          name: Tokenized Stock
+        - category_id: tokenized-t-bills
+          name: Tokenized Treasury Bills (T-Bills)
+        - category_id: tokenized-treasury-bonds-t-bonds
+          name: Tokenized Treasury Bonds (T-Bonds)
+        - category_id: tokensets
+          name: TokenSets Ecosystem
+        - category_id: token-standards
+          name: Token Standards
+        - category_id: ton-ecosystem
+          name: TON Ecosystem
+        - category_id: ton-meme-coins
+          name: TON Meme
+        - category_id: tourism
+          name: Tourism
+        - category_id: tower-defense-games
+          name: Tower Defense Games
+        - category_id: tradable-ecosystem
+          name: Tradable Ecosystem
+        - category_id: trading-bots
+          name: Trading Bots
+        - category_id: trading-card-rwa-platform
+          name: Trading Card RWA Platform
+        - category_id: tron-ecosystem
+          name: Tron Ecosystem
+        - category_id: tron-meme
+          name: TRON Meme
+        - category_id: trump-affiliated-tokens
+          name: Trump-Affiliated
+        - category_id: try-stablecoins
+          name: TRY Stablecoin
+        - category_id: ultron-ecosystem
+          name: Ultron Ecosystem
+        - category_id: unichain-ecosystem
+          name: Unichain Ecosystem
+        - category_id: units-network-ecosystem
+          name: Unit0 Network Ecosystem
+        - category_id: usd-stablecoin
+          name: USD Stablecoin
+        - category_id: us-treasury-backed-stablecoin
+          name: US Treasury-backed Stablecoin
+        - category_id: uton-ecosystem
+          name: UTON Ecosystem
+        - category_id: vana-ecosystem
+          name: Vana Ecosystem
+        - category_id: vanar-chain-ecosystem
+          name: Vanar Chain Ecosystem
+        - category_id: vechain-ecosystem
+          name: VeChain Ecosystem
+        - category_id: velas-ecosystem
+          name: Velas Ecosystem
+        - category_id: venom-ecosystem
+          name: Venom Ecosystem
+        - category_id: venture-capital-portfolios
+          name: Venture Capital Portfolios
+        - category_id: viction-ecosystem
+          name: Viction Ecosystem
+        - category_id: virtual-reality
+          name: Virtual Reality
+        - category_id: virtuals-protocol-ecosystem
+          name: Virtuals Protocol Ecosystem
+        - category_id: voi-network-ecosystem
+          name: Voi Network Ecosystem
+        - category_id: vpn
+          name: VPN
+        - category_id: vyvo-smart-chain-ecosystem
+          name: Vyvo Smart Chain Ecosystem
+        - category_id: wallets
+          name: Wallets
+        - category_id: wall-street-bets-themed-coins
+          name: Wall Street Bets Themed
+        - category_id: wanchain-ecosystem
+          name: Wanchain Ecosystem
+        - category_id: waves-ecosystem
+          name: Waves Ecosystem
+        - category_id: wax-ecosystem
+          name: Wax Ecosystem
+        - category_id: web-2-brands
+          name: Web 2 Brands
+        - category_id: wemix-ecosystem
+          name: WEMIX Ecosystem
+        - category_id: wojak-themed
+          name: Wojak-Themed
+        - category_id: world-chain-ecosystem
+          name: World Chain Ecosystem
+        - category_id: world-liberty-financial-portfolio
+          name: World Liberty Financial Portfolio
+        - category_id: wormhole-assets
+          name: Wormhole Assets
+        - category_id: wrapped-tokens
+          name: Wrapped-Tokens
+        - category_id: xai-ecosystem
+          name: XAI Ecosystem
+        - category_id: xdc-ecosystem
+          name: XDC Ecosystem
+        - category_id: x-layer-ecosystem
+          name: X Layer Ecosystem
+        - category_id: xrp-ledger-ecosystem
+          name: XRP Ledger Ecosystem
+        - category_id: xrpl-evm-ecosystem
+          name: XRPL EVM Ecosystem
+        - category_id: xt-smart-chain-ecosystem
+          name: XT Smart Chain Ecosystem
+        - category_id: yearn-yfi-partnerships-mergers
+          name: Yearn Ecosystem
+        - category_id: yearn-vault-tokens
+          name: Yearn Vault Tokens
+        - category_id: yield-aggregator
+          name: Yield Aggregator
+        - category_id: yield-bearing-tokens
+          name: Yield-Bearing
+        - category_id: yield-bearing-stablecoins
+          name: Yield-Bearing Stablecoin
+        - category_id: yield-farming
+          name: Yield Farming
+        - category_id: yield-optimizer
+          name: Yield Optimizer
+        - category_id: yield-tokenization-product
+          name: Yield Tokenization Product
+        - category_id: yield-tokenization
+          name: Yield Tokenization Protocol
+        - category_id: binance-labs-portfolio
+          name: YZi Labs (Prev. Binance Labs) Portfolio
+        - category_id: zano-ecosystem
+          name: Zano Ecosystem
+        - category_id: zedxion-ecosystem
+          name: Zedxion Ecosystem
+        - category_id: zenon-ecosystem
+          name: Zenon Ecosystem
+        - category_id: zero-knowledge-zk
+          name: Zero Knowledge (ZK)
+        - category_id: zero-network-ecosystem
+          name: Zero Network Ecosystem
+        - category_id: zetachain-ecosystem
+          name: ZetaChain Ecosystem
+        - category_id: ziliqa-evm-ecosystem
+          name: Ziliqa EVM Ecosystem
+        - category_id: zilliqa-ecosystem
+          name: Zilliqa Ecosystem
+        - category_id: zircuit-ecosystem
+          name: Zircuit Ecosystem
+        - category_id: zklink-nova-ecosystem
+          name: zkLink Nova Ecosystem
+        - category_id: zksync-ecosystem
+          name: ZkSync Ecosystem
+        - category_id: zodiac-themed
+          name: Zodiac-Themed
+        - category_id: zoo-themed
+          name: Zoo-Themed
+        - category_id: zora-creator-coins
+          name: Zora Creator
+        - category_id: zora-ecosystem
+          name: Zora Ecosystem
+    description: Direct tool call for categories list with raw data
+    status: success
+  get_category_data_tool:
+    input:
+      tool: get_category_data
+      tool_arguments:
+        order: market_cap_desc
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        category_data:
+        - id: smart-contract-platform
+          name: Smart Contract Platform
+          market_cap: 3423409493187.2427
+          market_cap_change_24h: -0.30868954805697757
+          content: Smart contract platforms are usually blockchains that host smart
+            contracts or decentralized applications. Users can interact with different
+            smart contracts on these platforms to perform various actions such as
+            lending and borrowing funds, staking their assets or minting NFTs. Smart
+            contracts are programs that are stored on the blockchain and are automatically
+            executed when certain conditions are met.
+          volume_24h: 98258392516.89647
+          updated_at: '2025-09-16T08:56:47.325Z'
+        - id: layer-1
+          name: Layer 1 (L1)
+          market_cap: 3331057530605.324
+          market_cap_change_24h: -0.3064854424503406
+          content: Layer 1 serves as the primary and autonomous chain on which transactions
+            are directly executed and confirmed, as well as providing the essential
+            infrastructure for the blockchain network.
+          volume_24h: 93415601317.16911
+          updated_at: '2025-09-16T08:55:34.235Z'
+        - id: proof-of-work-pow
+          name: Proof of Work (PoW)
+          market_cap: 2383501363722.0967
+          market_cap_change_24h: 0.19599188519295027
+          content: Proof of Work (PoW) is a blockchain consensus mechanism to validate
+            transactions and create new blocks through computational efforts by miners.
+          volume_24h: 47541547881.70357
+          updated_at: '2025-09-16T08:55:23.401Z'
+        - id: proof-of-stake-pos
+          name: Proof of Stake (PoS)
+          market_cap: 948149186855.2157
+          market_cap_change_24h: -1.6817126482314662
+          content: Proof of Stake (PoS) is a blockchain consensus mechanism where
+            validators are selected to create new blocks based on the amount of cryptocurrency
+            they hold and are willing to stake as collateral.
+          volume_24h: 45328664302.14224
+          updated_at: '2025-09-16T08:58:08.392Z'
+        - id: world-liberty-financial-portfolio
+          name: World Liberty Financial Portfolio
+          market_cap: 888499152798.587
+          market_cap_change_24h: -1.3031274996226379
+          content: The World Liberty Financial portfolio includes purchases made by
+            the World Liberty Financial project. World Liberty Financial is a DeFi
+            project associated with U.S. presidential candidate Donald Trump and his
+            family members.
+          volume_24h: 133302197615.45135
+          updated_at: '2025-09-16T08:56:49.547Z'
+        - id: made-in-usa
+          name: Made in USA
+          market_cap: 584600862273.6715
+          market_cap_change_24h: -0.8402891043583475
+          content: Refers to cryptocurrencies that have significant connections to
+            the United States, either through their founding team or company headquarters.
+          volume_24h: 42312437320.56454
+          updated_at: '2025-09-16T08:55:12.500Z'
+        - id: alleged-sec-securities
+          name: Alleged SEC Securities
+          market_cap: 347738200243.1913
+          market_cap_change_24h: -1.0149700198012699
+          content: "Tokens and cryptocurrencies alleged to be securities by the U.S.\
+            \ Securities and Exchange Commission (SEC). \r\n\r\nNote: The labeling\
+            \ of these cryptocurrencies as securities by the SEC doesn't equate to\
+            \ the legal classification till proven in a court."
+          volume_24h: 13467192897.230326
+          updated_at: '2025-09-16T08:55:29.812Z'
+        - id: stablecoins
+          name: Stablecoins
+          market_cap: 293485921182.28314
+          market_cap_change_24h: 0.11966724425371965
+          content: A stablecoin is a type of cryptocurrency that is designed to maintain
+            a stable value by being pegged to an external reference, such as a fiat
+            currency.
+          volume_24h: 105434598342.12769
+          updated_at: '2025-09-16T08:56:46.057Z'
+        - id: usd-stablecoin
+          name: USD Stablecoin
+          market_cap: 286818039469.3173
+          market_cap_change_24h: 0.11736444923105324
+          content: A USD stablecoin is a type of cryptocurrency that is designed to
+            maintain a stable value by being pegged to the United States dollar.
+          volume_24h: 111053394956.29851
+          updated_at: '2025-09-16T08:55:37.642Z'
+        - id: fiat-backed-stablecoin
+          name: Fiat-backed Stablecoin
+          market_cap: 281896526542.1918
+          market_cap_change_24h: 0.009279807370176706
+          content: 'A fiat-backed stablecoin is designed to maintain a stable value
+            by being pegged to a reserve of fiat currency, such as the US dollar,
+            euro, or other national currencies. '
+          volume_24h: 104610877071.3043
+          updated_at: '2025-09-16T08:56:46.264Z'
+        total_available: 606
+        returned_count: 10
+        limit: 10
+    description: Direct tool call for category data ordered by market cap
+    status: success
+  get_tokens_by_category_tool:
+    input:
+      tool: get_tokens_by_category
+      tool_arguments:
+        category_id: layer-1
+        vs_currency: usd
+        order: market_cap_desc
+        per_page: 10
+        page: 1
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        error: 'API request failed: 429, message=''Too Many Requests'', url=''https://api.coingecko.com/api/v3/coins/markets'''
+    description: Direct tool call for layer-1 tokens with formatted response
+    status: success
+  get_trending_pools_tool:
+    input:
+      tool: get_trending_pools
+      tool_arguments:
+        include: base_token
+        pools: 4
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        trending_pools:
+          data:
+          - id: x-layer_0x29e19d997f3e4e7c0b3508e44156c88bf6c674f0
+            type: pool
+            attributes:
+              trending_rank: 0
+              address: '0x29e19d997f3e4e7c0b3508e44156c88bf6c674f0'
+              name: XBANANA / WOKB
+              pool_created_at: '2025-09-13T09:15:43Z'
+              fdv_usd: '99858.2443499956'
+              market_cap_usd: null
+              volume_usd:
+                h24: '243937.940800275'
+              reserve_in_usd: '20413.8465'
+            relationships:
+              network:
+                data:
+                  id: x-layer
+                  type: network
+              dex:
+                data:
+                  id: potatoswap-x-layer
+                  type: dex
+              base_token:
+                data:
+                  id: x-layer_0xc6200e4555948c5c6395b255a64732a672f647cd
+                  type: token
+              quote_token:
+                data:
+                  id: x-layer_0xe538905cf8410324e03a5a23c1c177a474d59b2b
+                  type: token
+          - id: solana_9sWvEnk9cMTtGiBnp1LEsGHjbSd72mNFyyPzZzNrEwHA
+            type: pool
+            attributes:
+              trending_rank: 1
+              address: 9sWvEnk9cMTtGiBnp1LEsGHjbSd72mNFyyPzZzNrEwHA
+              name: CoD / SOL
+              pool_created_at: '2025-09-15T16:00:37Z'
+              fdv_usd: '27195.2055110742'
+              market_cap_usd: null
+              volume_usd:
+                h24: '256335.693075887'
+              reserve_in_usd: '18455.9741'
+            relationships:
+              network:
+                data:
+                  id: solana
+                  type: network
+              dex:
+                data:
+                  id: raydium
+                  type: dex
+              base_token:
+                data:
+                  id: solana_Cod7wUkjhcwcgbsRMAT6dJuqJGK3U936LMLrNQF1z7ht
+                  type: token
+              quote_token:
+                data:
+                  id: solana_So11111111111111111111111111111111111111112
+                  type: token
+          - id: bsc_0x182c80064fd2972f70fbffea8a5e3df14f8ecd49
+            type: pool
+            attributes:
+              trending_rank: 2
+              address: '0x182c80064fd2972f70fbffea8a5e3df14f8ecd49'
+              name: PUG / WBNB
+              pool_created_at: '2025-09-06T15:14:15Z'
+              fdv_usd: '124141.512357326'
+              market_cap_usd: '116946.130352755'
+              volume_usd:
+                h24: '65367.7911212135'
+              reserve_in_usd: '59609.9379'
+            relationships:
+              network:
+                data:
+                  id: bsc
+                  type: network
+              dex:
+                data:
+                  id: pancakeswap_v2
+                  type: dex
+              base_token:
+                data:
+                  id: bsc_0xf3091e416b8b77b9b293ce8ea15ce1e034ff4bd1
+                  type: token
+              quote_token:
+                data:
+                  id: bsc_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c
+                  type: token
+          - id: bsc_0xda0af7172ee22577654729f08f571352a0a15208
+            type: pool
+            attributes:
+              trending_rank: 3
+              address: '0xda0af7172ee22577654729f08f571352a0a15208'
+              name: $IPAX / WBNB
+              pool_created_at: '2025-09-07T18:57:32Z'
+              fdv_usd: '13622445.8716128'
+              market_cap_usd: null
+              volume_usd:
+                h24: '174239.404377255'
+              reserve_in_usd: '44663.6436'
+            relationships:
+              network:
+                data:
+                  id: bsc
+                  type: network
+              dex:
+                data:
+                  id: pancakeswap_v2
+                  type: dex
+              base_token:
+                data:
+                  id: bsc_0x95db59f8aeeed345cfb3dd87762de37c77b8f520
+                  type: token
+              quote_token:
+                data:
+                  id: bsc_0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c
+                  type: token
+          included:
+          - id: x-layer_0xc6200e4555948c5c6395b255a64732a672f647cd
+            type: token
+            attributes:
+              address: '0xc6200e4555948c5c6395b255a64732a672f647cd'
+              name: XBANANA
+              symbol: XBANANA
+              decimals: 9
+              coingecko_coin_id: null
+          - id: solana_Cod7wUkjhcwcgbsRMAT6dJuqJGK3U936LMLrNQF1z7ht
+            type: token
+            attributes:
+              address: Cod7wUkjhcwcgbsRMAT6dJuqJGK3U936LMLrNQF1z7ht
+              name: Call Of Degens
+              symbol: CoD
+              decimals: 6
+              coingecko_coin_id: null
+          - id: bsc_0xf3091e416b8b77b9b293ce8ea15ce1e034ff4bd1
+            type: token
+            attributes:
+              address: '0xf3091e416b8b77b9b293ce8ea15ce1e034ff4bd1'
+              name: Pug Inu
+              symbol: PUG
+              decimals: 9
+              coingecko_coin_id: pug-inu
+          - id: bsc_0x95db59f8aeeed345cfb3dd87762de37c77b8f520
+            type: token
+            attributes:
+              address: '0x95db59f8aeeed345cfb3dd87762de37c77b8f520'
+              name: Icopax
+              symbol: $IPAX
+              decimals: 18
+              coingecko_coin_id: icopax
+    description: Direct tool call for trending pools with base token info
+    status: success
+  get_top_token_holders_tool:
+    input:
+      tool: get_top_token_holders
+      tool_arguments:
+        network: base
+        address: '0xEF22cb48B8483dF6152e1423b19dF5553BbD818b'
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        top_holders:
+          data:
+            id: base_0xef22cb48b8483df6152e1423b19df5553bbd818b
+            type: top_holder
+            attributes:
+              last_updated_at: '2025-09-16T00:03:31.180Z'
+              holders:
+              - rank: 1
+                address: '0xfa13536bc4181db19fe93da82115f43f5c95761c'
+                label: Staked Heurist Token (STHEU)
+                amount: '22965105.0'
+                percentage: '13.3324'
+                value: '491348.35'
+              - rank: 2
+                address: '0xbeb7381f574e941650dc91e710ca0bd4864b3d31'
+                label: null
+                amount: '7883507.0'
+                percentage: '4.5768'
+                value: '168671.04'
+              - rank: 3
+                address: '0xb655dc66ecead581d1f1a5759c2c37c2dbef2275'
+                label: V3 Pool
+                amount: '7294248.0'
+                percentage: '4.2347'
+                value: '156063.59'
+              - rank: 4
+                address: '0x0d0707963952f2fba59dd06f2b425ace40b492fe'
+                label: Hot Wallet
+                amount: '7218187.0'
+                percentage: '4.1905'
+                value: '154436.23'
+              - rank: 5
+                address: '0x4e3ae00e8323558fa5cac04b152238924aa31b60'
+                label: Hot Wallet
+                amount: '6717760.0'
+                percentage: '3.9'
+                value: '143729.38'
+              - rank: 6
+                address: '0xcfc4f31d615f81d2f2508a06fb43e5b1c154ada2'
+                label: null
+                amount: '4558942.0'
+                percentage: '2.6467'
+                value: '97540.54'
+              - rank: 7
+                address: '0x5f619a8bc66b775d2d85419210c0b934a11f8016'
+                label: null
+                amount: '4240042.0'
+                percentage: '2.4615'
+                value: '90717.53'
+              - rank: 8
+                address: '0x726e0b747df0f78a7d8c546b6b34e1ac1e127598'
+                label: null
+                amount: '4229410.0'
+                percentage: '2.4554'
+                value: '90490.06'
+              - rank: 9
+                address: '0xfb39f454bfc710e92e6fcc5737acd734029cbf8e'
+                label: null
+                amount: '4166527.0'
+                percentage: '2.4189'
+                value: '89144.65'
+              - rank: 10
+                address: '0x89f9f593d2957bec9dc1ac58068a115961109ae9'
+                label: null
+                amount: '4000004.0'
+                percentage: '2.3222'
+                value: '85581.82'
+    description: Direct tool call for top token holders on Base network
+    status: success
+  raw_data_query:
+    input:
+      query: Compare Bitcoin and Ethereum prices
+      raw_data_only: true
+    output:
+      response: "Here's a comparison of Bitcoin and Ethereum prices based on the latest\
+        \ data:\n\n*   **Bitcoin (BTC):**\n    *   Price: \\$115,694\n    *   Market\
+        \ Cap: \\$2,304.4B\n    *   24h Volume: \\$40.5B\n    *   24h Change: 0.72%\n\
+        \n*   **Ethereum (ETH):**\n    *   Price: \\$4,511.75\n    *   Market Cap:\
+        \ \\$544.4B\n    *   24h Volume: \\$27.4B\n    *   24h Change: -0.17%\n\n\
+        **Insights:**\n\n*   Bitcoin's price is significantly higher than Ethereum's,\
+        \ reflecting its status as the original cryptocurrency and a store of value.\n\
+        *   Bitcoin also has a much larger market capitalization than Ethereum, indicating\
+        \ greater overall investment and adoption.\n*   While both cryptocurrencies\
+        \ have substantial 24-hour trading volumes, Bitcoin's is notably higher.\n\
+        *   In the last 24 hours, Bitcoin's price has increased slightly whereas Ethereum's\
+        \ has decreased slightly."
+      data: {}
+    description: Natural language query comparing BTC and ETH with raw data flag
+    status: success
