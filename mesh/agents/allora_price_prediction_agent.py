@@ -26,6 +26,7 @@ class AlloraPricePredictionAgent(MeshAgent):
                 "description": "This agent can predict the price of ETH/BTC with confidence intervals using Allora price prediction API",
                 "external_apis": ["Allora"],
                 "tags": ["Prediction"],
+                "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Allora.png",
                 "examples": [
                     "What is the price prediction for BTC in the next 5 minutes?",

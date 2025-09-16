@@ -73,6 +73,7 @@ class ArkhamIntelligenceAgent(MeshAgent):
                 "external_apis": ["Arkham Intelligence"],
                 "tags": ["Intelligence"],
                 "recommended": True,
+                "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Arkham.png",
                 "examples": [
                     "Analyze address 0x742d35Cc6634C0532925a3b8D84c5d146D4B6bb2 on Ethereum",
