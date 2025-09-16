@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 from firecrawl import FirecrawlApp
-from firecrawl.firecrawl import ScrapeOptions
 
 from core.llm import call_llm_async
 from decorators import with_cache, with_retry
@@ -230,10 +229,10 @@ Return clear, focused summaries that extract only the most relevant information.
         )
 
         try:
-            scrape_options = ScrapeOptions(formats=["markdown"])
+            scrape_options = {"formats": ["markdown"], "only_main_content": True, "timeout": 30000}
 
             # Build search parameters
-            search_params = {"query": search_term, "limit": limit, "scrape_options": scrape_options, "timeout": 30000}
+            search_params = {"query": search_term, "limit": limit, "scrape_options": scrape_options}
 
             # Add time filter if specified
             if time_filter:
@@ -242,13 +241,8 @@ Return clear, focused summaries that extract only the most relevant information.
 
             response = await asyncio.get_event_loop().run_in_executor(None, lambda: self.app.search(**search_params))
 
-            data = getattr(response, "data", None) or (response.get("data") if isinstance(response, dict) else None)
-
-            if isinstance(data, list) and data:
-                results = data
-            elif isinstance(response, list):
-                results = response
-            else:
+            results = response.web if hasattr(response, "web") else []
+            if not results:
                 logger.warning("Search completed but no results were found")
                 if self.firecrawl_logger.is_enabled():
                     try:
@@ -355,11 +349,18 @@ Return clear, focused summaries that extract only the most relevant information.
         logger.info(f"Scraping content from URL: {url}")
 
         try:
+            scrape_options = {
+                "formats": ["markdown"],
+                "only_main_content": True,
+                "wait_for": wait_time,
+                "timeout": 15000,
+            }
+
             scrape_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: self.app.scrape_url(url, formats=["markdown"], wait_for=wait_time, timeout=15000)
+                None, lambda: self.app.scrape(url, **scrape_options)
             )
 
-            markdown_content = getattr(scrape_result, "markdown", "") if hasattr(scrape_result, "markdown") else ""
+            markdown_content = scrape_result.markdown if hasattr(scrape_result, "markdown") else ""
             if not markdown_content:
                 if self.firecrawl_logger.is_enabled():
                     try:
