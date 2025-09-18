@@ -118,6 +118,35 @@ class DexScreenerTokenInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      DEXSCREENER API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
+    def _clean_pair_data(self, pair: Dict) -> Dict:
+        for field in ["url", "priceNative"]:
+            pair.pop(field, None)
+
+        for obj_key in ["txns", "volume", "priceChange"]:
+            if obj_key in pair:
+                for time_key in ["m5", "h6"]:
+                    pair.get(obj_key, {}).pop(time_key, None)
+
+        if "pairCreatedAt" in pair:
+            try:
+                from datetime import datetime
+
+                created_time = datetime.fromtimestamp(pair["pairCreatedAt"] / 1000)
+                time_diff = datetime.now() - created_time
+                if time_diff.days > 0:
+                    pair["pairCreatedAt"] = f"{time_diff.days} days ago"
+                elif time_diff.seconds >= 3600:
+                    pair["pairCreatedAt"] = f"{time_diff.seconds // 3600} hours ago"
+                else:
+                    pair["pairCreatedAt"] = f"{time_diff.seconds // 60} minutes ago"
+            except Exception:
+                pair["pairCreatedAt"] = "unknown"
+
+        if "info" in pair and "imageUrl" in pair["info"]:
+            pair["info"].pop("imageUrl", None)
+
+        return pair
+
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def search_pairs(self, search_term: str) -> Dict:
@@ -139,33 +168,8 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 if pair.get("marketCap", 0) < 50000:
                     continue
 
-                for field in ["url", "priceNative"]:
-                    pair.pop(field, None)
-
-                for obj_key in ["txns", "volume", "priceChange"]:
-                    if obj_key in pair:
-                        for time_key in ["m5", "h6"]:
-                            pair[obj_key].pop(time_key, None)
-
-                if "pairCreatedAt" in pair:
-                    try:
-                        from datetime import datetime
-
-                        created_time = datetime.fromtimestamp(pair["pairCreatedAt"] / 1000)
-                        time_diff = datetime.now() - created_time
-                        if time_diff.days > 0:
-                            pair["pairCreatedAt"] = f"{time_diff.days} days ago"
-                        elif time_diff.seconds >= 3600:
-                            pair["pairCreatedAt"] = f"{time_diff.seconds // 3600} hours ago"
-                        else:
-                            pair["pairCreatedAt"] = f"{time_diff.seconds // 60} minutes ago"
-                    except Exception:
-                        pair["pairCreatedAt"] = "unknown"
-
-                if "info" in pair and "imageUrl" in pair["info"]:
-                    pair["info"].pop("imageUrl", None)
-
-                cleaned_pairs.append(pair)
+                cleaned_pair = self._clean_pair_data(pair)
+                cleaned_pairs.append(cleaned_pair)
 
             if cleaned_pairs:
                 logger.info(f"Found {len(cleaned_pairs)} pairs for search term: {search_term}")
@@ -193,8 +197,9 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             return result
 
         if "pairs" in result and result["pairs"] and len(result["pairs"]) > 0:
+            cleaned_pair = self._clean_pair_data(result["pairs"][0])
             logger.info(f"Found pair info for chain: {chain}, pair address: {pair_address}")
-            return {"status": "success", "data": {"pair": result["pairs"][0]}}
+            return {"status": "success", "data": {"pair": cleaned_pair}}
         else:
             logger.warning(f"No pair found for chain: {chain}, pair address: {pair_address}")
             return {"status": "no_data", "error": "No matching pair found", "data": None}
@@ -215,16 +220,20 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             return result
 
         if "pairs" in result and result["pairs"]:
+            pairs = result["pairs"]
             if chain and chain.lower() != "all":
-                pairs = [pair for pair in result["pairs"] if pair.get("chainId") == chain.lower()]
-            else:
-                pairs = result["pairs"]
+                pairs = [pair for pair in pairs if pair.get("chainId") == chain.lower()]
 
             if pairs:
-                logger.info(f"Found {len(pairs)} pairs for token on chain: {chain}")
+                cleaned_pairs = []
+                for pair in pairs:
+                    cleaned_pair = self._clean_pair_data(pair)
+                    cleaned_pairs.append(cleaned_pair)
+
+                logger.info(f"Found {len(cleaned_pairs)} pairs for token on chain: {chain}")
                 return {
                     "status": "success",
-                    "data": {"pairs": pairs, "dex_url": f"https://dexscreener.com/{chain}/{token_address}"},
+                    "data": {"pairs": cleaned_pairs, "dex_url": f"https://dexscreener.com/{chain}/{token_address}"},
                 }
             else:
                 logger.warning(f"No pairs found for token on chain: {chain}")
