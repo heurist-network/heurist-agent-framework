@@ -175,10 +175,10 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 logger.info(f"Found {len(cleaned_pairs)} pairs for search term: {search_term}")
                 return {"status": "success", "data": {"pairs": cleaned_pairs}}
             else:
-                logger.warning(f"No pairs with market cap >= 50000 found for search term: {search_term}")
+                logger.info(f"No pairs with market cap >= 50000 found for search term: {search_term}")
                 return {"status": "no_data", "error": "No matching pairs found", "data": {"pairs": []}}
         else:
-            logger.warning(f"No pairs found for search term: {search_term}")
+            logger.info(f"No pairs found for search term: {search_term}")
             return {"status": "no_data", "error": "No matching pairs found", "data": {"pairs": []}}
 
     @with_cache(ttl_seconds=300)
@@ -201,7 +201,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             logger.info(f"Found pair info for chain: {chain}, pair address: {pair_address}")
             return {"status": "success", "data": {"pair": cleaned_pair}}
         else:
-            logger.warning(f"No pair found for chain: {chain}, pair address: {pair_address}")
+            logger.info(f"No pair found for chain: {chain}, pair address: {pair_address}")
             return {"status": "no_data", "error": "No matching pair found", "data": None}
 
     @with_cache(ttl_seconds=300)
@@ -233,17 +233,17 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 logger.info(f"Found {len(cleaned_pairs)} pairs for token on chain: {chain}")
                 return {
                     "status": "success",
-                    "data": {"pairs": cleaned_pairs, "dex_url": f"https://dexscreener.com/{chain}/{token_address}"},
+                    "data": {"pairs": cleaned_pairs},
                 }
             else:
-                logger.warning(f"No pairs found for token on chain: {chain}")
+                logger.info(f"No pairs found for token on chain: {chain}")
                 return {
                     "status": "no_data",
                     "error": f"No pairs found for token on chain {chain}",
                     "data": {"pairs": []},
                 }
         else:
-            logger.warning(f"No pairs found for token address: {token_address}")
+            logger.info(f"No pairs found for token address: {token_address}")
             return {"status": "no_data", "error": "No pairs found for token", "data": {"pairs": []}}
 
     # ------------------------------------------------------------------------
