@@ -134,8 +134,45 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             return result
 
         if "pairs" in result and result["pairs"]:
-            logger.info(f"Found {len(result['pairs'])} pairs for search term: {search_term}")
-            return {"status": "success", "data": {"pairs": result["pairs"]}}
+            cleaned_pairs = []
+            for pair in result["pairs"]:
+                if pair.get("marketCap", 0) < 50000:
+                    continue
+
+                for field in ["url", "priceNative"]:
+                    pair.pop(field, None)
+
+                for obj_key in ["txns", "volume", "priceChange"]:
+                    if obj_key in pair:
+                        for time_key in ["m5", "h6"]:
+                            pair[obj_key].pop(time_key, None)
+
+                if "pairCreatedAt" in pair:
+                    try:
+                        from datetime import datetime
+
+                        created_time = datetime.fromtimestamp(pair["pairCreatedAt"] / 1000)
+                        time_diff = datetime.now() - created_time
+                        if time_diff.days > 0:
+                            pair["pairCreatedAt"] = f"{time_diff.days} days ago"
+                        elif time_diff.seconds >= 3600:
+                            pair["pairCreatedAt"] = f"{time_diff.seconds // 3600} hours ago"
+                        else:
+                            pair["pairCreatedAt"] = f"{time_diff.seconds // 60} minutes ago"
+                    except Exception:
+                        pair["pairCreatedAt"] = "unknown"
+
+                if "info" in pair and "imageUrl" in pair["info"]:
+                    pair["info"].pop("imageUrl", None)
+
+                cleaned_pairs.append(pair)
+
+            if cleaned_pairs:
+                logger.info(f"Found {len(cleaned_pairs)} pairs for search term: {search_term}")
+                return {"status": "success", "data": {"pairs": cleaned_pairs}}
+            else:
+                logger.warning(f"No pairs with market cap >= 50000 found for search term: {search_term}")
+                return {"status": "no_data", "error": "No matching pairs found", "data": {"pairs": []}}
         else:
             logger.warning(f"No pairs found for search term: {search_term}")
             return {"status": "no_data", "error": "No matching pairs found", "data": {"pairs": []}}
