@@ -1,6 +1,3 @@
-# test_dexscreener_token_info_agent.py
-"""Test suite for DexScreener Token Info Agent"""
-
 import asyncio
 import sys
 from pathlib import Path
@@ -10,7 +7,6 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 from mesh.agents.dexscreener_token_info_agent import DexScreenerTokenInfoAgent
 from mesh.tests._test_agents import test_agent
 
-# Define test cases - exact conversion from original file
 TEST_CASES = {
     "natural_language_query_with_analysis": {
         "input": {
