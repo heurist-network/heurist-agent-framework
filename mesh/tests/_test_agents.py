@@ -1,9 +1,6 @@
-"""
-Common test utilities for all agent tests.
-Handles file saving, result formatting, and test execution.
-"""
-
+import asyncio
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -15,7 +12,9 @@ class AgentTestBase:
     """Base class for standardized agent testing."""
 
     @staticmethod
-    async def run_test(agent_class, test_cases: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
+    async def run_test(
+        agent_class, test_cases: Dict[str, Dict[str, Any]], delay_seconds: Optional[float] = None
+    ) -> Dict[str, Any]:
         """
         Execute test cases for an agent and return results.
 
@@ -28,26 +27,44 @@ class AgentTestBase:
         """
         agent = agent_class()
         results = {}
+        last_request_time = 0
 
         try:
             print(f"\n{'=' * 60}")
             print(f"Testing {agent_class.__name__}")
+            if delay_seconds:
+                print(f"With {delay_seconds}s delay between requests")
             print(f"{'=' * 60}")
 
-            for test_name, test_data in test_cases.items():
+            test_names = list(test_cases.keys())
+            for idx, test_name in enumerate(test_names):
+                test_data = test_cases[test_name]
                 print(f"\n[{test_name}] {test_data.get('description', 'No description')}")
                 print(f"Input: {test_data['input']}")
 
+                if delay_seconds and last_request_time > 0:
+                    current_time = time.time()
+                    time_since_last = current_time - last_request_time
+                    if time_since_last < delay_seconds:
+                        wait_time = delay_seconds - time_since_last
+                        print(f"⏳ Waiting {wait_time:.1f}s before request...")
+                        await asyncio.sleep(wait_time)
+
                 try:
+                    start_time = time.time()
                     output = await agent.handle_message(test_data["input"])
+                    elapsed = time.time() - start_time
+                    last_request_time = time.time()
                     results[test_name] = {
                         "input": test_data["input"],
                         "output": output,
                         "description": test_data.get("description", ""),
                         "status": "success",
+                        "elapsed_time": elapsed,
                     }
-                    print("✅ Success")
+                    print(f"✅ Success ({elapsed:.2f}s)")
                 except Exception as e:
+                    last_request_time = time.time()
                     results[test_name] = {
                         "input": test_data["input"],
                         "output": None,
@@ -56,6 +73,9 @@ class AgentTestBase:
                         "status": "failed",
                     }
                     print(f"❌ Failed: {e}")
+
+                if delay_seconds and idx < len(test_names) - 1:
+                    print(f"Progress: {idx + 1}/{len(test_names)} completed")
 
             return results
 
@@ -76,19 +96,14 @@ class AgentTestBase:
             test_filename: Name to use for the output file (without extension)
             output_dir: Optional output directory (defaults to script directory)
         """
-        # If test_filename not provided, try to get it from sys.argv
         if test_filename is None:
-            # Get the script name from command line arguments
             script_path = Path(sys.argv[0])
             test_filename = script_path.stem
 
-        # Determine output directory
         if output_dir is None:
-            # Use the directory of the running script
             script_path = Path(sys.argv[0])
             output_dir = script_path.parent
 
-        # Create filename
         base_filename = f"{test_filename}_example"
 
         # Add metadata
@@ -104,7 +119,6 @@ class AgentTestBase:
             "results": results,
         }
 
-        # Save as YAML
         yaml_file = output_dir / f"{base_filename}.yaml"
         with open(yaml_file, "w", encoding="utf-8") as f:
             yaml.dump(final_results, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
@@ -112,7 +126,6 @@ class AgentTestBase:
         print("\n📁 Results saved to:")
         print(f"  - {yaml_file}")
 
-        # Print summary
         meta = final_results["metadata"]
         print(f"\n📊 Summary: {meta['passed']}/{meta['total_tests']} tests passed")
 
@@ -120,7 +133,11 @@ class AgentTestBase:
 
     @staticmethod
     async def run_agent_tests(
-        agent_class, test_cases: Dict[str, Dict[str, Any]], save_output: bool = True, test_filename: str = None
+        agent_class,
+        test_cases: Dict[str, Dict[str, Any]],
+        save_output: bool = True,
+        test_filename: str = None,
+        delay_seconds: Optional[float] = None,
     ):
         """
         Main entry point for running agent tests.
@@ -135,9 +152,8 @@ class AgentTestBase:
             Test results dictionary
         """
         # Run tests
-        results = await AgentTestBase.run_test(agent_class, test_cases)
+        results = await AgentTestBase.run_test(agent_class, test_cases, delay_seconds)
 
-        # Save results if requested
         if save_output:
             # If test_filename not provided, extract from sys.argv
             if test_filename is None:
@@ -150,6 +166,8 @@ class AgentTestBase:
 
 
 # Convenience function for running tests
-async def test_agent(agent_class, test_cases, test_filename: str = None):
+async def test_agent(agent_class, test_cases, test_filename: str = None, delay_seconds: Optional[float] = None):
     """Quick function to test an agent with given test cases."""
-    return await AgentTestBase.run_agent_tests(agent_class, test_cases, test_filename=test_filename)
+    return await AgentTestBase.run_agent_tests(
+        agent_class, test_cases, test_filename=test_filename, delay_seconds=delay_seconds
+    )
