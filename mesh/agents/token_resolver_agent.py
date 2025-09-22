@@ -35,7 +35,9 @@ ALLOWED_CHAINS = {
     "moonbeam",
 }
 
+# TODO: add more supported symbols in coinsider api
 LARGE_CAP_SYMBOLS_FOR_FUNDING = {"BTC", "ETH", "SOL", "XRP", "BNB", "DOGE", "ADA", "AVAX", "LINK", "LTC", "BCH"}
+
 YF_DEFAULT_INTERVAL = "1d"
 YF_DEFAULT_PERIOD = "6mo"
 
@@ -158,13 +160,13 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search",
-                    "description": "Find tokens by address, ticker/symbol, exact name, or CoinGecko ID. Returns up to 5 concise candidates with basic market/trading context. This tool also returns a canonical ID (in the format of native:<SYMBOL> like native:ETH or <chain>:<contract_address> like base:0xEF22cb48B8483dF6152e1423b19dF5553BbD818b → Heurist token on Base or solana:So11111111111111111111111111111111111111112 → Wrapped SOL on Solana.) Agents can pass the canonical ID around between search, profile, and pairs",
+                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. This tool also returns a canonical ID (in the format of native:<SYMBOL> like native:ETH or <chain>:<contract_address> like base:0xEF22cb48B8483dF6152e1423b19dF5553BbD818b → Heurist token). Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "0x… (EVM), Solana mint, ticker/symbol (e.g., ETH), exact name, or CoinGecko ID",
+                                "description": "0x… (EVM), Solana mint, ticker/symbol or token name",
                             },
                             "chain": {
                                 "type": "string",
@@ -172,14 +174,8 @@ class TokenResolverAgent(MeshAgent):
                             },
                             "type_hint": {
                                 "type": "string",
-                                "enum": ["address", "symbol", "name", "coingecko_id"],
-                                "description": "Optional explicit hint",
-                            },
-                            "limit": {"type": "integer", "default": 5, "minimum": 1, "maximum": 10},
-                            "response_format": {
-                                "type": "string",
-                                "enum": ["concise", "detailed"],
-                                "default": "concise",
+                                "enum": ["address", "symbol", "name"],
+                                "description": "Optional explicit hint for the type of the query",
                             },
                         },
                         "required": ["query"],
@@ -190,14 +186,14 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "profile",
-                    "description": "Hydrate a single token into a detailed profile. Identify it by canonical_token_id or by one of: chain+address, symbol, coingecko_id. Optional sections: fundamentals, pairs, holders (Solana), traders (Solana), funding_rates (large caps only), technical_indicators (large caps only).",
+                    "description": "Get detailed profile of a token. Identify it by ONE OF canonical_token_id or chain+address or symbol or coingecko_id. Optional sections to return: fundamentals, pairs, holders (Solana), traders (Solana), funding_rates (large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "canonical_token_id": {"type": "string"},
                             "chain": {"type": "string"},
                             "address": {"type": "string"},
-                            "symbol": {"type": "string", "description": "Ticker symbol like BTC or ETH"},
+                            "symbol": {"type": "string", "description": "Ticker symbol like BTC or ETH. Only use this for well-known tokens."},
                             "coingecko_id": {"type": "string"},
                             "include": {
                                 "type": "array",
@@ -225,16 +221,13 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "pairs",
-                    "description": "Return top DEX pools for a token, ranked by liquidity, with price/volume snippets. Identify the token by canonical_token_id or by chain+address or by coingecko_id+symbol. Sometimes CEX tokens don't have DEX pools, which is normal.",
+                    "description": "Return top DEX pools for a token, ranked by liquidity, with price/volume snippets. Identify the token by ONE OF canonical_token_id or chain+address. Sometimes CEX tokens don't have DEX pools, which is normal.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "canonical_token_id": {"type": "string"},
                             "chain": {"type": "string"},
                             "address": {"type": "string"},
-                            "coingecko_id": {"type": "string"},
-                            "symbol": {"type": "string"},
-                            "limit": {"type": "integer", "default": 5, "minimum": 1, "maximum": 20},
                         },
                         "required": [],
                     },
@@ -513,7 +506,7 @@ class TokenResolverAgent(MeshAgent):
     # -----------------------------
     @with_retry(max_retries=2)
     async def _search(
-        self, query: str, chain: Optional[str], qtype: str, limit: int, response_format: str
+        self, query: str, chain: Optional[str], qtype: str, limit: int
     ) -> Dict[str, Any]:
         chain = _normalize_chain(chain)
         results: List[Dict[str, Any]] = []
@@ -715,28 +708,6 @@ class TokenResolverAgent(MeshAgent):
                 out = filtered
 
         final_results = out[:limit]
-
-        if response_format == "concise":
-            concise_results = []
-            for item in final_results:
-                concise_item = {
-                    "id": item.get("id"),
-                    "name": item.get("name"),
-                    "symbol": item.get("symbol"),
-                    "chain": item.get("chain"),
-                    "address": item.get("address"),
-                    "price_usd": item.get("price_usd"),
-                    "market_cap_usd": item.get("market_cap_usd"),
-                }
-                if item.get("top_pairs"):
-                    best_pair = item["top_pairs"][0]
-                    concise_item["best_pool"] = {
-                        "dex": best_pair.get("dex"),
-                        "price_usd": best_pair.get("price_usd"),
-                        "liquidity_usd": best_pair.get("liquidity_usd"),
-                    }
-                concise_results.append(concise_item)
-            final_results = concise_results
 
         return {"status": "success", "data": {"results": final_results, "timestamp": datetime.utcnow().isoformat()}}
 
@@ -951,8 +922,6 @@ class TokenResolverAgent(MeshAgent):
         canonical_token_id: Optional[str],
         chain: Optional[str],
         address: Optional[str],
-        coingecko_id: Optional[str],
-        symbol: Optional[str],
         limit: int,
     ) -> Dict[str, Any]:
         chain = _normalize_chain(chain)
@@ -962,25 +931,6 @@ class TokenResolverAgent(MeshAgent):
         if not cid:
             if chain and address:
                 cid = _make_canonical_id(chain=chain, address=address)
-            elif coingecko_id or symbol:
-                sym = (symbol or "").upper()
-                if not sym and coingecko_id:
-                    cg = await self._cg_get_token_info(coingecko_id)
-                    ti = (cg or {}).get("token_info") or {}
-                    sym = (ti.get("symbol") or "").upper()
-                if sym:
-                    ds = await self._ds_search_pairs(sym)
-                    pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
-                    previews = []
-                    for p in pairs:
-                        base = p.get("baseToken") or {}
-                        quote = p.get("quoteToken") or {}
-                        if base.get("symbol", "").upper() == sym or quote.get("symbol", "").upper() == sym:
-                            previews.append(self._pair_to_preview(p))
-                    out = sorted(previews, key=lambda x: (x.get("liquidity_usd") or 0), reverse=True)[:limit]
-                    return {"status": "success", "data": {"pairs": out}}
-                else:
-                    return {"status": "success", "data": {"pairs": []}}
 
         if cid and ":" in cid:
             parsed = _parse_canonical_id(cid)
@@ -1006,12 +956,10 @@ class TokenResolverAgent(MeshAgent):
                 query = function_args.get("query", "")
                 chain = function_args.get("chain")
                 type_hint = function_args.get("type_hint")
-                limit = int(function_args.get("limit", 5))
-                response_format = function_args.get("response_format", "concise")
-
+                limit = 5
                 qtype = self._detect_query_type(query, type_hint)
                 result = await self._search(
-                    query=query, chain=chain, qtype=qtype, limit=limit, response_format=response_format
+                    query=query, chain=chain, qtype=qtype, limit=limit
                 )
                 if errors := self._handle_error(result):
                     return errors
@@ -1045,16 +993,12 @@ class TokenResolverAgent(MeshAgent):
                 cid = function_args.get("canonical_token_id")
                 chain = function_args.get("chain")
                 address = function_args.get("address")
-                coingecko_id = function_args.get("coingecko_id")
-                symbol = function_args.get("symbol")
-                limit = int(function_args.get("limit", 5))
+                limit = 5
 
                 result = await self._pairs(
                     canonical_token_id=cid,
                     chain=chain,
                     address=address,
-                    coingecko_id=coingecko_id,
-                    symbol=symbol,
                     limit=limit,
                 )
                 if errors := self._handle_error(result):
