@@ -15,6 +15,14 @@ from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 
+# TODO: add more tokens to this map
+COINGECKO_ID_MAP = {
+    "BTC": "bitcoin",
+    "ETH": "ethereum",
+    "SOL": "solana",
+    "XRP": "ripple",
+    "BNB": "binancecoin",
+}
 
 class CoinGeckoTokenInfoAgent(MeshAgent):
     def __init__(self):
@@ -82,6 +90,13 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         self.agent.step_callbacks.append(self._step_callback)
         self.current_message = {}
         self._request_semaphore = asyncio.Semaphore(10)
+
+    def _resolve_coingecko_id(self, coingecko_id: str) -> str:
+        """Resolve a CoinGecko ID or symbol to the actual CoinGecko ID using the mapping."""
+        actual_coingecko_id = COINGECKO_ID_MAP.get(coingecko_id.upper(), coingecko_id)
+        if actual_coingecko_id != coingecko_id:
+            logger.info(f"Mapped {coingecko_id} to {actual_coingecko_id} using COINGECKO_ID_MAP")
+        return actual_coingecko_id
 
     def _step_callback(self, step_log):
         logger.info(f"Step: {step_log}")
@@ -458,26 +473,17 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             """
             logger.info(f"Getting token info for: {coingecko_id}")
             try:
-                api_url, headers = self.get_api_config(f"/coins/{coingecko_id}")
-                response_data = self._make_sync_request(f"{api_url}/coins/{coingecko_id}", headers)
-                return self.format_token_info(response_data)
-            except requests.HTTPError:
-                # Fallback search
+                # Run the async method synchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
                 try:
-                    api_url, headers = self.get_api_config("/search")
-                    search_data = self._make_sync_request(f"{api_url}/search?query={coingecko_id}", headers)
+                    result = loop.run_until_complete(self._get_token_info(coingecko_id))
+                finally:
+                    loop.close()
 
-                    if search_data.get("coins"):
-                        valid_tokens = [token for token in search_data["coins"] if token.get("market_cap_rank")]
-                        if valid_tokens:
-                            valid_tokens.sort(key=lambda x: x.get("market_cap_rank", float("inf")))
-                            fallback_id = valid_tokens[0]["id"]
-                            api_url, headers = self.get_api_config(f"/coins/{fallback_id}")
-                            fallback_data = self._make_sync_request(f"{api_url}/coins/{fallback_id}", headers)
-                            return self.format_token_info(fallback_data)
-                except:  # noqa: E722
-                    pass
-                return {"error": "Failed to fetch token info and fallback search failed"}
+                if "error" in result:
+                    return result
+                return self.format_token_info(result)
             except Exception as e:
                 logger.error(f"Error getting token info: {e}")
                 return {"error": f"Failed to fetch token info: {str(e)}"}
@@ -494,20 +500,14 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             """
             logger.info("Getting trending coins")
             try:
-                api_url, headers = self.get_api_config("/search/trending")
-                trending_data = self._make_sync_request(f"{api_url}/search/trending", headers)
-                formatted_trending = []
-                for coin in trending_data.get("coins", [])[:10]:
-                    coin_info = coin["item"]
-                    formatted_trending.append(
-                        {
-                            "name": coin_info["name"],
-                            "symbol": coin_info["symbol"],
-                            "market_cap_rank": coin_info.get("market_cap_rank", "N/A"),
-                            "price_usd": coin_info["data"].get("price", "N/A"),
-                        }
-                    )
-                return {"trending_coins": formatted_trending}
+                # Run the async method synchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(self._get_trending_coins())
+                finally:
+                    loop.close()
+                return result
             except Exception as e:
                 logger.error(f"Error getting trending coins: {e}")
                 return {"error": f"Failed to fetch trending coins: {str(e)}"}
@@ -541,20 +541,20 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             """
             logger.info(f"Getting multi-token price data for: {ids} in {vs_currencies}")
             try:
-                api_url, headers = self.get_api_config("/simple/price")
-                params = {
-                    "ids": ids,
-                    "vs_currencies": vs_currencies,
-                    "include_market_cap": str(include_market_cap).lower(),
-                    "include_24hr_vol": str(include_24hr_vol).lower(),
-                    "include_24hr_change": str(include_24hr_change).lower(),
-                    "include_last_updated_at": str(include_last_updated_at).lower(),
-                }
-                if precision:
-                    params["precision"] = precision
+                # Run the async method synchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(self._get_token_price_multi(
+                        ids, vs_currencies, include_market_cap, include_24hr_vol,
+                        include_24hr_change, include_last_updated_at, precision
+                    ))
+                finally:
+                    loop.close()
 
-                price_data = self._make_sync_request(f"{api_url}/simple/price", headers, params)
-                return {"price_data": price_data}
+                if "error" in result:
+                    return result
+                return {"price_data": result}
             except Exception as e:
                 logger.error(f"Error getting multi-token price data: {e}")
                 return {"error": f"Failed to fetch price data: {str(e)}"}
@@ -571,9 +571,14 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             """
             logger.info("Getting categories list")
             try:
-                api_url, headers = self.get_api_config("/coins/categories/list")
-                categories = self._make_sync_request(f"{api_url}/coins/categories/list", headers)
-                return {"categories": categories}
+                # Run the async method synchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(self._get_categories_list())
+                finally:
+                    loop.close()
+                return result
             except Exception as e:
                 logger.error(f"Error getting categories list: {e}")
                 return {"error": f"Failed to fetch categories list: {str(e)}"}
@@ -592,25 +597,16 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             Returns:
                 Dictionary with category data or error message
             """
-            limit = max(1, min(limit, 100))
-
             logger.info(f"Getting category data with order: {order}, limit: {limit}")
             try:
-                api_url, headers = self.get_api_config("/coins/categories")
-                params = {"order": order} if order else {}
-                category_data = self._make_sync_request(f"{api_url}/coins/categories", headers, params)
-
-                if isinstance(category_data, list):
-                    limited_data = category_data[:limit]
-                    return {
-                        "category_data": limited_data,
-                        "total_available": len(category_data),
-                        "returned_count": len(limited_data),
-                        "limit": limit,
-                    }
-                else:
-                    return {"category_data": category_data}
-
+                # Run the async method synchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(self._get_category_data(order, limit))
+                finally:
+                    loop.close()
+                return result
             except Exception as e:
                 logger.error(f"Error getting category data: {e}")
                 return {"error": f"Failed to fetch category data: {str(e)}"}
@@ -640,28 +636,16 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             """
             logger.info(f"Getting tokens for category: {category_id}")
             try:
-                api_url, headers = self.get_api_config("/coins/markets")
-                params = {
-                    "vs_currency": vs_currency,
-                    "category": category_id,
-                    "order": order,
-                    "per_page": per_page,
-                    "page": page,
-                    "sparkline": "false",
-                }
-                response = requests.get(f"{api_url}/coins/markets", headers=headers, params=params)
-                response.raise_for_status()
-                data = self.preprocess_api_response(response.json())
-                return {
-                    "category_tokens": {
-                        "category_id": category_id,
-                        "tokens": data,
-                        "pagination": {
-                            "total": response.headers.get("x-total", "N/A"),
-                            "per_page": response.headers.get("x-per-page", "N/A"),
-                        },
-                    }
-                }
+                # Run the async method synchronously
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(self._get_tokens_by_category(
+                        category_id, vs_currency, order, per_page, page
+                    ))
+                finally:
+                    loop.close()
+                return result
             except Exception as e:
                 logger.error(f"Error getting tokens for category: {e}")
                 return {"error": f"Failed to fetch tokens for category '{category_id}': {str(e)}"}
@@ -813,20 +797,22 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
     @with_retry(max_retries=3)
     async def _get_token_info(self, coingecko_id: str) -> dict:
         try:
-            api_url, headers = self.get_api_config(f"/coins/{coingecko_id}")
-            url = f"{api_url}/coins/{coingecko_id}"
+            actual_coingecko_id = self._resolve_coingecko_id(coingecko_id)
+            api_url, headers = self.get_api_config(f"/coins/{actual_coingecko_id}")
+            url = f"{api_url}/coins/{actual_coingecko_id}"
             response = await self._api_request(url=url, method="GET", headers=headers)
             if "error" not in response:
                 return response
 
-            # if response contains error, try search fallback
-            fallback_id = await self._search_token(coingecko_id)
-            if fallback_id:
-                api_url, headers = self.get_api_config(f"/coins/{fallback_id}")
-                fallback_url = f"{api_url}/coins/{fallback_id}"
-                fallback_response = await self._api_request(url=fallback_url, method="GET", headers=headers)
-                if "error" not in fallback_response:
-                    return fallback_response
+            # if response contains error, try search fallback (only if we didn't already use the map)
+            if actual_coingecko_id == coingecko_id:
+                fallback_id = await self._search_token(coingecko_id)
+                if fallback_id:
+                    api_url, headers = self.get_api_config(f"/coins/{fallback_id}")
+                    fallback_url = f"{api_url}/coins/{fallback_id}"
+                    fallback_response = await self._api_request(url=fallback_url, method="GET", headers=headers)
+                    if "error" not in fallback_response:
+                        return fallback_response
             return {"error": "Failed to fetch token info"}
         except Exception as e:
             logger.error(f"Error: {e}")
