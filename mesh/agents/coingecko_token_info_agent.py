@@ -758,7 +758,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                     "explorers": [u for u in (links.get("blockchain_site") or []) if u],
                 },
             },
-            "platforms": data.get("platforms", {}),
+            "platforms": {k: v.lower() if v else v for k, v in data.get("platforms", {}).items()},
             "market_metrics": {
                 "current_price_usd": market_data.get("current_price", {}).get("usd", "N/A"),
                 "market_cap_usd": market_data.get("market_cap", {}).get("usd", "N/A"),

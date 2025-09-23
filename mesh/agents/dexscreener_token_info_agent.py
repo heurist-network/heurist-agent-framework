@@ -145,6 +145,14 @@ class DexScreenerTokenInfoAgent(MeshAgent):
         if "info" in pair and "imageUrl" in pair["info"]:
             pair["info"].pop("imageUrl", None)
 
+        # Normalize token addresses to lowercase
+        if "baseToken" in pair and pair["baseToken"].get("address"):
+            pair["baseToken"]["address"] = pair["baseToken"]["address"].lower()
+        if "quoteToken" in pair and pair["quoteToken"].get("address"):
+            pair["quoteToken"]["address"] = pair["quoteToken"]["address"].lower()
+        if "pairAddress" in pair and pair["pairAddress"]:
+            pair["pairAddress"] = pair["pairAddress"].lower()
+
         return pair
 
     @with_cache(ttl_seconds=300)

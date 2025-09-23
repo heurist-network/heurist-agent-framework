@@ -437,7 +437,7 @@ class TokenResolverAgent(MeshAgent):
             chosen = other
         chain = pair.get("chainId")
         tok = {
-            "address": chosen.get("address"),
+            "address": chosen.get("address", "").lower() if chosen.get("address") else None,
             "name": chosen.get("name"),
             "symbol": chosen.get("symbol"),
             "chain": chain,
@@ -486,7 +486,7 @@ class TokenResolverAgent(MeshAgent):
                             "name": None,
                             "symbol": None,
                             "chain": chain,
-                            "address": query,
+                            "address": query.lower(),
                             "coingecko_id": None,
                             "price_usd": None,
                             "market_cap_usd": None,
@@ -595,15 +595,23 @@ class TokenResolverAgent(MeshAgent):
                 selected = []
 
                 if qtype == "symbol":
+                    # Trust DexScreener's search - if it returned this pair for the query, both tokens are potentially relevant
+                    # Prefer exact symbol matches but include all to let liquidity ranking decide
                     if base.get("symbol", "").upper() == query.upper():
                         selected.append(base)
                     if quote.get("symbol", "").upper() == query.upper():
                         selected.append(quote)
+                    # If no exact matches, include both tokens (DexScreener found them for a reason)
+                    if not selected:
+                        selected.extend([base, quote])
                 elif qtype == "name":
+                    # Similar approach for name queries
                     if base.get("name", "").lower() == query.lower():
                         selected.append(base)
                     if quote.get("name", "").lower() == query.lower():
                         selected.append(quote)
+                    if not selected:
+                        selected.extend([base, quote])
                 elif qtype == "coingecko_id":
                     # DS doesn't expose CG id; we still keep all to let liquidity sort do the work
                     selected.extend([base, quote])
@@ -613,7 +621,7 @@ class TokenResolverAgent(MeshAgent):
                     ch = p.get("chainId")
                     if not addr or not ch:
                         continue
-                    token_key = f"{ch}:{addr}"
+                    token_key = f"{ch}:{addr.lower()}"
                     preview = self._pair_to_preview(p)
                     ds_links = {
                         "website": preview.get("websites"),
@@ -632,7 +640,7 @@ class TokenResolverAgent(MeshAgent):
                             "name": tok.get("name"),
                             "symbol": tok.get("symbol"),
                             "chain": ch,
-                            "address": addr,
+                            "address": addr.lower(),
                             "coingecko_id": None,
                             "price_usd": preview.get("price_usd"),
                             "market_cap_usd": None,
@@ -649,10 +657,10 @@ class TokenResolverAgent(MeshAgent):
             for token_key, obj in token_map.items():
                 # Try to link with CoinGecko ID
                 if contract_to_cgid_map and not obj.get("coingecko_id"):
-                    chain = obj.get("chain")
+                    obj_chain = obj.get("chain")
                     address = obj.get("address")
-                    if chain and address:
-                        contract_key = f"{chain}:{address.lower()}"
+                    if obj_chain and address:
+                        contract_key = f"{obj_chain}:{address.lower()}"
                         if contract_key in contract_to_cgid_map:
                             obj["coingecko_id"] = contract_to_cgid_map[contract_key]
                             linked_count += 1
@@ -676,6 +684,7 @@ class TokenResolverAgent(MeshAgent):
                 combined.append(cg_anchor)
             combined.extend(ds_candidates)
             out = combined
+            logger.info(f"[token_resolver] Combined results: CG anchor={1 if cg_anchor else 0}, DS candidates={len(ds_candidates)}, total={len(out)}")
 
             if chain:
                 filtered = []
