@@ -381,15 +381,34 @@ class TokenResolverAgent(MeshAgent):
         if type_hint in {"address", "symbol", "name", "coingecko_id"}:
             return type_hint
         q = (query or "").strip()
+
+        # Long strings are likely addresses
+        if len(q) >= 20:
+            if _is_evm_address(q) or _is_solana_address(q):
+                return "address"
+            # Could be a long address we don't recognize, try as address anyway
+            return "address"
+
+        # Check for actual address formats first
         if _is_evm_address(q) or _is_solana_address(q):
             return "address"
-        if re.fullmatch(r"[A-Za-z0-9\-]{2,20}", q) and q.upper() == q:
+
+        # Short alphanumeric strings without spaces - treat as symbol
+        if re.fullmatch(r"[A-Za-z0-9\-]{2,20}", q) and " " not in q:
             return "symbol"
-        if re.fullmatch(r"[a-z0-9\-]{2,64}", q):
+
+        # Lowercase with hyphens - likely coingecko_id
+        if re.fullmatch(r"[a-z0-9\-]{2,64}", q) and "-" in q:
             return "coingecko_id"
-        letters = re.sub(r"[^A-Za-z]", "", q)
-        if len(letters) >= 3 and " " in q:
+
+        # Multi-word strings - treat as name
+        if " " in q and len(q.strip()) >= 3:
             return "name"
+
+        # Default to symbol for short strings (covers mixed case like "Aster")
+        if len(q) >= 2:
+            return "symbol"
+
         return "unknown"
 
     def _pair_to_preview(self, p: Dict[str, Any]) -> Dict[str, Any]:
@@ -454,10 +473,8 @@ class TokenResolverAgent(MeshAgent):
         results: List[Dict[str, Any]] = []
 
         if qtype == "unknown":
-            return {
-                "status": "error",
-                "error": "Unsupported or vague query. Provide address, symbol, exact name, or CoinGecko ID.",
-            }
+            # Fallback: treat as symbol for backwards compatibility
+            qtype = "symbol"
 
         if qtype == "address":
             pairs_res = await self._ds_token_pairs(chain or "all", query)
