@@ -172,8 +172,8 @@ class TokenResolverAgent(MeshAgent):
                 "examples": [
                     "search query=ETH",
                     "search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",
-                    "profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['fundamentals','pairs']",
-                    "profile symbol=BTC include=['fundamentals','funding_rates','technical_indicators']",
+                    "profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['pairs']",
+                    "profile symbol=BTC include=['funding_rates','technical_indicators']",
                 ],
             }
         )
@@ -224,7 +224,7 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "profile",
-                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: fundamentals, pairs, holders (Solana only), traders (Solana only), funding_rates (large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens",
+                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, holders (Solana only), traders (Solana only), funding_rates (large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -246,7 +246,6 @@ class TokenResolverAgent(MeshAgent):
                                 "items": {
                                     "type": "string",
                                     "enum": [
-                                        "fundamentals",
                                         "pairs",
                                         "holders",
                                         "traders",
@@ -254,7 +253,7 @@ class TokenResolverAgent(MeshAgent):
                                         "technical_indicators",
                                     ],
                                 },
-                                "default": ["fundamentals"],
+                                "default": ["pairs"],
                             },
                             "top_n_pairs": {"type": "integer", "default": 3, "minimum": 1, "maximum": 10},
                             "indicator_interval": {"type": "string", "enum": ["1h", "1d"], "default": "1d"},
@@ -777,45 +776,44 @@ class TokenResolverAgent(MeshAgent):
         if is_contract:
             prof["contracts"][chain] = address
 
-        # Fundamentals & links (CoinGecko)
-        if "fundamentals" in include or (not include):
-            cg_query = coingecko_id
-            if not cg_query and symbol:
-                cg_query = symbol.lower()
+        # Always get CoinGecko data when available
+        cg_query = coingecko_id
+        if not cg_query and symbol:
+            cg_query = symbol.lower()
 
-            if cg_query:
-                cg = await self._cg_get_token_info(cg_query)
-                if cg and not cg.get("error"):
-                    ti = cg.get("token_info") or {}
-                    mm = cg.get("market_metrics") or {}
-                    prof["name"] = prof["name"] or ti.get("name")
-                    if ti.get("symbol"):
-                        prof["symbol"] = (ti.get("symbol") or "").upper()
-                    if not prof.get("coingecko_id"):
-                        prof["coingecko_id"] = ti.get("id")
-                    prof["categories"] = ti.get("categories") or prof["categories"]
-                    links = ti.get("links") or {}
-                    prof["links"] = self._merge_links(prof["links"], links)
-                    prof["fundamentals"] = {
-                        "price_usd": mm.get("current_price_usd"),
-                        "market_cap_usd": mm.get("market_cap_usd"),
-                        "fdv_usd": (cg.get("market_metrics") or {}).get("fully_diluted_valuation_usd"),
-                        "volume24h_usd": mm.get("total_volume_usd"),
+        if cg_query:
+            cg = await self._cg_get_token_info(cg_query)
+            if cg and not cg.get("error"):
+                ti = cg.get("token_info") or {}
+                mm = cg.get("market_metrics") or {}
+                prof["name"] = prof["name"] or ti.get("name")
+                if ti.get("symbol"):
+                    prof["symbol"] = (ti.get("symbol") or "").upper()
+                if not prof.get("coingecko_id"):
+                    prof["coingecko_id"] = ti.get("id")
+                prof["categories"] = ti.get("categories") or prof["categories"]
+                links = ti.get("links") or {}
+                prof["links"] = self._merge_links(prof["links"], links)
+                prof["fundamentals"] = {
+                    "price_usd": mm.get("current_price_usd"),
+                    "market_cap_usd": mm.get("market_cap_usd"),
+                    "fdv_usd": (cg.get("market_metrics") or {}).get("fully_diluted_valuation_usd"),
+                    "volume24h_usd": mm.get("total_volume_usd"),
+                }
+                if cg.get("supply_info") or cg.get("price_metrics"):
+                    si = cg.get("supply_info") or {}
+                    pm = cg.get("price_metrics") or {}
+                    prof["supply"] = {
+                        "circulating": si.get("circulating_supply"),
+                        "total": si.get("total_supply"),
+                        "max": si.get("max_supply"),
                     }
-                    if cg.get("supply_info") or cg.get("price_metrics"):
-                        si = cg.get("supply_info") or {}
-                        pm = cg.get("price_metrics") or {}
-                        prof["supply"] = {
-                            "circulating": si.get("circulating_supply"),
-                            "total": si.get("total_supply"),
-                            "max": si.get("max_supply"),
-                        }
-                        prof["price_extremes"] = {
-                            "ath_usd": pm.get("ath_usd"),
-                            "ath_date": pm.get("ath_date"),
-                            "atl_usd": pm.get("atl_usd"),
-                            "atl_date": pm.get("atl_date"),
-                        }
+                    prof["price_extremes"] = {
+                        "ath_usd": pm.get("ath_usd"),
+                        "ath_date": pm.get("ath_date"),
+                        "atl_usd": pm.get("atl_usd"),
+                        "atl_date": pm.get("atl_date"),
+                    }
 
         # Pairs (DexScreener) and collect websites/socials
         if "pairs" in include or (not include):
@@ -952,7 +950,7 @@ class TokenResolverAgent(MeshAgent):
                 address = function_args.get("address")
                 symbol = function_args.get("symbol")
                 coingecko_id = function_args.get("coingecko_id")
-                include = function_args.get("include") or ["fundamentals", "pairs"]
+                include = function_args.get("include") or ["pairs"]
                 top_n_pairs = int(function_args.get("top_n_pairs", 3))
                 indicator_interval = function_args.get("indicator_interval", "1d")
 
