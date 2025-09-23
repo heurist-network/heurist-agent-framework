@@ -63,29 +63,6 @@ def _normalize_chain(chain: Optional[str]) -> Optional[str]:
     return c
 
 
-def _make_canonical_id(
-    chain: Optional[str] = None, address: Optional[str] = None, native_symbol: Optional[str] = None
-) -> Optional[str]:
-    if native_symbol:
-        return f"native:{native_symbol.upper()}"
-    if chain and address:
-        return f"{chain.lower()}:{address}"
-    return None
-
-
-def _parse_canonical_id(cid: str) -> Dict[str, str]:
-    out = {"kind": "", "chain": "", "address": "", "symbol": ""}
-    if not cid or ":" not in cid:
-        return out
-    lhs, rhs = cid.split(":", 1)
-    if lhs.lower() == "native":
-        out["kind"] = "native"
-        out["symbol"] = rhs.upper()
-        return out
-    out["kind"] = "contract"
-    out["chain"] = _normalize_chain(lhs)
-    out["address"] = rhs
-    return out
 
 
 def _safe_float(x) -> Optional[float]:
@@ -133,9 +110,8 @@ class TokenResolverAgent(MeshAgent):
                 "examples": [
                     "search query=ETH",
                     "search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",
-                    "profile canonical_token_id=base:0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['fundamentals','pairs']",
+                    "profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['fundamentals','pairs']",
                     "profile symbol=BTC include=['fundamentals','funding_rates','technical_indicators']",
-                    "pairs chain=solana address=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v limit=5",
                 ],
             }
         )
@@ -160,7 +136,7 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search",
-                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. This tool also returns a canonical ID (in the format of native:<SYMBOL> like native:ETH or <chain>:<contract_address> like base:0xEF22cb48B8483dF6152e1423b19dF5553BbD818b → Heurist token). Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query.",
+                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query. This tool may return multiple assets with the same or similar name/symbol, and in this case you should identify the largest market cap asset or the asset with the largest volume or liquidity and ignore the others.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -186,14 +162,13 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "profile",
-                    "description": "Get detailed profile of a token. Identify it by ONE OF canonical_token_id or chain+address or symbol or coingecko_id. Optional sections to return: fundamentals, pairs, holders (Solana), traders (Solana), funding_rates (large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID.",
+                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: fundamentals, pairs, holders (Solana only), traders (Solana only), funding_rates (large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "canonical_token_id": {"type": "string"},
-                            "chain": {"type": "string"},
-                            "address": {"type": "string"},
-                            "symbol": {"type": "string", "description": "Ticker symbol like BTC or ETH. Only use this for well-known tokens."},
+                            "chain": {"type": "string", "description": "Blockchain network (e.g., ethereum, base, bsc, solana)"},
+                            "address": {"type": "string", "description": "Token contract address (use with chain parameter)"},
+                            "symbol": {"type": "string", "description": "Ticker symbol like BTC or ETH. Only use this for well-known native tokens."},
                             "coingecko_id": {"type": "string"},
                             "include": {
                                 "type": "array",
@@ -208,26 +183,10 @@ class TokenResolverAgent(MeshAgent):
                                         "technical_indicators",
                                     ],
                                 },
-                                "default": ["fundamentals", "pairs"],
+                                "default": ["fundamentals"],
                             },
                             "top_n_pairs": {"type": "integer", "default": 3, "minimum": 1, "maximum": 10},
                             "indicator_interval": {"type": "string", "enum": ["1h", "1d"], "default": "1d"},
-                        },
-                        "required": [],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "pairs",
-                    "description": "Return top DEX pools for a token, ranked by liquidity, with price/volume snippets. Identify the token by ONE OF canonical_token_id or chain+address. Sometimes CEX tokens don't have DEX pools, which is normal.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "canonical_token_id": {"type": "string"},
-                            "chain": {"type": "string"},
-                            "address": {"type": "string"},
                         },
                         "required": [],
                     },
@@ -524,7 +483,6 @@ class TokenResolverAgent(MeshAgent):
                 if chain:
                     results.append(
                         {
-                            "id": _make_canonical_id(chain=chain, address=query),
                             "name": None,
                             "symbol": None,
                             "chain": chain,
@@ -544,9 +502,9 @@ class TokenResolverAgent(MeshAgent):
                 addr = token.get("address")
                 if not addr:
                     continue
-                cid = _make_canonical_id(chain=ch, address=addr)
+                token_key = f"{ch}:{addr}"
                 preview = self._pair_to_preview(p)
-                current = best_by_token.get(cid)
+                current = best_by_token.get(token_key)
                 # collect websites/socials
                 ds_links = {
                     "website": preview.get("websites"),
@@ -555,8 +513,7 @@ class TokenResolverAgent(MeshAgent):
                 if not current or (preview.get("liquidity_usd") or 0) > (
                     current.get("best_pair", {}).get("liquidity_usd") or 0
                 ):
-                    best_by_token[cid] = {
-                        "id": cid,
+                    best_by_token[token_key] = {
                         "name": token.get("name"),
                         "symbol": token.get("symbol"),
                         "chain": ch,
@@ -569,11 +526,11 @@ class TokenResolverAgent(MeshAgent):
                         "_all_pairs": [p],
                     }
                 else:
-                    best_by_token[cid]["_all_pairs"].append(p)
-                    best_by_token[cid]["links"] = self._merge_links(best_by_token[cid]["links"], ds_links)
+                    best_by_token[token_key]["_all_pairs"].append(p)
+                    best_by_token[token_key]["links"] = self._merge_links(best_by_token[token_key]["links"], ds_links)
 
             out = []
-            for cid, obj in best_by_token.items():
+            for token_key, obj in best_by_token.items():
                 previews = sorted(
                     [self._pair_to_preview(p) for p in obj["_all_pairs"]],
                     key=lambda x: (x.get("liquidity_usd") or 0),
@@ -596,12 +553,10 @@ class TokenResolverAgent(MeshAgent):
                     ti = cg.get("token_info") or {}
                     mm = cg.get("market_metrics") or {}
                     links = ti.get("links") or {}
+                    symbol_upper = (ti.get("symbol") or "").upper() if ti.get("symbol") else None
                     cg_anchor = {
-                        "id": _make_canonical_id(native_symbol=(ti.get("symbol") or "").upper())
-                        if ti.get("symbol")
-                        else None,
                         "name": ti.get("name"),
-                        "symbol": (ti.get("symbol") or "").upper() if ti.get("symbol") else None,
+                        "symbol": symbol_upper,
                         "chain": None,
                         "address": None,
                         "coingecko_id": ti.get("id"),
@@ -645,7 +600,7 @@ class TokenResolverAgent(MeshAgent):
                     ch = p.get("chainId")
                     if not addr or not ch:
                         continue
-                    cid = _make_canonical_id(chain=ch, address=addr)
+                    token_key = f"{ch}:{addr}"
                     preview = self._pair_to_preview(p)
                     ds_links = {
                         "website": preview.get("websites"),
@@ -656,12 +611,11 @@ class TokenResolverAgent(MeshAgent):
                             s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "telegram"
                         ],
                     }
-                    current = token_map.get(cid)
+                    current = token_map.get(token_key)
                     if not current or (preview.get("liquidity_usd") or 0) > (
                         current.get("best_pair", {}).get("liquidity_usd") or 0
                     ):
-                        token_map[cid] = {
-                            "id": cid,
+                        token_map[token_key] = {
                             "name": tok.get("name"),
                             "symbol": tok.get("symbol"),
                             "chain": ch,
@@ -674,11 +628,11 @@ class TokenResolverAgent(MeshAgent):
                             "_all_pairs": [p],
                         }
                     else:
-                        token_map[cid]["_all_pairs"].append(p)
-                        token_map[cid]["links"] = self._merge_links(token_map[cid]["links"], ds_links)
+                        token_map[token_key]["_all_pairs"].append(p)
+                        token_map[token_key]["links"] = self._merge_links(token_map[token_key]["links"], ds_links)
 
             ds_candidates = []
-            for cid, obj in token_map.items():
+            for token_key, obj in token_map.items():
                 previews = sorted(
                     [self._pair_to_preview(p) for p in obj["_all_pairs"]],
                     key=lambda x: (x.get("liquidity_usd") or 0),
@@ -701,7 +655,8 @@ class TokenResolverAgent(MeshAgent):
             if chain:
                 filtered = []
                 for item in combined:
-                    if item.get("chain") is None and item.get("id", "").startswith("native:"):
+                    if item.get("chain") is None and item.get("symbol"):
+                        # Native token matches any chain filter
                         filtered.append(item)
                     elif item.get("chain") == chain:
                         filtered.append(item)
@@ -714,7 +669,6 @@ class TokenResolverAgent(MeshAgent):
     @with_retry(max_retries=2)
     async def _profile(
         self,
-        canonical_token_id: Optional[str],
         chain: Optional[str],
         address: Optional[str],
         symbol: Optional[str],
@@ -723,24 +677,15 @@ class TokenResolverAgent(MeshAgent):
         top_n_pairs: int,
         indicator_interval: str,
     ) -> Dict[str, Any]:
-        cid = canonical_token_id
         chain = _normalize_chain(chain)
 
-        if not cid:
-            if chain and address:
-                cid = _make_canonical_id(chain=chain, address=address)
-            elif symbol:
-                cid = _make_canonical_id(native_symbol=symbol.upper())
-            elif coingecko_id:
-                cg_tmp = await self._cg_get_token_info(coingecko_id)
-                ti_tmp = (cg_tmp or {}).get("token_info") or {}
-                if ti_tmp.get("symbol"):
-                    cid = _make_canonical_id(native_symbol=ti_tmp["symbol"].upper())
+        # Determine token type based on parameters
+        is_native = bool(symbol and not (chain and address))
+        is_contract = bool(chain and address)
 
         prof: Dict[str, Any] = {
-            "id": cid,
             "name": None,
-            "symbol": None,
+            "symbol": symbol.upper() if symbol else None,
             "contracts": {},
             "coingecko_id": coingecko_id,
             "categories": [],
@@ -754,13 +699,15 @@ class TokenResolverAgent(MeshAgent):
             "timestamp": datetime.utcnow().isoformat(),
         }
 
+        # Add contract info if this is a contract token
+        if is_contract:
+            prof["contracts"][chain] = address
+
         # Fundamentals & links (CoinGecko)
         if "fundamentals" in include or (not include):
             cg_query = coingecko_id
             if not cg_query and symbol:
                 cg_query = symbol.lower()
-            if not cg_query and cid and cid.startswith("native:"):
-                cg_query = cid.split(":", 1)[1].lower()
 
             if cg_query:
                 cg = await self._cg_get_token_info(cg_query)
@@ -799,7 +746,7 @@ class TokenResolverAgent(MeshAgent):
         # Pairs (DexScreener) and collect websites/socials
         if "pairs" in include or (not include):
             pairs_out = []
-            if cid and cid.startswith("native:") and prof.get("symbol"):
+            if is_native and prof.get("symbol"):
                 ds = await self._ds_search_pairs(prof["symbol"])
                 pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
                 cand_previews = []
@@ -826,45 +773,40 @@ class TokenResolverAgent(MeshAgent):
                 pairs_out = sorted(cand_previews, key=lambda x: (x.get("liquidity_usd") or 0), reverse=True)[
                     :top_n_pairs
                 ]
-            elif cid and ":" in cid:
-                parsed = _parse_canonical_id(cid)
-                if parsed["kind"] == "contract" and parsed["address"]:
-                    ds = await self._ds_token_pairs(parsed["chain"] or chain or "all", parsed["address"])
-                    ps = ((ds or {}).get("data") or {}).get("pairs") or []
-                    pairs_out = sorted(
-                        [self._pair_to_preview(p) for p in ps],
-                        key=lambda x: (x.get("liquidity_usd") or 0),
-                        reverse=True,
-                    )[:top_n_pairs]
-                    if ps:
-                        base = ps[0].get("baseToken") or {}
-                        prof["name"] = prof["name"] or base.get("name")
-                        prof["symbol"] = prof["symbol"] or (base.get("symbol") or "").upper()
-                        prof["contracts"][parsed["chain"]] = parsed["address"]
-                    # merge links from pairs
-                    for prev in pairs_out:
-                        ds_links = {
-                            "website": prev.get("websites"),
-                            "twitter": [
-                                s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "twitter"
-                            ],
-                            "telegram": [
-                                s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "telegram"
-                            ],
-                        }
-                        prof["links"] = self._merge_links(prof["links"], ds_links)
+            elif is_contract and chain and address:
+                ds = await self._ds_token_pairs(chain or "all", address)
+                ps = ((ds or {}).get("data") or {}).get("pairs") or []
+                pairs_out = sorted(
+                    [self._pair_to_preview(p) for p in ps],
+                    key=lambda x: (x.get("liquidity_usd") or 0),
+                    reverse=True,
+                )[:top_n_pairs]
+                if ps:
+                    base = ps[0].get("baseToken") or {}
+                    prof["name"] = prof["name"] or base.get("name")
+                    prof["symbol"] = prof["symbol"] or (base.get("symbol") or "").upper()
+                # merge links from pairs
+                for prev in pairs_out:
+                    ds_links = {
+                        "website": prev.get("websites"),
+                        "twitter": [
+                            s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "twitter"
+                        ],
+                        "telegram": [
+                            s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "telegram"
+                        ],
+                    }
+                    prof["links"] = self._merge_links(prof["links"], ds_links)
 
             if pairs_out:
                 prof["top_pools"] = pairs_out
                 prof["best_pool"] = pairs_out[0]
 
         # Optional: GMGN (if contract + chain supported by gmgn)
-        if cid and ":" in cid:
-            parsed = _parse_canonical_id(cid)
-            ch = parsed["chain"]
-            if ch in {"eth", "ethereum", "base", "bsc", "sol"}:
+        if is_contract and chain and address:
+            if chain in {"eth", "ethereum", "base", "bsc", "solana"}:
                 ch_map = {"ethereum": "eth", "eth": "eth", "base": "base", "bsc": "bsc", "solana": "sol"}
-                gmgn = await self._gmgn_token_info(ch_map.get(ch, ch), parsed["address"])
+                gmgn = await self._gmgn_token_info(ch_map.get(chain, chain), address)
                 if gmgn and not gmgn.get("error") and gmgn.get("status") != "no_data":
                     # Try to parse payload string quickly for website/twitter/telegram
                     payload = gmgn.get("data", {}).get("payload") if isinstance(gmgn, dict) else None
@@ -884,18 +826,13 @@ class TokenResolverAgent(MeshAgent):
 
         # Optional: Solana holders/traders
         if "holders" in include or "traders" in include:
-            sol_addr = None
-            if cid and ":" in cid and cid.split(":")[0] == "solana":
-                sol_addr = cid.split(":")[1]
-            elif chain == "solana" and address:
-                sol_addr = address
-            if sol_addr:
+            if chain == "solana" and address:
                 if "holders" in include:
-                    holders = await self._bq_solana_holders(sol_addr, limit=5)
+                    holders = await self._bq_solana_holders(address, limit=5)
                     if holders and not holders.get("error"):
                         prof["extras"]["holders"] = holders
                 if "traders" in include:
-                    traders = await self._bq_solana_traders(sol_addr, limit=5)
+                    traders = await self._bq_solana_traders(address, limit=5)
                     if traders and not traders.get("error"):
                         prof["extras"]["traders"] = traders
 
@@ -916,32 +853,6 @@ class TokenResolverAgent(MeshAgent):
 
         return {"status": "success", "data": prof}
 
-    @with_retry(max_retries=2)
-    async def _pairs(
-        self,
-        canonical_token_id: Optional[str],
-        chain: Optional[str],
-        address: Optional[str],
-        limit: int,
-    ) -> Dict[str, Any]:
-        chain = _normalize_chain(chain)
-        out: List[Dict[str, Any]] = []
-
-        cid = canonical_token_id
-        if not cid:
-            if chain and address:
-                cid = _make_canonical_id(chain=chain, address=address)
-
-        if cid and ":" in cid:
-            parsed = _parse_canonical_id(cid)
-            if parsed["kind"] == "contract":
-                ds = await self._ds_token_pairs(parsed["chain"] or chain or "all", parsed["address"])
-                ps = ((ds or {}).get("data") or {}).get("pairs") or []
-                out = sorted(
-                    [self._pair_to_preview(p) for p in ps], key=lambda x: (x.get("liquidity_usd") or 0), reverse=True
-                )[:limit]
-
-        return {"status": "success", "data": {"pairs": out}}
 
     # -----------------------------
     # Tool handler
@@ -966,7 +877,6 @@ class TokenResolverAgent(MeshAgent):
                 return result
 
             elif tool_name == "profile":
-                cid = function_args.get("canonical_token_id")
                 chain = function_args.get("chain")
                 address = function_args.get("address")
                 symbol = function_args.get("symbol")
@@ -976,7 +886,6 @@ class TokenResolverAgent(MeshAgent):
                 indicator_interval = function_args.get("indicator_interval", "1d")
 
                 result = await self._profile(
-                    canonical_token_id=cid,
                     chain=chain,
                     address=address,
                     symbol=symbol,
@@ -984,22 +893,6 @@ class TokenResolverAgent(MeshAgent):
                     include=include,
                     top_n_pairs=top_n_pairs,
                     indicator_interval=indicator_interval,
-                )
-                if errors := self._handle_error(result):
-                    return errors
-                return result
-
-            elif tool_name == "pairs":
-                cid = function_args.get("canonical_token_id")
-                chain = function_args.get("chain")
-                address = function_args.get("address")
-                limit = 5
-
-                result = await self._pairs(
-                    canonical_token_id=cid,
-                    chain=chain,
-                    address=address,
-                    limit=limit,
                 )
                 if errors := self._handle_error(result):
                     return errors
