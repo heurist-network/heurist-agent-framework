@@ -705,8 +705,9 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         return get_top_token_holders
 
     def format_token_info(self, data: Dict) -> Dict:
-        """Format token information in a structured way"""
         market_data = data.get("market_data", {})
+        links = data.get("links", {})
+
         return {
             "token_info": {
                 "id": data.get("id", "N/A"),
@@ -714,7 +715,15 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "symbol": data.get("symbol", "N/A").upper(),
                 "market_cap_rank": data.get("market_cap_rank", "N/A"),
                 "categories": data.get("categories", []),
+                "links": {
+                    "website": next((u for u in (links.get("homepage") or []) if u), None),
+                    "twitter": f"https://twitter.com/{links.get('twitter_screen_name')}" if links.get("twitter_screen_name") else None,
+                    "telegram": f"https://t.me/{links.get('telegram_channel_identifier')}" if links.get("telegram_channel_identifier") else None,
+                    "github": (links.get("repos_url") or {}).get("github", []),
+                    "explorers": [u for u in (links.get("blockchain_site") or []) if u],
+                },
             },
+            "platforms": data.get("platforms", {}),
             "market_metrics": {
                 "current_price_usd": market_data.get("current_price", {}).get("usd", "N/A"),
                 "market_cap_usd": market_data.get("market_cap", {}).get("usd", "N/A"),

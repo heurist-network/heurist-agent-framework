@@ -38,6 +38,16 @@ ALLOWED_CHAINS = {
 # TODO: add more supported symbols in coinsider api
 LARGE_CAP_SYMBOLS_FOR_FUNDING = {"BTC", "ETH", "SOL", "XRP", "BNB", "DOGE", "ADA", "AVAX", "LINK", "LTC", "BCH"}
 
+COINGECKO_TO_DEXSCREENER_PLATFORM = {
+    "binance-smart-chain": "bsc",
+    "arbitrum-one": "arbitrum",
+    "optimistic-ethereum": "optimism",
+    "polygon-pos": "polygon",
+    "sei-network": "sei",
+    "zora-network": "zora",
+    "blast-mainnet": "blast",
+}
+
 YF_DEFAULT_INTERVAL = "1d"
 YF_DEFAULT_PERIOD = "6mo"
 
@@ -61,6 +71,10 @@ def _normalize_chain(chain: Optional[str]) -> Optional[str]:
     if c in {"bsc", "binance-smart-chain", "bnb-chain"}:
         return "bsc"
     return c
+
+
+def _normalize_platform_name(platform_id: str) -> str:
+    return COINGECKO_TO_DEXSCREENER_PLATFORM.get(platform_id, platform_id)
 
 
 
@@ -209,9 +223,7 @@ class TokenResolverAgent(MeshAgent):
         result = await inst.call_agent(payload)
         return result.get("data", result)
 
-    # CoinGecko (prefer existing agent; fallback to public API)
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def _cg_get_token_info(self, query_or_id: str) -> Dict[str, Any]:
         try:
             return await self._agent_call(
@@ -221,64 +233,10 @@ class TokenResolverAgent(MeshAgent):
                 {"coingecko_id": query_or_id},
             )
         except Exception as e:
-            logger.warning(f"[token_resolver] CG get_token_info fallback: {e}")
-            search_url = "https://api.coingecko.com/api/v3/search"
-            s = await self._api_request(search_url, params={"query": query_or_id})
-            if "error" in s or "coins" not in s:
-                return {"status": "error", "error": f"CoinGecko search failed for {query_or_id}"}
-            coins = [c for c in s.get("coins", []) if c.get("id")]
-            if not coins:
-                return {"status": "no_data", "error": f"No CoinGecko match for {query_or_id}"}
-            cgid = coins[0]["id"]
-            coin_url = f"https://api.coingecko.com/api/v3/coins/{cgid}"
-            c = await self._api_request(coin_url)
-            if "error" in c:
-                return {"status": "error", "error": f"CoinGecko coin fetch failed for {cgid}"}
-            links = c.get("links") or {}
-            pages = links.get("homepage") or []
-            homepage = next((u for u in pages if u), None)
-            twitter = links.get("twitter_screen_name") or None
-            telegram = links.get("telegram_channel_identifier") or None
-            github = (links.get("repos_url") or {}).get("github", [])
-            explorers = c.get("links", {}).get("blockchain_site", []) or []
-            categories = c.get("categories", []) or []
-            mkt = c.get("market_data") or {}
-            return {
-                "token_info": {
-                    "id": c.get("id"),
-                    "name": c.get("name"),
-                    "symbol": c.get("symbol"),
-                    "categories": categories,
-                    "links": {
-                        "website": homepage,
-                        "twitter": f"https://twitter.com/{twitter}" if twitter else None,
-                        "telegram": f"https://t.me/{telegram}" if telegram else None,
-                        "github": github,
-                        "explorers": [u for u in explorers if u],
-                    },
-                },
-                "market_metrics": {
-                    "current_price_usd": (mkt.get("current_price") or {}).get("usd"),
-                    "market_cap_usd": (mkt.get("market_cap") or {}).get("usd"),
-                    "fully_diluted_valuation_usd": (mkt.get("fully_diluted_valuation") or {}).get("usd"),
-                    "total_volume_usd": (mkt.get("total_volume") or {}).get("usd"),
-                },
-                "supply_info": {
-                    "circulating_supply": mkt.get("circulating_supply"),
-                    "total_supply": mkt.get("total_supply"),
-                    "max_supply": mkt.get("max_supply"),
-                },
-                "price_metrics": {
-                    "ath_usd": (mkt.get("ath") or {}).get("usd"),
-                    "ath_date": (mkt.get("ath_date") or {}).get("usd"),
-                    "atl_usd": (mkt.get("atl") or {}).get("usd"),
-                    "atl_date": (mkt.get("atl_date") or {}).get("usd"),
-                },
-            }
+            logger.warning(f"CoinGecko agent failed for {query_or_id}: {e}")
+            return {"status": "error", "error": f"CoinGecko lookup failed: {e}"}
 
-    # DexScreener
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def _ds_search_pairs(self, search_term: str) -> Dict[str, Any]:
         try:
             return await self._agent_call(
@@ -288,12 +246,10 @@ class TokenResolverAgent(MeshAgent):
                 {"search_term": search_term},
             )
         except Exception as e:
-            logger.warning(f"[token_resolver] DS search_pairs fallback: {e}")
-            url = "https://api.dexscreener.com/latest/dex/search"
-            return await self._api_request(url, params={"q": search_term})
+            logger.warning(f"DexScreener search_pairs failed for {search_term}: {e}")
+            return {"status": "error", "error": f"DexScreener search failed: {e}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def _ds_token_pairs(self, chain: Optional[str], token_address: str) -> Dict[str, Any]:
         try:
             return await self._agent_call(
@@ -303,15 +259,8 @@ class TokenResolverAgent(MeshAgent):
                 {"chain": chain or "all", "token_address": token_address},
             )
         except Exception as e:
-            logger.warning(f"[token_resolver] DS get_token_pairs fallback: {e}")
-            url = f"https://api.dexscreener.com/latest/dex/tokens/{token_address}"
-            raw = await self._api_request(url)
-            if "error" in raw:
-                return raw
-            pairs = raw.get("pairs", []) or []
-            if chain and chain.lower() != "all":
-                pairs = [p for p in pairs if p.get("chainId") == chain.lower()]
-            return {"status": "success", "data": {"pairs": pairs}}
+            logger.warning(f"DexScreener get_token_pairs failed for {chain}:{token_address}: {e}")
+            return {"status": "error", "error": f"DexScreener token pairs failed: {e}"}
 
     # GMGN / Unifai (memecoins)
     @with_cache(ttl_seconds=300)
@@ -547,9 +496,11 @@ class TokenResolverAgent(MeshAgent):
         # Symbol/Name/CGID path
         else:  # qtype in {"symbol", "name", "coingecko_id"}
             cg_anchor = None
+            contract_to_cgid_map = {}
+
             if qtype in {"symbol", "name", "coingecko_id"}:
                 cg = await self._cg_get_token_info(query)
-                if cg and not cg.get("error"):
+                if cg and cg.get("status") != "error":
                     ti = cg.get("token_info") or {}
                     mm = cg.get("market_metrics") or {}
                     links = ti.get("links") or {}
@@ -571,6 +522,15 @@ class TokenResolverAgent(MeshAgent):
                             "explorers": links.get("explorers"),
                         },
                     }
+
+                    # Build contract address mapping
+                    platforms = cg.get("platforms", {})
+                    cgid = ti.get("id")
+                    for platform_id, address in platforms.items():
+                        if address and cgid:
+                            ds_chain = _normalize_platform_name(platform_id)
+                            contract_key = f"{ds_chain}:{address.lower()}"
+                            contract_to_cgid_map[contract_key] = cgid
 
             ds = await self._ds_search_pairs(query)
             pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
@@ -633,6 +593,15 @@ class TokenResolverAgent(MeshAgent):
 
             ds_candidates = []
             for token_key, obj in token_map.items():
+                # Try to link with CoinGecko ID
+                if contract_to_cgid_map and not obj.get("coingecko_id"):
+                    chain = obj.get("chain")
+                    address = obj.get("address")
+                    if chain and address:
+                        contract_key = f"{chain}:{address.lower()}"
+                        if contract_key in contract_to_cgid_map:
+                            obj["coingecko_id"] = contract_to_cgid_map[contract_key]
+
                 previews = sorted(
                     [self._pair_to_preview(p) for p in obj["_all_pairs"]],
                     key=lambda x: (x.get("liquidity_usd") or 0),
