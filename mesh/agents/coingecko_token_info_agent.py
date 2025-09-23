@@ -15,14 +15,38 @@ from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 
-# TODO: add more tokens to this map
 COINGECKO_ID_MAP = {
     "BTC": "bitcoin",
     "ETH": "ethereum",
-    "SOL": "solana",
+    "USDT": "tether",
     "XRP": "ripple",
     "BNB": "binancecoin",
+    "SOL": "solana",
+    "USDC": "usd-coin",
+    "DOGE": "dogecoin",
+    "STETH": "staked-ether",  # Lido Staked Ether
+    "TRX": "tron",
+    "ADA": "cardano",
+    "WSTETH": "wrapped-steth",
+    "AVAX": "avalanche-2",
+    "WBETH": "wrapped-beacon-eth",
+    "LINK": "chainlink",
+    "WBTC": "wrapped-bitcoin",
+    "USDE": "usde",  # Ethena USDe
+    "HYPE": "hyperliquid",
+    "SUI": "sui",
+    "XLM": "stellar",
+    "BCH": "bitcoin-cash",
+    "WEETH": "wrapped-eeth",
+    "WETH": "weth",
+    "HBAR": "hedera-hashgraph",
+    "LEO": "leo-token",
+    "USDS": "usds",
+    "LTC": "litecoin",
+    "CRO": "crypto-com-chain",  # Cronos
+    "TON": "the-open-network",
 }
+
 
 class CoinGeckoTokenInfoAgent(MeshAgent):
     def __init__(self):
@@ -545,10 +569,17 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
                 try:
-                    result = loop.run_until_complete(self._get_token_price_multi(
-                        ids, vs_currencies, include_market_cap, include_24hr_vol,
-                        include_24hr_change, include_last_updated_at, precision
-                    ))
+                    result = loop.run_until_complete(
+                        self._get_token_price_multi(
+                            ids,
+                            vs_currencies,
+                            include_market_cap,
+                            include_24hr_vol,
+                            include_24hr_change,
+                            include_last_updated_at,
+                            precision,
+                        )
+                    )
                 finally:
                     loop.close()
 
@@ -640,9 +671,9 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
                 try:
-                    result = loop.run_until_complete(self._get_tokens_by_category(
-                        category_id, vs_currency, order, per_page, page
-                    ))
+                    result = loop.run_until_complete(
+                        self._get_tokens_by_category(category_id, vs_currency, order, per_page, page)
+                    )
                 finally:
                     loop.close()
                 return result
@@ -717,8 +748,12 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "categories": data.get("categories", []),
                 "links": {
                     "website": next((u for u in (links.get("homepage") or []) if u), None),
-                    "twitter": f"https://twitter.com/{links.get('twitter_screen_name')}" if links.get("twitter_screen_name") else None,
-                    "telegram": f"https://t.me/{links.get('telegram_channel_identifier')}" if links.get("telegram_channel_identifier") else None,
+                    "twitter": f"https://twitter.com/{links.get('twitter_screen_name')}"
+                    if links.get("twitter_screen_name")
+                    else None,
+                    "telegram": f"https://t.me/{links.get('telegram_channel_identifier')}"
+                    if links.get("telegram_channel_identifier")
+                    else None,
                     "github": (links.get("repos_url") or {}).get("github", []),
                     "explorers": [u for u in (links.get("blockchain_site") or []) if u],
                 },
