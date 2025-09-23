@@ -124,6 +124,27 @@ def _uniq(seq: List[Any]) -> List[Any]:
     return out
 
 
+def _clean_empty_fields(obj: Any) -> Any:
+    """Recursively remove empty fields (None, [], {}) from objects"""
+    if isinstance(obj, dict):
+        cleaned = {}
+        for key, value in obj.items():
+            cleaned_value = _clean_empty_fields(value)
+            # Only include non-empty values
+            if cleaned_value is not None and cleaned_value != [] and cleaned_value != {}:
+                cleaned[key] = cleaned_value
+        return cleaned
+    elif isinstance(obj, list):
+        cleaned_list = []
+        for item in obj:
+            cleaned_item = _clean_empty_fields(item)
+            if cleaned_item is not None and cleaned_item != [] and cleaned_item != {}:
+                cleaned_list.append(cleaned_item)
+        return cleaned_list
+    else:
+        return obj
+
+
 # -----------------------------
 # Agent
 # -----------------------------
@@ -616,22 +637,36 @@ class TokenResolverAgent(MeshAgent):
                     # DS doesn't expose CG id; we still keep all to let liquidity sort do the work
                     selected.extend([base, quote])
 
+                # Extract pair-level links once
+                preview = self._pair_to_preview(p)
+                pair_links = {
+                    "website": preview.get("websites"),
+                    "twitter": [
+                        s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "twitter"
+                    ],
+                    "telegram": [
+                        s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "telegram"
+                    ],
+                }
+
                 for tok in selected:
                     addr = tok.get("address")
                     ch = p.get("chainId")
                     if not addr or not ch:
                         continue
                     token_key = f"{ch}:{addr.lower()}"
-                    preview = self._pair_to_preview(p)
-                    ds_links = {
-                        "website": preview.get("websites"),
-                        "twitter": [
-                            s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "twitter"
-                        ],
-                        "telegram": [
-                            s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "telegram"
-                        ],
-                    }
+
+                    # Only assign pair links to tokens that match the search query
+                    should_get_links = False
+                    if qtype == "symbol":
+                        should_get_links = tok.get("symbol", "").upper() == query.upper()
+                    elif qtype == "name":
+                        should_get_links = tok.get("name", "").lower() == query.lower()
+                    elif qtype == "coingecko_id":
+                        # For CG queries, assign to all since we can't easily match
+                        should_get_links = True
+
+                    ds_links = pair_links if should_get_links else {}
                     current = token_map.get(token_key)
                     if not current or (preview.get("liquidity_usd") or 0) > (
                         current.get("best_pair", {}).get("liquidity_usd") or 0
@@ -697,9 +732,13 @@ class TokenResolverAgent(MeshAgent):
                 out = filtered
 
         final_results = out[:limit]
+
+        # Clean empty fields from results
+        cleaned_results = [_clean_empty_fields(result) for result in final_results]
+
         logger.info(f"[token_resolver] Final results: {len(final_results)}/{len(out)} (limit={limit})")
 
-        return {"status": "success", "data": {"results": final_results, "timestamp": datetime.utcnow().isoformat()}}
+        return {"status": "success", "data": {"results": cleaned_results, "timestamp": datetime.utcnow().isoformat()}}
 
     @with_retry(max_retries=2)
     async def _profile(
