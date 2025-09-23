@@ -35,9 +35,38 @@ ALLOWED_CHAINS = {
     "moonbeam",
 }
 
-# TODO: add more supported symbols in coinsider api
-LARGE_CAP_SYMBOLS_FOR_FUNDING = {"BTC", "ETH", "SOL", "XRP", "BNB", "DOGE", "ADA", "AVAX", "LINK", "LTC", "BCH"}
-
+LARGE_CAP_SYMBOLS_FOR_FUNDING = {
+    "BTC",
+    "ETH",
+    "BNB",
+    "XRP",
+    "ADA",
+    "SOL",
+    "DOGE",
+    "MATIC",
+    "DOT",
+    "TRX",
+    "LTC",
+    "BCH",
+    "LINK",
+    "SHIB",
+    "AVAX",
+    "UNI",
+    "APT",
+    "SUI",
+    "NEAR",
+    "APE",
+    "XLM",
+    "TON",
+    "ICP",
+    "FTM",
+    "ETC",
+    "EOS",
+    "ZEC",
+    "AAVE",
+    "MKR",
+    "COMP",
+}
 COINGECKO_TO_DEXSCREENER_PLATFORM = {
     "binance-smart-chain": "bsc",
     "arbitrum-one": "arbitrum",
@@ -75,8 +104,6 @@ def _normalize_chain(chain: Optional[str]) -> Optional[str]:
 
 def _normalize_platform_name(platform_id: str) -> str:
     return COINGECKO_TO_DEXSCREENER_PLATFORM.get(platform_id, platform_id)
-
-
 
 
 def _safe_float(x) -> Optional[float]:
@@ -180,9 +207,18 @@ class TokenResolverAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "chain": {"type": "string", "description": "Blockchain network (e.g., ethereum, base, bsc, solana)"},
-                            "address": {"type": "string", "description": "Token contract address (use with chain parameter)"},
-                            "symbol": {"type": "string", "description": "Ticker symbol like BTC or ETH. Only use this for well-known native tokens."},
+                            "chain": {
+                                "type": "string",
+                                "description": "Blockchain network (e.g., ethereum, base, bsc, solana)",
+                            },
+                            "address": {
+                                "type": "string",
+                                "description": "Token contract address (use with chain parameter)",
+                            },
+                            "symbol": {
+                                "type": "string",
+                                "description": "Ticker symbol like BTC or ETH. Only use this for well-known native tokens.",
+                            },
                             "coingecko_id": {"type": "string"},
                             "include": {
                                 "type": "array",
@@ -413,9 +449,7 @@ class TokenResolverAgent(MeshAgent):
     # Core operations
     # -----------------------------
     @with_retry(max_retries=2)
-    async def _search(
-        self, query: str, chain: Optional[str], qtype: str, limit: int
-    ) -> Dict[str, Any]:
+    async def _search(self, query: str, chain: Optional[str], qtype: str, limit: int) -> Dict[str, Any]:
         chain = _normalize_chain(chain)
         results: List[Dict[str, Any]] = []
 
@@ -822,7 +856,6 @@ class TokenResolverAgent(MeshAgent):
 
         return {"status": "success", "data": prof}
 
-
     # -----------------------------
     # Tool handler
     # -----------------------------
@@ -838,9 +871,7 @@ class TokenResolverAgent(MeshAgent):
                 type_hint = function_args.get("type_hint")
                 limit = 5
                 qtype = self._detect_query_type(query, type_hint)
-                result = await self._search(
-                    query=query, chain=chain, qtype=qtype, limit=limit
-                )
+                result = await self._search(query=query, chain=chain, qtype=qtype, limit=limit)
                 if errors := self._handle_error(result):
                     return errors
                 return result
