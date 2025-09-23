@@ -381,15 +381,34 @@ class TokenResolverAgent(MeshAgent):
         if type_hint in {"address", "symbol", "name", "coingecko_id"}:
             return type_hint
         q = (query or "").strip()
+
+        # Long strings are likely addresses
+        if len(q) >= 20:
+            if _is_evm_address(q) or _is_solana_address(q):
+                return "address"
+            # Could be a long address we don't recognize, try as address anyway
+            return "address"
+
+        # Check for actual address formats first
         if _is_evm_address(q) or _is_solana_address(q):
             return "address"
-        if re.fullmatch(r"[A-Za-z0-9\-]{2,20}", q) and q.upper() == q:
+
+        # Short alphanumeric strings without spaces - treat as symbol
+        if re.fullmatch(r"[A-Za-z0-9\-]{2,20}", q) and " " not in q:
             return "symbol"
-        if re.fullmatch(r"[a-z0-9\-]{2,64}", q):
+
+        # Lowercase with hyphens - likely coingecko_id
+        if re.fullmatch(r"[a-z0-9\-]{2,64}", q) and "-" in q:
             return "coingecko_id"
-        letters = re.sub(r"[^A-Za-z]", "", q)
-        if len(letters) >= 3 and " " in q:
+
+        # Multi-word strings - treat as name
+        if " " in q and len(q.strip()) >= 3:
             return "name"
+
+        # Default to symbol for short strings (covers mixed case like "Aster")
+        if len(q) >= 2:
+            return "symbol"
+
         return "unknown"
 
     def _pair_to_preview(self, p: Dict[str, Any]) -> Dict[str, Any]:
@@ -454,10 +473,8 @@ class TokenResolverAgent(MeshAgent):
         results: List[Dict[str, Any]] = []
 
         if qtype == "unknown":
-            return {
-                "status": "error",
-                "error": "Unsupported or vague query. Provide address, symbol, exact name, or CoinGecko ID.",
-            }
+            # Fallback: treat as symbol for backwards compatibility
+            qtype = "symbol"
 
         if qtype == "address":
             pairs_res = await self._ds_token_pairs(chain or "all", query)
@@ -565,9 +582,11 @@ class TokenResolverAgent(MeshAgent):
                             ds_chain = _normalize_platform_name(platform_id)
                             contract_key = f"{ds_chain}:{address.lower()}"
                             contract_to_cgid_map[contract_key] = cgid
+                    logger.info(f"[token_resolver] CoinGecko platforms: {len(platforms)}, contract mappings: {len(contract_to_cgid_map)}")
 
             ds = await self._ds_search_pairs(query)
             pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
+            logger.info(f"[token_resolver] DexScreener returned {len(pairs)} pairs")
             token_map: Dict[str, Dict[str, Any]] = {}
 
             for p in pairs:
@@ -626,6 +645,7 @@ class TokenResolverAgent(MeshAgent):
                         token_map[token_key]["links"] = self._merge_links(token_map[token_key]["links"], ds_links)
 
             ds_candidates = []
+            linked_count = 0
             for token_key, obj in token_map.items():
                 # Try to link with CoinGecko ID
                 if contract_to_cgid_map and not obj.get("coingecko_id"):
@@ -635,6 +655,7 @@ class TokenResolverAgent(MeshAgent):
                         contract_key = f"{chain}:{address.lower()}"
                         if contract_key in contract_to_cgid_map:
                             obj["coingecko_id"] = contract_to_cgid_map[contract_key]
+                            linked_count += 1
 
                 previews = sorted(
                     [self._pair_to_preview(p) for p in obj["_all_pairs"]],
@@ -648,6 +669,7 @@ class TokenResolverAgent(MeshAgent):
             ds_candidates = sorted(
                 ds_candidates, key=lambda x: (x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0), reverse=True
             )
+            logger.info(f"[token_resolver] Token map processed: {len(token_map)} unique tokens, {len(ds_candidates)} final candidates, {linked_count} linked to CoinGecko")
 
             combined: List[Dict[str, Any]] = []
             if cg_anchor:
@@ -666,6 +688,7 @@ class TokenResolverAgent(MeshAgent):
                 out = filtered
 
         final_results = out[:limit]
+        logger.info(f"[token_resolver] Final results: {len(final_results)}/{len(out)} (limit={limit})")
 
         return {"status": "success", "data": {"results": final_results, "timestamp": datetime.utcnow().isoformat()}}
 

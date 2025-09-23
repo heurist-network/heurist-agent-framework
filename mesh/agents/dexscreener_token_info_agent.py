@@ -165,7 +165,9 @@ class DexScreenerTokenInfoAgent(MeshAgent):
         if "pairs" in result and result["pairs"]:
             cleaned_pairs = []
             for pair in result["pairs"]:
-                if pair.get("marketCap", 0) < 50000:
+                # Only filter if marketCap exists and is below threshold
+                market_cap = pair.get("marketCap")
+                if market_cap is not None and market_cap < 50000:
                     continue
 
                 cleaned_pair = self._clean_pair_data(pair)
