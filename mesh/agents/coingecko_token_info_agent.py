@@ -198,7 +198,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_trending_coins",
-                    "description": "Get the current top trending cryptocurrencies on CoinGecko. This tool retrieves a list of the most popular cryptocurrencies based on trading volume and social media mentions.",
+                    "description": "Get today's trending cryptocurrencies based on trading activities. This tool retrieves a list of crypto assets including basic market data.",
                     "parameters": {
                         "type": "object",
                         "properties": {},
@@ -210,7 +210,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_token_price_multi",
-                    "description": "Fetch price data for multiple tokens at once using CoinGecko IDs. Efficiently retrieves current prices and optional market data for multiple cryptocurrencies in a single API call.",
+                    "description": "Fetch price data for multiple tokens. Returns current price, market cap, 24hr volume, 24hr change %",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -218,38 +218,8 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                                 "type": "string",
                                 "description": "Comma-separated CoinGecko IDs of the tokens to query",
                             },
-                            "vs_currencies": {
-                                "type": "string",
-                                "description": "Comma-separated target currencies (e.g., usd,eur,btc)",
-                                "default": "usd",
-                            },
-                            "include_market_cap": {
-                                "type": "boolean",
-                                "description": "Include market capitalization data",
-                                "default": False,
-                            },
-                            "include_24hr_vol": {
-                                "type": "boolean",
-                                "description": "Include 24hr trading volume data",
-                                "default": False,
-                            },
-                            "include_24hr_change": {
-                                "type": "boolean",
-                                "description": "Include 24hr price change percentage",
-                                "default": False,
-                            },
-                            "include_last_updated_at": {
-                                "type": "boolean",
-                                "description": "Include timestamp of when the data was last updated",
-                                "default": False,
-                            },
-                            "precision": {
-                                "type": "string",
-                                "description": "Decimal precision for currency values (e.g., 'full' for maximum precision)",
-                                "default": False,
-                            },
                         },
-                        "required": ["ids", "vs_currencies"],
+                        "required": ["ids"],
                     },
                 },
             },
@@ -257,7 +227,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_categories_list",
-                    "description": "Get a list of all available cryptocurrency categories from CoinGecko. This tool retrieves all the category IDs and names that can be used for further category-specific queries.",
+                    "description": "Get a list of all available cryptocurrency categories from CoinGecko, like layer-1, layer-2, defi, etc. This tool retrieves all the category IDs and names that can be used for further category-specific queries.",
                     "parameters": {
                         "type": "object",
                         "properties": {},
@@ -275,22 +245,19 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                         "properties": {
                             "order": {
                                 "type": "string",
-                                "description": "Sort order for categories (default: market_cap_desc)",
+                                "description": "Sort order for categories",
                                 "enum": [
                                     "market_cap_desc",
-                                    "market_cap_asc",
-                                    "name_desc",
-                                    "name_asc",
                                     "market_cap_change_24h_desc",
-                                    "market_cap_change_24h_asc",
                                 ],
+                                "default": "market_cap_change_24h_desc",
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": "Number of categories to return (default: 10, max: 100)",
-                                "default": 10,
-                                "minimum": 1,
-                                "maximum": 100,
+                                "description": "Number of categories to return",
+                                "default": 5,
+                                "minimum": 3,
+                                "maximum": 20,
                             },
                         },
                         "required": [],
@@ -301,7 +268,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_tokens_by_category",
-                    "description": "Get a list of tokens within a specific category. This tool retrieves token data for all cryptocurrencies that belong to a particular category, including price, market cap, volume, and price changes.",
+                    "description": "Get USD price data for tokens within a specific category. Returns price, market cap, volume, and price changes.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -309,34 +276,25 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                                 "type": "string",
                                 "description": "The CoinGecko category ID (e.g., 'layer-1')",
                             },
-                            "vs_currency": {
-                                "type": "string",
-                                "description": "The currency to show results in (default: usd)",
-                                "default": "usd",
-                            },
                             "order": {
                                 "type": "string",
-                                "description": "Sort order for tokens (default: market_cap_desc)",
+                                "description": "Sort order for tokens",
                                 "enum": [
                                     "market_cap_desc",
-                                    "market_cap_asc",
                                     "volume_desc",
-                                    "volume_asc",
-                                    "id_asc",
-                                    "id_desc",
                                 ],
                                 "default": "market_cap_desc",
                             },
                             "per_page": {
                                 "type": "integer",
-                                "description": "Number of results per page (1-250, default: 100)",
+                                "description": "Number of results per page",
                                 "default": 100,
-                                "minimum": 1,
+                                "minimum": 10,
                                 "maximum": 250,
                             },
                             "page": {
                                 "type": "integer",
-                                "description": "Page number (default: 1)",
+                                "description": "Page number",
                                 "default": 1,
                                 "minimum": 1,
                             },
@@ -349,7 +307,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_trending_pools",
-                    "description": "Get up to 10 trending on-chain pools with token data from CoinGecko. The 'include' parameter must be one of: base_token, quote_token, dex, or network.",
+                    "description": "Get top 10 trending onchain pools with token data from CoinGecko.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -379,7 +337,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "network": {"type": "string", "description": "Network ID (e.g., base)"},
+                            "network": {"type": "string", "description": "Network ID (e.g., base, bsc, solana, eth)"},
                             "address": {"type": "string", "description": "Token contract address"},
                         },
                         "required": ["network", "address"],
@@ -542,28 +500,16 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         @tool
         def get_token_price_multi(
             ids: str,
-            vs_currencies: str,
-            include_market_cap: bool = False,
-            include_24hr_vol: bool = False,
-            include_24hr_change: bool = False,
-            include_last_updated_at: bool = False,
-            precision: str = None,
         ) -> Dict[str, Any]:
-            """Fetch price data for multiple tokens at once using the simple/price endpoint.
+            """Fetch comprehensive USD price data for multiple tokens. Returns current price, market cap, 24hr volume, 24hr change percentage, and last updated timestamp.
 
             Args:
                 ids: Comma-separated CoinGecko IDs of the tokens to query
-                vs_currencies: Comma-separated target currencies (e.g., usd,eur,btc)
-                include_market_cap: Include market capitalization data
-                include_24hr_vol: Include 24hr trading volume data
-                include_24hr_change: Include 24hr price change percentage
-                include_last_updated_at: Include timestamp of when the data was last updated
-                precision: Decimal precision for currency values (e.g., 'full' for maximum precision)
 
             Returns:
-                Dictionary with price data for the requested tokens or error message
+                Dictionary with comprehensive price data for the requested tokens or error message
             """
-            logger.info(f"Getting multi-token price data for: {ids} in {vs_currencies}")
+            logger.info(f"Getting multi-token price data for: {ids} in USD")
             try:
                 # Run the async method synchronously
                 loop = asyncio.new_event_loop()
@@ -572,12 +518,6 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                     result = loop.run_until_complete(
                         self._get_token_price_multi(
                             ids,
-                            vs_currencies,
-                            include_market_cap,
-                            include_24hr_vol,
-                            include_24hr_change,
-                            include_last_updated_at,
-                            precision,
                         )
                     )
                 finally:
@@ -618,7 +558,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
     def get_category_data_tool(self):
         @tool
-        def get_category_data(order: str = "market_cap_desc", limit: int = 10) -> Dict[str, Any]:
+        def get_category_data(order: str = "market_cap_change_24h_desc", limit: int = 5) -> Dict[str, Any]:
             """Get market data for cryptocurrency categories from CoinGecko.
 
             Args:
@@ -648,18 +588,16 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         @tool
         def get_tokens_by_category(
             category_id: str,
-            vs_currency: str = "usd",
             order: str = "market_cap_desc",
             per_page: int = 100,
             page: int = 1,
         ) -> Dict[str, Any]:
-            """Get a list of tokens within a specific category.
+            """Get USD price data for tokens within a specific category.
 
             Args:
                 category_id: The CoinGecko category ID (e.g., 'layer-1')
-                vs_currency: The currency to show results in (default: usd)
                 order: Sort order for tokens (default: market_cap_desc)
-                per_page: Number of results per page (1-250, default: 100)
+                per_page: Number of results per page (10-250, default: 100)
                 page: Page number (default: 1)
 
             Returns:
@@ -672,7 +610,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 asyncio.set_event_loop(loop)
                 try:
                     result = loop.run_until_complete(
-                        self._get_tokens_by_category(category_id, vs_currency, order, per_page, page)
+                        self._get_tokens_by_category(category_id, "usd", order, per_page, page)
                     )
                 finally:
                     loop.close()
@@ -877,9 +815,9 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def _get_category_data(self, order: Optional[str] = "market_cap_desc", limit: int = 10) -> dict:
+    async def _get_category_data(self, order: Optional[str] = "market_cap_change_24h_desc", limit: int = 5) -> dict:
         """Get market data for cryptocurrency categories with limit"""
-        limit = max(1, min(limit, 100))
+        limit = max(3, min(limit, 20))
 
         try:
             api_url, headers = self.get_api_config("/coins/categories")
@@ -910,26 +848,18 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
     async def _get_token_price_multi(
         self,
         ids: str,
-        vs_currencies: str,
-        include_market_cap: bool = False,
-        include_24hr_vol: bool = False,
-        include_24hr_change: bool = False,
-        include_last_updated_at: bool = False,
-        precision: str = None,
     ) -> dict:
         try:
             api_url, headers = self.get_api_config("/simple/price")
             url = f"{api_url}/simple/price"
             params = {
                 "ids": ids,
-                "vs_currencies": vs_currencies,
-                "include_market_cap": str(include_market_cap).lower(),
-                "include_24hr_vol": str(include_24hr_vol).lower(),
-                "include_24hr_change": str(include_24hr_change).lower(),
-                "include_last_updated_at": str(include_last_updated_at).lower(),
+                "vs_currencies": "usd",
+                "include_market_cap": "true",
+                "include_24hr_vol": "true",
+                "include_24hr_change": "true",
+                "include_last_updated_at": "true",
             }
-            if precision:
-                params["precision"] = precision
 
             response = await self._api_request(url=url, method="GET", headers=headers, params=params)
             return response if "error" not in response else {"error": response["error"]}
@@ -1038,20 +968,14 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             "get_trending_coins": lambda: self._get_trending_coins(),
             "get_token_price_multi": lambda: self._get_token_price_multi(
                 ids=function_args["ids"],
-                vs_currencies=function_args.get("vs_currencies", "usd"),
-                include_market_cap=function_args.get("include_market_cap", False),
-                include_24hr_vol=function_args.get("include_24hr_vol", False),
-                include_24hr_change=function_args.get("include_24hr_change", False),
-                include_last_updated_at=function_args.get("include_last_updated_at", False),
-                precision=function_args.get("precision", None),
             ),
             "get_categories_list": lambda: self._get_categories_list(),
             "get_category_data": lambda: self._get_category_data(
-                function_args.get("order", "market_cap_desc"), function_args.get("limit", 10)
+                function_args.get("order", "market_cap_change_24h_desc"), function_args.get("limit", 5)
             ),
             "get_tokens_by_category": lambda: self._get_tokens_by_category(
                 category_id=function_args["category_id"],
-                vs_currency=function_args.get("vs_currency", "usd"),
+                vs_currency="usd",
                 order=function_args.get("order", "market_cap_desc"),
                 per_page=function_args.get("per_page", 100),
                 page=function_args.get("page", 1),
