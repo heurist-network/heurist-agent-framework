@@ -163,7 +163,8 @@ class FundingRateAgent(MeshAgent):
                 binance_data = [rate for rate in response["data"] if rate.get("exchange") == 1]
                 formatted_rates = self.format_funding_rates(binance_data)
                 logger.info(f"Successfully retrieved {len(formatted_rates)} funding rates")
-                return {"status": "success", "data": {"funding_rates": formatted_rates}}
+                # Return minimal format: ["symbol", rate, "4h"] for token efficiency
+                return {"rates": formatted_rates, "format": ["symbol", "rate", "interval"]}
             else:
                 logger.error("Unexpected API response format for all funding rates")
                 return {"status": "error", "error": "Unexpected API response format"}
@@ -349,34 +350,24 @@ class FundingRateAgent(MeshAgent):
             return {"status": "error", "error": f"Failed to find spot-futures opportunities: {str(e)}"}
 
     def format_funding_rates(self, data: List[Dict]) -> List[Dict]:
-        """Format funding rate information in a structured way"""
+        """Format funding rate information in a token-efficient way"""
         formatted_rates = []
 
         for rate in data:
-            exchange_id = rate.get("exchange")
-            exchange_name = "Unknown"
-            if isinstance(exchange_id, int):
-                exchange_name = self.exchange_map.get(exchange_id, "Unknown")
-            elif isinstance(exchange_id, dict) and "id" in exchange_id:
-                exchange_id_value = exchange_id.get("id")
-                if isinstance(exchange_id_value, int):
-                    exchange_name = self.exchange_map.get(exchange_id_value, "Unknown")
-                    exchange_id = exchange_id_value
+            # Get rate value, skip if invalid
+            latest_rate = rate.get("rates", {}).get("latest")
+            if latest_rate is None:
+                continue
 
-            formatted_rate = {
-                "symbol": rate.get("symbol", "N/A"),
-                "exchange": {
-                    "id": exchange_id,
-                    "name": exchange_name,
-                },
-                "rates": {
-                    "latest": rate.get("rates", {}).get("latest", "N/A"),  # Changed to only use "latest"
-                },
-                "funding_interval": rate.get("funding_interval", 8),
-                "last_updated": rate.get("updated_at", "N/A"),
-            }
-            formatted_rates.append(formatted_rate)
+            # Use minimal format: [symbol, rate, interval_string]
+            formatted_rates.append([
+                rate.get("symbol", "?"),
+                latest_rate,
+                f"{rate.get('funding_interval', 8)}h"
+            ])
 
+        # Sort by rate descending for most relevant data first
+        formatted_rates.sort(key=lambda x: abs(x[1]) if x[1] is not None else 0, reverse=True)
         return formatted_rates
 
     # ------------------------------------------------------------------------
