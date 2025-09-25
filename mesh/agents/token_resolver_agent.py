@@ -198,7 +198,7 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search",
-                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query. This tool may return multiple assets with the same or similar name/symbol, and in this case you should identify the largest market cap asset or the asset with the largest volume or liquidity and ignore the others.",
+                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query. This tool may return multiple assets with the same or similar name/symbol and may include scam tokens (which is totally normal), and in this case you should identify the asset with largest market cap / volume or liquidity to identify the probable asset and ignore the others.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -208,7 +208,7 @@ class TokenResolverAgent(MeshAgent):
                             },
                             "chain": {
                                 "type": "string",
-                                "description": "Optional chain hint (e.g., base, ethereum, solana)",
+                                "description": "Optional chain hint (e.g., base, ethereum, solana). Do not use this hint if there's no clear context about the chain.",
                             },
                             "type_hint": {
                                 "type": "string",
