@@ -130,7 +130,7 @@ Return clear, focused summaries that extract only the most relevant information.
                 "type": "function",
                 "function": {
                     "name": "firecrawl_web_search",
-                    "description": "Execute a web search query with advanced filtering using Firecrawl. MANDATORY: Use time_filter parameter for ANY time-sensitive requests (recent, today, past week, etc.). Supports Google search operators in search_term. Examples: For 'recent coinbase listings' use search_term='coinbase listings' + time_filter='qdr:w'. For 'today's bitcoin news' use search_term='bitcoin news' + time_filter='qdr:d'. For site-specific searches use search_term='site:coinbase.com announcements'. Always set limit for result count control. Results are processed by AI to provide concise, relevant summaries.",
+                    "description": "Search the web with advanced filtering. MANDATORY: Use time_filter parameter for ANY time-sensitive requests (recent, past week, etc.). Supports Google search operators in search_term. Examples: For 'recent coinbase listings' use search_term='coinbase listings' + time_filter='qdr:w'. For 'today's bitcoin news' use search_term='bitcoin news' + time_filter='qdr:d'. For site-specific searches use search_term='site:coinbase.com announcements'. Always set limit for result count control. Results are summarized by AI with source attribution.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -140,8 +140,8 @@ Return clear, focused summaries that extract only the most relevant information.
                             },
                             "time_filter": {
                                 "type": "string",
-                                "description": "REQUIRED for time-sensitive queries. Map: 'recent/past week'→'qdr:w', 'today/past day'→'qdr:d', 'past hour'→'qdr:h', 'past month'→'qdr:m', 'past year'→'qdr:y'. Always use when user mentions time periods.",
-                                "enum": ["qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"],
+                                "description": "REQUIRED for time-sensitive queries. 'past week'→'qdr:w', 'past month'→'qdr:m', 'past year'→'qdr:y'. Always use when user mentions time periods.",
+                                "enum": ["qdr:w", "qdr:m", "qdr:y"],
                             },
                             "limit": {
                                 "type": "integer",
@@ -159,7 +159,7 @@ Return clear, focused summaries that extract only the most relevant information.
                 "type": "function",
                 "function": {
                     "name": "firecrawl_extract_web_data",
-                    "description": "Extract structured data from one or multiple web pages using natural language instructions. This tool can process single URLs or entire domains (using wildcards like example.com/*). Use this when you need specific information from websites rather than general search results. You must specify what data to extract from the pages using the 'extraction_prompt' parameter. Firecrawl extract already uses AI internally so results are processed and structured.",
+                    "description": "Extract structured data from one or multiple web pages using natural language instructions. This tool can process single URLs or entire domains (using wildcards like example.com/*). Use this when you need specific information from websites rather than full search results. You must specify what data to extract from the pages using the 'extraction_prompt' parameter. Returns structured data.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -181,7 +181,7 @@ Return clear, focused summaries that extract only the most relevant information.
                 "type": "function",
                 "function": {
                     "name": "firecrawl_scrape_url",
-                    "description": "Scrape full contents from a specific URL. This provides complete raw web contents from individual web pages, processed by AI to provide concise, relevant summaries instead of overwhelming raw data.",
+                    "description": "Scrape full contents from a specific URL. Returns clean and summarized web contents.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -258,7 +258,12 @@ Return clear, focused summaries that extract only the most relevant information.
                         logger.info(f"Logged empty results to R2 with request ID: {request_id}")
                     except Exception as e:
                         logger.error(f"Failed to log to R2: {str(e)}")
-                return {"status": "no_data", "data": {"results": []}}
+                result = {"status": "no_data", "data": {"results": []}}
+                if time_filter == "qdr:w":
+                    result["next_step"] = "Try a broader search with qdr:m or qdr:y"
+                elif time_filter == "qdr:m":
+                    result["next_step"] = "Try a broader search with qdr:y"
+                return result
 
             logger.info(f"Search completed successfully with {len(results)} results")
             processed_summary = await self._process_search_results_with_llm(results, search_term)
