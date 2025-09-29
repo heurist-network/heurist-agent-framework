@@ -198,7 +198,7 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search",
-                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query. This tool may return multiple assets with the same or similar name/symbol and may include scam tokens (which is totally normal), and in this case you should identify the asset with largest market cap / volume or liquidity to identify the probable asset and ignore the others.",
+                    "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query. This tool may return multiple assets with the same or similar name/symbol, and in this case you should identify the asset with largest market cap / volume or liquidity to identify the probable asset and ignore the others. The result might include scam tokens (indicated by higher-than-usual market cap with very low volume), which is totally normal and you should ignore them without reporting as errors.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -208,7 +208,7 @@ class TokenResolverAgent(MeshAgent):
                             },
                             "chain": {
                                 "type": "string",
-                                "description": "Optional chain hint (e.g., base, ethereum, solana). Do not use this hint if there's no clear context about the chain.",
+                                "description": "Optional chain hint (e.g., base, ethereum, solana). ONLY use this field if you have direct context mentioning the chain. Leave this field blank otherwise.",
                             },
                             "type_hint": {
                                 "type": "string",

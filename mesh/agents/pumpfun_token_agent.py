@@ -94,7 +94,7 @@ Guidelines:
                 "type": "function",
                 "function": {
                     "name": "query_latest_graduated_tokens",
-                    "description": "Fetch recently graduated tokens from Pump.fun on Solana with their latest prices and market caps. Graduation means that the token hits a certain market cap threshold, and that it has gained traction and liquidity.",
+                    "description": "Fetch recently graduated tokens from Pump.fun on Solana with their latest prices and market caps. Graduation means that a newly launched token hits a certain market cap threshold, and that it has gained traction and liquidity.",
                     "parameters": {
                         "type": "object",
                         "properties": {
