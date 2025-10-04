@@ -218,7 +218,7 @@ Guidelines:
         return {"tokens": []}
 
     @monitor_execution()
-    @with_cache(ttl_seconds=300)
+    @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=3)
     async def query_latest_graduated_tokens(self, timeframe: int = 24) -> Dict:
         """

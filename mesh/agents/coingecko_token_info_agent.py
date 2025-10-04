@@ -748,7 +748,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      COINGECKO API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
+    @with_cache(ttl_seconds=3600)  # Cache for 1 hour
     async def _get_trending_coins(self) -> dict:
         try:
             api_url, headers = self.get_api_config("/search/trending")
@@ -763,10 +763,14 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 coin_info = coin["item"]
                 formatted_trending.append(
                     {
+                        "coingecko_id": coin_info.get("id", "N/A"),
                         "name": coin_info["name"],
                         "symbol": coin_info["symbol"],
                         "market_cap_rank": coin_info.get("market_cap_rank", "N/A"),
                         "price_usd": coin_info["data"].get("price", "N/A"),
+                        "market_cap": coin_info["data"].get("market_cap", "N/A"),
+                        "total_volume_24h": coin_info["data"].get("total_volume", "N/A"),
+                        "price_change_percentage_24h": coin_info["data"].get("price_change_percentage_24h", {}).get("usd", "N/A"),
                     }
                 )
             return {"trending_coins": formatted_trending}

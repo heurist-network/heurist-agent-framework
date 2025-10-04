@@ -5,20 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Run Commands
 - **Lint**: `ruff check --fix --line-length=120 --select=I <path>`
 - **Format**: `ruff format --line-length=120 <path>`
-- **Test**: `python -m pytest <path_to_test_file>`
-- **Run single test**: `python -m pytest path/to/test_file.py::test_function_name`
-- **Run example**: `python examples/<example_file>.py`
-- **Test Mesh agent**: `python mesh/tests/<agent_test_file>.py`
 - **Install dependencies with uv**: `uv add <package_name>`
-
-## Code Style Guidelines
-- **Formatting**: 120-char line length, use Ruff formatter
-- **Imports**: System imports first, then third-party, then local; use relative imports within packages
-- **Naming**: snake_case for variables/functions, PascalCase for classes; agents named with `ServiceNameFeatureAgent`
-- **Types**: Use type hints where possible
-- **Error handling**: Use specific exceptions with try/except blocks; use loguru for logging
-- **Async patterns**: Use asyncio and async/await syntax; properly manage resources with async context managers
-- **Documentation**: Include docstrings for classes and functions
 
 ## Project Structure
 - **agents/**: Base agent implementations
@@ -26,6 +13,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **mesh/**: Heurist Mesh specialized agent implementations
 - **clients/**: API client implementations
 - **examples/**: Example code and tests
+
+## Heurist Mesh Overview
+**Heurist Mesh** is an open network of modular and purpose-built AI agents. Technically, you can think of each agent as a collection of tools for AI. Once a Mesh agent is added to the main branch, it's automatically deployed and instantly available via REST API and MCP (Model Context Protocol).
 
 ## Mesh Agent Development Guidelines
 - **Base class**: Inherit from `mesh.mesh_agent.MeshAgent`
@@ -37,3 +27,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **External APIs**: Use `@with_retry` and `@with_cache` decorators for network operations
 - **Resource management**: Implement `__aenter__` and `__aexit__` for proper cleanup
 - **Documentation**: Include examples and clear descriptions in metadata
+
+## Testing Mesh Agents and Modules
+When developing or testing individual Mesh agent modules to see outputs ad-hoc, create test scripts in `mesh/test_scripts/` folder:
+
+- **Always use `uv run`**: Run scripts with `uv run python mesh/test_scripts/<script_name>.py`
+- **Test script location**: Place all test scripts in `mesh/test_scripts/` directory
+- **Import path fix**: Add project root to Python path in test scripts:
+  ```python
+  import sys
+  from pathlib import Path
+  project_root = Path(__file__).parent.parent.parent
+  sys.path.insert(0, str(project_root))
+  ```
+- **Test specific functionality**: Test individual agent tools, API responses, or data transformations
+- **Example tests**: See `mesh/test_scripts/test_trending_token.py` for aggregated data testing, or `test_token_resolver.py` for individual agent testing

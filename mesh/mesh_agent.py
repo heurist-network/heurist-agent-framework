@@ -321,6 +321,105 @@ class MeshAgent(ABC):
                 )
         return result
 
+    async def _call_agent_tool(
+        self,
+        module: str,
+        class_name: str,
+        tool_name: str,
+        tool_args: Optional[Dict[str, Any]] = None,
+        *,
+        raw_data_only: bool = True,
+        session_context: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """Instantiate another mesh agent locally and invoke one of its tools.
+
+        Returns the nested agent's raw data payload to keep aggregation simple.
+        """
+        from importlib import import_module
+
+        mod = import_module(module)
+        agent_cls = getattr(mod, class_name)
+        agent_instance = agent_cls()
+        if self.heurist_api_key:
+            agent_instance.set_heurist_api_key(self.heurist_api_key)
+
+        payload = {
+            "tool": tool_name,
+            "tool_arguments": tool_args or {},
+            "raw_data_only": raw_data_only,
+            "session_context": session_context or {},
+        }
+        result = await agent_instance.call_agent(payload)
+        return result.get("data", result)
+
+
+    async def _call_agent_tool_safe(
+        self,
+        module: str,
+        class_name: str,
+        tool_name: str,
+        tool_args: Optional[Dict[str, Any]] = None,
+        *,
+        raw_data_only: bool = True,
+        session_context: Optional[Dict[str, Any]] = None,
+        log_instance=None,
+        context: Optional[str] = None,
+        error_status: str = "error",
+    ) -> Dict[str, Any]:
+        """Call another agent's tool and convert failures into structured errors.
+
+        Useful for aggregator agents that should keep going even if a dependency fails.
+        """
+        try:
+            return await self._call_agent_tool(
+                module,
+                class_name,
+                tool_name,
+                tool_args=tool_args,
+                raw_data_only=raw_data_only,
+                session_context=session_context,
+            )
+        except Exception as exc:
+            log = log_instance or logger
+            ctx = context or f"{class_name}.{tool_name}"
+            if hasattr(log, "warning"):
+                log.warning(f"Failed calling {ctx}: {exc}")
+            return {"status": error_status, "error": str(exc)}
+
+    @staticmethod
+    def _has_useful_data(result: Any, data_key: Optional[str] = None) -> bool:
+        """Return True when a tool result contains non-empty useful data.
+
+        Treats dictionaries with populated values or non-empty lists as data; errors fail fast.
+        """
+        if not isinstance(result, dict):
+            return False
+        if result.get("status") == "error" or "error" in result:
+            return False
+
+        if data_key:
+            if data_key in result:
+                candidate = result[data_key]
+            elif isinstance(result.get("data"), dict) and data_key in result["data"]:
+                candidate = result["data"][data_key]
+            else:
+                candidate = None
+        elif result.get("status") == "success":
+            candidate = result.get("data")
+        elif "data" in result:
+            candidate = result["data"]
+        else:
+            candidate = result
+
+        if candidate in (None, "", [], {}):
+            return False
+        if isinstance(candidate, dict):
+            return any(value not in (None, "", [], {}) for value in candidate.values())
+        if isinstance(candidate, list):
+            return len(candidate) > 0
+        return True
+
+
     async def call_agent(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Main entry point that handles the message flow with hooks."""
         # Set task tracking IDs

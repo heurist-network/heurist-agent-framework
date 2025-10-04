@@ -267,22 +267,10 @@ class TokenResolverAgent(MeshAgent):
     # -----------------------------
     # Bridge to other Mesh agents (cached 300s)
     # -----------------------------
-    async def _agent_call(self, module: str, cls: str, tool: str, args: Dict[str, Any]) -> Dict[str, Any]:
-        from importlib import import_module
-
-        mod = import_module(module)
-        agent_cls = getattr(mod, cls)
-        inst = agent_cls()
-        if self.heurist_api_key:
-            inst.set_heurist_api_key(self.heurist_api_key)
-        payload = {"tool": tool, "tool_arguments": args, "raw_data_only": True, "session_context": {}}
-        result = await inst.call_agent(payload)
-        return result.get("data", result)
-
     @with_cache(ttl_seconds=300)
     async def _cg_get_token_info(self, query_or_id: str) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.coingecko_token_info_agent",
                 "CoinGeckoTokenInfoAgent",
                 "get_token_info",
@@ -295,7 +283,7 @@ class TokenResolverAgent(MeshAgent):
     @with_cache(ttl_seconds=300)
     async def _ds_search_pairs(self, search_term: str) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.dexscreener_token_info_agent",
                 "DexScreenerTokenInfoAgent",
                 "search_pairs",
@@ -308,7 +296,7 @@ class TokenResolverAgent(MeshAgent):
     @with_cache(ttl_seconds=300)
     async def _ds_token_pairs(self, chain: Optional[str], token_address: str) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.dexscreener_token_info_agent",
                 "DexScreenerTokenInfoAgent",
                 "get_token_pairs",
@@ -323,7 +311,7 @@ class TokenResolverAgent(MeshAgent):
     @with_retry(max_retries=2)
     async def _gmgn_token_info(self, chain: str, address: str) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.unifai_token_analysis_agent",
                 "UnifaiTokenAnalysisAgent",
                 "get_gmgn_token_info",
@@ -338,7 +326,7 @@ class TokenResolverAgent(MeshAgent):
     @with_retry(max_retries=2)
     async def _bq_solana_holders(self, mint: str, limit: int = 5) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.bitquery_solana_token_info_agent",
                 "BitquerySolanaTokenInfoAgent",
                 "query_token_holders",
@@ -352,7 +340,7 @@ class TokenResolverAgent(MeshAgent):
     @with_retry(max_retries=2)
     async def _bq_solana_traders(self, mint: str, limit: int = 5) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.bitquery_solana_token_info_agent",
                 "BitquerySolanaTokenInfoAgent",
                 "query_top_traders",
@@ -367,7 +355,7 @@ class TokenResolverAgent(MeshAgent):
     @with_retry(max_retries=2)
     async def _funding_rates(self, symbol: str) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.funding_rate_agent",
                 "FundingRateAgent",
                 "get_symbol_funding_rates",
@@ -384,7 +372,7 @@ class TokenResolverAgent(MeshAgent):
         self, yf_symbol: str, interval: str = YF_DEFAULT_INTERVAL, period: str = YF_DEFAULT_PERIOD
     ) -> Dict[str, Any]:
         try:
-            return await self._agent_call(
+            return await self._call_agent_tool(
                 "mesh.agents.yahoo_finance_agent",
                 "YahooFinanceAgent",
                 "indicator_snapshot",
