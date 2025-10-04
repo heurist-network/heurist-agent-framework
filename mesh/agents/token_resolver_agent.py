@@ -80,6 +80,9 @@ COINGECKO_TO_DEXSCREENER_PLATFORM = {
 YF_DEFAULT_INTERVAL = "1d"
 YF_DEFAULT_PERIOD = "6mo"
 
+# Minimum 24h volume threshold for DEX pools (filters out low-activity/fake pools)
+MIN_POOL_VOLUME_24H = 3000
+
 
 def _is_evm_address(s: str) -> bool:
     return bool(EVM_ADDR_RE.match(s or ""))
@@ -143,6 +146,39 @@ def _clean_empty_fields(obj: Any) -> Any:
         return cleaned_list
     else:
         return obj
+
+
+def _is_same_symbol_pair(pair: Dict[str, Any]) -> bool:
+    """Check if a pair has the same symbol for both base and quote tokens (invalid pair)"""
+    base = pair.get("baseToken") or {}
+    quote = pair.get("quoteToken") or {}
+    base_symbol = base.get("symbol", "").upper()
+    quote_symbol = quote.get("symbol", "").upper()
+    return bool(base_symbol and quote_symbol and base_symbol == quote_symbol)
+
+
+def _has_sufficient_volume(pair: Dict[str, Any]) -> bool:
+    """Check if a pair has sufficient 24h volume to be considered active.
+    Returns True if volume data is not available (benefit of the doubt).
+    """
+    volume_obj = pair.get("volume")
+    if not volume_obj:
+        return True  # No volume data available, don't filter
+
+    volume_24h = volume_obj.get("h24")
+    if volume_24h is None:
+        return True  # No 24h volume data, don't filter
+
+    return volume_24h >= MIN_POOL_VOLUME_24H
+
+
+def _extract_links_from_preview(preview: Dict[str, Any]) -> Dict[str, List]:
+    """Extract standardized links structure from pair preview"""
+    return {
+        "website": preview.get("websites") or [],
+        "twitter": [s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "twitter"],
+        "telegram": [s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "telegram"],
+    }
 
 
 # -----------------------------
@@ -506,6 +542,23 @@ class TokenResolverAgent(MeshAgent):
 
             best_by_token: Dict[str, Dict[str, Any]] = {}
             for p in pairs:
+                # Skip invalid same-symbol pairs
+                if _is_same_symbol_pair(p):
+                    logger.debug(
+                        f"[token_resolver] Skipping invalid same-symbol pair: "
+                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')}"
+                    )
+                    continue
+
+                # Skip pairs with insufficient volume
+                if not _has_sufficient_volume(p):
+                    logger.debug(
+                        f"[token_resolver] Skipping low-volume pair: "
+                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')} "
+                        f"(vol=${(p.get('volume') or {}).get('h24', 0):,.0f})"
+                    )
+                    continue
+
                 token, ch = self._extract_token_from_pair(p, prefer_base=True)
                 addr = token.get("address")
                 if not addr:
@@ -514,10 +567,7 @@ class TokenResolverAgent(MeshAgent):
                 preview = self._pair_to_preview(p)
                 current = best_by_token.get(token_key)
                 # collect websites/socials
-                ds_links = {
-                    "website": preview.get("websites"),
-                    "twitter": [s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "twitter"],
-                }
+                ds_links = _extract_links_from_preview(preview)
                 if not current or (preview.get("liquidity_usd") or 0) > (
                     current.get("best_pair", {}).get("liquidity_usd") or 0
                 ):
@@ -558,7 +608,9 @@ class TokenResolverAgent(MeshAgent):
             contract_to_cgid_map = {}
 
             if qtype in {"symbol", "name", "coingecko_id"}:
-                cg = await self._cg_get_token_info(query)
+                # CoinGecko IDs are lowercase, so convert query for lookup
+                cg_query = query.lower() if qtype in {"symbol", "coingecko_id"} else query
+                cg = await self._cg_get_token_info(cg_query)
                 if cg and cg.get("status") != "error":
                     ti = cg.get("token_info") or {}
                     mm = cg.get("market_metrics") or {}
@@ -598,16 +650,35 @@ class TokenResolverAgent(MeshAgent):
             token_map: Dict[str, Dict[str, Any]] = {}
 
             for p in pairs:
+                # Skip invalid same-symbol pairs
+                if _is_same_symbol_pair(p):
+                    logger.debug(
+                        f"[token_resolver] Skipping invalid same-symbol pair: "
+                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')}"
+                    )
+                    continue
+
+                # Skip pairs with insufficient volume
+                if not _has_sufficient_volume(p):
+                    logger.debug(
+                        f"[token_resolver] Skipping low-volume pair: "
+                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')} "
+                        f"(vol=${(p.get('volume') or {}).get('h24', 0):,.0f})"
+                    )
+                    continue
+
                 base = p.get("baseToken") or {}
                 quote = p.get("quoteToken") or {}
+                base_symbol = base.get("symbol", "").upper()
+                quote_symbol = quote.get("symbol", "").upper()
                 selected = []
 
                 if qtype == "symbol":
                     # Trust DexScreener's search - if it returned this pair for the query, both tokens are potentially relevant
                     # Prefer exact symbol matches but include all to let liquidity ranking decide
-                    if base.get("symbol", "").upper() == query.upper():
+                    if base_symbol == query.upper():
                         selected.append(base)
-                    if quote.get("symbol", "").upper() == query.upper():
+                    if quote_symbol == query.upper():
                         selected.append(quote)
                     # If no exact matches, include both tokens (DexScreener found them for a reason)
                     if not selected:
@@ -626,15 +697,6 @@ class TokenResolverAgent(MeshAgent):
 
                 # Extract pair-level links once
                 preview = self._pair_to_preview(p)
-                pair_links = {
-                    "website": preview.get("websites"),
-                    "twitter": [
-                        s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "twitter"
-                    ],
-                    "telegram": [
-                        s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "telegram"
-                    ],
-                }
 
                 for tok in selected:
                     addr = tok.get("address")
@@ -643,21 +705,27 @@ class TokenResolverAgent(MeshAgent):
                         continue
                     token_key = f"{ch}:{addr.lower()}"
 
-                    # Only assign pair links to tokens that match the search query
+                    # Only assign pair metadata (websites/socials) if this token matches the query
+                    # AND is the base token (DexScreener puts base token metadata in pair info)
                     should_get_links = False
                     if qtype == "symbol":
-                        should_get_links = tok.get("symbol", "").upper() == query.upper()
+                        should_get_links = (
+                            tok.get("symbol", "").upper() == query.upper() and
+                            tok == base  # Only if this is the base token
+                        )
                     elif qtype == "name":
-                        should_get_links = tok.get("name", "").lower() == query.lower()
+                        should_get_links = (
+                            tok.get("name", "").lower() == query.lower() and
+                            tok == base  # Only if this is the base token
+                        )
                     elif qtype == "coingecko_id":
-                        # For CG queries, assign to all since we can't easily match
-                        should_get_links = True
+                        # For CG queries, only use base token metadata
+                        should_get_links = tok == base
 
-                    ds_links = pair_links if should_get_links else {}
+                    ds_links = _extract_links_from_preview(preview) if should_get_links else {}
                     current = token_map.get(token_key)
-                    if not current or (preview.get("liquidity_usd") or 0) > (
-                        current.get("best_pair", {}).get("liquidity_usd") or 0
-                    ):
+                    if not current:
+                        # First time seeing this token
                         token_map[token_key] = {
                             "name": tok.get("name"),
                             "symbol": tok.get("symbol"),
@@ -669,10 +737,18 @@ class TokenResolverAgent(MeshAgent):
                             "top_pairs": [preview],
                             "links": self._merge_links({}, ds_links),
                             "_all_pairs": [p],
+                            "_max_liq": preview.get("liquidity_usd") or 0,
                         }
                     else:
+                        # Add this pair to the token's collection
                         token_map[token_key]["_all_pairs"].append(p)
                         token_map[token_key]["links"] = self._merge_links(token_map[token_key]["links"], ds_links)
+
+                        # Update metadata if this pair has higher liquidity
+                        pair_liq = preview.get("liquidity_usd") or 0
+                        if pair_liq > token_map[token_key]["_max_liq"]:
+                            token_map[token_key]["_max_liq"] = pair_liq
+                            token_map[token_key]["price_usd"] = preview.get("price_usd")
 
             ds_candidates = []
             linked_count = 0
@@ -694,6 +770,7 @@ class TokenResolverAgent(MeshAgent):
                 )[:3]
                 obj["top_pairs"] = previews
                 obj.pop("_all_pairs", None)
+                obj.pop("_max_liq", None)  # Clean up internal tracking field
                 ds_candidates.append(obj)
 
             ds_candidates = sorted(
@@ -701,12 +778,31 @@ class TokenResolverAgent(MeshAgent):
             )
             logger.info(f"[token_resolver] Token map processed: {len(token_map)} unique tokens, {len(ds_candidates)} final candidates, {linked_count} linked to CoinGecko")
 
+            # Merge CoinGecko anchor with DEX candidates that share the same coingecko_id
             combined: List[Dict[str, Any]] = []
-            if cg_anchor:
-                combined.append(cg_anchor)
+            cg_merged = False
+
+            if cg_anchor and cg_anchor.get("coingecko_id"):
+                # Try to find a DEX candidate with matching coingecko_id
+                cgid = cg_anchor["coingecko_id"]
+                for ds_cand in ds_candidates:
+                    if ds_cand.get("coingecko_id") == cgid:
+                        # Merge CoinGecko market data into DEX candidate
+                        ds_cand["market_cap_usd"] = cg_anchor.get("market_cap_usd")
+                        # Use CoinGecko price if DEX price is missing or significantly different
+                        if not ds_cand.get("price_usd"):
+                            ds_cand["price_usd"] = cg_anchor.get("price_usd")
+                        cg_merged = True
+                        logger.info(f"[token_resolver] Merged CoinGecko data into DEX result for {cgid}")
+                        break
+
+                # Only add CoinGecko anchor separately if it wasn't merged
+                if not cg_merged:
+                    combined.append(cg_anchor)
+
             combined.extend(ds_candidates)
             out = combined
-            logger.info(f"[token_resolver] Combined results: CG anchor={1 if cg_anchor else 0}, DS candidates={len(ds_candidates)}, total={len(out)}")
+            logger.info(f"[token_resolver] Combined results: CG anchor={1 if (cg_anchor and not cg_merged) else 0}, DS candidates={len(ds_candidates)}, merged={1 if cg_merged else 0}, total={len(out)}")
 
             if chain:
                 filtered = []
@@ -811,24 +907,27 @@ class TokenResolverAgent(MeshAgent):
                 pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
                 cand_previews = []
                 for p in pairs:
+                    # Skip invalid same-symbol pairs
+                    if _is_same_symbol_pair(p):
+                        continue
+
+                    # Skip pairs with insufficient volume
+                    if not _has_sufficient_volume(p):
+                        continue
+
                     base = p.get("baseToken") or {}
                     quote = p.get("quoteToken") or {}
+                    base_symbol = base.get("symbol", "").upper()
+                    quote_symbol = quote.get("symbol", "").upper()
+
                     if (
-                        base.get("symbol", "").upper() == prof["symbol"]
-                        or quote.get("symbol", "").upper() == prof["symbol"]
+                        base_symbol == prof["symbol"]
+                        or quote_symbol == prof["symbol"]
                     ):
                         prev = self._pair_to_preview(p)
                         cand_previews.append(prev)
                         # merge pair websites/socials into links
-                        ds_links = {
-                            "website": prev.get("websites"),
-                            "twitter": [
-                                s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "twitter"
-                            ],
-                            "telegram": [
-                                s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "telegram"
-                            ],
-                        }
+                        ds_links = _extract_links_from_preview(prev)
                         prof["links"] = self._merge_links(prof["links"], ds_links)
                 pairs_out = sorted(cand_previews, key=lambda x: (x.get("liquidity_usd") or 0), reverse=True)[
                     :top_n_pairs
@@ -836,26 +935,22 @@ class TokenResolverAgent(MeshAgent):
             elif is_contract and chain and address:
                 ds = await self._ds_token_pairs(chain or "all", address)
                 ps = ((ds or {}).get("data") or {}).get("pairs") or []
+
+                # Filter out invalid same-symbol pairs and low-volume pairs
+                valid_pairs = [p for p in ps if not _is_same_symbol_pair(p) and _has_sufficient_volume(p)]
+
                 pairs_out = sorted(
-                    [self._pair_to_preview(p) for p in ps],
+                    [self._pair_to_preview(p) for p in valid_pairs],
                     key=lambda x: (x.get("liquidity_usd") or 0),
                     reverse=True,
                 )[:top_n_pairs]
-                if ps:
-                    base = ps[0].get("baseToken") or {}
+                if valid_pairs:
+                    base = valid_pairs[0].get("baseToken") or {}
                     prof["name"] = prof["name"] or base.get("name")
                     prof["symbol"] = prof["symbol"] or (base.get("symbol") or "").upper()
                 # merge links from pairs
                 for prev in pairs_out:
-                    ds_links = {
-                        "website": prev.get("websites"),
-                        "twitter": [
-                            s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "twitter"
-                        ],
-                        "telegram": [
-                            s.get("url") for s in prev.get("socials", []) if (s or {}).get("type") == "telegram"
-                        ],
-                    }
+                    ds_links = _extract_links_from_preview(prev)
                     prof["links"] = self._merge_links(prof["links"], ds_links)
 
             if pairs_out:
