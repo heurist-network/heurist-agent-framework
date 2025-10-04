@@ -1,0 +1,2160 @@
+metadata:
+  agent: TrendingTokenAgent
+  test_file: trending_token_agent.py
+  timestamp: '2025-10-04T14:34:09.772151'
+  total_tests: 10
+  passed: 10
+  failed: 0
+results:
+  basic_trending_query:
+    input:
+      query: Show me trending tokens
+    output:
+      response: 'Here''s a summary of trending tokens from your data providers:
+
+
+        **CoinGecko Trending:**
+
+
+        *   **Aster (ASTER):** $2.217, +15.31% in 24h, Market Cap: $3.68B (Rank 50)
+
+        *   **FLOKI (FLOKI):** $0.0001135, +31.39% in 24h, Market Cap: $1.09B (Rank
+        121)
+
+        *   **Plasma (XPL):** $0.909, -2.13% in 24h, Market Cap: $1.65B (Rank 92)
+
+        *   **MYX Finance (MYX):** $6.501, -26.89% in 24h, Market Cap: $1.24B (Rank
+        110)
+
+        *   **Linea (LINEA):** $0.02857, +8.92% in 24h, Market Cap: $441.67M (Rank
+        216)
+
+        *   **PancakeSwap (CAKE):** $3.515, +1.19% in 24h, Market Cap: $1.21B (Rank
+        112)
+
+        *   **Bitcoin (BTC):** $122600.60, +2.14% in 24h, Market Cap: $2.44T (Rank
+        1)
+
+        *   **Falcon Finance (FF):** $0.1959, +9.57% in 24h, Market Cap: $458.11M
+        (Rank 210)
+
+        *   **4 (4):** $0.1744, +31.41% in 24h, Market Cap: $175.69M (Rank 396)
+
+        *   **Ethereum (ETH):** $4515.01, +0.75% in 24h, Market Cap: $545.30B (Rank
+        2)
+
+
+        **Twitter Trending:**
+
+
+        *   **Tokens:** btc, aster, eth, bnb, sol, pnkstr, xpl, zec, cake, pengu,
+        hype, dog, link, xrp, usdc, giggle, pump, doge, stbl, avax, spx, tao, sui,
+        tsla, iren, ape, priceless, pepe, troll, mstr, zero, ltc, useless, nat, crypto,
+        strc, crv, open, usdt, hood, lolcoin, x402, bmnr, kas, nvda, apex, birb, retire,
+        evaa, apt'
+      data: &id003
+        status: success
+        data:
+          coingecko_trending: &id001
+            trending_coins:
+            - coingecko_id: aster-2
+              name: Aster
+              symbol: ASTER
+              market_cap_rank: 50
+              price_usd: 2.217332890620634
+              market_cap: $3,681,275,853
+              total_volume_24h: $1,118,423,411
+              price_change_percentage_24h: 15.306387485903517
+            - coingecko_id: floki
+              name: FLOKI
+              symbol: FLOKI
+              market_cap_rank: 121
+              price_usd: 0.00011350776567951234
+              market_cap: $1,090,058,710
+              total_volume_24h: $329,612,904
+              price_change_percentage_24h: 31.390342675390777
+            - coingecko_id: plasma
+              name: Plasma
+              symbol: XPL
+              market_cap_rank: 92
+              price_usd: 0.9091707322639467
+              market_cap: $1,647,319,927
+              total_volume_24h: $1,902,622,972
+              price_change_percentage_24h: -2.1324910426754715
+            - coingecko_id: myx-finance
+              name: MYX Finance
+              symbol: MYX
+              market_cap_rank: 110
+              price_usd: 6.500616783402545
+              market_cap: $1,240,452,438
+              total_volume_24h: $216,266,183
+              price_change_percentage_24h: -26.891717729089155
+            - coingecko_id: linea
+              name: Linea
+              symbol: LINEA
+              market_cap_rank: 216
+              price_usd: 0.028569459650188887
+              market_cap: $441,670,016
+              total_volume_24h: $182,849,769
+              price_change_percentage_24h: 8.918070697397914
+            - coingecko_id: pancakeswap-token
+              name: PancakeSwap
+              symbol: CAKE
+              market_cap_rank: 112
+              price_usd: 3.5151589633846667
+              market_cap: $1,210,903,849
+              total_volume_24h: $810,706,082
+              price_change_percentage_24h: 1.1928156617374932
+            - coingecko_id: bitcoin
+              name: Bitcoin
+              symbol: BTC
+              market_cap_rank: 1
+              price_usd: 122600.60269975715
+              market_cap: $2,444,185,829,363
+              total_volume_24h: $82,483,145,380
+              price_change_percentage_24h: 2.1383755849624997
+            - coingecko_id: falcon-finance-ff
+              name: Falcon Finance
+              symbol: FF
+              market_cap_rank: 210
+              price_usd: 0.19590796084726242
+              market_cap: $458,106,372
+              total_volume_24h: $207,897,675
+              price_change_percentage_24h: 9.571693598303252
+            - coingecko_id: 4-2
+              name: '4'
+              symbol: '4'
+              market_cap_rank: 396
+              price_usd: 0.17439516979122555
+              market_cap: $175,688,327
+              total_volume_24h: $194,590,844
+              price_change_percentage_24h: 31.410817765643085
+            - coingecko_id: ethereum
+              name: Ethereum
+              symbol: ETH
+              market_cap_rank: 2
+              price_usd: 4515.008185308678
+              market_cap: $545,300,233,783
+              total_volume_24h: $42,672,758,724
+              price_change_percentage_24h: 0.7515425619329639
+          twitter_trending: &id002
+            status: success
+            data:
+              tokens:
+              - btc
+              - aster
+              - eth
+              - bnb
+              - sol
+              - pnkstr
+              - xpl
+              - zec
+              - cake
+              - pengu
+              - hype
+              - dog
+              - link
+              - xrp
+              - usdc
+              - giggle
+              - pump
+              - doge
+              - stbl
+              - avax
+              - spx
+              - tao
+              - sui
+              - tsla
+              - iren
+              - ape
+              - priceless
+              - pepe
+              - troll
+              - mstr
+              - zero
+              - ltc
+              - useless
+              - nat
+              - crypto
+              - strc
+              - crv
+              - open
+              - usdt
+              - hood
+              - lolcoin
+              - x402
+              - bmnr
+              - kas
+              - nvda
+              - apex
+              - birb
+              - retire
+              - evaa
+              - apt
+          notes: ''
+    description: ''
+    status: success
+    elapsed_time: 7.774991035461426
+  trending_with_memes:
+    input:
+      query: Get trending tokens including memecoins
+    output:
+      response: 'Here''s a summary of trending tokens from the provided data:
+
+
+        **CoinGecko Trending:**
+
+
+        *   **Aster (ASTER):** Market Cap: $3.68B, Rank: 50, Price: $2.21, 24h Change:
+        15.31%
+
+        *   **FLOKI (FLOKI):** Market Cap: $1.09B, Rank: 121, Price: $0.000113, 24h
+        Change: 31.39%
+
+        *   **Plasma (XPL):** Market Cap: $1.65B, Rank: 92, Price: $0.91, 24h Change:
+        -2.13%
+
+        *   **MYX Finance (MYX):** Market Cap: $1.24B, Rank: 110, Price: $6.50, 24h
+        Change: -26.89%
+
+        *   **Linea (LINEA):** Market Cap: $441.67M, Rank: 216, Price: $0.028, 24h
+        Change: 8.92%
+
+        *   **PancakeSwap (CAKE):** Market Cap: $1.21B, Rank: 112, Price: $3.51, 24h
+        Change: 1.19%
+
+        *   **Bitcoin (BTC):** Market Cap: $2.44T, Rank: 1, Price: $122600.60, 24h
+        Change: 2.14%
+
+        *   **Falcon Finance (FF):** Market Cap: $458.11M, Rank: 210, Price: $0.19,
+        24h Change: 9.57%
+
+        *   **4 (4):** Market Cap: $175.69M, Rank: 396, Price: $0.17, 24h Change:
+        31.41%
+
+        *   **Ethereum (ETH):** Market Cap: $545.30B, Rank: 2, Price: $4515.01, 24h
+        Change: 0.75%
+
+
+        **GMGN Trending (Top 5):**
+
+
+        *   **Block (Block):** Current Price: $0.0268, 24h Price Change: -22.25%,
+        Market Cap: $26.84M
+
+        *   **MORPHO (MORPHO):** Current Price: $1.867, 24h Price Change: -3.61%,
+        Market Cap: $1.87B
+
+        *   **PNKSTR (PNKSTR):** Current Price: $0.1913, 24h Price Change: 25.77%,
+        Market Cap: $191.33M
+
+        *   **T-HEAD (T-HEAD):** Current Price: $0.000408, 24h Price Change: -89.73%,
+        Market Cap: $408.68K
+
+        *   **puppies (puppies):** Current Price: $0.000000608, 24h Price Change:
+        -12.19%, Market Cap: $25.61M
+
+
+        **Pump.fun Recently Graduated Tokens (Top 5 by Market Cap):**
+
+
+        *   **Zolana (Zolana):** Market Cap: $4.51M, Price: $0.0045
+
+        *   **Zolana (Zolana):** Market Cap: $1.27M, Price: $0.00127
+
+        *   **Sorafication (Sorafy):** Market Cap: $923.51K, Price: $0.000923
+
+        *   **The Last Job (QUIT):** Market Cap: $853.45K, Price: $0.000853
+
+        *   **the rising (rise):** Market Cap: $751.79K, Price: $0.000751
+
+
+        **Twitter Trending:**
+
+
+        *   **Tokens:** btc, aster, eth, bnb, sol, pnkstr, xpl, zec, cake, pengu,
+        hype, dog, link, xrp, usdc, giggle, pump, doge, stbl, avax, spx, tao, sui,
+        tsla, iren, ape, priceless, pepe, troll, mstr, zero, ltc, useless, nat, crypto,
+        strc, crv, open, usdt, hood, lolcoin, x402, bmnr, kas, nvda, apex, birb, evaa,
+        apt'
+      data: &id004
+        status: success
+        data:
+          coingecko_trending: *id001
+          twitter_trending: *id002
+          gmgn_trending:
+            payload: '
+
+              === Token Rank #1 ===
+
+
+              Token Basic Information:
+
+              - ID: 826262
+
+              - Chain: eth
+
+              - Contract Address: 0xcab84bc21f9092167fcfe0ea60f5ce053ab39a1e
+
+              - Symbol: Block
+
+              - Logo: https://gmgn.ai/external-res/6c4d1356e6e48388fd13c2f7e17a7e73.webp
+
+              - Website: https://www.blockstreet.xyz/
+
+              - Twitter: blockstreetxyz
+
+              - Telegram: https://t.me/BlockStreetXYZ
+
+              - Total Supply: 1000000000
+
+
+              Market Data:
+
+              - Current Price: $0.02683987
+
+              - 24h Price Change: -22.249439%
+
+              - 1m Price Change: 0%
+
+              - 5m Price Change: -0.05979313%
+
+              - 1h Price Change: -0.30593671%
+
+              - Market Cap: $26839870
+
+
+              Trading Data:
+
+              - Total Swaps: 3603
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $5794659.6
+
+              - Buy Orders: 2129
+
+              - Sell Orders: 1474
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $1446792.225059197
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 16172
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 7/17/2025, 2:42:23 AM
+
+              - First Trade Time: 7/14/2025, 8:44:59 PM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.03592629235716052%
+
+              - Smart Investors Count: 6
+
+              - Renowned Address Count: 18
+
+
+
+              === Token Rank #2 ===
+
+
+              Token Basic Information:
+
+              - ID: 657703
+
+              - Chain: eth
+
+              - Contract Address: 0x58d97b57bb95320f9a05dc918aef65434969c2b2
+
+              - Symbol: MORPHO
+
+              - Logo: https://gmgn.ai/external-res/d562b5af39d0fd4a5104225eb6759d02.webp
+
+              - Website: https://morpho.org/
+
+              - Twitter: MorphoLabs
+
+              - Telegram: Unknown
+
+              - Total Supply: 1000000000
+
+
+              Market Data:
+
+              - Current Price: $1.867775
+
+              - 24h Price Change: -3.6069436%
+
+              - 1m Price Change: 0%
+
+              - 5m Price Change: 0%
+
+              - 1h Price Change: 0.24613337%
+
+              - Market Cap: $1867775000
+
+
+              Trading Data:
+
+              - Total Swaps: 3193
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $4320838.2
+
+              - Buy Orders: 2029
+
+              - Sell Orders: 1164
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $3835755.588419529
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 14270
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: creator_close
+
+              - Creator Closed Contract: Yes
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 11/20/2024, 8:38:11 AM
+
+              - First Trade Time: 11/20/2024, 8:38:11 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.05991590749824807%
+
+              - Smart Investors Count: 3
+
+              - Renowned Address Count: 2
+
+
+
+              === Token Rank #3 ===
+
+
+              Token Basic Information:
+
+              - ID: 880904
+
+              - Chain: eth
+
+              - Contract Address: 0xc50673edb3a7b94e8cad8a7d4e0cd68864e33edf
+
+              - Symbol: PNKSTR
+
+              - Logo: https://gmgn.ai/external-res/740e212ef8958146cb58defc64769c97.webp
+
+              - Website: https://punkstrategy.fun
+
+              - Twitter: token_works
+
+              - Telegram: Unknown
+
+              - Total Supply: 1000000000
+
+
+              Market Data:
+
+              - Current Price: $0.19132728
+
+              - 24h Price Change: 25.767177%
+
+              - 1m Price Change: 0.007657623%
+
+              - 5m Price Change: -0.13193441%
+
+              - 1h Price Change: -4.8090023%
+
+              - Market Cap: $191327280
+
+
+              Trading Data:
+
+              - Total Swaps: 3166
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $6336322.3
+
+              - Buy Orders: 1663
+
+              - Sell Orders: 1503
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $8170972.895474462
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 7234
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 9/6/2025, 4:38:23 PM
+
+              - First Trade Time: 9/6/2025, 4:38:23 PM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.04727674868675698%
+
+              - Smart Investors Count: 4
+
+              - Renowned Address Count: 41
+
+
+
+              === Token Rank #4 ===
+
+
+              Token Basic Information:
+
+              - ID: 1096644
+
+              - Chain: eth
+
+              - Contract Address: 0xf613f72c9d4718cefa3a7b11e00541b0a9c4fcf0
+
+              - Symbol: T-HEAD
+
+              - Logo: https://gmgn.ai/external-res/ac5b0f0e10290c057d5cc567288d1c4f.webp
+
+              - Website: https://t-headtoken.xyz/
+
+              - Twitter: T_HEAD_Official
+
+              - Telegram: https://t.me/T_HEAD_Portal
+
+              - Total Supply: 1000000000
+
+
+              Market Data:
+
+              - Current Price: $0.00040867734
+
+              - 24h Price Change: -89.732815%
+
+              - 1m Price Change: 2.6018583%
+
+              - 5m Price Change: 5.9825088%
+
+              - 1h Price Change: -15.049531%
+
+              - Market Cap: $408677.34
+
+
+              Trading Data:
+
+              - Total Swaps: 2806
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $3240622.5
+
+              - Buy Orders: 1486
+
+              - Sell Orders: 1320
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $148865.58858097106
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 1908
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 9/23/2025, 10:41:59 AM
+
+              - First Trade Time: 9/23/2025, 10:41:59 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.006289308176100629%
+
+              - Smart Investors Count: 0
+
+              - Renowned Address Count: 0
+
+
+
+              === Token Rank #5 ===
+
+
+              Token Basic Information:
+
+              - ID: 431231
+
+              - Chain: eth
+
+              - Contract Address: 0xcf91b70017eabde82c9671e30e5502d312ea6eb2
+
+              - Symbol: puppies
+
+              - Logo: https://gmgn.ai/external-res/bfe9ff44bbd5f6666de824982fd46892.webp
+
+              - Website: https://www.ilovepuppies.cc/
+
+              - Twitter: puppies_cc
+
+              - Telegram: https://t.me/puppies_CTO
+
+              - Total Supply: 42069000000000
+
+
+              Market Data:
+
+              - Current Price: $6.0883657e-7
+
+              - 24h Price Change: -12.194848%
+
+              - 1m Price Change: 0.13302847%
+
+              - 5m Price Change: 0.56162142%
+
+              - 1h Price Change: -8.2112816%
+
+              - Market Cap: $25613146
+
+
+              Trading Data:
+
+              - Total Swaps: 2723
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $1594575.8
+
+              - Buy Orders: 1749
+
+              - Sell Orders: 974
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $1912621.526910121
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 23768
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: creator_sell
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 2/11/2024, 7:54:59 AM
+
+              - First Trade Time: 2/11/2024, 7:54:59 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.02364523729384046%
+
+              - Smart Investors Count: 2
+
+              - Renowned Address Count: 2
+
+
+
+              === Token Rank #6 ===
+
+
+              Token Basic Information:
+
+              - ID: 887877
+
+              - Chain: eth
+
+              - Contract Address: 0x2fd23a21c52fff0535328a7177da1fb31b8a819e
+
+              - Symbol: SΞR
+
+              - Logo: https://gmgn.ai/external-res/40560269787ac984a1e5a47501648bff.webp
+
+              - Website: https://ser.cx/
+
+              - Twitter: SER_Token_
+
+              - Telegram: https://t.me/Strategic_ETH_Reserve
+
+              - Total Supply: 100000000
+
+
+              Market Data:
+
+              - Current Price: $0.028273715
+
+              - 24h Price Change: -5.7924091%
+
+              - 1m Price Change: -2.4098527%
+
+              - 5m Price Change: -2.4383347%
+
+              - 1h Price Change: 0.37190591%
+
+              - Market Cap: $2827371.5
+
+
+              Trading Data:
+
+              - Total Swaps: 2531
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $2293872.3
+
+              - Buy Orders: 1332
+
+              - Sell Orders: 1199
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $324204.53845611337
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 3162
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 9/12/2025, 7:35:35 AM
+
+              - First Trade Time: 9/12/2025, 7:35:35 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.008222643896268185%
+
+              - Smart Investors Count: 1
+
+              - Renowned Address Count: 0
+
+
+
+              === Token Rank #7 ===
+
+
+              Token Basic Information:
+
+              - ID: 1378965
+
+              - Chain: eth
+
+              - Contract Address: 0xca5e50710f656f2e537ce2fc8504db6e24ed3515
+
+              - Symbol: XCL
+
+              - Logo: https://gmgn.ai/external-res/b6fcb2afe84c0fd6d8a5dda968f373fc.webp
+
+              - Website: https://xcellar.ai/
+
+              - Twitter: xcellar_
+
+              - Telegram: https://t.me/xCellarOfficial
+
+              - Total Supply: 949243234
+
+
+              Market Data:
+
+              - Current Price: $0.020425309
+
+              - 24h Price Change: 458.92797%
+
+              - 1m Price Change: -1.0575804%
+
+              - 5m Price Change: -1.1961638%
+
+              - 1h Price Change: 29.548882%
+
+              - Market Cap: $19388586
+
+
+              Trading Data:
+
+              - Total Swaps: 2258
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $3066380.2
+
+              - Buy Orders: 1571
+
+              - Sell Orders: 687
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $907478.3419231216
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 1320
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 10/2/2025, 9:21:11 AM
+
+              - First Trade Time: 10/2/2025, 9:24:11 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.017424242424242425%
+
+              - Smart Investors Count: 0
+
+              - Renowned Address Count: 0
+
+
+
+              === Token Rank #8 ===
+
+
+              Token Basic Information:
+
+              - ID: 1307848
+
+              - Chain: eth
+
+              - Contract Address: 0x0e60ce572a5456b6974d5e7507cc07110dd062a4
+
+              - Symbol: Puppies
+
+              - Logo: https://gmgn.ai/external-res/fcc63023a7f6e70a92f49f389c25c81c.webp
+
+              - Website: https://ilovepuppies.club
+
+              - Twitter: puppiesCTO
+
+              - Telegram: https://t.me/puppiestg
+
+              - Total Supply: 420690000000000000
+
+
+              Market Data:
+
+              - Current Price: $2.5752494e-12
+
+              - 24h Price Change: 121.83499%
+
+              - 1m Price Change: 0.087656637%
+
+              - 5m Price Change: 0.53230114%
+
+              - 1h Price Change: 7.7123346%
+
+              - Market Cap: $1083381.7
+
+
+              Trading Data:
+
+              - Total Swaps: 2018
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $242371.08
+
+              - Buy Orders: 1392
+
+              - Sell Orders: 626
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $146391.25986695258
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 2786
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 9/30/2025, 3:27:47 AM
+
+              - First Trade Time: 9/30/2025, 3:27:59 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.013280689160086146%
+
+              - Smart Investors Count: 0
+
+              - Renowned Address Count: 0
+
+
+
+              === Token Rank #9 ===
+
+
+              Token Basic Information:
+
+              - ID: 237
+
+              - Chain: eth
+
+              - Contract Address: 0x514910771af9ca656af840dff83e8264ecf986ca
+
+              - Symbol: LINK
+
+              - Logo: https://gmgn.ai/external-res/949b7838734dfd15e842f63dc66aae4a.webp
+
+              - Website: https://chain.link/
+
+              - Twitter: chainlink
+
+              - Telegram: Unknown
+
+              - Total Supply: 1000000000
+
+
+              Market Data:
+
+              - Current Price: $22.242081
+
+              - 24h Price Change: -1.2123312%
+
+              - 1m Price Change: 0%
+
+              - 5m Price Change: -0.1152676%
+
+              - 1h Price Change: -0.041286996%
+
+              - Market Cap: $22242081000
+
+
+              Trading Data:
+
+              - Total Swaps: 1930
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $5809833.8
+
+              - Buy Orders: 754
+
+              - Sell Orders: 1176
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $39297300.60502963
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 802517
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: creator_hold
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 5/5/2021, 5:50:38 PM
+
+              - First Trade Time: 6/19/2020, 6:42:16 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0%
+
+              - Bluechip NFT Holder Rate: 0.01254802078959075%
+
+              - Smart Investors Count: 3
+
+              - Renowned Address Count: 17
+
+
+
+              === Token Rank #10 ===
+
+
+              Token Basic Information:
+
+              - ID: 357630
+
+              - Chain: eth
+
+              - Contract Address: 0x52a8845df664d76c69d2eea607cd793565af42b8
+
+              - Symbol: APEX
+
+              - Logo: https://gmgn.ai/external-res/e1b9d92f68e0b4d5f939d3924d2cb1ae.webp
+
+              - Website: https://apex.exchange/
+
+              - Twitter: OfficialApeXdex
+
+              - Telegram: https://t.me/ApeXdex
+
+              - Total Supply: 1000000000
+
+
+              Market Data:
+
+              - Current Price: $2.0586151
+
+              - 24h Price Change: 13.68909%
+
+              - 1m Price Change: -0.19732448%
+
+              - 5m Price Change: -1.0245338%
+
+              - 1h Price Change: -5.9709795%
+
+              - Market Cap: $2058615100
+
+
+              Trading Data:
+
+              - Total Swaps: 1783
+
+              - 24h Swaps: 0
+
+              - 24h Volume: $4933520.2
+
+              - Buy Orders: 914
+
+              - Sell Orders: 869
+
+
+              Liquidity Data:
+
+              - Current Liquidity: $8679936.491244974
+
+              - Initial Liquidity: $0
+
+
+              Holder Data:
+
+              - Total Holders: 5076
+
+              - Top 10 Holders Rate: 0%
+
+
+              Security and Mechanisms:
+
+              - Mint Renounced: No
+
+              - Freeze Account Renounced: No
+
+              - Burn Ratio: 0%
+
+              - Burn Status: Unknown
+
+              - Creator Token Status: Unknown
+
+              - Creator Closed Contract: No
+
+              - Wash Trading Detected: No
+
+
+              Additional Information:
+
+              - Heat Level: 0
+
+              - Pool Creation Time: 9/27/2025, 3:31:11 AM
+
+              - First Trade Time: 7/18/2025, 8:16:23 AM
+
+              - Launchpad Status: No
+
+              - Rat Trader Rate: 0.452521%
+
+              - Bluechip NFT Holder Rate: 0.08096926713947991%
+
+              - Smart Investors Count: 3
+
+              - Renowned Address Count: 1
+
+              '
+          pumpfun_recent_graduated:
+            graduated_tokens:
+            - price_usd: 0.00451166916490325
+              market_cap_usd: 4511669.1649032505
+              token_info:
+                name: Zolana
+                symbol: Zolana
+                mint_address: Eam3Y3afVw87yTr918WWjWvzd7J8Gyy4AHSyMunTpump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.rapidlaunch.io/metadata/a851e542-e60a-4781-bb42-7f66795666d8.json
+            - price_usd: 0.0012721973807369932
+              market_cap_usd: 1272197.3807369932
+              token_info:
+                name: Zolana
+                symbol: Zolana
+                mint_address: 91oGFWv8j48s93C5fxNCqPWsxafEd8Dzaj1xgzhKpump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.rapidlaunch.io/metadata/a851e542-e60a-4781-bb42-7f66795666d8.json
+            - price_usd: 0.0009235112694900697
+              market_cap_usd: 923511.2694900697
+              token_info:
+                name: Sorafication
+                symbol: Sorafy
+                mint_address: Emh1yW6N9iyrax199tW7VGj6EgrSeTskDqkriaPPpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreifyvptoqakof3p7oec7owuba42sjbrp2r2i5flanfee4ezgh2iqba
+            - price_usd: 0.0008534544689755916
+              market_cap_usd: 853454.4689755916
+              token_info:
+                name: The Last Job
+                symbol: QUIT
+                mint_address: 5JkXrk1UV9xox6giRrFyELB9HnBv49QQXYUT5eHMpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreig2dlsxygtd7ciqhxigjdv7zi3mo57vfkptfe4wdb5ehy7xhs5k4u
+            - price_usd: 0.0007517919864154231
+              market_cap_usd: 751791.9864154231
+              token_info:
+                name: the rising
+                symbol: rise
+                mint_address: Egsnb9CEQcrSo2RB5pBHKaBDoPNVtNPq5ANgajFwpump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.rapidlaunch.io/metadata/09d0e955-bfb3-4132-bd82-29faa95cf536.json
+            - price_usd: 0.0005661785637045693
+              market_cap_usd: 566178.5637045694
+              token_info:
+                name: Innovation Coin
+                symbol: INNOVATION
+                mint_address: EoQ85FHp8nWbB7rH4hTVUbgQY24W7F1c69aKyEKmShY3
+                decimals: 6
+                fungible: true
+                uri: https://1ea5c9284bee4d1c815c8bd0.blob.core.windows.net/deploy/f8f15674-defc-49d3-9c21-2eeb315fe881.json
+            - price_usd: 0.0005377438156301472
+              market_cap_usd: 537743.8156301472
+              token_info:
+                name: DEFBOT
+                symbol: DEFBOT
+                mint_address: 5HboHMWxQxzvf877RrcgxfMLYK6DdshkpiNKyWMCTyyU
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreidhg7ph4msh5xkrlbacu5snecakt4fzkagwnjf2cysfmug6b2ky5a
+            - price_usd: 0.000520351044542538
+              market_cap_usd: 520351.044542538
+              token_info:
+                name: ClauDex Perpetual Agent
+                symbol: ClauDex
+                mint_address: AhwRCDavf7dghmYsQ7LAXLbUDSiJ7ztGS55BHkhJpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreibwvurch64intd2536ov3kdrwrdpk6no35533sqhqowi7yawtsd2q
+            - price_usd: 0.0003697401349256793
+              market_cap_usd: 369740.1349256793
+              token_info:
+                name: DeepLoom
+                symbol: LOOM
+                mint_address: 42qG4GSV9XvexgftprY4pZgyNNBgcu5mkZXvmakWpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreibyofjlkpcn3mscdzbk6mniynkh2wovdynqapdcoct2gphygvdis4
+            - price_usd: 0.0002868740504168385
+              market_cap_usd: 286874.0504168385
+              token_info:
+                name: Bolana
+                symbol: Bolana
+                mint_address: GiUnrsdCEwToAarPtdwdJ295DfGbaPDmKExkhvUnpump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.rapidlaunch.io/metadata/d94b8c36-4160-4ac6-b11f-a81025c17df2.json
+            - price_usd: 0.00028215753504950156
+              market_cap_usd: 282157.5350495016
+              token_info:
+                name: one black line
+                symbol: blackline
+                mint_address: 48GnxxDd2SPBrVaHRUffafxLNLEPjz3dr8mmhQrxpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreifvhlwj6qsa3jdwohfnxik3sd4ksqsjspl2wwu2b4qgtky2r63mo4
+            - price_usd: 0.00028278020504294963
+              market_cap_usd: 282780.20504294964
+              token_info:
+                name: BNB on Solana
+                symbol: BNB
+                mint_address: N9D8KQZF9MEx6c7LxH1cy9Tm69tyUoHwZ7LUGbCpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/Qmab8u3b65PaMRvPFUKd47GH1Dkcmr4NNhFx48zG2VDM1w
+            - price_usd: 0.0002383386550003806
+              market_cap_usd: 238338.6550003806
+              token_info:
+                name: Pump Thumb
+                symbol: Thumb
+                mint_address: 9daws6qb63qQ7CTmuBt6t2E1NqoHBJm3tZRAn6Y9pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreidfoirmhat5ljy5pok5okc3bdeuzmerkv2kuztt6flox3q6vcvxdu
+            - price_usd: 0.00022747124806213364
+              market_cap_usd: 227471.24806213364
+              token_info:
+                name: Crypto Money by Me
+                symbol: CMONEY
+                mint_address: 51CFYQefjZZYNHppPGdEiCoRYjXnSNCzkHNDX3P2pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreiaq6htdo3j75ethwjxteezvhebkgftdlajfj63z7ipurnukybpnhq
+            - price_usd: 0.00020917199649280038
+              market_cap_usd: 209171.9964928004
+              token_info:
+                name: '42'
+                symbol: '42'
+                mint_address: 7QJdMieUxppWbamYFcXSDamVdZWFJ8aQAqz8oeBT2GQc
+                decimals: 6
+                fungible: true
+                uri: https://cf-ipfs.com/ipfs/Qmdc9jCnK2FtchG6dB2JhDXEKA5VqBWi6ykbap4FEf2qkh
+            - price_usd: 0.00020625050377686668
+              market_cap_usd: 206250.50377686668
+              token_info:
+                name: bee and bee
+                symbol: BNB
+                mint_address: AjYoH6vcGkLrTEnaHPkPcWKdESXgs6PTpzkft3SHpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreigepxjeduoo7cdwzczouahogxymsll6jdanqrukxbsq6y6n6rh7ri
+            - price_usd: 0.0001974537231941463
+              market_cap_usd: 197453.7231941463
+              token_info:
+                name: MELINOE
+                symbol: MELINOE
+                mint_address: 3DHTDcLyakwWRq7zCtJKv5UkLSZpoGw4ebSJf8r7HKVB
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreialkfoqghir6a5obofazloz5vkcejmahfcy4tvrvnueve45qruyma
+            - price_usd: 0.00017819840400084633
+              market_cap_usd: 178198.40400084632
+              token_info:
+                name: Binance Super Smart Chain
+                symbol: BSSC
+                mint_address: EBoXrDiJe363nGrHQoBUN2k2GJzQs11N7kUqUUNVpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreihvo2qb7igbgpnfvjdsabylmuitdt3ulhicgmdgfweanykkusax24
+            - price_usd: 0.00017248865298026181
+              market_cap_usd: 172488.6529802618
+              token_info:
+                name: Solana Pepe
+                symbol: Sepe
+                mint_address: Cpuyu6Fy82ei6m3A1bZJHtEj6zgND1s3rUZBZo9wpump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.rapidlaunch.io/metadata/991797f8-f2d5-4225-96b6-4befcc953b11.json
+            - price_usd: 0.00015908452479281845
+              market_cap_usd: 159084.52479281844
+              token_info:
+                name: Dartantic
+                symbol: DRTC
+                mint_address: CUgWZKjffktTV8cWLbJWVH8vGqxaDCbhX6WqeajBpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreibkvivrsfbst3z7jookuevhuchb4qycvxnvyibeylbe5vu6fsm7wq
+            - price_usd: 0.0001500922235984045
+              market_cap_usd: 150092.2235984045
+              token_info:
+                name: huh
+                symbol: huh
+                mint_address: HdbQVdtTh3gFuvmvVqHCh37w9ADPCiE9f24EX63npump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreihdgujt5ipbew7llsiknjps3kvjav6g3lgnbdogxoea3mo4phoo6u
+            - price_usd: 0.00014954973258259324
+              market_cap_usd: 149549.73258259325
+              token_info:
+                name: Internet
+                symbol: INTERNET
+                mint_address: HMds3rHpkkP8MaArBQg7wKq9JaQpdeMFmi7hEuwMpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreihl7s4zh5pifaxsmxvcmnfl7lovrptzjszqlvs5juhgbrqssdsdwa
+            - price_usd: 0.00014574187436577657
+              market_cap_usd: 145741.87436577657
+              token_info:
+                name: magic coin
+                symbol: magic
+                mint_address: YwykxcBFwKrNeKfMMLSmZhjuGsf3GUoQLz3yAd5pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreibwy5loaoko4hgs3npk73gszdoxf6jlzzyxwdiutt7azk3dosdy5y
+            - price_usd: 0.0001298609792870441
+              market_cap_usd: 129860.9792870441
+              token_info:
+                name: Banana
+                symbol: BNANA
+                mint_address: 3jQdWGCs8JcqPPhRjttQ7WMxNYzW2YxFdbKNDFpopump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreiapqcdmkzr7auncjm6kwtzfahcubeukqqq32ojspxs5kepzfjf4ni
+            - price_usd: 0.00012929955150760308
+              market_cap_usd: 129299.55150760307
+              token_info:
+                name: Name
+                symbol: Ticker
+                mint_address: FXEV8UXt3ByKVf3aXvQ7BdzQYABQEdTD37awsGFpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreibdobddwe2gyjxznu226uuis2kmf2z44nba3su5yaclihqvbshv2y
+            - price_usd: 0.00012544982329455625
+              market_cap_usd: 125449.82329455625
+              token_info:
+                name: Hi
+                symbol: HI
+                mint_address: AgX8q25LFaW2tyTsiPf26WVv5MwmtzQoUQdxru8kpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreihpmhvaocl5zsllecsfwnkxbyysuu6hz2xonx6namcvc22sg6xhf4
+            - price_usd: 0.00012525868497186606
+              market_cap_usd: 125258.68497186607
+              token_info:
+                name: Onboard
+                symbol: QR
+                mint_address: Ar4EdEVq725LRGTUX4pewFnwV4efQ9GjFk4C6Zb1pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreiemky23qyvpvh7pod6uriisoeyvcpqhqd65vq6ht43nmgadkagwju
+            - price_usd: 0.00011673449930448342
+              market_cap_usd: 116734.49930448341
+              token_info:
+                name: Quake Kinetic Energy
+                symbol: QKE
+                mint_address: EmtmP5ErKEMugX9vzQuZAWFm7k9r5HKfLdw1Ejjkpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreibonfqvimikp4r3g76m65yrobekzf4ol6bww6726b6bdivbfyg3rm
+            - price_usd: 0.00011849983108166307
+              market_cap_usd: 118499.83108166307
+              token_info:
+                name: Monsta Labs
+                symbol: monsta
+                mint_address: FxD4ZHh5vAxHj91cbt9npsvJGi3hU1wnCK3in8aUpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreidqitnouqbm57d7vblvk4vrralvm6wodda6q2l2n43i6slstjbnnu
+            - price_usd: 0.00011506625234737727
+              market_cap_usd: 115066.25234737727
+              token_info:
+                name: The Sun is Rising
+                symbol: SOL
+                mint_address: B7Hq4Uqr2gKPjMkaMaL6dS8ET6GT4LxtHKMdeMMppump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.uxento.io/data/e3fbe1d8-6b76-4a2e-a8fe-4f52daebd452
+            - price_usd: 0.00011398528750644468
+              market_cap_usd: 113985.28750644467
+              token_info:
+                name: Join
+                symbol: Join
+                mint_address: EAVhJqjQsGpR3JoHYcbcQpPRAW48RRDMndHM2kcvpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreifxgfj4isjp3uqvg2s62cs62jd4fijuuwa2rqcyung4ux4rt66ftq
+            - price_usd: 0.00011292905161939062
+              market_cap_usd: 112929.05161939062
+              token_info:
+                name: OpenDeSci
+                symbol: ODS
+                mint_address: DfHL2NzZvb2sYpUv7aaFjmcZwEDuTw6smeGyM9W52829
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreiewxq7xahd44oe6sncrpsht2fcfjcqaduow5qm6hu26tslugzzapa
+            - price_usd: 0.00011066572843798797
+              market_cap_usd: 110665.72843798797
+              token_info:
+                name: Amy Meat
+                symbol: MEAT
+                mint_address: 2qp5jNTBBs2yPAxjEsB48HaKR4HrRJV7LLgeUrZ2pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreicja5n66yrundcnpq7y6lt5mp4q5fxidiuwnkdhtahywkgsjvi3qe
+            - price_usd: 0.00011127598559899667
+              market_cap_usd: 111275.98559899667
+              token_info:
+                name: Justice For Kyren Lacy
+                symbol: 'Kyren '
+                mint_address: 4FHTJcFFLgqTvDJKpzeprRr1zZMVeXP6dijbQTDypump
+                decimals: 6
+                fungible: true
+                uri: https://metadata.rapidlaunch.io/metadata/1b5125f0-0a8c-4589-8211-7a8dc9a50579.json
+            - price_usd: 0.0001012253294933395
+              market_cap_usd: 101225.3294933395
+              token_info:
+                name: Solana ETF
+                symbol: GSOL
+                mint_address: FM6ZsWmVFA41D72NNNTk35ZrUSg2wkCerSNzg7Wjpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreih4rfbp3kr7sjlilgyafew67iqil3lubxe347us2ksp3g7dyi4ode
+            - price_usd: 9.847175093015111e-05
+              market_cap_usd: 98471.75093015112
+              token_info:
+                name: Trust Our Path
+                symbol: TOP
+                mint_address: FSGVtjQUeFsDmxWbAKSTcq4SgqH5AceysnDtk9y5pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreidg65ywcenm6v4ftilsp3tgivrg57i6im75c2tk5te4r2wxqirxee
+            - price_usd: 9.968256382064874e-05
+              market_cap_usd: 99682.56382064873
+              token_info:
+                name: Pumplabs
+                symbol: PUMPLABS
+                mint_address: 3voC7SvPvpvPdzAUC1r1mfTvWNNab8pRVLmcppy2pump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.io/ipfs/bafkreie4os4fwmqtvmaufkbmyg3cduwox2gmvd2j23mnfpnn2iv7qufx5e
+            - price_usd: 9.701974555043893e-05
+              market_cap_usd: 97019.74555043894
+              token_info:
+                name: Inuvation
+                symbol: INUVATION
+                mint_address: 5u8GQbU614m7j2vqrRMQT4r5bmsrKjgLGSfAXEWHpump
+                decimals: 6
+                fungible: true
+                uri: https://ipfs.filebase.io/ipfs/QmNfwB57cyKMSm66LPSnzHrXHgo5ihsLmj1TexHRa4Gf7x
+            tokens_without_price_data: []
+            timeframe_hours: 12
+            start_time: '2025-10-03T12:00:00Z'
+          notes: graduation of pump.fun means that a newly launched token hits a certain
+            market cap threshold, and that it has gained traction and liquidity. gmgn
+            is a memecoin trading platform.
+    description: Natural language query for trending tokens including memes
+    status: success
+    elapsed_time: 12.095586776733398
+  direct_tool_basic:
+    input:
+      tool: get_trending_tokens
+      tool_arguments: {}
+    output:
+      response: ''
+      data: *id003
+    description: ''
+    status: success
+    elapsed_time: 0.00031304359436035156
+  direct_tool_with_memes:
+    input:
+      tool: get_trending_tokens
+      tool_arguments:
+        include_memes: true
+    output:
+      response: ''
+      data: *id004
+    description: Direct tool call including memecoins and pump.fun data
+    status: success
+    elapsed_time: 0.00020766258239746094
+  trending_without_memes_raw:
+    input:
+      tool: get_trending_tokens
+      tool_arguments:
+        include_memes: false
+      raw_data_only: true
+    output:
+      response: ''
+      data: *id003
+    description: ''
+    status: success
+    elapsed_time: 0.0002446174621582031
+  trending_with_memes_formatted:
+    input:
+      tool: get_trending_tokens
+      tool_arguments:
+        include_memes: true
+      raw_data_only: false
+    output:
+      response: ''
+      data: *id004
+    description: ''
+    status: success
+    elapsed_time: 0.00021982192993164062
+  market_overview_query:
+    input:
+      query: What are the hottest tokens right now across all platforms?
+    output:
+      response: "```json\n{\n  \"coingecko_trending\": {\n    \"trending_coins\":\
+        \ [\n      {\n        \"coingecko_id\": \"aster-2\",\n        \"name\": \"\
+        Aster\",\n        \"symbol\": \"ASTER\",\n        \"price_usd\": 2.217332890620634,\n\
+        \        \"price_change_percentage_24h\": 15.306387485903517,\n        \"\
+        market_cap\": \"$3,681,275,853\",\n        \"market_cap_rank\": 50,\n    \
+        \    \"total_volume_24h\": \"$1,118,423,411\"\n      },\n      {\n       \
+        \ \"coingecko_id\": \"floki\",\n        \"name\": \"FLOKI\",\n        \"symbol\"\
+        : \"FLOKI\",\n        \"price_usd\": 0.00011350776567951234,\n        \"price_change_percentage_24h\"\
+        : 31.390342675390777,\n        \"market_cap\": \"$1,090,058,710\",\n     \
+        \   \"market_cap_rank\": 121,\n        \"total_volume_24h\": \"$329,612,904\"\
+        \n      },\n      {\n        \"coingecko_id\": \"plasma\",\n        \"name\"\
+        : \"Plasma\",\n        \"symbol\": \"XPL\",\n        \"price_usd\": 0.90917073226394673,\n\
+        \        \"price_change_percentage_24h\": -2.1324910426754715,\n        \"\
+        market_cap\": \"$1,647,319,927\",\n        \"market_cap_rank\": 92,\n    \
+        \    \"total_volume_24h\": \"$1,902,622,972\"\n      },\n      {\n       \
+        \ \"coingecko_id\": \"myx-finance\",\n        \"name\": \"MYX Finance\",\n\
+        \        \"symbol\": \"MYX\",\n        \"price_usd\": 6.5006167834025446,\n\
+        \        \"price_change_percentage_24h\": -26.891717729089155,\n        \"\
+        market_cap\": \"$1,240,452,438\",\n        \"market_cap_rank\": 110,\n   \
+        \     \"total_volume_24h\": \"$216,266,183\"\n      },\n      {\n        \"\
+        coingecko_id\": \"linea\",\n        \"name\": \"Linea\",\n        \"symbol\"\
+        : \"LINEA\",\n        \"price_usd\": 0.028569459650188887,\n        \"price_change_percentage_24h\"\
+        : 8.9180706973979138,\n        \"market_cap\": \"$441,670,016\",\n       \
+        \ \"market_cap_rank\": 216,\n        \"total_volume_24h\": \"$182,849,769\"\
+        \n      },\n      {\n        \"coingecko_id\": \"pancakeswap-token\",\n  \
+        \      \"name\": \"PancakeSwap\",\n        \"symbol\": \"CAKE\",\n       \
+        \ \"price_usd\": 3.5151589633846667,\n        \"price_change_percentage_24h\"\
+        : 1.1928156617374932,\n        \"market_cap\": \"$1,210,903,849\",\n     \
+        \   \"market_cap_rank\": 112,\n        \"total_volume_24h\": \"$810,706,082\"\
+        \n      },\n      {\n        \"coingecko_id\": \"bitcoin\",\n        \"name\"\
+        : \"Bitcoin\",\n        \"symbol\": \"BTC\",\n        \"price_usd\": 122600.60269975715,\n\
+        \        \"price_change_percentage_24h\": 2.1383755849624997,\n        \"\
+        market_cap\": \"$2,444,185,829,363\",\n        \"market_cap_rank\": 1,\n \
+        \       \"total_volume_24h\": \"$82,483,145,380\"\n      },\n      {\n   \
+        \     \"coingecko_id\": \"falcon-finance-ff\",\n        \"name\": \"Falcon\
+        \ Finance\",\n        \"symbol\": \"FF\",\n        \"price_usd\": 0.19590796084726242,\n\
+        \        \"price_change_percentage_24h\": 9.5716935983032521,\n        \"\
+        market_cap\": \"$458,106,372\",\n        \"market_cap_rank\": 210,\n     \
+        \   \"total_volume_24h\": \"$207,897,675\"\n      },\n      {\n        \"\
+        coingecko_id\": \"4-2\",\n        \"name\": \"4\",\n        \"symbol\": \"\
+        4\",\n        \"price_usd\": 0.17439516979122555,\n        \"price_change_percentage_24h\"\
+        : 31.410817765643085,\n        \"market_cap\": \"$175,688,327\",\n       \
+        \ \"market_cap_rank\": 396,\n        \"total_volume_24h\": \"$194,590,844\"\
+        \n      },\n      {\n        \"coingecko_id\": \"ethereum\",\n        \"name\"\
+        : \"Ethereum\",\n        \"symbol\": \"ETH\",\n        \"price_usd\": 4515.0081853086776,\n\
+        \        \"price_change_percentage_24h\": 0.75154256193296387,\n        \"\
+        market_cap\": \"$545,300,233,783\",\n        \"market_cap_rank\": 2,\n   \
+        \     \"total_volume_24h\": \"$42,672,758,724\"\n      }\n    ]\n  },\n  \"\
+        twitter_trending\": {\n    \"tokens\": [\n      \"btc\",\n      \"aster\"\
+        ,\n      \"eth\",\n      \"bnb\",\n      \"sol\",\n      \"pnkstr\",\n   \
+        \   \"xpl\",\n      \"zec\",\n      \"cake\",\n      \"pengu\",\n      \"\
+        hype\",\n      \"dog\",\n      \"link\",\n      \"xrp\",\n      \"usdc\",\n\
+        \      \"giggle\",\n      \"pump\",\n      \"doge\",\n      \"stbl\",\n  \
+        \    \"avax\",\n      \"spx\",\n      \"tao\",\n      \"sui\",\n      \"tsla\"\
+        ,\n      \"iren\",\n      \"ape\",\n      \"priceless\",\n      \"pepe\",\n\
+        \      \"troll\",\n      \"mstr\",\n      \"zero\",\n      \"ltc\",\n    \
+        \  \"useless\",\n      \"nat\",\n      \"crypto\",\n      \"strc\",\n    \
+        \  \"crv\",\n      \"open\",\n      \"usdt\",\n      \"hood\",\n      \"lolcoin\"\
+        ,\n      \"x402\",\n      \"bmnr\",\n      \"kas\",\n      \"nvda\",\n   \
+        \   \"apex\",\n      \"birb\",\n      \"retire\",\n      \"evaa\",\n     \
+        \ \"apt\"\n    ]\n  }\n}\n```"
+      data: *id003
+    description: Natural language query for comprehensive token trends
+    status: success
+    elapsed_time: 13.63705039024353
+  coingecko_twitter_only:
+    input:
+      query: Show me trending tokens from CoinGecko and Twitter only
+    output:
+      response: '**CoinGecko Trending Tokens:**
+
+
+        *   **Aster (ASTER):** Price: $2.217, 24h Change: +15.31%, Market Cap: $3.68B,
+        Rank: 50
+
+        *   **FLOKI (FLOKI):** Price: $0.0001135, 24h Change: +31.39%, Market Cap:
+        $1.09B, Rank: 121
+
+        *   **Plasma (XPL):** Price: $0.909, 24h Change: -2.13%, Market Cap: $1.65B,
+        Rank: 92
+
+        *   **MYX Finance (MYX):** Price: $6.501, 24h Change: -26.89%, Market Cap:
+        $1.24B, Rank: 110
+
+        *   **Linea (LINEA):** Price: $0.02857, 24h Change: +8.92%, Market Cap: $441.67M,
+        Rank: 216
+
+        *   **PancakeSwap (CAKE):** Price: $3.515, 24h Change: +1.19%, Market Cap:
+        $1.21B, Rank: 112
+
+        *   **Bitcoin (BTC):** Price: $122,600.60, 24h Change: +2.14%, Market Cap:
+        $2.44T, Rank: 1
+
+        *   **Falcon Finance (FF):** Price: $0.1959, 24h Change: +9.57%, Market Cap:
+        $458.11M, Rank: 210
+
+        *   **4 (4):** Price: $0.1744, 24h Change: +31.41%, Market Cap: $175.69M,
+        Rank: 396
+
+        *   **Ethereum (ETH):** Price: $4515.01, 24h Change: +0.75%, Market Cap: $545.30B,
+        Rank: 2
+
+
+        **Twitter Trending Tokens:**
+
+
+        *   btc
+
+        *   aster
+
+        *   eth
+
+        *   bnb
+
+        *   sol
+
+        *   pnkstr
+
+        *   xpl
+
+        *   zec
+
+        *   cake
+
+        *   pengu
+
+        *   hype
+
+        *   dog
+
+        *   link
+
+        *   xrp
+
+        *   usdc
+
+        *   giggle
+
+        *   pump
+
+        *   doge
+
+        *   stbl
+
+        *   avax
+
+        *   spx
+
+        *   tao
+
+        *   sui
+
+        *   tsla
+
+        *   iren
+
+        *   ape
+
+        *   priceless
+
+        *   pepe
+
+        *   troll
+
+        *   mstr
+
+        *   zero
+
+        *   ltc
+
+        *   useless
+
+        *   nat
+
+        *   crypto
+
+        *   strc
+
+        *   crv
+
+        *   open
+
+        *   usdt
+
+        *   hood
+
+        *   lolcoin
+
+        *   x402
+
+        *   bmnr
+
+        *   kas
+
+        *   nvda
+
+        *   apex
+
+        *   birb
+
+        *   retire
+
+        *   evaa
+
+        *   apt'
+      data: *id003
+    description: Query for standard trending sources (excluding meme platforms)
+    status: success
+    elapsed_time: 7.053095102310181
+  pump_fun_graduations:
+    input:
+      query: What tokens have recently graduated from pump.fun?
+    output:
+      response: "```json\n{\n  \"coingecko_trending\": {\n    \"trending_coins\":\
+        \ [\n      {\n        \"coingecko_id\": \"aster-2\",\n        \"market_cap\"\
+        : \"$3,681,275,853\",\n        \"market_cap_rank\": 50,\n        \"name\"\
+        : \"Aster\",\n        \"price_change_percentage_24h\": 15.306387485903517,\n\
+        \        \"price_usd\": 2.217332890620634,\n        \"symbol\": \"ASTER\"\
+        ,\n        \"total_volume_24h\": \"$1,118,423,411\"\n      },\n      {\n \
+        \       \"coingecko_id\": \"floki\",\n        \"market_cap\": \"$1,090,058,710\"\
+        ,\n        \"market_cap_rank\": 121,\n        \"name\": \"FLOKI\",\n     \
+        \   \"price_change_percentage_24h\": 31.390342675390777,\n        \"price_usd\"\
+        : 0.00011350776567951234,\n        \"symbol\": \"FLOKI\",\n        \"total_volume_24h\"\
+        : \"$329,612,904\"\n      },\n      {\n        \"coingecko_id\": \"plasma\"\
+        ,\n        \"market_cap\": \"$1,647,319,927\",\n        \"market_cap_rank\"\
+        : 92,\n        \"name\": \"Plasma\",\n        \"price_change_percentage_24h\"\
+        : -2.1324910426754715,\n        \"price_usd\": 0.90917073226394673,\n    \
+        \    \"symbol\": \"XPL\",\n        \"total_volume_24h\": \"$1,902,622,972\"\
+        \n      },\n      {\n        \"coingecko_id\": \"myx-finance\",\n        \"\
+        market_cap\": \"$1,240,452,438\",\n        \"market_cap_rank\": 110,\n   \
+        \     \"name\": \"MYX Finance\",\n        \"price_change_percentage_24h\"\
+        : -26.891717729089155,\n        \"price_usd\": 6.5006167834025446,\n     \
+        \   \"symbol\": \"MYX\",\n        \"total_volume_24h\": \"$216,266,183\"\n\
+        \      },\n      {\n        \"coingecko_id\": \"linea\",\n        \"market_cap\"\
+        : \"$441,670,016\",\n        \"market_cap_rank\": 216,\n        \"name\":\
+        \ \"Linea\",\n        \"price_change_percentage_24h\": 8.9180706973979138,\n\
+        \        \"price_usd\": 0.028569459650188887,\n        \"symbol\": \"LINEA\"\
+        ,\n        \"total_volume_24h\": \"$182,849,769\"\n      },\n      {\n   \
+        \     \"coingecko_id\": \"pancakeswap-token\",\n        \"market_cap\": \"\
+        $1,210,903,849\",\n        \"market_cap_rank\": 112,\n        \"name\": \"\
+        PancakeSwap\",\n        \"price_change_percentage_24h\": 1.1928156617374932,\n\
+        \        \"price_usd\": 3.5151589633846667,\n        \"symbol\": \"CAKE\"\
+        ,\n        \"total_volume_24h\": \"$810,706,082\"\n      },\n      {\n   \
+        \     \"coingecko_id\": \"bitcoin\",\n        \"market_cap\": \"$2,444,185,829,363\"\
+        ,\n        \"market_cap_rank\": 1,\n        \"name\": \"Bitcoin\",\n     \
+        \   \"price_change_percentage_24h\": 2.1383755849624997,\n        \"price_usd\"\
+        : 122600.60269975715,\n        \"symbol\": \"BTC\",\n        \"total_volume_24h\"\
+        : \"$82,483,145,380\"\n      },\n      {\n        \"coingecko_id\": \"falcon-finance-ff\"\
+        ,\n        \"market_cap\": \"$458,106,372\",\n        \"market_cap_rank\"\
+        : 210,\n        \"name\": \"Falcon Finance\",\n        \"price_change_percentage_24h\"\
+        : 9.5716935983032521,\n        \"price_usd\": 0.19590796084726242,\n     \
+        \   \"symbol\": \"FF\",\n        \"total_volume_24h\": \"$207,897,675\"\n\
+        \      },\n      {\n        \"coingecko_id\": \"4-2\",\n        \"market_cap\"\
+        : \"$175,688,327\",\n        \"market_cap_rank\": 396,\n        \"name\":\
+        \ \"4\",\n        \"price_change_percentage_24h\": 31.410817765643085,\n \
+        \       \"price_usd\": 0.17439516979122555,\n        \"symbol\": \"4\",\n\
+        \        \"total_volume_24h\": \"$194,590,844\"\n      },\n      {\n     \
+        \   \"coingecko_id\": \"ethereum\",\n        \"market_cap\": \"$545,300,233,783\"\
+        ,\n        \"market_cap_rank\": 2,\n        \"name\": \"Ethereum\",\n    \
+        \    \"price_change_percentage_24h\": 0.75154256193296387,\n        \"price_usd\"\
+        : 4515.0081853086776,\n        \"symbol\": \"ETH\",\n        \"total_volume_24h\"\
+        : \"$42,672,758,724\"\n      }\n    ]\n  },\n  \"twitter_trending\": {\n \
+        \   \"tokens\": [\n      \"btc\",\n      \"aster\",\n      \"eth\",\n    \
+        \  \"bnb\",\n      \"sol\",\n      \"pnkstr\",\n      \"xpl\",\n      \"zec\"\
+        ,\n      \"cake\",\n      \"pengu\",\n      \"hype\",\n      \"dog\",\n  \
+        \    \"link\",\n      \"xrp\",\n      \"usdc\",\n      \"giggle\",\n     \
+        \ \"pump\",\n      \"doge\",\n      \"stbl\",\n      \"avax\",\n      \"spx\"\
+        ,\n      \"tao\",\n      \"sui\",\n      \"tsla\",\n      \"iren\",\n    \
+        \  \"ape\",\n      \"priceless\",\n      \"pepe\",\n      \"troll\",\n   \
+        \   \"mstr\",\n      \"zero\",\n      \"ltc\",\n      \"useless\",\n     \
+        \ \"nat\",\n      \"crypto\",\n      \"strc\",\n      \"crv\",\n      \"open\"\
+        ,\n      \"usdt\",\n      \"hood\",\n      \"lolcoin\",\n      \"x402\",\n\
+        \      \"bmnr\",\n      \"kas\",\n      \"nvda\",\n      \"apex\",\n     \
+        \ \"birb\",\n      \"retire\",\n      \"evaa\",\n      \"apt\"\n    ]\n  }\n\
+        }\n```"
+      data: *id003
+    description: Natural language query specifically for pump.fun graduations
+    status: success
+    elapsed_time: 11.195312023162842
+  gmgn_meme_trends:
+    input:
+      query: Show me what's trending on GMGN
+    output:
+      response: 'Here''s a summary of trending tokens from your providers:
+
+
+        **GMGN Trending:**
+
+        1.  **Block (Block)**: Current Price: $0.0268, 24h Price Change: -22.25%,
+        Market Cap: $26.84M
+
+        2.  **MORPHO (MORPHO)**: Current Price: $1.8678, 24h Price Change: -3.61%,
+        Market Cap: $1.87B
+
+        3.  **PNKSTR (PNKSTR)**: Current Price: $0.1913, 24h Price Change: 25.77%,
+        Market Cap: $191.33M
+
+        4.  **T-HEAD (T-HEAD)**: Current Price: $0.0004087, 24h Price Change: -89.73%,
+        Market Cap: $408.68K
+
+        5.  **puppies (puppies)**: Current Price: $0.0000006088, 24h Price Change:
+        -12.19%, Market Cap: $25.61M
+
+        6.  **SΞR (SΞR)**: Current Price: $0.02827, 24h Price Change: -5.79%, Market
+        Cap: $2.83M
+
+        7.  **XCL (XCL)**: Current Price: $0.02043, 24h Price Change: 458.93%, Market
+        Cap: $19.39M
+
+        8.  **Puppies (Puppies)**: Current Price: $0.000000000002575, 24h Price Change:
+        121.83%, Market Cap: $1.08M
+
+        9.  **LINK (LINK)**: Current Price: $22.2421, 24h Price Change: -1.21%, Market
+        Cap: $22.24B
+
+        10. **APEX (APEX)**: Current Price: $2.0586, 24h Price Change: 13.69%, Market
+        Cap: $2.06B
+
+
+        **CoinGecko Trending:**
+
+        1.  **Aster (ASTER)**: Price: $2.217, 24h Change: 15.31%, Market Cap: $3.68B,
+        Rank: 50
+
+        2.  **FLOKI (FLOKI)**: Price: $0.0001135, 24h Change: 31.39%, Market Cap:
+        $1.09B, Rank: 121
+
+        3.  **Plasma (XPL)**: Price: $0.9092, 24h Change: -2.13%, Market Cap: $1.65B,
+        Rank: 92
+
+        4.  **MYX Finance (MYX)**: Price: $6.501, 24h Change: -26.89%, Market Cap:
+        $1.24B, Rank: 110
+
+        5.  **Linea (LINEA)**: Price: $0.02857, 24h Change: 8.92%, Market Cap: $441.67M,
+        Rank: 216
+
+        6.  **PancakeSwap (CAKE)**: Price: $3.515, 24h Change: 1.19%, Market Cap:
+        $1.21B, Rank: 112
+
+        7.  **Bitcoin (BTC)**: Price: $122600.60, 24h Change: 2.14%, Market Cap: $2.44T,
+        Rank: 1
+
+        8.  **Falcon Finance (FF)**: Price: $0.1959, 24h Change: 9.57%, Market Cap:
+        $458.11M, Rank: 210
+
+        9.  **4 (4)**: Price: $0.1744, 24h Change: 31.41%, Market Cap: $175.69M, Rank:
+        396
+
+        10. **Ethereum (ETH)**: Price: $4515.01, 24h Change: 0.75%, Market Cap: $545.30B,
+        Rank: 2
+
+
+        **Pump.fun Recent Graduated Tokens (within the last 12 hours):**
+
+        *   **Zolana (Zolana)**: Market Cap: $4.51M, Price: $0.00451
+
+        *   **Zolana (Zolana)**: Market Cap: $1.27M, Price: $0.00127
+
+        *   **Sorafication (Sorafy)**: Market Cap: $923.51K, Price: $0.0009235
+
+        *   **The Last Job (QUIT)**: Market Cap: $853.45K, Price: $0.0008535
+
+        *   **the rising (rise)**: Market Cap: $751.79K, Price: $0.0007518
+
+        *   **Innovation Coin (INNOVATION)**: Market Cap: $566.18K, Price: $0.0005662
+
+        *   **DEFBOT (DEFBOT)**: Market Cap: $537.74K, Price: $0.0005377
+
+        *   **ClauDex Perpetual Agent (ClauDex)**: Market Cap: $520.35K, Price: $0.0005204
+
+        *   **DeepLoom (LOOM)**: Market Cap: $369.74K, Price: $0.0003697
+
+        *   **Bolana (Bolana)**: Market Cap: $286.87K, Price: $0.0002869
+
+        *   **one black line (blackline)**: Market Cap: $282.16K, Price: $0.0002822
+
+        *   **BNB on Solana (BNB)**: Market Cap: $282.78K, Price: $0.0002828
+
+        *   **Pump Thumb (Thumb)**: Market Cap: $238.34K, Price: $0.0002383
+
+        *   **Crypto Money by Me (CMONEY)**: Market Cap: $227.47K, Price: $0.0002275
+
+        *   **42 (42)**: Market Cap: $209.17K, Price: $0.0002092
+
+        *   **bee and bee (BNB)**: Market Cap: $206.25K, Price: $0.0002063
+
+        *   **MELINOE (MELINOE)**: Market Cap: $197.45K, Price: $0.0001975
+
+        *   **Binance Super Smart Chain (BSSC)**: Market Cap: $178.20K, Price: $0.0001782
+
+        *   **Solana Pepe (Sepe)**: Market Cap: $172.49K, Price: $0.0001725
+
+        *   **Dartantic (DRTC)**: Market Cap: $159.08K, Price: $0.0001591
+
+        *   **huh (huh)**: Market Cap: $150.09K, Price: $0.0001501
+
+        *   **Internet (INTERNET)**: Market Cap: $149.55K, Price: $0.0001495
+
+        *   **magic coin (magic)**: Market Cap: $145.74K, Price: $0.0001457
+
+        *   **Banana (BNANA)**: Market Cap: $129.86K, Price: $0.0001299
+
+        *   **Name (Ticker)**: Market Cap: $129.30K, Price: $0.0001293
+
+        *   **Hi (HI)**: Market Cap: $125.45K, Price: $0.0001254
+
+        *   **Onboard (QR)**: Market Cap: $125.26K, Price: $0.0001253
+
+        *   **Quake Kinetic Energy (QKE)**: Market Cap: $116.73K, Price: $0.0001167
+
+        *   **Monsta Labs (monsta)**: Market Cap: $118.50K, Price: $0.0001185
+
+        *   **The Sun is Rising (SOL)**: Market Cap: $115.07K, Price: $0.0001151
+
+        *   **Join (Join)**: Market Cap: $113.99K, Price: $0.0001140
+
+        *   **OpenDeSci (ODS)**: Market Cap: $112.93K, Price: $0.0001129
+
+        *   **Amy Meat (MEAT)**: Market Cap: $110.67K, Price: $0.0001107
+
+        *   **Justice For Kyren Lacy (Kyren )**: Market Cap: $111.28K, Price: $0.0001113
+
+        *   **Solana ETF (GSOL)**: Market Cap: $101.23K, Price: $0.0001012
+
+        *   **Trust Our Path (TOP)**: Market Cap: $98.47K, Price: $0.00009847
+
+        *   **Pumplabs (PUMPLABS)**: Market Cap: $99.68K, Price: $0.00009968
+
+        *   **Inuvation (INUVATION)**: Market Cap: $97.02K, Price: $0.00009702
+
+
+        **Twitter Trending:**
+
+        *   btc, aster, eth, bnb, sol, pnkstr, xpl, zec, cake, pengu, hype, dog, link,
+        xrp, usdc, giggle, pump, doge, stbl, avax, spx, tao, sui, tsla, iren, ape,
+        priceless, pepe, troll, mstr, zero, ltc, useless, nat, crypto, strc, crv,
+        open, usdt, hood, lolcoin, x402, bmnr, kas, nvda, apex, birb, retire, evaa,
+        apt'
+      data: *id004
+    description: ''
+    status: success
+    elapsed_time: 16.61516284942627

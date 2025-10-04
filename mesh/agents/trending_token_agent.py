@@ -29,7 +29,12 @@ class TrendingTokenAgent(MeshAgent):
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
                 "examples": [
-                    "get_trending_tokens",
+                    "Show me trending tokens",
+                    "Get trending tokens including memecoins",
+                    "What are the hottest tokens right now across all platforms?",
+                    "Show me trending tokens from CoinGecko and Twitter only",
+                    "What tokens have recently graduated from pump.fun?",
+                    "Show me what's trending on GMGN",
                 ],
             }
         )
