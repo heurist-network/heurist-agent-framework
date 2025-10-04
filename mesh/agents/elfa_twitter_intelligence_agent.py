@@ -327,7 +327,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             logger.error(f"Exception in search_account: {str(e)}")
             return {"status": "error", "error": str(e)}
 
-    @with_cache(ttl_seconds=300)
+    @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=3)
     async def get_trending_tokens(self, time_window: str = "24h") -> Dict:
         logger.info(f"Getting trending tokens for time window: {time_window}")
@@ -338,8 +338,14 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             if "error" in result:
                 logger.error(f"Error getting trending tokens: {result['error']}")
                 return result
-            logger.info("Successfully retrieved trending tokens data")
-            return {"status": "success", "data": result}
+
+            # Extract token names only
+            tokens = []
+            if result.get("data") and result["data"].get("data"):
+                tokens = [item.get("token") for item in result["data"]["data"] if item.get("token")]
+
+            logger.info(f"Successfully retrieved {len(tokens)} trending tokens")
+            return {"status": "success", "data": {"tokens": tokens}}
         except Exception as e:
             logger.error(f"Exception in get_trending_tokens: {str(e)}")
             return {"status": "error", "error": str(e)}

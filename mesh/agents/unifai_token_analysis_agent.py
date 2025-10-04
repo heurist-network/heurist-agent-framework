@@ -118,7 +118,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                       API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @with_cache(ttl_seconds=300)
+    @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=3)
     async def get_gmgn_trend(self, time_window: str = "24h", limit: int = 50) -> Dict:
         """
