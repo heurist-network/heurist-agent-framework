@@ -380,9 +380,6 @@ Guidelines:
                         "name": currency.get("Name", "Unknown"),
                         "symbol": currency.get("Symbol", "Unknown"),
                         "mint_address": currency.get("MintAddress", ""),
-                        "decimals": currency.get("Decimals", 0),
-                        "fungible": currency.get("Fungible", True),
-                        "uri": currency.get("Uri", ""),
                     },
                 }
                 graduated_tokens_with_price.append(token_data)
