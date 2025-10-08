@@ -277,7 +277,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             result.pop("metadata", None)
 
             logger.info(f"Successfully retrieved and enriched {len(result.get('data', []))} mentions")
-            return {"status": "success", "data": result}
+            return {"status": "success", "data": result.get("data", [])}
         except Exception as e:
             logger.error(f"Exception in search_mentions: {str(e)}")
             return {"status": "error", "error": str(e)}

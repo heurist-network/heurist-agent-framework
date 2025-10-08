@@ -10,6 +10,7 @@ from mesh.mesh_agent import MeshAgent
 logger = logging.getLogger(__name__)
 load_dotenv()
 
+DEFAULT_TIMELINE_LIMIT = 20
 
 class TwitterInfoAgent(MeshAgent):
     def __init__(self):
@@ -75,6 +76,10 @@ class TwitterInfoAgent(MeshAgent):
                                 "description": "Maximum number of tweets to return (max: 50)",
                                 "default": 10,
                             },
+                            "cursor": {
+                                "type": "string",
+                                "description": "Cursor to fetch the next page of tweets",
+                            },
                         },
                         "required": ["username"],
                     },
@@ -92,6 +97,10 @@ class TwitterInfoAgent(MeshAgent):
                                 "type": "string",
                                 "description": "The ID of the tweet to fetch details for",
                             },
+                            "cursor": {
+                                "type": "string",
+                                "description": "Cursor to fetch the next page of tweets",
+                            },
                         },
                         "required": ["tweet_id"],
                     },
@@ -108,6 +117,15 @@ class TwitterInfoAgent(MeshAgent):
                             "q": {
                                 "type": "string",
                                 "description": "The search query - MUST be a single keyword, hashtag (#example), mention (@username), or exact phrase in quotes. DO NOT use multiple words or sentences.",
+                            },
+                            "cursor": {
+                                "type": "string",
+                                "description": "Cursor to fetch the next page of tweets",
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Maximum number of tweets to return",
+                                "default": 20,
                             },
                         },
                         "required": ["q"],
@@ -140,37 +158,56 @@ class TwitterInfoAgent(MeshAgent):
         return input_str.strip().isdigit()
 
     def _simplify_tweet_data(self, tweet: Dict) -> Dict:
-        """Extract only essential tweet information"""
-        simplified = {
-            "id": tweet.get("id_str", ""),
-            "text": tweet.get("text", ""),
-            "created_at": tweet.get("created_at", ""),
+        user = tweet.get("user", {}) or {}
+        username = user.get("screen_name", "")
+        tid = str(tweet.get("tweet_id") or tweet.get("id_str") or tweet.get("id") or "")
+        text = tweet.get("text", "")
+        created = tweet.get("created_at", "")
+        media_type = tweet.get("media_type") or ""
+        medias = tweet.get("medias") or []
+
+        def _type(t: Dict) -> str:
+            if t.get("is_retweet"): return "retweet"
+            if t.get("is_reply"): return "reply"
+            if t.get("is_quote"): return "quote"
+            return "tweet"
+
+        result = {
+            "id": tid,
+            "text": text,
+            "created_at": created,
+            # "link": f"https://x.com/{username}/status/{tid}" if username and tid else "",
             "author": {
-                "id": tweet.get("user", {}).get("id_str", ""),
-                "username": tweet.get("user", {}).get("screen_name", ""),
-                "name": tweet.get("user", {}).get("name", ""),
+                "id": user.get("id_str") or "",
+                "username": username,
+                "name": user.get("name", ""),
+                "verified": bool(user.get("verified", False)),
+                "followers": int(user.get("followers_count", 0)),
             },
             "engagement": {
-                "retweets": tweet.get("retweet_count", 0),
-                "likes": tweet.get("favorite_count", 0),
-                "replies": tweet.get("reply_count", 0),
+                "likes": int(tweet.get("favorite_count", 0)),
+                "replies": int(tweet.get("reply_count", 0)),
+                "retweets": int(tweet.get("retweet_count", 0)),
+                "quotes": int(tweet.get("quote_count", 0)),
+                "views": int(tweet.get("view_count", 0) or 0),
             },
+            "type": _type(tweet),
+            "media": {"type": media_type, "urls": medias},
         }
 
-        # Add thread/reply context if available
         if tweet.get("in_reply_to_status_id_str"):
-            simplified["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
-            simplified["in_reply_to_user"] = tweet.get("in_reply_to_screen_name")
+            result["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
+            result["in_reply_to_tweet_text"] = tweet.get("in_reply_to_status", {}).get("text", "")
+            result["in_reply_to_tweet_author"] = tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
 
-        # Add quoted tweet info if available
         if tweet.get("quoted_status"):
-            simplified["quoted_tweet"] = {
+            result["quoted_tweet"] = {
                 "id": tweet["quoted_status"].get("id_str", ""),
                 "text": tweet["quoted_status"].get("text", ""),
                 "author": tweet["quoted_status"].get("user", {}).get("screen_name", ""),
             }
 
-        return simplified
+        return result
 
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
@@ -217,107 +254,71 @@ class TwitterInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def get_tweets(self, user_id: str, limit: int = 10) -> Dict:
-        """Fetch recent tweets for a user by ID using _api_request"""
-        try:
-            params = {"user_id": user_id, "count": min(limit, 50)}
+    async def get_tweets(self, user_id: str, limit: int = DEFAULT_TIMELINE_LIMIT, cursor: Optional[str] = None) -> Dict:
+        params = {"user_id": user_id, "count": min(limit, 50)}
+        if cursor:
+            params["cursor"] = cursor
+        tweets_data = await self._api_request(url=self.get_twitter_tweets_endpoint(), method="GET", headers=self.headers, params=params)
+        if "error" in tweets_data:
+            return tweets_data
 
-            logger.info(f"Fetching tweets for user_id: {user_id}, limit: {limit}")
-            tweets_data = await self._api_request(
-                url=self.get_twitter_tweets_endpoint(), method="GET", headers=self.headers, params=params
-            )
+        # accept either {tweets:[...]} or {data:{tweets:[...], cursor:...}}
+        root = tweets_data.get("data") if isinstance(tweets_data, dict) else None
+        tweets = (root or tweets_data).get("tweets", [])
+        next_cursor = (root or tweets_data).get("cursor")
 
-            if "error" in tweets_data:
-                logger.error(f"Error fetching tweets: {tweets_data['error']}")
-                return tweets_data
+        cleaned = [self._simplify_tweet_data(t) for t in tweets]
+        return {"tweets": cleaned, "next_cursor": next_cursor}
 
-            tweets = tweets_data.get("tweets", [])
-            cleaned_tweets = [self._simplify_tweet_data(tweet) for tweet in tweets]
-
-            logger.info(f"Successfully fetched {len(cleaned_tweets)} tweets")
-            return {"tweets": cleaned_tweets}
-
-        except Exception as e:
-            logger.error(f"Error in get_tweets: {e}")
-            return {"error": f"Failed to fetch user tweets: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def get_tweet_detail(self, tweet_id: str) -> Dict:
-        """Fetch detailed information about a specific tweet using _api_request"""
-        try:
-            params = {"tweet_id": tweet_id}
+    async def get_tweet_detail(self, tweet_id: str, cursor: Optional[str] = None) -> Dict:
+        params = {"tweet_id": tweet_id}
+        if cursor:
+            params["cursor"] = cursor
+        tweet_data = await self._api_request(url=self.get_twitter_detail_endpoint(), method="GET", headers=self.headers, params=params)
+        if "error" in tweet_data:
+            return tweet_data
 
-            logger.info(f"Fetching tweet details for tweet_id: {tweet_id}")
-            tweet_data = await self._api_request(
-                url=self.get_twitter_detail_endpoint(), method="GET", headers=self.headers, params=params
-            )
+        root = tweet_data.get("data") or tweet_data
+        tweets = root.get("tweets", [])
+        next_cursor = root.get("cursor")
 
-            if "error" in tweet_data:
-                logger.error(f"Error fetching tweet details: {tweet_data['error']}")
-                return tweet_data
+        result = {"main_tweet": None, "thread_tweets": [], "replies": [], "next_cursor": next_cursor}
+        for t in tweets:
+            s = self._simplify_tweet_data(t)
+            if s["id"] == tweet_id:
+                result["main_tweet"] = s
+            elif s["type"] == "reply":
+                result["replies"].append(s)
+            else:
+                result["thread_tweets"].append(s)
+        return result
 
-            result = {"main_tweet": None, "thread_tweets": [], "replies": []}
-
-            # Find the main tweet and organize thread/replies
-            tweets = tweet_data.get("tweets", [])
-            for tweet in tweets:
-                simplified = self._simplify_tweet_data(tweet)
-                if tweet.get("id_str") == tweet_id:
-                    result["main_tweet"] = simplified
-                elif tweet.get("in_reply_to_status_id_str") == tweet_id:
-                    result["replies"].append(simplified)
-                else:
-                    result["thread_tweets"].append(simplified)
-
-            logger.info("Successfully fetched tweet details")
-            return result
-
-        except Exception as e:
-            logger.error(f"Error in get_tweet_detail: {e}")
-            return {"error": f"Failed to fetch tweet details: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def general_search(self, query: str) -> Dict:
-        """Search for tweets using a query term using _api_request"""
-        try:
-            # Warn if query appears to be multi-word without quotes
-            if " " in query and not (query.startswith('"') and query.endswith('"')):
-                logger.warning(f"Multi-word search query detected: '{query}'. This may return empty results.")
+    async def general_search(self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None) -> Dict:
+        if " " in query and not (query.startswith('"') and query.endswith('"')):
+            logger.warning(f"Multi-word search query detected: '{query}' (likely sparse results).")
+        params = {"q": query, "sort_by": sort_by}
+        if cursor:
+            params["cursor"] = cursor
+        if limit:
+            params["count"] = limit
 
-            params = {"q": query}
+        search_data = await self._api_request(url=self.get_twitter_search_endpoint(), method="GET", headers=self.headers, params=params)
+        if "error" in search_data:
+            return search_data
 
-            logger.info(f"Performing general search for query: {query}")
-            search_data = await self._api_request(
-                url=self.get_twitter_search_endpoint(), method="GET", headers=self.headers, params=params
-            )
+        root = search_data.get("data") if isinstance(search_data, dict) else None
+        tweets = (root or search_data).get("tweets", [])
+        next_cursor = (root or search_data).get("cursor")
 
-            if "error" in search_data:
-                logger.error(f"Error in general search: {search_data['error']}")
-                return search_data
+        simplified = [self._simplify_tweet_data(t) for t in tweets]
+        return {"query": query, "tweets": simplified, "result_count": len(simplified), "next_cursor": next_cursor}
 
-            tweets = search_data.get("tweets", [])
-            simplified_tweets = [self._simplify_tweet_data(tweet) for tweet in tweets]
-
-            result = {"query": query, "tweets": simplified_tweets, "result_count": len(simplified_tweets)}
-
-            # Add warning if no results found
-            if len(simplified_tweets) == 0:
-                result["warning"] = (
-                    "No results found. If you used multiple words, try a single keyword, hashtag (#example), or mention (@username) instead."
-                )
-
-            logger.info(f"Successfully completed search for query: {query}, found {len(simplified_tweets)} results")
-            return result
-
-        except Exception as e:
-            logger.error(f"Error in general_search: {e}")
-            return {"error": f"Failed to search tweets: {str(e)}"}
-
-    # ------------------------------------------------------------------------
-    #                      TOOL HANDLING LOGIC
-    # ------------------------------------------------------------------------
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
@@ -326,7 +327,8 @@ class TwitterInfoAgent(MeshAgent):
 
         if tool_name == "get_user_tweets":
             identifier = function_args.get("username")
-            limit = min(function_args.get("limit", 10), 50)  # Cap at 50
+            limit = min(function_args.get("limit", 10), 50)
+            cursor = function_args.get("cursor")
 
             if not identifier:
                 return {"error": "Missing 'username' parameter"}
@@ -347,7 +349,7 @@ class TwitterInfoAgent(MeshAgent):
                 return {"error": "Could not retrieve user ID"}
 
             # Get user tweets
-            tweets_result = await self.get_tweets(user_id, limit)
+            tweets_result = await self.get_tweets(user_id, limit, cursor)
             errors = self._handle_error(tweets_result)
             if errors:
                 return errors
@@ -361,13 +363,13 @@ class TwitterInfoAgent(MeshAgent):
 
         elif tool_name == "get_twitter_detail":
             tweet_id = function_args.get("tweet_id")
-
+            cursor = function_args.get("cursor")
             if not tweet_id:
                 return {"error": "Missing 'tweet_id' parameter"}
 
             logger.info(f"Fetching tweet details for tweet_id '{tweet_id}'")
 
-            tweet_detail_result = await self.get_tweet_detail(tweet_id)
+            tweet_detail_result = await self.get_tweet_detail(tweet_id, cursor)
             errors = self._handle_error(tweet_detail_result)
             if errors:
                 return errors
@@ -376,7 +378,8 @@ class TwitterInfoAgent(MeshAgent):
 
         elif tool_name == "get_general_search":
             query = function_args.get("q")
-
+            cursor = function_args.get("cursor")
+            limit = function_args.get("limit")
             if not query:
                 return {"error": "Missing 'q' parameter"}
 
@@ -389,7 +392,7 @@ class TwitterInfoAgent(MeshAgent):
 
             logger.info(f"Performing general search for query '{query}'")
 
-            search_result = await self.general_search(query)
+            search_result = await self.general_search(query, cursor, limit)
             errors = self._handle_error(search_result)
             if errors:
                 return errors
