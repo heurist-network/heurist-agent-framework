@@ -416,7 +416,8 @@ class TwitterInfoAgent(MeshAgent):
                 "twitter_data": {
                     "profile": profile_result.get("profile", {}),
                     "tweets": tweets_result.get("tweets", []),
-                }
+                },
+                "next_cursor": tweets_result.get("next_cursor"),
             }
 
         elif tool_name == "get_twitter_detail":
