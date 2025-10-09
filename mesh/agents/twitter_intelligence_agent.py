@@ -40,6 +40,11 @@ class TwitterIntelligenceAgent(MeshAgent):
             }
         )
 
+    def get_system_prompt(self) -> str:
+        return """You are a Twitter/X intelligence specialist that helps users retrieve and analyze Twitter data.
+You have access to tools for fetching user timelines, tweet details with threads/replies, and searching Twitter content.
+Provide clear, structured information from Twitter/X to help users understand social media discussions and activity."""
+
     # -----------------------------
     # Tool surface
     # -----------------------------
@@ -170,15 +175,22 @@ class TwitterIntelligenceAgent(MeshAgent):
             {"keywords": keywords, "limit": max(SEARCH_LIMIT_MIN, min(SEARCH_LIMIT_MAX, limit))},
         )
 
-    def _simplify_tweet(self, t: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def _simplify_tweet(self, t: Dict[str, Any], include_replies: bool = False) -> Optional[Dict[str, Any]]:
         """
         Normalize a single tweet from TwitterInfoAgent's simplified tweet.
         Expects keys: id, text, created_at, author{username,name,verified,followers}, engagement{likes,replies,retweets,quotes,views}, type, media{type,urls}
+
+        Args:
+            t: The tweet dictionary to simplify
+            include_replies: If True, don't filter out reply tweets (useful for tweet_detail)
         """
         if not t or not t.get("id"):
             return None
-        # Enforce defaults: exclude retweets & replies; include quotes
-        if t.get("type") in ("retweet", "reply"):
+        # Enforce defaults: exclude retweets & replies (unless include_replies=True); include quotes
+        tweet_type = t.get("type")
+        if tweet_type == "retweet":
+            return None
+        if tweet_type == "reply" and not include_replies:
             return None
         if (t.get("author", {}) or {}).get("followers", 0) < MIN_AUTHOR_FOLLOWERS:
             return None
@@ -186,7 +198,8 @@ class TwitterIntelligenceAgent(MeshAgent):
         total = int(eng.get("likes", 0)) + int(eng.get("replies", 0)) + int(eng.get("retweets", 0)) + int(eng.get("quotes", 0))
         if total < MIN_TOTAL_ENGAGEMENT:
             return None
-        return {
+
+        result = {
             "id": str(t["id"]),
             "text": t.get("text", ""),
             "created_at": t.get("created_at", ""),
@@ -206,6 +219,18 @@ class TwitterIntelligenceAgent(MeshAgent):
             "type": t.get("type", "tweet"),
             # "media": t.get("media", {"type": "", "urls": []}),
         }
+
+        if t.get("quoted_tweet"):
+            result["quoted_tweet"] = t.get("quoted_tweet")
+
+        if t.get("in_reply_to_tweet_id"):
+            result["in_reply_to"] = {
+                "id": t.get("in_reply_to_tweet_id"),
+                "text": t.get("in_reply_to_tweet_text", ""),
+                "author": t.get("in_reply_to_tweet_author", ""),
+            }
+
+        return result
 
     def _dedupe_keep_best(self, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Deduplicate by id; if duplicates exist, keep the one with higher total engagement."""
@@ -271,32 +296,41 @@ class TwitterIntelligenceAgent(MeshAgent):
 
             data = raw.get("tweet_data") or raw
             main = data.get("main_tweet")
+            in_reply_to = data.get("in_reply_to")  # Parent tweet if main is a reply
             thread = data.get("thread_tweets") or data.get("thread") or []
             replies = data.get("replies") or []
             next_cursor = data.get("next_cursor") or raw.get("next_cursor")
 
-            main_item = self._simplify_tweet(main) if main else None
+            # Always include the main tweet even if it's a reply (don't filter it out)
+            main_item = self._simplify_tweet(main, include_replies=True) if main else None
+            in_reply_to_item = self._simplify_tweet(in_reply_to, include_replies=True) if in_reply_to else None
 
             # Apply filters to thread/replies and clamp replies
-            thread_items = [self._simplify_tweet(t) for t in thread]
+            # Note: thread tweets can be replies in a thread, so include_replies=True
+            thread_items = [self._simplify_tweet(t, include_replies=True) for t in thread]
             thread_items = [x for x in thread_items if x is not None]
 
-            reply_items = [self._simplify_tweet(t) for t in replies]
+            reply_items = [self._simplify_tweet(t, include_replies=True) for t in replies]
             reply_items = [x for x in reply_items if x is not None][:replies_limit]
 
             data: Dict[str, Any] = {"main": main_item}
 
+            # If main is a reply, include the parent tweet
+            if in_reply_to_item:
+                data["in_reply_to"] = in_reply_to_item
+
             if show_thread:
-                data.update({
-                    "thread": thread_items,
-                    "replies": reply_items,
-                    "next_cursor": next_cursor,
-                })
+                # Only include non-empty fields
+                if thread_items:
+                    data["thread"] = thread_items
+                if reply_items:
+                    data["replies"] = reply_items
                 if next_cursor:
+                    data["next_cursor"] = next_cursor
                     data["next_tool_tips"] = [f"Call tweet_detail again with cursor={next_cursor} to fetch more replies."]
             else:
                 # If there is more context but we're not showing it, add a helpful tip.
-                needs_tip = (len(thread_items) + len(reply_items)) > 0 or bool(next_cursor)
+                needs_tip = (len(thread_items) + len(reply_items)) > 0 or bool(next_cursor) or in_reply_to_item
                 if needs_tip:
                     data["next_tool_tips"] = ["Pass show_thread=true to load the full thread and top replies."]
 

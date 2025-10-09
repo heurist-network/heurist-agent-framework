@@ -163,8 +163,8 @@ class TwitterInfoAgent(MeshAgent):
         tid = str(tweet.get("tweet_id") or tweet.get("id_str") or tweet.get("id") or "")
         text = tweet.get("text", "")
         created = tweet.get("created_at", "")
-        media_type = tweet.get("media_type") or ""
-        medias = tweet.get("medias") or []
+        # media_type = tweet.get("media_type") or ""
+        # medias = tweet.get("medias") or []
 
         def _type(t: Dict) -> str:
             if t.get("is_retweet"): return "retweet"
@@ -192,20 +192,16 @@ class TwitterInfoAgent(MeshAgent):
                 "views": int(tweet.get("view_count", 0) or 0),
             },
             "type": _type(tweet),
-            "media": {"type": media_type, "urls": medias},
+            # "media": {"type": media_type, "urls": medias},
         }
 
         if tweet.get("in_reply_to_status_id_str"):
             result["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
             result["in_reply_to_tweet_text"] = tweet.get("in_reply_to_status", {}).get("text", "")
             result["in_reply_to_tweet_author"] = tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
-
-        if tweet.get("quoted_status"):
-            result["quoted_tweet"] = {
-                "id": tweet["quoted_status"].get("id_str", ""),
-                "text": tweet["quoted_status"].get("text", ""),
-                "author": tweet["quoted_status"].get("user", {}).get("screen_name", ""),
-            }
+# Store the ID so it can be fetched later if fetch_quoted=True
+        if tweet.get("is_quote") and tweet.get("related_tweet_id"):
+            result["quoted_tweet_id"] = str(tweet["related_tweet_id"])
 
         return result
 
@@ -285,15 +281,77 @@ class TwitterInfoAgent(MeshAgent):
         tweets = root.get("tweets", [])
         next_cursor = root.get("cursor")
 
-        result = {"main_tweet": None, "thread_tweets": [], "replies": [], "next_cursor": next_cursor}
+        result = {"main_tweet": None}
+
+        # First pass: find the main tweet and identify if it's a reply
+        is_main_a_reply = False
+        parent_tweet_id = None
+
+        for t in tweets:
+            tid = str(t.get("tweet_id") or t.get("id_str") or t.get("id") or "")
+            if tid == tweet_id:
+                is_main_a_reply = t.get("is_reply", False)
+                if is_main_a_reply:
+                    parent_tweet_id = t.get("related_tweet_id")
+                break
+
+        # Get main tweet author for thread detection
+        main_tweet_author = None
+        for t in tweets:
+            tid = str(t.get("tweet_id") or t.get("id_str") or t.get("id") or "")
+            if tid == tweet_id:
+                main_tweet_author = (t.get("user", {}) or {}).get("screen_name")
+                break
+
+        # Temporary lists for categorization
+        thread_tweets = []
+        replies = []
+
+        # Second pass: categorize all tweets
         for t in tweets:
             s = self._simplify_tweet_data(t)
-            if s["id"] == tweet_id:
+            tid = s["id"]
+            tweet_author = s.get("author", {}).get("username")
+
+            if tid == tweet_id:
+                # This is the main tweet we requested
                 result["main_tweet"] = s
+            elif is_main_a_reply and tid == parent_tweet_id:
+                # This is the parent tweet that the main tweet is replying to
+                result["in_reply_to"] = s
+            elif s["type"] == "reply" and tweet_author == main_tweet_author:
+                # Thread tweet: reply by the same author (continuing their own thread)
+                thread_tweets.append(s)
             elif s["type"] == "reply":
-                result["replies"].append(s)
+                # Actual reply: reply by a different author (commenting on the tweet)
+                replies.append(s)
             else:
-                result["thread_tweets"].append(s)
+                # Regular tweet (not a reply), could be part of a thread
+                thread_tweets.append(s)
+
+        # Only include fields with data
+        if thread_tweets:
+            result["thread_tweets"] = thread_tweets
+        if replies:
+            result["replies"] = replies
+        if next_cursor:
+            result["next_cursor"] = next_cursor
+
+        if result["main_tweet"] and result["main_tweet"].get("quoted_tweet_id"):
+            quoted_id = result["main_tweet"]["quoted_tweet_id"]
+            try:
+                quoted_result = await self.get_tweet_detail(quoted_id, cursor=None)
+                if "error" not in quoted_result and quoted_result.get("main_tweet"):
+                    quoted_tweet = quoted_result["main_tweet"]
+                    result["main_tweet"]["quoted_tweet"] = quoted_tweet
+                else:
+                    result["main_tweet"]["quoted_tweet"] = {"id": quoted_id}
+            except Exception as e:
+                logger.warning(f"Failed to fetch quoted tweet {quoted_id}: {e}")
+                result["main_tweet"]["quoted_tweet"] = {"id": quoted_id}
+
+            del result["main_tweet"]["quoted_tweet_id"]
+
         return result
 
 
@@ -380,6 +438,7 @@ class TwitterInfoAgent(MeshAgent):
             query = function_args.get("q")
             cursor = function_args.get("cursor")
             limit = function_args.get("limit")
+            sort_by = function_args.get("sort_by", "Latest")
             if not query:
                 return {"error": "Missing 'q' parameter"}
 
@@ -392,7 +451,7 @@ class TwitterInfoAgent(MeshAgent):
 
             logger.info(f"Performing general search for query '{query}'")
 
-            search_result = await self.general_search(query, cursor, limit)
+            search_result = await self.general_search(query, sort_by=sort_by, cursor=cursor, limit=limit)
             errors = self._handle_error(search_result)
             if errors:
                 return errors
