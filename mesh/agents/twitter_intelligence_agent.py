@@ -37,6 +37,15 @@ class TwitterIntelligenceAgent(MeshAgent):
                     "twitter_search(queries=['#ETH','SOL'], limit=15)"
                 ],
                 "credits": 10,
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.02",
+                    "tool_prices": {
+                        "user_timeline": "0.01",
+                        "tweet_detail": "0.01",
+                        "twitter_search": "0.02",
+                    },
+                },
             }
         )
 

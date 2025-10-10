@@ -24,7 +24,7 @@ class TrendingTokenAgent(MeshAgent):
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, and social media intelligence sources.",
-                "external_apis": ["GMGN", "CoinGecko", "Bitquery", "ELFA"],
+                "external_apis": ["GMGN", "CoinGecko", "Bitquery", "Elfa"],
                 "tags": ["Token Trends", "Market Data"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
@@ -36,6 +36,13 @@ class TrendingTokenAgent(MeshAgent):
                     "What tokens have recently graduated from pump.fun?",
                     "Show me what's trending on GMGN",
                 ],
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.02",
+                    "tool_prices": {
+                        "get_trending_tokens": "0.02",
+                    },
+                },
             }
         )
 

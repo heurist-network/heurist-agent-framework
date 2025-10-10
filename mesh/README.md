@@ -181,6 +181,34 @@ Each agent's `metadata` dictionary should at least contain:
 - `external_apis`: Any external service your agent accesses (e.g., `['DefiLlama']`).
 - `tags`: Keywords or categories to help users discover your agent.
 
+### X402 Payment Integration (Optional)
+
+Mesh agents can be exposed via the [Coinbase X402 Bazaar](https://docs.cdp.coinbase.com/x402) to enable pay-per-use access with USDC payments. To enable your agent for X402:
+
+Add `x402_config` to your agent's metadata:
+
+```python
+self.metadata.update({
+    # ... other metadata fields ...
+    "x402_config": {
+        "enabled": True,
+        "default_price_usd": "0.02",  # Default price for all tools in USD
+        "tool_prices": {  # Optional: override price for specific tools
+            "search_projects": "0.01",
+            "get_market_summary": "0.02",
+        },
+    },
+})
+```
+
+**X402 Eligibility Criteria:**
+- Agents **must** have `x402_config.enabled` set to `True` to be discoverable in X402 Bazaar
+- The `author_address` must be a valid Ethereum address (this is where USDC payments will be sent)
+- Tool prices are specified in USD and automatically converted to USDC (6 decimals) by the X402 middleware
+- If `tool_prices` is not specified for a tool, it will use `default_price_usd`
+
+**Example:** See [aixbt_project_info_agent.py](./agents/aixbt_project_info_agent.py) for a complete implementation.
+
 ## Examples
 
 We have included example agents in this folder:

@@ -72,6 +72,14 @@ class YahooFinanceAgent(MeshAgent):
                     "Signal summary for TSLA on 1d timeframe",
                     "Show me technical analysis for ETH-USD",
                 ],
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.02",
+                    "tool_prices": {
+                        "fetch_price_history": "0.02",
+                        "indicator_snapshot": "0.02",
+                    },
+                },
             }
         )
 
