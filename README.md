@@ -66,36 +66,16 @@ The Heurist Agent Framework is built on a modular architecture that allows an AI
 
 ![mesh](https://github.com/user-attachments/assets/77a2ab3b-e35c-4313-8a5b-a0e751cac879)
 
-**Heurist Mesh** is an open network where AI agents are contributed by the community and used modularly—similar to DeFi smart contracts. Each agent is a specialized unit that can process data, generate reports, or perform actions while collectively forming an intelligent swarm to tackle complex tasks. Each agent is accessible via a unified REST API interface, and can be used in conjunction with any agent framework or application.
+**Heurist Mesh** is the skills marketplace for Web3 AI. It is an open network of specialized, composable AI agents. Each agent is a unit that can check token performance, understand social sentiment, generate reports, or perform actions while collectively forming an intelligent swarm to tackle complex tasks. Each agent and each tool is accessible via REST API and MCP, and can be used in conjunction with any agent framework or application.
 
-Want to contribute your own agent? Check out the [Mesh README](./mesh/README.md) for detailed guidelines, examples, and best practices.
+Want to integrate Heurist Mesh in your application? Check out the [Mesh README](./mesh/README.md) for detailed guidelines, examples, and best practices.
 
 
 ### MCP Support
 
-**Just In:** All Heurist Mesh agents are accessible via MCP! This means you can access them from your favorite MCP client, including [Claude Desktop](https://claude.ai/download), [Cursor](https://www.cursor.com/), and [Windsurf](https://codeium.com/windsurf).
+All Heurist Mesh agents are accessible via MCP. This means you can access them from any AI clients and frameworks that support MCP, including Claude, ChatGPT, Cursor, LangChain, Google ADK, n8n, etc.
 
-Head to [heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mesh-mcp-server) to set up a server and give your AI assistant a powerup.
-
-### Recommended Mesh Agents
-
-• [BitquerySolanaTokenInfoAgent](./mesh/agents/bitquery_solana_token_info_agent.py) - Provides comprehensive analysis of Solana tokens including metrics, holders, trading activity, and trending token discovery
-
-• [CoinGeckoTokenInfoAgent](./mesh/agents/coingecko_token_info_agent.py) - Fetches token information, market data, trending coins, and category data from CoinGecko
-
-• [DexScreenerTokenInfoAgent](./mesh/agents/dexscreener_token_info_agent.py) - Fetches real-time DEX trading data and token information across multiple chains
-
-• [ElfaTwitterIntelligenceAgent](./mesh/agents/elfa_twitter_intelligence_agent.py) - Analyzes tokens, topics or Twitter accounts using Twitter data, highlighting smart influencers
-
-• [ExaSearchAgent](./mesh/agents/exa_search_agent.py) - Searches the web and provides direct answers to questions
-
-• [GoplusAnalysisAgent](./mesh/agents/goplus_analysis_agent.py) - Fetches and analyzes security details of blockchain token contracts
-
-• [MetaSleuthSolTokenWalletClusterAgent](./mesh/agents/metasleuth_sol_token_wallet_cluster_agent.py) - Analyzes wallet clusters holding Solana tokens to identify holder behavior, concentration, and potential market manipulation
-
-• [PumpFunTokenAgent](./mesh/agents/pumpfun_token_agent.py) - Analyzes Pump.fun tokens on Solana, tracking token creation and graduation events
-
-• [SolWalletAgent](./mesh/agents/sol_wallet_agent.py) - Queries Solana wallet assets and recent swap transactions
+Visit [MCP Portal](https://mcp.heurist.ai) to customize your MCP server by mixing and matching the agents that you need. The MCP server source code is available at [Github: heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mesh-mcp-server).
 
 ### Full List of Mesh Agents
 
