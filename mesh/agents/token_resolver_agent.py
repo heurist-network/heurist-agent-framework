@@ -890,7 +890,7 @@ class TokenResolverAgent(MeshAgent):
                     "price_usd": mm.get("current_price_usd"),
                     "market_cap_usd": mm.get("market_cap_usd"),
                     "fdv_usd": (cg.get("market_metrics") or {}).get("fully_diluted_valuation_usd"),
-                    "volume24h_usd": mm.get("total_volume_usd"),
+                    "volume_all_cex_dex_24h_usd": mm.get("total_volume_usd"),
                 }
                 if cg.get("supply_info") or cg.get("price_metrics"):
                     si = cg.get("supply_info") or {}
