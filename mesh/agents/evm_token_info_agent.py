@@ -42,9 +42,9 @@ class EvmTokenInfoAgent(MeshAgent):
                 "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.03",
+                    "default_price_usd": "0.05",
                     "tool_prices": {
-                        "get_recent_large_trades": "0.03",
+                        "get_recent_large_trades": "0.05",
                     },
                 },
             }

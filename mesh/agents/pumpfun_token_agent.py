@@ -35,6 +35,10 @@ class PumpFunTokenAgent(MeshAgent):
                 "examples": [
                     "Latest token launched on Pump.fun in the last 24 hours",
                 ],
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.02",
+                },
             }
         )
 

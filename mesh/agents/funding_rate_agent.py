@@ -28,15 +28,7 @@ class FundingRateAgent(MeshAgent):
                     "Find arbitrage opportunities between Binance and Bybit",
                     "Best opportunities for arbitraging funding rates of SOL",
                     "Get the latest funding rates for SOL across all exchanges",
-                ],
-                "x402_config": {
-                    "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "get_all_funding_rates": "0.02",
-                        "get_symbol_funding_rates": "0.01",
-                    },
-                },
+                ]
             }
         )
 

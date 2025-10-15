@@ -39,6 +39,10 @@ class PondWalletAnalysisAgent(MeshAgent):
                     "Check the transaction activity for Base wallet 0x97224Dd2aFB28F6f442E773853F229B3d8A0999a",
                 ],
                 "credits": 0,
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.01",
+                },
             }
         )
 

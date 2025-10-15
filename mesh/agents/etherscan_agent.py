@@ -55,6 +55,10 @@ class EtherscanAgent(MeshAgent):
                 "credits": 2,
                 "large_model_id": "google/gemini-2.5-flash",
                 "small_model_id": "google/gemini-2.5-flash",
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.03",
+                },
             }
         )
 
