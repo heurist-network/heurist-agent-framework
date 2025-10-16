@@ -309,17 +309,20 @@ class MeshAgent(ABC):
         if self.heurist_api_key:
             agent_instance.set_heurist_api_key(self.heurist_api_key)
 
-        result = await agent_instance.call_agent(input_payload)
+        try:
+            result = await agent_instance.call_agent(input_payload)
 
-        # Annotate fallback in result
-        if isinstance(result, dict):
-            result.setdefault("data", {})
-            if isinstance(result["data"], dict):
-                result["data"].setdefault("fallback", {})
-                result["data"]["fallback"].update(
-                    {"from_agent": self.agent_name, "to_agent": class_name, "reason": "timeout"}
-                )
-        return result
+            # Annotate fallback in result
+            if isinstance(result, dict):
+                result.setdefault("data", {})
+                if isinstance(result["data"], dict):
+                    result["data"].setdefault("fallback", {})
+                    result["data"]["fallback"].update(
+                        {"from_agent": self.agent_name, "to_agent": class_name, "reason": "timeout"}
+                    )
+            return result
+        finally:
+            await agent_instance.cleanup()
 
     async def _call_agent_tool(
         self,
@@ -343,14 +346,17 @@ class MeshAgent(ABC):
         if self.heurist_api_key:
             agent_instance.set_heurist_api_key(self.heurist_api_key)
 
-        payload = {
-            "tool": tool_name,
-            "tool_arguments": tool_args or {},
-            "raw_data_only": raw_data_only,
-            "session_context": session_context or {},
-        }
-        result = await agent_instance.call_agent(payload)
-        return result.get("data", result)
+        try:
+            payload = {
+                "tool": tool_name,
+                "tool_arguments": tool_args or {},
+                "raw_data_only": raw_data_only,
+                "session_context": session_context or {},
+            }
+            result = await agent_instance.call_agent(payload)
+            return result.get("data", result)
+        finally:
+            await agent_instance.cleanup()
 
 
     async def _call_agent_tool_safe(
@@ -555,9 +561,6 @@ class MeshAgent(ABC):
         """
         if not self.session:
             self.session = aiohttp.ClientSession()
-            should_close = True
-        else:
-            should_close = False
 
         try:
             if method.upper() == "GET":
@@ -588,7 +591,3 @@ class MeshAgent(ABC):
         except Exception as e:
             logger.error(f"API request error: {e}")
             return {"error": f"API request failed: {str(e)}"}
-        finally:
-            if should_close and self.session:
-                await self.session.close()
-                self.session = None
