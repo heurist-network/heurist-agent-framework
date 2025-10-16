@@ -74,11 +74,7 @@ class YahooFinanceAgent(MeshAgent):
                 ],
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "fetch_price_history": "0.02",
-                        "indicator_snapshot": "0.02",
-                    },
+                    "default_price_usd": "0.03",
                 },
             }
         )

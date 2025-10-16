@@ -42,9 +42,9 @@ class TwitterIntelligenceAgent(MeshAgent):
                     "enabled": True,
                     "default_price_usd": "0.02",
                     "tool_prices": {
-                        "user_timeline": "0.01",
-                        "tweet_detail": "0.01",
-                        "twitter_search": "0.02",
+                        "user_timeline": "0.02",
+                        "tweet_detail": "0.02",
+                        "twitter_search": "0.03",
                     },
                 },
             }
