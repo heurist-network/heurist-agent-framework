@@ -335,6 +335,12 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 logger.warning(f"AIXBT error: {result['error']}")
                 return {"error": result["error"], "data": {"projects": []}}
 
+            # Remove 'id' field to reduce response size
+            if "projects" in result:
+                for project in result["projects"]:
+                    if project and "id" in project:
+                        del project["id"]
+
             return {"data": result}
 
         elif tool_name == "get_market_summary":
