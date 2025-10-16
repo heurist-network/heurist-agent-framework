@@ -174,7 +174,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      AIXBT API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @with_cache(ttl_seconds=3600)
+    @with_cache(ttl_seconds=10000)
     @with_retry(max_retries=3)
     async def search_projects(
         self,
@@ -244,7 +244,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 await self.session.close()
                 self.session = None
 
-    @with_cache(ttl_seconds=1800)
+    @with_cache(ttl_seconds=10000)
     @with_retry(max_retries=3)
     async def get_market_summary(self, lookback_days: Optional[int] = 1) -> Dict[str, Any]:
         """Fetch market summary from aixbt.tech/market-insights"""

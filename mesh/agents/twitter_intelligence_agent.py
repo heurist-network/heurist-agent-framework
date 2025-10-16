@@ -148,7 +148,7 @@ Provide clear, structured information from Twitter/X to help users understand so
             args,
         )
 
-    @with_cache(ttl_seconds=300)
+    @with_cache(ttl_seconds=3600)
     async def _tweet_detail(self, tweet_id: str, cursor: Optional[str]) -> Dict[str, Any]:
         args = {"tweet_id": tweet_id}
         if cursor:
