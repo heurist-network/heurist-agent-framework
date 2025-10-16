@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from decorators import with_cache
@@ -15,6 +16,24 @@ MIN_TOTAL_ENGAGEMENT = 1  # likes+replies+retweets+quotes >= 1
 SEARCH_LIMIT_MIN = 10
 SEARCH_LIMIT_MAX = 20
 SEARCH_LIMIT_DEFAULT = 10
+
+
+def _convert_twitter_timestamp(twitter_time: str) -> str:
+    """
+    Convert Twitter timestamp format to ISO 8601.
+    Input: "Tue Oct 14 19:35:12 +0000 2025" (31 chars)
+    Output: "2025-10-14T19:35:12Z" (20 chars)
+    """
+    if not twitter_time:
+        return ""
+    try:
+        # Parse Twitter's timestamp format
+        dt = datetime.strptime(twitter_time, "%a %b %d %H:%M:%S %z %Y")
+        # Convert to ISO 8601 format with Z suffix for UTC
+        return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception as e:
+        logger.warning(f"Failed to convert timestamp '{twitter_time}': {e}")
+        return twitter_time
 
 
 class TwitterIntelligenceAgent(MeshAgent):
@@ -208,26 +227,28 @@ Provide clear, structured information from Twitter/X to help users understand so
         if total < MIN_TOTAL_ENGAGEMENT:
             return None
 
+        # Build engagement dict with only non-zero values
+        engagement = {}
+        for key in ["likes", "replies", "retweets", "quotes", "views"]:
+            value = int(eng.get(key, 0))
+            if value > 0:
+                engagement[key] = value
+
+        # Keep ID internally for deduplication but mark it as internal
         result = {
-            "id": str(t["id"]),
+            "_id": str(t["id"]),  # Internal ID for deduplication
             "text": t.get("text", ""),
-            "created_at": t.get("created_at", ""),
+            "created_at": _convert_twitter_timestamp(t.get("created_at", "")),
             "author": {
                 "username": (t.get("author") or {}).get("username"),
                 "name": (t.get("author") or {}).get("name"),
-                "verified": bool((t.get("author") or {}).get("verified", False)),
                 "followers": (t.get("author") or {}).get("followers", 0),
-            },
-            "engagement": {
-                "likes": eng.get("likes", 0),
-                "replies": eng.get("replies", 0),
-                "retweets": eng.get("retweets", 0),
-                "quotes": eng.get("quotes", 0),
-                "views": eng.get("views", 0),
             },
             "type": t.get("type", "tweet"),
             # "media": t.get("media", {"type": "", "urls": []}),
         }
+
+        result["engagement"] = engagement
 
         if t.get("urls"):
             space_urls = [url for url in t.get("urls", []) if "/spaces/" in url]
@@ -239,20 +260,26 @@ Provide clear, structured information from Twitter/X to help users understand so
 
         if t.get("in_reply_to_tweet_id"):
             result["in_reply_to"] = {
-                "id": t.get("in_reply_to_tweet_id"),
                 "text": t.get("in_reply_to_tweet_text", ""),
                 "author": t.get("in_reply_to_tweet_author", ""),
             }
 
         return result
 
+    def _remove_internal_ids(self, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Remove internal _id field from final output."""
+        for item in items:
+            if item and "_id" in item:
+                del item["_id"]
+        return items
+
     def _dedupe_keep_best(self, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Deduplicate by id; if duplicates exist, keep the one with higher total engagement."""
+        """Deduplicate by _id; if duplicates exist, keep the one with higher total engagement."""
         best: Dict[str, Dict[str, Any]] = {}
         for x in items:
             if not x:
                 continue
-            tid = x.get("id")
+            tid = x.get("_id")
             if not tid:
                 continue
             cur = best.get(tid)
@@ -290,6 +317,8 @@ Provide clear, structured information from Twitter/X to help users understand so
             items = [x for x in normalized if x is not None]
             if limit and len(items) > limit:
                 items = items[:limit]
+
+            self._remove_internal_ids(items)
 
             data = {
                 "profile": {
@@ -333,6 +362,8 @@ Provide clear, structured information from Twitter/X to help users understand so
 
             reply_items = [self._simplify_tweet(t, include_replies=True) for t in replies]
             reply_items = [x for x in reply_items if x is not None][:replies_limit]
+
+            self._remove_internal_ids([main_item, in_reply_to_item] + thread_items + reply_items)
 
             data: Dict[str, Any] = {"main": main_item}
 
@@ -400,17 +431,20 @@ Provide clear, structured information from Twitter/X to help users understand so
 
             # Deduplication: separate influential mentions from general search
             # Build a set of tweet IDs from elfa results
-            elfa_tweet_ids = {item["id"] for item in elfa_items if item.get("id")}
+            elfa_tweet_ids = {item["_id"] for item in elfa_items if item.get("_id")}
 
             # Filter out public items that are already in elfa results
             general_items = []
             for item in public_items:
-                if item and item.get("id") not in elfa_tweet_ids:
+                if item and item.get("_id") not in elfa_tweet_ids:
                     general_items.append(item)
 
             # Sort both lists by newest first
             elfa_items.sort(key=lambda x: (x.get("created_at") or ""), reverse=True)
             general_items.sort(key=lambda x: (x.get("created_at") or ""), reverse=True)
+
+            self._remove_internal_ids(elfa_items)
+            self._remove_internal_ids(general_items)
 
             # Prepare response
             influential_mentions = elfa_items if elfa_items else "No influential account mentioning this topic is found"
