@@ -1,15 +1,16 @@
 import asyncio
 import logging
 from typing import Any, Dict, List, Optional
+
 from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_TIMELINE_LIMIT = 20           # user_timeline default page size
-DEFAULT_REPLIES_LIMIT = 25            # tweet_detail default replies size
-MIN_AUTHOR_FOLLOWERS = 50             # default author filter
-MIN_TOTAL_ENGAGEMENT = 1              # likes+replies+retweets+quotes >= 1
+DEFAULT_TIMELINE_LIMIT = 20  # user_timeline default page size
+DEFAULT_REPLIES_LIMIT = 25  # tweet_detail default replies size
+MIN_AUTHOR_FOLLOWERS = 50  # default author filter
+MIN_TOTAL_ENGAGEMENT = 1  # likes+replies+retweets+quotes >= 1
 
 SEARCH_LIMIT_MIN = 10
 SEARCH_LIMIT_MAX = 20
@@ -34,7 +35,7 @@ class TwitterIntelligenceAgent(MeshAgent):
                     "user_timeline(identifier='@heurist_ai')",
                     "tweet_detail(tweet_id='1975788185671389308')",
                     "tweet_detail(tweet_id='1975788185671389308', show_thread=true)",
-                    "twitter_search(queries=['#ETH','SOL'], limit=15)"
+                    "twitter_search(queries=['#ETH','SOL'], limit=15)",
                 ],
                 "credits": 10,
                 "x402_config": {
@@ -67,24 +68,18 @@ Provide clear, structured information from Twitter/X to help users understand so
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "identifier": {
-                                "type": "string",
-                                "description": "User handle (with @) or numeric user_id"
-                            },
+                            "identifier": {"type": "string", "description": "User handle (with @) or numeric user_id"},
                             "limit": {
                                 "type": "integer",
-                                "description": f"Maximum number of tweets to return",
+                                "description": "Maximum number of tweets to return",
                                 "minimum": 5,
                                 "maximum": 50,
-                                "default": DEFAULT_TIMELINE_LIMIT
+                                "default": DEFAULT_TIMELINE_LIMIT,
                             },
-                            "cursor": {
-                                "type": "string",
-                                "description": "Pagination cursor from a prior call"
-                            }
+                            "cursor": {"type": "string", "description": "Pagination cursor from a prior call"},
                         },
-                        "required": ["identifier"]
-                    }
+                        "required": ["identifier"],
+                    },
                 },
             },
             {
@@ -95,11 +90,11 @@ Provide clear, structured information from Twitter/X to help users understand so
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "tweet_id": { "type": "string", "description": "The tweet ID" },
-                            "cursor": { "type": "string", "description": "Pagination cursor for next replies page" },
+                            "tweet_id": {"type": "string", "description": "The tweet ID"},
+                            "cursor": {"type": "string", "description": "Pagination cursor for next replies page"},
                             "replies_limit": {
                                 "type": "integer",
-                                "description": f"Max number of replies to return",
+                                "description": "Max number of replies to return",
                                 "default": DEFAULT_REPLIES_LIMIT,
                                 "minimum": 1,
                                 "maximum": 50,
@@ -107,11 +102,11 @@ Provide clear, structured information from Twitter/X to help users understand so
                             "show_thread": {
                                 "type": "boolean",
                                 "description": "If true, include the entire thread including all replies; default shows only the main tweet.",
-                                "default": False
-                            }
+                                "default": False,
+                            },
                         },
-                        "required": ["tweet_id"]
-                    }
+                        "required": ["tweet_id"],
+                    },
                 },
             },
             {
@@ -125,18 +120,18 @@ Provide clear, structured information from Twitter/X to help users understand so
                             "queries": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1-5 search terms (e.g., 'bitcoin', '$ETH', '@coinbase', '\"exact phrase\"'). Case insensitive. Each of the queries should be within [English: one word or two-word phrase] [Chinese or Korean: one word, no more than 5 characters]. One query should be one concept only. Never use long sentences or long phrases as keywords."
+                                "description": "1-5 search terms (e.g., 'bitcoin', '$ETH', '@coinbase', '\"exact phrase\"'). Case insensitive. Each of the queries should be within [English: one word or two-word phrase] [Chinese or Korean: one word, no more than 5 characters]. One query should be one concept only. Never use long sentences or long phrases as keywords.",
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": f"Number of tweets to return.",
+                                "description": "Number of tweets to return.",
                                 "default": SEARCH_LIMIT_DEFAULT,
                                 "minimum": SEARCH_LIMIT_MIN,
                                 "maximum": SEARCH_LIMIT_MAX,
-                            }
+                            },
                         },
-                        "required": ["queries"]
-                    }
+                        "required": ["queries"],
+                    },
                 },
             },
         ]
@@ -204,7 +199,12 @@ Provide clear, structured information from Twitter/X to help users understand so
         if (t.get("author", {}) or {}).get("followers", 0) < MIN_AUTHOR_FOLLOWERS:
             return None
         eng = t.get("engagement", {}) or {}
-        total = int(eng.get("likes", 0)) + int(eng.get("replies", 0)) + int(eng.get("retweets", 0)) + int(eng.get("quotes", 0))
+        total = (
+            int(eng.get("likes", 0))
+            + int(eng.get("replies", 0))
+            + int(eng.get("retweets", 0))
+            + int(eng.get("quotes", 0))
+        )
         if total < MIN_TOTAL_ENGAGEMENT:
             return None
 
@@ -229,6 +229,11 @@ Provide clear, structured information from Twitter/X to help users understand so
             # "media": t.get("media", {"type": "", "urls": []}),
         }
 
+        if t.get("urls"):
+            space_urls = [url for url in t.get("urls", []) if "/spaces/" in url]
+            if space_urls:
+                result["space_urls"] = space_urls
+
         if t.get("quoted_tweet"):
             result["quoted_tweet"] = t.get("quoted_tweet")
 
@@ -251,16 +256,23 @@ Provide clear, structured information from Twitter/X to help users understand so
             if not tid:
                 continue
             cur = best.get(tid)
-            score = sum(int(x.get("engagement", {}).get(k, 0) or 0) for k in ("likes", "replies", "retweets", "quotes", "views"))
+            score = sum(
+                int(x.get("engagement", {}).get(k, 0) or 0) for k in ("likes", "replies", "retweets", "quotes", "views")
+            )
             if not cur:
                 best[tid] = x
             else:
-                old = sum(int(cur.get("engagement", {}).get(k, 0) or 0) for k in ("likes", "replies", "retweets", "quotes", "views"))
+                old = sum(
+                    int(cur.get("engagement", {}).get(k, 0) or 0)
+                    for k in ("likes", "replies", "retweets", "quotes", "views")
+                )
                 if score > old:
                     best[tid] = x
         return list(best.values())
 
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         if tool_name == "user_timeline":
             identifier = function_args["identifier"]
             limit = int(function_args.get("limit", DEFAULT_TIMELINE_LIMIT))
@@ -336,7 +348,9 @@ Provide clear, structured information from Twitter/X to help users understand so
                     data["replies"] = reply_items
                 if next_cursor:
                     data["next_cursor"] = next_cursor
-                    data["next_tool_tips"] = [f"Call tweet_detail again with cursor={next_cursor} to fetch more replies."]
+                    data["next_tool_tips"] = [
+                        f"Call tweet_detail again with cursor={next_cursor} to fetch more replies."
+                    ]
             else:
                 # If there is more context but we're not showing it, add a helpful tip.
                 needs_tip = (len(thread_items) + len(reply_items)) > 0 or bool(next_cursor) or in_reply_to_item
@@ -356,15 +370,18 @@ Provide clear, structured information from Twitter/X to help users understand so
             public_items: List[Dict[str, Any]] = []
             search_tasks = [self._search(q, limit=limit) for q in queries[:5]]
             search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
-            
+
             for i, pub_res in enumerate(search_results):
                 if isinstance(pub_res, Exception) or "error" in pub_res:
                     logger.info(f"Public search error for '{queries[i]}': {pub_res}")
                     public_items.append({"error": f"Public Twitter search error for '{queries[i]}': {pub_res}"})
                     continue
-                pub_tweets = (pub_res.get("search_data") or pub_res.get("tweets") or pub_res.get("items") or {}).get("tweets") \
-                             or (pub_res.get("search_data") or {}).get("tweets") \
-                             or pub_res.get("tweets") or []
+                pub_tweets = (
+                    (pub_res.get("search_data") or pub_res.get("tweets") or pub_res.get("items") or {}).get("tweets")
+                    or (pub_res.get("search_data") or {}).get("tweets")
+                    or pub_res.get("tweets")
+                    or []
+                )
                 public_items.extend([self._simplify_tweet(t) for t in pub_tweets])
 
             # 2) Influential mentions (batch)

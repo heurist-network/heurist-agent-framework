@@ -12,6 +12,7 @@ load_dotenv()
 
 DEFAULT_TIMELINE_LIMIT = 20
 
+
 class TwitterInfoAgent(MeshAgent):
     def __init__(self):
         super().__init__()
@@ -167,9 +168,12 @@ class TwitterInfoAgent(MeshAgent):
         # medias = tweet.get("medias") or []
 
         def _type(t: Dict) -> str:
-            if t.get("is_retweet"): return "retweet"
-            if t.get("is_reply"): return "reply"
-            if t.get("is_quote"): return "quote"
+            if t.get("is_retweet"):
+                return "retweet"
+            if t.get("is_reply"):
+                return "reply"
+            if t.get("is_quote"):
+                return "quote"
             return "tweet"
 
         result = {
@@ -195,11 +199,17 @@ class TwitterInfoAgent(MeshAgent):
             # "media": {"type": media_type, "urls": medias},
         }
 
+        # Include URLs if they exist (for x spaces)
+        if tweet.get("urls"):
+            result["urls"] = tweet.get("urls")
+
         if tweet.get("in_reply_to_status_id_str"):
             result["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
             result["in_reply_to_tweet_text"] = tweet.get("in_reply_to_status", {}).get("text", "")
-            result["in_reply_to_tweet_author"] = tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
-# Store the ID so it can be fetched later if fetch_quoted=True
+            result["in_reply_to_tweet_author"] = (
+                tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
+            )
+        # Store the ID so it can be fetched later if fetch_quoted=True
         if tweet.get("is_quote") and tweet.get("related_tweet_id"):
             result["quoted_tweet_id"] = str(tweet["related_tweet_id"])
 
@@ -254,7 +264,9 @@ class TwitterInfoAgent(MeshAgent):
         params = {"user_id": user_id, "count": min(limit, 50)}
         if cursor:
             params["cursor"] = cursor
-        tweets_data = await self._api_request(url=self.get_twitter_tweets_endpoint(), method="GET", headers=self.headers, params=params)
+        tweets_data = await self._api_request(
+            url=self.get_twitter_tweets_endpoint(), method="GET", headers=self.headers, params=params
+        )
         if "error" in tweets_data:
             return tweets_data
 
@@ -266,14 +278,15 @@ class TwitterInfoAgent(MeshAgent):
         cleaned = [self._simplify_tweet_data(t) for t in tweets]
         return {"tweets": cleaned, "next_cursor": next_cursor}
 
-
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def get_tweet_detail(self, tweet_id: str, cursor: Optional[str] = None) -> Dict:
         params = {"tweet_id": tweet_id}
         if cursor:
             params["cursor"] = cursor
-        tweet_data = await self._api_request(url=self.get_twitter_detail_endpoint(), method="GET", headers=self.headers, params=params)
+        tweet_data = await self._api_request(
+            url=self.get_twitter_detail_endpoint(), method="GET", headers=self.headers, params=params
+        )
         if "error" in tweet_data:
             return tweet_data
 
@@ -354,10 +367,11 @@ class TwitterInfoAgent(MeshAgent):
 
         return result
 
-
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def general_search(self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None) -> Dict:
+    async def general_search(
+        self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None
+    ) -> Dict:
         if " " in query and not (query.startswith('"') and query.endswith('"')):
             logger.warning(f"Multi-word search query detected: '{query}' (likely sparse results).")
         params = {"q": query, "sort_by": sort_by}
@@ -366,7 +380,9 @@ class TwitterInfoAgent(MeshAgent):
         if limit:
             params["count"] = limit
 
-        search_data = await self._api_request(url=self.get_twitter_search_endpoint(), method="GET", headers=self.headers, params=params)
+        search_data = await self._api_request(
+            url=self.get_twitter_search_endpoint(), method="GET", headers=self.headers, params=params
+        )
         if "error" in search_data:
             return search_data
 
