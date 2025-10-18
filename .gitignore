@@ -179,3 +179,5 @@ metadata.json
 mesh/context/*
 
 **/.claude/settings.local.json
+
+**/logs/*
