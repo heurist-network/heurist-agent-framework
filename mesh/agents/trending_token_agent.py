@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
 from decorators import with_cache, with_retry
@@ -13,7 +14,7 @@ PUMPFUN_NOTE = (
 )
 GMGN_NOTE = "gmgn is a memecoin trading platform."
 
-
+TRENDING_CHAIN_DATA_BASE_URL = "https://mesh-data.heurist.xyz/"
 class TrendingTokenAgent(MeshAgent):
     def __init__(self):
         super().__init__()
@@ -62,10 +63,14 @@ class TrendingTokenAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
+                            "chain": {
+                                "type": "string",
+                                "description": "Chain to get trending tokens for. Your default action is to keep it empty to get trending tokens across CEXs and chains. Include this field if specific chain is requested in the context.",
+                                "enum": ["base", "ethereum", "solana", "bsc"]
+                            },
                             "include_memes": {
                                 "type": "boolean",
-                                "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Default is false.",
-                                "default": False,
+                                "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Keep it false by default. Include only if memecoins are specifically requested in the context."
                             }
                         },
                         "required": [],
@@ -79,7 +84,8 @@ class TrendingTokenAgent(MeshAgent):
     ) -> Dict[str, Any]:
         if tool_name == "get_trending_tokens":
             include_memes = function_args.get("include_memes", False)
-            return await self.get_trending_tokens(include_memes=include_memes)
+            chain = function_args.get("chain", "")
+            return await self.get_trending_tokens(include_memes=include_memes, chain=chain)
         return {"status": "error", "error": f"Unsupported tool '{tool_name}'"}
 
     def _normalize_tool_result(self, result: Any, context: str) -> Dict[str, Any]:
@@ -91,10 +97,47 @@ class TrendingTokenAgent(MeshAgent):
         logger.warning(f"{context} returned unexpected payload type {type(result).__name__}")
         return {"status": "error", "error": "unexpected payload"}
 
+    def _check_data_freshness(self, last_updated_str: str) -> Optional[str]:
+        # Check if data is outdated (>1 day old).
+        # last_updated_str: ISO format timestamp string
+        try:
+            last_updated = datetime.fromisoformat(last_updated_str.replace('Z', '+00:00'))
+            if last_updated.tzinfo is None:
+                last_updated = last_updated.replace(tzinfo=timezone.utc)
+
+            now = datetime.now(timezone.utc)
+            age = now - last_updated
+
+            if age > timedelta(days=1):
+                return f"warning: data is outdated (last updated {age.days} day(s) ago)"
+            return None
+        except Exception as e:
+            logger.warning(f"Failed to parse last_updated timestamp: {e}")
+            return None
+
+    async def _fetch_chain_data(self, chain: str) -> Dict[str, Any]:
+        """Fetch trending tokens from chain-specific API endpoint."""
+        url = f"{TRENDING_CHAIN_DATA_BASE_URL}trending_tokens_{chain}.json"
+        return await self._api_request(url, method="GET")
+
     @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=2)
-    async def get_trending_tokens(self, include_memes: bool = False) -> Dict[str, Any]:
-        # Always fetch CoinGecko and Twitter
+    async def get_trending_tokens(self, include_memes: bool = False, chain: str = "") -> Dict[str, Any]:
+        # If chain is specified, only fetch chain-specific data
+        if chain:
+            chain_result = await self._fetch_chain_data(chain)
+            if "error" in chain_result:
+                return {"status": "error", "error": chain_result["error"]}
+
+            notes = "The ranking is based on multiple factors including DEX volume and social discussions."
+            if "last_updated" in chain_result:
+                warning = self._check_data_freshness(chain_result["last_updated"])
+                if warning:
+                    notes = f"{warning}. {notes}"
+
+            return {"status": "success", "data": {f"{chain}_trending": chain_result, "notes": notes}}
+
+        # Otherwise, fetch CoinGecko and Twitter
         coingecko_task = self._call_agent_tool_safe(
             "mesh.agents.coingecko_token_info_agent",
             "CoinGeckoTokenInfoAgent",
@@ -144,7 +187,7 @@ class TrendingTokenAgent(MeshAgent):
             "twitter_trending": twitter_result,
         }
 
-        notes_parts = []
+        notes_parts = ["Trending tokens on coingecko and twitter include CEX and DEX tokens, and Twitter trends may include stock tickers."]
 
         if include_memes:
             gmgn_result = self._normalize_tool_result(results[2], "UnifaiTokenAnalysisAgent.get_gmgn_trend")

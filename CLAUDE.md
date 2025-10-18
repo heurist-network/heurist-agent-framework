@@ -3,18 +3,13 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build & Run Commands
+Only apply these to production code, not testing scripts.
 - **Lint**: `ruff check --fix --line-length=120 --select=I <path>`
 - **Format**: `ruff format --line-length=120 <path>`
 - **Install dependencies with uv**: `uv add <package_name>`
 
-## Project Structure
-- **agents/**: Base agent implementations
-- **core/**: Framework components (LLM, search, tools, clients)
-- **mesh/**: Heurist Mesh specialized agent implementations
-- **clients/**: API client implementations
-- **examples/**: Example code and tests
-
 ## Heurist Mesh Overview
+- **mesh/**: Heurist Mesh specialized agent implementations
 **Heurist Mesh** is an open network of modular and purpose-built AI agents. Technically, you can think of each agent as a collection of tools for AI. Once a Mesh agent is added to the main branch, it's automatically deployed and instantly available via REST API and MCP (Model Context Protocol).
 
 ## Mesh Agent Development Guidelines
