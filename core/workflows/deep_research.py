@@ -71,8 +71,8 @@ class ResearchWorkflow:
         self.search_client = self.search_clients.get("default", next(iter(self.search_clients.values())))
 
         self._last_request_time = 0
-        self.analysis_model = self.llm_provider["small_model_id"]
-        self.report_model = self.llm_provider["large_model_id"]
+        self.analysis_model = getattr(self.llm_provider, "small_model_id", None)
+        self.report_model = getattr(self.llm_provider, "large_model_id", None)
 
     async def process(
         self, message: str, personality_provider=None, chat_id: str = None, workflow_options: Dict = None, **kwargs

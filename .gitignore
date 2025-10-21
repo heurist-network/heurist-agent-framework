@@ -181,3 +181,4 @@ mesh/context/*
 **/.claude/settings.local.json
 
 **/logs/*
+*.db

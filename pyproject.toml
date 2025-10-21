@@ -38,6 +38,7 @@ dependencies = [
     "tiktoken==0.9.0", # core embeddings
     "tweepy==4.15.0", # clients/twitter_api.py
     "typer[all]==0.9.0", # main_research.py
+    "yfinance==0.2.54", # yahoo finance agent
     "uvicorn==0.34.0", # for mesh api server
     "web3-ethereum-defi==0.28.1", # aave agent
 ]

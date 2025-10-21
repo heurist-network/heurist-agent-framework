@@ -6,7 +6,7 @@ import time
 from contextlib import asynccontextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import aiohttp
 import uvicorn
@@ -21,6 +21,7 @@ project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
+from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
 
 
 # exclude `mesh_health` logs as it's used for health checks
@@ -117,6 +118,7 @@ config = Config()
 agents_dict = AgentLoader(config).load_agents()
 agent_pool = AgentPool(agents_dict)
 current_commit = os.getenv("GITHUB_SHA", "unknown")
+task_store = MeshTaskStore(project_root / "mesh_async_tasks.db")
 
 
 class MeshRequest(BaseModel):
@@ -126,13 +128,102 @@ class MeshRequest(BaseModel):
     heurist_api_key: str | None = None
 
 
+class MeshTaskCreateRequest(BaseModel):
+    agent_id: str
+    task_details: Dict[str, Any]
+    api_key: str | None = None
+    heurist_api_key: str | None = None
+    agent_type: Optional[str] = None
+
+
+class MeshTaskQueryRequest(BaseModel):
+    task_id: str
+    api_key: str | None = None
+
+
+async def validate_api_credits(agent_id: str, origin_api_key: str) -> None:
+    credits_api_url = os.getenv("HEURIST_CREDITS_DEDUCTION_API")
+    if not credits_api_url:
+        return
+
+    credits_api_auth = os.getenv("HEURIST_CREDITS_DEDUCTION_AUTH")
+    if not credits_api_auth:
+        raise HTTPException(status_code=500, detail="Credits API auth not configured")
+
+    try:
+        if "#" in origin_api_key:
+            user_id, api_key_part = origin_api_key.split("#", 1)
+        else:
+            user_id, api_key_part = origin_api_key.split("-", 1)
+
+        logger.info(f"Deducting credits for agent {agent_id} with user_id {user_id}")
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                credits_api_url,
+                headers={"Authorization": credits_api_auth},
+                json={
+                    "user_id": user_id,
+                    "api_key": api_key_part,
+                    "model_type": "AGENT",
+                    "model_id": agent_id,
+                },
+            ) as response:
+                if response.status != 200:
+                    raise HTTPException(status_code=403, detail="API credit validation failed")
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid API key format")
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error(f"Error validating API credits: {exc}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Error validating API credits")
+
+
+async def run_async_agent_task(
+    task_id: str,
+    agent_id: str,
+    payload: Dict[str, Any],
+    origin_api_key: str,
+    heurist_api_key: Optional[str],
+) -> None:
+    task_store.mark_running(task_id)
+
+    try:
+        agent = await agent_pool.get_agent(agent_id)
+
+        if heurist_api_key:
+            agent.set_heurist_api_key(heurist_api_key)
+
+        call_args = dict(payload)
+        call_args.setdefault("raw_data_only", False)
+        call_args["session_context"] = {"api_key": origin_api_key}
+        call_args.setdefault("task_id", task_id)
+        call_args.setdefault("origin_task_id", task_id)
+
+        result = await agent.call_agent(call_args)
+        result_payload = dict(result)
+        result_payload["success"] = True
+        task_store.mark_completed(task_id, result_payload)
+    except HTTPException as exc:
+        detail = exc.detail if isinstance(exc.detail, str) else str(exc.detail)
+        task_store.mark_failed(task_id, detail)
+        logger.error(f"Async task failed | Agent: {agent_id} | Task: {task_id} | Error: {detail}")
+    except Exception as exc:
+        task_store.mark_failed(task_id, str(exc))
+        logger.error(f"Async task failed | Agent: {agent_id} | Task: {task_id} | Error: {exc}", exc_info=True)
+
+
 async def get_api_key(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security), request: MeshRequest = None
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
+    request: Union[MeshRequest, MeshTaskCreateRequest, MeshTaskQueryRequest, None] = None,
 ) -> str:
     if credentials:
         return credentials.credentials
-    if request and request.api_key:
-        return request.api_key
+    if request:
+        api_key = getattr(request, "api_key", None)
+        if api_key:
+            return api_key
     raise HTTPException(status_code=401, detail="API key is required from either bearer token or request body")
 
 
@@ -150,39 +241,7 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
             agent.set_heurist_api_key(request.heurist_api_key)  # this is the api key for the agent to use Heurist LLMs
 
         # Handle API credit deduction if enabled
-        credits_api_url = os.getenv("HEURIST_CREDITS_DEDUCTION_API")
-        credits_api_auth = os.getenv("HEURIST_CREDITS_DEDUCTION_AUTH")
-        if credits_api_url:
-            if not credits_api_auth:
-                raise HTTPException(status_code=500, detail="Credits API auth not configured")
-            try:
-                # Parse user_id and api_key, split by first occurrence only, this is passed in from the user
-                if "#" in origin_api_key:
-                    user_id, api_key = api_key.split("#", 1)
-                else:
-                    user_id, api_key = api_key.split("-", 1)
-
-                logger.info(
-                    f"Deducting credits for agent {request.agent_id} with user_id {user_id} and api_key {api_key}"
-                )
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(
-                        credits_api_url,
-                        headers={"Authorization": credits_api_auth},
-                        json={
-                            "user_id": user_id,
-                            "api_key": api_key,
-                            "model_type": "AGENT",
-                            "model_id": request.agent_id,
-                        },
-                    ) as response:
-                        if response.status != 200:
-                            raise HTTPException(status_code=403, detail="API credit validation failed")
-            except ValueError:
-                raise HTTPException(status_code=401, detail="Invalid API key format")
-            except Exception as e:
-                logger.error(f"Error validating API credits: {e}", exc_info=True)
-                raise HTTPException(status_code=500, detail="Error validating API credits")
+        await validate_api_credits(request.agent_id, origin_api_key)
 
         call_args = dict(request.input)
         call_args["session_context"] = {"api_key": origin_api_key}
@@ -195,6 +254,52 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
     except Exception as e:
         logger.error(f"Error processing request: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/mesh_task_create")
+async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depends(get_api_key)):
+    if request.agent_id not in agents_dict:
+        raise HTTPException(status_code=404, detail=f"Agent {request.agent_id} not found")
+
+    if not isinstance(request.task_details, dict):
+        raise HTTPException(status_code=400, detail="task_details must be an object")
+
+    task_payload = dict(request.task_details)
+    if not task_payload.get("query") and not task_payload.get("tool"):
+        raise HTTPException(status_code=400, detail="task_details must include either query or tool")
+
+    # Ensure raw_data_only is present for consistency
+    task_payload.setdefault("raw_data_only", False)
+
+    await validate_api_credits(request.agent_id, api_key)
+
+    task_id = task_store.create_task(request.agent_id, task_payload, api_key)
+
+    asyncio.create_task(
+        run_async_agent_task(task_id, request.agent_id, task_payload, api_key, request.heurist_api_key)
+    )
+
+    return {"task_id": task_id, "msg": "Task created"}
+
+
+@app.post("/mesh_task_query")
+async def query_mesh_task(request: MeshTaskQueryRequest, api_key: str = Depends(get_api_key)):
+    record = task_store.get_task(request.task_id)
+    if not record:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    if record["api_key"] != api_key:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    status = record["status"]
+    response: Dict[str, Any] = {"status": status}
+
+    if status == "completed" and record["result"]:
+        response["result"] = record["result"]
+    elif status == "failed":
+        response["error"] = record["error"] or "Task failed"
+
+    return response
 
 
 @app.get("/mesh_health")
