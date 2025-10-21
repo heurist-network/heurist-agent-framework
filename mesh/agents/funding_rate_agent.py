@@ -1,5 +1,7 @@
+import asyncio
+import os
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
@@ -7,97 +9,102 @@ from mesh.mesh_agent import MeshAgent
 logger = logging.getLogger(__name__)
 
 
+def _pct(x: float) -> float:
+    return x * 100.0
+
+
+def _fmt_pct(x: float, places: int = 4) -> str:
+    return f"{_pct(x):.{places}f}%"
+
+
 class FundingRateAgent(MeshAgent):
-    def __init__(self):
+    """
+    Use Binance USDⓈ-M Futures public endpoints.
+
+    Endpoints used (public, no key):
+      - Exchange Info:          GET /fapi/v1/exchangeInfo
+      - Mark Price (all/one):   GET /fapi/v1/premiumIndex
+      - Funding Info:           GET /fapi/v1/fundingInfo
+      - Funding Rate History:   GET /fapi/v1/fundingRate
+      - Open Interest (point):  GET /fapi/v1/openInterest     [not required, but handy]
+      - OI Statistics (4h):     GET /futures/data/openInterestHist
+
+    Strategy:
+      - Verify symbol exists on Binance perp via exchangeInfo
+      - OI: fetch 7d of 4h bars, summarize trend + snapshot
+      - Funding: use premiumIndex.lastFundingRate as "current"; derive fundingIntervalHours
+                 from fundingInfo when present; otherwise infer from fundingRate timestamps;
+                 otherwise default to 8h. Compute APR.
+    """
+
+    def __init__(self, base_url: Optional[str] = None):
         super().__init__()
-        self.api_url = "https://api.coinsider.app/api"
+
+        # Allow proxy override.
+        # If env BINANCE_FAPI_BASE_URL is set, it wins. Otherwise use argument, then official host.
+        self.base_url = os.getenv("BINANCE_FAPI_BASE_URL") or "https://fapi.binance.com"
 
         self.metadata.update(
             {
                 "name": "Funding Rate Agent",
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "This agent can fetch funding rate data and identify arbitrage opportunities across cryptocurrency exchanges.",
-                "external_apis": ["Coinsider"],
-                "tags": ["Arbitrage"],
+                "description": "Fetches Binance USDⓈ‑M funding & open interest, summarizes OI trends, and computes APR from funding intervals.",
+                "external_apis": ["Binance USDⓈ‑M Futures"],
+                "tags": ["Arbitrage", "Funding", "Open Interest"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/FundingRate.png",
                 "examples": [
-                    "What is the funding rate for BTC on Binance?",
-                    "Find arbitrage opportunities between Binance and Bybit",
-                    "Best opportunities for arbitraging funding rates of SOL",
-                    "Get the latest funding rates for SOL across all exchanges",
-                ]
+                    "Get OI trend and funding APR for BTC",
+                    "What is the current funding rate APR for SOL on Binance?",
+                    "List current Binance funding rates (interval-aware)",
+                    "Spot-perp carry candidates on Binance with funding > 0.02% per interval",
+                ],
             }
         )
 
-        # Exchange mapping for reference
-        self.exchange_map = {
-            1: "Binance",
-            2: "OKX",
-            3: "Bybit",
-            4: "Gate.io",
-            5: "Bitget",
-            6: "dYdX",
-            7: "Bitmex",
-        }
-
+    # ---------------------------------------------------------------------
+    # Identity / Prompt
+    # ---------------------------------------------------------------------
     def get_system_prompt(self) -> str:
         return """
-    IDENTITY:
-    You are a cryptocurrency funding rate specialist that can fetch and analyze funding rate data from Coinsider.
+IDENTITY:
+You specialize in Binance USDⓈ-M funding rates and open interest.
 
-    CAPABILITIES:
-    - Fetch all current funding rates across exchanges
-    - Identify cross-exchange funding rate arbitrage opportunities
-    - Identify spot-futures funding rate arbitrage opportunities
-    - Analyze specific trading pairs' funding rates
+CAPABILITIES:
+- Get latest funding rates and convert to APR based on each symbol's funding interval
+- Fetch and summarize 7-day 4h Open Interest trends per symbol
+- Identify spot-perp carry candidates on Binance (positive funding)
 
-    RESPONSE GUIDELINES:
-    - Keep responses focused on what was specifically asked
-    - Format funding rates as percentages with 4 decimal places (e.g., "0.0123%")
-    - Provide only relevant metrics for the query context
-    - For arbitrage opportunities, clearly explain the strategy and potential risks
+RESPONSE GUIDELINES:
+- Format funding rates as percentages with 4 decimal places (e.g., "0.0123%")
+- Include the funding interval in hours when presenting APR
+- Summarize OI trends into clear statements (up/down/sideways), include latest OI and 24h change
+"""
 
-    DOMAIN-SPECIFIC RULES:
-    When analyzing funding rates, consider these important factors:
-    1. Funding intervals vary by exchange (typically 8h, but can be 1h, 4h, etc.)
-    2. Cross-exchange arbitrage requires going long on the exchange with lower/negative funding and short on the exchange with higher/positive funding
-    3. Spot-futures arbitrage requires holding the spot asset and shorting the perpetual futures contract
-    4. Always consider trading fees, slippage, and minimum viable position sizes in recommendations
-
-    For cross-exchange opportunities, a significant opportunity typically requires at least 0.03% funding rate difference.
-    For spot-futures opportunities, a significant opportunity typically requires at least 0.01% positive funding rate.
-
-    IMPORTANT:
-    - Always indicate funding intervals in hours when comparing rates
-    - Mention exchange names rather than just IDs in explanations
-    - Consider risk factors like liquidity and counterparty risk"""
-
+    # ---------------------------------------------------------------------
+    # MCP Tools
+    # ---------------------------------------------------------------------
     def get_tool_schemas(self) -> List[Dict]:
         return [
             {
                 "type": "function",
                 "function": {
                     "name": "get_all_funding_rates",
-                    "description": "Get all current funding rates across exchanges",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {},
-                        "required": [],
-                    },
+                    "description": "Get current funding rates for major Binance perpetual symbols: BTC, ETH, SOL, BNB, XRP. Useful to identify overall perp market situation.",
+                    "parameters": {"type": "object", "properties": {}, "required": []},
                 },
             },
             {
                 "type": "function",
                 "function": {
                     "name": "get_symbol_funding_rates",
-                    "description": "Get funding rates for a specific trading pair across all exchanges",
+                    "description": "Get the latest funding rate and APR for a specific Binance perp symbol",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "The trading pair symbol (e.g., BTC, ETH, SOL)"}
+                            "symbol": {"type": "string", "description": "Asset ticker or full symbol (e.g., BTC or BTCUSDT)"},
                         },
                         "required": ["symbol"],
                     },
@@ -106,17 +113,14 @@ class FundingRateAgent(MeshAgent):
             {
                 "type": "function",
                 "function": {
-                    "name": "find_cross_exchange_opportunities",
-                    "description": "Find cross-exchange funding rate arbitrage opportunities",
+                    "name": "get_symbol_oi_and_funding",
+                    "description": "Get 7d 4h Open Interest trend summary + latest funding rate and APR for a symbol on Binance perp.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "min_funding_rate_diff": {
-                                "type": "number",
-                                "description": "Minimum funding rate difference to consider (default: 0.0003)",
-                            }
+                            "symbol": {"type": "string", "description": "Asset ticker or full symbol (e.g., BTC or BTCUSDT)"},
                         },
-                        "required": [],
+                        "required": ["symbol"],
                     },
                 },
             },
@@ -124,285 +128,372 @@ class FundingRateAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "find_spot_futures_opportunities",
-                    "description": "Find spot-futures funding rate arbitrage opportunities",
+                    "description": "On Binance: list symbols with positive funding rates above a threshold (carry candidates).",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "min_funding_rate": {
-                                "type": "number",
-                                "description": "Minimum funding rate to consider (default: 0.0003)",
-                            }
+                            "min_funding_rate": {"type": "number", "description": "Per-interval threshold, default 0.0003"},
                         },
                         "required": [],
                     },
                 },
-            },
+            }
         ]
 
-    # ------------------------------------------------------------------------
-    #                      COINSIDER API-SPECIFIC METHODS
-    # ------------------------------------------------------------------------
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
+    # ---------------------------------------------------------------------
+    # Helpers
+    # ---------------------------------------------------------------------
+    async def _get(self, path: str, params: Optional[Dict[str, Any]] = None, use_data_host: bool = False) -> Any:
+        base = self.base_url
+        url = f"{base}{path}"
+        return await self._api_request(url=url, method="GET", params=params or {})
+
+    @with_cache(ttl_seconds=120)
+    @with_retry(max_retries=2)
+    async def _premium_index(self, symbol: Optional[str] = None) -> Any:
+        params = {"symbol": symbol} if symbol else None
+        return await self._get("/fapi/v1/premiumIndex", params=params)
+
+    @with_cache(ttl_seconds=300)
+    @with_retry(max_retries=2)
+    async def _funding_info_all(self) -> List[Dict[str, Any]]:
+        # fundingInfo returns only symbols that had adjustments; we’ll filter locally.
+        res = await self._get("/fapi/v1/fundingInfo")
+        return res if isinstance(res, list) else []
+
+    @with_retry(max_retries=2)
+    async def _funding_rate_history(self, symbol: str, limit: int = 2) -> List[Dict[str, Any]]:
+        params = {"symbol": symbol, "limit": limit}
+        res = await self._get("/fapi/v1/fundingRate", params=params)
+        return res if isinstance(res, list) else []
+
+    async def _infer_interval_hours(self, symbol: str) -> int:
+        """
+        1) Try fundingInfo.fundingIntervalHours
+        2) Else infer from last 2 fundingRate timestamps
+        3) Else default 8h
+        """
+        # 1) fundingInfo, when exists
+        info_list = await self._funding_info_all()
+        for row in info_list:
+            if row.get("symbol") == symbol and "fundingIntervalHours" in row:
+                return int(row["fundingIntervalHours"])
+
+        # 2) infer from history
+        hist = await self._funding_rate_history(symbol, limit=3)
+        if len(hist) >= 2:
+            t2 = int(hist[-1].get("fundingTime", 0))
+            t1 = int(hist[-2].get("fundingTime", 0))
+            if t1 and t2:
+                hours = max(1, round((t2 - t1) / 3_600_000))
+                # Clamp to common values
+                if hours in (1, 2, 4, 6, 8, 12):
+                    return hours
+                # nearest typical
+                for cand in (1, 2, 4, 6, 8, 12):
+                    if abs(hours - cand) <= 1:
+                        return cand
+
+        # 3) default
+        return 8
+
+    def _apr_from_rate(self, per_interval_rate: float, interval_hours: int) -> Tuple[float, int]:
+        """
+        per_interval_rate is a decimal (e.g., 0.0005 = 0.05%).
+        Returns (apr, intervals_per_year)
+        """
+        intervals_per_day = 24.0 / float(interval_hours)
+        intervals_per_year = intervals_per_day * 365.0
+        apr = per_interval_rate * intervals_per_year
+        return apr, int(round(intervals_per_year))
+
+    @with_retry(max_retries=2)
+    async def _oi_hist_4h_7d(self, symbol: str) -> List[Dict[str, Any]]:
+        # 7 days * 24h / 4h = 42 bars
+        params = {"symbol": symbol, "period": "4h", "limit": 42}
+        res = await self._get("/futures/data/openInterestHist", params=params, use_data_host=True)
+        return res if isinstance(res, list) else []
+
+    def _summarize_oi(self, rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Transform 4h OI series into compact features/trend for LLM consumption.
+        Uses sumOpenInterestValue (USDⓈ notionals).
+        """
+        if not rows:
+            return {"status": "no_data", "message": "No OI data available for the past 7 days."}
+
+        # Keep chronological order; Binance returns ascending for /futures/data/*
+        def f(x): return float(x) if x is not None else 0.0
+
+        vals = [f(r.get("sumOpenInterestValue")) for r in rows if "sumOpenInterestValue" in r]
+        times = [int(r.get("timestamp", 0)) for r in rows]
+        n = len(vals)
+        first, last = vals[0], vals[-1]
+        change_abs = last - first
+        change_pct = (change_abs / first) if first else 0.0
+        high, low = max(vals), min(vals)
+        hi_ix, lo_ix = vals.index(high), vals.index(low)
+
+        # Simple slope via last-first over span (per day)
+        span_days = max(1.0, (times[-1] - times[0]) / (1000.0 * 60 * 60 * 24))
+        daily_slope = change_abs / span_days
+
+        # 24h change (last 6 bars ~ 24h)
+        if n >= 7:
+            day_ago = vals[-7]
+            change_24h_abs = last - day_ago
+            change_24h_pct = (change_24h_abs / day_ago) if day_ago else 0.0
+        else:
+            change_24h_abs = 0.0
+            change_24h_pct = 0.0
+
+        # Trend label
+        if abs(change_pct) >= 0.10:
+            trend = "uptrend" if change_pct > 0 else "downtrend"
+        elif abs(change_pct) >= 0.04:
+            trend = "mild " + ("uptrend" if change_pct > 0 else "downtrend")
+        else:
+            trend = "sideways"
+
+        return {
+            "status": "success",
+            "trend_label": trend,
+            "latest_oi": last,
+            "change_7d_abs": change_abs,
+            "change_7d_pct": change_pct,
+            "change_24h_abs": change_24h_abs,
+            "change_24h_pct": change_24h_pct,
+            "high": {"value": high, "time": times[hi_ix]},
+            "low": {"value": low, "time": times[lo_ix]},
+            "daily_slope_abs": daily_slope,
+            "points": n,
+        }
+
+    # ---------------------------------------------------------------------
+    # Public Tool Methods
+    # ---------------------------------------------------------------------
+    @with_cache(ttl_seconds=90)
+    @with_retry(max_retries=2)
     async def get_all_funding_rates(self) -> Dict[str, Any]:
         """
-        Get all current funding rates across exchanges.
+        Return funding rates for top 5 Binance USDⓈ-M tokens (BTC, ETH, SOL, BNB, XRP).
+        Fetches in parallel with individual error handling.
+        Format: ["symbol", rate_decimal, "intervalH"]
         """
-        logger.info("Fetching all funding rates")
+        # Top 5 tokens to track
+        top_tokens = ["BTC", "ETH", "SOL", "BNB", "XRP"]
+
+        async def fetch_token_funding(token: str) -> Optional[List]:
+            """Fetch funding rate for a single token with error handling."""
+            try:
+                result = await self.get_symbol_funding_rates(token)
+                if result.get("status") == "success":
+                    data = result.get("data", {})
+                    symbol = data.get("symbol")
+                    funding = data.get("funding", {})
+                    rate = funding.get("latest_rate", 0.0)
+                    interval = funding.get("interval_hours", 8)
+                    logger.info(f"Successfully fetched funding rate for {token}: {rate * 100:.6f}%")
+                    return [symbol, rate, f"{interval}h"]
+                else:
+                    logger.warning(f"Could not resolve symbol for {token}: {result.get('message', 'Unknown error')}")
+                    return None
+            except Exception as e:
+                logger.warning(f"Error fetching funding rate for {token}: {str(e)}")
+                return None
 
         try:
-            url = f"{self.api_url}/funding_rate/all"
-            response = await self._api_request(url=url, method="GET")
+            logger.info("Fetching funding rates for top 5 tokens in parallel")
+            # Fetch all tokens in parallel
+            tasks = [fetch_token_funding(token) for token in top_tokens]
+            results = await asyncio.gather(*tasks)
 
-            if "error" in response:
-                logger.error(f"Error fetching all funding rates: {response['error']}")
-                return {"error": response["error"]}
+            # Filter out None results (failed fetches) and build formatted list
+            formatted = [result for result in results if result is not None]
 
-            if isinstance(response, dict) and "data" in response and isinstance(response["data"], list):
-                # Filter for Binance only (exchange = 1)
-                binance_data = [rate for rate in response["data"] if rate.get("exchange") == 1]
-                formatted_rates = self.format_funding_rates(binance_data)
-                logger.info(f"Successfully retrieved {len(formatted_rates)} funding rates")
-                # Return minimal format: ["symbol", rate, "4h"] for token efficiency
-                return {"rates": formatted_rates, "format": ["symbol", "rate", "interval"]}
-            else:
-                logger.error("Unexpected API response format for all funding rates")
-                return {"status": "error", "error": "Unexpected API response format"}
+            # Sort by absolute rate descending
+            formatted.sort(key=lambda x: abs(x[1]), reverse=True)
+
+            return {"rates": formatted, "format": ["symbol", "rate", "interval"]}
 
         except Exception as e:
-            logger.error(f"Exception in get_all_funding_rates: {str(e)}")
-            return {"status": "error", "error": f"Failed to fetch funding rates: {str(e)}"}
+            logger.exception("get_all_funding_rates failed")
+            return {"status": "error", "error": str(e)}
 
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
+    @with_cache(ttl_seconds=90)
+    @with_retry(max_retries=2)
     async def get_symbol_funding_rates(self, symbol: str) -> Dict[str, Any]:
         """
-        Get funding rates for a specific trading pair across all exchanges.
+        Latest funding rate and APR for a single symbol.
+        Accepts 'BTC' or 'BTCUSDT'. Directly fetches data and returns friendly error if market doesn't exist.
+        Always uses USDT as quote asset.
         """
-        logger.info(f"Fetching funding rates for symbol: {symbol}")
-
         try:
-            all_rates_result = await self.get_all_funding_rates()
-            if "error" in all_rates_result:
-                return all_rates_result
+            # Normalize symbol to standard format
+            s = (symbol or "").upper().replace("PERP", "").replace("-PERP", "").strip()
 
-            all_rates = all_rates_result.get("data", {}).get("funding_rates", [])
-            symbol_rates = [rate for rate in all_rates if rate.get("symbol") == symbol.upper()]
+            # If not already a full symbol, construct it with USDT
+            if not s.endswith("USDT") and not s.endswith("USDC"):
+                resolved = f"{s}USDT"
+            else:
+                resolved = s
 
-            if not symbol_rates:
-                logger.warning(f"No funding rate data found for symbol {symbol}")
-                return {"status": "no_data", "error": f"No funding rate data found for symbol {symbol}"}
+            # Try to fetch data directly - if market doesn't exist, API will return error
+            prem = await self._premium_index(resolved)
 
-            logger.info(f"Found {len(symbol_rates)} funding rates for symbol {symbol}")
-            return {"status": "success", "data": {"symbol": symbol, "funding_rates": symbol_rates}}
+            # Check if API returned valid data
+            if not isinstance(prem, dict):
+                return {
+                    "status": "no_data",
+                    "message": f"Unable to fetch funding rate for '{symbol}'. "
+                               f"Binance may not have a perpetual market for this token."
+                }
+
+            if prem.get("symbol") != resolved:
+                return {
+                    "status": "no_data",
+                    "message": f"Symbol '{symbol}' (resolved as '{resolved}') not found. "
+                               f"Binance may not have a perpetual market for this token."
+                }
+
+            last_rate = float(prem.get("lastFundingRate", 0.0) or 0.0)
+            interval_h = await self._infer_interval_hours(resolved)
+            apr, intervals_year = self._apr_from_rate(last_rate, interval_h)
+
+            result = {
+                "status": "success",
+                "data": {
+                    "symbol": resolved,
+                    "funding": {
+                        "latest_rate": last_rate,
+                        "latest_rate_pct": _fmt_pct(last_rate, 4),
+                        "interval_hours": interval_h,
+                        "apr": apr,
+                        "apr_pct": _fmt_pct(apr, 2),
+                        "intervals_per_year": intervals_year,
+                    },
+                },
+            }
+            return result
 
         except Exception as e:
-            logger.error(f"Exception in get_symbol_funding_rates: {str(e)}")
-            return {"status": "error", "error": f"Failed to fetch funding rates for {symbol}: {str(e)}"}
+            logger.exception("get_symbol_funding_rates failed")
+            return {
+                "status": "error",
+                "message": f"Failed to fetch funding rate for '{symbol}'. "
+                          f"Binance may not have a perpetual market for this token, or there was an API error.",
+                "error": str(e)
+            }
 
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
-    async def find_cross_exchange_opportunities(self, min_funding_rate_diff: float = 0.0003) -> Dict[str, Any]:
+    @with_cache(ttl_seconds=180)
+    @with_retry(max_retries=2)
+    async def get_symbol_oi_and_funding(self, symbol: str) -> Dict[str, Any]:
         """
-        Find cross-exchange funding rate arbitrage opportunities.
-        """
-        logger.info(f"Finding cross-exchange opportunities with min diff: {min_funding_rate_diff}")
+        Combined view for a symbol:
+          - OI trend summary (7d, 4h bars)
+          - Funding snapshot + APR
+        Always uses USDT as quote asset.
 
+        If symbol is not available on Binance perp, returns the error from get_symbol_funding_rates.
+        If OI data is not available, returns funding data with a friendly OI message.
+        """
         try:
-            all_rates_result = await self.get_all_funding_rates()
-            if "error" in all_rates_result:
-                return all_rates_result
+            funding = await self.get_symbol_funding_rates(symbol)
+            if funding.get("status") != "success":
+                # Reuse the friendly error message from get_symbol_funding_rates
+                return funding
 
-            funding_data = all_rates_result.get("data", {}).get("funding_rates", [])
+            # Get the resolved symbol from funding result
+            resolved = funding["data"]["symbol"]
 
-            # Group by trading pair symbol
-            symbols_map = {}
-            for item in funding_data:
-                symbol = item.get("symbol")
-                if not symbol:
-                    continue
+            # OI 4h × 7d
+            oi_rows = await self._oi_hist_4h_7d(resolved)
+            oi_summary = self._summarize_oi(oi_rows)
 
-                if symbol not in symbols_map:
-                    symbols_map[symbol] = []
+            # Friendly textual summary for OI
+            oi_text = f"Open Interest data is not available for {resolved} on Binance perp."
+            if oi_summary.get("status") == "success":
+                latest = oi_summary["latest_oi"]
+                c7 = oi_summary["change_7d_pct"]
+                c24 = oi_summary["change_24h_pct"]
+                high = oi_summary["high"]["value"]
+                low = oi_summary["low"]["value"]
+                label = oi_summary["trend_label"]
+                oi_text = (
+                    f"Open interest trend is {label}: latest ≈ {latest:,.0f} USD. "
+                    f"7d change: {_fmt_pct(c7, 2)}, 24h: {_fmt_pct(c24, 2)}. "
+                    f"Range over 7d: low {low:,.0f} – high {high:,.0f}. "
+                )
 
-                exchange_id = item.get("exchange", {}).get("id")
-                if exchange_id:
-                    symbols_map[symbol].append(item)
-
-            # Filter out trading pairs with arbitrage opportunities
-            opportunities = []
-            funding_rate_period = "latest"  # Changed from "1d" to "latest"
-
-            for symbol, exchanges_data in symbols_map.items():
-                # Skip if the trading pair is only listed on one exchange
-                if len(exchanges_data) < 2:
-                    continue
-
-                # Sort by funding rate
-                exchanges_data.sort(key=lambda x: x.get("rates", {}).get(funding_rate_period, 0) or 0)
-
-                # Get the exchanges with the lowest and highest funding rates
-                lowest_rate_exchange = exchanges_data[0]
-                highest_rate_exchange = exchanges_data[-1]
-
-                # Safely get funding rates
-                lowest_rate = lowest_rate_exchange.get("rates", {}).get(funding_rate_period, 0) or 0
-                highest_rate = highest_rate_exchange.get("rates", {}).get(funding_rate_period, 0) or 0
-
-                # Calculate funding rate difference
-                rate_diff = highest_rate - lowest_rate
-
-                # If the difference exceeds the threshold, consider it an arbitrage opportunity
-                if rate_diff >= min_funding_rate_diff:
-                    lowest_exchange_id = lowest_rate_exchange.get("exchange", {}).get("id")
-                    lowest_exchange_name = lowest_rate_exchange.get("exchange", {}).get("name", "Unknown")
-
-                    highest_exchange_id = highest_rate_exchange.get("exchange", {}).get("id")
-                    highest_exchange_name = highest_rate_exchange.get("exchange", {}).get("name", "Unknown")
-
-                    # Skip if missing necessary information
-                    if lowest_exchange_id is None or highest_exchange_id is None:
-                        continue
-
-                    lowest_funding_interval = lowest_rate_exchange.get("funding_interval", 8)
-                    highest_funding_interval = highest_rate_exchange.get("funding_interval", 8)
-
-                    opportunity = {
-                        "symbol": symbol,
-                        "rate_diff": rate_diff,
-                        "long_exchange": {
-                            "id": lowest_exchange_id,
-                            "name": lowest_exchange_name,
-                            "rate": lowest_rate,
-                            "funding_interval": lowest_funding_interval,
-                            "quote_currency": lowest_rate_exchange.get("quote_currency", "USDT"),
-                        },
-                        "short_exchange": {
-                            "id": highest_exchange_id,
-                            "name": highest_exchange_name,
-                            "rate": highest_rate,
-                            "funding_interval": highest_funding_interval,
-                            "quote_currency": highest_rate_exchange.get("quote_currency", "USDT"),
-                        },
-                    }
-
-                    opportunities.append(opportunity)
-
-            logger.info(f"Found {len(opportunities)} cross-exchange opportunities")
-            return {"status": "success", "data": {"cross_exchange_opportunities": opportunities}}
+            out = {
+                "status": "success",
+                "data": {
+                    "symbol": resolved,
+                    "funding": funding["data"]["funding"],
+                    "open_interest": {
+                        "summary": oi_summary,
+                        "text": oi_text,
+                        "period": "7d",
+                        "interval": "4h",
+                    },
+                },
+            }
+            return out
 
         except Exception as e:
-            logger.error(f"Exception in find_cross_exchange_opportunities: {str(e)}")
-            return {"status": "error", "error": f"Failed to find cross-exchange opportunities: {str(e)}"}
+            logger.exception("get_symbol_oi_and_funding failed")
+            return {"status": "error", "error": str(e)}
 
-    @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
+    @with_cache(ttl_seconds=90)
+    @with_retry(max_retries=2)
     async def find_spot_futures_opportunities(self, min_funding_rate: float = 0.0003) -> Dict[str, Any]:
         """
-        Find spot-futures funding rate arbitrage opportunities.
+        On Binance only: list symbols whose latest per-interval funding >= threshold.
         """
-        logger.info(f"Finding spot-futures opportunities with min rate: {min_funding_rate}")
-
         try:
-            all_rates_result = await self.get_all_funding_rates()
-            if "error" in all_rates_result:
-                return all_rates_result
+            all_rates = await self.get_all_funding_rates()
+            if "rates" not in all_rates:
+                return all_rates
 
-            funding_data = all_rates_result.get("data", {}).get("funding_rates", [])
-            opportunities = []
-            funding_rate_period = "latest"  # Changed from "1d" to "latest"
-            excluded_symbols = ["1000LUNC", "1000SHIB", "1000BTT"]  # Symbols to exclude
-
-            for item in funding_data:
-                symbol = item.get("symbol")
-                if not symbol or symbol in excluded_symbols:
-                    continue
-
-                funding_rate = item.get("rates", {}).get(funding_rate_period)
-                if not funding_rate or funding_rate <= 0:
-                    continue
-
-                if funding_rate >= min_funding_rate:
-                    exchange_id = item.get("exchange", {}).get("id")
-                    exchange_name = item.get("exchange", {}).get("name", "Unknown")
-
-                    if exchange_id is None:
-                        continue
-
-                    funding_interval = item.get("funding_interval", 8)  # Default to 8 hours
-
-                    opportunity = {
-                        "symbol": symbol,
-                        "exchange_id": exchange_id,
-                        "exchange_name": exchange_name,
-                        "funding_rate": funding_rate,
-                        "funding_interval": funding_interval,
-                        "quote_currency": item.get("quote_currency", "USDT"),
-                    }
-
-                    opportunities.append(opportunity)
-
-            logger.info(f"Found {len(opportunities)} spot-futures opportunities")
-            return {"status": "success", "data": {"spot_futures_opportunities": opportunities}}
+            positives = [
+                {
+                    "symbol": sym,
+                    "funding_rate": rate,
+                    "funding_rate_pct": _fmt_pct(rate, 4),
+                    "funding_interval": interval,
+                }
+                for sym, rate, interval in all_rates["rates"]
+                if rate >= min_funding_rate
+            ]
+            return {"status": "success", "data": {"spot_futures_opportunities": positives}}
 
         except Exception as e:
-            logger.error(f"Exception in find_spot_futures_opportunities: {str(e)}")
-            return {"status": "error", "error": f"Failed to find spot-futures opportunities: {str(e)}"}
+            logger.exception("find_spot_futures_opportunities failed")
+            return {"status": "error", "error": str(e)}
 
-    def format_funding_rates(self, data: List[Dict]) -> List[Dict]:
-        """Format funding rate information in a token-efficient way"""
-        formatted_rates = []
-
-        for rate in data:
-            # Get rate value, skip if invalid
-            latest_rate = rate.get("rates", {}).get("latest")
-            if latest_rate is None:
-                continue
-
-            # Use minimal format: [symbol, rate, interval_string]
-            formatted_rates.append([
-                rate.get("symbol", "?"),
-                latest_rate,
-                f"{rate.get('funding_interval', 8)}h"
-            ])
-
-        # Sort by rate descending for most relevant data first
-        formatted_rates.sort(key=lambda x: abs(x[1]) if x[1] is not None else 0, reverse=True)
-        return formatted_rates
-
-    # ------------------------------------------------------------------------
-    #                      TOOL HANDLING LOGIC
-    # ------------------------------------------------------------------------
-    async def _handle_tool_logic(
-        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
-        """Handle tool execution and return the raw data"""
-
+    # ---------------------------------------------------------------------
+    # Tool dispatcher
+    # ---------------------------------------------------------------------
+    async def _handle_tool_logic(self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 
         if tool_name == "get_all_funding_rates":
-            result = await self.get_all_funding_rates()
+            return await self.get_all_funding_rates()
 
-        elif tool_name == "get_symbol_funding_rates":
+        if tool_name == "get_symbol_funding_rates":
             symbol = function_args.get("symbol")
             if not symbol:
                 return {"error": "Missing 'symbol' parameter"}
+            return await self.get_symbol_funding_rates(symbol)
 
-            result = await self.get_symbol_funding_rates(symbol)
+        if tool_name == "get_symbol_oi_and_funding":
+            symbol = function_args.get("symbol")
+            if not symbol:
+                return {"error": "Missing 'symbol' parameter"}
+            return await self.get_symbol_oi_and_funding(symbol)
 
-        elif tool_name == "find_cross_exchange_opportunities":
-            min_funding_rate_diff = function_args.get("min_funding_rate_diff", 0.0003)
-            result = await self.find_cross_exchange_opportunities(min_funding_rate_diff)
+        if tool_name == "find_spot_futures_opportunities":
+            min_rate = function_args.get("min_funding_rate", 0.0003)
+            return await self.find_spot_futures_opportunities(min_rate)
 
-        elif tool_name == "find_spot_futures_opportunities":
-            min_funding_rate = function_args.get("min_funding_rate", 0.0003)
-            result = await self.find_spot_futures_opportunities(min_funding_rate)
-
-        else:
-            return {"error": f"Unsupported tool: {tool_name}"}
-
-        errors = self._handle_error(result)
-        if errors:
-            return errors
-
-        return result
+        return {"error": f"Unsupported tool: {tool_name}"}
