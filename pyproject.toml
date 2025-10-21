@@ -41,6 +41,7 @@ dependencies = [
     "yfinance==0.2.54", # yahoo finance agent
     "uvicorn==0.34.0", # for mesh api server
     "web3-ethereum-defi==0.28.1", # aave agent
+    "stockstats>=0.6.5",
 ]
 
 # required for spaceandtime agent as it uses old deps
