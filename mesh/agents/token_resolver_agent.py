@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
-from decorators import with_cache, with_retry
+from decorators import with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -311,7 +311,6 @@ class TokenResolverAgent(MeshAgent):
     # -----------------------------
     # Bridge to other Mesh agents (cached 300s)
     # -----------------------------
-    @with_cache(ttl_seconds=300)
     async def _cg_get_token_info(self, query_or_id: str) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -324,7 +323,6 @@ class TokenResolverAgent(MeshAgent):
             logger.warning(f"CoinGecko agent failed for {query_or_id}: {e}")
             return {"status": "error", "error": f"CoinGecko lookup failed: {e}"}
 
-    @with_cache(ttl_seconds=300)
     async def _ds_search_pairs(self, search_term: str) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -337,7 +335,6 @@ class TokenResolverAgent(MeshAgent):
             logger.warning(f"DexScreener search_pairs failed for {search_term}: {e}")
             return {"status": "error", "error": f"DexScreener search failed: {e}"}
 
-    @with_cache(ttl_seconds=300)
     async def _ds_token_pairs(self, chain: Optional[str], token_address: str) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -350,9 +347,6 @@ class TokenResolverAgent(MeshAgent):
             logger.warning(f"DexScreener get_token_pairs failed for {chain}:{token_address}: {e}")
             return {"status": "error", "error": f"DexScreener token pairs failed: {e}"}
 
-    # GMGN / Unifai (memecoins)
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=2)
     async def _gmgn_token_info(self, chain: str, address: str) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -365,9 +359,6 @@ class TokenResolverAgent(MeshAgent):
             logger.info(f"[token_resolver] GMGN unavailable: {e}")
             return {"status": "no_data", "error": "gmgn_unavailable"}
 
-    # Bitquery (Solana)
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=2)
     async def _bq_solana_holders(self, mint: str, limit: int = 5) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -380,8 +371,6 @@ class TokenResolverAgent(MeshAgent):
             logger.info(f"[token_resolver] Bitquery holders unavailable: {e}")
             return {"status": "no_data", "error": "bitquery_unavailable"}
 
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=2)
     async def _bq_solana_traders(self, mint: str, limit: int = 5) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -394,9 +383,6 @@ class TokenResolverAgent(MeshAgent):
             logger.info(f"[token_resolver] Bitquery traders unavailable: {e}")
             return {"status": "no_data", "error": "bitquery_unavailable"}
 
-    # Funding rates (Coinsider)
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=2)
     async def _funding_rates(self, symbol: str) -> Dict[str, Any]:
         try:
             return await self._call_agent_tool(
@@ -409,9 +395,6 @@ class TokenResolverAgent(MeshAgent):
             logger.info(f"[token_resolver] Funding rates unavailable: {e}")
             return {"status": "no_data", "error": "funding_unavailable"}
 
-    # Yahoo Finance indicators (optional)
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=2)
     async def _yahoo_indicator_snapshot(
         self, yf_symbol: str, interval: str = YF_DEFAULT_INTERVAL, period: str = YF_DEFAULT_PERIOD
     ) -> Dict[str, Any]:
@@ -439,10 +422,6 @@ class TokenResolverAgent(MeshAgent):
             if _is_evm_address(q) or _is_solana_address(q):
                 return "address"
             # Could be a long address we don't recognize, try as address anyway
-            return "address"
-
-        # Check for actual address formats first
-        if _is_evm_address(q) or _is_solana_address(q):
             return "address"
 
         # Short alphanumeric strings without spaces - treat as symbol
@@ -550,7 +529,6 @@ class TokenResolverAgent(MeshAgent):
 
             best_by_token: Dict[str, Dict[str, Any]] = {}
             for p in pairs:
-                # Skip invalid same-symbol pairs
                 if _is_same_symbol_pair(p):
                     logger.debug(
                         f"[token_resolver] Skipping invalid same-symbol pair: "
@@ -558,7 +536,6 @@ class TokenResolverAgent(MeshAgent):
                     )
                     continue
 
-                # Skip pairs with insufficient volume
                 if not _has_sufficient_volume(p):
                     logger.debug(
                         f"[token_resolver] Skipping low-volume pair: "
@@ -574,7 +551,6 @@ class TokenResolverAgent(MeshAgent):
                 token_key = f"{ch}:{addr}"
                 preview = self._pair_to_preview(p)
                 current = best_by_token.get(token_key)
-                # collect websites/socials
                 ds_links = _extract_links_from_preview(preview)
                 if not current or (preview.get("liquidity_usd") or 0) > (
                     current.get("best_pair", {}).get("liquidity_usd") or 0

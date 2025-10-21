@@ -3,7 +3,6 @@ import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
-from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -15,6 +14,7 @@ PUMPFUN_NOTE = (
 GMGN_NOTE = "gmgn is a memecoin trading platform."
 
 TRENDING_CHAIN_DATA_BASE_URL = "https://mesh-data.heurist.xyz/"
+
 class TrendingTokenAgent(MeshAgent):
     def __init__(self):
         super().__init__()
@@ -120,8 +120,6 @@ class TrendingTokenAgent(MeshAgent):
         url = f"{TRENDING_CHAIN_DATA_BASE_URL}trending_tokens_{chain}.json"
         return await self._api_request(url, method="GET")
 
-    @with_cache(ttl_seconds=3600)
-    @with_retry(max_retries=2)
     async def get_trending_tokens(self, include_memes: bool = False, chain: str = "") -> Dict[str, Any]:
         # If chain is specified, only fetch chain-specific data
         if chain:

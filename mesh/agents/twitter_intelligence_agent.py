@@ -3,7 +3,6 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -155,7 +154,6 @@ Provide clear, structured information from Twitter/X to help users understand so
             },
         ]
 
-    @with_cache(ttl_seconds=300)
     async def _get_user_tweets(self, username: str, limit: int, cursor: Optional[str]) -> Dict[str, Any]:
         args = {"username": username, "limit": limit}
         if cursor:
@@ -167,7 +165,6 @@ Provide clear, structured information from Twitter/X to help users understand so
             args,
         )
 
-    @with_cache(ttl_seconds=3600)
     async def _tweet_detail(self, tweet_id: str, cursor: Optional[str]) -> Dict[str, Any]:
         args = {"tweet_id": tweet_id}
         if cursor:
@@ -179,7 +176,6 @@ Provide clear, structured information from Twitter/X to help users understand so
             args,
         )
 
-    @with_cache(ttl_seconds=300)
     async def _search(self, q: str, limit: int) -> Dict[str, Any]:
         return await self._call_agent_tool(
             "mesh.agents.twitter_info_agent",
@@ -188,7 +184,6 @@ Provide clear, structured information from Twitter/X to help users understand so
             {"q": q, "limit": limit, "sort_by": "Latest"},
         )
 
-    @with_cache(ttl_seconds=300)
     async def _elfa_mentions(self, keywords: List[str], limit: int) -> Dict[str, Any]:
         # default days_ago=29
         return await self._call_agent_tool(
