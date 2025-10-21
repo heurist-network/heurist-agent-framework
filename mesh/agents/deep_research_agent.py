@@ -15,6 +15,9 @@ load_dotenv()
 
 
 class DeepResearchAgent(MeshAgent):
+    SEARCH_MODEL_ID = "anthropic/claude-haiku-4.5"
+    RESEARCH_MODEL_ID = "anthropic/claude-sonnet-4.5"
+
     def __init__(self):
         super().__init__()
         self.metadata.update(
@@ -56,7 +59,7 @@ class DeepResearchAgent(MeshAgent):
                         "default": 9,
                     },
                 ],
-                "external_apis": ["Firecrawl"],
+                "external_apis": ["Firecrawl", "Exa"],
                 "tags": ["Research"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/DeepResearch.png",
                 "examples": [
@@ -70,13 +73,11 @@ class DeepResearchAgent(MeshAgent):
         )
         self._last_request_time = 0
 
-        self.search_model = os.getenv("SEARCH_MODEL", self.metadata["large_model_id"])
-        self.research_model = os.getenv("RESEARCH_MODEL", self.metadata["large_model_id"])
+        self.search_model = self.SEARCH_MODEL_ID
+        self.research_model = self.RESEARCH_MODEL_ID
 
-        if not os.getenv("SEARCH_MODEL"):
-            logger.info(f"SEARCH_MODEL not set, using {self.search_model}")
-        if not os.getenv("RESEARCH_MODEL"):
-            logger.info(f"RESEARCH_MODEL not set, using {self.research_model}")
+        self.metadata["large_model_id"] = self.research_model
+        self.metadata["small_model_id"] = self.search_model
 
         self.search_clients = {}
 
@@ -95,11 +96,23 @@ class DeepResearchAgent(MeshAgent):
         else:
             logger.warning("EXA_API_KEY not found in environment variables")
 
-        self.duckduckgo_client = SearchClient(client_type="duckduckgo", rate_limit=5)
-        self.search_clients["duckduckgo"] = self.duckduckgo_client
+        if not self.search_clients:
+            raise RuntimeError(
+                "DeepResearchAgent requires at least one search provider. Set FIRECRAWL_API_KEY and/or EXA_API_KEY."
+            )
+
+        openrouter_base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+        openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
+        if not openrouter_api_key:
+            logger.warning("OPENROUTER_API_KEY not found in environment variables; LLM calls will fail.")
+
         self.tools = Tools()
         self.llm_provider = LLMProvider(
-            self.heurist_base_url, self.heurist_api_key, self.search_model, self.metadata["small_model_id"], self.tools
+            openrouter_base_url,
+            openrouter_api_key,
+            self.research_model,
+            self.search_model,
+            self.tools,
         )
         self.research_workflow = ResearchWorkflow(self.llm_provider, self.tools, search_clients=self.search_clients)
 

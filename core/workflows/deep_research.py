@@ -71,7 +71,8 @@ class ResearchWorkflow:
         self.search_client = self.search_clients.get("default", next(iter(self.search_clients.values())))
 
         self._last_request_time = 0
-        self.report_model = None  # Ensure report_model is initialized
+        self.analysis_model = self.llm_provider["small_model_id"]
+        self.report_model = self.llm_provider["large_model_id"]
 
     async def process(
         self, message: str, personality_provider=None, chat_id: str = None, workflow_options: Dict = None, **kwargs
@@ -89,7 +90,8 @@ class ResearchWorkflow:
             "concurrency": 3,  # Max concurrent requests
             "temperature": 0.7,
             "raw_data_only": False,  # Whether to return only raw data without report
-            "report_model": None,  # Model to use for report generation
+            "analysis_model": self.analysis_model,  # Model to use for intermediate reasoning
+            "report_model": self.report_model,  # Model to use for report generation
             "multi_provider": len(self.search_clients) > 1,  # Auto-enable when multiple clients are available
             "search_providers": [],  # List of search provider names to use (if multi_provider is True)
         }
@@ -97,6 +99,7 @@ class ResearchWorkflow:
         if workflow_options:
             options.update(workflow_options)
             # Update self.report_model if provided in options
+            self.analysis_model = workflow_options.get("analysis_model", self.analysis_model)
             self.report_model = workflow_options.get("report_model", self.report_model)
 
         try:
@@ -144,7 +147,10 @@ class ResearchWorkflow:
         Return ONLY a JSON array of strings containing the questions."""
 
         response, _, _ = await self.llm_provider.call(
-            system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.7
+            system_prompt=self._get_system_prompt(),
+            user_prompt=prompt,
+            temperature=0.7,
+            model_id=self.analysis_model,
         )
 
         try:
@@ -190,14 +196,13 @@ class ResearchWorkflow:
         }
         """
         prompt += example_response
-        if self.report_model:
-            response, _, _ = await self.llm_provider.call(
-                system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.3, model_id=self.report_model
-            )
-        else:
-            response, _, _ = await self.llm_provider.call(
-                system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.3
-            )
+        model_for_queries = self.analysis_model or self.report_model
+        response, _, _ = await self.llm_provider.call(
+            system_prompt=self._get_system_prompt(),
+            user_prompt=prompt,
+            temperature=0.3,
+            model_id=model_for_queries,
+        )
         try:
             cleaned_response = response.replace("```json", "").replace("```", "").strip()
             result = json.loads(cleaned_response)
@@ -251,7 +256,10 @@ class ResearchWorkflow:
         """
 
         response, _, _ = await self.llm_provider.call(
-            system_prompt=self._get_system_prompt(), user_prompt=prompt, temperature=0.3
+            system_prompt=self._get_system_prompt(),
+            user_prompt=prompt,
+            temperature=0.3,
+            model_id=self.analysis_model,
         )
 
         try:

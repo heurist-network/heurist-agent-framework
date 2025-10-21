@@ -251,19 +251,6 @@
       "limit": 5
     }
   },
-  "MasaTwitterSearchAgent": {
-    "search_twitter": {
-      "search_term": "defi"
-    }
-  },
-  "MetaSleuthSolTokenWalletClusterAgent": {
-    "fetch_cluster_details": {
-      "cluster_uuid": "13axGrDoFlaj8E0ruhYfi1"
-    },
-    "fetch_token_clusters": {
-      "address": "tQNVaFm2sy81tWdHZ971ztS5FKaShJUKGAzHMcypump"
-    }
-  },
   "MoniTwitterInsightAgent": {
     "get_smart_followers_categories": {
       "username": "heurist_ai"

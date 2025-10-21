@@ -30,7 +30,7 @@ class Config:
 
     def __init__(self):
         load_dotenv()
-        self.protocol_v2_url = os.getenv("PROTOCOL_V2_SERVER_URL", "https://sequencer-v2.heurist.xyz")
+        self.protocol_v2_port = int(os.getenv("PROTOCOL_V2_PORT", "8000"))
         self.poll_interval = float(os.getenv("POLL_INTERVAL_SECONDS", "2.0"))
         self.auth_token = os.getenv("PROTOCOL_V2_AUTH_TOKEN", "test_key")
         self.agent_type = "AGENT"
@@ -138,7 +138,7 @@ class MeshManager:
 
         try:
             async with self.session.post(
-                f"{self.config.protocol_v2_url}/mesh_manager_poll", json=payload, headers=headers
+                f"http://127.0.0.1:{self.config.protocol_v2_port}/mesh_manager_poll", json=payload, headers=headers
             ) as resp:
                 resp_data = await resp.json()
                 return resp_data
@@ -184,7 +184,7 @@ class MeshManager:
 
         try:
             async with self.session.post(
-                f"{self.config.protocol_v2_url}/mesh_manager_submit", json=submit_data, headers=headers
+                f"http://127.0.0.1:{self.config.protocol_v2_port}/mesh_manager_submit", json=submit_data, headers=headers
             ) as resp:
                 submit_resp_data = await resp.json()
                 logger.info(f"Result submitted | Agent: {agent_id} | Task: {task_id} | Result: {submit_data}")
