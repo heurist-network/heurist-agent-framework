@@ -868,6 +868,9 @@ class TokenResolverAgent(MeshAgent):
                     "fdv_usd": (cg.get("market_metrics") or {}).get("fully_diluted_valuation_usd"),
                     "volume_all_cex_dex_24h_usd": mm.get("total_volume_usd"),
                 }
+                cex_data = cg.get("cex_data")
+                if cex_data:
+                    prof["cex_data"] = cex_data
                 if cg.get("supply_info") or cg.get("price_metrics"):
                     si = cg.get("supply_info") or {}
                     pm = cg.get("price_metrics") or {}

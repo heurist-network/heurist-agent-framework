@@ -1,15 +1,7 @@
-import asyncio
 import logging
 import os
-import time
 from typing import Any, Dict, List, Optional
 
-import aiohttp
-import requests
-from smolagents import ToolCallingAgent, tool
-from smolagents.memory import SystemPromptStep
-
-from core.custom_smolagents import OpenAIServerModel
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
@@ -86,35 +78,6 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             }
         )
 
-        # Initialize SmolaAgents setup
-        self.model = OpenAIServerModel(
-            model_id=self.metadata["large_model_id"],
-            api_key=self.heurist_api_key,
-            api_base=self.heurist_base_url,
-        )
-
-        tools = [
-            self.get_token_info_tool(),
-            self.get_trending_coins_tool(),
-            self.get_token_price_multi_tool(),
-            self.get_categories_list_tool(),
-            self.get_category_data_tool(),
-            self.get_tokens_by_category_tool(),
-            self.get_trending_pools_tool(),
-            self.get_top_token_holders_tool(),
-        ]
-
-        max_steps = 6
-        self.agent = ToolCallingAgent(tools=tools, model=self.model, max_steps=max_steps)
-
-        self.agent.prompt_templates["system_prompt"] = self.get_system_prompt()
-        self.agent.system_prompt = self.agent.prompt_templates["system_prompt"]
-        self.agent.memory.system_prompt = SystemPromptStep(system_prompt=self.agent.system_prompt)
-
-        self.agent.step_callbacks.append(self._step_callback)
-        self.current_message = {}
-        self._request_semaphore = asyncio.Semaphore(10)
-
     def _resolve_coingecko_id(self, coingecko_id: str) -> str:
         """Resolve a CoinGecko ID or symbol to the actual CoinGecko ID using the mapping."""
         actual_coingecko_id = COINGECKO_ID_MAP.get(coingecko_id.upper(), coingecko_id)
@@ -122,61 +85,10 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             logger.info(f"Mapped {coingecko_id} to {actual_coingecko_id} using COINGECKO_ID_MAP")
         return actual_coingecko_id
 
-    def _step_callback(self, step_log):
-        logger.info(f"Step: {step_log}")
-        if step_log.tool_calls:
-            msg = f"Calling function {step_log.tool_calls[0].name} with args {step_log.tool_calls[0].arguments}"
-            logger.info(msg)
-            self.push_update(self.current_message, msg)
-
     def get_system_prompt(self) -> str:
-        return """
-    IDENTITY:
-    You are a crypto data specialist that can fetch token information and category data from CoinGecko.
+        return """You are a helpful assistant that can access CoinGecko API to provide cryptocurrency token information, market data, trending coins, and category data.
 
-    CAPABILITIES:
-    - Search and retrieve token details
-    - Get current trending coins
-    - Analyze token market data
-    - Compare multiple tokens using the token price multi tool
-    - List crypto categories
-    - Get tokens within specific categories
-    - Compare tokens across categories
-    - Get trending on-chain pools
-    - Get top token holders for a specific token and network
-
-    RESPONSE GUIDELINES:
-    - Keep responses focused on what was specifically asked
-    - Format numbers in a human-readable way (e.g., "$150.4M")
-    - Provide only relevant metrics for the query context
-
-    DOMAIN-SPECIFIC RULES:
-    For specific token queries, identify whether the user provided a CoinGecko ID directly or needs to search by token name or symbol. Coingecko ID is lowercase string and may contain dashes. If a direct CoinGecko ID lookup fails, the system will automatically attempt to search and find the best matching token. Do not make up CoinGecko IDs.
-
-    For trending coins requests, use the get_trending_coins tool to fetch the current top trending cryptocurrencies.
-
-    For trending pools requests, use the get_trending_pools tool to fetch trending on-chain pools. The 'include' parameter must be one of: base_token, quote_token, dex, or network.
-
-    For top token holders requests, use the get_top_token_holders tool to analyze token holder distribution for a specific token and network.
-
-    For token comparisons or when needing to fetch multiple token prices at once, use the get_token_price_multi tool which is more efficient than making multiple individual calls.
-
-    For category-related requests:
-    - Use get_categories_list to fetch all available categories
-    - Use get_category_data to get market data for all categories (limited to 10 by default, specify limit parameter for more)
-    - Use get_tokens_by_category to fetch tokens within a specific category
-
-    When selecting tokens from search results, apply these criteria in order:
-    1. First priority: Select the token where name or symbol perfectly matches the query
-    2. If multiple matches exist, select the token with the highest market cap rank (lower number = higher rank)
-    3. If market cap ranks are not available, prefer the token with the most complete information
-
-    For comparison queries across tokens or categories, extract the relevant metrics and provide a comparative analysis.
-
-    IMPORTANT:
-    - Never invent or assume CoinGecko IDs or category IDs
-    - Keep responses concise and relevant
-    - Use multiple tool calls when needed to get comprehensive information"""
+Format your response in clean text. Be objective and informative."""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -352,13 +264,22 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             return self.pro_api_url, self.pro_headers
         return self.public_api_url, self.public_headers
 
+    async def _api_request(
+        self, url: str, method: str = "GET", headers: Dict = None, params: Dict = None, json_data: Dict = None
+    ) -> Dict:
+        result = await super()._api_request(url, method, headers, params, json_data)
+        if "error" not in result:
+            return self.preprocess_api_response(result)
+        return result
+
     @staticmethod
     def preprocess_api_response(data: Any) -> Any:
         """
         Preprocess API response to remove unnecessary data like images, URLs, and advertisements.
+        Note: 'tickers' is intentionally preserved for CEX data extraction.
         """
         # fmt: off
-        FIELDS_TO_REMOVE = {"image", "thumb", "small", "large", "icon", "logo", "img", "thumbnail", "image_url", "thumb_url", "small_image", "large_image", "icon_url", "logo_url", "img_url", "thumbnail_url", "images", "homepage", "official_forum_url", "chat_url", "announcement_url", "twitter_screen_name", "facebook_username", "bitcointalk_thread_identifier", "telegram_channel_identifier", "subreddit_url", "repos_url", "github", "bitbucket", "urls", "blockchain_site", "official_forum", "chat", "announcement", "twitter", "facebook", "reddit", "telegram", "discord", "website", "whitepaper", "explorer", "source_code", "technical_doc", "repos", "social_links", "community_data", "developer_data", "public_interest_stats", "coingecko_rank", "coingecko_score", "developer_score", "community_score", "liquidity_score", "public_interest_score", "status_updates", "tickers", "sparkline_in_7d", "roi", "description", "genesis_date", "hashing_algorithm", "country_origin", "last_updated", "localization", "detail_platforms", "asset_platform_id", "block_time_in_minutes", "mining_stats", "additional_notices", "ico_data", "market_data.sparkline_7d", "top_3_coins", "top_3_coins_id"}
+        FIELDS_TO_REMOVE = {"image", "thumb", "small", "large", "icon", "logo", "img", "thumbnail", "image_url", "thumb_url", "small_image", "large_image", "icon_url", "logo_url", "img_url", "thumbnail_url", "images", "homepage", "official_forum_url", "chat_url", "announcement_url", "twitter_screen_name", "facebook_username", "bitcointalk_thread_identifier", "telegram_channel_identifier", "subreddit_url", "repos_url", "github", "bitbucket", "urls", "blockchain_site", "official_forum", "chat", "announcement", "twitter", "facebook", "reddit", "telegram", "discord", "website", "whitepaper", "explorer", "source_code", "technical_doc", "repos", "social_links", "community_data", "developer_data", "public_interest_stats", "coingecko_rank", "coingecko_score", "developer_score", "community_score", "liquidity_score", "public_interest_score", "status_updates", "sparkline_in_7d", "roi", "description", "genesis_date", "hashing_algorithm", "country_origin", "last_updated", "localization", "detail_platforms", "asset_platform_id", "block_time_in_minutes", "mining_stats", "additional_notices", "ico_data", "market_data.sparkline_7d", "top_3_coins", "top_3_coins_id"}
         # fmt: on
 
         if isinstance(data, dict):
@@ -405,279 +326,74 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         else:
             return data
 
-    async def _api_request(self, url: str, method: str, headers: Dict, params: Dict = None) -> Dict:
-        """Perform an asynchronous API request with rate-limiting and preprocessing."""
-        async with self._request_semaphore:
-            try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.request(method, url, headers=headers, params=params, timeout=10) as response:
-                        response.raise_for_status()
-                        data = await response.json()
-                        return self.preprocess_api_response(data)
-            except aiohttp.ClientResponseError as e:
-                logger.error(f"API request error: {e.status}, message='{e.message}', url='{url}'")
-                return {"error": f"API request failed: {e.status}, message='{e.message}', url='{url}'"}
-            except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-                logger.error(f"Request error: {e}")
-                return {"error": f"Request error: {str(e)}"}
+    @staticmethod
+    def extract_cex_data(tickers: List[Dict]) -> Optional[List[Dict]]:
+        """
+        Extract CEX data from tickers for specific exchanges.
 
-    def _make_sync_request(self, url: str, headers: Dict, params: Dict = None, max_attempts: int = 3) -> Dict:
-        """Make synchronous API request with retry logic and preprocessing."""
-        for attempt in range(max_attempts):
-            try:
-                response = requests.get(url, headers=headers, params=params)
-                response.raise_for_status()
-                data = response.json()
-                return self.preprocess_api_response(data)
-            except requests.HTTPError:
-                if response.status_code == 429 and attempt < max_attempts - 1:
-                    logger.warning(f"429 Too Many Requests, retrying after 5 seconds (attempt {attempt + 1})")
-                    time.sleep(5)
+        Filters for:
+        - Binance (binance) with USDT target
+        - Bybit Spot (bybit_spot) with USDT target
+        - Upbit (upbit) - any target
+        - Coinbase (coinbase) - any target
+
+        Args:
+            tickers: List of ticker data from CoinGecko API
+
+        Returns:
+            List of CEX data dictionaries or None if no relevant tickers found
+        """
+        if not tickers:
+            return None
+
+        # Define filter rules: (market_identifier, target_required)
+        # None for target_required means accept any target
+        # target means USDT, USD, KRW, etc.
+        cex_filters = [
+            ("binance", "USDT"),
+            ("bybit_spot", "USDT"),
+            ("upbit", None),
+            ("coinbase", None),
+        ]
+
+        cex_data = []
+        seen_exchanges = set()  # Track unique exchange/target combinations
+
+        for ticker in tickers:
+            market = ticker.get("market", {})
+            market_identifier = market.get("identifier")
+            target = ticker.get("target", "")
+
+            for exchange_id, required_target in cex_filters:
+                if market_identifier != exchange_id:
                     continue
-                raise
-            except requests.RequestException:
-                if attempt < max_attempts - 1:
-                    time.sleep(2)
+
+                if required_target and target != required_target:
                     continue
-                raise
 
-    # Tool definitions using smolagents tool decorator
-    def get_token_info_tool(self):
-        @tool
-        def get_token_info(coingecko_id: str) -> Dict[str, Any]:
-            """Get detailed token information and market data using CoinGecko ID.
+                exchange_key = f"{market_identifier}_{target}"
+                if exchange_key in seen_exchanges:
+                    continue
 
-            Args:
-                coingecko_id: The CoinGecko ID of the token
+                seen_exchanges.add(exchange_key)
 
-            Returns:
-                Dictionary with token information or error message
-            """
-            logger.info(f"Getting token info for: {coingecko_id}")
-            try:
-                # Run the async method synchronously
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(self._get_token_info(coingecko_id))
-                finally:
-                    loop.close()
+                cex_entry = {
+                    "cex_name": market.get("name", market_identifier),
+                    "base_token": target,
+                    "volume_24h": ticker.get("volume"),
+                }
 
-                if "error" in result:
-                    return result
-                return self.format_token_info(result)
-            except Exception as e:
-                logger.error(f"Error getting token info: {e}")
-                return {"error": f"Failed to fetch token info: {str(e)}"}
+                cex_data.append(cex_entry)
+                break
 
-        return get_token_info
-
-    def get_trending_coins_tool(self):
-        @tool
-        def get_trending_coins() -> Dict[str, Any]:
-            """Get the current top trending cryptocurrencies on CoinGecko.
-
-            Returns:
-                Dictionary with trending coins data or error message
-            """
-            logger.info("Getting trending coins")
-            try:
-                # Run the async method synchronously
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(self._get_trending_coins())
-                finally:
-                    loop.close()
-                return result
-            except Exception as e:
-                logger.error(f"Error getting trending coins: {e}")
-                return {"error": f"Failed to fetch trending coins: {str(e)}"}
-
-        return get_trending_coins
-
-    def get_token_price_multi_tool(self):
-        @tool
-        def get_token_price_multi(
-            ids: str,
-        ) -> Dict[str, Any]:
-            """Fetch comprehensive USD price data for multiple tokens. Returns current price, market cap, 24hr volume, 24hr change percentage, and last updated timestamp.
-
-            Args:
-                ids: Comma-separated CoinGecko IDs of the tokens to query
-
-            Returns:
-                Dictionary with comprehensive price data for the requested tokens or error message
-            """
-            logger.info(f"Getting multi-token price data for: {ids} in USD")
-            try:
-                # Run the async method synchronously
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(
-                        self._get_token_price_multi(
-                            ids,
-                        )
-                    )
-                finally:
-                    loop.close()
-
-                if "error" in result:
-                    return result
-                return {"price_data": result}
-            except Exception as e:
-                logger.error(f"Error getting multi-token price data: {e}")
-                return {"error": f"Failed to fetch price data: {str(e)}"}
-
-        return get_token_price_multi
-
-    def get_categories_list_tool(self):
-        @tool
-        def get_categories_list() -> Dict[str, Any]:
-            """Get a list of all available cryptocurrency categories from CoinGecko.
-
-            Returns:
-                Dictionary with categories list or error message
-            """
-            logger.info("Getting categories list")
-            try:
-                # Run the async method synchronously
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(self._get_categories_list())
-                finally:
-                    loop.close()
-                return result
-            except Exception as e:
-                logger.error(f"Error getting categories list: {e}")
-                return {"error": f"Failed to fetch categories list: {str(e)}"}
-
-        return get_categories_list
-
-    def get_category_data_tool(self):
-        @tool
-        def get_category_data(order: str = "market_cap_change_24h_desc", limit: int = 5) -> Dict[str, Any]:
-            """Get market data for cryptocurrency categories from CoinGecko.
-
-            Args:
-                order: Sort order for categories (default: market_cap_desc)
-                limit: Number of categories to return (default: 10, max: 100)
-
-            Returns:
-                Dictionary with category data or error message
-            """
-            logger.info(f"Getting category data with order: {order}, limit: {limit}")
-            try:
-                # Run the async method synchronously
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(self._get_category_data(order, limit))
-                finally:
-                    loop.close()
-                return result
-            except Exception as e:
-                logger.error(f"Error getting category data: {e}")
-                return {"error": f"Failed to fetch category data: {str(e)}"}
-
-        return get_category_data
-
-    def get_tokens_by_category_tool(self):
-        @tool
-        def get_tokens_by_category(
-            category_id: str,
-            order: str = "market_cap_desc",
-            per_page: int = 100,
-            page: int = 1,
-        ) -> Dict[str, Any]:
-            """Get USD price data for tokens within a specific category.
-
-            Args:
-                category_id: The CoinGecko category ID (e.g., 'layer-1')
-                order: Sort order for tokens (default: market_cap_desc)
-                per_page: Number of results per page (10-250, default: 100)
-                page: Page number (default: 1)
-
-            Returns:
-                Dictionary with category tokens or error message
-            """
-            logger.info(f"Getting tokens for category: {category_id}")
-            try:
-                # Run the async method synchronously
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(
-                        self._get_tokens_by_category(category_id, "usd", order, per_page, page)
-                    )
-                finally:
-                    loop.close()
-                return result
-            except Exception as e:
-                logger.error(f"Error getting tokens for category: {e}")
-                return {"error": f"Failed to fetch tokens for category '{category_id}': {str(e)}"}
-
-        return get_tokens_by_category
-
-    def get_trending_pools_tool(self):
-        @tool
-        def get_trending_pools(include: str = "base_token", pools: int = 4) -> Dict[str, Any]:
-            """Get trending on-chain pools from CoinGecko.
-
-            Args:
-                include: Single attribute to include: base_token, quote_token, dex, or network
-                pools: Number of pools to return (1-10, default: 4)
-
-            Returns:
-                Dictionary with trending pools data or error message
-            """
-            valid_includes = ["base_token", "quote_token", "dex", "network"]
-            if include not in valid_includes:
-                return {"error": f"Invalid include parameter: {include}. Must be one of {valid_includes}"}
-
-            logger.info(f"Getting trending pools with include: {include}, pools: {pools}")
-            try:
-                api_url, headers = self.get_api_config("/onchain/pools/trending_search")
-                params = {"include": include, "pools": pools}
-                trending_data = self._make_sync_request(f"{api_url}/onchain/pools/trending_search", headers, params)
-                return {"trending_pools": trending_data}
-            except Exception as e:
-                logger.error(f"Error getting trending pools: {e}")
-                return {"error": f"Failed to fetch trending pools: {str(e)}"}
-
-        return get_trending_pools
-
-    def get_top_token_holders_tool(self):
-        @tool
-        def get_top_token_holders(network: str, address: str) -> Dict[str, Any]:
-            """Get top 50 token holder addresses for a token on a specific network.
-
-            Args:
-                network: Network ID (e.g., base)
-                address: Token contract address
-
-            Returns:
-                Dictionary with top token holders data or error message
-            """
-            logger.info(f"Getting top token holders for network: {network}, address: {address}")
-            try:
-                api_url, headers = self.get_api_config(f"/onchain/networks/{network}/tokens/{address}/top_holders")
-                url = f"{api_url}/onchain/networks/{network}/tokens/{address}/top_holders"
-                holders_data = self._make_sync_request(url, headers)
-                return {"top_holders": holders_data}
-            except Exception as e:
-                logger.error(f"Error getting top token holders: {e}")
-                return {"error": f"Failed to fetch top token holders: {str(e)}"}
-
-        return get_top_token_holders
+        return cex_data if cex_data else None
 
     def format_token_info(self, data: Dict) -> Dict:
         market_data = data.get("market_data", {})
         links = data.get("links", {})
+        tickers = data.get("tickers", [])
 
-        return {
+        result = {
             "token_info": {
                 "id": data.get("id", "N/A"),
                 "name": data.get("name", "N/A"),
@@ -719,6 +435,12 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             },
         }
 
+        cex_data = self.extract_cex_data(tickers)
+        if cex_data:
+            result["cex_data"] = cex_data
+
+        return result
+
     @with_retry(max_retries=3)
     async def _search_token(self, query: str) -> str | None:
         """Internal helper to search for a token and return its id"""
@@ -726,7 +448,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             api_url, headers = self.get_api_config("/search")
             url = f"{api_url}/search"
             params = {"query": query}
-            response = await self._api_request(url=url, method="GET", headers=headers, params=params)
+            response = await self._api_request(url=url, headers=headers, params=params)
 
             if "error" in response or not response.get("coins"):
                 return None
@@ -753,7 +475,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         try:
             api_url, headers = self.get_api_config("/search/trending")
             url = f"{api_url}/search/trending"
-            response = await self._api_request(url=url, method="GET", headers=headers)
+            response = await self._api_request(url=url, headers=headers)
 
             if "error" in response:
                 return {"error": response["error"]}
@@ -786,7 +508,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             actual_coingecko_id = self._resolve_coingecko_id(coingecko_id)
             api_url, headers = self.get_api_config(f"/coins/{actual_coingecko_id}")
             url = f"{api_url}/coins/{actual_coingecko_id}"
-            response = await self._api_request(url=url, method="GET", headers=headers)
+            response = await self._api_request(url=url, headers=headers)
             if "error" not in response:
                 return response
 
@@ -796,7 +518,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 if fallback_id:
                     api_url, headers = self.get_api_config(f"/coins/{fallback_id}")
                     fallback_url = f"{api_url}/coins/{fallback_id}"
-                    fallback_response = await self._api_request(url=fallback_url, method="GET", headers=headers)
+                    fallback_response = await self._api_request(url=fallback_url, headers=headers)
                     if "error" not in fallback_response:
                         return fallback_response
             return {"error": "Failed to fetch token info"}
@@ -811,7 +533,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         try:
             api_url, headers = self.get_api_config("/coins/categories/list")
             url = f"{api_url}/coins/categories/list"
-            response = await self._api_request(url=url, method="GET", headers=headers)
+            response = await self._api_request(url=url, headers=headers)
             return {"categories": response} if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error: {e}")
@@ -827,7 +549,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             api_url, headers = self.get_api_config("/coins/categories")
             url = f"{api_url}/coins/categories"
             params = {"order": order} if order else {}
-            response = await self._api_request(url=url, method="GET", headers=headers, params=params)
+            response = await self._api_request(url=url, headers=headers, params=params)
 
             if "error" in response:
                 return {"error": response["error"]}
@@ -865,7 +587,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "include_last_updated_at": "true",
             }
 
-            response = await self._api_request(url=url, method="GET", headers=headers, params=params)
+            response = await self._api_request(url=url, headers=headers, params=params)
             return response if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error: {e}")
@@ -893,7 +615,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "page": page,
                 "sparkline": "false",
             }
-            response = await self._api_request(url=url, method="GET", headers=headers, params=params)
+            response = await self._api_request(url=url, headers=headers, params=params)
             return (
                 {"category_tokens": {"category_id": category_id, "tokens": response}}
                 if "error" not in response
@@ -903,65 +625,24 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             logger.error(f"Error: {e}")
             return {"error": f"Failed to fetch tokens for category '{category_id}': {str(e)}"}
 
-    @with_cache(ttl_seconds=300)
     @monitor_execution()
     @with_retry(max_retries=3)
     async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle incoming messages with either direct tool calls or natural language queries."""
-        query = params.get("query")
+        """Handle incoming messages with direct tool calls."""
         tool_name = params.get("tool")
         tool_args = params.get("tool_arguments", {})
-        raw_data_only = params.get("raw_data_only", False)
-        self.current_message = params
 
         try:
-            # ---------------------
-            # 1) DIRECT TOOL CALL
-            # ---------------------
             if tool_name:
                 logger.info(f"Direct tool call: {tool_name} with args {tool_args}")
                 result = await self._handle_tool_logic(tool_name, tool_args)
+                return {"data": result}
 
-                if raw_data_only:
-                    return {"response": "", "data": result}
-                if query:
-                    explanation = await self._respond_with_llm(
-                        model_id=self.metadata["large_model_id"],
-                        system_prompt=self.get_system_prompt(),
-                        query=query,
-                        tool_call_id="direct_tool",
-                        data=result,
-                        temperature=0.7,
-                    )
-                    return {"response": explanation, "data": result}
-                return {"response": "", "data": result}
-
-            # ---------------------
-            # 2) NATURAL LANGUAGE QUERY (using SmolaAgents)
-            # ---------------------
-            if query:
-                logger.info(f"Processing natural language query: {query}")
-                result = self.agent.run(
-                    f"""Analyze this query and provide insights: {query}
-
-                    Guidelines:
-                    - Use appropriate tools to find and analyze cryptocurrency data
-                    - Format numbers clearly (e.g. $1.5M, 15.2%)
-                    - Keep response concise and focused on key insights
-                    """
-                )
-                return {"response": result.to_string(), "data": {}}
-
-            # ---------------------
-            # 3) NEITHER query NOR tool
-            # ---------------------
-            return {"error": "Either 'query' or 'tool' must be provided in the parameters."}
+            return {"error": "Tool name must be provided in the parameters."}
 
         except Exception as e:
             logger.error(f"Agent execution failed: {str(e)}")
             return {"error": str(e)}
-        finally:
-            self.current_message = {}
 
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
@@ -1005,6 +686,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
         return result
 
+    @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def _handle_trending_pools(self, include: str, pools: int) -> Dict[str, Any]:
         valid_includes = ["base_token", "quote_token", "dex", "network"]
@@ -1015,7 +697,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             api_url, headers = self.get_api_config("/onchain/pools/trending_search")
             url = f"{api_url}/onchain/pools/trending_search"
             params = {"include": include, "pools": pools}
-            response = await self._api_request(url=url, method="GET", headers=headers, params=params)
+            response = await self._api_request(url=url, headers=headers, params=params)
             return {"trending_pools": response} if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error getting trending pools: {e}")
@@ -1027,7 +709,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
         try:
             api_url, headers = self.get_api_config(f"/onchain/networks/{network}/tokens/{address}/top_holders")
             url = f"{api_url}/onchain/networks/{network}/tokens/{address}/top_holders"
-            response = await self._api_request(url=url, method="GET", headers=headers)
+            response = await self._api_request(url=url, headers=headers)
             return {"top_holders": response} if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error getting top token holders: {e}")
