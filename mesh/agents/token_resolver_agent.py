@@ -35,38 +35,7 @@ ALLOWED_CHAINS = {
     "moonbeam",
 }
 
-LARGE_CAP_SYMBOLS_FOR_FUNDING = {
-    "BTC",
-    "ETH",
-    "BNB",
-    "XRP",
-    "ADA",
-    "SOL",
-    "DOGE",
-    "MATIC",
-    "DOT",
-    "TRX",
-    "LTC",
-    "BCH",
-    "LINK",
-    "SHIB",
-    "AVAX",
-    "UNI",
-    "APT",
-    "SUI",
-    "NEAR",
-    "APE",
-    "XLM",
-    "TON",
-    "ICP",
-    "FTM",
-    "ETC",
-    "EOS",
-    "ZEC",
-    "AAVE",
-    "MKR",
-    "COMP",
-}
+
 COINGECKO_TO_DEXSCREENER_PLATFORM = {
     "binance-smart-chain": "bsc",
     "arbitrum-one": "arbitrum",
@@ -268,7 +237,7 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "profile",
-                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, holders (Solana only), traders (Solana only), funding_rates (large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens",
+                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, holders (Solana only), traders (Solana only), funding_rates (Binance-listed large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -388,7 +357,7 @@ class TokenResolverAgent(MeshAgent):
             return await self._call_agent_tool(
                 "mesh.agents.funding_rate_agent",
                 "FundingRateAgent",
-                "get_symbol_funding_rates",
+                "get_symbol_oi_and_funding",
                 {"symbol": symbol},
             )
         except Exception as e:
@@ -980,7 +949,7 @@ class TokenResolverAgent(MeshAgent):
 
         # Optional: Funding rates + Technical indicators for large caps
         sym = (symbol or prof.get("symbol") or "").upper()
-        if "funding_rates" in include and sym in LARGE_CAP_SYMBOLS_FOR_FUNDING:
+        if "funding_rates" in include:
             fr = await self._funding_rates(sym)
             if fr and not fr.get("error"):
                 prof["extras"]["funding_rates"] = fr
