@@ -279,7 +279,7 @@ RESPONSE GUIDELINES:
         """
         Return funding rates for top 5 Binance USDⓈ-M tokens (BTC, ETH, SOL, BNB, XRP).
         Fetches in parallel with individual error handling.
-        Format: ["symbol", rate_decimal, "intervalH"]
+        Format: ["symbol", rate_decimal, "intervalH", "apr%"]
         """
         # Top 5 tokens to track
         top_tokens = ["BTC", "ETH", "SOL", "BNB", "XRP"]
@@ -294,8 +294,11 @@ RESPONSE GUIDELINES:
                     funding = data.get("funding", {})
                     rate = funding.get("latest_rate", 0.0)
                     interval = funding.get("interval_hours", 8)
+                    # Calculate APR assuming 8h interval as specified
+                    apr, _ = self._apr_from_rate(rate, interval)
+                    apr_pct = _fmt_pct(apr, 2)
                     logger.info(f"Successfully fetched funding rate for {token}: {rate * 100:.6f}%")
-                    return [symbol, rate, f"{interval}h"]
+                    return [symbol, rate, f"{interval}h", apr_pct]
                 else:
                     logger.warning(f"Could not resolve symbol for {token}: {result.get('message', 'Unknown error')}")
                     return None
@@ -315,7 +318,7 @@ RESPONSE GUIDELINES:
             # Sort by absolute rate descending
             formatted.sort(key=lambda x: abs(x[1]), reverse=True)
 
-            return {"rates": formatted, "format": ["symbol", "rate", "interval"]}
+            return {"rates": formatted, "format": ["symbol", "rate", "interval", "apr"]}
 
         except Exception as e:
             logger.exception("get_all_funding_rates failed")
@@ -462,8 +465,9 @@ RESPONSE GUIDELINES:
                     "funding_rate": rate,
                     "funding_rate_pct": _fmt_pct(rate, 4),
                     "funding_interval": interval,
+                    "apr": apr_pct,
                 }
-                for sym, rate, interval in all_rates["rates"]
+                for sym, rate, interval, apr_pct in all_rates["rates"]
                 if rate >= min_funding_rate
             ]
             return {"status": "success", "data": {"spot_futures_opportunities": positives}}

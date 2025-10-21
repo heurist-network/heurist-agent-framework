@@ -467,6 +467,27 @@ class TokenResolverAgent(MeshAgent):
     # -----------------------------
     # Core operations
     # -----------------------------
+    async def _enrich_with_profile_data(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Enrich search result with profile data when coingecko_id is available"""
+        cgid = result.get("coingecko_id")
+        if not cgid:
+            return result
+
+        profile_result = await self._profile(
+            chain=None,
+            address=None,
+            symbol=None,
+            coingecko_id=cgid,
+            include=["funding_rates", "technical_indicators"],
+            top_n_pairs=0,
+            indicator_interval="1d",
+        )
+
+        if profile_result.get("status") == "success":
+            result["profile"] = profile_result.get("data", {})
+
+        return result
+
     @with_retry(max_retries=2)
     async def _search(self, query: str, chain: Optional[str], qtype: str, limit: int) -> Dict[str, Any]:
         chain = _normalize_chain(chain)
@@ -769,8 +790,16 @@ class TokenResolverAgent(MeshAgent):
 
         final_results = out[:limit]
 
+        enriched_results = []
+        for result in final_results:
+            if result.get("coingecko_id"):
+                enriched = await self._enrich_with_profile_data(result)
+                enriched_results.append(enriched)
+            else:
+                enriched_results.append(result)
+
         # Clean empty fields from results
-        cleaned_results = [_clean_empty_fields(result) for result in final_results]
+        cleaned_results = [_clean_empty_fields(result) for result in enriched_results]
 
         logger.info(f"[token_resolver] Final results: {len(final_results)}/{len(out)} (limit={limit})")
 
