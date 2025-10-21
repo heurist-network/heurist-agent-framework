@@ -148,19 +148,20 @@ RESPONSE GUIDELINES:
         url = f"{base}{path}"
         return await self._api_request(url=url, method="GET", params=params or {})
 
-    @with_cache(ttl_seconds=120)
+    @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=2)
     async def _premium_index(self, symbol: Optional[str] = None) -> Any:
         params = {"symbol": symbol} if symbol else None
         return await self._get("/fapi/v1/premiumIndex", params=params)
 
-    @with_cache(ttl_seconds=300)
+    @with_cache(ttl_seconds=14400)
     @with_retry(max_retries=2)
     async def _funding_info_all(self) -> List[Dict[str, Any]]:
         # fundingInfo returns only symbols that had adjustments; we’ll filter locally.
         res = await self._get("/fapi/v1/fundingInfo")
         return res if isinstance(res, list) else []
 
+    @with_cache(ttl_seconds=14400)
     @with_retry(max_retries=2)
     async def _funding_rate_history(self, symbol: str, limit: int = 2) -> List[Dict[str, Any]]:
         params = {"symbol": symbol, "limit": limit}
