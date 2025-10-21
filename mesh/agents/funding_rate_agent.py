@@ -235,10 +235,6 @@ RESPONSE GUIDELINES:
         high, low = max(vals), min(vals)
         hi_ix, lo_ix = vals.index(high), vals.index(low)
 
-        # Simple slope via last-first over span (per day)
-        span_days = max(1.0, (times[-1] - times[0]) / (1000.0 * 60 * 60 * 24))
-        daily_slope = change_abs / span_days
-
         # 24h change (last 6 bars ~ 24h)
         if n >= 7:
             day_ago = vals[-7]
@@ -264,10 +260,8 @@ RESPONSE GUIDELINES:
             "change_7d_pct": change_pct,
             "change_24h_abs": change_24h_abs,
             "change_24h_pct": change_24h_pct,
-            "high": {"value": high, "time": times[hi_ix]},
-            "low": {"value": low, "time": times[lo_ix]},
-            "daily_slope_abs": daily_slope,
-            "points": n,
+            "high": high,
+            "low": low,
         }
 
     # ---------------------------------------------------------------------
@@ -420,8 +414,8 @@ RESPONSE GUIDELINES:
                 latest = oi_summary["latest_oi"]
                 c7 = oi_summary["change_7d_pct"]
                 c24 = oi_summary["change_24h_pct"]
-                high = oi_summary["high"]["value"]
-                low = oi_summary["low"]["value"]
+                high = oi_summary["high"]
+                low = oi_summary["low"]
                 label = oi_summary["trend_label"]
                 oi_text = (
                     f"Open interest trend is {label}: latest ≈ {latest:,.0f} USD. "
@@ -434,12 +428,7 @@ RESPONSE GUIDELINES:
                 "data": {
                     "symbol": resolved,
                     "funding": funding["data"]["funding"],
-                    "open_interest": {
-                        "summary": oi_summary,
-                        "text": oi_text,
-                        "period": "7d",
-                        "interval": "4h",
-                    },
+                    "open_interest": oi_text,
                 },
             }
             return out
