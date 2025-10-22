@@ -24,8 +24,8 @@ class TrendingTokenAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, and social media intelligence sources.",
-                "external_apis": ["GMGN", "CoinGecko", "Bitquery", "Elfa"],
+                "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener and Twitter discussions.",
+                "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa"],
                 "tags": ["Token Trends", "Market Data"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
@@ -59,7 +59,7 @@ class TrendingTokenAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_trending_tokens",
-                    "description": "Aggregate trending tokens from CoinGecko, Crypto Twitter top mentions (24h), and optionally GMGN (24h, top 10) and Pump.fun graduations (12h).",
+                    "description": "Get trending tokens that are most talked about and traded on CEXs and DEXs. Optionally get trending tokens on a specific chain.",
                     "parameters": {
                         "type": "object",
                         "properties": {
