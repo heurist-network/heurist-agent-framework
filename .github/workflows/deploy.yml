@@ -44,7 +44,7 @@ jobs:
           webhook_url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
           webhook_secret: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
           # this runs a webhook on the prod machine, which in turn triggers the .docker/deploy.sh script to deploy the new image
-          data: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "commits": ${{ toJson(github.event.commits) }}}'
+          data: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "pm2_api_secret": "${{ secrets.PM2_API_SECRET }}", "commits": ${{ toJson(github.event.commits) }}}'
 
       - name: Wait for deployment
         run: |
