@@ -35,7 +35,6 @@ class TrendingTokenAgent(MeshAgent):
                     "What are the hottest tokens right now across all platforms?",
                     "Show me trending tokens from CoinGecko and Twitter only",
                     "What tokens have recently graduated from pump.fun?",
-                    "Show me what's trending on GMGN",
                 ],
                 "x402_config": {
                     "enabled": True,
