@@ -352,6 +352,8 @@ Format your response in clean text. Be objective and informative."""
         cex_filters = [
             ("binance", "USDT"),
             ("bybit_spot", "USDT"),
+            ("gate", "USDT"),
+            ("bitget", "USDT"),
             ("upbit", None),
             ("coinbase", None),
         ]
