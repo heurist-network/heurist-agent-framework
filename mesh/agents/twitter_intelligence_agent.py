@@ -48,7 +48,7 @@ class TwitterIntelligenceAgent(MeshAgent):
                 "external_apis": ["Twitter/X", "Influential mentions"],
                 "tags": ["Twitter", "X", "Social", "x402"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Twitter.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/twitter-agent.png",
                 "examples": [
                     "user_timeline(identifier='@heurist_ai')",
                     "tweet_detail(tweet_id='1975788185671389308')",

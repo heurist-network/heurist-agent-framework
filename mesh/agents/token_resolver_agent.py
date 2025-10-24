@@ -173,7 +173,7 @@ class TokenResolverAgent(MeshAgent):
                 ],
                 "tags": ["Token Search", "Market Data", "x402"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/token-resolver-agent.png",
                 "examples": [
                     "search query=ETH",
                     "search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",

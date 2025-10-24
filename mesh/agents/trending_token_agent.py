@@ -29,7 +29,7 @@ class TrendingTokenAgent(MeshAgent):
                 "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa"],
                 "tags": ["Token Trends", "Market Data", "x402"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/trending-token-agent.png",
                 "examples": [
                     "Show me trending tokens",
                     "Get trending tokens including memecoins",
