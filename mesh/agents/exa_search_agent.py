@@ -74,14 +74,23 @@ class ExaSearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_web_search",
-                    "description": "Search for webpages related to a query using Exa search. This tool performs a web search and returns relevant results including titles, snippets, and URLs. It's useful for finding up-to-date information on any topic, but may fail to find information of niche topics such like small cap crypto projects. Use this when you need to gather information from across the web.",
+                    "description": "Search for webpages using Exa's neural search. Returns relevant results with titles, snippets, and URLs. Unlike traditional search, Exa uses semantic understanding (not boolean operators like AND/OR). Supports domain filtering and date filtering. Use includeDomains to restrict search to specific sites. Use date filters for time-sensitive queries.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "search_term": {"type": "string", "description": "The search term"},
+                            "search_term": {"type": "string", "description": "The search term or natural language query"},
                             "limit": {
                                 "type": "number",
                                 "description": "Maximum number of results to return (default: 10)",
+                            },
+                            "include_domains": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "List of domains to include in search (e.g., ['arxiv.org', 'papers.com']). Supports paths (e.g., 'example.com/blog') and wildcards (e.g., '*.substack.com')",
+                            },
+                            "start_published_date": {
+                                "type": "string",
+                                "description": "Only return results published after this date (ISO 8601 format: '2024-01-01T00:00:00.000Z')",
                             },
                         },
                         "required": ["search_term"],
@@ -107,15 +116,37 @@ class ExaSearchAgent(MeshAgent):
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
     @with_retry(max_retries=3)
-    async def exa_web_search(self, search_term: str, limit: int = 10) -> Dict[str, Any]:
+    async def exa_web_search(
+        self,
+        search_term: str,
+        limit: int = 10,
+        include_domains: Optional[List[str]] = None,
+        start_published_date: Optional[str] = None,
+    ) -> Dict[str, Any]:
         """
         Uses Exa's /search endpoint to find webpages related to the search term.
+
+        Args:
+            search_term: The search query
+            limit: Maximum number of results
+            include_domains: List of domains to include (e.g., ['arxiv.org'])
+            start_published_date: ISO 8601 format date string for filtering results published after this date
         """
         logger.info(f"Executing Exa web search for '{search_term}' with limit {limit}")
 
         try:
             url = f"{self.base_url}/search"
             payload = {"query": search_term, "numResults": limit, "contents": {"text": True}}
+
+            # Add domain filters if specified
+            if include_domains:
+                payload["includeDomains"] = include_domains
+                logger.info(f"Including domains: {include_domains}")
+
+            # Add date filters if specified
+            if start_published_date:
+                payload["startPublishedDate"] = start_published_date
+                logger.info(f"Filtering results published after: {start_published_date}")
 
             response = await self._api_request(url=url, method="POST", headers=self.headers, json_data=payload)
 
@@ -190,6 +221,8 @@ class ExaSearchAgent(MeshAgent):
         if tool_name == "exa_web_search":
             search_term = function_args.get("search_term")
             limit = function_args.get("limit", 10)
+            include_domains = function_args.get("include_domains")
+            start_published_date = function_args.get("start_published_date")
 
             if not search_term:
                 logger.error("Missing 'search_term' parameter")
@@ -199,7 +232,7 @@ class ExaSearchAgent(MeshAgent):
             if limit < 10:
                 limit = 10
 
-            result = await self.exa_web_search(search_term, limit)
+            result = await self.exa_web_search(search_term, limit, include_domains, start_published_date)
 
         elif tool_name == "exa_answer_question":
             question = function_args.get("question")
