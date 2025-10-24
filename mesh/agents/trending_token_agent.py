@@ -15,6 +15,7 @@ GMGN_NOTE = "gmgn is a memecoin trading platform."
 
 TRENDING_CHAIN_DATA_BASE_URL = "https://mesh-data.heurist.xyz/"
 
+
 class TrendingTokenAgent(MeshAgent):
     def __init__(self):
         super().__init__()
@@ -65,12 +66,12 @@ class TrendingTokenAgent(MeshAgent):
                             "chain": {
                                 "type": "string",
                                 "description": "Chain to get trending tokens for. Your default action is to keep it empty to get trending tokens across CEXs and chains. Include this field if specific chain is requested in the context.",
-                                "enum": ["base", "ethereum", "solana", "bsc"]
+                                "enum": ["base", "ethereum", "solana", "bsc"],
                             },
                             "include_memes": {
                                 "type": "boolean",
-                                "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Keep it false by default. Include only if memecoins are specifically requested in the context."
-                            }
+                                "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Keep it false by default. Include only if memecoins are specifically requested in the context.",
+                            },
                         },
                         "required": [],
                     },
@@ -100,7 +101,7 @@ class TrendingTokenAgent(MeshAgent):
         # Check if data is outdated (>1 day old).
         # last_updated_str: ISO format timestamp string
         try:
-            last_updated = datetime.fromisoformat(last_updated_str.replace('Z', '+00:00'))
+            last_updated = datetime.fromisoformat(last_updated_str.replace("Z", "+00:00"))
             if last_updated.tzinfo is None:
                 last_updated = last_updated.replace(tzinfo=timezone.utc)
 
@@ -184,7 +185,9 @@ class TrendingTokenAgent(MeshAgent):
             "twitter_trending": twitter_result,
         }
 
-        notes_parts = ["Trending tokens on coingecko and twitter include CEX and DEX tokens, and Twitter trends may include stock tickers."]
+        notes_parts = [
+            "Trending tokens on coingecko and twitter include CEX and DEX tokens, and Twitter trends may include stock tickers."
+        ]
 
         if include_memes:
             gmgn_result = self._normalize_tool_result(results[2], "UnifaiTokenAnalysisAgent.get_gmgn_trend")

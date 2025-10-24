@@ -3,6 +3,7 @@
 Test script to check raw API responses from CoinGecko and PumpFun agents.
 This helps identify additional data fields that might be useful.
 """
+
 import asyncio
 import json
 import sys
@@ -46,6 +47,7 @@ async def test_coingecko_raw_response():
     except Exception as e:
         print(f"\n❌ Test failed: {str(e)}")
         import traceback
+
         traceback.print_exc()
 
 
@@ -53,8 +55,9 @@ async def test_coingecko_raw_api():
     """Test direct CoinGecko API call to see full response."""
     print_section("CoinGecko Trending - Direct API Response (Before Preprocessing)")
 
-    import aiohttp
     import os
+
+    import aiohttp
 
     api_key = os.getenv("COINGECKO_API_KEY")
     if not api_key:
@@ -87,6 +90,7 @@ async def test_coingecko_raw_api():
     except Exception as e:
         print(f"\n❌ Test failed: {str(e)}")
         import traceback
+
         traceback.print_exc()
 
 
@@ -118,6 +122,7 @@ async def test_pumpfun_raw_response():
     except Exception as e:
         print(f"\n❌ Test failed: {str(e)}")
         import traceback
+
         traceback.print_exc()
 
 

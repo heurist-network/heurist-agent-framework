@@ -3,6 +3,7 @@
 Test script for TrendingTokenAgent.
 Tests the aggregation of trending tokens from multiple sources.
 """
+
 import asyncio
 import json
 import sys
@@ -58,7 +59,12 @@ def print_trending_source(source_name: str, data: dict):
                 symbol = token.get("symbol") or token_info.get("symbol") or token.get("token_symbol") or "Unknown"
                 chain = token.get("chain") or token.get("network") or "N/A"
                 price = token.get("price") or token.get("price_usd") or token.get("current_price")
-                volume = token.get("volume") or token.get("volume_24h") or token.get("total_volume") or token.get("total_volume_24h")
+                volume = (
+                    token.get("volume")
+                    or token.get("volume_24h")
+                    or token.get("total_volume")
+                    or token.get("total_volume_24h")
+                )
                 market_cap = token.get("market_cap") or token.get("marketcap") or token.get("market_cap_usd")
                 price_change = token.get("price_change_percentage_24h") or token.get("price_change_24h")
                 rank = token.get("market_cap_rank") or token.get("rank")
@@ -161,15 +167,14 @@ async def test_trending_tokens():
         # Print summary
         print_section("Summary")
         available_sources = sum(
-            1
-            for _, key in sources
-            if data.get(key) and data[key].get("status") not in ["error", "no_data"]
+            1 for _, key in sources if data.get(key) and data[key].get("status") not in ["error", "no_data"]
         )
         print(f"Available data sources: {available_sources}/{len(sources)}")
 
     except Exception as e:
         print(f"\n❌ Test failed with exception: {str(e)}")
         import traceback
+
         traceback.print_exc()
 
     print("\n🏁 Test completed\n")

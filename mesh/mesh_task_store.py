@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 from uuid import uuid4
 
-
 _UNSET = object()
 
 

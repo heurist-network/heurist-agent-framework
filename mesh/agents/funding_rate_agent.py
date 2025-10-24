@@ -1,6 +1,6 @@
 import asyncio
-import os
 import logging
+import os
 from typing import Any, Dict, List, Optional, Tuple
 
 from decorators import with_cache, with_retry
@@ -104,7 +104,10 @@ RESPONSE GUIDELINES:
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Asset ticker or full symbol (e.g., BTC or BTCUSDT)"},
+                            "symbol": {
+                                "type": "string",
+                                "description": "Asset ticker or full symbol (e.g., BTC or BTCUSDT)",
+                            },
                         },
                         "required": ["symbol"],
                     },
@@ -118,7 +121,10 @@ RESPONSE GUIDELINES:
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Asset ticker or full symbol (e.g., BTC or BTCUSDT)"},
+                            "symbol": {
+                                "type": "string",
+                                "description": "Asset ticker or full symbol (e.g., BTC or BTCUSDT)",
+                            },
                         },
                         "required": ["symbol"],
                     },
@@ -132,12 +138,15 @@ RESPONSE GUIDELINES:
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "min_funding_rate": {"type": "number", "description": "Per-interval threshold, default 0.0003"},
+                            "min_funding_rate": {
+                                "type": "number",
+                                "description": "Per-interval threshold, default 0.0003",
+                            },
                         },
                         "required": [],
                     },
                 },
-            }
+            },
         ]
 
     # ---------------------------------------------------------------------
@@ -224,7 +233,8 @@ RESPONSE GUIDELINES:
             return {"status": "no_data", "message": "No OI data available for the past 7 days."}
 
         # Keep chronological order; Binance returns ascending for /futures/data/*
-        def f(x): return float(x) if x is not None else 0.0
+        def f(x):
+            return float(x) if x is not None else 0.0
 
         vals = [f(r.get("sumOpenInterestValue")) for r in rows if "sumOpenInterestValue" in r]
         times = [int(r.get("timestamp", 0)) for r in rows]
@@ -344,14 +354,14 @@ RESPONSE GUIDELINES:
                 return {
                     "status": "no_data",
                     "message": f"Unable to fetch funding rate for '{symbol}'. "
-                               f"Binance may not have a perpetual market for this token."
+                    f"Binance may not have a perpetual market for this token.",
                 }
 
             if prem.get("symbol") != resolved:
                 return {
                     "status": "no_data",
                     "message": f"Symbol '{symbol}' (resolved as '{resolved}') not found. "
-                               f"Binance may not have a perpetual market for this token."
+                    f"Binance may not have a perpetual market for this token.",
                 }
 
             last_rate = float(prem.get("lastFundingRate", 0.0) or 0.0)
@@ -379,8 +389,8 @@ RESPONSE GUIDELINES:
             return {
                 "status": "error",
                 "message": f"Failed to fetch funding rate for '{symbol}'. "
-                          f"Binance may not have a perpetual market for this token, or there was an API error.",
-                "error": str(e)
+                f"Binance may not have a perpetual market for this token, or there was an API error.",
+                "error": str(e),
             }
 
     @with_cache(ttl_seconds=180)
@@ -468,7 +478,9 @@ RESPONSE GUIDELINES:
     # ---------------------------------------------------------------------
     # Tool dispatcher
     # ---------------------------------------------------------------------
-    async def _handle_tool_logic(self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    async def _handle_tool_logic(
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 
         if tool_name == "get_all_funding_rates":

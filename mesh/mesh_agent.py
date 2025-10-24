@@ -358,7 +358,6 @@ class MeshAgent(ABC):
         finally:
             await agent_instance.cleanup()
 
-
     async def _call_agent_tool_safe(
         self,
         module: str,
@@ -424,7 +423,6 @@ class MeshAgent(ABC):
         if isinstance(candidate, list):
             return len(candidate) > 0
         return True
-
 
     async def call_agent(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Main entry point that handles the message flow with hooks."""
