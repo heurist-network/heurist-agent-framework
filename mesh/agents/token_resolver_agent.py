@@ -171,7 +171,7 @@ class TokenResolverAgent(MeshAgent):
                     "Yahoo Finance (optional)",
                     "Coinsider (optional)",
                 ],
-                "tags": ["Token Search", "Market Data"],
+                "tags": ["Token Search", "Market Data", "x402"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
                 "examples": [
