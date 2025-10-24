@@ -54,14 +54,22 @@ docker image prune -a --filter "until=96h" -f
 # ─── 5) Restart x402-gateway via PM2 Control API ─────────────────────────────
 log "Restarting x402-gateway via PM2 Control API"
 if [[ -n "${PM2_API_SECRET:-}" ]]; then
-    response=$(curl -s -X POST https://mesh.heurist.xyz/pm2-control/restart/x402-gateway \
+    # Use timeout and better error handling to prevent deployment failure
+    response=$(curl -s --max-time 30 --connect-timeout 10 -X POST https://mesh.heurist.xyz/pm2-control/restart/x402-gateway \
         -H "Authorization: Bearer ${PM2_API_SECRET}" \
-        -w "\n%{http_code}" || echo "error")
-    http_code=$(echo "$response" | tail -n1)
-    body=$(echo "$response" | head -n-1)
+        -w "\n%{http_code}\n%{exit_code}" 2>/dev/null || echo -e "error\n000\n1")
+    
+    # Parse response: body, http_code, curl_exit_code
+    body=$(echo "$response" | head -n-2)
+    http_code=$(echo "$response" | tail -n2 | head -n1)
+    curl_exit_code=$(echo "$response" | tail -n1)
 
-    if [[ "$http_code" == "200" ]]; then
+    if [[ "$curl_exit_code" != "0" ]]; then
+        log "WARNING: Network error during x402-gateway restart (curl exit code: $curl_exit_code)"
+    elif [[ "$http_code" == "200" ]]; then
         log "Successfully restarted x402-gateway: $body"
+    elif [[ "$http_code" == "504" ]]; then
+        log "WARNING: Gateway timeout (504) when restarting x402-gateway - service may be overloaded"
     else
         log "WARNING: Failed to restart x402-gateway (HTTP $http_code): $body"
     fi
