@@ -30,7 +30,7 @@ class UnifaiWeb3NewsAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent fetches the latest Web3 and cryptocurrency news using UnifAI's API",
                 "external_apis": ["UnifAI"],
-                "tags": ["News"],
+                "tags": ["News", "x402"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Unifai.png",
                 "examples": [
@@ -39,6 +39,10 @@ class UnifaiWeb3NewsAgent(MeshAgent):
                     "Show the top blockchain news",
                 ],
                 "credits": 0,
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.01",
+                },
             }
         )
 
@@ -53,7 +57,7 @@ class UnifaiWeb3NewsAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_web3_news",
-                    "description": "Fetch the latest news from the Web3 and cryptocurrency space",
+                    "description": "Fetch the latest news of the Web3 and cryptocurrency space. Use this tool to check the most recent updates and most important developments in crypto. You must use this tool before answering any crypto-related questions to check the market sentiment and news.",
                     "parameters": {
                         "type": "object",
                         "properties": {
