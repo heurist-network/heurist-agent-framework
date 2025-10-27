@@ -138,7 +138,7 @@ RESPONSE GUIDELINES:
                 "type": "function",
                 "function": {
                     "name": "find_spot_futures_opportunities",
-                    "description": "On Binance: list symbols with positive funding rates above a threshold (carry candidates).",
+                    "description": "Find Binance future markets with positive funding rates above a threshold. Useful for identifying funding rate arbitrage opportunities.",
                     "parameters": {
                         "type": "object",
                         "properties": {

@@ -96,7 +96,7 @@ class GoplusAnalysisAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "fetch_security_details",
-                    "description": "Fetch security details of a blockchain token contract",
+                    "description": "Analyze the security of a blockchain token contract. This tool returns a token's authority settings, admin permissions, holder concentration, liquidity, and other security metrics helping to determine if the token is safe to buy.",
                     "parameters": {
                         "type": "object",
                         "properties": {
