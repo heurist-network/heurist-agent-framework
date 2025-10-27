@@ -49,11 +49,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 "credits": 0,
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "search_projects": "0.01",
-                        "get_market_summary": "0.02",
-                    },
+                    "default_price_usd": "0.01",
                 },
             }
         )

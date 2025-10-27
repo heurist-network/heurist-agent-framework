@@ -182,11 +182,7 @@ class TokenResolverAgent(MeshAgent):
                 ],
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "search": "0.02",
-                        "profile": "0.02",
-                    },
+                    "default_price_usd": "0.01",
                 },
             }
         )

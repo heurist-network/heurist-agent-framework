@@ -37,7 +37,7 @@ class PumpFunTokenAgent(MeshAgent):
                 ],
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
+                    "default_price_usd": "0.01",
                 },
             }
         )
