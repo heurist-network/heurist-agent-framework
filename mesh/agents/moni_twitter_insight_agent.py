@@ -30,7 +30,7 @@ class MoniTwitterInsightAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity.",
                 "external_apis": ["Moni"],
-                "tags": ["Twitter"],
+                "tags": ["Twitter", "x402"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Moni.png",
                 "examples": [
                     "Show me the follower growth trends for heurist_ai over the last week",
@@ -38,6 +38,10 @@ class MoniTwitterInsightAgent(MeshAgent):
                     "Show me the recent smart mentions for ethereum",
                 ],
                 "credits": 10,
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.01",
+                },
             }
         )
 
@@ -63,29 +67,6 @@ class MoniTwitterInsightAgent(MeshAgent):
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
-            {
-                "type": "function",
-                "function": {
-                    "name": "get_smart_followers_history",
-                    "description": "Get historical data on smart followers count for a Twitter account",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "username": {
-                                "type": "string",
-                                "description": "Twitter username without the @ symbol",
-                            },
-                            "timeframe": {
-                                "type": "string",
-                                "description": "Time range for the data (H1=Last hour, H24=Last 24 hours, D7=Last 7 days, D30=Last 30 days, Y1=Last year)",
-                                "enum": ["H1", "H24", "D7", "D30", "Y1"],
-                                "default": "D7",
-                            },
-                        },
-                        "required": ["username"],
-                    },
-                },
-            },
             {
                 "type": "function",
                 "function": {
@@ -150,17 +131,6 @@ class MoniTwitterInsightAgent(MeshAgent):
 
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
     @with_retry(max_retries=3)
-    async def get_smart_followers_history(self, username: str, timeframe: str = "D7") -> Dict:
-        """Get historical data on smart followers count"""
-        clean_username = self._clean_username(username)
-        url = f"{self.base_url}{clean_username}/history/smarts_count/"
-        params = {"timeframe": timeframe}
-
-        # Use the base class's _api_request method
-        return await self._api_request(url=url, method="GET", headers=self.headers, params=params)
-
-    @with_cache(ttl_seconds=3600)  # Cache for 1 hour
-    @with_retry(max_retries=3)
     async def get_smart_followers_categories(self, username: str) -> Dict:
         """Get categories of smart followers"""
         clean_username = self._clean_username(username)
@@ -201,10 +171,7 @@ class MoniTwitterInsightAgent(MeshAgent):
         if not username:
             return {"error": "Username is required for all Twitter intelligence tools"}
 
-        if tool_name == "get_smart_followers_history":
-            timeframe = function_args.get("timeframe", "D7")
-            result = await self.get_smart_followers_history(username, timeframe)
-        elif tool_name == "get_smart_followers_categories":
+        if tool_name == "get_smart_followers_categories":
             result = await self.get_smart_followers_categories(username)
         elif tool_name == "get_smart_mentions_feed":
             limit = function_args.get("limit", 100)

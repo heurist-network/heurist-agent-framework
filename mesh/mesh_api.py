@@ -275,9 +275,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
 
     task_id = task_store.create_task(request.agent_id, task_payload, api_key)
 
-    asyncio.create_task(
-        run_async_agent_task(task_id, request.agent_id, task_payload, api_key, request.heurist_api_key)
-    )
+    asyncio.create_task(run_async_agent_task(task_id, request.agent_id, task_payload, api_key, request.heurist_api_key))
 
     return {"task_id": task_id, "msg": "Task created"}
 

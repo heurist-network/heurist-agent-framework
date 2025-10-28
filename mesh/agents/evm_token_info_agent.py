@@ -29,7 +29,7 @@ class EvmTokenInfoAgent(MeshAgent):
                 "description": "This agent analyzes large trades for EVM tokens across multiple chains using Bitquery API. It tracks whale movements by identifying actual traders with transaction details. Trade types are shown from the trader's perspective (not DEX perspective).",
                 "external_apis": ["Bitquery"],
                 "recommended": True,
-                "tags": ["EVM"],
+                "tags": ["EVM", "x402"],
                 "supported_chains": ["ethereum", "eth", "bsc", "binance", "base", "arbitrum", "arb"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/EVM.png",
                 "examples": [
@@ -42,10 +42,7 @@ class EvmTokenInfoAgent(MeshAgent):
                 "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.05",
-                    "tool_prices": {
-                        "get_recent_large_trades": "0.05",
-                    },
+                    "default_price_usd": "0.01",
                 },
             }
         )

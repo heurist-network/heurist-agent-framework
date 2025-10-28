@@ -51,4 +51,22 @@ docker container prune -f
 docker image prune -f
 docker image prune -a --filter "until=96h" -f
 
+# ─── 5) Restart x402-gateway via PM2 Control API ─────────────────────────────
+log "Restarting x402-gateway via PM2 Control API"
+if [[ -n "${PM2_API_SECRET:-}" ]]; then
+    response=$(curl -s -X POST https://mesh.heurist.xyz/pm2-control/restart/x402-gateway \
+        -H "Authorization: Bearer ${PM2_API_SECRET}" \
+        -w "\n%{http_code}" || echo "error")
+    http_code=$(echo "$response" | tail -n1)
+    body=$(echo "$response" | head -n-1)
+
+    if [[ "$http_code" == "200" ]]; then
+        log "Successfully restarted x402-gateway: $body"
+    else
+        log "WARNING: Failed to restart x402-gateway (HTTP $http_code): $body"
+    fi
+else
+    log "WARNING: PM2_API_SECRET not set, skipping x402-gateway restart"
+fi
+
 log "===== Deployment finished ====="

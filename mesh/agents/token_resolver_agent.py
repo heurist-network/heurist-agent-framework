@@ -171,9 +171,9 @@ class TokenResolverAgent(MeshAgent):
                     "Yahoo Finance (optional)",
                     "Coinsider (optional)",
                 ],
-                "tags": ["Token Search", "Market Data"],
+                "tags": ["Token Search", "Market Data", "x402"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/token-resolver-agent.png",
                 "examples": [
                     "search query=ETH",
                     "search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",
@@ -182,11 +182,7 @@ class TokenResolverAgent(MeshAgent):
                 ],
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "search": "0.02",
-                        "profile": "0.02",
-                    },
+                    "default_price_usd": "0.01",
                 },
             }
         )
@@ -616,7 +612,9 @@ class TokenResolverAgent(MeshAgent):
                             ds_chain = _normalize_platform_name(platform_id)
                             contract_key = f"{ds_chain}:{address.lower()}"
                             contract_to_cgid_map[contract_key] = cgid
-                    logger.info(f"[token_resolver] CoinGecko platforms: {len(platforms)}, contract mappings: {len(contract_to_cgid_map)}")
+                    logger.info(
+                        f"[token_resolver] CoinGecko platforms: {len(platforms)}, contract mappings: {len(contract_to_cgid_map)}"
+                    )
 
             ds = await self._ds_search_pairs(query)
             pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
@@ -684,13 +682,13 @@ class TokenResolverAgent(MeshAgent):
                     should_get_links = False
                     if qtype == "symbol":
                         should_get_links = (
-                            tok.get("symbol", "").upper() == query.upper() and
-                            tok == base  # Only if this is the base token
+                            tok.get("symbol", "").upper() == query.upper()
+                            and tok == base  # Only if this is the base token
                         )
                     elif qtype == "name":
                         should_get_links = (
-                            tok.get("name", "").lower() == query.lower() and
-                            tok == base  # Only if this is the base token
+                            tok.get("name", "").lower() == query.lower()
+                            and tok == base  # Only if this is the base token
                         )
                     elif qtype == "coingecko_id":
                         # For CG queries, only use base token metadata
@@ -750,7 +748,9 @@ class TokenResolverAgent(MeshAgent):
             ds_candidates = sorted(
                 ds_candidates, key=lambda x: (x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0), reverse=True
             )
-            logger.info(f"[token_resolver] Token map processed: {len(token_map)} unique tokens, {len(ds_candidates)} final candidates, {linked_count} linked to CoinGecko")
+            logger.info(
+                f"[token_resolver] Token map processed: {len(token_map)} unique tokens, {len(ds_candidates)} final candidates, {linked_count} linked to CoinGecko"
+            )
 
             # Merge CoinGecko anchor with DEX candidates that share the same coingecko_id
             combined: List[Dict[str, Any]] = []
@@ -776,7 +776,9 @@ class TokenResolverAgent(MeshAgent):
 
             combined.extend(ds_candidates)
             out = combined
-            logger.info(f"[token_resolver] Combined results: CG anchor={1 if (cg_anchor and not cg_merged) else 0}, DS candidates={len(ds_candidates)}, merged={1 if cg_merged else 0}, total={len(out)}")
+            logger.info(
+                f"[token_resolver] Combined results: CG anchor={1 if (cg_anchor and not cg_merged) else 0}, DS candidates={len(ds_candidates)}, merged={1 if cg_merged else 0}, total={len(out)}"
+            )
 
             if chain:
                 filtered = []
@@ -905,10 +907,7 @@ class TokenResolverAgent(MeshAgent):
                     base_symbol = base.get("symbol", "").upper()
                     quote_symbol = quote.get("symbol", "").upper()
 
-                    if (
-                        base_symbol == prof["symbol"]
-                        or quote_symbol == prof["symbol"]
-                    ):
+                    if base_symbol == prof["symbol"] or quote_symbol == prof["symbol"]:
                         prev = self._pair_to_preview(p)
                         cand_previews.append(prev)
                         # merge pair websites/socials into links

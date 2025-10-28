@@ -43,7 +43,7 @@ class EtherscanAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can analyze blockchain transactions, addresses, and ERC20 tokens across multiple chains using blockchain explorers and Firecrawl for data extraction.",
                 "external_apis": ["Firecrawl"],
-                "tags": ["Blockchain"],
+                "tags": ["Blockchain", "x402"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Etherscan.png",
                 "examples": [
@@ -57,7 +57,7 @@ class EtherscanAgent(MeshAgent):
                 "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.03",
+                    "default_price_usd": "0.01",
                 },
             }
         )

@@ -352,6 +352,8 @@ Format your response in clean text. Be objective and informative."""
         cex_filters = [
             ("binance", "USDT"),
             ("bybit_spot", "USDT"),
+            ("gate", "USDT"),
+            ("bitget", "USDT"),
             ("upbit", None),
             ("coinbase", None),
         ]
@@ -492,7 +494,9 @@ Format your response in clean text. Be objective and informative."""
                         "price_usd": coin_info["data"].get("price", "N/A"),
                         "market_cap": coin_info["data"].get("market_cap", "N/A"),
                         "total_volume_24h": coin_info["data"].get("total_volume", "N/A"),
-                        "price_change_percentage_24h": coin_info["data"].get("price_change_percentage_24h", {}).get("usd", "N/A"),
+                        "price_change_percentage_24h": coin_info["data"]
+                        .get("price_change_percentage_24h", {})
+                        .get("usd", "N/A"),
                     }
                 )
             return {"trending_coins": formatted_trending}

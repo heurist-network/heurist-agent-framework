@@ -15,7 +15,6 @@ TEST_CASES = {
         },
         "description": "Natural language query for Ethereum daily block creation in last month",
     },
-    
     "ethereum_transactions_direct": {
         "input": {
             "tool": "generate_and_execute_sql",
@@ -24,7 +23,6 @@ TEST_CASES = {
         },
         "description": "Direct tool call for Ethereum average transactions in past week",
     },
-    
     "heurist_gpus_query": {
         "input": {
             "query": "Tell me top 10 GPUs from HEURIST",
@@ -32,7 +30,6 @@ TEST_CASES = {
         },
         "description": "Natural language query for top 10 GPUs from HEURIST",
     },
-    
     "ethereum_yesterday_transactions": {
         "input": {
             "query": "How many transactions occurred on Ethereum yesterday?",
@@ -40,7 +37,6 @@ TEST_CASES = {
         },
         "description": "Natural language query for Ethereum transactions count yesterday",
     },
-    
     "ethereum_largest_transaction": {
         "input": {
             "query": "What's the largest transaction value on Ethereum in the past 24 hours?",

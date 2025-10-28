@@ -63,7 +63,7 @@ class YahooFinanceAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent uses Yahoo Finance to obtain historical price performance and technical analysis for stocks and cryptocurrencies. Provides OHLCV data and technical indicators with trading signals.",
                 "external_apis": ["Yahoo Finance"],
-                "tags": ["Market Analysis"],
+                "tags": ["Market Analysis", "x402"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/YFinance.png",
                 "examples": [
@@ -74,7 +74,7 @@ class YahooFinanceAgent(MeshAgent):
                 ],
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.03",
+                    "default_price_usd": "0.01",
                 },
             }
         )

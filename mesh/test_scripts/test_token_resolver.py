@@ -3,6 +3,7 @@
 Test script for TokenResolverAgent.
 Modify the variables below to test different search/profile scenarios.
 """
+
 import asyncio
 import json
 import sys
@@ -106,17 +107,17 @@ async def test_search():
             print(f"Price USD: ${token.get('price_usd')}")
             print(f"Market Cap USD: ${token.get('market_cap_usd')}")
 
-            links = token.get('links', {})
+            links = token.get("links", {})
             if any(links.values()):
                 print("\nLinks:")
-                if links.get('website'):
+                if links.get("website"):
                     print(f"  Website: {links['website']}")
-                if links.get('twitter'):
+                if links.get("twitter"):
                     print(f"  Twitter: {links['twitter']}")
-                if links.get('telegram'):
+                if links.get("telegram"):
                     print(f"  Telegram: {links['telegram']}")
 
-            top_pairs = token.get('top_pairs', [])
+            top_pairs = token.get("top_pairs", [])
             if top_pairs:
                 print(f"\nTop {len(top_pairs)} Pair(s):")
                 for j, pair in enumerate(top_pairs, 1):
@@ -128,6 +129,7 @@ async def test_search():
     except Exception as e:
         print(f"\n❌ Test failed with exception: {str(e)}")
         import traceback
+
         traceback.print_exc()
 
 
@@ -179,30 +181,30 @@ async def test_profile():
         print(f"CoinGecko ID: {data.get('coingecko_id')}")
         print(f"Timestamp: {data.get('timestamp')}")
 
-        contracts = data.get('contracts', {})
+        contracts = data.get("contracts", {})
         if contracts:
             print("\n--- Contracts ---")
             for chain, address in contracts.items():
                 print(f"{chain}: {address}")
 
-        categories = data.get('categories', [])
+        categories = data.get("categories", [])
         if categories:
             print(f"\n--- Categories ---")
             print(f"{', '.join(categories)}")
 
-        links = data.get('links', {})
+        links = data.get("links", {})
         if any(links.values()):
             print("\n--- Links ---")
-            if links.get('website'):
+            if links.get("website"):
                 print(f"Website: {links['website']}")
-            if links.get('twitter'):
+            if links.get("twitter"):
                 print(f"Twitter: {links['twitter']}")
-            if links.get('telegram'):
+            if links.get("telegram"):
                 print(f"Telegram: {links['telegram']}")
-            if links.get('github'):
+            if links.get("github"):
                 print(f"GitHub: {links['github']}")
 
-        fundamentals = data.get('fundamentals')
+        fundamentals = data.get("fundamentals")
         if fundamentals:
             print("\n--- Fundamentals ---")
             print(f"Price USD: ${fundamentals.get('price_usd')}")
@@ -210,20 +212,20 @@ async def test_profile():
             print(f"FDV USD: ${fundamentals.get('fdv_usd')}")
             print(f"Volume 24h USD: ${fundamentals.get('volume24h_usd')}")
 
-        supply = data.get('supply')
+        supply = data.get("supply")
         if supply:
             print("\n--- Supply ---")
             print(f"Circulating: {supply.get('circulating')}")
             print(f"Total: {supply.get('total')}")
             print(f"Max: {supply.get('max')}")
 
-        price_extremes = data.get('price_extremes')
+        price_extremes = data.get("price_extremes")
         if price_extremes:
             print("\n--- Price Extremes ---")
             print(f"ATH: ${price_extremes.get('ath_usd')} ({price_extremes.get('ath_date')})")
             print(f"ATL: ${price_extremes.get('atl_usd')} ({price_extremes.get('atl_date')})")
 
-        best_pool = data.get('best_pool')
+        best_pool = data.get("best_pool")
         if best_pool:
             print("\n--- Best Pool ---")
             print(f"Chain: {best_pool.get('chain')}")
@@ -233,7 +235,7 @@ async def test_profile():
             print(f"Liquidity USD: ${best_pool.get('liquidity_usd')}")
             print(f"Volume 24h USD: ${best_pool.get('volume24h_usd')}")
 
-        top_pools = data.get('top_pools', [])
+        top_pools = data.get("top_pools", [])
         if top_pools and len(top_pools) > 1:
             print(f"\n--- Top {len(top_pools)} Pools ---")
             for i, pool in enumerate(top_pools, 1):
@@ -241,7 +243,7 @@ async def test_profile():
                 print(f"    Liquidity: ${pool.get('liquidity_usd')}")
                 print(f"    Volume 24h: ${pool.get('volume24h_usd')}")
 
-        extras = data.get('extras', {})
+        extras = data.get("extras", {})
         if extras:
             print("\n--- Extras ---")
             for key, value in extras.items():
@@ -254,6 +256,7 @@ async def test_profile():
     except Exception as e:
         print(f"\n❌ Test failed with exception: {str(e)}")
         import traceback
+
         traceback.print_exc()
 
 

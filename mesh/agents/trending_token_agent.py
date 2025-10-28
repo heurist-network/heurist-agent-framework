@@ -15,6 +15,7 @@ GMGN_NOTE = "gmgn is a memecoin trading platform."
 
 TRENDING_CHAIN_DATA_BASE_URL = "https://mesh-data.heurist.xyz/"
 
+
 class TrendingTokenAgent(MeshAgent):
     def __init__(self):
         super().__init__()
@@ -24,25 +25,21 @@ class TrendingTokenAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, and social media intelligence sources.",
-                "external_apis": ["GMGN", "CoinGecko", "Bitquery", "Elfa"],
-                "tags": ["Token Trends", "Market Data"],
+                "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener and Twitter discussions.",
+                "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa"],
+                "tags": ["Token Trends", "Market Data", "x402"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/trending-token-agent.png",
                 "examples": [
                     "Show me trending tokens",
                     "Get trending tokens including memecoins",
                     "What are the hottest tokens right now across all platforms?",
                     "Show me trending tokens from CoinGecko and Twitter only",
                     "What tokens have recently graduated from pump.fun?",
-                    "Show me what's trending on GMGN",
                 ],
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "get_trending_tokens": "0.02",
-                    },
+                    "default_price_usd": "0.01",
                 },
             }
         )
@@ -59,19 +56,19 @@ class TrendingTokenAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_trending_tokens",
-                    "description": "Aggregate trending tokens from CoinGecko, Crypto Twitter top mentions (24h), and optionally GMGN (24h, top 10) and Pump.fun graduations (12h).",
+                    "description": "Get trending tokens that are most talked about and traded on CEXs and DEXs. Optionally get trending tokens on a specific chain.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "chain": {
                                 "type": "string",
                                 "description": "Chain to get trending tokens for. Your default action is to keep it empty to get trending tokens across CEXs and chains. Include this field if specific chain is requested in the context.",
-                                "enum": ["base", "ethereum", "solana", "bsc"]
+                                "enum": ["base", "ethereum", "solana", "bsc"],
                             },
                             "include_memes": {
                                 "type": "boolean",
-                                "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Keep it false by default. Include only if memecoins are specifically requested in the context."
-                            }
+                                "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Keep it false by default. Include only if memecoins are specifically requested in the context.",
+                            },
                         },
                         "required": [],
                     },
@@ -101,7 +98,7 @@ class TrendingTokenAgent(MeshAgent):
         # Check if data is outdated (>1 day old).
         # last_updated_str: ISO format timestamp string
         try:
-            last_updated = datetime.fromisoformat(last_updated_str.replace('Z', '+00:00'))
+            last_updated = datetime.fromisoformat(last_updated_str.replace("Z", "+00:00"))
             if last_updated.tzinfo is None:
                 last_updated = last_updated.replace(tzinfo=timezone.utc)
 
@@ -185,7 +182,9 @@ class TrendingTokenAgent(MeshAgent):
             "twitter_trending": twitter_result,
         }
 
-        notes_parts = ["Trending tokens on coingecko and twitter include CEX and DEX tokens, and Twitter trends may include stock tickers."]
+        notes_parts = [
+            "Trending tokens on coingecko and twitter include CEX and DEX tokens, and Twitter trends may include stock tickers."
+        ]
 
         if include_memes:
             gmgn_result = self._normalize_tool_result(results[2], "UnifaiTokenAnalysisAgent.get_gmgn_trend")

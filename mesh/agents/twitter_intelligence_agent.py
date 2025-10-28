@@ -46,9 +46,9 @@ class TwitterIntelligenceAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Twitter/X tools (timeline, tweet detail, search)",
                 "external_apis": ["Twitter/X", "Influential mentions"],
-                "tags": ["Twitter", "X", "Social"],
+                "tags": ["Twitter", "X", "Social", "x402"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Twitter.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/twitter-agent.png",
                 "examples": [
                     "user_timeline(identifier='@heurist_ai')",
                     "tweet_detail(tweet_id='1975788185671389308')",
@@ -58,12 +58,7 @@ class TwitterIntelligenceAgent(MeshAgent):
                 "credits": 10,
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
-                    "tool_prices": {
-                        "user_timeline": "0.02",
-                        "tweet_detail": "0.02",
-                        "twitter_search": "0.03",
-                    },
+                    "default_price_usd": "0.01",
                 },
             }
         )

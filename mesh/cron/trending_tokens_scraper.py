@@ -4,24 +4,22 @@ Fetches top 20 trending tokens from DexScreener for multiple chains and uploads 
 Designed to run as a PM2 cron job
 """
 
+import asyncio
+import json
+import logging
+import os
+import time
+from datetime import datetime
+from typing import Dict, List, Optional
+
+import aiohttp
+import boto3
 import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
-import json
-import time
-import os
-import logging
-import boto3
-from datetime import datetime
-from typing import List, Dict, Optional
-import asyncio
-import aiohttp
 from dotenv import load_dotenv
 
 # Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 # Load environment variables
@@ -29,21 +27,21 @@ load_dotenv()
 
 # Configuration
 CHAINS = {
-    'solana': 'https://dexscreener.com/solana',
-    'bsc': 'https://dexscreener.com/bsc',
-    'ethereum': 'https://dexscreener.com/ethereum',
-    'base': 'https://dexscreener.com/base'
+    "solana": "https://dexscreener.com/solana",
+    "bsc": "https://dexscreener.com/bsc",
+    "ethereum": "https://dexscreener.com/ethereum",
+    "base": "https://dexscreener.com/base",
 }
 
 TOP_N_TOKENS = 20
 RATE_LIMIT_DELAY = 0.5  # 500ms between API calls (well below 300 req/min limit)
 PAGE_LOAD_WAIT = 30  # Wait time for Cloudflare check
-R2_BUCKET = 'mesh'
+R2_BUCKET = "mesh"
 
 # R2 Configuration from environment
-R2_ENDPOINT = os.getenv('R2_ENDPOINT')
-R2_ACCESS_KEY = os.getenv('R2_ACCESS_KEY')
-R2_SECRET_KEY = os.getenv('R2_SECRET_KEY')
+R2_ENDPOINT = os.getenv("R2_ENDPOINT")
+R2_ACCESS_KEY = os.getenv("R2_ACCESS_KEY")
+R2_SECRET_KEY = os.getenv("R2_SECRET_KEY")
 
 
 class TrendingTokensScraper:
@@ -59,11 +57,11 @@ class TrendingTokensScraper:
             raise ValueError("R2 credentials not found in environment variables")
 
         return boto3.client(
-            's3',
+            "s3",
             endpoint_url=R2_ENDPOINT,
             aws_access_key_id=R2_ACCESS_KEY,
             aws_secret_access_key=R2_SECRET_KEY,
-            region_name='auto'
+            region_name="auto",
         )
 
     async def _init_session(self):
@@ -92,10 +90,10 @@ class TrendingTokensScraper:
 
         # Configure Chrome options
         options = uc.ChromeOptions()
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        options.add_argument('--disable-blink-features=AutomationControlled')
-        options.add_argument('--window-size=1920,1080')
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--window-size=1920,1080")
 
         driver = None
         pair_addresses = []
@@ -121,14 +119,14 @@ class TrendingTokensScraper:
             html = driver.page_source
 
             # Parse HTML
-            soup = BeautifulSoup(html, 'html.parser')
+            soup = BeautifulSoup(html, "html.parser")
 
             # Find the trending table
-            table = soup.find('div', class_='ds-dex-table ds-dex-table-top')
+            table = soup.find("div", class_="ds-dex-table ds-dex-table-top")
 
             if not table:
                 logger.warning("ds-dex-table-top not found, trying any ds-dex-table...")
-                all_tables = soup.find_all('div', class_=lambda x: x and 'ds-dex-table' in x if x else False)
+                all_tables = soup.find_all("div", class_=lambda x: x and "ds-dex-table" in x if x else False)
                 if all_tables:
                     table = all_tables[0]
                 else:
@@ -136,17 +134,17 @@ class TrendingTokensScraper:
                     return []
 
             # Find all token links in the table
-            links = table.find_all('a', href=True)
+            links = table.find_all("a", href=True)
 
             for link in links[:TOP_N_TOKENS]:
-                href = link.get('href', '')
+                href = link.get("href", "")
 
                 # Extract pair address from URL
                 # URL format: /solana/{pair_address} or /bsc/{pair_address}, etc.
-                if f'/{chain}/' in href:
-                    parts = href.split(f'/{chain}/')
+                if f"/{chain}/" in href:
+                    parts = href.split(f"/{chain}/")
                     if len(parts) > 1:
-                        pair_address = parts[1].split('?')[0].strip('/')
+                        pair_address = parts[1].split("?")[0].strip("/")
                         if pair_address:
                             pair_addresses.append(pair_address)
 
@@ -170,24 +168,22 @@ class TrendingTokensScraper:
         symbol_upper = symbol.upper()
 
         # Common stablecoins
-        stablecoins = ['USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'USDD', 'FRAX', 'USDP', 'GUSD', 'PYUSD']
+        stablecoins = ["USDT", "USDC", "DAI", "BUSD", "TUSD", "USDD", "FRAX", "USDP", "GUSD", "PYUSD"]
 
         # Native and wrapped native tokens
-        native_tokens = ['SOL', 'WSOL', 'ETH', 'WETH', 'BNB', 'WBNB', 'MATIC', 'WMATIC', 'AVAX', 'WAVAX']
+        native_tokens = ["SOL", "WSOL", "ETH", "WETH", "BNB", "WBNB", "MATIC", "WMATIC", "AVAX", "WAVAX"]
 
         # Common DEX base tokens
         common_addresses = [
-            'So11111111111111111111111111111111111111112',  # Wrapped SOL
-            '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'.lower(),  # WETH
-            '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'.lower(),  # WBNB
-            '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'.lower(),  # USDC on Base
-            '0x4200000000000000000000000000000000000006'.lower(),  # WETH on Base
-            '0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b'.lower(),  # Virtual on Base
+            "So11111111111111111111111111111111111111112",  # Wrapped SOL
+            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".lower(),  # WETH
+            "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".lower(),  # WBNB
+            "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913".lower(),  # USDC on Base
+            "0x4200000000000000000000000000000000000006".lower(),  # WETH on Base
+            "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b".lower(),  # Virtual on Base
         ]
 
-        return (symbol_upper in stablecoins or
-                symbol_upper in native_tokens or
-                address.lower() in common_addresses)
+        return symbol_upper in stablecoins or symbol_upper in native_tokens or address.lower() in common_addresses
 
     async def fetch_pair_details(self, chain: str, pair_address: str) -> Optional[Dict]:
         """
@@ -210,20 +206,18 @@ class TrendingTokensScraper:
                 if response.status == 200:
                     data = await response.json()
 
-                    if 'pairs' in data and data['pairs'] and len(data['pairs']) > 0:
-                        pair = data['pairs'][0]
+                    if "pairs" in data and data["pairs"] and len(data["pairs"]) > 0:
+                        pair = data["pairs"][0]
 
-                        base_token = pair.get('baseToken', {})
-                        quote_token = pair.get('quoteToken', {})
+                        base_token = pair.get("baseToken", {})
+                        quote_token = pair.get("quoteToken", {})
 
                         # Select the volatile token (not stablecoin or native)
                         base_is_stable = self._is_stable_or_native_token(
-                            base_token.get('symbol', ''),
-                            base_token.get('address', '')
+                            base_token.get("symbol", ""), base_token.get("address", "")
                         )
                         quote_is_stable = self._is_stable_or_native_token(
-                            quote_token.get('symbol', ''),
-                            quote_token.get('address', '')
+                            quote_token.get("symbol", ""), quote_token.get("address", "")
                         )
 
                         # Token selection logic:
@@ -245,32 +239,32 @@ class TrendingTokensScraper:
 
                         # Extract simplified token info
                         result = {
-                            'address': selected_token.get('address'),
-                            'name': selected_token.get('name'),
-                            'symbol': selected_token.get('symbol')
+                            "address": selected_token.get("address"),
+                            "name": selected_token.get("name"),
+                            "symbol": selected_token.get("symbol"),
                         }
 
                         # Add social/info fields if available
-                        if 'info' in pair:
-                            info = pair['info']
+                        if "info" in pair:
+                            info = pair["info"]
                             links = {}
 
                             # Add websites
-                            if info.get('websites'):
-                                links['websites'] = [w.get('url') for w in info['websites'] if w.get('url')]
+                            if info.get("websites"):
+                                links["websites"] = [w.get("url") for w in info["websites"] if w.get("url")]
 
                             # Add socials
-                            if info.get('socials'):
-                                for social in info['socials']:
-                                    social_type = social.get('type', social.get('platform', ''))
-                                    social_url = social.get('url', '')
+                            if info.get("socials"):
+                                for social in info["socials"]:
+                                    social_type = social.get("type", social.get("platform", ""))
+                                    social_url = social.get("url", "")
                                     if social_type and social_url:
                                         if social_type not in links:
                                             links[social_type] = []
                                         links[social_type].append(social_url)
 
                             if links:
-                                result['links'] = links
+                                result["links"] = links
 
                         logger.info(f"Fetched details for {chain}/{pair_address}: {result.get('symbol')}")
                         return result
@@ -332,21 +326,14 @@ class TrendingTokensScraper:
             tokens: List of token data
         """
         try:
-            data = {
-                'chain': chain,
-                'last_updated': datetime.now().isoformat(),
-                'tokens': tokens
-            }
+            data = {"chain": chain, "last_updated": datetime.now().isoformat(), "tokens": tokens}
 
             json_data = json.dumps(data, indent=2, ensure_ascii=False)
 
             filename = f"trending_tokens_{chain}.json"
 
             self.s3_client.put_object(
-                Bucket=R2_BUCKET,
-                Key=filename,
-                Body=json_data.encode('utf-8'),
-                ContentType='application/json'
+                Bucket=R2_BUCKET, Key=filename, Body=json_data.encode("utf-8"), ContentType="application/json"
             )
 
             logger.info(f"Uploaded {filename} to R2 bucket {R2_BUCKET} ({len(tokens)} tokens)")

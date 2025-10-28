@@ -29,7 +29,7 @@ class ZerionWalletAnalysisAgent(ContextAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can fetch and analyze the token and NFT holdings of a crypto wallet (must be EVM chain)",
                 "external_apis": ["Zerion"],
-                "tags": ["EVM Wallet"],
+                "tags": ["EVM Wallet", "x402"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Zerion.png",
                 "examples": [
@@ -39,6 +39,10 @@ class ZerionWalletAnalysisAgent(ContextAgent):
                     "What's the total value of tokens in 0x7d9d1821d15B9e0b8Ab98A058361233E255E405D?",
                     "Which tokens held by 0x7d9d1821d15B9e0b8Ab98A058361233E255E405D have had the most price change in the last 24 hours?",
                 ],
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.01",
+                },
             }
         )
 
@@ -59,7 +63,7 @@ class ZerionWalletAnalysisAgent(ContextAgent):
                 "type": "function",
                 "function": {
                     "name": "fetch_wallet_tokens",
-                    "description": "Fetch token holdings of an EVM wallet. The result includes the amount, USD value, 1-day price change, token contract address and the chain of all tokens held by the wallet. Use this tool if you want to know the token portfolio of the wallet.",
+                    "description": "Fetch token holdings of an EVM wallet. The result includes the amount, USD value, 1-day price change, token contract address and the chain of all tokens held by the wallet. Use this tool if you want to know the token portfolio of the wallet or understand a user's onchain behavior.",
                     "parameters": {
                         "type": "object",
                         "properties": {
