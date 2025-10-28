@@ -29,7 +29,7 @@ class ExaSearchDigestAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Fast neural search agent using Exa's semantic search API with concise LLM summarization. Provides 5-7s faster results than traditional search with intelligent content digests.",
+                "description": "Web search agent using Exa API with concise LLM summarization.",
                 "external_apis": ["Exa"],
                 "tags": ["Search"],
                 "recommended": True,
@@ -167,17 +167,17 @@ class ExaSearchDigestAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_web_search",
-                    "description": "Search the web using Exa's neural/semantic search with AI summarization. MANDATORY: Use time_filter for ANY time-sensitive requests. Unlike traditional search, Exa uses semantic understanding (not boolean operators). Supports domain filtering. Results are automatically summarized by AI with inline citations. Faster than traditional search by 5-7 seconds.",
+                    "description": "Search the web for any topics. MANDATORY: Use time_filter for ANY time-sensitive requests. Supports domain filtering. Results are automatically summarized by AI with inline citations.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "search_term": {
                                 "type": "string",
-                                "description": "Natural language search query. Exa uses semantic/neural search, so phrase naturally. No boolean operators (AND/OR) needed.",
+                                "description": "Natural language search query. Exa uses semantic/neural search, so phrase naturally. Boolean operators (AND/OR) are not supported.",
                             },
                             "time_filter": {
                                 "type": "string",
-                                "description": "REQUIRED for time-sensitive queries. Use ISO format for start date. Examples: 'past_week' for last 7 days, 'past_month' for last 30 days, 'past_year' for last 365 days.",
+                                "description": "REQUIRED for time-sensitive queries.",
                                 "enum": ["past_week", "past_month", "past_year"],
                             },
                             "limit": {
@@ -196,19 +196,14 @@ class ExaSearchDigestAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_scrape_url",
-                    "description": "Scrape and summarize full contents from a specific URL using Exa's content API. Returns AI-processed summary with key information extracted.",
+                    "description": "Scrape full contents from a specific URL and return AI-processed summary with key information extracted.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "url": {
                                 "type": "string",
                                 "description": "The URL to scrape and analyze",
-                            },
-                            "wait_time": {
-                                "type": "integer",
-                                "description": "Time to wait for page to load in milliseconds (not used by Exa, kept for compatibility)",
-                                "default": 7500,
-                            },
+                            }
                         },
                         "required": ["url"],
                     },
@@ -289,7 +284,7 @@ class ExaSearchDigestAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def exa_scrape_url(self, url: str, _wait_time: int = 7500) -> Dict[str, Any]:
+    async def exa_scrape_url(self, url: str) -> Dict[str, Any]:
         logger.info(f"Scraping URL with Exa: {url}")
 
         try:
@@ -352,13 +347,12 @@ class ExaSearchDigestAgent(MeshAgent):
 
         elif tool_name == "exa_scrape_url":
             url = function_args.get("url")
-            wait_time = function_args.get("wait_time", 7500)
 
             if not url:
                 logger.error("Missing 'url' parameter")
                 return {"status": "error", "error": "Missing 'url' parameter"}
 
-            result = await self.exa_scrape_url(url, wait_time)
+            result = await self.exa_scrape_url(url)
 
         else:
             logger.error(f"Unsupported tool: {tool_name}")
