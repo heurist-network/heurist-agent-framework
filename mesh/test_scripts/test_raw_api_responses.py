@@ -13,8 +13,8 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from mesh.agents.coingecko_token_info_agent import CoinGeckoTokenInfoAgent
-from mesh.agents.pumpfun_token_agent import PumpFunTokenAgent
+from mesh.agents.coingecko_token_info_agent import CoinGeckoTokenInfoAgent  # noqa: E402
+from mesh.agents.pumpfun_token_agent import PumpFunTokenAgent  # noqa: E402
 
 
 def print_section(title: str):
@@ -57,7 +57,7 @@ async def test_coingecko_raw_api():
 
     import os
 
-    import aiohttp
+    import aiohttp  # type: ignore
 
     api_key = os.getenv("COINGECKO_API_KEY")
     if not api_key:
@@ -84,7 +84,7 @@ async def test_coingecko_raw_api():
 
                         if "data" in item:
                             print(f"Available keys in 'data': {list(item['data'].keys())}")
-                            print(f"\nFull 'data' object:")
+                            print("\nFull 'data' object:")
                             print(json.dumps(item["data"], indent=2))
 
     except Exception as e:
