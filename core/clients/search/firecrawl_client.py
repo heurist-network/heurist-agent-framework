@@ -2,7 +2,6 @@ import asyncio
 from typing import Optional
 
 from firecrawl import FirecrawlApp
-from firecrawl.firecrawl import ScrapeOptions
 
 from .base_search_client import BaseSearchClient, SearchResponse
 
@@ -21,7 +20,7 @@ class FirecrawlClient(BaseSearchClient):
             await self._apply_rate_limiting()
 
             # Create ScrapeOptions object instead of passing raw dict
-            scrape_options = ScrapeOptions(formats=["markdown"])
+            scrape_options = {"formats": ["markdown"]}
 
             # Run the synchronous SDK call in a thread pool
             response = await asyncio.get_event_loop().run_in_executor(
@@ -30,28 +29,8 @@ class FirecrawlClient(BaseSearchClient):
             )
 
             # Handle the response format from the SDK
-            if isinstance(response, dict) and "data" in response:
-                # Response is already in the right format
-                return response
-            elif isinstance(response, dict) and "success" in response:
-                # Response is in the documented format
-                return {"data": response.get("data", [])}
-            elif isinstance(response, list):
-                # Response is a list of results
-                formatted_data = []
-                for item in response:
-                    if isinstance(item, dict):
-                        formatted_data.append(item)
-                    else:
-                        # Handle non-dict items (like objects)
-                        formatted_data.append(
-                            {
-                                "url": getattr(item, "url", ""),
-                                "markdown": getattr(item, "markdown", "") or getattr(item, "content", ""),
-                                "title": getattr(item, "title", "") or getattr(item, "metadata", {}).get("title", ""),
-                            }
-                        )
-                return {"data": formatted_data}
+            if hasattr(response, "web"):
+                return {"data": response.web}
             else:
                 print(f"Unexpected response format from Firecrawl: {type(response)}")
                 return {"data": []}
