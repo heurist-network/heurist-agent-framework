@@ -332,7 +332,7 @@ class ExaSearchDigestAgent(MeshAgent):
             return {"status": "error", "error": f"Failed to scrape URL: {str(e)}"}
 
     async def _handle_tool_logic(
-        self, tool_name: str, function_args: dict, _session_context: Optional[Dict[str, Any]] = None
+        self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 
