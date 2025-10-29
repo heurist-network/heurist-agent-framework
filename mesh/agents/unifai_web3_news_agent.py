@@ -95,6 +95,7 @@ class UnifaiWeb3NewsAgent(MeshAgent):
             Dict containing the news articles or error information
         """
         try:
+            limit = int(limit)
             if limit < 10:
                 limit = 10
 
