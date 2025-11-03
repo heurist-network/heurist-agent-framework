@@ -99,7 +99,9 @@ class TrendingTokensScraper:
         pair_addresses = []
 
         try:
-            driver = uc.Chrome(options=options, use_subprocess=True)
+            # Let undetected-chromedriver automatically download matching ChromeDriver version
+            # Explicitly specify Chrome version 141 to match installed browser
+            driver = uc.Chrome(options=options, use_subprocess=True, version_main=141)
 
             logger.info(f"Navigating to: {url}")
             driver.get(url)
