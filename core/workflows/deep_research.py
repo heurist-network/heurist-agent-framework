@@ -618,15 +618,23 @@ class ResearchWorkflow:
         IMPORTANT: MAKE SURE YOU RETURN THE JSON ONLY, NO OTHER TEXT OR MARKUP AND A VALID JSON.
         IMPORTANT: DONT ADD ANY COMMENTS OR MARKUP TO THE JSON. Example NO # or /* */ or /* */ or // or ``` or JSON or json or any other comments or markup.
         IMPORTANT: MAKE SURE YOU RETURN THE JSON ONLY, JSON SHOULD BE PERFECTLY FORMATTED. ALL KEYS SHOULD BE OPENED AND CLOSED.
+        CRITICAL: If you cannot fit the entire report in one response, it is better to make it shorter and complete than to output incomplete JSON. NEVER output unterminated strings.
         """
+        # Use higher max_tokens to reduce risk of truncated JSON responses
+        max_tokens = 16000  # Generous limit for detailed reports
+
         if self.report_model:
             response, _, _ = await self.llm_provider.call(
-                system_prompt=system_prompt, user_prompt=prompt, temperature=0.3, model_id=self.report_model
+                system_prompt=system_prompt,
+                user_prompt=prompt,
+                temperature=0.3,
+                model_id=self.report_model,
+                max_tokens=max_tokens,
             )
         else:
             # Pass None explicitly if self.report_model is None
             response, _, _ = await self.llm_provider.call(
-                system_prompt=system_prompt, user_prompt=prompt, temperature=0.3
+                system_prompt=system_prompt, user_prompt=prompt, temperature=0.3, max_tokens=max_tokens
             )
 
         try:
@@ -639,7 +647,39 @@ class ResearchWorkflow:
             return report + sources
         except json.JSONDecodeError as e:
             logger.error(f"Error parsing report JSON: {e}")
-            logger.debug(f"Raw response: {response}")
+            logger.debug(f"Raw response (first 1000 chars): {response[:1000]}")
+
+            # Try to extract reportMarkdown using string parsing as fallback
+            try:
+                # Look for "reportMarkdown": " pattern and extract until the closing quote
+                if '"reportMarkdown"' in response:
+                    start_idx = response.find('"reportMarkdown"')
+                    if start_idx != -1:
+                        # Find the opening quote after the colon
+                        content_start = response.find('"', start_idx + len('"reportMarkdown"') + 1)
+                        if content_start != -1:
+                            content_start += 1  # Move past the opening quote
+                            # Try to find the closing quote (accounting for escaped quotes)
+                            content_end = content_start
+                            while content_end < len(response):
+                                if response[content_end] == '"' and response[content_end - 1] != '\\':
+                                    break
+                                content_end += 1
+
+                            if content_end < len(response):
+                                extracted_report = response[content_start:content_end]
+                                # Unescape common JSON escape sequences
+                                extracted_report = (
+                                    extracted_report.replace('\\n', '\n')
+                                    .replace('\\t', '\t')
+                                    .replace('\\"', '"')
+                                    .replace('\\\\', '\\')
+                                )
+                                sources = "\n\n## Sources\n\n" + "\n".join([f"- {url}" for url in research_result["visited_urls"]])
+                                logger.info("Successfully extracted report using string parsing fallback")
+                                return extracted_report + sources
+            except Exception as extraction_error:
+                logger.warning(f"String extraction fallback also failed: {extraction_error}")
 
             # Fallback report generation
             return (
