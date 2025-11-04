@@ -167,6 +167,56 @@ TEST_CASES = {
         "input": {"query": "Get me OHLCV data for Microsoft"},
         "description": "Natural language query for Microsoft OHLCV data",
     },
+    # Symbol validation test cases
+    "invalid_symbol_fakecoin": {
+        "input": {
+            "tool": "fetch_price_history",
+            "tool_arguments": {"symbol": "FAKECOIN-USD", "interval": "1d"},
+            "raw_data_only": True,
+        },
+        "description": "Test invalid symbol rejection (FAKECOIN-USD)",
+    },
+    "invalid_symbol_random": {
+        "input": {
+            "tool": "indicator_snapshot",
+            "tool_arguments": {"symbol": "ABR", "interval": "1d"},
+            "raw_data_only": True,
+        },
+        "description": "",
+    },
+    "invalid_symbol_memecoin": {
+        "input": {
+            "tool": "fetch_price_history",
+            "tool_arguments": {"symbol": "NEWMEME-USD", "interval": "1h"},
+            "raw_data_only": True,
+        },
+        "description": "Test invalid symbol rejection (NEWMEME-USD)",
+    },
+    "invalid_symbol_numeric": {
+        "input": {
+            "tool": "indicator_snapshot",
+            "tool_arguments": {"symbol": "12345", "interval": "1d"},
+            "raw_data_only": True,
+        },
+        "description": "Test invalid symbol rejection (12345)",
+    },
+    # Valid symbols that should work
+    "valid_symbol_spy": {
+        "input": {
+            "tool": "fetch_price_history",
+            "tool_arguments": {"symbol": "SPY", "interval": "1d", "period": "5d"},
+            "raw_data_only": True,
+        },
+        "description": "Test valid ETF symbol (SPY)",
+    },
+    "valid_symbol_qqq": {
+        "input": {
+            "tool": "indicator_snapshot",
+            "tool_arguments": {"symbol": "QQQ", "interval": "1d"},
+            "raw_data_only": True,
+        },
+        "description": "Test valid ETF symbol (QQQ)",
+    },
 }
 
 

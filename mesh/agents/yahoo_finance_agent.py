@@ -1,8 +1,9 @@
 import asyncio
+import json
 import logging
-import re
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
 
 import numpy as np
 import pandas as pd
@@ -19,42 +20,45 @@ logger = logging.getLogger(__name__)
 ALLOWED_INTERVALS = {"1h", "1d"}
 
 
-SUPPORTED_CRYPTO_TOKENS = {
-    "BTC-USD",
-    "ETH-USD",
-    "XRP-USD",
-    "USDT-USD",
-    "SOL-USD",
-    "BNB-USD",
-    "USDC-USD",
-    "DOGE-USD",
-    "STETH-USD",
-    "TRX-USD",
-    "ADA-USD",
-    "WTRX-USD",
-    "LINK-USD",
-    "WBETH-USD",
-    "WETH-USD",
-    "WBTC-USD",
-    "XLM-USD",
-    "AVAX-USD",
-    "BCH-USD",
-    "HBAR-USD",
-    "LEO-USD",
-    "LTC-USD",
-    "CRO-USD",
-    "TON11419-USD",
-    "SUI20947-USD",
-    "HYPE32196-USD",
-    "USDE29470-USD",
-    "WEETH-USD",
-    "AETHWETH-USD",
-}
+def load_supported_symbols() -> Set[str]:
+    """Load supported symbols from the JSON file. No fallback - file must exist."""
+    symbols_file = Path(__file__).parent.parent / "cron" / "yahoo_finance_symbols.json"
+
+    if not symbols_file.exists():
+        error_msg = f"Symbols file not found at {symbols_file}. Please run fetch_yahoo_symbols_auto.py to generate it."
+        logger.error(error_msg)
+        raise FileNotFoundError(error_msg)
+
+    try:
+        with open(symbols_file, "r") as f:
+            data = json.load(f)
+            symbols = set(data.get("symbols", []))
+
+            if not symbols:
+                error_msg = "Symbols file is empty. Please regenerate it using fetch_yahoo_symbols_auto.py"
+                logger.error(error_msg)
+                raise ValueError(error_msg)
+
+            logger.info(f"Loaded {len(symbols)} supported symbols from {symbols_file}")
+            return symbols
+
+    except json.JSONDecodeError as e:
+        error_msg = f"Invalid JSON in symbols file: {e}"
+        logger.error(error_msg)
+        raise ValueError(error_msg)
+    except Exception as e:
+        error_msg = f"Error loading symbols file: {e}"
+        logger.error(error_msg)
+        raise
+
+
+SUPPORTED_SYMBOLS = load_supported_symbols()
 
 
 class YahooFinanceAgent(MeshAgent):
     def __init__(self):
         super().__init__()
+        self.supported_symbols = load_supported_symbols()
         self.metadata.update(
             {
                 "name": "Yahoo Finance Agent",
@@ -169,24 +173,22 @@ class YahooFinanceAgent(MeshAgent):
     #                       PRIVATE HELPERS
     # ------------------------------------------------------------------------
 
+    def _reload_symbols(self) -> Set[str]:
+        """Reload the supported symbols from the JSON file."""
+        return load_supported_symbols()
+
     def _validate_symbol(self, symbol: str) -> tuple[bool, Optional[str]]:
         """Validate if a symbol is supported."""
         if not symbol or not isinstance(symbol, str):
             return False, "Symbol must be a non-empty string"
 
         symbol = symbol.upper().strip()
-
-        if symbol.endswith("-USD"):
-            if symbol not in SUPPORTED_CRYPTO_TOKENS:
-                logger.info(f"Token {symbol} may be a newer or smaller cap token - attempting to fetch")
+        if symbol in self.supported_symbols:
             return True, None
-
-        if re.match(r"^[A-Z][A-Z0-9\.]{0,4}$", symbol):
-            return True, None
-
+        logger.warning(f"Symbol {symbol} not in supported symbols list, rejecting to save API rate limits")
         return (
             False,
-            f"Invalid symbol: {symbol}. Use stock tickers or crypto pairs with -USD suffix.",
+            f"Symbol '{symbol}' is not supported. This symbol is not available in Yahoo Finance or may be a recently launched token. Please use established stocks or major cryptocurrencies with -USD suffix.",
         )
 
     async def _download_history_df(
@@ -275,6 +277,9 @@ class YahooFinanceAgent(MeshAgent):
             f"[yahoo_finance] fetch_price_history symbol={symbol} interval={interval} period={period} start={start_date} end={end_date}"
         )
 
+        is_valid, error_msg = self._validate_symbol(symbol)
+        if not is_valid:
+            return {"status": "error", "error": error_msg}
         if interval not in ALLOWED_INTERVALS:
             return {
                 "status": "error",
