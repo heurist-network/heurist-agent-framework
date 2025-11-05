@@ -50,6 +50,64 @@ class ExaSearchDigestAgent(MeshAgent):
             }
         )
 
+    def get_tool_schemas(self) -> List[Dict]:
+        return [
+            {
+                "type": "function",
+                "function": {
+                    "name": "exa_web_search",
+                    "description": "Search the web for any topics. MANDATORY: Use time_filter for ANY time-sensitive requests. Supports domain filtering.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "search_term": {
+                                "type": "string",
+                                "description": "Natural language search query. Phrase naturally and concisely. Boolean operators (AND/OR) are NOT supported.",
+                            },
+                            "time_filter": {
+                                "type": "string",
+                                "description": "REQUIRED for time-sensitive queries",
+                                "enum": ["past_week", "past_month", "past_year"],
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Number of pages",
+                                "minimum": 5,
+                                "maximum": 10,
+                                "default": 10,
+                            },
+                            "include_domains": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "List of domains to include in search (e.g., ['arxiv.org', 'papers.com']). Supports paths (e.g., 'example.com/blog') and wildcards (e.g., '*.substack.com')",
+                            },
+                        },
+                        "required": ["search_term"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "exa_scrape_url",
+                    "description": "Scrape full contents from a specific URL and return a summary.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "url": {
+                                "type": "string",
+                                "description": "Source URL",
+                            }
+                        },
+                        "required": ["url"],
+                    },
+                },
+            },
+        ]
+
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 20
+
     def get_system_prompt(self) -> str:
         return """You are an AI assistant tasked with synthesizing information from provided web search results into a single, concise, and integrated summary. Your goal is to minimize output length while retaining the most crucial information.
             - Synthesize, Don't Segregate: Instead of summarizing each source individually, group related information from across all sources into thematic paragraphs.
@@ -165,59 +223,6 @@ class ExaSearchDigestAgent(MeshAgent):
             logger.error(f"LLM processing failed after {processing_time:.2f}s: {str(e)}")
             return f"Content from {url}:\n\n{scraped_content[:1000]}..."
 
-    def get_tool_schemas(self) -> List[Dict]:
-        return [
-            {
-                "type": "function",
-                "function": {
-                    "name": "exa_web_search",
-                    "description": "Search the web for any topics. MANDATORY: Use time_filter for ANY time-sensitive requests. Supports domain filtering. Results are automatically summarized by AI with inline citations.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "search_term": {
-                                "type": "string",
-                                "description": "Natural language search query. Exa uses semantic/neural search, so phrase naturally. Boolean operators (AND/OR) are not supported.",
-                            },
-                            "time_filter": {
-                                "type": "string",
-                                "description": "REQUIRED for time-sensitive queries.",
-                                "enum": ["past_week", "past_month", "past_year"],
-                            },
-                            "limit": {
-                                "type": "integer",
-                                "description": "Number of results to retrieve and summarize.",
-                                "minimum": 5,
-                                "maximum": 10,
-                                "default": 10,
-                            },
-                        },
-                        "required": ["search_term"],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "exa_scrape_url",
-                    "description": "Scrape full contents from a specific URL and return AI-processed summary with key information extracted.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "url": {
-                                "type": "string",
-                                "description": "The URL to scrape and analyze",
-                            }
-                        },
-                        "required": ["url"],
-                    },
-                },
-            },
-        ]
-
-    def get_default_timeout_seconds(self) -> Optional[int]:
-        return 45
-
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def exa_web_search(
@@ -225,12 +230,17 @@ class ExaSearchDigestAgent(MeshAgent):
         search_term: str,
         time_filter: Optional[str] = None,
         limit: int = 10,
+        include_domains: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         logger.info(f"Executing Exa web search for '{search_term}' with time_filter='{time_filter}', limit={limit}")
 
         try:
             url = f"{self.base_url}/search"
             payload = {"query": search_term, "numResults": limit, "contents": {"text": {"maxCharacters": 2000}}}
+
+            if include_domains:
+                payload["includeDomains"] = include_domains
+                logger.info(f"Including domains: {include_domains}")
 
             if time_filter:
                 from datetime import datetime, timedelta
@@ -340,6 +350,7 @@ class ExaSearchDigestAgent(MeshAgent):
             search_term = function_args.get("search_term")
             time_filter = function_args.get("time_filter")
             limit = function_args.get("limit", 10)
+            include_domains = function_args.get("include_domains")
 
             if not search_term:
                 logger.error("Missing 'search_term' parameter")
@@ -347,7 +358,7 @@ class ExaSearchDigestAgent(MeshAgent):
 
             limit = max(5, min(10, limit))
 
-            result = await self.exa_web_search(search_term, time_filter, limit)
+            result = await self.exa_web_search(search_term, time_filter, limit, include_domains)
 
         elif tool_name == "exa_scrape_url":
             url = function_args.get("url")

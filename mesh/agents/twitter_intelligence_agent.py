@@ -382,7 +382,9 @@ Provide clear, structured information from Twitter/X to help users understand so
 
         if tool_name == "twitter_search":
             # Retweets & replies removed; quotes included
-            queries: List[str] = function_args["queries"]
+            queries: List[str] = function_args.get("queries")
+            if not queries:
+                return {"status": "error", "error": "Missing required parameter: queries"}
             limit = int(function_args.get("limit", SEARCH_LIMIT_DEFAULT))
             limit = max(SEARCH_LIMIT_MIN, min(SEARCH_LIMIT_MAX, limit))
 

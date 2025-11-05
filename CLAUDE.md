@@ -7,6 +7,7 @@ Only apply these to production code, not testing scripts.
 - **Lint**: `ruff check --fix --line-length=120 --select=I <path>`
 - **Format**: `ruff format --line-length=120 <path>`
 - **Install dependencies with uv**: `uv add <package_name>`
+- Always use uv to run Python
 
 ## Heurist Mesh Overview
 - **mesh/**: Heurist Mesh specialized agent implementations
@@ -37,3 +38,11 @@ When developing or testing individual Mesh agent modules to see outputs ad-hoc, 
   ```
 - **Test specific functionality**: Test individual agent tools, API responses, or data transformations
 - **Example tests**: See `mesh/test_scripts/test_trending_token.py` for aggregated data testing, or `test_token_resolver.py` for individual agent testing
+
+Coding Style
+- Prefer the most straightforward way of implementation.
+- No defensive programming. Use try/except sparingly. Let most fatal errors propogate.
+- No adding extra variables if there's not a clear reason to do so. Prefer simplicity
+- Use comments sparingly. Function and variable names should be self-explaining and you don't need to comment most of the times
+- If duplicate code is written, consider refactoring.
+- DO NOT use `getattr` or `isinstance` or defensive programming patterns

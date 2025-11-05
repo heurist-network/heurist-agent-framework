@@ -173,15 +173,15 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             return None
 
     async def _fetch_batch_tweet_texts(
-        self, tweet_ids: List[str], batch_size: int = 3, delay: float = 2.0
+        self, tweet_ids: List[str], batch_size: int = 5, delay: float = 1
     ) -> List[Optional[str]]:
         """
         Fetch texts for tweets with controlled parallelism.
 
         Args:
             tweet_ids: List of tweet IDs to fetch
-            batch_size: Number of tweets to fetch in parallel (default: 3)
-            delay: Delay between batches in seconds (default: 2.0)
+            batch_size: Number of tweets to fetch in parallel (default: 5)
+            delay: Delay between batches in seconds (default: 1)
         """
         all_results = []
 

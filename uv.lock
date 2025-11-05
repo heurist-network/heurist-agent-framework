@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.13' and implementation_name == 'cpython'",
@@ -1091,6 +1091,17 @@ async = [
 ]
 
 [[package]]
+name = "frozendict"
+version = "2.4.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/bb/59/19eb300ba28e7547538bdf603f1c6c34793240a90e1a7b61b65d8517e35e/frozendict-2.4.6.tar.gz", hash = "sha256:df7cd16470fbd26fc4969a208efadc46319334eb97def1ddf48919b351192b8e", size = 316416, upload-time = "2024-10-13T12:15:32.449Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/13/d9839089b900fa7b479cce495d62110cddc4bd5630a04d8469916c0e79c5/frozendict-2.4.6-py311-none-any.whl", hash = "sha256:d065db6a44db2e2375c23eac816f1a022feb2fa98cbb50df44a9e83700accbea", size = 16148, upload-time = "2024-10-13T12:15:26.839Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/d0/d482c39cee2ab2978a892558cf130681d4574ea208e162da8958b31e9250/frozendict-2.4.6-py312-none-any.whl", hash = "sha256:49344abe90fb75f0f9fdefe6d4ef6d4894e640fadab71f11009d52ad97f370b9", size = 16146, upload-time = "2024-10-13T12:15:28.16Z" },
+    { url = "https://files.pythonhosted.org/packages/a5/8e/b6bf6a0de482d7d7d7a2aaac8fdc4a4d0bb24a809f5ddd422aa7060eb3d2/frozendict-2.4.6-py313-none-any.whl", hash = "sha256:7134a2bb95d4a16556bb5f2b9736dceb6ea848fa5b6f3f6c2d6dba93b44b4757", size = 16146, upload-time = "2024-10-13T12:15:29.495Z" },
+]
+
+[[package]]
 name = "frozenlist"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1407,12 +1418,14 @@ dependencies = [
     { name = "scikit-learn" },
     { name = "smolagents" },
     { name = "spaceandtime" },
+    { name = "stockstats" },
     { name = "tenacity" },
     { name = "tiktoken" },
     { name = "tweepy" },
     { name = "typer", extra = ["all"] },
     { name = "uvicorn" },
     { name = "web3-ethereum-defi" },
+    { name = "yfinance" },
 ]
 
 [package.metadata]
@@ -1446,12 +1459,14 @@ requires-dist = [
     { name = "scikit-learn", specifier = "==1.6.1" },
     { name = "smolagents", specifier = "==1.9.2" },
     { name = "spaceandtime", specifier = "==1.1.70" },
+    { name = "stockstats", specifier = ">=0.6.5" },
     { name = "tenacity", specifier = "==8.5.0" },
     { name = "tiktoken", specifier = "==0.9.0" },
     { name = "tweepy", specifier = "==4.15.0" },
     { name = "typer", extras = ["all"], specifier = "==0.9.0" },
     { name = "uvicorn", specifier = "==0.34.0" },
     { name = "web3-ethereum-defi", specifier = "==0.28.1" },
+    { name = "yfinance", specifier = "==0.2.54" },
 ]
 
 [[package]]
@@ -2010,6 +2025,12 @@ wheels = [
 ]
 
 [[package]]
+name = "multitasking"
+version = "0.0.12"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/17/0d/74f0293dfd7dcc3837746d0138cbedd60b31701ecc75caec7d3f281feba0/multitasking-0.0.12.tar.gz", hash = "sha256:2fba2fa8ed8c4b85e227c5dd7dc41c7d658de3b6f247927316175a57349b84d1", size = 19984, upload-time = "2025-07-20T21:27:51.636Z" }
+
+[[package]]
 name = "mypy-extensions"
 version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2173,6 +2194,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/7b/91/abdc50c4ef06fdf8d
 wheels = [
     { url = "https://files.pythonhosted.org/packages/aa/0f/c8b64d9b54ea631fcad4e9e3c8dbe8c11bb32a623be94f22974c88e71eaf/parsimonious-0.10.0-py3-none-any.whl", hash = "sha256:982ab435fabe86519b57f6b35610aa4e4e977e9f02a14353edf4bbc75369fc0f", size = 48427, upload-time = "2022-09-03T17:01:13.814Z" },
 ]
+
+[[package]]
+name = "peewee"
+version = "3.18.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/04/89/76f6f1b744c8608e0d416b588b9d63c2a500ff800065ae610f7c80f532d6/peewee-3.18.2.tar.gz", hash = "sha256:77a54263eb61aff2ea72f63d2eeb91b140c25c1884148e28e4c0f7c4f64996a0", size = 949220, upload-time = "2025-07-08T12:52:03.941Z" }
 
 [[package]]
 name = "pillow"
@@ -3122,6 +3149,14 @@ name = "safe-pysha3"
 version = "1.0.4"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/fd/73/67ba7ed2177b0b17d10665418fb5deafa03d76b8d4b2cb30883b81b00edf/safe-pysha3-1.0.4.tar.gz", hash = "sha256:e429146b1edd198b2ca934a2046a65656c5d31b0ec894bbd6055127f4deaff17", size = 827688, upload-time = "2023-05-04T10:43:09.971Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e3/e5/3a4d4edd5ed4013c463c3eafe7d2a2e7067c9bd574dfce5fceec0414beb9/safe_pysha3-1.0.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9e6253f44cc665d5a07c0bdff84ec9545e28410fac26295f0fac30fdce6245b0", size = 190188, upload-time = "2025-06-20T15:16:08.081Z" },
+    { url = "https://files.pythonhosted.org/packages/b1/a4/c85447525e820fcd95e53b2f20696170b02d0ac073bf9c41927c8bff39e2/safe_pysha3-1.0.4-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:3251f444cf3fd0cffadd71fd3f66cec0354c3c6f5553916c1d7f73fd99c2732b", size = 184231, upload-time = "2025-06-20T15:16:09.321Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/f9/435b5dd88cc14d983ff1e7b26ddd3621791a0918e580fcb083a166e990a3/safe_pysha3-1.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:941d3c3b19c71c764121e950f44df9bfed5b31d84d04bd1620e9a046a9cb6e17", size = 190419, upload-time = "2025-06-20T15:16:10.315Z" },
+    { url = "https://files.pythonhosted.org/packages/49/c6/4540238e4d0fc325e3f5b077f289182536b0355b0bdac4459a65ec20902f/safe_pysha3-1.0.4-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:c9f8bb82919a4afcefb9a034809b5f17b58e99b37da90937da2d366cd76bcca4", size = 184468, upload-time = "2025-06-20T15:16:11.26Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/97/812d5bbf90f0c5ef97503f17d19ec3a7e17e7d0e6910182119e601c5e879/safe_pysha3-1.0.4-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cde1eb8c19cd8f0a6e6bbf4903ed5119e700d1d856392435f31d5fed953c1f0a", size = 190534, upload-time = "2025-06-20T15:16:12.303Z" },
+    { url = "https://files.pythonhosted.org/packages/db/49/cdb76dd9592117169a4503f50cfa228ca745408ef0412a116638b4b6b262/safe_pysha3-1.0.4-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:224bc7b1fce08301cb4af7dd3d6c48ce1dfc7e97b9c0f1ac8d62aafb92e62a15", size = 367215, upload-time = "2025-06-20T15:16:13.517Z" },
+]
 
 [[package]]
 name = "scikit-learn"
@@ -3394,6 +3429,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ce/20/08dfcd9c983f6a6f4a1000d934b9e6d626cff8d2eeb77a89a68eef20a2b7/starlette-0.46.2.tar.gz", hash = "sha256:7f7361f34eed179294600af672f565727419830b54b7b084efe44bb82d2fccd5", size = 2580846, upload-time = "2025-04-13T13:56:17.942Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8b/0c/9d30a4ebeb6db2b25a841afbb80f6ef9a854fc3b41be131d249a977b4959/starlette-0.46.2-py3-none-any.whl", hash = "sha256:595633ce89f8ffa71a015caed34a5b2dc1c0cdb3f0f1fbd1e69339cf2abeec35", size = 72037, upload-time = "2025-04-13T13:56:16.21Z" },
+]
+
+[[package]]
+name = "stockstats"
+version = "0.6.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/28/2a/371a47cf6c34de1254da28536f5b242bb1e2651f4e406899b3f3fe6976c3/stockstats-0.6.5.tar.gz", hash = "sha256:2bc81bff187ab9ab5a4c17cec0bbec46a5b108d21878d2fbc8921eb3afc48606", size = 55788, upload-time = "2025-05-18T08:18:52.755Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bd/09/15a60adddee87fb0c9d1a2ed2ba0362a80451b107a77cfc87fbe72b9aac7/stockstats-0.6.5-py2.py3-none-any.whl", hash = "sha256:89a42808a8b0f94f7fa537cee8a097ae61790b3773051a889586d51a1e8c9392", size = 31727, upload-time = "2025-05-18T08:18:51.172Z" },
 ]
 
 [[package]]
@@ -3878,4 +3926,24 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ed/f7/f0f2500cf0c469beb2050b522c7815c575811627e6d3eb9ec7550ddd0bfe/yarl-1.20.0-cp313-cp313t-win32.whl", hash = "sha256:65a4053580fe88a63e8e4056b427224cd01edfb5f951498bfefca4052f0ce0ac", size = 93816, upload-time = "2025-04-17T00:44:25.491Z" },
     { url = "https://files.pythonhosted.org/packages/3f/93/f73b61353b2a699d489e782c3f5998b59f974ec3156a2050a52dfd7e8946/yarl-1.20.0-cp313-cp313t-win_amd64.whl", hash = "sha256:53b2da3a6ca0a541c1ae799c349788d480e5144cac47dba0266c7cb6c76151fe", size = 101093, upload-time = "2025-04-17T00:44:27.418Z" },
     { url = "https://files.pythonhosted.org/packages/ea/1f/70c57b3d7278e94ed22d85e09685d3f0a38ebdd8c5c73b65ba4c0d0fe002/yarl-1.20.0-py3-none-any.whl", hash = "sha256:5d0fe6af927a47a230f31e6004621fd0959eaa915fc62acfafa67ff7229a3124", size = 46124, upload-time = "2025-04-17T00:45:12.199Z" },
+]
+
+[[package]]
+name = "yfinance"
+version = "0.2.54"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "frozendict" },
+    { name = "multitasking" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "peewee" },
+    { name = "platformdirs" },
+    { name = "pytz" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/83/a7/592e5074f5f72be7b4b9fafd2f66e4d20e10afd83a134de63638980fcd19/yfinance-0.2.54.tar.gz", hash = "sha256:a4ab8e2ecba4fda5a36bff0bdc602a014adc732e5eda5d3ac283836ce40356e8", size = 117872, upload-time = "2025-02-18T22:19:21.232Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/09/05/28664524fcc67c078313d482bf25fe403e9399130622cfc89e185ec0abf6/yfinance-0.2.54-py2.py3-none-any.whl", hash = "sha256:8754f90332158d5d19bf754c1b230864ca2d1d313182a3f94a7bc7718bbe7d90", size = 108707, upload-time = "2025-02-18T22:19:19.883Z" },
 ]

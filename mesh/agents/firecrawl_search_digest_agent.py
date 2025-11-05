@@ -67,7 +67,7 @@ Task:
 - Disregard Irrelevant Info: Completely ignore any information that is not directly related to the query.
 - Mention Related Info: Note any other related, but less direct, information found in the results.
 - Final evaluation: Conclude with one sentence evaluating the overall relevancy of the search results to the original query. State whether the results are relevant, somewhat relevant, or irrelevant.
-- Strictly less than 2000 words. There's no minimum length requirement. Try to be as concise as possible while providing sufficient information.
+- Strictly less than 1800 words. There's no minimum length requirement. Try to be as concise as possible while providing sufficient information.
 
 Return clear, focused summaries that extract only the most relevant information."""
 
