@@ -33,6 +33,7 @@ class TruthSocialAgent(MeshAgent):
                 "external_apis": ["Apify"],
                 "tags": ["Politics"],
                 "recommended": True,
+                "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Trump.png",
                 "examples": [
                     "Get the latest posts from Donald Trump",
