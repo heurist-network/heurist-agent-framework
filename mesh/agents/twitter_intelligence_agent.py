@@ -133,7 +133,7 @@ Provide clear, structured information from Twitter/X to help users understand so
                             "queries": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1-5 search terms (e.g., 'bitcoin', '$ETH', '@coinbase', '\"exact phrase\"'). Case insensitive. Each of the queries should be within [English: one word or two-word phrase] [Chinese or Korean: one word, no more than 5 characters]. One query should be one concept only. Never use long sentences or long phrases as keywords.",
+                                "description": "1-5 search terms (e.g., 'bitcoin', '$ETH', '@coinbase', '\"exact phrase\"'). Case insensitive. Do not use the same query with variations of case. Each of the queries should be within [English: one word or two-word phrase] [Chinese or Korean: one word, no more than 5 characters]. One query should be one concept only. Never use long sentences or long phrases as keywords.",
                             },
                             "limit": {
                                 "type": "integer",
