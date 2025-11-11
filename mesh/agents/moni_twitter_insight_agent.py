@@ -174,7 +174,7 @@ class MoniTwitterInsightAgent(MeshAgent):
         if tool_name == "get_smart_followers_categories":
             result = await self.get_smart_followers_categories(username)
         elif tool_name == "get_smart_mentions_feed":
-            limit = function_args.get("limit", 100)
+            limit = int(function_args.get("limit", 100))
             fromDate = function_args.get("fromDate", None)
             toDate = function_args.get("toDate", None)
             result = await self.get_smart_mentions_feed(username, limit, fromDate, toDate)

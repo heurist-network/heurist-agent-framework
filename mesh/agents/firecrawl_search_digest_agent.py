@@ -421,7 +421,7 @@ Return clear, focused summaries that extract only the most relevant information.
         if tool_name == "firecrawl_web_search":
             search_term = function_args.get("search_term")
             time_filter = function_args.get("time_filter")
-            limit = function_args.get("limit", 10)
+            limit = int(function_args.get("limit", 10))
 
             if not search_term:
                 return {"status": "error", "error": "Missing 'search_term' parameter"}

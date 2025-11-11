@@ -219,7 +219,7 @@ class EvmTokenInfoAgent(MeshAgent):
         return await self.get_recent_large_trades(
             chain=chain,
             tokenAddress=tokenAddress,
-            minUsdAmount=function_args.get("minUsdAmount", 5000),
+            minUsdAmount=float(function_args.get("minUsdAmount", 5000)),
             filter=function_args.get("filter", "all"),
-            limit=function_args.get("limit", 10),
+            limit=int(function_args.get("limit", 10)),
         )

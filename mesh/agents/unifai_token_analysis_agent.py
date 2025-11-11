@@ -226,7 +226,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
         """Handle tool execution logic"""
         if tool_name == "get_gmgn_trend":
             time_window = function_args.get("time_window", "24h")
-            limit = function_args.get("limit", 50)
+            limit = int(function_args.get("limit", 50))
 
             logger.info(f"Getting GMGN trends for {time_window} with limit {limit}")
             result = await self.get_gmgn_trend(time_window=time_window, limit=limit)

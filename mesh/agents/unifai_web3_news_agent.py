@@ -129,7 +129,7 @@ class UnifaiWeb3NewsAgent(MeshAgent):
     ) -> Dict[str, Any]:
         """Handle tool execution logic"""
         if tool_name == "get_web3_news":
-            limit = function_args.get("limit", 10)
+            limit = int(function_args.get("limit", 10))
             keyword = function_args.get("keyword", "")
 
             logger.info(f"Getting Web3 news with limit={limit}, keyword='{keyword}'")

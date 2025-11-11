@@ -319,11 +319,11 @@ class AIXBTProjectInfoAgent(MeshAgent):
         """Handle AIXBT tool calls."""
         if tool_name == "search_projects":
             result = await self.search_projects(
-                limit=function_args.get("limit", 10),
+                limit=int(function_args.get("limit", 10)),
                 name=function_args.get("name"),
                 ticker=function_args.get("ticker"),
                 xHandle=function_args.get("xHandle"),
-                minScore=function_args.get("minScore"),
+                minScore=float(function_args.get("minScore")) if function_args.get("minScore") is not None else None,
                 chain=function_args.get("chain"),
             )
 
@@ -340,7 +340,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
             return {"data": result}
 
         elif tool_name == "get_market_summary":
-            result = await self.get_market_summary(lookback_days=function_args.get("lookback_days", 1))
+            result = await self.get_market_summary(lookback_days=int(function_args.get("lookback_days", 1)))
 
             if result.get("error"):
                 logger.warning(f"Market summary error: {result['error']}")
