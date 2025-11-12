@@ -276,7 +276,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                     tweet.pop("twitter_id", None)
                     tweet.pop("twitter_user_id", None)
 
-                result["data"] = await self._enrich_tweets_with_text(result["data"])
+                result["data"] = await self._enrich_tweets_with_text(result["data"][:limit]) # seems api returns more than limit
             result.pop("metadata", None)
 
             logger.info(f"Successfully retrieved and enriched {len(result.get('data', []))} mentions")
