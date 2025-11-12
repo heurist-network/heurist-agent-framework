@@ -37,7 +37,7 @@ def _format_date_only(timestamp: str) -> str:
             dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %z %Y") # "Tue Oct 14 19:35:12 +0000 2025" -> "2025-10-14"
         return dt.strftime("%Y-%m-%d")
     except Exception as e:
-        logger.warning(f"Failed to format date '{timestamp}': {e}")
+        # logger.warning(f"Failed to format date '{timestamp}': {e}")
         return timestamp.split('T')[0] if 'T' in timestamp else timestamp
 
 

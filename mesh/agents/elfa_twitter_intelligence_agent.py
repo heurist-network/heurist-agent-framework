@@ -156,32 +156,40 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         ]
 
     # ------------------------------------------------------------------------
-    #                      ENHANCED TWEET TEXT FETCHING
+    #  Tweet enrichment using TwitterInfoAgent
     # ------------------------------------------------------------------------
 
-    async def _fetch_single_tweet_text(self, tweet_id: str) -> Optional[str]:
-        """Fetch text for a single tweet using Apidance API"""
+    async def _fetch_single_tweet_detail(self, tweet_id: str) -> Optional[Dict]:
         try:
-            tweet_details = await self.get_tweet_detail(tweet_id)
-            if "error" not in tweet_details and tweet_details.get("tweets"):
-                for tweet in tweet_details.get("tweets", []):
-                    if str(tweet.get("tweet_id")) == str(tweet_id) or str(tweet.get("id_str")) == str(tweet_id):
-                        return tweet.get("text")
-            return None
+            result = await self._call_agent_tool(
+                "mesh.agents.twitter_info_agent",
+                "TwitterInfoAgent",
+                "get_twitter_detail",
+                {"tweet_id": tweet_id}
+            )
+            if "error" in result:
+                logger.warning(f"Error fetching tweet {tweet_id}: {result.get('error')}")
+                return None
+
+            tweet_data = result.get("tweet_data") or result
+            return tweet_data.get("main_tweet")
         except Exception as e:
-            logger.warning(f"Failed to fetch text for tweet {tweet_id}: {str(e)}")
+            logger.warning(f"Failed to fetch tweet {tweet_id}: {str(e)}")
             return None
 
-    async def _fetch_batch_tweet_texts(
-        self, tweet_ids: List[str], batch_size: int = 5, delay: float = 1
-    ) -> List[Optional[str]]:
+    async def _fetch_batch_tweet_details(
+        self, tweet_ids: List[str], batch_size: int = 5, delay: float = 0.5
+    ) -> List[Optional[Dict]]:
         """
-        Fetch texts for tweets with controlled parallelism.
+        Fetch full tweet details with controlled parallelism.
 
         Args:
             tweet_ids: List of tweet IDs to fetch
-            batch_size: Number of tweets to fetch in parallel (default: 5)
-            delay: Delay between batches in seconds (default: 1)
+            batch_size: Number of tweets to fetch in parallel
+            delay: Delay between batches in seconds
+
+        Returns:
+            List of simplified tweet dicts in TwitterInfoAgent format
         """
         all_results = []
 
@@ -191,17 +199,19 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 f"Processing batch {i // batch_size + 1}/{(len(tweet_ids) + batch_size - 1) // batch_size}: {len(batch)} tweets"
             )
 
-            batch_tasks = [self._fetch_single_tweet_text(tweet_id) for tweet_id in batch]
+            batch_tasks = [self._fetch_single_tweet_detail(tweet_id) for tweet_id in batch]
             batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+
             processed_results = []
             for tweet_id, result in zip(batch, batch_results):
                 if isinstance(result, Exception):
-                    logger.warning(f"Exception fetching text for tweet {tweet_id}: {result}")
+                    logger.warning(f"Exception fetching tweet {tweet_id}: {result}")
                     processed_results.append(None)
                 else:
                     processed_results.append(result)
 
             all_results.extend(processed_results)
+
             if i + batch_size < len(tweet_ids):
                 logger.debug(f"Waiting {delay}s before next batch...")
                 await asyncio.sleep(delay)
@@ -210,32 +220,21 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
 
     async def _enrich_tweets_with_text(self, tweets: List[Dict]) -> List[Dict]:
         """
-        Enrich tweet data with full text using parallel API calls.
-        Removes the 'link' field and adds 'text' field for each tweet.
+        Enrich ELFA tweets using TwitterInfoAgent to get full tweet details.
         """
-        tweet_ids = []
-        tweet_id_to_index = {}
+        tweet_ids = [tweet.get("tweetId") for tweet in tweets if tweet.get("tweetId")]
 
-        for i, tweet in enumerate(tweets):
-            tweet_id = tweet.get("tweetId")
-            if tweet_id:
-                tweet_ids.append(tweet_id)
-                tweet_id_to_index[tweet_id] = i
-        if tweet_ids:
-            logger.info(f"Fetching text for {len(tweet_ids)} tweets")
-            batch_size = 5
-            delay = 2.0
+        if not tweet_ids:
+            return []
 
-            tweet_texts = await self._fetch_batch_tweet_texts(tweet_ids, batch_size, delay)
-            for tweet_id, text_result in zip(tweet_ids, tweet_texts):
-                tweet_index = tweet_id_to_index[tweet_id]
-                tweets[tweet_index]["text"] = text_result
-        for tweet in tweets:
-            tweet.pop("link", None)
-            if "text" not in tweet:
-                tweet["text"] = None
+        logger.info(f"Fetching full details for {len(tweet_ids)} tweets using TwitterInfoAgent")
 
-        return tweets
+        enriched_tweets = await self._fetch_batch_tweet_details(tweet_ids, batch_size=5, delay=2.0)
+
+        result = [tweet for tweet in enriched_tweets if tweet is not None]
+
+        logger.info(f"Successfully enriched {len(result)} out of {len(tweet_ids)} tweets")
+        return result
 
     # ------------------------------------------------------------------------
     #                      ELFA API-SPECIFIC METHODS

@@ -388,7 +388,7 @@ Provide clear, structured information from Twitter/X to help users understand so
                 public_items.extend([self._simplify_tweet(t) for t in pub_tweets])
 
             # 2) Influential mentions (batch)
-            elfa_res = await self._elfa_mentions(queries[:5], limit=limit)
+            elfa_res = await self._elfa_mentions(queries[:5], limit=max(limit, 10))
             elfa_items = []
             if "error" not in elfa_res:
                 # Elfa returns {"status":"success","data":[...]} with unwrapped tweet array
