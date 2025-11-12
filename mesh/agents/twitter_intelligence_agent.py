@@ -16,25 +16,6 @@ SEARCH_LIMIT_MIN = 10
 SEARCH_LIMIT_MAX = 20
 SEARCH_LIMIT_DEFAULT = 10
 
-
-def _convert_twitter_timestamp(twitter_time: str) -> str:
-    """
-    Convert Twitter timestamp format to ISO 8601.
-    Input: "Tue Oct 14 19:35:12 +0000 2025" (31 chars)
-    Output: "2025-10-14T19:35:12Z" (20 chars)
-    """
-    if not twitter_time:
-        return ""
-    try:
-        # Parse Twitter's timestamp format
-        dt = datetime.strptime(twitter_time, "%a %b %d %H:%M:%S %z %Y")
-        # Convert to ISO 8601 format with Z suffix for UTC
-        return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
-    except Exception as e:
-        logger.warning(f"Failed to convert timestamp '{twitter_time}': {e}")
-        return twitter_time
-
-
 class TwitterIntelligenceAgent(MeshAgent):
     def __init__(self):
         super().__init__()
@@ -228,9 +209,9 @@ Provide clear, structured information from Twitter/X to help users understand so
         result = {
             "_id": str(t["id"]),  # Internal ID for deduplication
             "text": t.get("text", ""),
-            "created_at": _convert_twitter_timestamp(t.get("created_at", "")),
+            "created_at": t.get("created_at", ""),
+            "source": t.get("source", ""),
             "author": {
-                "username": (t.get("author") or {}).get("username"),
                 "name": (t.get("author") or {}).get("name"),
                 "followers": (t.get("author") or {}).get("followers", 0),
             },
@@ -251,7 +232,6 @@ Provide clear, structured information from Twitter/X to help users understand so
         if t.get("in_reply_to_tweet_id"):
             result["in_reply_to"] = {
                 "text": t.get("in_reply_to_tweet_text", ""),
-                "author": t.get("in_reply_to_tweet_author", ""),
             }
 
         return result

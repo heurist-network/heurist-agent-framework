@@ -1,5 +1,7 @@
 import logging
 import os
+import re
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
@@ -11,6 +13,32 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 DEFAULT_TIMELINE_LIMIT = 20
+
+
+def _clean_tweet_text(text: str) -> str:
+    if not text:
+        return text
+    cleaned = re.sub(r'https://t\.co/\S+', '', text)
+    cleaned = re.sub(r'#\w+', '', cleaned) # remove hashtags
+    cleaned = re.sub(r'\s+', ' ', cleaned)
+    return cleaned.strip()
+
+
+def _format_date_only(timestamp: str) -> str:
+    if not timestamp:
+        return ""
+    # Already formatted as YYYY-MM-DD
+    if len(timestamp) == 10 and timestamp.count('-') == 2:
+        return timestamp
+    try:
+        if 'T' in timestamp:
+            dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00')) # "2025-11-12T05:47:53Z" -> "2025-11-12"
+        else:
+            dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %z %Y") # "Tue Oct 14 19:35:12 +0000 2025" -> "2025-10-14"
+        return dt.strftime("%Y-%m-%d")
+    except Exception as e:
+        logger.warning(f"Failed to format date '{timestamp}': {e}")
+        return timestamp.split('T')[0] if 'T' in timestamp else timestamp
 
 
 class TwitterInfoAgent(MeshAgent):
@@ -178,12 +206,11 @@ class TwitterInfoAgent(MeshAgent):
 
         result = {
             "id": tid,
-            "text": text,
-            "created_at": created,
-            # "link": f"https://x.com/{username}/status/{tid}" if username and tid else "",
+            "text": _clean_tweet_text(text),
+            "created_at": _format_date_only(created),
+            "source": f"x.com/{username}/status/{tid}" if username and tid else "",
             "author": {
                 "id": user.get("id_str") or "",
-                "username": username,
                 "name": user.get("name", ""),
                 "verified": bool(user.get("verified", False)),
                 "followers": int(user.get("followers_count", 0)),
@@ -205,10 +232,8 @@ class TwitterInfoAgent(MeshAgent):
 
         if tweet.get("in_reply_to_status_id_str"):
             result["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
-            result["in_reply_to_tweet_text"] = tweet.get("in_reply_to_status", {}).get("text", "")
-            result["in_reply_to_tweet_author"] = (
-                tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
-            )
+            result["in_reply_to_user"] = tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
+            result["in_reply_to_tweet_text"] = _clean_tweet_text(tweet.get("in_reply_to_status", {}).get("text", ""))
         # Store the ID so it can be fetched later if fetch_quoted=True
         if tweet.get("is_quote") and tweet.get("related_tweet_id"):
             result["quoted_tweet_id"] = str(tweet["related_tweet_id"])
