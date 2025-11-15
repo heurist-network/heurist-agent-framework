@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
@@ -115,6 +116,39 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             },
         ]
 
+    def _parse_gmgn_token_response(self, response_str: str, target_address: str) -> str:
+        sections = re.split(r'===\s*Token\s+Rank\s+#\d+\s*===', response_str)
+        sections = [s.strip() for s in sections if s.strip()]
+
+        target_address_lower = target_address.lower()
+
+        for section in sections:
+            contract_match = re.search(r'Contract Address:\s*(\S+)', section)
+            if contract_match and contract_match.group(1).lower() == target_address_lower:
+                lines = section.split('\n')
+                cleaned_lines = []
+                for line in lines:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    if 'Contract Address:' in line:
+                        continue
+                    if 'Unknown' in line:
+                        continue
+                    if 'Logo:' in line:
+                        continue
+                    if 'ID:' in line:
+                        continue
+                    if 'Bluechip NFT Holder Rate:' in line:
+                        continue
+                    if 'Rat Trader Rate:' in line:
+                        line.replace('Rat Trader Rate:', 'Suspicious Insider Rate:')
+                    cleaned_lines.append(line)
+
+                return '\n'.join(cleaned_lines)
+
+        return f"No token found matching contract address: {target_address}"
+
     # ------------------------------------------------------------------------
     #                       API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
@@ -177,6 +211,10 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             if "error" in result:
                 logger.error(f"API error: {result['error']}")
                 return {"status": "error", "error": result["error"]}
+
+            if result and "payload" in result and isinstance(result["payload"], str):
+                parsed_data = self._parse_gmgn_token_response(result["payload"], address)
+                result["result"] = parsed_data
 
             logger.info("Successfully fetched GMGN token info")
             return {"status": "success", "data": result}
