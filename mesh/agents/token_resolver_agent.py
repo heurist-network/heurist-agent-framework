@@ -411,10 +411,12 @@ class TokenResolverAgent(MeshAgent):
         vol = (p.get("volume") or {}).get("h24")
         liq = (p.get("liquidity") or {}).get("usd")
         info = p.get("info") or {}
+        chain = p.get("chainId")
+        pair_address = p.get("pairAddress")
+        link = f"https://dexscreener.com/{chain}/{pair_address.lower()}"
         return {
-            "chain": p.get("chainId"),
+            "link": link,
             "dex": p.get("dexId"),
-            "pair_address": p.get("pairAddress"),
             "price_usd": _safe_float(p.get("priceUsd")),
             "volume24h_usd": _safe_float(vol),
             "liquidity_usd": _safe_float(liq),
