@@ -33,7 +33,7 @@ class WanVideoGenAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Generate videos using Alibaba Wan 2.2 models. Supports text-to-video and image-to-video generation in 480p resolution.",
                 "external_apis": ["DashScope"],
-                "tags": ["Video Generation", "AI", "Text-to-Video", "Image-to-Video"],
+                "tags": ["Video Generation"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Wan.png",
                 "examples": [
