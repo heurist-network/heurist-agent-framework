@@ -35,7 +35,7 @@ class WanVideoGenAgent(MeshAgent):
                 "external_apis": ["DashScope"],
                 "tags": ["Video Generation", "AI", "Text-to-Video", "Image-to-Video"],
                 "recommended": True,
-                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/wan.png",
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Wan.png",
                 "examples": [
                     "Generate a video of a cat running on grass",
                     "Create a video from an image showing ocean waves",
