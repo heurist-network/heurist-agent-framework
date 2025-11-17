@@ -41,7 +41,7 @@ class WanVideoGenAgent(MeshAgent):
                     "Create a video from an image showing ocean waves",
                     "Check status of task: abc123",
                 ],
-                "credits": 1,
+                "credits": 10,
                 "large_model_id": "google/gemini-2.5-flash",
                 "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
