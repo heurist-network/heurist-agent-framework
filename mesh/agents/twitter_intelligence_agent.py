@@ -377,7 +377,6 @@ Provide clear, structured information from Twitter/X to help users understand so
             for i, pub_res in enumerate(search_results):
                 if isinstance(pub_res, Exception) or "error" in pub_res:
                     logger.info(f"Public search error for '{queries[i]}': {pub_res}")
-                    public_items.append({"error": f"Public Twitter search error for '{queries[i]}': {pub_res}"})
                     continue
                 pub_tweets = (
                     (pub_res.get("search_data") or pub_res.get("tweets") or pub_res.get("items") or {}).get("tweets")
@@ -385,7 +384,8 @@ Provide clear, structured information from Twitter/X to help users understand so
                     or pub_res.get("tweets")
                     or []
                 )
-                public_items.extend([self._simplify_tweet(t) for t in pub_tweets])
+                if pub_tweets:
+                    public_items.extend([self._simplify_tweet(t) for t in pub_tweets])
 
             # 2) Influential mentions (batch)
             elfa_res = await self._elfa_mentions(queries[:5], limit=max(limit, 10))

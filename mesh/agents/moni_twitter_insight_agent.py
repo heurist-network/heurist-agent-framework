@@ -49,8 +49,8 @@ class MoniTwitterInsightAgent(MeshAgent):
         return """
         You are a Twitter intelligence specialist.
         CAPABILITIES:
-        - Track smart follower metrics and trends for any Twitter account
-        - Analyze smart followers by categories
+        - Track smarts metrics and trends for any Twitter account
+        - Analyze smarts of any account by categories
         - Provide insights on Twitter account feed and smart mentions
 
         RESPONSE GUIDELINES:
@@ -70,8 +70,8 @@ class MoniTwitterInsightAgent(MeshAgent):
             {
                 "type": "function",
                 "function": {
-                    "name": "get_smart_followers_categories",
-                    "description": "Get categories of smart followers for a Twitter account",
+                    "name": "get_smarts_categories",
+                    "description": "Get categories of smarts for a Twitter account",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -131,8 +131,8 @@ class MoniTwitterInsightAgent(MeshAgent):
 
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
     @with_retry(max_retries=3)
-    async def get_smart_followers_categories(self, username: str) -> Dict:
-        """Get categories of smart followers"""
+    async def get_smarts_categories(self, username: str) -> Dict:
+        """Get categories of smarts"""
         clean_username = self._clean_username(username)
         url = f"{self.base_url}{clean_username}/smarts/categories/"
 
@@ -171,8 +171,8 @@ class MoniTwitterInsightAgent(MeshAgent):
         if not username:
             return {"error": "Username is required for all Twitter intelligence tools"}
 
-        if tool_name == "get_smart_followers_categories":
-            result = await self.get_smart_followers_categories(username)
+        if tool_name == "get_smarts_categories":
+            result = await self.get_smarts_categories(username)
         elif tool_name == "get_smart_mentions_feed":
             limit = int(function_args.get("limit", 100))
             fromDate = function_args.get("fromDate", None)
