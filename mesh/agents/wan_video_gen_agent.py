@@ -192,7 +192,7 @@ When handling image-to-video requests:
         ]
 
     def get_default_timeout_seconds(self) -> Optional[int]:
-        return 30
+        return 240
 
     async def _create_video_task(
         self, model: str, input_data: Dict[str, Any], parameters: Dict[str, Any]
