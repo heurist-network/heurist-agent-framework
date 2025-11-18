@@ -75,40 +75,35 @@ class WanVideoGenAgent(MeshAgent):
     def get_system_prompt(self) -> str:
         return """You are an AI assistant that helps users generate videos using Alibaba Wan models.
 
-Capabilities:
-- Text-to-video: Generate videos from text descriptions
-- Image-to-video: Animate images with motion based on text prompts
-- Check video generation status using task IDs
+        Capabilities:
+        - Text-to-video: Generate videos from text descriptions
+        - Image-to-video: Animate images with motion based on text prompts
+        - Check video generation status using task IDs
 
-Available models (480p resolution only):
-- wan2.2-t2v-plus: Standard text-to-video - recommended default
-- wan2.2-i2v-plus: Standard image-to-video - recommended default
-- wan2.2-i2v-flash: Fast image-to-video
+        Available models (480p resolution only):
+        - wan2.2-t2v-plus: Standard text-to-video - recommended default
+        - wan2.2-i2v-plus: Standard image-to-video - recommended default
+        - wan2.2-i2v-flash: Fast image-to-video
 
-IMPORTANT WORKFLOW - AUTOMATIC WAIT AND FETCH:
-1. When user requests video generation:
-   - Call text_to_video or image_to_video
-   - These tools return task_id IMMEDIATELY (within seconds)
-   - The response includes a "next_step" field with instructions
-   - ALWAYS follow the next_step instructions automatically
-   - Wait 120 seconds (2 minutes) as instructed
-   - Then call get_video_status with the task_id to fetch results
-   - Provide the final video URL to the user
+        IMPORTANT TWO-STEP WORKFLOW:
+        1. When user requests video generation:
+        - Call text_to_video or image_to_video
+        - These tools return task_id IMMEDIATELY (within seconds)
+        - Tell user the task_id and that generation takes 1-5 minutes
+        - Inform user they can check status later
 
-2. When checking status with get_video_status:
-   - If SUCCEEDED: provide the video_url (Heurist R2 storage) to user
-   - The video is automatically uploaded to Heurist R2 and the URL will be from https://images.heurist.xyz/
-   - If PENDING/RUNNING: wait another 30 seconds and check again
-   - If FAILED: explain the error
+        2. When user asks to check status:
+        - Call get_video_status with the task_id
+        - If SUCCEEDED: provide the video_url to user
+        - If PENDING/RUNNING: tell user to wait and check again
+        - If FAILED: explain the error
 
-CRITICAL: When you receive a next_step instruction, you MUST follow it automatically.
-Wait the specified time and then call the indicated tool. Do NOT ask the user to wait or check back later.
-The entire workflow (create, wait, fetch) should complete in a single conversation turn.
+        Never wait for video completion - always return task_id immediately!
 
-When handling image-to-video requests:
-- Always call the tool when an image URL is provided
-- Create a reasonable animation prompt based on context
-- Don't ask for more information, infer motion from context"""
+        When handling image-to-video requests:
+        - Always call the tool when an image URL is provided
+        - Create a reasonable animation prompt based on context
+        - Don't ask for more information, infer motion from context"""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -192,7 +187,7 @@ When handling image-to-video requests:
         ]
 
     def get_default_timeout_seconds(self) -> Optional[int]:
-        return 240
+        return 30
 
     async def _create_video_task(
         self, model: str, input_data: Dict[str, Any], parameters: Dict[str, Any]
@@ -282,9 +277,8 @@ When handling image-to-video requests:
                 "task_status": create_result["task_status"],
                 "model": model,
                 "prompt": prompt,
-                "message": "Video generation started. Please wait 1-3 minutes while the video is being generated.",
+                "message": "Video generation started. It will take 1-5 minutes to complete. Use get_video_status with this task_id to check progress.",
             },
-            "next_step": f"Wait 120 seconds then call get_video_status with task_id '{task_id}'",
         }
 
     @with_cache(ttl_seconds=60)
@@ -313,9 +307,8 @@ When handling image-to-video requests:
                 "model": model,
                 "prompt": prompt,
                 "image_url": image_url,
-                "message": "Video generation started. Please wait 1-3 minutes while the video is being generated.",
+                "message": "Video generation started. It will take 1-5 minutes to complete. Use get_video_status with this task_id to check progress.",
             },
-            "next_step": f"Wait 120 seconds then call get_video_status with task_id '{task_id}'",
         }
 
     @with_cache(ttl_seconds=10)
@@ -339,22 +332,20 @@ When handling image-to-video requests:
             video_url = output.get("video_url")
             try:
                 r2_preview_url = await self._download_and_upload_to_r2(video_url, task_id)
-                response_data = {
-                    "task_id": task_id,
-                    "task_status": task_status,
-                    "video_url": r2_preview_url,
-                    "task_metrics": data.get("usage", {}),
-                    "message": "Video generation completed successfully! Video uploaded to Heurist R2 storage.",
-                }
             except Exception as e:
                 logger.error(f"Failed to upload to R2: {e}", exc_info=True)
-                response_data = {
-                    "task_id": task_id,
-                    "task_status": task_status,
-                    "video_url": video_url,
-                    "task_metrics": data.get("usage", {}),
-                    "message": "Video generation completed successfully! (Note: Using Alibaba URL as R2 upload failed)",
-                }
+                r2_preview_url = None
+
+            response_data = {
+                "task_id": task_id,
+                "task_status": task_status,
+                "video_url": video_url,
+                "task_metrics": data.get("usage", {}),
+                "message": "Video generation completed successfully!",
+            }
+
+            if r2_preview_url:
+                response_data["r2_preview_url"] = r2_preview_url
 
             return {
                 "status": "success",
@@ -391,28 +382,6 @@ When handling image-to-video requests:
 
             result = await self.text_to_video(prompt, model, prompt_extend)
 
-            if result.get("status") == "success" and "next_step" in result:
-                task_id = result["data"]["task_id"]
-                logger.info(f"Automatically waiting 120 seconds for video generation (task_id: {task_id})")
-                await asyncio.sleep(120)
-                logger.info(f"Fetching video status for task_id: {task_id}")
-                status_result = await self.get_video_status(task_id)
-                max_retries = 3
-                retry_count = 0
-                while (
-                    status_result.get("status") == "success"
-                    and status_result.get("data", {}).get("task_status") in ["PENDING", "RUNNING"]
-                    and retry_count < max_retries
-                ):
-                    logger.info(
-                        f"Video still processing, waiting 30 more seconds (retry {retry_count + 1}/{max_retries})"
-                    )
-                    await asyncio.sleep(30)
-                    status_result = await self.get_video_status(task_id)
-                    retry_count += 1
-
-                return status_result
-
         elif tool_name == "image_to_video":
             prompt = function_args.get("prompt")
             image_url = function_args.get("image_url")
@@ -424,31 +393,6 @@ When handling image-to-video requests:
             prompt_extend = function_args.get("prompt_extend", True)
 
             result = await self.image_to_video(prompt, image_url, model, prompt_extend)
-
-            # Automatic wait and fetch
-            if result.get("status") == "success" and "next_step" in result:
-                task_id = result["data"]["task_id"]
-                logger.info(f"Automatically waiting 120 seconds for video generation (task_id: {task_id})")
-                await asyncio.sleep(120)
-                logger.info(f"Fetching video status for task_id: {task_id}")
-                status_result = await self.get_video_status(task_id)
-
-                # Retry logic if still pending
-                max_retries = 3
-                retry_count = 0
-                while (
-                    status_result.get("status") == "success"
-                    and status_result.get("data", {}).get("task_status") in ["PENDING", "RUNNING"]
-                    and retry_count < max_retries
-                ):
-                    logger.info(
-                        f"Video still processing, waiting 30 more seconds (retry {retry_count + 1}/{max_retries})"
-                    )
-                    await asyncio.sleep(30)
-                    status_result = await self.get_video_status(task_id)
-                    retry_count += 1
-
-                return status_result
 
         elif tool_name == "get_video_status":
             task_id = function_args.get("task_id")
