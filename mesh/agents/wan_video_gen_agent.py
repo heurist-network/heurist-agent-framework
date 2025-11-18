@@ -1,7 +1,10 @@
+import asyncio
 import logging
 import os
 from typing import Any, Dict, List, Optional
 
+import aiohttp
+import boto3
 from dotenv import load_dotenv
 
 from decorators import with_cache, with_retry
@@ -24,6 +27,24 @@ class WanVideoGenAgent(MeshAgent):
             "Content-Type": "application/json",
             "X-DashScope-Async": "enable",
         }
+
+        self.r2_endpoint = os.getenv("R2_ENDPOINT")
+        self.r2_access_key = os.getenv("R2_ACCESS_KEY")
+        self.r2_secret_key = os.getenv("R2_SECRET_KEY")
+        self.r2_bucket = os.getenv("R2_BUCKET_WAN_VIDEO_AGENT")
+
+        if not all([self.r2_endpoint, self.r2_access_key, self.r2_secret_key, self.r2_bucket]):
+            raise ValueError(
+                "R2 credentials (R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY, R2_BUCKET_WAN_VIDEO_AGENT) are required"
+            )
+
+        self.s3_client = boto3.client(
+            "s3",
+            endpoint_url=self.r2_endpoint,
+            aws_access_key_id=self.r2_access_key,
+            aws_secret_access_key=self.r2_secret_key,
+            region_name="auto",
+        )
 
         self.metadata.update(
             {
@@ -207,6 +228,30 @@ When handling image-to-video requests:
 
         return {"status": "success", "data": response}
 
+    async def _download_and_upload_to_r2(self, video_url: str, task_id: str) -> str:
+        """Download video from Alibaba and upload to R2"""
+        logger.info(f"Downloading video from {video_url}")
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(video_url) as response:
+                if response.status != 200:
+                    raise Exception(f"Failed to download video: HTTP {response.status}")
+                video_data = await response.read()
+
+        logger.info(f"Downloaded {len(video_data)} bytes")
+        filename = f"videos/{task_id}.mp4"
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(
+            None,
+            lambda: self.s3_client.put_object(
+                Bucket=self.r2_bucket, Key=filename, Body=video_data, ContentType="video/mp4"
+            ),
+        )
+        r2_preview_url = f"https://images.heurist.xyz/{filename}"
+        logger.info(f"Uploaded to R2: {r2_preview_url}")
+
+        return r2_preview_url
+
     @with_cache(ttl_seconds=60)
     @with_retry(max_retries=3)
     async def text_to_video(
@@ -285,15 +330,26 @@ When handling image-to-video requests:
 
         if task_status == "SUCCEEDED":
             video_url = output.get("video_url")
+            try:
+                r2_preview_url = await self._download_and_upload_to_r2(video_url, task_id)
+            except Exception as e:
+                logger.error(f"Failed to upload to R2: {e}", exc_info=True)
+                r2_preview_url = None
+
+            response_data = {
+                "task_id": task_id,
+                "task_status": task_status,
+                "video_url": video_url,
+                "task_metrics": data.get("usage", {}),
+                "message": "Video generation completed successfully!",
+            }
+
+            if r2_preview_url:
+                response_data["r2_preview_url"] = r2_preview_url
+
             return {
                 "status": "success",
-                "data": {
-                    "task_id": task_id,
-                    "task_status": task_status,
-                    "video_url": video_url,
-                    "task_metrics": data.get("usage", {}),
-                    "message": "Video generation completed successfully!",
-                },
+                "data": response_data,
             }
         elif task_status == "FAILED":
             error_msg = output.get("message", "Video generation failed")
