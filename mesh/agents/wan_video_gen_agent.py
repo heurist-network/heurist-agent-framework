@@ -67,43 +67,46 @@ class WanVideoGenAgent(MeshAgent):
                 "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
-                    "default_price": 1,
+                    "default_price_usd": "0.15",
+                    "tool_prices": {
+                        "text_to_video": "0.15",  # wan2.2-t2v-plus: $0.03/s × 5s
+                        "image_to_video_plus": "0.15",  # wan2.2-i2v-plus: $0.03/s × 5s
+                        "image_to_video_flash": "0.10",  # wan2.2-i2v-flash: $0.02/s × 5s
+                        "get_video_status": "0.00",
+                    },
                 },
             }
         )
 
     def get_system_prompt(self) -> str:
-        return """You are an AI assistant that helps users generate videos using Alibaba Wan models.
+        return """You are an AI assistant that helps users generate videos using Alibaba Wan 2.2 models.
 
-        Capabilities:
-        - Text-to-video: Generate videos from text descriptions
-        - Image-to-video: Animate images with motion based on text prompts
-        - Check video generation status using task IDs
+        Available tools and pricing (all videos are 5 seconds, 480p):
 
-        Available models (480p resolution only):
-        - wan2.2-t2v-plus: Standard text-to-video - recommended default
-        - wan2.2-i2v-plus: Standard image-to-video - recommended default
-        - wan2.2-i2v-flash: Fast image-to-video
+        TEXT-TO-VIDEO:
+        - text_to_video: Wan 2.2 standard quality ($0.15) - Use for all text-to-video requests
 
-        IMPORTANT TWO-STEP WORKFLOW:
+        IMAGE-TO-VIDEO:
+        - image_to_video_plus: Wan 2.2 Plus standard quality ($0.15) - Recommended default
+        - image_to_video_flash: Wan 2.2 Flash fast ($0.10) - Use when user mentions "quick", "fast", or needs rapid results
+
+        AUTOMATIC WORKFLOW:
+        The video generation workflow is fully automatic - user gets final video in one request!
+
         1. When user requests video generation:
-        - Call text_to_video or image_to_video
-        - These tools return task_id IMMEDIATELY (within seconds)
-        - Tell user the task_id and that generation takes 1-5 minutes
-        - Inform user they can check status later
+        - Select appropriate tool (use Flash for fast requests, Plus for standard)
+        - Tool creates task and automatically waits 120 seconds
+        - Then automatically checks status (retries up to 3 times if needed)
+        - Returns final video URL to user
 
-        2. When user asks to check status:
-        - Call get_video_status with the task_id
-        - If SUCCEEDED: provide the video_url to user
-        - If PENDING/RUNNING: tell user to wait and check again
-        - If FAILED: explain the error
+        2. Video URLs:
+        - Videos are uploaded to Heurist R2 storage (https://images.heurist.xyz/)
+        - User receives ready-to-use video link
 
-        Never wait for video completion - always return task_id immediately!
-
-        When handling image-to-video requests:
-        - Always call the tool when an image URL is provided
-        - Create a reasonable animation prompt based on context
-        - Don't ask for more information, infer motion from context"""
+        When handling requests:
+        - For image-to-video: Always call the tool when an image URL is provided
+        - Create reasonable animation prompts based on context
+        - Don't ask for more information, infer from context"""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -111,19 +114,13 @@ class WanVideoGenAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "text_to_video",
-                    "description": "Start generating a video from a text prompt. Returns task_id immediately. Video takes 1-5 minutes to generate.",
+                    "description": "Generate 5-second 480p video from text using Wan 2.2 model. Price: $0.15. Returns task_id immediately",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "prompt": {
                                 "type": "string",
                                 "description": "The text description of the video to generate. Be specific and descriptive.",
-                            },
-                            "model": {
-                                "type": "string",
-                                "enum": ["wan2.2-t2v-plus"],
-                                "description": "The model to use for text-to-video generation. Default: wan2.2-t2v-plus",
-                                "default": "wan2.2-t2v-plus",
                             },
                             "prompt_extend": {
                                 "type": "boolean",
@@ -138,8 +135,8 @@ class WanVideoGenAgent(MeshAgent):
             {
                 "type": "function",
                 "function": {
-                    "name": "image_to_video",
-                    "description": "Start generating a video from an image and text prompt. Returns task_id immediately. Video takes 1-5 minutes to generate.",
+                    "name": "image_to_video_plus",
+                    "description": "Generate 5-second 480p video from image using Wan 2.2 Plus model (standard quality). Price: $0.15. Returns task_id immediately",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -151,11 +148,31 @@ class WanVideoGenAgent(MeshAgent):
                                 "type": "string",
                                 "description": "The URL of the image to animate.",
                             },
-                            "model": {
+                            "prompt_extend": {
+                                "type": "boolean",
+                                "description": "Whether to extend/enhance the prompt automatically. Default: true",
+                                "default": True,
+                            },
+                        },
+                        "required": ["prompt", "image_url"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "image_to_video_flash",
+                    "description": "Generate 5-second 480p video from image using Wan 2.2 Flash model (fast). Price: $0.10. Returns task_id immediately",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "prompt": {
                                 "type": "string",
-                                "enum": ["wan2.2-i2v-flash", "wan2.2-i2v-plus"],
-                                "description": "The model to use for image-to-video generation. Default: wan2.2-i2v-plus",
-                                "default": "wan2.2-i2v-plus",
+                                "description": "The text description of how the image should animate/move.",
+                            },
+                            "image_url": {
+                                "type": "string",
+                                "description": "The URL of the image to animate.",
                             },
                             "prompt_extend": {
                                 "type": "boolean",
@@ -372,27 +389,27 @@ class WanVideoGenAgent(MeshAgent):
     ) -> Dict[str, Any]:
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 
-        if tool_name == "text_to_video":
+        tool_to_model = {
+            "text_to_video": ("text_to_video", "wan2.2-t2v-plus"),
+            "image_to_video_plus": ("image_to_video", "wan2.2-i2v-plus"),
+            "image_to_video_flash": ("image_to_video", "wan2.2-i2v-flash"),
+        }
+
+        if tool_name in tool_to_model:
+            tool_type, model = tool_to_model[tool_name]
             prompt = function_args.get("prompt")
             if not prompt:
                 return {"error": "Missing 'prompt' parameter"}
 
-            model = function_args.get("model", "wan2.2-t2v-plus")
             prompt_extend = function_args.get("prompt_extend", True)
 
-            result = await self.text_to_video(prompt, model, prompt_extend)
-
-        elif tool_name == "image_to_video":
-            prompt = function_args.get("prompt")
-            image_url = function_args.get("image_url")
-
-            if not prompt or not image_url:
-                return {"error": "Missing 'prompt' or 'image_url' parameter"}
-
-            model = function_args.get("model", "wan2.2-i2v-plus")
-            prompt_extend = function_args.get("prompt_extend", True)
-
-            result = await self.image_to_video(prompt, image_url, model, prompt_extend)
+            if tool_type == "text_to_video":
+                result = await self.text_to_video(prompt, model, prompt_extend)
+            else:
+                image_url = function_args.get("image_url")
+                if not image_url:
+                    return {"error": "Missing 'image_url' parameter"}
+                result = await self.image_to_video(prompt, image_url, model, prompt_extend)
 
         elif tool_name == "get_video_status":
             task_id = function_args.get("task_id")
