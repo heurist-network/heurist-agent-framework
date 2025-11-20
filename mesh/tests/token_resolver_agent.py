@@ -90,6 +90,11 @@ TEST_CASES = {
         },
         "description": "Search for recent Pumpfun token by address",
     },
+    # Search without funding rates (default behavior)
+    "search_heurist_symbol": {
+        "input": {"tool": "search", "tool_arguments": {"query": "heurist", "type_hint": "name"}, "raw_data_only": True},
+        "description": "Search for Heurist token - should NOT include funding_rates by default",
+    },
     # Chain-specific searches
     "search_arb_on_arbitrum": {
         "input": {
@@ -128,10 +133,18 @@ TEST_CASES = {
     "profile_btc_with_funding": {
         "input": {
             "tool": "profile",
-            "tool_arguments": {"symbol": "BTC", "include": ["fundamentals", "funding_rates"]},
+            "tool_arguments": {"symbol": "BTC", "include": ["funding_rates"]},
             "raw_data_only": True,
         },
-        "description": "BTC profile with funding rates (large cap only)",
+        "description": "BTC profile with funding rates explicitly requested (opt-in, large cap only)",
+    },
+    "profile_heurist_no_funding": {
+        "input": {
+            "tool": "profile",
+            "tool_arguments": {"coingecko_id": "heurist", "include": ["technical_indicators"]},
+            "raw_data_only": True,
+        },
+        "description": "Heurist profile WITHOUT funding rates (not available on Binance, should not error)",
     },
     "profile_eth_with_indicators": {
         "input": {

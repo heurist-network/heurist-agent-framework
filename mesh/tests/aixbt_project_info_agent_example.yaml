@@ -1,758 +1,490 @@
 metadata:
   agent: AIXBTProjectInfoAgent
   test_file: aixbt_project_info_agent.py
-  timestamp: '2025-09-16T16:01:47.922035'
-  total_tests: 8
-  passed: 8
+  timestamp: '2025-11-20T15:43:48.768017'
+  total_tests: 10
+  passed: 10
   failed: 0
 results:
   heu_token_query:
     input:
       query: Tell me about HEU token
     output:
-      response: "HEU Token Information:\n\nThere are two projects associated with\
-        \ the HEU ticker:\n\n1.  Heurist (heurist)\n    *   Rationale: This AI infrastructure\
-        \ project has launched an equity tokenization platform, xEquity, with backing\
-        \ from Circle, Base, and Coinbase. It secured a Google Cloud grant and built\
-        \ a trustless agent-to-agent payment system with 23,000 GPU miners generating\
-        \ token rewards.\n    *   Recent Developments:\n        *   2025-08-25: Chain\
-        \ infrastructure is ready with A2A, agent discovery, and trustless verification\
-        \ features.\n        *   2025-08-10: Platform reaches 23,000 registered GPU\
-        \ miners who can earn tokens by powering AI computations.\n        *   2025-08-07:\
-        \ xEquity product launches with SPV-based legal structure, enabling startup\
-        \ equity tokenization with DeFi composability features. Circle, Base, and\
-        \ Amber are confirmed partners.\n        *   2025-08-07: Secured a $350k Google\
-        \ Cloud grant while receiving active support from Coinbase.\n        *   2025-08-04:\
-        \ Launched a digital assets platform for AI company equity tokenization and\
-        \ migrated protocol-owned liquidity to Uniswap V3 on Base, enabling native\
-        \ swaps via OKX DEX aggregator and Wasabi leverage trading.\n    *   Tokens:\n\
-        \        *   Base: 0xef22cb48b8483df6152e1423b19df5553bbd818b\n        * \
-        \  Ethereum: 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea\n        *   ZKSync:\
-        \ 0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf\n    *   Twitter Handle: @heurist_ai\n\
-        \n2.  HEU (heu)\n    *   Rationale: This project secured a $350K Google grant\
-        \ and Coinbase Ventures backing while developing an OnChain Equities product.\
-        \ This followed a liquidity pool migration to Uniswap, a surge in staking\
-        \ volume to 20M tokens, a 43% token price increase, and the launch of a new\
-        \ dual-APR staking system.\n    *   Recent Developments:\n        *   2025-08-09:\
-        \ Secured the highest-tier Google grant ($350K) and Coinbase Ventures backing;\
-        \ developing an OnChain Equities product.\n        *   2025-07-13: Liquidity\
-        \ pool migration from Aerodrome to Uniswap on the Base network began, promising\
-        \ enhanced trading efficiency and deeper liquidity.\n        *   2025-06-13:\
-        \ Staking volume surged to 20M tokens on the Base network, marking a 150%\
-        \ increase from April levels.\n        *   2025-06-05: Token price increased\
-        \ by 43% while the broader AI crypto market fell by 6%.\n        *   2025-04-11:\
-        \ A new dual-APR staking system launched with an 86% combined APR (50% base\
-        \ + 36% revenue share). Over 8M tokens are currently staked.\n    *   Tokens:\n\
-        \        *   Base: 0xef22cb48b8483df6152e1423b19df5553bbd818b\n        * \
-        \  Ethereum: 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea\n        *   ZKSync:\
-        \ 0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf\n    *   Twitter Handle: @heurist_ai\n\
-        \nIt appears that both entries refer to the same project, \"Heurist,\" and\
-        \ its HEU token, with slightly different focuses in their rationales and summaries."
+      response: "**HEU Token Information**\n\n* **Project Name:** Heurist\n* **Ticker\
+        \ Symbol:** HEU\n* **Twitter Handle:** @heurist_ai (score: 0.265, indicating\
+        \ a moderate confidence level in the match)\n\n**Token Details:**\n\n* **Available\
+        \ on the following blockchains with their respective contract addresses:**\n\
+        \t+ Ethereum: 0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea\n\t+ Zksync: 0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf\n\
+        \t+ Base: 0xef22cb48b8483df6152e1423b19df5553bbd818b\n\n**Recent Project Summaries\
+        \ (last 5 updates):**\n\n1. **November 19, 2025:**\n\t* Heurist launched Facilitator\
+        \ x402 for agentic crypto payments, which is live on Base, with upcoming deployments\
+        \ on Arbitrum and X Layer networks.\n2. **November 14, 2025:**\n\t* Announced\
+        \ a USDC prize competition for developers to create agents on the x402scan\
+        \ composer platform.\n3. **November 8, 2025:**\n\t* Noted significant adoption\
+        \ of Heurist Mesh among top agents on x402scan, with 4 out of the top 10 agents\
+        \ now utilizing it.\n4. **November 5, 2025:**\n\t* Highlighted partnerships\
+        \ with Coral Protocol for agent rental and composability, and with Roba Labs\
+        \ for integrating physical robotics through Creator Hub. Additionally, the\
+        \ Ask Heurist product entered beta testing for crypto intelligence queries.\n\
+        \t* Heurist Mesh expanded to support x402 on Solana, alongside its existing\
+        \ support on Base.\n5. **November 4, 2025:**\n\t* Completed integration with\
+        \ aixbt_labs, enabling direct agent-to-agent queries for project intelligence,\
+        \ fundamental analysis, and social metrics through Heurist Mesh.\n\n**Additional\
+        \ Information:**\nFor more detailed insights, market summaries, or specific\
+        \ data points not covered here (e.g., market performance, developer activity),\
+        \ please provide a more targeted query. Note that market summaries are available\
+        \ for up to 3 days maximum. If you're looking for data beyond this scope,\
+        \ I can provide the last 3 days of available data."
       data:
         data:
           projects:
-          - id: 66fb7f153342c5177d1800a2
-            name: heurist
-            score: 0
+          - name: Heurist
+            score: 0.265
             xHandle: heurist_ai
-            rationale: AI infrastructure project has launched equity tokenization
-              platform xEquity with Circle/Base/Coinbase backing, secured Google Cloud
-              grant, and built trustless agent-to-agent payment system with 23,000
-              GPU miners generating token rewards.
+            rationale: Heurist launched Facilitator x402 for agentic crypto payments,
+              live on Base, coming to Arbitrum/X Layer.
             ticker: heu
             tokens:
               ethereum: '0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea'
               zksync: '0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf'
               base: '0xef22cb48b8483df6152e1423b19df5553bbd818b'
             summaries:
-            - id: heurist_2025-08-25T13:00:00.000Z
-              date: '2025-08-25T13:00:00.000Z'
-              description: Chain infrastructure now ready with A2A, agent discovery,
-                and trustless verification features.
-            - id: heurist_2025-08-10T16:00:00.000Z
-              date: '2025-08-10T16:00:00.000Z'
-              description: Platform reaches 23,000 registered GPU miners who can earn
-                tokens by powering AI computations.
-            - id: heurist_2025-08-07T11:00:00.000Z
-              date: '2025-08-07T11:00:00.000Z'
-              description: xEquity product launches with SPV-based legal structure,
-                enabling startup equity tokenization with DeFi composability features.
-                Circle, Base, and Amber confirmed as partners.
-            - id: heurist_2025-08-07T09:00:00.000Z
-              date: '2025-08-07T09:00:00.000Z'
-              description: Secures $350k Google Cloud grant while receiving active
-                support from Coinbase through multiple venture articles and developer
-                acknowledgments.
-            - id: heurist_2025-08-04T14:00:00.000Z
-              date: '2025-08-04T14:00:00.000Z'
-              description: Launches digital assets platform for AI company equity
-                tokenization while migrating protocol-owned liquidity to Uniswap V3
-                on Base, enabling native swaps via OKX DEX aggregator and Wasabi leverage
-                trading.
-          - id: 671719fc542204f02af39fbe
-            name: heu
-            score: 0
-            xHandle: heurist_ai
-            rationale: Project secures a $350K Google grant and Coinbase Ventures
-              backing while developing an OnChain Equities product, following a liquidity
-              pool migration to Uniswap, a surge in staking volume to 20M tokens,
-              a 43% token price increase, and the launch of a new dual-APR staking
-              system.
-            ticker: heu
-            tokens:
-              ethereum: '0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea'
-              base: '0xef22cb48b8483df6152e1423b19df5553bbd818b'
-              zksync: '0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf'
-            summaries:
-            - id: heu_2025-08-09T13:00:00.000Z
-              date: '2025-08-09T13:00:00.000Z'
-              description: Secures highest-tier Google grant ($350K) and Coinbase
-                Ventures backing; develops OnChain Equities product.
-            - id: heu_2025-07-13T19:00:00.000Z
-              date: '2025-07-13T19:00:00.000Z'
-              description: Liquidity pool migration from Aerodrome to Uniswap on Base
-                network begins, promising enhanced trading efficiency and deeper liquidity.
-            - id: heu_2025-06-13T17:00:00.000Z
-              date: '2025-06-13T17:00:00.000Z'
-              description: Staking volume surges to 20M tokens on Base network, marking
-                150% increase from April levels.
-            - id: heu_2025-06-05T12:00:00.000Z
-              date: '2025-06-05T12:00:00.000Z'
-              description: Token price increases 43% while broader AI crypto market
-                falls 6%.
-            - id: heu_2025-04-11T04:00:00.000Z
-              date: '2025-04-11T04:00:00.000Z'
-              description: New dual-APR staking system launches with 86% combined
-                APR (50% base + 36% revenue share). Over 8M tokens currently staked.
+            - id: 691dede6e5d831ec8017377b
+              date: '2025-11-19T15:00:00.000Z'
+              description: Launches Heurist Facilitator x402 integration sample, allowing
+                developers to integrate agentic crypto payments into applications
+                with a few lines of code. Deployment is live on Base with Arbitrum
+                and X Layer networks coming next.
+            - id: 69170060e5d831ec80cf71ee
+              date: '2025-11-14T09:00:00.000Z'
+              description: Launches USDC prize competition for developers to create
+                agents on the x402scan composer platform.
+            - id: 690f87bbe5d831ec8076489b
+              date: '2025-11-08T17:00:00.000Z'
+              description: 4 out of 10 top agents on x402scan now use Heurist Mesh,
+                showing significant adoption among leading agents on the platform.
+            - id: 690bbdfde5d831ec803eeeaa
+              date: '2025-11-05T20:00:00.000Z'
+              description: Partners with Coral Protocol to make agents rentable and
+                composable, and with Roba Labs to integrate physical robotics capabilities
+                through Creator Hub. Ask Heurist product enters beta testing for crypto
+                intelligence queries, available in Telegram beta group and soon on
+                Base App. Heurist Mesh adds full x402 support on Solana alongside
+                Base, and Token Analyst Agent tops the x402scan leaderboard.
+            - id: 690a5ed7e5d831ec8028cb0a
+              date: '2025-11-04T19:00:00.000Z'
+              description: Completes integration with aixbt_labs to enable direct
+                agent-to-agent queries for project intelligence, fundamental analysis,
+                and social metrics through Heurist Mesh access to aixbt_agent data.
     description: Natural language query about HEU token
     status: success
+    elapsed_time: 16.590394973754883
   trending_solana:
     input:
       query: Tell me about trending projects on solana with minscore of 0.1
       raw_data_only: false
     output:
-      response: 'Here are some trending projects on Solana with a minimum score of
-        0.1:
-
-
-        Apollo (APOLLO) - Score: 0.507
-
-        Rationale: Apollo Global is ranked 7th among the fastest-growing RWA issuers,
-        showing strong whale adoption with over $16M in recent large deposits. Its
-        TVL has reached all-time highs following the V2 protocol launch, which includes
-        enhanced BTC bridging capabilities.
-
-        Recent Summaries:
-
-        2025-09-15T12:00:00.000Z: Apollo Global ranks 7th among fastest growing RWA
-        issuers with 2% growth in tokenized assets under management over the past
-        30 days.
-
-        2025-09-09T09:00:00.000Z: 2,000 USDC in voting incentives launched for mAPOLLO
-        pool on Equilibria''s voting market, with emissions expected to increase next
-        week.
-
-        2025-08-29T10:00:00.000Z: TVL reaches all-time high of 426 BTC following massive
-        99.99 BTC ($11M+) whale bridge.
-
-        2025-08-22T06:00:00.000Z: Whale bridges 49.99 BTC ($5.64M) from Bitcoin to
-        Solana through protocol.
-
-        2025-08-05T13:00:00.000Z: V2 protocol launches with faster BTC deposits and
-        improved zBTC minting capabilities.
-
-
-        PancakeSwap (CAKE) - Score: 0.47
-
-        Rationale: PancakeSwap maintains a strong market position as the second-largest
-        DEX behind Uniswap and is expanding through new partnerships with the DEGEN
-        project and BRC-20 token integration. However, recent weekly volumes show
-        a decline from its peak August performance.
-
-        Recent Summaries:
-
-        2025-09-15T22:00:00.000Z: Partnership with DEGEN project launches with live
-        liquidity pool and CAKE token rewards for participants.
-
-        2025-09-15T15:00:00.000Z: Weekly trading volume reaches $15.347B for September
-        8-14, 2025, showing minimal week-over-week change but indicating a significant
-        decline from August''s strong $92B monthly performance.
-
-        2025-09-10T20:00:00.000Z: Platform launches $250,000 trading competition featuring
-        WILD token participation.
-
-        2025-09-10T07:00:00.000Z: Integrates with MultiBit to enable trading of bridged
-        BRC-20 tokens ORDI and SATS as BEP-20 versions on BNB Chain.
-
-        2025-09-08T08:00:00.000Z: Achieves $92B in August trading volume, ranking
-        second to Uniswap''s $111.8B according to Coingecko data.
-
-
-        Polycule (PCULE) - Score: 0.45
-
-        Rationale: Polycule recently launched its PMX prediction market platform,
-        which uses YES/NO token trading mechanics. The project has achieved 50K daily
-        active users and $6M in volume through its existing Telegram bot infrastructure.
-
-        Recent Summaries:
-
-        2025-09-15T21:00:00.000Z: Launches new prediction market platform PMX with
-        YES/NO token trading mechanics powered by MeteoraAG integration.
-
-        2025-09-13T22:00:00.000Z: New $ICM token partnership enables SOL-based funding
-        with automatic Polygon bridging functionality.
-
-        2025-07-18T21:00:00.000Z: Processes $6M volume via Telegram bot MVP; developing
-        first-party app on Polymarket with leverage and parlays functionality.
-
-        2025-07-08T19:00:00.000Z: Platform reaches 50K daily active users; announces
-        new points program integration.
-
-        2025-06-19T20:00:00.000Z: Trading volume shows consistent growth with 30%
-        allocated to automatic buybacks.
-
-
-        YEEZY (YZY) - Score: 0.411
-
-        Rationale: This project is facing scam allegations, with claims of hundreds
-        of millions extracted. Its price has collapsed by 85% from launch, leading
-        to massive retail losses, while Kanye West remains silent.
-
-        Recent Summaries:
-
-        2025-09-14T22:00:00.000Z: Explicit scam allegations surface claiming hundreds
-        of millions extracted with Kanye West remaining silent.
-
-        2025-09-12T10:00:00.000Z: Price drops 85% within a month of launch, escalating
-        beyond the 50% decline previously recorded.
-
-        2025-08-29T10:00:00.000Z: Sharp 50% price decline signals significant market
-        correction.
-
-        2025-08-27T20:00:00.000Z: Market polarization intensifies with 11 wallets
-        now profiting over $1M while 51,862 wallets lose $74.8M total, representing
-        increased concentration of gains among top traders.
-
-        2025-08-26T00:00:00.000Z: Major trader accumulates long position despite $8M
-        unrealized loss across portfolio.
-
-
-        Kindness Coin (KIND) - Score: 0.402
-
-        Rationale: The $KIND coin is achieving viral algorithmic discovery on TikTok
-        beyond its existing audience. The developer has already generated over $100K
-        from streaming and maintains over 1M TikTok followers, with active creator
-        reward distributions.
-
-        Recent Summaries:
-
-        2025-09-15T22:00:00.000Z: $KIND coin videos are breaking into TikTok algorithms
-        of users with unrelated content feeds, indicating viral algorithmic discovery
-        beyond the project''s existing audience base.
-
-        2025-09-15T02:00:00.000Z: The project is actively distributing thousands in
-        creator rewards to streamers and has achieved Facebook virality as part of
-        its attention flywheel strategy.
-
-        2025-09-13T21:00:00.000Z: The project developer has generated over $100K from
-        pump.fun streaming while maintaining 1M+ TikTok followers, and is highlighted
-        as a quality creator in the emerging creator coin meta.
-
-
-        Galaxy (GLXY) - Score: 0.39
-
-        Rationale: Galaxy has aggressively accumulated $302M worth of Solana, launched
-        tokenized stock products on the network, and served as a financial advisor
-        for Forward Industries'' $1.65B PIPE deal. Technical analysis indicates potential
-        $80 price targets.
-
-        Recent Summaries:
-
-        2025-09-12T15:00:00.000Z: Galaxy serves as co-placement agent and financial
-        advisor for Forward Industries'' $1.65B PIPE deal and enters separate services
-        agreement to provide treasury strategy management support. Technical analysis
-        suggests potential price target of $80 based on cup and handle pattern.
-
-        2025-09-11T22:00:00.000Z: Galaxy launches tokenized stock product on Solana,
-        choosing it over Ethereum L2s due to readiness concerns about L2s for tokenized
-        stocks.
-
-        2025-09-11T17:00:00.000Z: Galaxy leads crypto stock gains while Bitcoin-focused
-        vehicles like Metaplanet and Nakamoto experience significant declines.
-
-        2025-09-11T16:00:00.000Z: Kyle Samani confirms his appointment as Chairman
-        of Forward Industries and reveals he invested $25M personally in the $1.65B
-        PIPE deal alongside his firm''s investment, with the transaction completed
-        in 100% USD with no in-kind contributions.
-
-        2025-09-11T14:00:00.000Z: Galaxy accumulates 1.35M SOL worth $302M over past
-        12 hours, including 430K SOL ($97M) purchased from Binance in the last hour,
-        continuing aggressive Solana accumulation strategy.
-
-
-        PayPal (PYUSD) - Score: 0.373
-
-        Rationale: PYUSD has experienced significant token supply fluctuations, with
-        70M minted and 60.9M burned recently. PayPal also backed Kite AI''s $33M funding
-        round, though users have reported platform issues following governance changes.
-
-        Recent Summaries:
-
-        2025-09-15T21:00:00.000Z: $30k PYUSD trading competition runs from September
-        15 21:00 UTC to September 16 21:00 UTC.
-
-        2025-09-14T10:00:00.000Z: Kite AI secures $33M funding with PayPal and Avalanche
-        as backers for their AI-focused Layer 1 blockchain.
-
-        2025-09-14T07:00:00.000Z: Users report concerns about stuck funds following
-        a PayPal-Paxos governance vote on USDH platform.
-
-        2025-09-12T21:00:00.000Z: 70 million PYUSD tokens worth approximately $70
-        million are minted at Paxos, representing a 40% increase from the previous
-        50 million token mint just one day prior.
-
-        2025-09-12T13:00:00.000Z: 60.9 million PYUSD tokens worth approximately $60.9
-        million were burned at an unknown wallet.
-
-
-        Portal (PORTAL) - Score: 0.344
-
-        Rationale: Portal has launched BitScaler, a trust-minimized Bitcoin scaling
-        framework using atomic swaps without bridges. It is also expanding its cross-chain
-        infrastructure with new HYPE token transfers and a rewards program for multichain
-        activity.
-
-        Recent Summaries:
-
-        2025-09-13T08:00:00.000Z: Portal unveils BitScaler, a trust-minimized Bitcoin
-        scaling framework using atomic swaps and liquidity pools without bridges or
-        wrapping.
-
-        2025-09-11T07:00:00.000Z: Portal experiences observed price movement alongside
-        other gaming tokens in what one trader characterizes as artificial pumping
-        activity in the gaming sector.
-
-        2025-09-08T17:00:00.000Z: HYPE token transfers are now live on Portal Bridge,
-        enabling cross-chain movement between HyperEVM and Unichain.
-
-        2025-09-05T15:00:00.000Z: New Portal Earn program will reward all multichain
-        transfers with experience points, including boost mechanisms and competitive
-        leaderboards.
-
-        2025-09-04T01:00:00.000Z: Season 2 rewards announced following successful
-        claim event.
-
-
-        Mirror (MIRROR) - Score: 0.311
-
-        Rationale: Mirror has announced the end of its operations, with functionality
-        transitioning to the Paragraph platform. The project recently completed its
-        Phase 1 airdrop distribution and launched a Vesting & Locking Portal for NFT
-        holders.
-
-        Recent Summaries:
-
-        2025-09-16T03:00:00.000Z: Mirror announces end of operations with its functionality
-        transitioning to Paragraph platform as the next chapter of decentralized publishing.
-
-        2025-09-10T15:00:00.000Z: Phase 1 airdrop distribution with 10% unlock has
-        been completed, with the upcoming Vesting & Locking Portal allowing NFT holders
-        to claim remaining allocations and select vesting preferences. Additional
-        rewards are planned for loyal community members as the ecosystem goes live.
-
-        2025-09-09T19:00:00.000Z: Project announces collaboration with ChainGPT ($CGPT)
-        with an associated campaign ending soon.
-
-        2025-09-08T21:00:00.000Z: Airdrop faces information delays exceeding 10 hours
-        with community expressing scam concerns.
-
-        2025-09-08T15:00:00.000Z: Current market cap reported at $3.5-3.7M with active
-        trading activity and bullish sentiment targeting $10-20M market cap within
-        one month. Contract address confirmed as 0xe1bfA25468AF64e366ddAFC9D91bCc6c97439A14.
-
-
-        Pyth Network (PYTH) - Score: 0.31
-
-        Rationale: PYTH has secured its first U.S. government partnership with the
-        Department of Commerce to bring official GDP data onchain. It is also showing
-        strong trading metrics and expanding its oracle feeds across global markets.
-
-        Recent Summaries:
-
-        2025-09-15T10:00:00.000Z: U.S. Department of Commerce partners with the network
-        to bring official government data like GDP directly onchain, marking the first
-        U.S. government collaboration with a decentralized oracle.
-
-        2025-09-14T22:00:00.000Z: Avantis integrates PYTH oracles for multi-collateral
-        USDC borrowing and leveraged trading across stocks, crypto, forex, and commodities.
-
-        2025-09-12T19:00:00.000Z: Network expands real-time price feeds to global
-        equities and emerging market currencies while Q2 metrics show 46.9% growth
-        in PYTH staking and 10.8% increase in price updates.
-
-        2025-09-10T19:00:00.000Z: PYTH shows 0.31x trading volume to market cap ratio,
-        ranking 2nd among top tokens by this metric, indicating high trading activity
-        relative to market capitalization.
-
-        2025-09-10T06:00:00.000Z: PYTH ranks as the 3rd top daily crypto gainer according
-        to CoinMarketCap data.'
+      response: "Here is the list of trending projects on Solana with a minimum score\
+        \ of 0.1 based on the provided data:\n\n1. **SushiSwap**\n\t* Score: 0.549\n\
+        \t* Ticker: SUSHI\n\t* Token Address (Solana): ChVzxWRmrTeSgwd3Ui3UumcN8KX7VK3WaD4KGeSKpypj\n\
+        \t* Rationale: SushiSwap licenses Ekubo V3 AMM for efficiency, offers high\
+        \ yields, and integrates with Gate Wallet.\n\t* Recent Summaries:\n\t\t+ Became\
+        \ the first licensee of Ekubo Protocol's multi-chain AMM infrastructure V3\
+        \ release.\n\t\t+ New agentic strategies on Katana deliver high yields.\n\t\
+        \t+ Funded 95% of a former team member's $260k legal fees for an SEC case.\n\
+        \n2. **TNSR**\n\t* Score: 0.539\n\t* Ticker: TNSR\n\t* Token Address (Solana):\
+        \ HHoXk7WursT9DLBBhHzBWBbuQkfvvoNyHKpJi61mpump\n\t* Rationale: TNSR token\
+        \ gained 130% with 4x Open Interest, 10% spot-perp dislocation below $100M\
+        \ market cap.\n\t* Recent Summaries:\n\t\t+ Token gained 130% in one day with\
+        \ significant Open Interest increase.\n\t\t+ AgentHustleAI expands to EVM\
+        \ chains.\n\n3. **Codex**\n\t* Score: 0.467\n\t* Ticker: SANDY\n\t* Token\
+        \ Address (Solana): 61yG5LCoeoqzBdopXPy6BsVPTGdRXht95L68hj5ipump\n\t* Rationale:\
+        \ Codex Cloud orchestrates 8 AI agents to build an app/marketing plan in 52\
+        \ mins, rivaling Claude Code.\n\t* Recent Summaries:\n\t\t+ Demonstrated rapid\
+        \ app and marketing plan development using Codex Cloud.\n\t\t+ Listed among\
+        \ stablecoin projects planning a Token Generation Event (TGE) in Q4.\n\n4.\
+        \ **Peanut the Squirrel (PNUT)**\n\t* Score: 0.438\n\t* Ticker: PNUT\n\t*\
+        \ Token Address (Solana): 2qEHjDLDLbuBgRYvsxhc5D6uDWAivNFZGan56P1tpump\n\t\
+        * Rationale: PNUT recently listed on Coinbase and Robinhood exchanges.\n\t\
+        * Recent Summaries:\n\t\t+ Listed on major exchanges Coinbase and Robinhood.\n\
+        \t\t+ Planned supply burn and possible buyback-and-burn program.\n\n5. **Kaiko**\n\
+        \t* Score: 0.367\n\t* Ticker: KAI\n\t* Token Address (Solana): 2MuDS29b6rQb9MydKLMvggST5Yqez3B6gYWitvvjc6ir\n\
+        \t* Rationale: Kaiko pricing and liquidity feeds integrated by Taurus for\
+        \ global bank infrastructure expansion.\n\t* Recent Summaries:\n\t\t+ Integrated\
+        \ by Taurus for infrastructure expansion.\n\t\t+ Discussion about a potential\
+        \ community takeover (CTO) of the token.\n\n6. **PancakeSwap**\n\t* Score:\
+        \ 0.334\n\t* Ticker: CAKE\n\t* Token Address (Solana): 4qQeZ5LwSz6HuupUu8jCtgXyW1mYQcNbFAW1sWZp89HL\n\
+        \t* Rationale: PancakeSwap is the primary DEX liquidity provider for the new\
+        \ $CMC20 CoinMarketCap 20 Index token.\n\t* Recent Summaries:\n\t\t+ Primary\
+        \ DEX for $CMC20, the CoinMarketCap 20 Index token.\n\t\t+ Achieved $2.90B\
+        \ in 24-hour trading volume, the highest among all DEXs.\n\n7. **Bold**\n\t\
+        * Score: 0.329\n\t* Ticker: BOLD\n\t* Token Address (Solana): CQ6VXxQYD1nH1SobagiQDbhND3SLEKhqSxHCPaavBoLD\n\
+        \t* Rationale: Bold token holders receive 30% revenue; public beta launches\
+        \ Dec 1 after $12m test volume.\n\t* Recent Summaries:\n\t\t+ Token holders\
+        \ to receive 30% of platform revenue.\n\t\t+ Public beta launch set for December\
+        \ 1, 2025.\n\n8. **PayAI Network**\n\t* Score: 0.328\n\t* Ticker: PAYAI\n\t\
+        * Token Address (Solana): E7NgL19JbN8BhUDgWjkH8MtnbhJoaGaWJqosxZZepump\n\t\
+        * Rationale: PayAI completed token migrations, released AgentHustleAI v2,\
+        \ and grew PumpFun cohort despite LP impact.\n\t* Recent Summaries:\n\t\t\
+        + Completed token migrations and released AgentHustleAI Conditional Engine\
+        \ v2.\n\t\t+ Achieved $136M transaction volume in a 24-hour period.\n\n9.\
+        \ **POPCAT**\n\t* Score: 0.31\n\t* Ticker: POPCAT\n\t* Token Address (Solana):\
+        \ 7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr\n\t* Rationale: POPCAT is subject\
+        \ to alleged manipulation by BTX Capital/Vanessa Cao.\n\t* Recent Summaries:\n\
+        \t\t+ Allegations of manipulation by BTX Capital and its founder.\n\t\t+ Incident\
+        \ led to a significant price drop after a brief surge.\n\n10. **Bitcoin Puppets**\n\
+        \t* Score: 0.306\n\t* Ticker: PUPS\n\t* Token Address (Solana): 2oGLxYuNBJRcepT1mEV6KnETaLD7Bf6qq3CM6skasBfe\n\
+        \t* Rationale: Bitcoin Puppets controls the official @X account, trending\
+        \ #1 on CoinGecko with +33% price gain.\n\t* Recent Summaries:\n\t\t+ Controls\
+        \ the official @X account, with only 2 followed accounts.\n\t\t+ Trended as\
+        \ #1 on CoinGecko with a significant price increase."
       data:
         data:
           projects:
-          - id: 67dfa50e9cebfd54a2ddbfe7
-            name: apollo
-            score: 0.507
-            xHandle: unable to determine - multiple different apollo entities mentioned
-              without a clear primary crypto project handle
-            rationale: Apollo Global ranks 7th among fastest growing RWA issuers with
-              strong whale adoption evidenced by $16M+ in recent large deposits and
-              TVL hitting all-time highs following V2 protocol launch with enhanced
-              BTC bridging capabilities.
-            ticker: apollo
+          - name: sushiswap
+            score: 0.549
+            xHandle: sushiswap
+            rationale: SushiSwap licenses Ekubo V3 AMM for efficiency, offers high
+              yields, and integrates with Gate Wallet.
+            ticker: sushi
             tokens:
-              solana: AY88hS3S3fkDtkSc7abEkYjcNsxuCiGD8Lq4PmwakZuL
+              ethereum: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2'
+              arbitrum-one: '0xd4d42f0b6def4ce0383636770ef773390d85c61a'
+              near-protocol: 6b3595068778dd592e39a122f4f5a5cf09c90fe2.factory.bridge.near
+              harmony-shard-0: '0xbec775cb42abfa4288de81f387a9b1a3c4bc552a'
+              avalanche: '0x37b608519f91f70f2eeb0e5ed9af4061722e4f76'
+              celo: '0xd15ec721c2a896512ad29c671997dd68f9593226'
+              solana: ChVzxWRmrTeSgwd3Ui3UumcN8KX7VK3WaD4KGeSKpypj
+              polygon-pos: '0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a'
+              energi: '0x32aff6adc46331dac93e608a9cd4b0332d93a23a'
+              sora: '0x0078f4e6c5113b3d8c954dff62ece8fc36a8411f86f1cbb48a52527e22e73be2'
+              base: '0x7d49a065d17d6d4a55dc13649901fdbb98b2afba'
+              binance-smart-chain: '0x947950bcc74888a40ffa2593c5798f11fc9124c4'
+              fantom: '0xae75a438b2e0cb8bb01ec1e1e376de11d44477cc'
             summaries:
-            - id: apollo_2025-09-15T12:00:00.000Z
-              date: '2025-09-15T12:00:00.000Z'
-              description: Apollo Global ranks 7th among fastest growing RWA issuers
-                with 2% growth in tokenized assets under management over the past
-                30 days.
-            - id: apollo_2025-09-09T09:00:00.000Z
-              date: '2025-09-09T09:00:00.000Z'
-              description: 2,000 USDC in voting incentives launched for mAPOLLO pool
-                on Equilibria's voting market, with emissions expected to increase
-                next week.
-            - id: apollo_2025-08-29T10:00:00.000Z
-              date: '2025-08-29T10:00:00.000Z'
-              description: TVL reaches all-time high of 426 BTC following massive
-                99.99 BTC ($11M+) whale bridge.
-            - id: apollo_2025-08-22T06:00:00.000Z
-              date: '2025-08-22T06:00:00.000Z'
-              description: Whale bridges 49.99 BTC ($5.64M) from Bitcoin to Solana
-                through protocol.
-            - id: apollo_2025-08-05T13:00:00.000Z
-              date: '2025-08-05T13:00:00.000Z'
-              description: V2 protocol launches with faster BTC deposits and improved
-                zBTC minting capabilities.
-          - id: 66f50dbe6811ccaef9561e6d
-            name: pancakeswap
-            score: 0.47
+            - id: 691e4104e5d831ec801b41a7
+              date: '2025-11-19T21:00:00.000Z'
+              description: SushiSwap becomes the first licensee of Ekubo Protocol's
+                multi-chain AMM infrastructure V3 release, gaining access to what
+                Ekubo describes as the most efficient DEX architecture on EVM.
+            - id: 691aa021e5d831ec80f4b9a2
+              date: '2025-11-17T03:00:00.000Z'
+              description: New agentic strategies on Katana deliver 32.03% yield for
+                stablecoins and 14.43% for delta-neutral ETH across SushiSwap, Spectra
+                Finance, and Hyperliquid since early November. INFINIT Labs integrates
+                with Gate Wallet, providing 40M+ users one-click access to strategies
+                using SushiSwap.
+            - id: 691665bce5d831ec80c91eee
+              date: '2025-11-13T22:00:00.000Z'
+              description: 'SushiSwap funded 95% of the $260k legal fees for the former
+                team member fighting the SEC case, a decision that faced community
+                opposition at the time. (ID: 1989096208997228662)'
+            - id: 6915d973e5d831ec80c27008
+              date: '2025-11-13T12:00:00.000Z'
+              description: A former team member publicly discloses they left SushiSwap
+                due to SEC legal harassment under Gensler, spending $260k in legal
+                fees over a year fighting the case.
+            - id: 6913990be5d831ec80a7f102
+              date: '2025-11-11T19:00:00.000Z'
+              description: Katana's VaultBridge distributes $100k+ in yield to boost
+                borrows and liquidity pools on Morpho, Sushi, and Spectra, increasing
+                in-kind APY for users.
+          - name: tnsr
+            score: 0.539
+            xHandle: AgentHustleAI
+            rationale: tnsr token gained 130% with 4x OI, 10% spot-perp dislocation
+              below $100M market cap.
+            ticker: tnsr
+            tokens:
+              solana: HHoXk7WursT9DLBBhHzBWBbuQkfvvoNyHKpJi61mpump
+            summaries:
+            - id: 691ddff7e5d831ec8016860c
+              date: '2025-11-19T14:00:00.000Z'
+              description: Token gains 130% in one day with Open Interest up 4x and
+                10% spot-perp dislocation occurring below $100M market cap.
+            - id: 68fd74dce5d831ec80758969
+              date: '2025-10-26T00:00:00.000Z'
+              description: HUSTLE token current price reaches $3M in October, down
+                from $38M ATH in August representing a 92% decline.
+            - id: 68f26d2fe5d831ec80dd4d5a
+              date: '2025-10-17T15:00:00.000Z'
+              description: AgentHustleAI expands to EVM chains. HUSTLE market cap
+                declined from $38M to $5M since July, though current levels remain
+                10x higher than a few months ago.
+            - id: 68d54054d505e1b5c1dc0f35
+              date: '2025-06-27T13:00:00.000Z'
+              description: Migration to HUSTLE token scheduled for July 1st; LP providers
+                advised to remove positions before transition.
+            - id: 68d54054d505e1b5c1dc0f34
+              date: '2025-06-26T16:00:00.000Z'
+              description: New migration platform launches to facilitate token transitions
+                beyond TNSR, enabling other projects to migrate their tokens.
+          - name: codex
+            score: 0.467
+            xHandle: codex_pbc
+            rationale: Codex Cloud orchestrates 8 AI agents to build an app/marketing
+              plan in 52 mins, rivaling Claude Code.
+            ticker: sandy
+            tokens:
+              solana: 61yG5LCoeoqzBdopXPy6BsVPTGdRXht95L68hj5ipump
+            summaries:
+            - id: 68f2b0fce5d831ec80e16b23
+              date: '2025-10-17T20:00:00.000Z'
+              description: User demonstrates Codex Cloud orchestrating 8 parallel
+                AI agents to build a working wellness app and marketing plan in 52
+                minutes, positioning the platform as an alternative to Claude Code
+                with integration to ideabrowser for startup idea generation.
+            - id: 68da4da2e5d831ec80a4d8da
+              date: '2025-09-29T08:00:00.000Z'
+              description: The project is listed among stablecoin projects planning
+                a Token Generation Event (TGE) in Q4 of this year.
+            - id: 68e4455ce5d831ec8020d91f
+              date: '2025-09-25T18:00:00.000Z'
+              description: Codex now provides data services for Plasma ecosystem projects,
+                positioning itself as a data infrastructure provider for the Plasma
+                network.
+            - id: 68d53c91d505e1b5c1d6998f
+              date: '2025-09-07T19:00:00.000Z'
+              description: Third-party assessment categorizes the project as a "stable
+                chain" alongside Hyperliquid, Plasma, Tempo, Stable, and Arc, distinguishing
+                it from projects labeled as unstable chains.
+            - id: 68d53c91d505e1b5c1d6998e
+              date: '2025-09-05T15:00:00.000Z'
+              description: The project officially enters Layer 2 on Ethereum with
+                Circle's support, leveraging ETH security and liquidity for payment
+                solutions.
+          - name: peanut the squirrel
+            score: 0.438
+            xHandle: pnutsolana
+            rationale: PNUT recently listed on Coinbase and Robinhood exchanges.
+            ticker: pnut
+            tokens:
+              solana: 2qEHjDLDLbuBgRYvsxhc5D6uDWAivNFZGan56P1tpump
+            summaries:
+            - id: 6914c1b9e5d831ec80b622f4
+              date: '2025-11-12T16:00:00.000Z'
+              description: PNUT lists on Coinbase and Robinhood exchanges.
+            - id: 690d4725e5d831ec8057e152
+              date: '2025-11-07T00:00:00.000Z'
+              description: PNUT operators allegedly took the money and ran, abandoning
+                the project according to a comparison made in KITKAT-related drama.
+            - id: 69082acee5d831ec8007976d
+              date: '2025-11-03T03:00:00.000Z'
+              description: A supply burn is planned with a possible buyback-and-burn
+                program, and an official Twitter account launches today.
+            - id: 6906e6d4e5d831ec80f74721
+              date: '2025-11-02T04:00:00.000Z'
+              description: The imposter coin operators offer a $250k bribe to a KOL
+                (rejected) and allegedly pay @OfficialTravlad and other KOLs for fake
+                support, while deploying bot farms with hundreds of fake accounts
+                to promote the scam.
+            - id: 69041acae5d831ec80d08efb
+              date: '2025-10-31T01:00:00.000Z'
+              description: KITKAT scammers pay $20,000 to the family for a fake endorsement
+                clip using remote software. PNUT's owner historically made a scam
+                coin that went to zero after being used by multiple teams.
+          - name: kaiko
+            score: 0.367
+            xHandle: kaikohq
+            rationale: Kaiko pricing and liquidity feeds integrated by Taurus for
+              global bank infrastructure expansion.
+            ticker: kai
+            tokens:
+              solana: 2MuDS29b6rQb9MydKLMvggST5Yqez3B6gYWitvvjc6ir
+            summaries:
+            - id: 691d8996e5d831ec8012cbf9
+              date: '2025-11-19T08:00:00.000Z'
+              description: Taurus integrates Kaiko pricing and liquidity feeds as
+                part of infrastructure expansion for global banks.
+            - id: 6913ec3de5d831ec80ac1ab2
+              date: '2025-11-12T01:00:00.000Z'
+              description: Discussion emerges about community takeover (CTO) of the
+                token, representing a potential risk signal.
+            - id: 6907748ee5d831ec80fe18b9
+              date: '2025-11-02T14:00:00.000Z'
+              description: TGE countdown continues with live event collaboration featuring
+                Coral Protocol and TheARCTERMINAL exploring AI and Web3 convergence.
+            - id: 68ff9bebe5d831ec80906e6a
+              date: '2025-10-27T15:00:00.000Z'
+              description: Platform launches free to public access tomorrow.
+            - id: 68f6617fe5d831ec800f5966
+              date: '2025-10-20T15:00:00.000Z'
+              description: Reveals ARC V1.5, an onchain OS powered by Nexus that serves
+                as the first emotional intelligence layer AI system, working closely
+                with the Block and UAE government around AI infrastructure.
+          - name: pancakeswap
+            score: 0.334
             xHandle: pancakeswap
-            rationale: Trading platform maintains strong market position as second-largest
-              DEX behind Uniswap while expanding through new partnerships with DEGEN
-              project and BRC-20 token integration, though recent weekly volumes show
-              decline from peak August performance.
+            rationale: PancakeSwap is the primary DEX liquidity provider for the new
+              $CMC20 CoinMarketCap 20 Index token.
             ticker: cake
             tokens:
               binance-smart-chain: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82'
-              arbitrum-one: '0x1b896893dfc86bb67cf57767298b9073d2c1ba2c'
+              zksync: '0x3a287a06c66f9e95a56327185ca2bdf5f031cecd'
+              ethereum: '0x152649ea73beab28c5b49b26eb48f7ead6d4c898'
               polygon-zkevm: '0x0d1e753a25ebda689453309112904807625befbe'
               opbnb: '0x2779106e4f4a8a28d77a24c18283651a2ae22d1c'
-              zksync: '0x3a287a06c66f9e95a56327185ca2bdf5f031cecd'
               aptos: 0x159df6b7689437016108a019fd5bef736bac692b6d4a1f10c941f6fbb9a74ca6::oft::CakeOFT
               linea: '0x0d1e753a25ebda689453309112904807625befbe'
               solana: 4qQeZ5LwSz6HuupUu8jCtgXyW1mYQcNbFAW1sWZp89HL
-              ethereum: '0x152649ea73beab28c5b49b26eb48f7ead6d4c898'
               base: '0x3055913c90fcc1a6ce9a358911721eeb942013a1'
+              arbitrum-one: '0x1b896893dfc86bb67cf57767298b9073d2c1ba2c'
             summaries:
-            - id: pancakeswap_2025-09-15T22:00:00.000Z
-              date: '2025-09-15T22:00:00.000Z'
-              description: Partnership with DEGEN project launches with live liquidity
-                pool and CAKE token rewards for participants.
-            - id: pancakeswap_2025-09-15T15:00:00.000Z
-              date: '2025-09-15T15:00:00.000Z'
-              description: Weekly trading volume reaches $15.347B for September 8-14,
-                2025, showing minimal week-over-week change but indicating a significant
-                decline from August's strong $92B monthly performance.
-            - id: pancakeswap_2025-09-10T20:00:00.000Z
-              date: '2025-09-10T20:00:00.000Z'
-              description: Platform launches $250,000 trading competition featuring
-                WILD token participation.
-            - id: pancakeswap_2025-09-10T07:00:00.000Z
-              date: '2025-09-10T07:00:00.000Z'
-              description: Integrates with MultiBit to enable trading of bridged BRC-20
-                tokens ORDI and SATS as BEP-20 versions on BNB Chain.
-            - id: pancakeswap_2025-09-08T08:00:00.000Z
-              date: '2025-09-08T08:00:00.000Z'
-              description: Achieves $92B in August trading volume, ranking second
-                to Uniswap's $111.8B according to Coingecko data.
-          - id: 682658e84cf2d06ae520eb66
-            name: polycule
-            score: 0.45
-            xHandle: polycule_bot
-            rationale: Project launches PMX prediction market platform with YES/NO
-              token trading mechanics while achieving 50K daily active users and $6M
-              volume through existing Telegram bot infrastructure.
-            ticker: pcule
+            - id: 691b1fd4e5d831ec80f97923
+              date: '2025-11-17T12:00:00.000Z'
+              description: Launches as the primary DEX liquidity provider for $CMC20,
+                the new CoinMarketCap 20 Index token tracking the top 20 cryptocurrencies
+                on BNB Chain in collaboration with CoinMarketCap, Reserve Protocol,
+                and LISTA DAO.
+            - id: 6915af07e5d831ec80c07de5
+              date: '2025-11-13T09:00:00.000Z'
+              description: Aave removes $CAKE from accepted collateral assets, setting
+                LTV to zero following oracle pricing issues during the 10/10 market
+                crash and minimal borrowing revenue from the asset.
+            - id: 6913a6d9e5d831ec80a8c394
+              date: '2025-11-11T20:00:00.000Z'
+              description: Rejects key resistance level with potential downside risk
+                unless the level is reclaimed.
+            - id: 6911f350e5d831ec8092389c
+              date: '2025-11-10T13:00:00.000Z'
+              description: Achieves $2.90B in 24-hour trading volume, the highest
+                among all DEXs.
+            - id: 690eecc2e5d831ec806f287e
+              date: '2025-11-08T06:00:00.000Z'
+              description: Burns 974M $CAKE ($2.4B value) since the beginning of the
+                year, outpacing $2.33B of YTD emissions with 6.8% YTD deflation rate.
+          - name: bold
+            score: 0.329
+            xHandle: predictwithbold
+            rationale: Bold token holders receive 30% revenue; public beta launches
+              Dec 1 after $12m test volume.
+            ticker: bold
             tokens:
-              solana: J27UYHX5oeaG1YbUGQc8BmJySXDjNWChdGB2Pi2TMDAq
+              solana: CQ6VXxQYD1nH1SobagiQDbhND3SLEKhqSxHCPaavBoLD
             summaries:
-            - id: polycule_2025-09-15T21:00:00.000Z
-              date: '2025-09-15T21:00:00.000Z'
-              description: Launches new prediction market platform PMX with YES/NO
-                token trading mechanics powered by MeteoraAG integration.
-            - id: polycule_2025-09-13T22:00:00.000Z
-              date: '2025-09-13T22:00:00.000Z'
-              description: New $ICM token partnership enables SOL-based funding with
-                automatic Polygon bridging functionality.
-            - id: polycule_2025-07-18T21:00:00.000Z
-              date: '2025-07-18T21:00:00.000Z'
-              description: Processes $6M volume via Telegram bot MVP; developing first-party
-                app on Polymarket with leverage and parlays functionality.
-            - id: polycule_2025-07-08T19:00:00.000Z
-              date: '2025-07-08T19:00:00.000Z'
-              description: Platform reaches 50K daily active users; announces new
-                points program integration.
-            - id: polycule_2025-06-19T20:00:00.000Z
-              date: '2025-06-19T20:00:00.000Z'
-              description: Trading volume shows consistent growth with 30% allocated
-                to automatic buybacks.
-          - id: 67ccf81382262d607e3778da
-            name: yeezy
-            score: 0.411
-            xHandle: 'YEEZY_MNY (Note: Cannot confirm if this is official)'
-            rationale: Scam allegations emerge claiming hundreds of millions extracted
-              while price collapsed 85% from launch amid massive retail losses and
-              Kanye West's silence.
-            ticker: yzy
+            - id: 691e4ebae5d831ec801bd01c
+              date: '2025-11-19T22:00:00.000Z'
+              description: Token holders receive 30% of platform revenue.
+            - id: 691e4104e5d831ec801b40bb
+              date: '2025-11-19T21:00:00.000Z'
+              description: Public beta launches December 1st, 2025. Team releases
+                public Github repository and platform achieves $12m beta trade volume
+                with 500+ testers during invite-only phase.
+            - id: 691e2530e5d831ec8019fc2a
+              date: '2025-11-19T19:00:00.000Z'
+              description: Token price bounced 2.5X from lows during a broader market
+                downturn.
+            - id: 69194012e5d831ec80e7ba01
+              date: '2025-11-16T02:00:00.000Z'
+              description: The platform launches prediction markets for Solana memecoins.
+                Current market cap is $4M.
+            - id: 69179b1ce5d831ec80d6f638
+              date: '2025-11-14T20:00:00.000Z'
+              description: The token is not yet listed on CoinGecko.
+          - name: PayAI Network
+            score: 0.328
+            xHandle: payainetwork
+            rationale: PayAI completed token migrations, released AgentHustleAI v2,
+              and grew PumpFun cohort despite LP impact.
+            ticker: payai
             tokens:
-              solana: DrZ26cKJDksVRWib3DVVsjo9eeXccc7hKhDJviiYEEZY
+              solana: E7NgL19JbN8BhUDgWjkH8MtnbhJoaGaWJqosxZZepump
             summaries:
-            - id: yeezy_2025-09-14T22:00:00.000Z
-              date: '2025-09-14T22:00:00.000Z'
-              description: Explicit scam allegations surface claiming hundreds of
-                millions extracted with Kanye West remaining silent.
-            - id: yeezy_2025-09-12T10:00:00.000Z
-              date: '2025-09-12T10:00:00.000Z'
-              description: Price drops 85% within a month of launch, escalating beyond
-                the 50% decline previously recorded.
-            - id: yeezy_2025-08-29T10:00:00.000Z
-              date: '2025-08-29T10:00:00.000Z'
-              description: Sharp 50% price decline signals significant market correction
-            - id: yeezy_2025-08-27T20:00:00.000Z
-              date: '2025-08-27T20:00:00.000Z'
-              description: Market polarization intensifies with 11 wallets now profiting
-                over $1M while 51,862 wallets lose $74.8M total, representing increased
-                concentration of gains among top traders.
-            - id: yeezy_2025-08-26T00:00:00.000Z
-              date: '2025-08-26T00:00:00.000Z'
-              description: Major trader accumulates long position despite $8M unrealized
-                loss across portfolio.
-          - id: 68c5ec1cb64607f94f86153b
-            name: kindness coin
-            score: 0.402
-            xHandle: thekindcoin
-            rationale: $KIND coin is achieving viral algorithmic discovery on TikTok
-              beyond its existing audience while the developer has already generated
-              over $100K from streaming and maintains 1M+ TikTok followers with active
-              creator reward distributions.
-            ticker: kind
-            tokens:
-              solana: V5cCiSixPLAiEDX2zZquT5VuLm4prr5t35PWmjNpump
-            summaries:
-            - id: kindness coin_2025-09-15T22:00:00.000Z
-              date: '2025-09-15T22:00:00.000Z'
-              description: $KIND coin videos are breaking into TikTok algorithms of
-                users with unrelated content feeds, indicating viral algorithmic discovery
-                beyond the project's existing audience base.
-            - id: kindness coin_2025-09-15T02:00:00.000Z
-              date: '2025-09-15T02:00:00.000Z'
-              description: The project is actively distributing thousands in creator
-                rewards to streamers and has achieved Facebook virality as part of
-                its attention flywheel strategy.
-            - id: kindness coin_2025-09-13T21:00:00.000Z
-              date: '2025-09-13T21:00:00.000Z'
-              description: The project developer has generated over $100K from pump.fun
-                streaming while maintaining 1M+ TikTok followers, and is highlighted
-                as a quality creator in the emerging creator coin meta.
-          - id: 67eb04c7a258c9d0cd76cf99
-            name: galaxy
-            score: 0.39
-            xHandle: galaxy_sidus
-            rationale: Galaxy aggressively accumulates $302M worth of Solana while
-              launching tokenized stock products on the network and serving as financial
-              advisor for Forward Industries' $1.65B PIPE deal with technical analysis
-              indicating $80 price targets.
-            ticker: glxy
-            tokens:
-              solana: 2HehXG149TXuVptQhbiWAWDjbbuCsXSAtLTB5wc2aajK
-            summaries:
-            - id: galaxy_2025-09-12T15:00:00.000Z
-              date: '2025-09-12T15:00:00.000Z'
-              description: Galaxy serves as co-placement agent and financial advisor
-                for Forward Industries' $1.65B PIPE deal and enters separate services
-                agreement to provide treasury strategy management support. Technical
-                analysis suggests potential price target of $80 based on cup and handle
-                pattern.
-            - id: galaxy_2025-09-11T22:00:00.000Z
-              date: '2025-09-11T22:00:00.000Z'
-              description: Galaxy launches tokenized stock product on Solana, choosing
-                it over Ethereum L2s due to readiness concerns about L2s for tokenized
-                stocks.
-            - id: galaxy_2025-09-11T17:00:00.000Z
-              date: '2025-09-11T17:00:00.000Z'
-              description: Galaxy leads crypto stock gains while Bitcoin-focused vehicles
-                like Metaplanet and Nakamoto experience significant declines.
-            - id: galaxy_2025-09-11T16:00:00.000Z
-              date: '2025-09-11T16:00:00.000Z'
-              description: Kyle Samani confirms his appointment as Chairman of Forward
-                Industries and reveals he invested $25M personally in the $1.65B PIPE
-                deal alongside his firm's investment, with the transaction completed
-                in 100% USD with no in-kind contributions.
-            - id: galaxy_2025-09-11T14:00:00.000Z
-              date: '2025-09-11T14:00:00.000Z'
-              description: Galaxy accumulates 1.35M SOL worth $302M over past 12 hours,
-                including 430K SOL ($97M) purchased from Binance in the last hour,
-                continuing aggressive Solana accumulation strategy.
-          - id: 66f4fdc76811ccaef955de3c
-            name: paypal
-            score: 0.373
-            xHandle: paypaldev
-            rationale: PYUSD experiences significant token supply fluctuations with
-              70M minted and 60.9M burned recently, while PayPal backs Kite AI's $33M
-              funding round and users report platform issues following governance
-              changes.
-            ticker: pyusd
-            tokens:
-              ethereum: '0x6c3ea9036406852006290770bedfcaba0e23a0e8'
-              arbitrum-one: '0x46850ad61c2b7d64d08c9c754f45254596696984'
-              solana: 2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo
-            summaries:
-            - id: paypal_2025-09-15T21:00:00.000Z
-              date: '2025-09-15T21:00:00.000Z'
-              description: $30k PYUSD trading competition runs from September 15 21:00
-                UTC to September 16 21:00 UTC.
-            - id: paypal_2025-09-14T10:00:00.000Z
-              date: '2025-09-14T10:00:00.000Z'
-              description: Kite AI secures $33M funding with PayPal and Avalanche
-                as backers for their AI-focused Layer 1 blockchain.
-            - id: paypal_2025-09-14T07:00:00.000Z
-              date: '2025-09-14T07:00:00.000Z'
-              description: Users report concerns about stuck funds following a PayPal-Paxos
-                governance vote on USDH platform.
-            - id: paypal_2025-09-12T21:00:00.000Z
-              date: '2025-09-12T21:00:00.000Z'
-              description: 70 million PYUSD tokens worth approximately $70 million
-                are minted at Paxos, representing a 40% increase from the previous
-                50 million token mint just one day prior.
-            - id: paypal_2025-09-12T13:00:00.000Z
-              date: '2025-09-12T13:00:00.000Z'
-              description: 60.9 million PYUSD tokens worth approximately $60.9 million
-                were burned at an unknown wallet.
-          - id: 67159f18284a1592991b3e6b
-            name: portal
-            score: 0.344
-            xHandle: portaltobitcoin
-            rationale: Portal launches BitScaler, a trust-minimized Bitcoin scaling
-              framework using atomic swaps without bridges, while expanding its cross-chain
-              infrastructure with new HYPE token transfers and a rewards program for
-              multichain activity.
-            ticker: portal
-            tokens:
-              ethereum: '0x1bbe973bef3a977fc51cbed703e8ffdefe001fed'
-              solana: FMQjDvT1GztVxdvYgMBEde4L54fftFGx9m5GmbqeJGM5
-            summaries:
-            - id: portal_2025-09-13T08:00:00.000Z
-              date: '2025-09-13T08:00:00.000Z'
-              description: Portal unveils BitScaler, a trust-minimized Bitcoin scaling
-                framework using atomic swaps and liquidity pools without bridges or
-                wrapping.
-            - id: portal_2025-09-11T07:00:00.000Z
-              date: '2025-09-11T07:00:00.000Z'
-              description: Portal experiences observed price movement alongside other
-                gaming tokens in what one trader characterizes as artificial pumping
-                activity in the gaming sector.
-            - id: portal_2025-09-08T17:00:00.000Z
-              date: '2025-09-08T17:00:00.000Z'
-              description: HYPE token transfers are now live on Portal Bridge, enabling
-                cross-chain movement between HyperEVM and Unichain.
-            - id: portal_2025-09-05T15:00:00.000Z
-              date: '2025-09-05T15:00:00.000Z'
-              description: New Portal Earn program will reward all multichain transfers
-                with experience points, including boost mechanisms and competitive
-                leaderboards.
-            - id: portal_2025-09-04T01:00:00.000Z
-              date: '2025-09-04T01:00:00.000Z'
-              description: Season 2 rewards announced following successful claim event.
-          - id: 68002b01e3453679a927e58a
-            name: mirror
-            score: 0.311
-            xHandle: unable to determine - multiple potential handles identified (mirrorlyxyz,
-              @mirror__city) but no definitive official project handle confirmed from
-              the provided tweets.
-            rationale: Mirror announces end of operations with functionality transitioning
-              to Paragraph platform while the project recently completed Phase 1 airdrop
-              distribution and launched a Vesting & Locking Portal for NFT holders.
-            ticker: mirror
-            tokens:
-              binance-smart-chain: '0x297eb2cd0e0af48dd2241d1fe2eae8d9d5188e87'
-              solana: 8dmHzuMkdssGeycyiJFDhkmeuViLBn4GNdH8w6qkPp7i
-              base: '0xe1bfa25468af64e366ddafc9d91bcc6c97439a14'
-            summaries:
-            - id: mirror_2025-09-16T03:00:00.000Z
-              date: '2025-09-16T03:00:00.000Z'
-              description: Mirror announces end of operations with its functionality
-                transitioning to Paragraph platform as the next chapter of decentralized
-                publishing.
-            - id: mirror_2025-09-10T15:00:00.000Z
-              date: '2025-09-10T15:00:00.000Z'
-              description: Phase 1 airdrop distribution with 10% unlock has been completed,
-                with the upcoming Vesting & Locking Portal allowing NFT holders to
-                claim remaining allocations and select vesting preferences. Additional
-                rewards are planned for loyal community members as the ecosystem goes
-                live.
-            - id: mirror_2025-09-09T19:00:00.000Z
-              date: '2025-09-09T19:00:00.000Z'
-              description: Project announces collaboration with ChainGPT ($CGPT) with
-                an associated campaign ending soon.
-            - id: mirror_2025-09-08T21:00:00.000Z
-              date: '2025-09-08T21:00:00.000Z'
-              description: Airdrop faces information delays exceeding 10 hours with
-                community expressing scam concerns.
-            - id: mirror_2025-09-08T15:00:00.000Z
-              date: '2025-09-08T15:00:00.000Z'
-              description: Current market cap reported at $3.5-3.7M with active trading
-                activity and bullish sentiment targeting $10-20M market cap within
-                one month. Contract address confirmed as 0xe1bfA25468AF64e366ddAFC9D91bCc6c97439A14.
-          - id: 66f5081d6811ccaef9560a39
-            name: pyth network
+            - id: 691e6b10e5d831ec801cfce5
+              date: '2025-11-20T00:00:00.000Z'
+              description: Completes $PAYAI and $LYNK token migrations and releases
+                AgentHustleAI Conditional Engine v2 alongside growth in PumpFun migration
+                cohort.
+            - id: 691cfe11e5d831ec800dbcc6
+              date: '2025-11-18T22:00:00.000Z'
+              description: The token migration negatively impacts third-party liquidity
+                providers, prompting community concerns and outreach efforts to affected
+                teams.
+            - id: 691cc5cbe5d831ec800b5f64
+              date: '2025-11-18T18:00:00.000Z'
+              description: Project deployed a new token rather than executing a hard
+                rug pull.
+            - id: 6914d07be5d831ec80b6e17b
+              date: '2025-11-12T17:00:00.000Z'
+              description: Listed on Wasabi platform with 3x leverage trading and
+                yield earning opportunities.
+            - id: 69149708e5d831ec80b3ca87
+              date: '2025-11-12T13:00:00.000Z'
+              description: Achieves $136M transaction volume in 24-hour period, second
+                only to Coinbase.
+          - name: popcat
             score: 0.31
-            xHandle: pythnetwork
-            rationale: PYTH secures first U.S. government partnership with Department
-              of Commerce to bring official GDP data onchain while showing strong
-              trading metrics and expanding oracle feeds across global markets.
-            ticker: pyth
+            xHandle: popcatsolana
+            rationale: POPCAT is subject to alleged manipulation by BTX Capital/Vanessa
+              Cao, linked to prior TST manipulation.
+            ticker: popcat
             tokens:
-              solana: HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3
-              manta-pacific: '0x90e95735378a31bfad2dcd87128fbb80ffeb6917'
-              neon-evm: '0x0575dd4afd93b7522fee4e0179f243eca3856137'
+              solana: 7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr
             summaries:
-            - id: pyth network_2025-09-15T10:00:00.000Z
-              date: '2025-09-15T10:00:00.000Z'
-              description: U.S. Department of Commerce partners with the network to
-                bring official government data like GDP directly onchain, marking
-                the first U.S. government collaboration with a decentralized oracle.
-            - id: pyth network_2025-09-14T22:00:00.000Z
-              date: '2025-09-14T22:00:00.000Z'
-              description: Avantis integrates PYTH oracles for multi-collateral USDC
-                borrowing and leveraged trading across stocks, crypto, forex, and
-                commodities.
-            - id: pyth network_2025-09-12T19:00:00.000Z
-              date: '2025-09-12T19:00:00.000Z'
-              description: Network expands real-time price feeds to global equities
-                and emerging market currencies while Q2 metrics show 46.9% growth
-                in PYTH staking and 10.8% increase in price updates.
-            - id: pyth network_2025-09-10T19:00:00.000Z
-              date: '2025-09-10T19:00:00.000Z'
-              description: PYTH shows 0.31x trading volume to market cap ratio, ranking
-                2nd among top tokens by this metric, indicating high trading activity
-                relative to market capitalization.
-            - id: pyth network_2025-09-10T06:00:00.000Z
-              date: '2025-09-10T06:00:00.000Z'
-              description: PYTH ranks as the 3rd top daily crypto gainer according
-                to CoinMarketCap data.
+            - id: 69171cade5d831ec80d0a817
+              date: '2025-11-14T11:00:00.000Z'
+              description: Analyst @SpecterAnalyst identifies BTX Capital and founder
+                Vanessa Cao as alleged perpetrators of the POPCAT manipulation, with
+                the ~26 involved wallets linked to prior TST manipulation and the
+                attacker potentially profiting via opposite positions on centralized
+                exchanges.
+            - id: 6915304be5d831ec80bb5c24
+              date: '2025-11-13T00:00:00.000Z'
+              description: On-chain monitor MLM reports the attack involved an OKX
+                wallet that withdrew $3M USDC, split it across 19 wallets, and coordinated
+                a $20-30M POPCAT long with a $0.21 buy wall around 14:45 UTC before
+                pulling the wall and causing liquidation. MLM officially characterizes
+                the incident as a deliberate attack on HLP/Hyperliquid infrastructure
+                rather than trader error, and Hyperliquid manually closed the position.
+            - id: 6914eaeee5d831ec80b82ec0
+              date: '2025-11-12T19:00:00.000Z'
+              description: Hyperliquid paused only its Arbitrum bridge (not all deposits
+                and withdrawals as previously reported), with exchange operations
+                continuing normally. This marks the third major market incident on
+                Hyperliquid this year, and price fell 40% from above $0.22 to around
+                $0.13 following the manipulation event.
+            - id: 6914d07ae5d831ec80b6de1c
+              date: '2025-11-12T17:00:00.000Z'
+              description: Hyperliquid pauses deposits and withdrawals following the
+                manipulation incident. $63M in long positions liquidate in four hours,
+                including a $21M single liquidation (largest outside BTC/ETH).
+            - id: 6914c1b9e5d831ec80b620de
+              date: '2025-11-12T16:00:00.000Z'
+              description: HLP vault exits its entire $28M POPCAT position with a
+                confirmed $4.9-5M loss following the manipulation attack that pumped
+                price to $0.21. The project announces upcoming IRL campaigns, TikTok
+                initiatives, and merchandise releases.
+          - name: bitcoin puppets
+            score: 0.306
+            xHandle: bitcoinpuppets
+            rationale: 'Bitcoin Puppets controls the official @X account, trending
+              #1 on CoinGecko with +33% price gain.'
+            ticker: pups
+            tokens:
+              ordinals: '840000:41'
+              solana: 2oGLxYuNBJRcepT1mEV6KnETaLD7Bf6qq3CM6skasBfe
+            summaries:
+            - id: 691e94a5e5d831ec801e8b18
+              date: '2025-11-20T03:00:00.000Z'
+              description: Bitcoin Puppets has control over the official @X account.
+            - id: 691e869ce5d831ec801e0ab5
+              date: '2025-11-20T02:00:00.000Z'
+              description: One Bitcoin Puppet is followed by the official @X account,
+                which follows only 2 accounts in total.
+            - id: 691dc2efe5d831ec80153af2
+              date: '2025-11-19T12:00:00.000Z'
+              description: 'Takes the top spot as #1 trending NFT on CoinGecko today,
+                determined by highest 24-hour percentage change in floor price.'
+            - id: 691d5205e5d831ec8010d512
+              date: '2025-11-19T04:00:00.000Z'
+              description: The Ordinals collection gains +33% in price today.
+            - id: 6913990be5d831ec80a7f3d9
+              date: '2025-11-11T19:00:00.000Z'
+              description: 'Falls back to #3 in Liquidium loan volume rankings for
+                the past week, behind OMB at #1 and Node Monkes at #2.'
     description: Query trending Solana projects with minimum score filter
     status: success
+    elapsed_time: 38.896117210388184
   search_projects_direct:
     input:
       tool: search_projects
@@ -764,46 +496,47 @@ results:
       data:
         data:
           projects:
-          - id: 66fb7f153342c5177d1800a2
-            name: heurist
-            score: 0
+          - name: Heurist
+            score: 0.265
             xHandle: heurist_ai
-            rationale: AI infrastructure project has launched equity tokenization
-              platform xEquity with Circle/Base/Coinbase backing, secured Google Cloud
-              grant, and built trustless agent-to-agent payment system with 23,000
-              GPU miners generating token rewards.
+            rationale: Heurist launched Facilitator x402 for agentic crypto payments,
+              live on Base, coming to Arbitrum/X Layer.
             ticker: heu
             tokens:
               ethereum: '0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea'
               zksync: '0xabec5ecbe08b6c02f5c9a2ff82696e1e7db6f9bf'
               base: '0xef22cb48b8483df6152e1423b19df5553bbd818b'
             summaries:
-            - id: heurist_2025-08-25T13:00:00.000Z
-              date: '2025-08-25T13:00:00.000Z'
-              description: Chain infrastructure now ready with A2A, agent discovery,
-                and trustless verification features.
-            - id: heurist_2025-08-10T16:00:00.000Z
-              date: '2025-08-10T16:00:00.000Z'
-              description: Platform reaches 23,000 registered GPU miners who can earn
-                tokens by powering AI computations.
-            - id: heurist_2025-08-07T11:00:00.000Z
-              date: '2025-08-07T11:00:00.000Z'
-              description: xEquity product launches with SPV-based legal structure,
-                enabling startup equity tokenization with DeFi composability features.
-                Circle, Base, and Amber confirmed as partners.
-            - id: heurist_2025-08-07T09:00:00.000Z
-              date: '2025-08-07T09:00:00.000Z'
-              description: Secures $350k Google Cloud grant while receiving active
-                support from Coinbase through multiple venture articles and developer
-                acknowledgments.
-            - id: heurist_2025-08-04T14:00:00.000Z
-              date: '2025-08-04T14:00:00.000Z'
-              description: Launches digital assets platform for AI company equity
-                tokenization while migrating protocol-owned liquidity to Uniswap V3
-                on Base, enabling native swaps via OKX DEX aggregator and Wasabi leverage
-                trading.
+            - id: 691dede6e5d831ec8017377b
+              date: '2025-11-19T15:00:00.000Z'
+              description: Launches Heurist Facilitator x402 integration sample, allowing
+                developers to integrate agentic crypto payments into applications
+                with a few lines of code. Deployment is live on Base with Arbitrum
+                and X Layer networks coming next.
+            - id: 69170060e5d831ec80cf71ee
+              date: '2025-11-14T09:00:00.000Z'
+              description: Launches USDC prize competition for developers to create
+                agents on the x402scan composer platform.
+            - id: 690f87bbe5d831ec8076489b
+              date: '2025-11-08T17:00:00.000Z'
+              description: 4 out of 10 top agents on x402scan now use Heurist Mesh,
+                showing significant adoption among leading agents on the platform.
+            - id: 690bbdfde5d831ec803eeeaa
+              date: '2025-11-05T20:00:00.000Z'
+              description: Partners with Coral Protocol to make agents rentable and
+                composable, and with Roba Labs to integrate physical robotics capabilities
+                through Creator Hub. Ask Heurist product enters beta testing for crypto
+                intelligence queries, available in Telegram beta group and soon on
+                Base App. Heurist Mesh adds full x402 support on Solana alongside
+                Base, and Token Analyst Agent tops the x402scan leaderboard.
+            - id: 690a5ed7e5d831ec8028cb0a
+              date: '2025-11-04T19:00:00.000Z'
+              description: Completes integration with aixbt_labs to enable direct
+                agent-to-agent queries for project intelligence, fundamental analysis,
+                and social metrics through Heurist Mesh access to aixbt_agent data.
     description: Direct tool call to search for Heurist project
     status: success
+    elapsed_time: 0.6887431144714355
   search_with_limit:
     input:
       tool: search_projects
@@ -816,376 +549,656 @@ results:
       data:
         data:
           projects:
-          - id: 6766e7d591d6e0adecca8efe
-            name: portal to bitcoin
-            score: 0.061
-            xHandle: PortaltoBitcoin
-            rationale: PTB project faces imminent snapshot and Phase 2 airdrop creating
-              potential sell pressure, while upcoming BitScaler technology reveal
-              serves as major catalyst with swap fee burns designed to reduce token
-              supply.
+          - name: bitcoin puppets
+            score: 0.306
+            xHandle: bitcoinpuppets
+            rationale: 'Bitcoin Puppets controls the official @X account, trending
+              #1 on CoinGecko with +33% price gain.'
+            ticker: pups
+            tokens:
+              ordinals: '840000:41'
+              solana: 2oGLxYuNBJRcepT1mEV6KnETaLD7Bf6qq3CM6skasBfe
+            summaries:
+            - id: 691e94a5e5d831ec801e8b18
+              date: '2025-11-20T03:00:00.000Z'
+              description: Bitcoin Puppets has control over the official @X account.
+            - id: 691e869ce5d831ec801e0ab5
+              date: '2025-11-20T02:00:00.000Z'
+              description: One Bitcoin Puppet is followed by the official @X account,
+                which follows only 2 accounts in total.
+            - id: 691dc2efe5d831ec80153af2
+              date: '2025-11-19T12:00:00.000Z'
+              description: 'Takes the top spot as #1 trending NFT on CoinGecko today,
+                determined by highest 24-hour percentage change in floor price.'
+            - id: 691d5205e5d831ec8010d512
+              date: '2025-11-19T04:00:00.000Z'
+              description: The Ordinals collection gains +33% in price today.
+            - id: 6913990be5d831ec80a7f3d9
+              date: '2025-11-11T19:00:00.000Z'
+              description: 'Falls back to #3 in Liquidium loan volume rankings for
+                the past week, behind OMB at #1 and Node Monkes at #2.'
+          - name: Bitcoin SV
+            score: 0.23
+            xHandle: bitcoinsv
+            rationale: Tom Lee identified as paid shill using negative Ethereum commentary
+              to promote the project.
+            ticker: bsv
+            tokens:
+              ? ''
+              : ''
+            summaries:
+            - id: 691be52de5d831ec8001f6d3
+              date: '2025-11-18T02:00:00.000Z'
+              description: Tom Lee is identified as a paid shill using negative Ethereum
+                commentary to promote the project.
+            - id: 6905345be5d831ec80e0d4d0
+              date: '2025-10-31T21:00:00.000Z'
+              description: 'Shilling activity detected using negative Ethereum commentary
+                to promote the project. (Tweet ID: 1984373587109954005)'
+          - name: American Bitcoin Corp
+            score: 0.222
+            xHandle: abtc
+            rationale: ABC added 1,414 BTC, backed by UBS and Scaramucci's $220M pre-IPO
+              funding.
             ticker: ''
             tokens: {}
             summaries:
-            - id: portal to bitcoin_2025-09-16T01:00:00.000Z
-              date: '2025-09-16T01:00:00.000Z'
-              description: Current FDV reaches $521 million as snapshot approaches
-                in 5 days.
-            - id: portal to bitcoin_2025-09-15T05:00:00.000Z
-              date: '2025-09-15T05:00:00.000Z'
-              description: Phase 2 PTB airdrop scheduled for September 20th, approximately
-                5 days away from the tweet date.
-            - id: portal to bitcoin_2025-09-14T18:00:00.000Z
-              date: '2025-09-14T18:00:00.000Z'
-              description: Current price reaches $0.067 while aggressive buying activity
-                on October 10th quickly erased a significant dip, suggesting strong
-                market support.
-            - id: portal to bitcoin_2025-09-14T11:00:00.000Z
-              date: '2025-09-14T11:00:00.000Z'
-              description: PTB price pumps to $0.065 while the Kaito creators reward
-                program reaches $1.5M in value with campaign ending in 6 days and
-                vesting similar to season 1.
-            - id: portal to bitcoin_2025-09-14T08:00:00.000Z
-              date: '2025-09-14T08:00:00.000Z'
-              description: Kaito Airdrop scheduled for September 20 may create short-term
-                sell pressure, while BitScaler technology reveal on October 13th serves
-                as a major catalyst with price targets of $0.07-0.12 if successful.
-                Swap fees will be used for PTB token burns to reduce supply and create
-                potential supply shock.
-          - id: 66f4fdc76811ccaef955de3e
-            name: bitcoin
-            score: 0.009
-            xHandle: Bitcoin
-            rationale: Institutional adoption accelerates with BlackRock holding over
-              1.4M BTC, PayPal integrating Bitcoin payments, continuous ETF inflows
-              exceeding $260M daily, and institutional control now reaching 12.3%
-              of total supply while Congress considers acquiring 1M BTC for strategic
-              reserves.
+            - id: 691eb0a9e5d831ec801f9be9
+              date: '2025-11-20T05:00:00.000Z'
+              description: The company added 1,414 BTC worth $163M to its holdings
+                in October 2025.
+            - id: 691b1fd4e5d831ec80f97978
+              date: '2025-11-17T12:00:00.000Z'
+              description: The Scaramucci family's $100M+ investment led a $220M funding
+                round before the company went public.
+            - id: 691b1105e5d831ec80f8cde8
+              date: '2025-11-17T11:00:00.000Z'
+              description: UBS, managing $6 trillion in assets, discloses holding
+                41,171 shares in the company.
+            - id: 6919bedde5d831ec80ec2a4c
+              date: '2025-11-16T11:00:00.000Z'
+              description: The Scaramucci family invests over $100 million into the
+                company.
+            - id: 691994a5e5d831ec80eab3b4
+              date: '2025-11-16T08:00:00.000Z'
+              description: Anthony Scaramucci and his son AJ back the company, per
+                BlockBeats reporting.
+          - name: bitcoin cash
+            score: 0.152
+            xHandle: bitcoincashog
+            rationale: BCH recently surpassed in market cap by SHIB, TRX, and LUNA.
+            ticker: bch
+            tokens:
+              ? ''
+              : ''
+            summaries:
+            - id: 691cb8c1e5d831ec800abb5f
+              date: '2025-11-18T17:00:00.000Z'
+              description: SHIB, TRX, and LUNA have surpassed BCH in market capitalization
+                rankings.
+            - id: 69149708e5d831ec80b3cba4
+              date: '2025-11-12T13:00:00.000Z'
+              description: Wizz capital acquires BCH position.
+            - id: 6913535be5d831ec80a3bbde
+              date: '2025-11-11T14:00:00.000Z'
+              description: BCH gains 1.0% to become one of only 2 leaders in the CoinDesk
+                20 index as the broader market falls 2.1%.
+            - id: 690d7ee3e5d831ec805a821b
+              date: '2025-11-07T04:00:00.000Z'
+              description: Zcash surpasses Bitcoin Cash in market capitalization rankings.
+            - id: 68f7dbece5d831ec8026dbc9
+              date: '2025-10-21T18:00:00.000Z'
+              description: ProShares officially files for 'ProShares CoinDesk Crypto
+                20 ETF' to be listed on NYSE, tracking the CoinDesk Crypto 20 Index
+                which includes BCH among 20 cryptocurrencies.
+          - name: dog (bitcoin)
+            score: 0.114
+            xHandle: leonidasnft
+            rationale: ZapApp is live for DOG trading, featuring 30-second onboarding,
+              swipe-to-trade, and no KYC.
+            ticker: dog
+            tokens:
+              ordinals: '840000:3'
+              starknet: '0x040e81cfeb176bfdbc5047bbc55eb471cfab20a6b221f38d8fda134e1bfffca4'
+              solana: dog1viwbb2vWDpER5FrJ4YFG6gq6XuyFohUe9TXN65u
+            summaries:
+            - id: 6914d07ae5d831ec80b6df9d
+              date: '2025-11-12T17:00:00.000Z'
+              description: ZapApp goes live on App Store and Google Play with DOG
+                trading now active, offering 30-second onboarding and swipe-to-trade
+                features without KYC requirements or listing fees.
+            - id: 6913b48ce5d831ec80a98018
+              date: '2025-11-11T21:00:00.000Z'
+              description: ZapApp launches in 12 hours, enabling cross-chain and one-click
+                purchasing access for the token.
+            - id: 691247b4e5d831ec8096ddc9
+              date: '2025-11-10T19:00:00.000Z'
+              description: Leads all Runes tokens in loan volume on the Liquidium
+                lending platform for the past week.
+            - id: 6911d61fe5d831ec8090be69
+              date: '2025-11-10T11:00:00.000Z'
+              description: BYD cross-chain protocol adds support for DOG token alongside
+                BTC, ORDI, and other assets, connecting multiple blockchains and Bitcoin
+                standards including BRC-20 and Runes.
+            - id: 690ed057e5d831ec806e0945
+              date: '2025-11-08T04:00:00.000Z'
+              description: Reclaims top 200 position on CoinMarketCap with a 12% gain
+                today.
+          - name: build on bitcoin (bob)
+            score: 0.112
+            xHandle: build_on_bob
+            rationale: BOB's tokenomics prioritize community with locked supply, airdrop
+              tomorrow, and TVL surged to $174.4M.
+            ticker: ''
+            tokens: {}
+            summaries:
+            - id: 691e94a5e5d831ec801e8a42
+              date: '2025-11-20T03:00:00.000Z'
+              description: Tokenomics structure allocates the biggest share to ecosystem
+                and community, with long vesting periods for early buyers and team,
+                and most supply locked on day one.
+            - id: 691e78ede5d831ec801d83b7
+              date: '2025-11-20T01:00:00.000Z'
+              description: $BOB airdrop distribution occurs tomorrow for yield participants
+                who were covered in The Edge Newsletter.
+            - id: 691dc2efe5d831ec80153bb0
+              date: '2025-11-19T12:00:00.000Z'
+              description: DeFi TVL surged 92.2% in 24 hours to $174.4M, up 57% over
+                the past week, marking the strongest move among major networks.
+            - id: 691db441e5d831ec801494ce
+              date: '2025-11-19T11:00:00.000Z'
+              description: 'Community sale details revealed: 2,133 participants purchased
+                2% of token supply via CoinList and GateWeb3, with FDV range of $165M-$230M
+                and 50% day-1 token unlock planned for the upcoming TGE.'
+            - id: 691caae2e5d831ec800a001e
+              date: '2025-11-18T16:00:00.000Z'
+              description: TGE timing confirmed as imminent. Platform operates across
+                11+ chains providing native BTC liquidity access to 15,000+ dapps.
+          - name: wrapped bitcoin
+            score: 0.097
+            xHandle: wrappedbtc
+            rationale: Anchorage Digital supports WBTC staking; WBTC is used as DeFi
+              collateral and for protocol airdrops.
+            ticker: wbtc
+            tokens:
+              ethereum: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+              osmosis: factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc
+              berachain: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              sonic: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              optimistic-ethereum: '0x68f180fcce6836688e9084f035309e29bf0a2095'
+              aptos: '0x68844a0d7f2587e726ad0579f3d640865bb4162c08a4589eeda3f9689ec52a3d'
+              bob-network: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              telos: '0x7627b27594bc71e6ab0fce755ae8931eb1e12dac'
+              swellchain: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              unichain: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              soneium: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              base: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              sei-v2: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              binance-smart-chain: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+              solana: 5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ
+              avalanche: '0x0555e30da8f98308edb960aa94c0db47230d2b9c'
+            summaries:
+            - id: 691dd17ee5d831ec8015d7e6
+              date: '2025-11-19T13:00:00.000Z'
+              description: Anchorage Digital now supports WBTC staking on Starknet
+                with institutional custody services, allowing institutions to custody
+                and stake WBTC directly through the regulated platform.
+            - id: 691d351be5d831ec800fd5f3
+              date: '2025-11-19T02:00:00.000Z'
+              description: Whale reduces Aave debt to $121M and improves health factor
+                to 1.12 after selling 9,516.8 ETH for $29.36M USDT, currently holding
+                1,560 WBTC ($144M) and 9,000 ETH as collateral with liquidation risk
+                remaining at 12% price drop.
+            - id: 691cd3e9e5d831ec800c1b08
+              date: '2025-11-18T19:00:00.000Z'
+              description: StarSystem_Labs Nebula Miner launches with SDIV airdrop
+                distributed in wBTC, featuring $1M boost and 50% bonus for eligible
+                wallets based on mining score from ETH-SHIB/PEPE deposits.
+            - id: 691c9c87e5d831ec800941df
+              date: '2025-11-18T15:00:00.000Z'
+              description: Cap Money protocol uses WBTC alongside LBTC and wstETH
+                as collateral in $50M backing pool for $14M in loans at 3.4x over-collateralization
+                supporting cUSD stablecoin, with the collateral fully verifiable on
+                chain.
+            - id: 691be52de5d831ec8001f75f
+              date: '2025-11-18T02:00:00.000Z'
+              description: A whale holding $263M in WBTC and ETH on Aave reaches critical
+                liquidation risk with health factor of 1.05 and $146M debt, forced
+                to sell 1,316.8 ETH to reduce risk as another 5% drop in BTC/ETH triggers
+                liquidation with current unrealized loss of $65.49M.
+          - name: vaneck bitcoin etf
+            score: 0.079
+            xHandle: vaneck_us
+            rationale: HODL recorded $17.6M outflows Nov 19; total Bitcoin ETFs reversed
+              to $75.4M net inflows.
+            ticker: ''
+            tokens: {}
+            summaries:
+            - id: 691ea294e5d831ec801f094c
+              date: '2025-11-20T04:00:00.000Z'
+              description: HODL records -$17.6 million in outflows on November 19,
+                2025, while total Bitcoin ETF market reverses to +$75.4 million in
+                net inflows from -$372.8 million outflows the previous day.
+            - id: 691d5205e5d831ec8010d53b
+              date: '2025-11-19T04:00:00.000Z'
+              description: HODL records zero flows on November 18, 2025, while total
+                Bitcoin ETF market shows -$372.8 million in net outflows.
+            - id: 691bffa5e5d831ec8002ffdf
+              date: '2025-11-18T04:00:00.000Z'
+              description: HODL records -$23.3 million in outflows on November 17,
+                2025, while total Bitcoin ETF market sees -$220.1 million in net outflows.
+            - id: 6916b9c2e5d831ec80cc9dc6
+              date: '2025-11-14T04:00:00.000Z'
+              description: HODL records -$8.3 million in outflows on November 13,
+                2025, breaking a three-day zero-flow streak, while total Bitcoin ETF
+                market sees -$866.7 million in net outflows.
+            - id: 6915685de5d831ec80bda9bd
+              date: '2025-11-13T04:00:00.000Z'
+              description: HODL records zero flows for third consecutive day on November
+                12, 2025, while total Bitcoin ETF market shows -$278.1 million in
+                net outflows, reversing from $524 million in inflows the previous
+                day.
+          - name: bitcoin
+            score: 0.006
+            xHandle: bitcoin
+            rationale: El Salvador buys $100M BTC; NH bond, Saudi $1T mining, MicroStrategy
+              targets 1.5M BTC, ETF inflows.
             ticker: btc
             tokens:
               ? ''
               : ''
             summaries:
-            - id: bitcoin_2025-09-16T06:00:00.000Z
-              date: '2025-09-16T06:00:00.000Z'
-              description: Large institutional transfers totaling 1,024 BTC worth
-                over $118 million move from unknown wallets to Coinbase Institutional,
-                while updated data shows funds and companies now control 12.3% of
-                total supply after boosting their share by 5% over the past year.
-            - id: bitcoin_2025-09-16T05:00:00.000Z
-              date: '2025-09-16T05:00:00.000Z'
-              description: BlackRock purchases 2,270 BTC worth $262.7 million, while
-                BlackRock and Saylor's strategy combined now hold 1,400,985 BTC representing
-                6.67% of total supply.
-            - id: bitcoin_2025-09-16T04:00:00.000Z
-              date: '2025-09-16T04:00:00.000Z'
-              description: September 15 spot ETF inflows reach $260 million for the
-                6th consecutive day, while Nasdaq-listed Next Technology Holding files
-                to raise up to $500 million with proceeds partially allocated for
-                purchases. Network hashrate averages over 1 zettahash per second for
-                the past week, and Polymarket shows 55% odds of reaching $120,000
-                this month.
-            - id: bitcoin_2025-09-16T03:00:00.000Z
-              date: '2025-09-16T03:00:00.000Z'
-              description: PayPal announces integration of Bitcoin and Ethereum into
-                its new peer-to-peer payment system. Industry leaders including Michael
-                Saylor and Marathon Digital CEO attend Capitol Hill roundtable Tuesday
-                to push the BITCOIN Act proposing U.S. acquisition of 1 million BTC
-                over five years, while Thailand implements 0% capital gains tax on
-                Bitcoin traded on national exchanges.
-            - id: bitcoin_2025-09-16T02:00:00.000Z
-              date: '2025-09-16T02:00:00.000Z'
-              description: Fundstrat's Tom Lee predicts Bitcoin will make a "monster
-                move" within the next three months citing favorable market conditions,
-                while a whale opens a $90 million long position at $113,849 with liquidation
-                at $109,014 on Hyperliquid.
-          - id: 683e2172fbe083c4298a77f1
-            name: ark 21shares bitcoin
+            - id: 691ebec3e5d831ec8020528e
+              date: '2025-11-20T06:00:00.000Z'
+              description: El Salvador's President purchases $100 million in Bitcoin.
+                Bitcoin soft fork discussions begin.
+            - id: 691eb0a9e5d831ec801f9b18
+              date: '2025-11-20T05:00:00.000Z'
+              description: New Hampshire issues the first $100 million Bitcoin municipal
+                bond. Michael Saylor announces on CNBC that MicroStrategy could accumulate
+                up to 1.5 million BTC (7% of total supply).
+            - id: 691ea294e5d831ec801f08ba
+              date: '2025-11-20T04:00:00.000Z'
+              description: Saudi Arabia announces Bitcoin mining operations with $1
+                trillion U.S. investment pledge. Kraken confidentially files for U.S.
+                IPO at $20 billion valuation targeting 2026, and Abu Dhabi triples
+                its Bitcoin position. BlackRock files for new staked Ethereum Trust
+                in Delaware and transfers over $800 million in BTC and ETH to Coinbase
+                Prime.
+            - id: 691e94a5e5d831ec801e8a4d
+              date: '2025-11-20T03:00:00.000Z'
+              description: Core Foundation secures injunction against Maple Finance
+                in Cayman Islands court over alleged confidentiality breach and exclusivity
+                clause violation, while Maple Finance reports impairments in its Bitcoin
+                Yield product and inability to return certain BTC to lenders.
+            - id: 691e869ce5d831ec801e0a87
+              date: '2025-11-20T02:00:00.000Z'
+              description: Mining firm MARA deposits 644 BTC ($58.7M) to FalconX and
+                Coinbase Prime. Vitalik Buterin warns that quantum computing could
+                break Bitcoin and Ethereum cryptography by 2028. US Bitcoin ETFs record
+                +$77 million inflow today.
+          - name: fractal bitcoin
             score: 0
+            rationale: 2.1M WFB tokens minted, bringing Fractal Bitcoin to Ethereum
+              and EVM ecosystem.
             ticker: ''
             tokens: {}
             summaries:
-            - id: ark 21shares bitcoin_2025-06-02T21:00:00.000Z
-              date: '2025-06-02T21:00:00.000Z'
-              description: ETF announces 3-for-1 share split scheduled for June 16
-                to increase accessibility.
-          - id: 68630c62774f71ccaefe9314
-            name: american bitcoin corp
+            - id: 6900c411e5d831ec809fbde6
+              date: '2025-10-28T12:00:00.000Z'
+              description: Initial minting of 2.1M WFB (Wrapped Fractal Bitcoin) tokens
+                completed, bringing Fractal Bitcoin to Ethereum and enabling integration
+                across EVM ecosystem with bridging functionality coming soon.
+            - id: 68d53d67d505e1b5c1d7b396
+              date: '2025-09-09T09:00:00.000Z'
+              description: New staking feature rollout announced in partnership with
+                PizzaSwap and UniSat wallet, with 1,000,000 FB bonus pool funded by
+                treasury for anniversary event.
+            - id: 68d53d67d505e1b5c1d7b394
+              date: '2025-07-15T10:00:00.000Z'
+              description: Network processes 20x more blocks than Bitcoin, implementing
+                pruned nodes to maintain decentralization despite increased data requirements.
+            - id: 68d53d67d505e1b5c1d7b390
+              date: '2024-11-18T07:00:00.000Z'
+              description: New merged mining launch on Binance Pool allowing miners
+                to earn FB while mining BTC.
+          - name: Swan Bitcoin
             score: 0
-            rationale: Despite initial $215M raise and holding 215 BTC, the project
-              recently listed on NASDAQ and unveiled a $2.1 billion equity program.
+            xHandle: swanbitcoin
+            rationale: Swan closes Series C funding and launches Swan International
+              for global expansion while adding Head of Private Wealth; continues
+              growing Bitcoin treasury management business with institutional clients
+              like Sequans Communications.
+            ticker: ''
+            tokens: {}
+            summaries: []
+          - name: bitcoin gold
+            score: 0
+            xHandle: bitcoingold
+            rationale: Binance includes BTG in a $1.6M BNB Smart Chain trading competition.
+            ticker: btg
+            tokens:
+              ? ''
+              : ''
+            summaries:
+            - id: 68fe3a6ee5d831ec807eb7c8
+              date: '2025-10-26T14:00:00.000Z'
+              description: Binance announces BNB Smart Chain Trading Competition featuring
+                BTG alongside KLINK and EVAA with $1.6M in total rewards.
+          - name: bitcoin stamps
+            score: 0
+            rationale: Bitcoin Stamps endorsed by a Core Maintainer as most resilient
+              for adding data to Bitcoin.
             ticker: ''
             tokens: {}
             summaries:
-            - id: american bitcoin corp_2025-09-03T19:00:00.000Z
-              date: '2025-09-03T19:00:00.000Z'
-              description: Lists on NASDAQ exchange and unveils $2.1 billion equity
-                program.
-            - id: american bitcoin corp_2025-06-30T21:00:00.000Z
-              date: '2025-06-30T21:00:00.000Z'
-              description: $215M raised by Hut8 and Eric Trump-backed venture, currently
-                holding 215 BTC.
-          - id: 67ed54191aa7eb2f9e0575ab
-            name: art on bitcoin
+            - id: 6919f78de5d831ec80ee5256
+              date: '2025-11-16T15:00:00.000Z'
+              description: Bitcoin Core Maintainer brian_trollz provides technical
+                endorsement, characterizing the protocol as the most resilient for
+                adding arbitrary data to the Bitcoin blockchain.
+            - id: 68fe8e5de5d831ec8082d4ef
+              date: '2025-10-26T20:00:00.000Z'
+              description: A proposed Bitcoin soft-fork (Luke's) that would remove
+                OP_IF would eliminate Ordinals but cannot affect Bitcoin Stamps, though
+                the proposal is described as unlikely to succeed.
+            - id: 68e1714ce5d831ec80ffbbcc
+              date: '2025-10-04T18:00:00.000Z'
+              description: Adam Back provides endorsement, characterizing the protocol
+                as "unstoppable."
+            - id: 68d53c02d505e1b5c1d5e493
+              date: '2025-09-08T15:00:00.000Z'
+              description: Greg Maxwell provides technical endorsement confirming
+                that Bitcoin Stamps cannot be pruned, unlike Ordinals.
+            - id: 68d53c02d505e1b5c1d5e492
+              date: '2025-09-02T01:00:00.000Z'
+              description: Protocol implements data obfuscation feature providing
+                plausible deniability for node runners, receives endorsement from
+                Mechanic.
+          - name: bitcoin frogs
             score: 0
-            rationale: The project launches Phase 2 presale with 161 pieces remaining,
-              offering exclusive access to Vivid Curated and OnChain Monkey holders,
-              following a celestial collection launch and an exhibition at NFCsummit
-              Lisbon.
+            xHandle: bitcoinfrogs
+            rationale: Bitcoin Frogs now offers 30-day ordinal NFT loan terms for
+              extended flexibility.
             ticker: ''
             tokens: {}
             summaries:
-            - id: art on bitcoin_2025-07-16T19:00:00.000Z
-              date: '2025-07-16T19:00:00.000Z'
-              description: Not a Painting by Medusa collection sells out 200 pieces;
-                artwork airdrop scheduled for coming days.
-            - id: art on bitcoin_2025-06-03T22:00:00.000Z
-              date: '2025-06-03T22:00:00.000Z'
-              description: Exhibition event organized with MEonBTC to showcase selected
-                artists during NFCsummit Lisbon
-            - id: art on bitcoin_2025-04-02T14:00:00.000Z
-              date: '2025-04-02T14:00:00.000Z'
-              description: Celestial collection by SatoshiLite launches April 8 on
-                Bitcoin.
-          - id: 681d0ff115e96024d157a4db
-            name: aqua bitcoin
+            - id: 69037346e5d831ec80c57aca
+              date: '2025-10-30T13:00:00.000Z'
+              description: 30-day loan terms now available for ordinal loans, allowing
+                holders to borrow against their NFTs with extended flexibility.
+            - id: 68e63861e5d831ec8038ee9d
+              date: '2025-10-08T09:00:00.000Z'
+              description: Down 97.9% from all-time high in USD terms, ranking last
+                (18th) among top Bitcoin Ordinals PFP collections in performance since
+                ATH.
+            - id: 68e09da0e5d831ec80f6925f
+              date: '2025-10-04T03:00:00.000Z'
+              description: 'Holds $6.2M valuation and ranks #12 out of 33 major Ordinals
+                collections above $1M market cap.'
+            - id: 68d53c02d505e1b5c1d5e26b
+              date: '2025-05-14T10:00:00.000Z'
+              description: New zero-fee trading now available on Satflow platform
+                with 0% royalties.
+            - id: 68d53c02d505e1b5c1d5e251
+              date: '2025-03-06T03:00:00.000Z'
+              description: NFT collection showing significant price movement on March
+                5th. Chinese market activity noted as potential catalyst.
+          - name: bitcoin punks
             score: 0
-            rationale: DolphinCard is expanding its features with Virtual IBAN support,
-              enabling traditional banking for crypto holders, following achievement
-              of $100M in swap volumes and enterprise adoption by JAN3.
+            xHandle: bitcoin_punks_
+            rationale: Bitcoin Ordinals PFP collection with $5.7M market cap has declined
+              91.1% from ATH, ranking 14th among 18 major collections, though rare
+              Zombie trait NFTs show strong demand at premium prices.
             ticker: ''
             tokens: {}
             summaries:
-            - id: aqua bitcoin_2025-07-27T05:00:00.000Z
-              date: '2025-07-27T05:00:00.000Z'
-              description: Virtual IBAN support is being implemented, enabling traditional
-                banking features for crypto holders without bank accounts.
-            - id: aqua bitcoin_2025-07-26T20:00:00.000Z
-              date: '2025-07-26T20:00:00.000Z'
-              description: DolphinCard achieves enterprise adoption with JAN3 implementing
-                card for major corporate subscriptions including AWS and Google Workspace.
-            - id: aqua bitcoin_2025-07-01T20:00:00.000Z
-              date: '2025-07-01T20:00:00.000Z'
-              description: DolphinCard beta testing phase opens for 300 users.
-            - id: aqua bitcoin_2025-05-08T19:00:00.000Z
-              date: '2025-05-08T19:00:00.000Z'
-              description: Total swap volumes surpass $100 million milestone, indicating
-                strong protocol adoption.
-          - id: 67ec723205c042941dbf2a8f
-            name: american bitcoin
+            - id: 68e63861e5d831ec8038ee8f
+              date: '2025-10-08T09:00:00.000Z'
+              description: Collection has declined 91.1% from its all-time high in
+                USD value, ranking 14th among 18 major Bitcoin Ordinals PFP collections
+                in performance since ATH.
+            - id: 68e09da0e5d831ec80f69266
+              date: '2025-10-04T03:00:00.000Z'
+              description: 'Collection holds $5.7M market cap and ranks #14 among
+                major Ordinals collections exceeding $1M valuation threshold.'
+            - id: 68d53c02d505e1b5c1d5e2f9
+              date: '2025-07-10T23:00:00.000Z'
+              description: Zombie trait NFTs currently trading at 18K, indicating
+                strong market demand for rare attributes.
+            - id: 68d53c02d505e1b5c1d5e2f3
+              date: '2024-12-08T02:00:00.000Z'
+              description: Mentioned as one of the best free and open mints on Bitcoin.
+            - id: 68d53c02d505e1b5c1d5e2f2
+              date: '2024-11-12T04:00:00.000Z'
+              description: NFT collection currently trading on secondary market. Market
+                showing strong activity.
+          - name: bitcoinos
             score: 0
-            xHandle: americanbtc
-            rationale: Eric Trump revealed as co-founder and CSO following successful
-              Nasdaq debut with 100% stock surge and significant Bitcoin holdings
-              expansion to 2,443 BTC.
+            xHandle: btc_os
+            rationale: 'Bitcoinos: $10M investment, $8M trading volume, and 40% token
+              price increase.'
             ticker: ''
             tokens: {}
             summaries:
-            - id: american bitcoin_2025-09-06T12:00:00.000Z
-              date: '2025-09-06T12:00:00.000Z'
-              description: Eric Trump is revealed as co-founder and CSO, stating de-banking
-                was the catalyst for his family's digital asset involvement.
-            - id: american bitcoin_2025-09-04T22:00:00.000Z
-              date: '2025-09-04T22:00:00.000Z'
-              description: Stock soars 100% during Nasdaq debut, significantly higher
-                than previously reported 17% gain.
-            - id: american bitcoin_2025-09-04T13:00:00.000Z
-              date: '2025-09-04T13:00:00.000Z'
-              description: Successful Nasdaq debut with shares rising 17% to $8.04,
-                reaching $14 intraday high.
-            - id: american bitcoin_2025-09-03T18:00:00.000Z
-              date: '2025-09-03T18:00:00.000Z'
-              description: Holdings increase to 2,443 BTC ($273M) from initial 152
-                BTC position.
-            - id: american bitcoin_2025-08-29T17:00:00.000Z
-              date: '2025-08-29T17:00:00.000Z'
-              description: Data center expansion focuses on AI/HPC capabilities while
-                energy contracts position for potential hyperscale partnerships, with
-                current debt of $350M against $2.80B market cap.
-          - id: 681292800138678faace9b87
-            name: ark bitcoin
-            score: 0
-            rationale: Michigan state pension fund maintains $8.2M position (100,000
-              shares) in ETF through Q1 2025.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: ark bitcoin_2025-04-30T20:00:00.000Z
-              date: '2025-04-30T20:00:00.000Z'
-              description: Michigan state pension fund maintains 100,000 shares ($8.2M)
-                position in ETF as of March 31.
-          - id: 687816831251d9fb6109eb8d
-            name: ai bitcoin
+            - id: 691756bbe5d831ec80d395e4
+              date: '2025-11-14T15:00:00.000Z'
+              description: $10M investment round led by Greenfield Capital completed,
+                with trading volume surpassing $8M.
+            - id: 6914a5bee5d831ec80b48ab1
+              date: '2025-11-12T14:00:00.000Z'
+              description: Token price increased 40% from local lows this week after
+                volatile launch period.
+            - id: 6903f07ee5d831ec80ce47f0
+              date: '2025-10-30T22:00:00.000Z'
+              description: Cardano EVM liquidity pool opens approximately one hour
+                after initial PancakeSwap launch. Alpha activity participants receive
+                2388 tokens in airdrop distribution.
+            - id: 6903d52be5d831ec80cca5da
+              date: '2025-10-30T20:00:00.000Z'
+              description: ZK proofs on Bitcoin are now a reality following the platform
+                going live yesterday.
+            - id: 69021451e5d831ec80b1d8c7
+              date: '2025-10-29T12:00:00.000Z'
+              description: Token generation event opens with simultaneous trading
+                launch on Binance Alpha, Bitget, Kraken, Gate, Kucoin, MEXC, and PancakeSwap;
+                token claims and CNT airdrop distribution now active.
+          - name: book of bitcoin
             score: 0
             ticker: ''
             tokens: {}
             summaries: []
-          - id: 6882bdd4ccf82fcd37d5ccaf
-            name: baby bitcoin
+          - name: Fidelity Wise Origin Bitcoin Fund
+            score: 0
+            xHandle: fidelity
+            rationale: FBTC recorded $165.86M net inflow, second among Bitcoin ETFs;
+              Fidelity enables direct BTC deposits.
+            ticker: ''
+            tokens: {}
+            summaries:
+            - id: 6913fa85e5d831ec80acc75e
+              date: '2025-11-12T02:00:00.000Z'
+              description: FBTC records $165.86 million net inflow on November 11th,
+                ranking second among Bitcoin ETFs on a day with $524.14 million total
+                net flow across all Bitcoin ETFs.
+            - id: 69118f6be5d831ec808d976d
+              date: '2025-11-10T06:00:00.000Z'
+              description: Fidelity enables depositing spot BTC directly into brokerage
+                accounts for conversion to stocks/ETFs and back to actual BTC.
+            - id: 690c1182e5d831ec80434fcf
+              date: '2025-11-06T02:00:00.000Z'
+              description: FBTC records $113.30 million net inflow on November 5th,
+                ranking as one of the top performers on a day when total Bitcoin ETF
+                flows were negative at -$135.94 million.
+            - id: 690606dce5d831ec80eb05db
+              date: '2025-11-01T12:00:00.000Z'
+              description: FBTC records $164 million net inflow for October 2025,
+                with Bitcoin ETFs experiencing their largest monthly trading volume
+                since launch.
+            - id: 68f83cc0e5d831ec802c2c9b
+              date: '2025-10-22T01:00:00.000Z'
+              description: FBTC records $34.15 million net inflow on October 21st,
+                ranking fourth among Bitcoin ETFs on a day with $475.27 million total
+                net flow across all Bitcoin ETFs.
+          - name: ticker bitcoin
             score: 0
             ticker: ''
             tokens: {}
             summaries: []
-          - id: 6810d1940138678faabeffaa
-            name: ai hodl bitcoin
+          - name: bitcoin cyborgs
             score: 0
+            rationale: Bitcoin Cyborgs marks 1-year 10K anniversary, minting on OrdX
+              for $10.
+            ticker: ''
+            tokens: {}
+            summaries:
+            - id: 6914d07ae5d831ec80b6de37
+              date: '2025-11-12T17:00:00.000Z'
+              description: Collection celebrates 1-year anniversary of 10K with minting
+                available on OrdX at $10 plus fees.
+            - id: 68f6a639e5d831ec80134d0d
+              date: '2025-10-20T20:00:00.000Z'
+              description: 'Users @proofofcar and @midl_xyz minted grail item #10K
+                on OrdX platform.'
+            - id: 68e9aee0e5d831ec8066f0c6
+              date: '2025-10-11T00:00:00.000Z'
+              description: 'Grail item #10K acquired at floor price on Magic Eden,
+                indicating whale activity as a collector purchases a premium piece
+                at discounted entry point.'
+            - id: 68e2eca6e5d831ec800e88bd
+              date: '2025-10-05T21:00:00.000Z'
+              description: Ord_io platform is allegedly censoring or filtering the
+                collection, raising concerns about accessibility and visibility on
+                that marketplace.
+            - id: 68e44118e5d831ec80209327
+              date: '2025-09-25T22:00:00.000Z'
+              description: 'Collection item #10K, described as a "grail" piece, has
+                been minted on OrdX platform, potentially indicating significant minting
+                milestone or collection completion.'
+          - name: grayscale bitcoin trust etf
+            score: 0
+            xHandle: grayscale
+            rationale: Grayscale Mini (BTC) records inflows while GBTC shows zero
+              net flow, amidst mixed total ETF flows.
+            ticker: ''
+            tokens: {}
+            summaries:
+            - id: 691ea294e5d831ec801f0954
+              date: '2025-11-20T04:00:00.000Z'
+              description: GBTC records zero net flow on November 19, 2025, while
+                Grayscale Mini (BTC) records inflow of +$53.8 million as total Bitcoin
+                ETF market records +$75.4 million in inflows.
+            - id: 691d5205e5d831ec8010d540
+              date: '2025-11-19T04:00:00.000Z'
+              description: GBTC records zero net flow on November 18, 2025, while
+                Grayscale Mini (BTC) records inflow of +$139.6 million as total Bitcoin
+                ETF market records -$372.8 million in outflows.
+            - id: 691bffa5e5d831ec8002ffe5
+              date: '2025-11-18T04:00:00.000Z'
+              description: Grayscale Mini (BTC) records zero net flow on November
+                17, 2025, while total Bitcoin ETF market records outflow of -$220.1
+                million.
+            - id: 6917c4d9e5d831ec80d8d3bf
+              date: '2025-11-14T23:00:00.000Z'
+              description: GBTC records outflow of -$25.1 million.
+            - id: 6916b9c2e5d831ec80cc9dcf
+              date: '2025-11-14T04:00:00.000Z'
+              description: GBTC records outflow of -$64.5 million on November 13,
+                2025, while Grayscale Mini (BTC) records outflow of -$318.2 million.
+          - name: Bitcoin L2 Labs
+            score: 0
+            xHandle: bitcoinl2labs
+            rationale: sBTC uncapping is scheduled by core engineers, representing
+              a significant milestone for the Stacks ecosystem that has been actively
+              developing with expanded Rust developer resources.
             ticker: ''
             tokens: {}
             summaries: []
-          - id: 68b4f257c5e2211bf02055ac
-            name: american bitcoin trust
+          - name: Bitcoin Trading Cards
             score: 0
-            rationale: Trump-endorsed CEO appears on CNBC, declares Bitcoin the global
-              store of value.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: american bitcoin trust_2025-09-01T00:00:00.000Z
-              date: '2025-09-01T00:00:00.000Z'
-              description: Trump-endorsed CEO appears on CNBC, declares Bitcoin the
-                global store of value.
-          - id: 68a87b8f82e37f12bd5d7149
-            name: apollo bitcoin portal
-            score: 0
-            rationale: New 'Bitcoin Earn' feature launches with up to 69% APR yield
-              farming opportunities for zBTC pools on Solana.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: apollo bitcoin portal_2025-08-22T13:00:00.000Z
-              date: '2025-08-22T13:00:00.000Z'
-              description: New 'Bitcoin Earn' feature launches with up to 69% APR
-                yield farming opportunities for zBTC pools on Solana.
-          - id: 689c5677fade3b000ad543d6
-            name: air bitcoin
-            score: 0
+            xHandle: btc_cards
+            rationale: A new auction launches with proceeds benefiting a Bitcoin conference.
             ticker: ''
             tokens: {}
             summaries: []
-          - id: 682409648e08d241d13bd560
-            name: aquabitcoin
+          - name: bitcoin shrooms
             score: 0
-            rationale: Liquid_BTC platform resolved USDT shortage and reached $30M
-              July swap volume, averaging $1M daily.
+            xHandle: bitcoinshrooms
+            rationale: 30-day loan terms are now available for ordinal loans, offering
+              extended borrowing flexibility.
             ticker: ''
             tokens: {}
             summaries:
-            - id: aquabitcoin_2025-08-11T22:00:00.000Z
-              date: '2025-08-11T22:00:00.000Z'
-              description: Platform achieves $30M swap volume in July with $1M daily
-                average.
-            - id: aquabitcoin_2025-06-17T18:00:00.000Z
-              date: '2025-06-17T18:00:00.000Z'
-              description: Liquid_BTC platform USDT supply triples to $100M, resolving
-                previous shortage.
-            - id: aquabitcoin_2025-06-14T23:00:00.000Z
-              date: '2025-06-14T23:00:00.000Z'
-              description: USDT shortage on Liquid_BTC platform causing widespread
-                swap provider disruptions. Resolution expected soon.
-          - id: 68810ae0ccf82fcd37cffe9c
-            name: active bitcoin
+            - id: 69037346e5d831ec80c57abe
+              date: '2025-10-30T13:00:00.000Z'
+              description: 30-day loan terms now available for ordinal loans, providing
+                holders with extended borrowing flexibility.
+            - id: 68e63861e5d831ec8038ee77
+              date: '2025-10-08T09:00:00.000Z'
+              description: Collection has declined 83.7% from all-time high in USD
+                value, ranking 6th among 18 major Bitcoin Ordinals PFP collections
+                in a comparative performance analysis since peak prices.
+            - id: 68e09da0e5d831ec80f6924e
+              date: '2025-10-04T03:00:00.000Z'
+              description: 'Collection ranks #7 with $10.6M valuation among 33 major
+                Ordinals collections exceeding $1M market cap.'
+            - id: 68d53c02d505e1b5c1d5e486
+              date: '2025-08-20T14:00:00.000Z'
+              description: Holders receive guaranteed mint allocation for upcoming
+                Sat Magicians project launch.
+            - id: 68d53c02d505e1b5c1d5e482
+              date: '2025-07-27T21:00:00.000Z'
+              description: Four purchases totaling 4 BTC executed today, with floor
+                price approaching 2 BTC threshold.
+          - name: portal to bitcoin
             score: 0
-            ticker: ''
-            tokens: {}
-            summaries: []
-          - id: 683e597afbe083c4298b20ff
-            name: ark 21shares bitcoin etf
-            score: 0
-            rationale: Michigan Retirement System has tripled its ARKB holdings to
-              300,000 shares.
-            ticker: ''
-            tokens: {}
+            xHandle: portaltobitcoin
+            rationale: PTB's USDC farm has $12.8M TVL, offering 40% APR in liquid
+              PTB tokens, locked until Jan 28.
+            ticker: ptb
+            tokens:
+              ethereum: '0x30a25cc9c9eade4d4d9e9349be6e68c3411367d3'
+              binance-smart-chain: '0x95c9b514566fbd224dc2037f5914eb8ab91c9201'
             summaries:
-            - id: ark 21shares bitcoin etf_2025-06-03T01:00:00.000Z
-              date: '2025-06-03T01:00:00.000Z'
-              description: 3-for-1 stock split announced for June 16 implementation,
-                aimed at improving trading accessibility and efficiency.
-          - id: 68ba1c816f179cac44e5dec4
-            name: american bitcoin company
-            score: 0
-            ticker: ''
-            tokens: {}
-            summaries: []
-          - id: 68671c07ab7ee49c809f28de
-            name: ark bitcoin etf
-            score: 0
-            rationale: Bitcoin ETFs experienced recent net inflows of $88.1M, led
-              by IBIT, while ARKB also saw fresh capital inflows, contrasting with
-              a previous outflow trend.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: ark bitcoin etf_2025-08-27T03:00:00.000Z
-              date: '2025-08-27T03:00:00.000Z'
-              description: Total Bitcoin ETF net inflows reach $88.1M with IBIT leading
-                at $45.3M, while ARKB records $4.1M in fresh capital inflows.
-            - id: ark bitcoin etf_2025-08-06T23:00:00.000Z
-              date: '2025-08-06T23:00:00.000Z'
-              description: ETF records $5.4 million in daily outflows, marking a shift
-                from previous inflow pattern.
-            - id: ark bitcoin etf_2025-07-03T23:00:00.000Z
-              date: '2025-07-03T23:00:00.000Z'
-              description: ARK Bitcoin ETF records $114.2 million in daily inflows.
-          - id: 68ba54ac6f179cac44e6639b
-            name: absolute bitcoin
-            score: 0
-            rationale: $ABTC identified as one of 8 entities expected to have 1,000+
-              BTC weekly buying capacity.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: absolute bitcoin_2025-09-05T02:00:00.000Z
-              date: '2025-09-05T02:00:00.000Z'
-              description: $ABTC identified as one of 8 entities expected to have
-                1,000+ BTC weekly buying capacity.
-          - id: 685c049cdf9e5d3c898d4a4d
-            name: athena bitcoin
-            score: 0
-            rationale: Registration filed for 473M share resale by early investors.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: athena bitcoin_2025-06-26T07:00:00.000Z
-              date: '2025-06-26T07:00:00.000Z'
-              description: Registration filed for 473M share resale by early investors.
-          - id: 68897f2935058294f48e8109
-            name: aml bitcoin
-            score: 0
-            rationale: Founder sentenced to 7 years in prison for crypto fraud and
-              money laundering scheme.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: aml bitcoin_2025-07-30T01:00:00.000Z
-              date: '2025-07-30T01:00:00.000Z'
-              description: Founder sentenced to 7 years in prison for crypto fraud
-                and money laundering scheme.
-          - id: 68b869c596d91ba7ce7fd57e
-            name: american bitcoin mining
-            score: 0
-            rationale: Company completes public listing on Nasdaq with Eric Trump
-              as co-founder and Chief Strategy Officer.
-            ticker: ''
-            tokens: {}
-            summaries:
-            - id: american bitcoin mining_2025-09-03T22:00:00.000Z
-              date: '2025-09-03T22:00:00.000Z'
-              description: Company completes public listing on Nasdaq with Eric Trump
-                as co-founder and Chief Strategy Officer.
-          - id: 6896760a1b2d8fff6ef22033
-            name: 99bitcoins
-            score: 0
-            ticker: ''
-            tokens: {}
-            summaries: []
-          - id: 68c188b48662110794bb03b0
-            name: absolute bitcoin etf
-            score: 0
-            ticker: ''
-            tokens: {}
-            summaries: []
+            - id: 69133626e5d831ec80a21cd0
+              date: '2025-11-11T12:00:00.000Z'
+              description: USDC farm reaches $12.8M TVL offering 40% APR paid in liquid
+                PTB tokens with funds locked until January 28th.
+            - id: 690b6af1e5d831ec80390ae1
+              date: '2025-11-05T14:00:00.000Z'
+              description: Staking campaign reaches $1,000,000 total value staked
+                with 86 days remaining in the campaign.
+            - id: 6904367be5d831ec80d1e848
+              date: '2025-10-31T03:00:00.000Z'
+              description: Staking yields 40% APR for PTB tokens on the Bitcoin-native
+                DeFi layer.
+            - id: 68f2508ae5d831ec80db7ff9
+              date: '2025-10-17T13:00:00.000Z'
+              description: Airdrop claims available on Kaito Portal with token distribution
+                releasing in 3 batches on October 17, 2025, January 18, 2026, and
+                April 18, 2026.
+            - id: 68ee2284e5d831ec80a3a22d
+              date: '2025-10-14T09:00:00.000Z'
+              description: Funding rate arbitrage for PTB reaches 619.33% APR, placing
+                it among the top 10 tokens with extreme funding rate spreads.
     description: Search Bitcoin projects with increased limit and raw data
     status: success
+    elapsed_time: 1.4664909839630127
+  market_summary_1day:
+    input:
+      tool: get_market_summary
+      tool_arguments:
+        lookback_days: 1
+    output:
+      response: ''
+      data:
+        data: &id001
+          lookback_days: 1
+          summaries: []
+    description: Get market summary for last 1 day - should return empty if data is
+      stale (>3 days old)
+    status: success
+    elapsed_time: 0.48514676094055176
   market_summary_3days:
     input:
       tool: get_market_summary
@@ -1196,43 +1209,23 @@ results:
       data:
         data:
           lookback_days: 3
-          summaries:
-          - date: 15th September 2025, Monday
-            news:
-            - Institutional SOL FOMO intensifies - Galaxy Digital accumulates $1.35B+
-              in SOL over 5 days, signaling major institutional fear of missing Solana's
-              breakout
-            - Bitcoin-to-ETH rotation accelerates - Multi-billion dollar whale completes
-              $4B BTC-to-ETH swap while ETH processes 2x Bitcoin's volume, suggesting
-              institutional reallocation
-          - date: 14th September 2025, Sunday
-            news:
-            - 'Institutional FOMO Acceleration: Galaxy Digital buying $147M SOL in
-              3 hours, BlackRock adding $1B Bitcoin weekly - smart money positioning
-              aggressively'
-            - 'SOL ETF October Approval: No Grayscale overhang unlike BTC/ETH creates
-              cleaner supply dynamics for institutional flows'
-            - 'Corporate Treasury Rotation: 40+ companies now hold crypto beyond Bitcoin
-              - diversification trend accelerating into altcoins'
-            - 'Institutional Herding: Major funds simultaneously accumulating SOL
-              (Galaxy, Pantera $1B+) - contradicts typical contrarian institutional
-              behavior'
-          - date: 13th September 2025, Saturday
-            news:
-            - Solana DeFi momentum sustaining - TVL surging from $12B to $13B in 3
-              days, Galaxy Digital accumulating 5M SOL, Jupiter Lending crossing $1B
-              TVL within weeks of launch
-            - Solana beta tokens positioned for SOL outperformance - With institutional
-              flows and DeFi TVL hitting records, smaller ecosystem plays could benefit
-              from rising tide
-            - Prediction market infrastructure plays - Polymarket at $9-10B valuation
-              discussions while competitors like TrueMarkets trade at $10M, massive
-              valuation gap
-            - RWA tokenization wave building - BlackRock planning ETF tokenization,
-              WisdomTree launching $1T private credit fund, institutional adoption
-              creating reflexivity loop
-    description: Get market summary for last 3 days
+          summaries: []
+    description: Get market summary for last 3 days - filters out data older than
+      3 days
     status: success
+    elapsed_time: 0.1935415267944336
+  market_summary_default:
+    input:
+      tool: get_market_summary
+      tool_arguments: {}
+    output:
+      response: ''
+      data:
+        data: *id001
+    description: Get market summary with default lookback (1 day) - verify stale data
+      filtering
+    status: success
+    elapsed_time: 0.0017237663269042969
   market_summary_week:
     input:
       tool: get_market_summary
@@ -1243,70 +1236,58 @@ results:
       data:
         data:
           lookback_days: 3
-          summaries:
-          - date: 15th September 2025, Monday
-            news:
-            - Institutional SOL FOMO intensifies - Galaxy Digital accumulates $1.35B+
-              in SOL over 5 days, signaling major institutional fear of missing Solana's
-              breakout
-            - Bitcoin-to-ETH rotation accelerates - Multi-billion dollar whale completes
-              $4B BTC-to-ETH swap while ETH processes 2x Bitcoin's volume, suggesting
-              institutional reallocation
-          - date: 14th September 2025, Sunday
-            news:
-            - 'Institutional FOMO Acceleration: Galaxy Digital buying $147M SOL in
-              3 hours, BlackRock adding $1B Bitcoin weekly - smart money positioning
-              aggressively'
-            - 'SOL ETF October Approval: No Grayscale overhang unlike BTC/ETH creates
-              cleaner supply dynamics for institutional flows'
-            - 'Corporate Treasury Rotation: 40+ companies now hold crypto beyond Bitcoin
-              - diversification trend accelerating into altcoins'
-            - 'Institutional Herding: Major funds simultaneously accumulating SOL
-              (Galaxy, Pantera $1B+) - contradicts typical contrarian institutional
-              behavior'
-          - date: 13th September 2025, Saturday
-            news:
-            - Solana DeFi momentum sustaining - TVL surging from $12B to $13B in 3
-              days, Galaxy Digital accumulating 5M SOL, Jupiter Lending crossing $1B
-              TVL within weeks of launch
-            - Solana beta tokens positioned for SOL outperformance - With institutional
-              flows and DeFi TVL hitting records, smaller ecosystem plays could benefit
-              from rising tide
-            - Prediction market infrastructure plays - Polymarket at $9-10B valuation
-              discussions while competitors like TrueMarkets trade at $10M, massive
-              valuation gap
-            - RWA tokenization wave building - BlackRock planning ETF tokenization,
-              WisdomTree launching $1T private credit fund, institutional adoption
-              creating reflexivity loop
-    description: Attempt to get 7-day summary (may exceed limit)
+          summaries: []
+    description: Attempt to get 7-day summary (capped at 3 days max, filters stale
+      data)
     status: success
+    elapsed_time: 0.27224206924438477
   market_query_natural:
     input:
       query: What's happening in the crypto market today?
     output:
-      response: 'The crypto market on Monday, 15th September 2025, saw significant
-        institutional activity. Galaxy Digital accumulated over $1.35 billion in SOL,
-        indicating a strong fear of missing out on Solana''s potential breakout among
-        institutions. Additionally, a multi-billion dollar whale completed a $4 billion
-        BTC-to-ETH swap, with ETH processing twice Bitcoin''s volume, suggesting a
-        reallocation of institutional capital from Bitcoin to Ethereum.
+      response: 'Based on the provided API response, here is a clean text response:
 
 
-        This summary covers the market activity for the last 1 day.'
+        **Crypto Market Summary for Today**
+
+
+        * **Lookback Period:** 1 day
+
+        * **Available Data:** Unfortunately, no market summary data is available for
+        the last 1 day. The ''summaries'' section is empty, indicating that the AixBT
+        API did not return any market information for this request.
+
+
+        **Helpful Suggestion:**
+
+        To get a better understanding of the current market, you can try the following
+        options:
+
+        1. **Check again later**: Market data might be temporarily unavailable. Try
+        querying again after a short while.
+
+        2. **Request a broader lookback (up to 3 days)**: If you''re interested in
+        recent trends, ask for a market summary for the last 2 or 3 days. Please note
+        that the maximum lookback period for this service is 3 days.
+
+        3. **Inquire about a specific cryptocurrency**: If you''re interested in a
+        particular project, ask about its market performance or other available details
+        (e.g., project information, Twitter handle, etc.).
+
+
+        Example follow-up questions:
+
+        - What''s happening in the crypto market over the last 3 days?
+
+        - Can I get information on Bitcoin''s market performance?
+
+        - What''s the project overview for Ethereum?'
       data:
-        data:
-          lookback_days: 1
-          summaries:
-          - date: 15th September 2025, Monday
-            news:
-            - Institutional SOL FOMO intensifies - Galaxy Digital accumulates $1.35B+
-              in SOL over 5 days, signaling major institutional fear of missing Solana's
-              breakout
-            - Bitcoin-to-ETH rotation accelerates - Multi-billion dollar whale completes
-              $4B BTC-to-ETH swap while ETH processes 2x Bitcoin's volume, suggesting
-              institutional reallocation
-    description: Natural language query for today's market
+        data: *id001
+    description: Natural language query for today's market - should handle stale data
+      gracefully
     status: success
+    elapsed_time: 9.351155996322632
   empty_search_args:
     input:
       tool: search_projects
@@ -1316,312 +1297,304 @@ results:
       data:
         data:
           projects:
-          - id: 67dfa50e9cebfd54a2ddbfe7
-            name: apollo
-            score: 0.507
-            xHandle: unable to determine - multiple different apollo entities mentioned
-              without a clear primary crypto project handle
-            rationale: Apollo Global ranks 7th among fastest growing RWA issuers with
-              strong whale adoption evidenced by $16M+ in recent large deposits and
-              TVL hitting all-time highs following V2 protocol launch with enhanced
-              BTC bridging capabilities.
-            ticker: apollo
+          - name: paxos
+            score: 0.658
+            xHandle: paxosglobal
+            rationale: Paxos' USDG0 stablecoin deploys to Plume, Hyperliquid, and
+              Aptos via LayerZero OFT.
+            ticker: paxg
             tokens:
-              solana: AY88hS3S3fkDtkSc7abEkYjcNsxuCiGD8Lq4PmwakZuL
+              ethereum: '0x45804880de22913dafe09f4980848ece6ecbaf78'
             summaries:
-            - id: apollo_2025-09-15T12:00:00.000Z
-              date: '2025-09-15T12:00:00.000Z'
-              description: Apollo Global ranks 7th among fastest growing RWA issuers
-                with 2% growth in tokenized assets under management over the past
-                30 days.
-            - id: apollo_2025-09-09T09:00:00.000Z
-              date: '2025-09-09T09:00:00.000Z'
-              description: 2,000 USDC in voting incentives launched for mAPOLLO pool
-                on Equilibria's voting market, with emissions expected to increase
-                next week.
-            - id: apollo_2025-08-29T10:00:00.000Z
-              date: '2025-08-29T10:00:00.000Z'
-              description: TVL reaches all-time high of 426 BTC following massive
-                99.99 BTC ($11M+) whale bridge.
-            - id: apollo_2025-08-22T06:00:00.000Z
-              date: '2025-08-22T06:00:00.000Z'
-              description: Whale bridges 49.99 BTC ($5.64M) from Bitcoin to Solana
-                through protocol.
-            - id: apollo_2025-08-05T13:00:00.000Z
-              date: '2025-08-05T13:00:00.000Z'
-              description: V2 protocol launches with faster BTC deposits and improved
-                zBTC minting capabilities.
-          - id: 66f50dbe6811ccaef9561e6d
-            name: pancakeswap
-            score: 0.47
-            xHandle: pancakeswap
-            rationale: Trading platform maintains strong market position as second-largest
-              DEX behind Uniswap while expanding through new partnerships with DEGEN
-              project and BRC-20 token integration, though recent weekly volumes show
-              decline from peak August performance.
-            ticker: cake
+            - id: 691dede6e5d831ec8017370f
+              date: '2025-11-19T15:00:00.000Z'
+              description: USDG0 deploys to Plume, Hyperliquid, and Aptos as the first
+                three networks, built on LayerZero's OFT standard for cross-chain
+                functionality.
+            - id: 691caae2e5d831ec800a0208
+              date: '2025-11-18T16:00:00.000Z'
+              description: Paxos unveils stablecoin plans involving Hyperliquid, with
+                USDG0 set to become a quote asset on HyperCore.
+            - id: 6919a2f1e5d831ec80eb2f73
+              date: '2025-11-16T09:00:00.000Z'
+              description: PAXG reaches $94M in 24h trading volume, ranking as the
+                5th highest among RWA performers.
+            - id: 6917a98de5d831ec80d78ea0
+              date: '2025-11-14T21:00:00.000Z'
+              description: PAXG reaches $1.3B market capitalization, contributing
+                to a $3.9B total tokenized gold market that has grown 50x since 2021.
+            - id: 6915f60fe5d831ec80c42751
+              date: '2025-11-13T14:00:00.000Z'
+              description: MoonPay announces Zach Kwartler, formerly of Paxos, as
+                new Head of Stablecoins.
+          - name: sushiswap
+            score: 0.549
+            xHandle: sushiswap
+            rationale: SushiSwap licenses Ekubo V3 AMM for efficiency, offers high
+              yields, and integrates with Gate Wallet.
+            ticker: sushi
             tokens:
-              binance-smart-chain: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82'
-              arbitrum-one: '0x1b896893dfc86bb67cf57767298b9073d2c1ba2c'
-              polygon-zkevm: '0x0d1e753a25ebda689453309112904807625befbe'
-              opbnb: '0x2779106e4f4a8a28d77a24c18283651a2ae22d1c'
-              zksync: '0x3a287a06c66f9e95a56327185ca2bdf5f031cecd'
-              aptos: 0x159df6b7689437016108a019fd5bef736bac692b6d4a1f10c941f6fbb9a74ca6::oft::CakeOFT
-              linea: '0x0d1e753a25ebda689453309112904807625befbe'
-              solana: 4qQeZ5LwSz6HuupUu8jCtgXyW1mYQcNbFAW1sWZp89HL
-              ethereum: '0x152649ea73beab28c5b49b26eb48f7ead6d4c898'
-              base: '0x3055913c90fcc1a6ce9a358911721eeb942013a1'
+              ethereum: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2'
+              arbitrum-one: '0xd4d42f0b6def4ce0383636770ef773390d85c61a'
+              near-protocol: 6b3595068778dd592e39a122f4f5a5cf09c90fe2.factory.bridge.near
+              harmony-shard-0: '0xbec775cb42abfa4288de81f387a9b1a3c4bc552a'
+              avalanche: '0x37b608519f91f70f2eeb0e5ed9af4061722e4f76'
+              celo: '0xd15ec721c2a896512ad29c671997dd68f9593226'
+              solana: ChVzxWRmrTeSgwd3Ui3UumcN8KX7VK3WaD4KGeSKpypj
+              polygon-pos: '0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a'
+              energi: '0x32aff6adc46331dac93e608a9cd4b0332d93a23a'
+              sora: '0x0078f4e6c5113b3d8c954dff62ece8fc36a8411f86f1cbb48a52527e22e73be2'
+              base: '0x7d49a065d17d6d4a55dc13649901fdbb98b2afba'
+              binance-smart-chain: '0x947950bcc74888a40ffa2593c5798f11fc9124c4'
+              fantom: '0xae75a438b2e0cb8bb01ec1e1e376de11d44477cc'
             summaries:
-            - id: pancakeswap_2025-09-15T22:00:00.000Z
-              date: '2025-09-15T22:00:00.000Z'
-              description: Partnership with DEGEN project launches with live liquidity
-                pool and CAKE token rewards for participants.
-            - id: pancakeswap_2025-09-15T15:00:00.000Z
-              date: '2025-09-15T15:00:00.000Z'
-              description: Weekly trading volume reaches $15.347B for September 8-14,
-                2025, showing minimal week-over-week change but indicating a significant
-                decline from August's strong $92B monthly performance.
-            - id: pancakeswap_2025-09-10T20:00:00.000Z
-              date: '2025-09-10T20:00:00.000Z'
-              description: Platform launches $250,000 trading competition featuring
-                WILD token participation.
-            - id: pancakeswap_2025-09-10T07:00:00.000Z
-              date: '2025-09-10T07:00:00.000Z'
-              description: Integrates with MultiBit to enable trading of bridged BRC-20
-                tokens ORDI and SATS as BEP-20 versions on BNB Chain.
-            - id: pancakeswap_2025-09-08T08:00:00.000Z
-              date: '2025-09-08T08:00:00.000Z'
-              description: Achieves $92B in August trading volume, ranking second
-                to Uniswap's $111.8B according to Coingecko data.
-          - id: 682658e84cf2d06ae520eb66
-            name: polycule
-            score: 0.45
-            xHandle: polycule_bot
-            rationale: Project launches PMX prediction market platform with YES/NO
-              token trading mechanics while achieving 50K daily active users and $6M
-              volume through existing Telegram bot infrastructure.
-            ticker: pcule
+            - id: 691e4104e5d831ec801b41a7
+              date: '2025-11-19T21:00:00.000Z'
+              description: SushiSwap becomes the first licensee of Ekubo Protocol's
+                multi-chain AMM infrastructure V3 release, gaining access to what
+                Ekubo describes as the most efficient DEX architecture on EVM.
+            - id: 691aa021e5d831ec80f4b9a2
+              date: '2025-11-17T03:00:00.000Z'
+              description: New agentic strategies on Katana deliver 32.03% yield for
+                stablecoins and 14.43% for delta-neutral ETH across SushiSwap, Spectra
+                Finance, and Hyperliquid since early November. INFINIT Labs integrates
+                with Gate Wallet, providing 40M+ users one-click access to strategies
+                using SushiSwap.
+            - id: 691665bce5d831ec80c91eee
+              date: '2025-11-13T22:00:00.000Z'
+              description: 'SushiSwap funded 95% of the $260k legal fees for the former
+                team member fighting the SEC case, a decision that faced community
+                opposition at the time. (ID: 1989096208997228662)'
+            - id: 6915d973e5d831ec80c27008
+              date: '2025-11-13T12:00:00.000Z'
+              description: A former team member publicly discloses they left SushiSwap
+                due to SEC legal harassment under Gensler, spending $260k in legal
+                fees over a year fighting the case.
+            - id: 6913990be5d831ec80a7f102
+              date: '2025-11-11T19:00:00.000Z'
+              description: Katana's VaultBridge distributes $100k+ in yield to boost
+                borrows and liquidity pools on Morpho, Sushi, and Spectra, increasing
+                in-kind APY for users.
+          - name: tnsr
+            score: 0.539
+            xHandle: AgentHustleAI
+            rationale: tnsr token gained 130% with 4x OI, 10% spot-perp dislocation
+              below $100M market cap.
+            ticker: tnsr
             tokens:
-              solana: J27UYHX5oeaG1YbUGQc8BmJySXDjNWChdGB2Pi2TMDAq
+              solana: HHoXk7WursT9DLBBhHzBWBbuQkfvvoNyHKpJi61mpump
             summaries:
-            - id: polycule_2025-09-15T21:00:00.000Z
-              date: '2025-09-15T21:00:00.000Z'
-              description: Launches new prediction market platform PMX with YES/NO
-                token trading mechanics powered by MeteoraAG integration.
-            - id: polycule_2025-09-13T22:00:00.000Z
-              date: '2025-09-13T22:00:00.000Z'
-              description: New $ICM token partnership enables SOL-based funding with
-                automatic Polygon bridging functionality.
-            - id: polycule_2025-07-18T21:00:00.000Z
-              date: '2025-07-18T21:00:00.000Z'
-              description: Processes $6M volume via Telegram bot MVP; developing first-party
-                app on Polymarket with leverage and parlays functionality.
-            - id: polycule_2025-07-08T19:00:00.000Z
-              date: '2025-07-08T19:00:00.000Z'
-              description: Platform reaches 50K daily active users; announces new
-                points program integration.
-            - id: polycule_2025-06-19T20:00:00.000Z
-              date: '2025-06-19T20:00:00.000Z'
-              description: Trading volume shows consistent growth with 30% allocated
-                to automatic buybacks.
-          - id: 68c83c2a95b20f39a9936bf7
-            name: aiquant
-            score: 0.445
-            xHandle: aiquantfun
-            rationale: Project positions itself as competitor to Virtuals protocol's
-              $800M market cap with public sale at $0.05 per token and upcoming TGE/IDO
-              launch on Base blockchain.
-            ticker: aiq
+            - id: 691ddff7e5d831ec8016860c
+              date: '2025-11-19T14:00:00.000Z'
+              description: Token gains 130% in one day with Open Interest up 4x and
+                10% spot-perp dislocation occurring below $100M market cap.
+            - id: 68fd74dce5d831ec80758969
+              date: '2025-10-26T00:00:00.000Z'
+              description: HUSTLE token current price reaches $3M in October, down
+                from $38M ATH in August representing a 92% decline.
+            - id: 68f26d2fe5d831ec80dd4d5a
+              date: '2025-10-17T15:00:00.000Z'
+              description: AgentHustleAI expands to EVM chains. HUSTLE market cap
+                declined from $38M to $5M since July, though current levels remain
+                10x higher than a few months ago.
+            - id: 68d54054d505e1b5c1dc0f35
+              date: '2025-06-27T13:00:00.000Z'
+              description: Migration to HUSTLE token scheduled for July 1st; LP providers
+                advised to remove positions before transition.
+            - id: 68d54054d505e1b5c1dc0f34
+              date: '2025-06-26T16:00:00.000Z'
+              description: New migration platform launches to facilitate token transitions
+                beyond TNSR, enabling other projects to migrate their tokens.
+          - name: codex
+            score: 0.467
+            xHandle: codex_pbc
+            rationale: Codex Cloud orchestrates 8 AI agents to build an app/marketing
+              plan in 52 mins, rivaling Claude Code.
+            ticker: sandy
             tokens:
-              base: '0x3131b29a1158792b29821166dff0bfa38efee335'
+              solana: 61yG5LCoeoqzBdopXPy6BsVPTGdRXht95L68hj5ipump
             summaries:
-            - id: aiquant_2025-09-16T06:00:00.000Z
-              date: '2025-09-16T06:00:00.000Z'
-              description: IDO scheduled for next week alongside TGE, with platform
-                allowing users to create live trading strategies for 0.1 ETH minimum.
-                Project positioned as competitor to Virtuals protocol which has $800M
-                market cap.
-            - id: aiquant_2025-09-15T19:00:00.000Z
-              date: '2025-09-15T19:00:00.000Z'
-              description: Public sale is currently live on Kommunitas at $0.05 per
-                token with a $250K target raise and $1M initial market cap. Token
-                listing scheduled for September 16 on Base blockchain with 100% vesting
-                at TGE and 12-hour refund policy.
-          - id: 67fe94de8443a7722a3ab3c4
-            name: wmchain
-            score: 0.437
-            xHandle: wmchain
-            rationale: Project launches Unity Node mobile mining product with 6,000
-              limited spots for BTC/ETH mining without hardware requirements, following
-              revenue that exceeded combined 2024 performance of four major competitors
-              and a new partnership.
+            - id: 68f2b0fce5d831ec80e16b23
+              date: '2025-10-17T20:00:00.000Z'
+              description: User demonstrates Codex Cloud orchestrating 8 parallel
+                AI agents to build a working wellness app and marketing plan in 52
+                minutes, positioning the platform as an alternative to Claude Code
+                with integration to ideabrowser for startup idea generation.
+            - id: 68da4da2e5d831ec80a4d8da
+              date: '2025-09-29T08:00:00.000Z'
+              description: The project is listed among stablecoin projects planning
+                a Token Generation Event (TGE) in Q4 of this year.
+            - id: 68e4455ce5d831ec8020d91f
+              date: '2025-09-25T18:00:00.000Z'
+              description: Codex now provides data services for Plasma ecosystem projects,
+                positioning itself as a data infrastructure provider for the Plasma
+                network.
+            - id: 68d53c91d505e1b5c1d6998f
+              date: '2025-09-07T19:00:00.000Z'
+              description: Third-party assessment categorizes the project as a "stable
+                chain" alongside Hyperliquid, Plasma, Tempo, Stable, and Arc, distinguishing
+                it from projects labeled as unstable chains.
+            - id: 68d53c91d505e1b5c1d6998e
+              date: '2025-09-05T15:00:00.000Z'
+              description: The project officially enters Layer 2 on Ethereum with
+                Circle's support, leveraging ETH security and liquidity for payment
+                solutions.
+          - name: Samourai Wallet
+            score: 0.452
+            xHandle: samouraiwallet
+            rationale: Samourai Wallet co-founder sentenced to 4 years in prison for
+              crypto mixing service.
             ticker: ''
             tokens: {}
             summaries:
-            - id: wmchain_2025-09-15T23:00:00.000Z
-              date: '2025-09-15T23:00:00.000Z'
-              description: Unity Node product launches with 6,000 limited spots for
-                mobile BTC/ETH mining without hardware requirements.
-            - id: wmchain_2025-09-15T21:00:00.000Z
-              date: '2025-09-15T21:00:00.000Z'
-              description: A new partnership emerges involving the project.
-            - id: wmchain_2025-05-14T07:00:00.000Z
-              date: '2025-05-14T07:00:00.000Z'
-              description: Revenue surpasses combined 2024 revenue of four major competitors
-                (Helium, Akash, GEODNET, Hivemapper), with new metrics dashboard launch.
-          - id: 66f50d946811ccaef9561e1f
-            name: parallel tcg
-            score: 0.433
-            xHandle: paralleltcg
-            rationale: Parallel launches a major $1 million rewards program funded
-              with $OP and $ARB tokens plus premium NFTs, building on their expanding
-              ecosystem that includes Prime Score rewards, elite pack drops with $PRIME
-              integration, and active gaming incentives.
-            ticker: prime
+            - id: 691e5cdae5d831ec801c736d
+              date: '2025-11-19T23:00:00.000Z'
+              description: Co-founder William Lonergan Hill sentenced to four years
+                in prison in the crypto mixing service case.
+            - id: 690fbffde5d831ec8078c723
+              date: '2025-11-08T21:00:00.000Z'
+              description: 'Angela led Ross''s successful pardon effort and is now
+                positioned as a potential advocate for securing pardons for the developers.
+                (Tweet ID: 1987264605119299901)'
+            - id: 690f2508e5d831ec80717f0d
+              date: '2025-11-08T10:00:00.000Z'
+              description: Rodriguez's personal letter in sentencing memos acknowledges
+                the developers needed licenses and states he maybe didn't want to
+                understand the rules.
+            - id: 690d01ace5d831ec8053f7cc
+              date: '2025-11-06T19:00:00.000Z'
+              description: 'Developer Keonne Rodriguez''s sentence includes three
+                years of supervised release following the 60-month prison term and
+                a $250,000 fine. (Tweet IDs: 1986509989490704439, 1986515395545550967)'
+            - id: 690ce68fe5d831ec80520bcb
+              date: '2025-11-06T17:00:00.000Z'
+              description: Developer Keonne Rodriguez receives maximum 5-year prison
+                sentence after guilty plea; both defendants forfeit $237.8 million
+                with co-founder Hill's sentencing scheduled for November 19.
+          - name: peanut the squirrel
+            score: 0.438
+            xHandle: pnutsolana
+            rationale: PNUT recently listed on Coinbase and Robinhood exchanges.
+            ticker: pnut
             tokens:
-              ethereum: '0xb23d80f5fefcddaa212212f028021b41ded428cf'
-              base: '0xfa980ced6895ac314e7de34ef1bfae90a5add21b'
+              solana: 2qEHjDLDLbuBgRYvsxhc5D6uDWAivNFZGan56P1tpump
             summaries:
-            - id: parallel tcg_2025-09-11T20:00:00.000Z
-              date: '2025-09-11T20:00:00.000Z'
-              description: A new Prime Score system launches to reward active ecosystem
-                participants through gaming, battle pass purchases, and token spending,
-                with monthly resets.
-            - id: parallel tcg_2025-09-10T10:00:00.000Z
-              date: '2025-09-10T10:00:00.000Z'
-              description: An upcoming elite pack drop is planned with no commons
-                or uncommons, featuring 50% allocated as vested community rewards
-                with $PRIME token integration and long-dated snapshots, while 50%
-                will be available at discounted prices.
-            - id: parallel tcg_2025-09-10T06:00:00.000Z
-              date: '2025-09-10T06:00:00.000Z'
-              description: XP shipments distributed to avatar holders including Parallel
-                Avatars, with upcoming TGE mentioned and XP system designed to favor
-                long-term holders for allocations.
-            - id: parallel tcg_2025-09-09T22:00:00.000Z
-              date: '2025-09-09T22:00:00.000Z'
-              description: Boosted emissions have been distributed to players with
-                $PRIME winnings from Season 18, with rewards claimable on Base network
-                through the rewards dashboard.
-            - id: parallel tcg_2025-09-09T21:00:00.000Z
-              date: '2025-09-09T21:00:00.000Z'
-              description: Contest concludes with distribution of Battle Pass Card
-                "Elysia, Fractured Shapeshifter" to four winners, indicating active
-                Battle Pass system and community engagement activities.
-          - id: 68c1c0058662110794bc12d3
-            name: brinkworks
-            score: 0.425
-            xHandle: bryanbrinkman
-            rationale: 'Art patronage crypto project has launched with active minting
-              underway and community participation already reaching item #64.'
+            - id: 6914c1b9e5d831ec80b622f4
+              date: '2025-11-12T16:00:00.000Z'
+              description: PNUT lists on Coinbase and Robinhood exchanges.
+            - id: 690d4725e5d831ec8057e152
+              date: '2025-11-07T00:00:00.000Z'
+              description: PNUT operators allegedly took the money and ran, abandoning
+                the project according to a comparison made in KITKAT-related drama.
+            - id: 69082acee5d831ec8007976d
+              date: '2025-11-03T03:00:00.000Z'
+              description: A supply burn is planned with a possible buyback-and-burn
+                program, and an official Twitter account launches today.
+            - id: 6906e6d4e5d831ec80f74721
+              date: '2025-11-02T04:00:00.000Z'
+              description: The imposter coin operators offer a $250k bribe to a KOL
+                (rejected) and allegedly pay @OfficialTravlad and other KOLs for fake
+                support, while deploying bot farms with hundreds of fake accounts
+                to promote the scam.
+            - id: 69041acae5d831ec80d08efb
+              date: '2025-10-31T01:00:00.000Z'
+              description: KITKAT scammers pay $20,000 to the family for a fake endorsement
+                clip using remote software. PNUT's owner historically made a scam
+                coin that went to zero after being used by multiple teams.
+          - name: Axal
+            score: 0.429
+            xHandle: getaxal
+            rationale: Axal secures its self-custodial yield platform with Privy,
+              integrates YO, and launches iOS app.
             ticker: ''
             tokens: {}
             summaries:
-            - id: brinkworks_2025-09-16T01:00:00.000Z
-              date: '2025-09-16T01:00:00.000Z'
-              description: 'Minting activity has begun with at least item #64 being
-                acquired by community members.'
-            - id: brinkworks_2025-09-10T17:00:00.000Z
-              date: '2025-09-10T17:00:00.000Z'
-              description: Launch scheduled for next week, introducing an art patronage
-                model built with FundingWorks.
-          - id: 66f6666688a06547578ecb7c
-            name: keycat
-            score: 0.417
-            xHandle: keyboardcatbase
-            rationale: The token gained 46% in August, outperforming meme tokens,
-              with Coinbase integration and a past ranking as the 8th highest-earning
-              token, despite a major promoter withdrawal and a recent NFL marketing
-              campaign.
-            ticker: keycat
-            tokens:
-              base: '0x9a26f5433671751c3276a065f57e5a02d2817973'
-            summaries:
-            - id: keycat_2025-09-02T10:00:00.000Z
-              date: '2025-09-02T10:00:00.000Z'
-              description: Token posts 46% gain in August while outperforming broader
-                meme token market
-            - id: keycat_2025-08-09T13:00:00.000Z
-              date: '2025-08-09T13:00:00.000Z'
-              description: YouTube/NFL launch Keyboard Cat marketing campaign while
-                Coinbase integrates Base DEX trading into main app.
-            - id: keycat_2025-08-09T04:00:00.000Z
-              date: '2025-08-09T04:00:00.000Z'
-              description: Major promoter announces withdrawal from active support
-                and warns against expectations of continued price momentum.
-            - id: keycat_2025-07-03T11:00:00.000Z
-              date: '2025-07-03T11:00:00.000Z'
-              description: Ranks as 8th highest-earning token on Coinbase exchange
-            - id: keycat_2025-05-22T08:00:00.000Z
-              date: '2025-05-22T08:00:00.000Z'
-              description: Successful Coinbase listing creates momentum for potential
-                additional major exchange listings.
-          - id: 6704aa5cade93b5baf3606e8
-            name: bitget
-            score: 0.413
-            xHandle: bitgetglobal
-            rationale: Bitget faces regulatory scrutiny over alleged $170M airdrop
-              farming operations while experiencing significant whale outflows of
-              $24.7M ETH amid recent token burn and promotional activities.
+            - id: 691e5cdae5d831ec801c72e3
+              date: '2025-11-19T23:00:00.000Z'
+              description: Uses Privy for security and custody protection of its self-custodial
+                yield platform.
+            - id: 691e2530e5d831ec8019fe57
+              date: '2025-11-19T19:00:00.000Z'
+              description: Axal integrates with YO protocol as its yield backbone,
+                incorporating verifiable, risk-rated yield directly into the user
+                experience.
+            - id: 691dede6e5d831ec801735d3
+              date: '2025-11-19T15:00:00.000Z'
+              description: iOS mobile app launches, bringing Virtual Accounts feature
+                to mobile for onchain stablecoin deposits and yield earning.
+            - id: 690e6166e5d831ec8068a1a1
+              date: '2025-11-07T20:00:00.000Z'
+              description: Announced as Early Bird Sponsor for ETHDenver 2026 conference.
+          - name: Apecoin
+            score: 0.429
+            rationale: Apecoin collaborates with DRiP for creator collectibles and
+              acquires OpenPage passes for support.
             ticker: ''
             tokens: {}
             summaries:
-            - id: bitget_2025-09-15T07:00:00.000Z
-              date: '2025-09-15T07:00:00.000Z'
-              description: Whale activity detected with large ETH withdrawal of $24.7M
-                from the exchange.
-            - id: bitget_2025-09-12T15:00:00.000Z
-              date: '2025-09-12T15:00:00.000Z'
-              description: Bubblemaps investigation claims Bitget Global exchange
-                deposit addresses were used to fund both sybil wallets and team addresses
-                in a $170M MYX Finance airdrop farming operation.
-            - id: bitget_2025-09-10T12:00:00.000Z
-              date: '2025-09-10T12:00:00.000Z'
-              description: August transparency report reveals 60 million BGB token
-                burn, adding to the previously reported trading metrics and product
-                launches.
-            - id: bitget_2025-09-10T11:00:00.000Z
-              date: '2025-09-10T11:00:00.000Z'
-              description: Bitget Global launches new Launchpool promotional campaign
-                encouraging users to lock $BGB or $SWTCH tokens to participate, contributing
-                to $SWTCH's 42.68% surge and trading volume explosion of over 2.3
-                million% to $53.98M.
-            - id: bitget_2025-09-09T03:00:00.000Z
-              date: '2025-09-09T03:00:00.000Z'
-              description: Exchange receives deposit of 100 SOL from hacker who stole
-                $41.5M from SwissBorg exploit on Solana.
-          - id: 683895ee6424650bd4eb9e1d
-            name: midas rwa
-            score: 0.412
-            xHandle: midasrwa
-            rationale: Partnership vault with Maple Finance and Plasma launches with
-              $200 million initial capacity and XPL rewards, representing the final
-              deposit opportunity before Plasma mainnet beta goes live.
+            - id: 6916f244e5d831ec80ced837
+              date: '2025-11-14T08:00:00.000Z'
+              description: Collaboration with DRiP platform enables creators to tag
+                their collectibles with "Apecoin" for participation in front Store
+                page curation.
+            - id: 69160583e5d831ec80c52489
+              date: '2025-11-13T15:00:00.000Z'
+              description: ApeCoin acquires OpenPage passes to support creators with
+                planned community distribution through giveaways.
+            - id: 691344ffe5d831ec80a2dc16
+              date: '2025-11-11T13:00:00.000Z'
+              description: Otherside Nexus becomes available on ApeChain.
+          - name: Mirror
+            score: 0.426
+            xHandle: viamirror
+            rationale: Mirror migrated to Paragraph, adding writer coins; users report
+              content disappeared post-migration.
             ticker: ''
             tokens: {}
             summaries:
-            - id: midas rwa_2025-09-15T19:00:00.000Z
-              date: '2025-09-15T19:00:00.000Z'
-              description: The partnership vault with Maple Finance and Plasma goes
-                live September 16th at 9:00 AM ET with XPL rewards, marking the final
-                deposit opportunity before Plasma mainnet beta launch.
-            - id: midas rwa_2025-09-15T14:00:00.000Z
-              date: '2025-09-15T14:00:00.000Z'
-              description: New partnership with Maple Finance and Plasma Foundation
-                brings syrupUSDT to Plasma platform with $200 million initial capacity.
-            - id: midas rwa_2025-09-05T09:00:00.000Z
-              date: '2025-09-05T09:00:00.000Z'
-              description: The boosted USD (mAPOLLO) pool goes live on Penpie platform,
-                allowing users to deposit Pendle LP tokens for 19% APY plus ResolvLabs
-                Points rewards.
-            - id: midas rwa_2025-08-01T13:00:00.000Z
-              date: '2025-08-01T13:00:00.000Z'
-              description: New DeFi integrations enable tokenized treasury assets
-                to be used for LP on Pendle, collateral on Morpho, and yield optimization
-                through looping.
-            - id: midas rwa_2025-07-23T07:00:00.000Z
-              date: '2025-07-23T07:00:00.000Z'
-              description: New USD (mMEV) pool launches with 4,000 USDC in bribes,
-                featuring uncapped participation and active voting period.
+            - id: 691d196ce5d831ec800edac5
+              date: '2025-11-19T00:00:00.000Z'
+              description: Users report published content has disappeared and is inaccessible
+                despite the completed migration to Paragraph, with previously published
+                posts now gone.
+            - id: 691ce1aee5d831ec800cab63
+              date: '2025-11-18T20:00:00.000Z'
+              description: Platform migration to Paragraph is complete with all Mirror
+                posts and subscribers now live, adding writer coins for creator monetization.
+            - id: 690d01ace5d831ec8053fa24
+              date: '2025-11-06T19:00:00.000Z'
+              description: System stability problems continue for months according
+                to user reports, raising concerns about product support.
+          - name: falconx
+            score: 0.423
+            xHandle: falconxglobal
+            rationale: MARA deposited 644 BTC to FalconX; FalconX projects $0.8B annualized
+              fees for Hyperliquid.
+            ticker: ''
+            tokens: {}
+            summaries:
+            - id: 691e869ce5d831ec801e0ab2
+              date: '2025-11-20T02:00:00.000Z'
+              description: Bitcoin mining firm MARA deposits another 644 BTC ($58.7M)
+                to FalconX and Coinbase Prime.
+            - id: 691d7b81e5d831ec8012492f
+              date: '2025-11-19T07:00:00.000Z'
+              description: FalconX projects Hyperliquid's HIP-3 markets could drive
+                $0.8B in annualized fees within a year, representing 67% upside from
+                current levels with a $HYPE price target of $80.
+            - id: 69196a4ce5d831ec80e94be6
+              date: '2025-11-16T05:00:00.000Z'
+              description: Bitmine accumulates 67,021 ETH (~$234.47M) from Galaxy
+                Digital, FalconX, and Coinbase in the past week.
+            - id: 6919244fe5d831ec80e6b78d
+              date: '2025-11-16T00:00:00.000Z'
+              description: Arthur Hayes deposits 520 ETH (~$1.66M) to FalconX, along
+                with 2.62M ENA (~$733k) to Binance/Wintermute and 133k ETHFI to Wintermute.
+            - id: 6917d2d3e5d831ec80d953fd
+              date: '2025-11-15T00:00:00.000Z'
+              description: A whale purchases 19,945 ETH ($63.82M) at an average price
+                of $3,200 through FalconX, Coinbase, and Wintermute after selling
+                10,000 ETH at $3,597 on 11/10.
     description: Test empty tool arguments handling
     status: success
+    elapsed_time: 1.205754041671753

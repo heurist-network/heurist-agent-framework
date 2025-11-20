@@ -28,17 +28,25 @@ TEST_CASES = {
         "input": {"tool": "search_projects", "tool_arguments": {"name": "bitcoin", "limit": 25}, "raw_data_only": True},
         "description": "Search Bitcoin projects with increased limit and raw data",
     },
+    "market_summary_1day": {
+        "input": {"tool": "get_market_summary", "tool_arguments": {"lookback_days": 1}},
+        "description": "Get market summary for last 1 day - should return empty if data is stale (>3 days old)",
+    },
     "market_summary_3days": {
         "input": {"tool": "get_market_summary", "tool_arguments": {"lookback_days": 3}},
-        "description": "Get market summary for last 3 days",
+        "description": "Get market summary for last 3 days - filters out data older than 3 days",
+    },
+    "market_summary_default": {
+        "input": {"tool": "get_market_summary", "tool_arguments": {}},
+        "description": "Get market summary with default lookback (1 day) - verify stale data filtering",
     },
     "market_summary_week": {
         "input": {"tool": "get_market_summary", "tool_arguments": {"lookback_days": 7}},
-        "description": "Attempt to get 7-day summary (may exceed limit)",
+        "description": "Attempt to get 7-day summary (capped at 3 days max, filters stale data)",
     },
     "market_query_natural": {
         "input": {"query": "What's happening in the crypto market today?"},
-        "description": "Natural language query for today's market",
+        "description": "Natural language query for today's market - should handle stale data gracefully",
     },
     "empty_search_args": {
         "input": {"tool": "search_projects", "tool_arguments": {}},

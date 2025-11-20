@@ -476,7 +476,7 @@ class TokenResolverAgent(MeshAgent):
             address=None,
             symbol=None,
             coingecko_id=cgid,
-            include=["funding_rates", "technical_indicators"],
+            include=["technical_indicators"],
             top_n_pairs=0,
             indicator_interval="1d",
         )

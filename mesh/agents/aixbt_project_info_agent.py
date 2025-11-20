@@ -3,6 +3,7 @@ import os
 import re
 import ssl
 import subprocess
+from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -240,6 +241,18 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 await self.session.close()
                 self.session = None
 
+    def _is_date_stale(self, date_str: str, max_age_days: int = 3) -> bool:
+        """Check if a date string is older than max_age_days"""
+        try:
+            clean_date = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", date_str)
+            clean_date = clean_date.split(",")[0].strip()
+            parsed_date = datetime.strptime(clean_date, "%d %B %Y")
+            age_days = (datetime.now() - parsed_date).days
+            return age_days > max_age_days
+        except Exception as e:
+            logger.warning(f"Failed to parse date '{date_str}': {e}")
+            return True
+
     @with_cache(ttl_seconds=10000)
     @with_retry(max_retries=3)
     async def get_market_summary(self, lookback_days: Optional[int] = 1) -> Dict[str, Any]:
@@ -297,11 +310,12 @@ class AIXBTProjectInfoAgent(MeshAgent):
                     if len(summaries) >= lookback_days:
                         break
 
+            # Filter out stale summaries (> 3 days old)
+            fresh_summaries = [s for s in summaries if not self._is_date_stale(s["date"])]
+
             return {
                 "lookback_days": lookback_days,
-                "summaries": summaries[:lookback_days]
-                if summaries
-                else [{"date": "Recent", "news": ["No data found for the specified lookback period."]}],
+                "summaries": fresh_summaries[:lookback_days] if fresh_summaries else [],
             }
         except subprocess.TimeoutExpired:
             logger.error("Curl timeout after 30s")
