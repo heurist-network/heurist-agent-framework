@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import os
 from typing import Any, Dict, List, Optional
@@ -12,11 +11,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 # Configuration
-COMPUTE_UNITS = 4  # CU (Compute Units) for Caesar API - controls research depth/quality
-TIMEOUT_SECONDS = 100  # Total timeout for research completion
-INITIAL_WAIT_SECONDS = 30  # Wait before first status check
-RETRY_WAIT_SECONDS = 10  # Wait between retry attempts
-MAX_RETRY_ATTEMPTS = 3  # Maximum number of status check retries
+COMPUTE_UNITS = 4  # CU (Compute Units)
 
 
 class CaesarResearchAgent(MeshAgent):
@@ -37,7 +32,7 @@ class CaesarResearchAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Advanced research agent using Caesar AI to find and analyze academic papers, articles, and authoritative sources with citation scoring.",
+                "description": "Advanced research agent using Caesar AI to find and analyze academic papers, articles, and authoritative source.",
                 "external_apis": ["Caesar"],
                 "tags": ["Research", "Academic", "Citations"],
                 "recommended": True,
@@ -48,7 +43,7 @@ class CaesarResearchAgent(MeshAgent):
                     "How does Heurist decentralized AI infrastructure work?",
                     "Latest developments in AI safety research",
                 ],
-                "credits": 2,
+                "credits": 10,
                 "large_model_id": "google/gemini-2.5-flash",
                 "small_model_id": "google/gemini-2.5-flash",
             }
@@ -56,7 +51,12 @@ class CaesarResearchAgent(MeshAgent):
 
     def get_system_prompt(self) -> str:
         return """You are an AI research assistant that helps users find and analyze authoritative academic and research sources using Caesar AI.
-Your role is to facilitate research queries and present citation-scored results in a clear format."""
+
+            You have two tools:
+            1. caesar_research: Submit a research query and get a research_id back immediately
+            2. get_research_result: Check the status and retrieve synthesized research content using the research_id
+
+         Research typically takes 2-3 minutes to complete. When a user asks for research, submit it with caesar_research, inform them it will take several minutes, and then use get_research_result to check the status and retrieve the synthesized content."""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -64,7 +64,7 @@ Your role is to facilitate research queries and present citation-scored results 
                 "type": "function",
                 "function": {
                     "name": "caesar_research",
-                    "description": "Perform in-depth research on a topic using Caesar AI. Returns authoritative sources with citation scores. This operation may take 4-7 minutes to complete as it searches across academic databases and research papers.",
+                    "description": "Submit a research query to perform in-depth research on a topic usingCaesar AI. Returns a research ID immediately. Use get_research_result with the returned ID to retrieve result when ready.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -76,11 +76,25 @@ Your role is to facilitate research queries and present citation-scored results 
                         "required": ["query"],
                     },
                 },
-            }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_research_result",
+                    "description": "Retrieve the results of a Caesar research query by its research ID. Returns the research status and content if completed. Status can be 'queued', 'researching', 'completed', or 'failed'.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "research_id": {
+                                "type": "string",
+                                "description": "The research ID returned by caesar_research tool.",
+                            }
+                        },
+                        "required": ["research_id"],
+                    },
+                },
+            },
         ]
-
-    def get_default_timeout_seconds(self) -> Optional[int]:
-        return TIMEOUT_SECONDS
 
     async def _create_research_object(self, query: str) -> Dict[str, Any]:
         """Create a research object and return the job ID"""
@@ -119,14 +133,13 @@ Your role is to facilitate research queries and present citation-scored results 
 
         return {"status": "success", "data": response}
 
-    @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def caesar_research(self, query: str) -> Dict[str, Any]:
         """
-        Perform research using Caesar AI with automatic polling for results.
-        Uses configurable compute units and timeout settings.
+        Submit a research query to Caesar AI and return the research ID immediately.
+        The research will process in the background.
         """
-        logger.info(f"Executing Caesar research for: {query} with {COMPUTE_UNITS} CU")
+        logger.info(f"Submitting Caesar research for: {query} with {COMPUTE_UNITS} CU")
 
         create_result = await self._create_research_object(query)
 
@@ -134,84 +147,112 @@ Your role is to facilitate research queries and present citation-scored results 
             return create_result
 
         research_id = create_result["id"]
-        logger.info(f"Research queued with ID: {research_id}, waiting {INITIAL_WAIT_SECONDS}s before first check")
+        initial_status = create_result.get("initial_status", "queued")
 
-        await asyncio.sleep(INITIAL_WAIT_SECONDS)
+        logger.info(f"Research submitted with ID: {research_id}, initial status: {initial_status}")
 
-        for attempt in range(1, MAX_RETRY_ATTEMPTS + 1):
-            logger.info(f"Checking research status (attempt {attempt}/{MAX_RETRY_ATTEMPTS})")
+        return {
+            "status": "success",
+            "data": {
+                "research_id": research_id,
+                "query": query,
+                "initial_status": initial_status,
+                "message": f"Research submitted successfully. Use get_research_result with research_id '{research_id}' to retrieve synthesized content (typically takes 2-3 minutes with CU=4).",
+            },
+        }
 
-            retrieve_result = await self._get_research_object(research_id)
+    @with_cache(ttl_seconds=300)
+    @with_retry(max_retries=3)
+    async def get_research_result(self, research_id: str) -> Dict[str, Any]:
+        """
+        Retrieve the results of a Caesar research query by its research ID.
+        Returns the current status and synthesized content if completed.
+        """
+        logger.info(f"Fetching research result for ID: {research_id}")
 
-            if retrieve_result.get("status") != "success":
-                return retrieve_result
+        retrieve_result = await self._get_research_object(research_id)
 
-            data = retrieve_result["data"]
-            research_status = data.get("status")
+        if retrieve_result.get("status") != "success":
+            return retrieve_result
 
-            logger.info(f"Research status: {research_status}")
+        data = retrieve_result["data"]
+        research_status = data.get("status")
 
-            if research_status == "completed":
-                results = data.get("results", [])
-                logger.info(f"Research completed with {len(results)} results")
+        logger.info(f"Research status: {research_status}")
 
-                return {
-                    "status": "success",
-                    "data": {
-                        "id": data.get("id"),
-                        "query": data.get("query"),
-                        "created_at": data.get("created_at"),
-                        "completed_at": data.get("completed_at"),
-                        "results": results,
-                        "result_count": len(results),
-                    },
-                }
+        if research_status == "completed":
+            content = data.get("content", "")
+            logger.info(f"Research completed with content length: {len(content)} characters")
 
-            elif research_status == "failed":
-                error_msg = data.get("error", "Research failed")
-                logger.error(f"Research failed: {error_msg}")
-                return {"status": "error", "error": f"Research failed: {error_msg}"}
+            return {
+                "status": "success",
+                "data": {
+                    "research_status": research_status,
+                    "id": data.get("id"),
+                    "query": data.get("query"),
+                    "created_at": data.get("created_at"),
+                    "completed_at": data.get("completed_at"),
+                    "content": content,
+                },
+            }
 
-            elif research_status in ["queued", "researching"]:
-                if attempt < MAX_RETRY_ATTEMPTS:
-                    logger.info(f"Research in progress, waiting {RETRY_WAIT_SECONDS}s before retry")
-                    await asyncio.sleep(RETRY_WAIT_SECONDS)
-                else:
-                    logger.warning(f"Research timeout after {TIMEOUT_SECONDS}s")
-                    return {
-                        "status": "error",
-                        "error": f"Research timeout after {TIMEOUT_SECONDS}s. Research ID: {research_id}",
-                    }
-            else:
-                logger.warning(f"Unknown research status: {research_status}")
-                return {"status": "error", "error": f"Unknown status: {research_status}"}
+        elif research_status == "failed":
+            error_msg = data.get("error", "Research failed")
+            logger.error(f"Research failed: {error_msg}")
+            return {"status": "error", "error": f"Research failed: {error_msg}"}
 
-        logger.warning("Max retries reached")
-        return {"status": "error", "error": f"Research timeout. Research ID: {research_id}"}
+        elif research_status in ["queued", "researching"]:
+            logger.info(f"Research still in progress: {research_status}")
+            return {
+                "status": "success",
+                "data": {
+                    "research_status": research_status,
+                    "id": data.get("id"),
+                    "query": data.get("query"),
+                    "created_at": data.get("created_at"),
+                    "message": f"Research is still {research_status}. Please check again in a few minutes.",
+                },
+            }
+
+        else:
+            logger.warning(f"Unknown research status: {research_status}")
+            return {"status": "error", "error": f"Unknown status: {research_status}"}
 
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 
-        if tool_name != "caesar_research":
-            return {"error": f"Unsupported tool: {tool_name}"}
+        if tool_name == "caesar_research":
+            query = function_args.get("query")
+            if not query:
+                return {"error": "Missing 'query' parameter"}
 
-        query = function_args.get("query")
+            CaesarResearchAgent._active_calls += 1
+            logger.info(f"Active Caesar API calls: {CaesarResearchAgent._active_calls}")
 
-        if not query:
-            return {"error": "Missing 'query' parameter"}
+            try:
+                result = await self.caesar_research(query)
 
-        CaesarResearchAgent._active_calls += 1
-        logger.info(f"Active Caesar API calls: {CaesarResearchAgent._active_calls}")
+                if errors := self._handle_error(result):
+                    return errors
 
-        try:
-            result = await self.caesar_research(query)
+                return result
+            finally:
+                CaesarResearchAgent._active_calls -= 1
+                logger.info(f"Active Caesar API calls: {CaesarResearchAgent._active_calls}")
+
+        elif tool_name == "get_research_result":
+            research_id = function_args.get("research_id")
+            if not research_id:
+                return {"error": "Missing 'research_id' parameter"}
+
+            result = await self.get_research_result(research_id)
 
             if errors := self._handle_error(result):
                 return errors
 
             return result
-        finally:
-            CaesarResearchAgent._active_calls -= 1
-            logger.info(f"Active Caesar API calls: {CaesarResearchAgent._active_calls}")
+
+        else:
+            return {"error": f"Unsupported tool: {tool_name}"}
