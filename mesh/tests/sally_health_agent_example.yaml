@@ -1,0 +1,327 @@
+metadata:
+  agent: SallyHealthAgent
+  test_file: sally_health_agent.py
+  timestamp: '2025-11-26T14:28:30.013961'
+  total_tests: 4
+  passed: 4
+  failed: 0
+results:
+  fitness_query:
+    input:
+      query: How can I stay fit with a work from home routine?
+      raw_data_only: false
+    output:
+      response: "**Staying Fit with a Work-from-Home Routine: 7 Effective Strategies**\n\
+        \nHello! I'm Sally, your AI health assistant. I've outlined a comprehensive\
+        \ plan to help you maintain your health and fitness while working from home.\n\
+        \n### 1. **Incorporate Movement Breaks**\n* **Frequency:** Every hour\n* **Activity:**\
+        \ Stand up, stretch, or take a quick walk around your home\n* **Benefit:**\
+        \ Counteracts the effects of prolonged sitting\n\n### 2. **Soleus Push-Ups\
+        \ for Enhanced Circulation**\n* **How-to:**\n\t1. Sit upright with feet flat\
+        \ on the floor\n\t2. Lift heels while keeping toes down\n\t3. Hold for a moment,\
+        \ then lower back down\n* **Goal:** 12-15 repetitions per set, 3-5 sets throughout\
+        \ the day\n* **References:**\n\t+ [The Soleus Push-Up: A Simple Exercise...](https://almanac.a1c.io/2025/08/25/the-soleus-push-up-a-simple-exercise-that-could-transform-your-metabolic-health/)\n\
+        \t+ [Beyond Heart Rate Zones...](https://almanac.a1c.io/2025/09/02/beyond-heart-rate-zones-why-the-maximum-aerobic-function-method-is-redefining-athletic-performance-and-metabolic-health/)\n\
+        \t+ [The Guide to Gut Repair and Microbiome Restoration](https://almanac.a1c.io/2025/08/22/the-guide-to-gut-repair-and-microbiome-restoration/)\n\
+        \n### 3. **Scheduled Workouts**\n* **Aim for:** At least 150 minutes of moderate\
+        \ aerobic activity per week\n* **Types:** Cardio, strength training, or flexibility\
+        \ exercises\n* **Tip:** Utilize online classes or fitness apps for guidance\
+        \ and motivation\n\n### 4. **Stay Hydrated**\n* **Reminder:** Keep a water\
+        \ bottle at your desk\n* **Benefit:** Crucial for overall health and hunger\
+        \ management\n\n### 5. **Healthy Snacking**\n* **Options:** Nuts, seeds, low-GI\
+        \ fruits (e.g., berries)\n* **Tip:** Avoid unhealthy processed foods\n\n###\
+        \ 6. **Mindful Eating**\n* **Practice:** Eat without screens\n* **Benefit:**\
+        \ Enjoy meals more and prevent overeating\n\n### 7. **Leverage Technology**\n\
+        * **Tools:** Fitness apps, online workout classes\n* **Benefit:** Stay motivated\
+        \ and guided in your fitness journey\n\n**Next Steps:**\nTo provide more **personalized\
+        \ recommendations**, I'd love to know your name. Please share it with me,\
+        \ and I'll tailor my advice to better suit your needs.\n\n**Conversation ID:**\
+        \ 019abed8-6267-7555-a0c0-c9ff331fda2c  \n**Status:** Success  \n**Message:**\
+        \ Empowering your health and fitness journey, one step at a time."
+      data:
+        status: success
+        data:
+          message: "I'm Sally, your AI health assistant focused on metabolic health\
+            \ and A1C optimization. Staying fit while working from home can be challenging,\
+            \ but there are effective strategies you can implement to maintain your\
+            \ health and fitness:\n\n1. **Incorporate Movement Breaks**: Set a timer\
+            \ to remind yourself to take short breaks every hour. Use these breaks\
+            \ to stand up, stretch, or take a quick walk around your home. This helps\
+            \ counteract the effects of prolonged sitting.\n\n2. **Soleus Push-Ups**:\
+            \ This simple exercise can be done while seated. It targets the soleus\
+            \ muscle in your lower leg, promoting blood circulation and enhancing\
+            \ metabolic health. To perform it, sit upright with your feet flat on\
+            \ the floor, lift your heels while keeping your toes down, hold for a\
+            \ moment, and then lower back down. Aim for 12-15 repetitions per set,\
+            \ doing 3-5 sets throughout the day. [1,2,3]\n\n3. **Structured Workouts**:\
+            \ Schedule regular workout sessions into your day. This could include\
+            \ a mix of cardio, strength training, or flexibility exercises. Aim for\
+            \ at least 150 minutes of moderate aerobic activity each week.\n\n4. **Stay\
+            \ Hydrated**: Keep a water bottle at your desk to remind you to drink\
+            \ water throughout the day. Staying hydrated is crucial for overall health\
+            \ and can help manage hunger.\n\n5. **Healthy Snacking**: Keep healthy\
+            \ snacks on hand, such as nuts, seeds, or low-GI fruits like berries.\
+            \ This can help you avoid unhealthy snacking on processed foods.\n\n6.\
+            \ **Mindful Eating**: Pay attention to your meals and avoid eating in\
+            \ front of screens. This can help you enjoy your food more and prevent\
+            \ overeating.\n\n7. **Utilize Technology**: Consider using fitness apps\
+            \ or online classes to guide your workouts and keep you motivated.\n\n\
+            By integrating these strategies into your work-from-home routine, you\
+            \ can stay fit and support your metabolic health effectively. \n\nAlso,\
+            \ to provide you with even more personalized recommendations, could you\
+            \ share your name?\n\n\n*References*\n[1] The Soleus Push-Up: A Simple\
+            \ Exercise That Could Transform Your Metabolic Health. 2025 Aug 25 [cited\
+            \ 2025 Nov 26]. Available from: [The Soleus Push-Up: A Simple Exercise\
+            \ That Could Transform Your Metabolic Health](https://almanac.a1c.io/2025/08/25/the-soleus-push-up-a-simple-exercise-that-could-transform-your-metabolic-health/)\n\
+            [2] Beyond Heart Rate Zones: Why the MAF Method Is Redefining Athletic\
+            \ Performance and Metabolic Health. 2025 Sep 2 [cited 2025 Nov 26]. Available\
+            \ from: [Beyond Heart Rate Zones: Why the MAF Method Is Redefining Athletic\
+            \ Performance and Metabolic Health](https://almanac.a1c.io/2025/09/02/beyond-heart-rate-zones-why-the-maximum-aerobic-function-method-is-redefining-athletic-performance-and-metabolic-health/)\n\
+            [3] The Guide to Gut Repair and Microbiome Restoration. 2025 Aug 22 [cited\
+            \ 2025 Nov 26]. Available from: [The Guide to Gut Repair and Microbiome\
+            \ Restoration](https://almanac.a1c.io/2025/08/22/the-guide-to-gut-repair-and-microbiome-restoration/)"
+          conversation_id: 019abed8-6267-7555-a0c0-c9ff331fda2c
+    description: Query about fitness tips for remote workers
+    status: success
+    elapsed_time: 36.338963747024536
+  heart_health:
+    input:
+      query: What are good foods for heart health?
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          message: 'I''m Sally, your AI health assistant focused on metabolic health
+            and A1C optimization. When it comes to heart health, incorporating the
+            right foods into your diet can make a significant difference. Here are
+            some excellent food choices for promoting cardiovascular health: [1,2]
+
+
+            1. **Fruits and Vegetables**: Aim for a variety of colorful options, as
+            they are rich in antioxidants, vitamins, and minerals. Leafy greens, berries,
+            and citrus fruits are particularly beneficial.
+
+
+            2. **Whole Grains**: Foods like oats, quinoa, and brown rice provide fiber,
+            which can help lower cholesterol levels and improve heart health.
+
+
+            3. **Healthy Fats**: Incorporate sources of unsaturated fats, such as
+            olive oil, avocados, and nuts. These fats can help reduce bad cholesterol
+            levels.
+
+
+            4. **Fatty Fish**: Salmon, mackerel, and sardines are high in omega-3
+            fatty acids, which are known to lower inflammation and reduce the risk
+            of heart disease.
+
+
+            5. **Legumes**: Beans, lentils, and chickpeas are excellent sources of
+            protein and fiber, contributing to heart health by helping to manage cholesterol
+            levels.
+
+
+            6. **Nuts and Seeds**: Almonds, walnuts, flaxseeds, and chia seeds are
+            nutrient-dense options that provide healthy fats and fiber.
+
+
+            7. **Low-Fat Dairy**: Options like yogurt and milk can be beneficial,
+            but choose low-fat varieties to reduce saturated fat intake.
+
+
+            8. **Herbs and Spices**: Use herbs like garlic, turmeric, and ginger,
+            which have anti-inflammatory properties and can enhance heart health.
+
+
+            By focusing on these foods, you can create a heart-healthy diet that supports
+            overall well-being. If you have any specific dietary preferences or restrictions,
+            let me know, and I can tailor my recommendations further!
+
+
+            Also, to provide you with even more personalized advice, could you share
+            your name?
+
+
+
+            *References*
+
+            [1] Rethinking Saturated Fat: Why Decades of Dietary Dogma May Need a
+            Modern Makeover. 2025 Sep 4 [cited 2025 Nov 26]. Available from: [Rethinking
+            Saturated Fat: Why Decades of Dietary Dogma May Need a Modern Makeover](https://almanac.a1c.io/2025/09/04/rethinking-saturated-fat-why-decades-of-dietary-dogma-may-need-a-modern-makeover/)
+
+            [2] Beyond Good and Bad: Why Your Cholesterol Story Is More Complex Than
+            You Think. 2025 Sep 5 [cited 2025 Nov 26]. Available from: [Beyond Good
+            and Bad: Why Your Cholesterol Story Is More Complex Than You Think](https://almanac.a1c.io/2025/09/05/beyond-good-and-bad-why-your-cholesterol-story-is-more-complex-than-you-think/)'
+          conversation_id: 019abed8-e328-79a1-b008-5d21e455b902
+    description: Query about heart-healthy nutrition with raw data
+    status: success
+    elapsed_time: 18.400031328201294
+  direct_tool_call:
+    input:
+      tool: ask_health_advice
+      tool_arguments:
+        message: Tips for better sleep quality
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          message: 'I''m Sally, your AI health assistant focused on metabolic health
+            and A1C optimization. Improving your sleep quality is essential for overall
+            health, including metabolic function. Here are some actionable tips to
+            enhance your sleep: [1,2]
+
+
+            1. **Establish a Consistent Sleep Schedule**: Go to bed and wake up at
+            the same time every day, even on weekends. This helps regulate your body''s
+            internal clock.
+
+
+            2. **Create a Relaxing Bedtime Routine**: Engage in calming activities
+            before bed, such as reading, gentle stretching, or meditation. This signals
+            your body that it''s time to wind down.
+
+
+            3. **Limit Screen Time**: Reduce exposure to screens (phones, computers,
+            TVs) at least an hour before bed. The blue light emitted can interfere
+            with melatonin production, making it harder to fall asleep.
+
+
+            4. **Optimize Your Sleep Environment**: Ensure your bedroom is dark, quiet,
+            and cool. Consider blackout curtains, earplugs, or a white noise machine
+            to create a conducive sleep environment.
+
+
+            5. **Mindful Eating**: Avoid heavy meals, caffeine, and alcohol close
+            to bedtime. These can disrupt sleep patterns and affect sleep quality.
+
+
+            6. **Stay Active**: Regular physical activity can help you fall asleep
+            faster and enjoy deeper sleep. Aim for at least 30 minutes of moderate
+            exercise most days, but avoid vigorous workouts close to bedtime.
+
+
+            7. **Manage Stress**: Chronic stress can negatively impact sleep. Techniques
+            such as yoga, meditation, or deep breathing exercises can help reduce
+            stress levels and promote better sleep.
+
+
+            8. **Hydration**: While staying hydrated is important, try to limit fluid
+            intake in the evening to reduce nighttime awakenings for bathroom trips.
+
+
+            By incorporating these strategies, you can improve your sleep quality,
+            which in turn supports your metabolic health. If you have any specific
+            preferences or restrictions, let me know, and I can tailor my recommendations
+            further!
+
+
+            Also, to provide you with even more personalized advice, could you share
+            your name?
+
+
+
+            *References*
+
+            [1] The Guide to Gut Health: Understanding What Really Supports Your Microbiome.
+            2025 Sep 5 [cited 2025 Nov 26]. Available from: [The Guide to Gut Health:
+            Understanding What Really Supports Your Microbiome](https://almanac.a1c.io/2025/09/05/the-guide-to-gut-health-understanding-what-really-supports-your-microbiome/)
+
+            [2] Smart Nutrients for the Brain: A Guide to Cognitive-Enhancing Supplements.
+            2025 Aug 26 [cited 2025 Nov 26]. Available from: [Smart Nutrients for
+            the Brain: A Guide to Cognitive-Enhancing Supplements](https://almanac.a1c.io/2025/08/26/smart-nutrients-for-the-brain-a-guide-to-cognitive-enhancing-supplements/)'
+          conversation_id: 019abed9-20e4-73bf-a367-76050ae892d2
+    description: Direct tool call asking Sally about sleep tips
+    status: success
+    elapsed_time: 15.802027940750122
+  stress_management:
+    input:
+      tool: ask_health_advice
+      tool_arguments:
+        message: How to manage stress naturally?
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          message: 'I''m Sally, your AI health assistant focused on metabolic health
+            and A1C optimization. Managing stress naturally is essential for overall
+            well-being, and there are several effective strategies you can incorporate
+            into your daily routine: [1,2]
+
+
+            1. **Mindfulness and Meditation**: Practicing mindfulness or meditation
+            can help reduce stress and improve mental clarity. Even a few minutes
+            of deep breathing or guided meditation can make a difference.
+
+
+            2. **Physical Activity**: Regular exercise is a powerful stress reliever.
+            Aim for at least 30 minutes of moderate activity most days, such as walking,
+            yoga, or dancing, to boost your mood and reduce anxiety.
+
+
+            3. **Adequate Sleep**: Prioritize quality sleep by establishing a consistent
+            sleep schedule and creating a relaxing bedtime routine. Good sleep hygiene
+            can significantly impact your stress levels.
+
+
+            4. **Healthy Eating**: A balanced diet rich in whole foods, including
+            fruits, vegetables, whole grains, and healthy fats, supports your body’s
+            stress response. Avoid excessive caffeine and sugar, which can exacerbate
+            stress.
+
+
+            5. **Social Connections**: Maintain strong relationships with family and
+            friends. Sharing your feelings and experiences with others can provide
+            emotional support and reduce feelings of isolation.
+
+
+            6. **Nature Exposure**: Spend time outdoors in nature. Studies show that
+            being in natural environments can lower stress levels and improve mood.
+
+
+            7. **Stress-Relief Techniques**: Techniques such as yoga, tai chi, or
+            deep breathing exercises can help calm your mind and body.
+
+
+            8. **Limit Alcohol and Sugar**: Reducing alcohol and sugar intake can
+            help maintain stable mood levels and prevent stress-related spikes in
+            anxiety.
+
+
+            9. **Hydration**: Staying well-hydrated supports overall health and can
+            help manage stress levels. Aim to drink plenty of water throughout the
+            day.
+
+
+            10. **Supplements**: Consider natural supplements like magnesium, omega-3
+            fatty acids, or adaptogens (like Rhodiola Rosea) that may help support
+            stress management and hormonal balance.
+
+
+            By integrating these strategies into your lifestyle, you can effectively
+            manage stress and enhance your overall well-being. If you have any specific
+            preferences or restrictions, let me know, and I can tailor my recommendations
+            further!
+
+
+            Also, to provide you with even more personalized advice, could you share
+            your name?
+
+
+
+            *References*
+
+            [1] Hormone Harmony: Science-Backed Stacks That Balance Fast. 2025 Sep
+            1 [cited 2025 Nov 26]. Available from: [Hormone Harmony: Science-Backed
+            Stacks That Balance Fast](https://almanac.a1c.io/2025/09/01/hormone-harmony-science-backed-stacks-that-balance-fast/)
+
+            [2] The Guide to Gut Health: Understanding What Really Supports Your Microbiome.
+            2025 Sep 5 [cited 2025 Nov 26]. Available from: [The Guide to Gut Health:
+            Understanding What Really Supports Your Microbiome](https://almanac.a1c.io/2025/09/05/the-guide-to-gut-health-understanding-what-really-supports-your-microbiome/)'
+          conversation_id: 019abed9-66b6-7493-896b-36e68eb9c428
+    description: Direct tool call asking Sally about stress management
+    status: success
+    elapsed_time: 17.871047973632812
