@@ -61,10 +61,6 @@ Your role is to facilitate health-related queries and present the information cl
                                 "type": "string",
                                 "description": "Message in natural language to talk to Sally agent. It can be a question or a prompt for information about health and medical topics.",
                             },
-                            "last_conversation_id": {
-                                "type": "string",
-                                "description": "Optional conversation ID to continue a previous conversation with Sally.",
-                            },
                         },
                         "required": ["message"],
                     },
@@ -74,12 +70,10 @@ Your role is to facilitate health-related queries and present the information cl
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def ask_health_advice(self, message: str, last_conversation_id: Optional[str] = None) -> Dict[str, Any]:
+    async def ask_health_advice(self, message: str) -> Dict[str, Any]:
         logger.info(f"Sending message to Sally: {message}")
 
         payload = {"message": message}
-        if last_conversation_id:
-            payload["last_conversation_id"] = last_conversation_id
 
         response = await self._api_request(url=self.base_url, method="POST", headers=self.headers, json_data=payload)
         if response.get("error") and not isinstance(response.get("error"), dict):
@@ -112,9 +106,7 @@ Your role is to facilitate health-related queries and present the information cl
         if not message:
             return {"error": "Missing 'message' parameter"}
 
-        last_conversation_id = function_args.get("last_conversation_id")
-
-        result = await self.ask_health_advice(message, last_conversation_id)
+        result = await self.ask_health_advice(message)
 
         if errors := self._handle_error(result):
             return errors
