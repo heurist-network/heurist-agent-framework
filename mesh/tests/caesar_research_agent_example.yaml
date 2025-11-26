@@ -1,0 +1,502 @@
+metadata:
+  agent: CaesarResearchAgent
+  test_file: caesar_research_agent.py
+  timestamp: '2025-11-12T22:35:14.851609'
+  total_tests: 6
+  passed: 6
+  failed: 0
+results:
+  heurist_mesh_query:
+    input:
+      query: What is Heurist Mesh?
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        status: error
+        error: Tool 'caesar_research' timed out after 300s
+    description: Research query about Heurist Mesh platform and ecosystem
+    status: success
+    elapsed_time: 302.1404731273651
+  x402_vending_machine:
+    input:
+      query: What is x402-vending machine by Heurist Mesh?
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          id: a7b78802-a35d-47c6-a7c3-567ee13667cd
+          query: x402-vending machine by Heurist Mesh
+          created_at: '2025-11-12T14:13:27.823082Z'
+          completed_at: null
+          results:
+          - id: 3150409f-580d-42e9-9421-a73fc55d3c16
+            score: 0.64746445
+            title: Heurist AI - Full-Stack AI Infrastructure for Onchain Agents
+            url: https://www.heurist.ai/
+            citation_index: 1
+          - id: 957b7150-fb38-43e2-b3e8-ffa449823f5b
+            score: 0.694241
+            title: Heurist AI
+            url: https://www.heurist.ai/ecosystem
+            citation_index: 2
+          - id: d5bd1e96-a3d1-4c45-8953-30a0e41a1088
+            score: 0.650934
+            title: Heurist Project Introduction, Team, Financing and News_RootData
+            url: https://www.rootdata.com/Projects/detail/Heurist?k=MTE3MzM%3D
+            citation_index: 3
+          - id: f95537d8-1a9a-4f76-bc2d-aef32c52eafe
+            score: 0.83710164
+            title: What is Heurist? Understanding the Decentralised ...
+            url: https://app.t2.world/article/cm4jszz70853634tjmcktmeobot
+            citation_index: 4
+          - id: 5c700383-7586-4d0d-aad0-9dcf4dbe21a3
+            score: 0.6847074
+            title: Heurist Ai | LinkedIn
+            url: https://www.linkedin.com/company/heurist-ai
+            citation_index: 5
+          - id: af7211a7-1171-45cd-88cf-62ff858d1d9a
+            score: 0.5677694
+            title: Heurist Imagine
+            url: https://imagine.heurist.ai/
+            citation_index: 6
+          - id: a3d52b57-b731-4875-b8b9-f52b30d4e584
+            score: 0.6816637
+            title: Apps
+            url: https://www.heurist.ai/apps
+            citation_index: 7
+          - id: 3a4f6610-3743-4b3b-8355-92a7eab5e198
+            score: 0.63939893
+            title: How does Heurist boost AI Agents' computing power?
+            url: https://www.gate.com/learn/articles/how-does-heurist-boost-ai-agents-computing-power/4769
+            citation_index: 8
+          - id: 25e3dc3c-62e9-422b-817f-d7c92edb0d02
+            score: 0.67063034
+            title: Announcing Heurist Agent Framework | by Heurist | Medium
+            url: https://medium.com/@heuristai/announcing-heurist-agent-framework-bcd68d2d391f
+            citation_index: 9
+          - id: fcf4610e-f389-46af-8d5b-730ae330b673
+            score: 0.5134007
+            title: Welcome to Heurist - Heurist AI
+            url: https://docs.heurist.ai/introduction
+            citation_index: 10
+          - id: 34029c29-3570-4d2a-bcc8-dea64214b9a9
+            score: 0.6796259
+            title: 'The Future of Agent Interoperability: Heurist Collaborates with
+              Linux Foundation to Accelerate the… | Heurist AI'
+            url: https://www.heurist.ai/blog/the-future-of-agent-interoperability-heurist-collaborates-with-linux-foundation-to-accelerate-the
+            citation_index: 11
+          - id: eaebf7d5-8a89-4218-9783-0c504a58be22
+            score: 0.44666424
+            title: Heurist has launched the Mesh MCP portal to achieve ...
+            url: https://www.binance.com/en/square/post/23198567176930
+            citation_index: 12
+          - id: febd1163-d79a-4ac8-afc2-84b8e956fb0e
+            score: 0.53750324
+            title: 'BlockBeak: Building Your Own ''Perplexity for Crypto'' ...'
+            url: https://www.heurist.ai/blog/heurist-blockbeak
+            citation_index: 13
+          - id: d62f1cde-7285-4560-a2b8-a2d1fd2026a9
+            score: 0.7147281
+            title: 'x402: Powering Autonomous AI Agent Payments'
+            url: https://ozak.ai/blogs/x402
+            citation_index: 14
+          - id: 3ebd4495-0326-4c69-a66c-14f6ef55e2d4
+            score: 0.54201555
+            title: Build a Monetized Miniapp on TBA with x402
+            url: https://medium.com/@heimlabs/build-a-monetized-miniapp-on-tba-with-x402-from-scratch-in-typescript-9cf1d6eb62e5
+            citation_index: 15
+          - id: cd833e21-8b0c-47ea-9d42-561d940b318e
+            score: 0.7135319
+            title: Cloudflare and Coinbase Will Launch x402 Foundation | Disruption
+              Banking
+            url: https://www.disruptionbanking.com/2025/09/25/cloudflare-and-coinbase-will-launch-x402-foundation/
+            citation_index: 16
+          - id: 7a44fddc-61a5-4ddf-8eba-dff080259701
+            score: 0.50329643
+            title: Cloudflare and Coinbase Will Launch x402 Foundation | Nasdaq
+            url: https://www.nasdaq.com/press-release/cloudflare-and-coinbase-will-launch-x402-foundation-2025-09-23
+            citation_index: 17
+          - id: 6f48a206-c0b5-41ba-8407-d0718a805609
+            score: 0.54274267
+            title: 'Heurist AI: Welcome to Heurist'
+            url: https://docs.heurist.ai/
+            citation_index: 18
+          - id: 2d08db37-a065-4d7a-b58b-f97143bc605b
+            score: 0.26713163
+            title: Cloudflare and Coinbase Launch x402 Foundation for Machine-to-Machine
+              Web Payments – Here’s How it Impacts You | Blockchain Stablecoin | CryptoRank.io
+            url: https://cryptorank.io/news/feed/39af7-cloudflare-and-coinbase-launch-x402-foundation-for-machine-to-machine-web-payments-heres-how-it-impacts-you
+            citation_index: 19
+          - id: 9e09e7ab-9a05-4274-8e06-704a10f44ec3
+            score: 0.82048416
+            title: 'Heurist AI Price, HEU Price, Live Charts, and Marketcap: heu coin'
+            url: https://www.coinbase.com/price/heurist
+          - id: b313b85a-4095-47c6-8515-54c9f053d102
+            score: 0.74161834
+            title: '<Heurist: A Blockchain-Based Decentralized AI Computing Platform>
+              | by hjjlucky | Medium'
+            url: https://medium.com/@hotelchef12/heurist-a-blockchain-based-decentralized-ai-computing-platform-65b4db85c27e
+          - id: b834f918-175d-4cc0-82cc-540b1bf3d047
+            score: 0.7178241
+            title: Full-Stack AI Infrastructure for Onchain Agents
+            url: https://www.heurist.ai/analytics
+          - id: ddc4538d-fcad-4ac7-a4f8-32c67398cd3c
+            score: 0.6937432
+            title: Flow x402 Cheerbot
+            url: https://ethglobal.com/showcase/flow-x402-cheerbot-fsjn2
+          - id: d3ea60b0-e305-4b2d-90b6-0b0f1ded280d
+            score: 0.6708892
+            title: 'Heurist: Evolving Through Innovation and Collaboration'
+            url: https://medium.com/@bolajiade10/heurist-evolving-through-innovation-and-collaboration-3483d7cb9feb
+          - id: baf2c6a6-6a83-4d12-80b0-9a6ba4a2b61c
+            score: 0.62303346
+            title: Heurist AI - Full-Stack AI Infrastructure for Onchain Agents
+            url: https://www.heurist.ai/portal
+          - id: ad4f3eb3-cefd-4952-854f-cabfec953db0
+            score: 0.59796065
+            title: Heurist Launches Serverless AI Agents Framework | Bitget News
+            url: https://www.bitget.com/news/detail/12560604439713
+          - id: 669ec137-573d-4357-b4fb-eeed60921fa2
+            score: 0.477969
+            title: Heurist · GitHub
+            url: https://github.com/heurist-network
+          - id: c12b546c-acc6-4a9e-856e-f3507d046d9e
+            score: 0.46949652
+            title: Heurist - Scaling - CypherHunter
+            url: https://www.cypherhunter.com/en/p/heurist-ai/
+          - id: a59b7242-cf2d-497e-a6a7-9ebfe2fda6de
+            score: 0.33528608
+            title: Heurist Agent Framework
+            url: https://agent.heurist.ai/
+          - id: 4c10e7a5-08cf-41c5-8add-ba822d09a6a2
+            score: 0.036621105
+            title: A Survey of Technical Standards for Command and ... - DTIC
+            url: https://apps.dtic.mil/sti/tr/pdf/ADA252203.pdf
+          result_count: 30
+    description: Research query about x402-vending machine system with raw data
+    status: success
+    elapsed_time: 203.30878853797913
+  heurist_ai_infrastructure:
+    input:
+      tool: caesar_research
+      tool_arguments:
+        query: How does Heurist decentralized AI infrastructure work?
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          id: 521f4d62-a299-4fcd-b466-fce6984809eb
+          query: How does Heurist decentralized AI infrastructure work?
+          created_at: '2025-11-12T14:16:48.709297Z'
+          completed_at: null
+          results:
+          - id: 988c1a9f-dc0e-4d7e-9654-59ac9408cce4
+            score: 0.7402687
+            title: 'Allora and Heurist: Advancing AI Agents with Collective ...'
+            url: https://www.allora.network/blog/allora-heurist-advancing-ai-agents-with-collective-intelligence
+            citation_index: 1
+          - id: 63177e8f-47ec-4c91-bb13-08136cdcd31a
+            score: 0.4604593
+            title: Ecosystem
+            url: https://www.genlayer.com/ecosystem
+            citation_index: 2
+          - id: 2bbe89b0-afab-4821-81fa-c3803083d62f
+            score: 0.3802761
+            title: Heurist AI - Full-Stack AI Infrastructure for Onchain Agents
+            url: https://www.heurist.ai/
+            citation_index: 3
+          - id: aed41d1a-f626-44a3-b03c-f31e96125902
+            score: 0.2836107
+            title: Heurist AI
+            url: https://www.heurist.ai/ecosystem
+            citation_index: 4
+          - id: 22b75267-c2e0-45bb-b8dc-48c6bf11d2c1
+            score: 0.7023877
+            title: How does Heurist boost AI Agents' computing power?
+            url: https://www.gate.com/learn/articles/how-does-heurist-boost-ai-agents-computing-power/4769
+            citation_index: 5
+          - id: 02da36c5-a1c6-43b8-be3c-f597a7ab53b0
+            score: 0.6158511
+            title: Heurist AI
+            url: https://www.heurist.ai/whitepaper
+            citation_index: 6
+          - id: 35804d45-6c4d-4b18-9784-8bd28285e178
+            score: 0.32869154
+            title: Litepaper - Heurist AI
+            url: https://docs.heurist.ai/protocol-overview/litepaper
+            citation_index: 7
+          - id: 253a50ff-5074-46ce-9e63-d3eff1bfaaac
+            score: 0.68191797
+            title: 'Unlocking Web3 with AI: A Deep Dive into the Heurist Mesh MCP
+              Server'
+            url: https://skywork.ai/skypage/en/web3-ai-heurist-mesh/1978666294075236352
+            citation_index: 8
+          - id: 16992439-a502-444a-a363-728f4b3e2f95
+            score: 0.4766533
+            title: 'Heurist AI: Welcome to Heurist'
+            url: https://docs.heurist.ai/
+            citation_index: 9
+          - id: 32c52b1e-cc64-41a0-b821-d4aee0dc6f43
+            score: 0.45420644
+            title: Announcing Heurist Agent Framework | by Heurist | Medium
+            url: https://medium.com/@heuristai/announcing-heurist-agent-framework-bcd68d2d391f
+            citation_index: 10
+          - id: 9741bf33-e8fe-47ec-83d5-8cddbb48038c
+            score: 0.45420644
+            title: Announcing Heurist Agent Framework | Heurist AI
+            url: https://www.heurist.ai/blog/announcing-heurist-agent-framework
+            citation_index: 11
+          - id: 2875fb41-f04b-4f17-9675-d091938fe7f2
+            score: 0.4527543
+            title: 'Bridging GPU Owners with the Open Source AI Community: Heurist
+              AI | by PROLIFIC | Medium'
+            url: https://medium.com/@prolific__/bridging-gpu-owners-with-the-open-source-ai-community-heurist-ai-a057c4d50bc6
+            citation_index: 12
+          - id: a2ad7c2a-fcf1-4b1b-8fd3-844fea84c58e
+            score: 0.28390843
+            title: 'GitHub - heurist-network/miner-release: Stable Diffusion and LLM
+              miner for Heurist'
+            url: https://github.com/heurist-network/miner-release
+            citation_index: 13
+          - id: 76b01a39-3684-4ee3-9f9c-bed67133b353
+            score: 0.7190094
+            title: 'Heurist: A Comprehensive Overview'
+            url: https://blog.spheron.network/heurist-a-comprehensive-overview
+            citation_index: 14
+          - id: 829f1e0c-597c-4a4a-933a-f9a614aee03d
+            score: 0.70483154
+            title: Running Heurist — ASXN Labs
+            url: https://mirror.xyz/10/0x06eebc1449f130e4f4d4e7f60ad81a14ef6100ae/render
+            citation_index: 15
+          - id: 993d1d07-56ad-4d2a-adbd-3c02b465fb06
+            score: 0.6688159
+            title: 'Scaling the Agentic Economy: Bringing Heurist Credits to ...'
+            url: https://medium.com/@heuristai/scaling-the-agentic-economy-bringing-heurist-credits-to-the-heurist-chain-8065d8204ddb
+            citation_index: 16
+          - id: 3150cd57-93a0-4a1f-b1e7-29f11e04c055
+            score: 0.28977397
+            title: Heurist Deep Research - Heurist AI
+            url: https://docs.heurist.ai/ecosystem/heurist-deep-research
+            citation_index: 17
+          - id: 7463e244-994b-4468-b53c-6c41dd77aaf6
+            score: 0.55420566
+            title: Asphere to develop Heurist Chain as an orchestration layer for
+              the permissionless AI cloud
+            url: https://cointelegraph.com/press-releases/asphere-to-develop-heurist-chain-as-an-orchestration-layer-for-the-permissionless-ai-cloud
+            citation_index: 18
+          - id: d1335915-fc60-481a-82af-6a7761cb4a61
+            score: 0.28116918
+            title: '<Heurist: A Blockchain-Based Decentralized AI Computing Platform>
+              | by hjjlucky | Medium'
+            url: https://medium.com/@hotelchef12/heurist-a-blockchain-based-decentralized-ai-computing-platform-65b4db85c27e
+            citation_index: 19
+          - id: 6eb90ea1-1844-435e-b2e1-1106aab4a1a9
+            score: 0.16091137
+            title: Images – Nextra - Heurist SDK
+            url: https://sdk.heurist.ai/endpoint/images
+            citation_index: 20
+          - id: e7d10889-54d2-47b2-b4f0-f936392fa737
+            score: 0.8479807
+            title: 'DePIN Ecosystem: The Transformative Force Drives AI ...'
+            url: https://www.gate.com/learn/articles/depin-ecosystem-the-transformative-force-drives-ai-computing-power/3430
+            citation_index: 21
+          - id: 5bee31e7-ea60-4588-93d0-ea8a1751cfd7
+            score: 0.7975099
+            title: Tokenomics - Heurist AI
+            url: https://docs.heurist.ai/protocol-overview/tokenomics
+            citation_index: 22
+          - id: b53b9253-e182-479f-962f-2e65fbe599a7
+            score: 0.586926
+            title: Heurist price now, Live HEU price, marketcap, chart, and info |
+              CoinCarp
+            url: https://www.coincarp.com/currencies/heurist/
+            citation_index: 23
+          - id: b1ea9515-cb30-480e-b23c-6a25f1b28382
+            score: 0.7323053
+            title: io.net airdrop is coming soon, here are 5 potential Depin ...
+            url: https://www.bitget.com/news/detail/12560603985841
+            citation_index: 24
+          - id: 921d9c3a-bd51-4e8c-8909-9174f219ee0c
+            score: 0.7147281
+            title: What is Heurist?
+            url: https://www.gate.com/learn/articles/what-is-heurist/5617
+            citation_index: 25
+          - id: 23a9f735-2442-4b52-a9cc-b05051a5a06f
+            score: 0.854509
+            title: Heurist Releases Whitepaper and 2025 Roadmap | by Heurist | Oct,
+              2024 | Medium
+            url: https://heuristai.medium.com/heurist-releases-whitepaper-and-2025-roadmap-7e90cb285a27
+          - id: a3086ebc-8e3e-4ff0-8fbe-9fc28db37e37
+            score: 0.72019166
+            title: Heurist AI partners with Oasis for onchain agents
+            url: https://www.linkedin.com/posts/oasisprotocol_heurist-ai-a-full-stack-ai-infrastructure-activity-7376342175942615040-ZURA
+          - id: 802bbb1e-3dc3-4d1d-8d86-b57a0e2a5d92
+            score: 0.7099254
+            title: A Complete Guide; Introducing HUE Token $HUE | by PROLIFIC | Medium
+            url: https://medium.com/@prolific__/a-complete-guide-introducing-hue-token-hue-f76a17caf058
+          - id: f2e6d5fb-dd39-4a30-8fe2-e5905083000e
+            score: 0.7001783
+            title: Heurist (HEU) Token Tracker
+            url: https://basescan.org/token/0xEF22cb48B8483dF6152e1423b19dF5553BbD818b
+          - id: 58b45182-c80e-4fb2-ac24-15c3dd4e5b61
+            score: 0.68798697
+            title: THE INTERMEDIARY ROLE OF COMPUTE PROVIDERS ...
+            url: https://www.robots.ox.ac.uk/~mosb/public/pdf/3343/Heim%20et%20al.%20-%202024%20-%20Governing%20Through%20the%20Cloud%20The%20Intermediary%20Role.pdf
+          - id: 4a9a4127-6e34-4fe1-9fab-3840b4aa4836
+            score: 0.6803909
+            title: What is Heurist? Understanding the Decentralised Infrastructure
+              ...
+            url: https://app.t2.world/article/cm4jszz70853634tjmcktmeobot
+          - id: b867a4af-55d3-4ee8-8068-d7befc8887d3
+            score: 0.6326168
+            title: 'Heurist: Evolving Through Innovation and Collaboration'
+            url: https://medium.com/@bolajiade10/heurist-evolving-through-innovation-and-collaboration-3483d7cb9feb
+          - id: bddb0e0f-7f69-4dd0-888e-bb04cea35899
+            score: 0.61972505
+            title: 'Scaling the Agentic Economy: Bringing Heurist Credits to ...'
+            url: https://www.heurist.ai/blog/scaling-the-agentic-economy-bringing-heurist-credits-to-the-heurist-chain
+          - id: 50aaed43-a3a9-4635-b146-e08b66d6074d
+            score: 0.6191726
+            title: AI narrative is at the forefront. How does Heurist contribute ...
+            url: https://followin.io/en/feed/14322307
+          - id: 77fe215d-3c51-4ef1-a4e4-77de6955675b
+            score: 0.5957048
+            title: 'AI Inference: Guide and Best Practices | Mirantis'
+            url: https://www.mirantis.com/blog/what-is-ai-inference-a-guide-and-best-practices/
+          - id: 89e0bd2a-61e7-4038-9bdf-f7bee6e2c252
+            score: 0.5917474
+            title: Heurist Ai | LinkedIn
+            url: https://www.linkedin.com/company/heurist-ai
+          - id: 2608308a-bdcc-4ac2-94a9-27f742690be9
+            score: 0.5769478
+            title: Understanding Heurist | Messari
+            url: https://messari.io/copilot/share/understanding-heurist-56dbe75c-8b30-4d5b-b0e1-cdc5b216b8e9
+          - id: 87d8c66d-cdbf-4fab-8248-1e81d4e0a451
+            score: 0.50183165
+            title: 'Heurist x Masa: Unlocking Open Data Access for Advanced AI Agents
+              | Heurist AI'
+            url: https://www.heurist.ai/blog/heurist-x-masa
+          - id: 29254640-eb42-4b2f-8fe9-b900deb308a8
+            score: 0.48191768
+            title: 'Introducing Heurist Deep Research: Web3''s First Native ...'
+            url: https://www.heurist.ai/blog/heurist-deep-research
+          - id: 30c031d6-eebd-4f42-a882-e0018fc5ccbc
+            score: 0.4574039
+            title: 'Heurist x Autonomys: Decentralized Storage for Agentic Data Persistence
+              | Heurist AI'
+            url: https://www.heurist.ai/blog/heurist-x-autonomys
+          - id: 8754d1f3-f913-46cb-8c3b-04f4874328e5
+            score: 0.43943515
+            title: Image Generation API - Heurist AI
+            url: https://docs.heurist.ai/dev-guide/image-generation/introduction
+          - id: a7cf7d16-3b4f-40e5-9573-98f818b1b4f4
+            score: 0.40853685
+            title: 'Asphere Chosen to Develop Heurist Chain: A Blockchain Powerhouse
+              for the AI Cloud'
+            url: https://www.ankr.com/blog/asphere-chosen-to-develop-heurist-chain-a-blockchain-powerhouse-for-the-ai-cloud/
+          - id: 82d40e46-cfb9-49af-b991-fe3f4531daf3
+            score: 0.3797929
+            title: 'Heurist: The Elastic New Paradigm of Decentralized AI Cloud Services'
+            url: https://www.gate.com/crypto-wiki/article/heurist-a-new-paradigm-for-decentralized-elastic-ai-cloud
+          - id: 8a04f54c-9432-47cf-968d-e11e8327d56b
+            score: 0.3714107
+            title: Heurist AI - MOGE
+            url: https://moge.ai/product/heurist-ai
+          - id: 8f4aabfc-a6f8-476f-89d1-22ae98708eea
+            score: 0.3295001
+            title: AI for Secure Network Architecture Design | Exclusive Lesson
+            url: https://www.youtube.com/watch?v=MADM0Bk4248
+          - id: d1570858-0f11-46d1-9ab0-6bfc69058e2f
+            score: 0.28209528
+            title: Welcome to Heurist - Heurist AI
+            url: https://docs.heurist.ai/introduction
+          - id: 29e267c5-df13-483d-96af-1705c17a868e
+            score: 0.26007736
+            title: Blog | Heurist AI
+            url: https://www.heurist.ai/blog
+          - id: 932d7f82-ea9c-4116-aa9c-b490d8cc242e
+            score: 0.24663356
+            title: 'GitHub - heurist-network/heurist-agent-framework: A flexible multi-interface
+              AI agent framework for building agents with reasoning, tool use, memory,
+              deep research, blockchain interaction, MCP, and agents-as-a-service.'
+            url: https://github.com/heurist-network/heurist-agent-framework
+          - id: 006f95f4-676a-41c3-af59-7faf876b833f
+            score: 0.22489737
+            title: 'Heurist (HEU) Token Unlocks and Vesting: Schedule and Tokenomics
+              | CryptoRank.io'
+            url: https://cryptorank.io/price/heurist/vesting
+          - id: 8567cb25-447c-4854-921f-7135372a5094
+            score: 0.17668614
+            title: 'The Lifecycle of an AI Model: Training to Inference'
+            url: https://www.linkedin.com/posts/vijayakumar0328_ai-training-inference-activity-7366898074767540225-zk_g
+          - id: 466ffcc1-4304-47db-b0a9-dfb135747a9d
+            score: 0.13898711
+            title: Heurist (HEU) - All information about Heurist ICO (Token Sale)
+              - ICO Drops
+            url: https://icodrops.com/heurist/
+          - id: 0f63875c-e685-4811-be21-823036aba3bf
+            score: 0.07154592
+            title: Full papers - CSWIM 2025
+            url: https://2025.cswimworkshop.org/wp-content/uploads/2025/06/2025-CSWIM-Proceedings-first-version.pdf
+          - id: d6c6a8e9-ccfe-4e11-b77d-9510fc5eb3b5
+            score: 0.045188066
+            title: 'HEURIST (HEU): Base Chain’s AI Token Quietly Building Under the
+              Radar?'
+            url: https://www.youtube.com/watch?v=pKx-kRiQ77o
+          - id: fb6e1c15-59b2-4204-b59b-7d8dfd959c36
+            score: 0.04253497
+            title: 'AI Model Network Architecture for the ISO 21001: Educational Organizations
+              Management System (EOMS)'
+            url: https://www.youtube.com/watch?v=gH8IxLMyTAg
+          - id: e23dd12d-847a-49bc-8869-c210f5b564e7
+            score: 0.0165566
+            title: 'The Future of Agent Interoperability: Heurist Collaborates with
+              Linux Foundation to Accelerate the… | Heurist AI'
+            url: https://www.heurist.ai/blog/the-future-of-agent-interoperability-heurist-collaborates-with-linux-foundation-to-accelerate-the
+          result_count: 55
+    description: Direct tool call researching Heurist's decentralized AI infrastructure
+    status: success
+    elapsed_time: 200.63432502746582
+  ai_agent_frameworks:
+    input:
+      query: What are the latest developments in AI agent frameworks and autonomous
+        agents?
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        status: error
+        error: Tool 'caesar_research' timed out after 300s
+    description: Research on modern AI agent frameworks and autonomous systems
+    status: success
+    elapsed_time: 302.48846316337585
+  blockchain_ai_integration:
+    input:
+      query: How are blockchain and AI being integrated in decentralized systems?
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: error
+        error: Tool 'caesar_research' timed out after 300s
+    description: Research on blockchain and AI integration with raw results
+    status: success
+    elapsed_time: 303.0991632938385
+  zero_knowledge_proofs:
+    input:
+      tool: caesar_research
+      tool_arguments:
+        query: What are zero-knowledge proofs and their applications in privacy-preserving
+          AI?
+    output:
+      response: ''
+      data:
+        status: error
+        error: Tool 'caesar_research' timed out after 300s
+    description: Direct tool call researching zero-knowledge proofs in AI applications
+    status: success
+    elapsed_time: 300.041002035141
