@@ -13,9 +13,9 @@ load_dotenv()
 
 # Configuration
 COMPUTE_UNITS = 4  # CU (Compute Units) for Caesar API - controls research depth/quality
-TIMEOUT_SECONDS = 340  # Total timeout for research completion
-INITIAL_WAIT_SECONDS = 180  # Wait before first status check
-RETRY_WAIT_SECONDS = 40  # Wait between retry attempts
+TIMEOUT_SECONDS = 600  # Total timeout for research completion
+INITIAL_WAIT_SECONDS = 240  # Wait before first status check
+RETRY_WAIT_SECONDS = 60  # Wait between retry attempts
 MAX_RETRY_ATTEMPTS = 3  # Maximum number of status check retries
 
 
@@ -64,7 +64,7 @@ Your role is to facilitate research queries and present citation-scored results 
                 "type": "function",
                 "function": {
                     "name": "caesar_research",
-                    "description": "Perform in-depth research on a topic using Caesar AI. Returns authoritative sources with citation scores. This operation may take 1-2 minutes to complete as it searches across academic databases and research papers.",
+                    "description": "Perform in-depth research on a topic using Caesar AI. Returns authoritative sources with citation scores. This operation may take 4-7 minutes to complete as it searches across academic databases and research papers.",
                     "parameters": {
                         "type": "object",
                         "properties": {
