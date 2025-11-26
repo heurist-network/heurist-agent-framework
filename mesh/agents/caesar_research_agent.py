@@ -13,9 +13,9 @@ load_dotenv()
 
 # Configuration
 COMPUTE_UNITS = 4  # CU (Compute Units) for Caesar API - controls research depth/quality
-TIMEOUT_SECONDS = 300  # Total timeout for research completion
-INITIAL_WAIT_SECONDS = 200  # Wait before first status check
-RETRY_WAIT_SECONDS = 60  # Wait between retry attempts
+TIMEOUT_SECONDS = 210  # Total timeout for research completion
+INITIAL_WAIT_SECONDS = 90  # Wait before first status check
+RETRY_WAIT_SECONDS = 30  # Wait between retry attempts
 MAX_RETRY_ATTEMPTS = 3  # Maximum number of status check retries
 
 
@@ -48,7 +48,7 @@ class CaesarResearchAgent(MeshAgent):
                     "How does Heurist decentralized AI infrastructure work?",
                     "Latest developments in AI safety research",
                 ],
-                "credits": 0.001,
+                "credits": 2,
                 "large_model_id": "google/gemini-2.5-flash",
                 "small_model_id": "google/gemini-2.5-flash",
             }
