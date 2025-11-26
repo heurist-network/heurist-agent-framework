@@ -13,9 +13,9 @@ load_dotenv()
 
 # Configuration
 COMPUTE_UNITS = 4  # CU (Compute Units) for Caesar API - controls research depth/quality
-TIMEOUT_SECONDS = 600  # Total timeout for research completion
-INITIAL_WAIT_SECONDS = 240  # Wait before first status check
-RETRY_WAIT_SECONDS = 60  # Wait between retry attempts
+TIMEOUT_SECONDS = 100  # Total timeout for research completion
+INITIAL_WAIT_SECONDS = 30  # Wait before first status check
+RETRY_WAIT_SECONDS = 10  # Wait between retry attempts
 MAX_RETRY_ATTEMPTS = 3  # Maximum number of status check retries
 
 
