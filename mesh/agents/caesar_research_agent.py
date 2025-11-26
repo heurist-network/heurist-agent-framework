@@ -32,7 +32,7 @@ class CaesarResearchAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Advanced research agent using Caesar AI to find and analyze academic papers, articles, and authoritative source.",
+                "description": "Advanced research agent using Caesar AI to find and analyze academic papers, articles, and authoritative sources.",
                 "external_apis": ["Caesar"],
                 "tags": ["Research", "Academic", "Citations"],
                 "recommended": True,
@@ -52,11 +52,11 @@ class CaesarResearchAgent(MeshAgent):
     def get_system_prompt(self) -> str:
         return """You are an AI research assistant that helps users find and analyze authoritative academic and research sources using Caesar AI.
 
-            You have two tools:
-            1. caesar_research: Submit a research query and get a research_id back immediately
-            2. get_research_result: Check the status and retrieve synthesized research content using the research_id
+You have two tools:
+1. caesar_research: Submit a research query and get a research_id back immediately
+2. get_research_result: Check the status and retrieve the result using the research_id
 
-         Research typically takes 2-3 minutes to complete. When a user asks for research, submit it with caesar_research, inform them it will take several minutes, and then use get_research_result to check the status and retrieve the synthesized content."""
+Research typically takes 2-3 minutes to complete. When a user asks for research, submit it with caesar_research, inform them it will take several minutes, and then use get_research_result to check the status and retrieve the result."""
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -64,7 +64,7 @@ class CaesarResearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "caesar_research",
-                    "description": "Submit a research query to perform in-depth research on a topic usingCaesar AI. Returns a research ID immediately. Use get_research_result with the returned ID to retrieve result when ready.",
+                    "description": "Submit a research query to perform in-depth research on a topic using Caesar AI. Returns a research ID immediately. Use get_research_result with the returned ID to retrieve result when ready.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -81,7 +81,7 @@ class CaesarResearchAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "get_research_result",
-                    "description": "Retrieve the results of a Caesar research query by its research ID. Returns the research status and content if completed. Status can be 'queued', 'researching', 'completed', or 'failed'.",
+                    "description": "Retrieve the results of a Caesar research query by its research ID. Returns the research status and result if completed. Status can be 'queued', 'researching', 'completed', or 'failed'.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -157,7 +157,7 @@ class CaesarResearchAgent(MeshAgent):
                 "research_id": research_id,
                 "query": query,
                 "initial_status": initial_status,
-                "message": f"Research submitted successfully. Use get_research_result with research_id '{research_id}' to retrieve synthesized content (typically takes 2-3 minutes with CU=4).",
+                "message": f"Research submitted successfully. Use get_research_result with research_id '{research_id}' to retrieve result (typically takes 2-3 minutes with CU=4).",
             },
         }
 
@@ -166,7 +166,7 @@ class CaesarResearchAgent(MeshAgent):
     async def get_research_result(self, research_id: str) -> Dict[str, Any]:
         """
         Retrieve the results of a Caesar research query by its research ID.
-        Returns the current status and synthesized content if completed.
+        Returns the current status and result if completed.
         """
         logger.info(f"Fetching research result for ID: {research_id}")
 
