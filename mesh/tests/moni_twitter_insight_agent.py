@@ -29,7 +29,7 @@ TEST_CASES = {
     },
     "direct_follower_categories": {
         "input": {
-            "tool": "get_smart_followers_categories",
+            "tool": "get_smarts_categories",
             "tool_arguments": {"username": "heurist_ai"},
         },
         "description": "Direct tool call for smart followers categories",

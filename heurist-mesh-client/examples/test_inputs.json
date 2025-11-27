@@ -252,7 +252,7 @@
     }
   },
   "MoniTwitterInsightAgent": {
-    "get_smart_followers_categories": {
+    "get_smarts_categories": {
       "username": "heurist_ai"
     },
     "get_smart_followers_history": {
@@ -400,6 +400,28 @@
       "symbol": "BTC-USD",
       "interval": "1d",
       "period": "6mo"
+    },
+    "SallyHealthAgent": {
+      "ask_health_advice": {
+        "message": "Tips for better sleep quality"
+      }
+    },
+    "TwitterIntelligenceAgent": {
+      "user_timeline": {
+        "identifier": "@heurist_ai",
+        "limit": 10
+      },
+      "tweet_detail": {
+        "tweet_id": "1975788185671389308",
+        "show_thread": true
+      },
+      "twitter_search": {
+        "queries": [
+          "bitcoin",
+          "ETH"
+        ],
+        "limit": 10
+      }
     }
   }
 }
