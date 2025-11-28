@@ -20,6 +20,13 @@ class BaseUSDCForensicsAgent(MeshAgent):
         self.project_id = os.getenv("BIGQUERY_PROJECT_ID")
         if not self.project_id:
             raise ValueError("BIGQUERY_PROJECT_ID environment variable is required")
+
+        gcp_creds_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        if gcp_creds_path:
+            logger.info(f"Using GCP credentials from: {gcp_creds_path}")
+        else:
+            logger.warning("GOOGLE_APPLICATION_CREDENTIALS not set, using default credentials")
+
         self.table = f"{self.project_id}.base_blockchain___community_public_dataset.token_transfers"
         self.client = bigquery.Client(project=self.project_id)
 
