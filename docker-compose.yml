@@ -10,8 +10,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    volumes:
-      - /root/.gcp:/root/.gcp:ro
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/mesh_health" ]
       interval: 30s
@@ -34,8 +32,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    volumes:
-      - /root/.gcp:/root/.gcp:ro
     deploy:
       replicas: 2
       update_config:

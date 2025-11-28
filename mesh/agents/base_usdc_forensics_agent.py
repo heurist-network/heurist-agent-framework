@@ -1,9 +1,12 @@
+import base64
+import json
 import logging
 import os
 from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 from google.cloud import bigquery
+from google.oauth2 import service_account
 
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
@@ -21,14 +24,18 @@ class BaseUSDCForensicsAgent(MeshAgent):
         if not self.project_id:
             raise ValueError("BIGQUERY_PROJECT_ID environment variable is required")
 
-        gcp_creds_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-        if gcp_creds_path:
-            logger.info(f"Using GCP credentials from: {gcp_creds_path}")
+        credentials = None
+        gcp_creds_base64 = os.getenv("GCP_CREDENTIALS_BASE64")
+        if gcp_creds_base64:
+            creds_json = base64.b64decode(gcp_creds_base64).decode("utf-8")
+            creds_dict = json.loads(creds_json)
+            credentials = service_account.Credentials.from_service_account_info(creds_dict)
+            logger.info("Using GCP credentials from GCP_CREDENTIALS_BASE64")
         else:
-            logger.warning("GOOGLE_APPLICATION_CREDENTIALS not set, using default credentials")
+            logger.warning("GCP_CREDENTIALS_BASE64 not set, using default credentials")
 
         self.table = f"{self.project_id}.base_blockchain___community_public_dataset.token_transfers"
-        self.client = bigquery.Client(project=self.project_id)
+        self.client = bigquery.Client(project=self.project_id, credentials=credentials)
 
         self.metadata.update(
             {
