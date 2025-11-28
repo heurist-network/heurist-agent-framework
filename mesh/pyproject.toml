@@ -10,6 +10,8 @@ dependencies = [
     "duckduckgo-search==7.4.3", # ddg agent
     "fastapi==0.115.12", # for mesh api server
     "firecrawl-py==2.8.0", # firecrawl agent
+    "google-cloud-bigquery>=3.27.0",
+    "db-dtypes>=1.3.1",
     "loguru==0.7.3",
     "mcp==1.6.0",
     "numpy>=2.2.4",
