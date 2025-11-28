@@ -8,7 +8,6 @@ from mesh.agents.base_usdc_forensics_agent import BaseUSDCForensicsAgent
 from mesh.tests._test_agents import test_agent
 
 PRIMARY_ADDRESS = "0x7d9d1821d15b9e0b8ab98a058361233e255e405d"
-
 SECONDARY_ADDRESS = "0xb2f1c3beb9c4c4bb7fe8e55a9751603c2a3c0e54"
 
 TEST_CASES = {
