@@ -263,11 +263,15 @@ class BaseUSDCForensicsAgent(MeshAgent):
                    THEN quantity_raw ELSE 0 END) / 1e6 AS total_in_usdc,
           SUM(CASE WHEN from_address = (SELECT addr FROM params)
                    THEN quantity_raw ELSE 0 END) / 1e6 AS total_out_usdc,
-          SUM(CASE
-                WHEN to_address   = (SELECT addr FROM params) THEN quantity_raw
-                WHEN from_address = (SELECT addr FROM params) THEN -quantity_raw
-                ELSE 0
-              END) / 1e6 AS net_flow_usdc
+          SUM(
+            CASE
+              WHEN to_address   = (SELECT addr FROM params)
+               AND from_address = (SELECT addr FROM params) THEN 0
+              WHEN to_address   = (SELECT addr FROM params) THEN quantity_raw
+              WHEN from_address = (SELECT addr FROM params) THEN -quantity_raw
+              ELSE 0
+            END
+          ) / 1e6 AS net_flow_usdc
         FROM addr_txs;
         """
         params = [
@@ -373,6 +377,7 @@ class BaseUSDCForensicsAgent(MeshAgent):
           WHERE t.event_type = 'ERC-20'
             AND t.address = p.usdc
             AND (t.from_address = p.addr OR t.to_address = p.addr)
+            AND NOT (t.from_address = p.addr AND t.to_address = p.addr)
         ),
         edges AS (
           SELECT
