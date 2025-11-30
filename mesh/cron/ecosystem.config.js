@@ -5,6 +5,7 @@ module.exports = {
       script: 'xvfb-run',
       args: '-a uv run python /home/appuser/heurist-agent-framework/mesh/cron/trending_tokens_scraper.py',
       interpreter: 'bash',
+      cwd: '/home/appuser/heurist-agent-framework',
       cron_restart: '0 */6 * * *',  // Run every 6 hours
       autorestart: true,  // Auto-restart to keep process managed by PM2
       max_memory_restart: '1G',
