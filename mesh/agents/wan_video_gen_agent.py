@@ -290,7 +290,6 @@ class WanVideoGenAgent(MeshAgent):
 
         compressor = zlib.compressobj(level=9)
         compressed_data = compressor.compress(video_data) + compressor.flush()
-        
 
         async with aiohttp.ClientSession() as session:
             create_payload = {
@@ -317,7 +316,7 @@ class WanVideoGenAgent(MeshAgent):
             index = 0
             for i in range(0, len(compressed_data), chunk_size):
                 chunk = compressed_data[i : i + chunk_size]
-                
+
                 form_data = aiohttp.FormData()
                 form_data.add_field("file", chunk, filename="chunk", content_type="application/octet-stream")
                 form_data.add_field("index", str(index))
@@ -487,10 +486,9 @@ class WanVideoGenAgent(MeshAgent):
             },
         }
 
-    @with_cache(ttl_seconds=10)
     @with_retry(max_retries=3)
     async def get_video_status(self, task_id: str) -> Dict[str, Any]:
-        """Check status of video generation task"""
+        """Check status of video generation task (no caching - status should always be fresh)"""
         logger.info(f"Checking status for task: {task_id}")
 
         result = await self._get_task_result(task_id)
