@@ -1,6 +1,8 @@
 import asyncio
 import logging
 import os
+import tempfile
+import zlib
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -28,23 +30,29 @@ class WanVideoGenAgent(MeshAgent):
             "X-DashScope-Async": "enable",
         }
 
+        # AI3 Storage (primary)
+        self.ai3_api_key = os.getenv("AI3_API_KEY")
+        self.ai3_base_url = "https://mainnet.auto-drive.autonomys.xyz/api"
+        self.ai3_gateway = "https://gateway.autonomys.xyz"
+
+        # R2 Storage (fallback)
         self.r2_endpoint = os.getenv("R2_ENDPOINT")
         self.r2_access_key = os.getenv("R2_ACCESS_KEY")
         self.r2_secret_key = os.getenv("R2_SECRET_KEY")
         self.r2_bucket = os.getenv("R2_BUCKET_WAN_VIDEO_AGENT")
 
-        if not all([self.r2_endpoint, self.r2_access_key, self.r2_secret_key, self.r2_bucket]):
-            raise ValueError(
-                "R2 credentials (R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY, R2_BUCKET_WAN_VIDEO_AGENT) are required"
-            )
+        if not self.ai3_api_key and not all([self.r2_endpoint, self.r2_access_key, self.r2_secret_key, self.r2_bucket]):
+            raise ValueError("Either AI3_API_KEY or R2 credentials are required for video storage")
 
-        self.s3_client = boto3.client(
-            "s3",
-            endpoint_url=self.r2_endpoint,
-            aws_access_key_id=self.r2_access_key,
-            aws_secret_access_key=self.r2_secret_key,
-            region_name="auto",
-        )
+        self.s3_client = None
+        if all([self.r2_endpoint, self.r2_access_key, self.r2_secret_key, self.r2_bucket]):
+            self.s3_client = boto3.client(
+                "s3",
+                endpoint_url=self.r2_endpoint,
+                aws_access_key_id=self.r2_access_key,
+                aws_secret_access_key=self.r2_secret_key,
+                region_name="auto",
+            )
 
         self.metadata.update(
             {
@@ -52,8 +60,8 @@ class WanVideoGenAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Generate videos using Alibaba Wan 2.2 models. Supports text-to-video and image-to-video generation in 480p resolution.",
-                "external_apis": ["DashScope"],
+                "description": "Generate videos using Alibaba Wan 2.2 models. Supports text-to-video and image-to-video generation in 480p resolution. Videos are stored on AI3 (Autonomys) decentralized storage with R2 fallback.",
+                "external_apis": ["DashScope", "Autonomys Auto Drive"],
                 "tags": ["Video Generation"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Wan.png",
@@ -268,17 +276,89 @@ class WanVideoGenAgent(MeshAgent):
 
         return {"status": "success", "data": response}
 
-    async def _download_and_upload_to_r2(self, video_url: str, task_id: str) -> str:
-        """Download video from Alibaba and upload to R2"""
-        logger.info(f"Downloading video from {video_url}")
+    async def _upload_to_ai3(self, video_data: bytes, task_id: str) -> str:
+        """Upload video to AI3 (Autonomys Auto Drive) storage with ZLIB compression"""
+        original_size = len(video_data)
+        logger.info(f"Uploading {original_size} bytes to AI3 storage")
+
+        headers = {
+            "Authorization": f"Bearer {self.ai3_api_key}",
+            "X-Auth-Provider": "apikey",
+            "Accept": "application/json",
+        }
+        filename = f"{task_id}.mp4"
+
+        compressor = zlib.compressobj(level=9)
+        compressed_data = compressor.compress(video_data) + compressor.flush()
+        
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(video_url) as response:
+            create_payload = {
+                "filename": filename,
+                "mimeType": "video/mp4",
+                "uploadOptions": {"compression": {"algorithm": "ZLIB"}},
+            }
+            async with session.post(
+                f"{self.ai3_base_url}/uploads/file",
+                headers={**headers, "Content-Type": "application/json"},
+                json=create_payload,
+            ) as response:
                 if response.status != 200:
-                    raise Exception(f"Failed to download video: HTTP {response.status}")
-                video_data = await response.read()
+                    error_text = await response.text()
+                    raise Exception(f"AI3 create upload failed: HTTP {response.status} - {error_text}")
+                upload_info = await response.json()
+                upload_id = upload_info.get("id")
+                if not upload_id:
+                    raise Exception(f"AI3 create upload failed: no upload ID returned - {upload_info}")
 
-        logger.info(f"Downloaded {len(video_data)} bytes")
+            logger.info(f"AI3 upload session created: {upload_id}")
+
+            chunk_size = 100 * 1024 * 1024
+            index = 0
+            for i in range(0, len(compressed_data), chunk_size):
+                chunk = compressed_data[i : i + chunk_size]
+                
+                form_data = aiohttp.FormData()
+                form_data.add_field("file", chunk, filename="chunk", content_type="application/octet-stream")
+                form_data.add_field("index", str(index))
+
+                async with session.post(
+                    f"{self.ai3_base_url}/uploads/file/{upload_id}/chunk",
+                    headers=headers,
+                    data=form_data,
+                ) as response:
+                    if response.status != 200:
+                        error_text = await response.text()
+                        raise Exception(f"AI3 chunk upload failed: HTTP {response.status} - {error_text}")
+                index += 1
+
+            async with session.post(
+                f"{self.ai3_base_url}/uploads/{upload_id}/complete",
+                headers=headers,
+            ) as response:
+                if response.status != 200:
+                    error_text = await response.text()
+                    raise Exception(f"AI3 complete upload failed: HTTP {response.status} - {error_text}")
+                complete_info = await response.json()
+                cid = complete_info.get("cid")
+                if not cid:
+                    raise Exception(f"AI3 complete upload failed: no CID returned - {complete_info}")
+
+            async with session.post(
+                f"{self.ai3_base_url}/objects/{cid}/publish",
+                headers=headers,
+            ) as response:
+                if response.status != 200:
+                    logger.warning(f"AI3 publish failed: HTTP {response.status} (non-fatal)")
+
+        ai3_url = f"{self.ai3_gateway}/file/{cid}"
+        logger.info(f"Uploaded to AI3: {ai3_url}")
+        return ai3_url
+
+    async def _upload_to_r2(self, video_data: bytes, task_id: str) -> str:
+        """Upload video to R2 storage"""
+        logger.info(f"Uploading {len(video_data)} bytes to R2 storage")
+
         filename = f"videos/{task_id}.mp4"
         loop = asyncio.get_event_loop()
         await loop.run_in_executor(
@@ -287,10 +367,49 @@ class WanVideoGenAgent(MeshAgent):
                 Bucket=self.r2_bucket, Key=filename, Body=video_data, ContentType="video/mp4"
             ),
         )
-        r2_preview_url = f"https://images.heurist.xyz/{filename}"
-        logger.info(f"Uploaded to R2: {r2_preview_url}")
+        r2_url = f"https://images.heurist.xyz/{filename}"
+        logger.info(f"Uploaded to R2: {r2_url}")
+        return r2_url
 
-        return r2_preview_url
+    async def _download_and_upload_video(self, video_url: str, task_id: str) -> Dict[str, str]:
+        """Download video from Alibaba and upload to storage (AI3 primary, R2 fallback)"""
+        logger.info(f"Downloading video from {video_url}")
+
+        temp_path = None
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(video_url) as response:
+                    if response.status != 200:
+                        raise Exception(f"Failed to download video: HTTP {response.status}")
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
+                        temp_path = temp_file.name
+                        async for chunk in response.content.iter_chunked(8192):
+                            temp_file.write(chunk)
+
+            logger.info(f"Downloaded video to temp file: {temp_path}")
+            with open(temp_path, "rb") as f:
+                video_data = f.read()
+
+            logger.info(f"Read {len(video_data)} bytes from temp file")
+            if self.ai3_api_key:
+                try:
+                    file_url = await self._upload_to_ai3(video_data, task_id)
+                    return {"file_url": file_url}
+                except Exception as e:
+                    logger.warning(f"AI3 upload failed, falling back to R2: {e}")
+            if self.s3_client:
+                file_url = await self._upload_to_r2(video_data, task_id)
+                return {"file_url": file_url}
+
+            raise Exception("No storage backend available for video upload")
+
+        finally:
+            if temp_path and os.path.exists(temp_path):
+                try:
+                    os.remove(temp_path)
+                    logger.info(f"Deleted temp file: {temp_path}")
+                except Exception as e:
+                    logger.warning(f"Failed to delete temp file {temp_path}: {e}")
 
     @with_cache(ttl_seconds=60)
     @with_retry(max_retries=3)
@@ -387,11 +506,11 @@ class WanVideoGenAgent(MeshAgent):
 
         if task_status == "SUCCEEDED":
             video_url = output.get("video_url")
+            storage_urls = {}
             try:
-                r2_preview_url = await self._download_and_upload_to_r2(video_url, task_id)
+                storage_urls = await self._download_and_upload_video(video_url, task_id)
             except Exception as e:
-                logger.error(f"Failed to upload to R2: {e}", exc_info=True)
-                r2_preview_url = None
+                logger.error(f"Failed to upload video to storage: {e}", exc_info=True)
 
             response_data = {
                 "task_id": task_id,
@@ -401,8 +520,8 @@ class WanVideoGenAgent(MeshAgent):
                 "message": "Video generation completed successfully!",
             }
 
-            if r2_preview_url:
-                response_data["r2_preview_url"] = r2_preview_url
+            if storage_urls.get("file_url"):
+                response_data["file_url"] = storage_urls["file_url"]
 
             return {
                 "status": "success",

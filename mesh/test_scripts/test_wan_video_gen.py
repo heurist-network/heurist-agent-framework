@@ -34,7 +34,7 @@ def print_result(label: str, result: dict):
             task_status = nested_data.get("task_status")
             message = nested_data.get("message")
             video_url = nested_data.get("video_url")
-            r2_preview_url = nested_data.get("r2_preview_url")
+            file_url = nested_data.get("file_url")
 
             if task_id:
                 print(f"✅ Task ID: {task_id}")
@@ -44,8 +44,8 @@ def print_result(label: str, result: dict):
                 print(f"💬 Message: {message}")
             if video_url:
                 print(f"🎬 Original URL: {video_url}")
-            if r2_preview_url:
-                print(f"🌐 R2 URL: {r2_preview_url}")
+            if file_url:
+                print(f"🌐 File URL: {file_url}")
 
         if data.get("status") == "error":
             print(f"❌ Error: {data.get('error')}")
@@ -221,9 +221,14 @@ async def test_wan_video_agent():
             for name, result in results.items():
                 data = result.get("data", {}).get("data", {})
                 if data.get("task_status") == "SUCCEEDED":
-                    r2_url = data.get("r2_preview_url") or data.get("video_url")
+                    file_url = data.get("file_url")
+                    video_url = data.get("video_url")
                     elapsed = task_end_times[name] - task_start_times[name]
-                    print(f"  • {name}: {r2_url}")
+                    print(f"  • {name}:")
+                    if file_url:
+                        print(f"    🌐 File URL: {file_url}")
+                    elif video_url:
+                        print(f"    🎬 Original: {video_url}")
                     print(f"    ⏱️  {elapsed:.1f}s ({elapsed / 60:.1f} min)")
 
         if pending > 0:
@@ -263,5 +268,59 @@ async def test_wan_video_agent():
         print()
 
 
+async def test_ai3_upload_only():
+    """Test AI3 upload with a small test file"""
+    print_section("Testing AI3 Upload Only")
+
+    agent = WanVideoGenAgent()
+
+    # Test with small data to verify API connectivity
+    test_data = b"test video content for AI3 upload verification"
+    test_task_id = f"test_upload_{int(time.time())}"
+
+    print(f"Testing AI3 upload with {len(test_data)} bytes...")
+    print(f"Test task ID: {test_task_id}")
+
+    try:
+        ai3_url = await agent._upload_to_ai3(test_data, test_task_id)
+        print("\n✅ AI3 upload successful!")
+        print(f"🌐 AI3 URL: {ai3_url}")
+        return ai3_url
+    except Exception as e:
+        print(f"\n❌ AI3 upload failed: {e}")
+        return None
+
+
+async def test_check_status(task_id: str):
+    """Check status of a specific task"""
+    print_section(f"Checking Status for Task: {task_id}")
+
+    async with WanVideoGenAgent() as agent:
+        result = await check_status_with_retry(agent, task_id, max_retries=3)
+        print_result("Final Status", result)
+        return result
+
+
 if __name__ == "__main__":
-    asyncio.run(test_wan_video_agent())
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Test WAN Video Gen Agent with AI3 Storage")
+    parser.add_argument(
+        "--action",
+        choices=["full", "ai3", "status"],
+        default="full",
+        help="Test action: full (all tests), ai3 (AI3 upload only), status (check task status)",
+    )
+    parser.add_argument("--task-id", help="Task ID for status check")
+
+    args = parser.parse_args()
+
+    if args.action == "full":
+        asyncio.run(test_wan_video_agent())
+    elif args.action == "ai3":
+        asyncio.run(test_ai3_upload_only())
+    elif args.action == "status":
+        if not args.task_id:
+            print("Error: --task-id required for status check")
+            sys.exit(1)
+        asyncio.run(test_check_status(args.task_id))
