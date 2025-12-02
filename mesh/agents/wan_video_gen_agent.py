@@ -249,6 +249,8 @@ class WanVideoGenAgent(MeshAgent):
 
         if "error" in response:
             logger.error(f"DashScope API error: {response['error']}")
+            if "img_url" in input_data and "400" in str(response.get("error", "")):
+                return {"status": "error", "error": "Image retrieval failed."}
             return {"status": "error", "error": response["error"]}
 
         task_id = response.get("output", {}).get("task_id")
