@@ -15,7 +15,7 @@ class SallyHealthAgent(MeshAgent):
         if not self.api_key:
             raise ValueError("SALLY_API_KEY environment variable is required")
 
-        self.base_url = "https://api-dev-a1c.sallya1c.com/conversations/v1/terminal/heurist"
+        self.base_url = "https://api-a1c.sallya1c.com/conversations/v1/terminal/heurist"
         self.headers = {"x-api-key": self.api_key, "Content-Type": "application/json"}
 
         self.metadata.update(
