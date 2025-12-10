@@ -18,6 +18,7 @@ TEST_CASES = {
         "input": {"tool": "search", "tool_arguments": {"query": "ETH"}, "raw_data_only": True},
         "description": "Search for Ethereum by symbol",
     },
+    
     "search_bitcoin_name": {
         "input": {"tool": "search", "tool_arguments": {"query": "Bitcoin", "type_hint": "name"}, "raw_data_only": True},
         "description": "Search for Bitcoin by exact name",
