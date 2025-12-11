@@ -1,0 +1,392 @@
+metadata:
+  agent: ChainbaseAddressLabelAgent
+  test_file: chainbase_address_label_agent.py
+  timestamp: '2025-12-11T17:25:28.234121'
+  total_tests: 8
+  passed: 8
+  failed: 0
+results:
+  vitalik_address:
+    input:
+      query: Get labels for address 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
+    output:
+      response: "**Address Labels for 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045**\n\
+        \n**ENS (Ethereum Name Service) Resolution:**\n* **Resolved ENS Name:** vitalik.eth\n\
+        \n**Blockchain-Specific Labels:**\n\n### **Ethereum:**\n\n* **Categories and\
+        \ Tags:**\n\t1. **Contract Deployer** \n\t\t+ Tag: Contract Deployer\n\t2.\
+        \ **Donor** \n\t\t+ Tag: Ukraine Donations Donor\n\t3. **Early Token Holder**\
+        \ \n\t\t+ Tags: Early PEANUT Holder, Early YAWN Holder\n\t4. **ENS Manager\
+        \ (Current and Previous)** \n\t\t+ Current Manager for: $tmnt.eth, tipsforcoins.eth,\
+        \ бутерин.eth\n\t\t+ Previous Manager for: quantumexchange.eth, vyalik.eth\n\
+        \t5. **ENS Owner (Current and Previous)** \n\t\t+ Current Owner of: 10kclub.eth,\
+        \ tipsforcoins.eth, бутерин.eth\n\t\t+ Previous Owner of: 999poker.eth, lgbtqai.eth\n\
+        \t6. **Ethereum First Funder** \n\t\t+ Tag: Ethereum First Funder: 0x1Db3439a222C519ab44bb1144fC28167b4Fa6EE6\n\
+        \t7. **Gnosis Safe Signer (Current and Previous Safes)** \n\t\t+ Current Signer\
+        \ of: 0x7854e996686edca87933F3247E74353D8691bada\n\t\t+ Previous Signer of:\
+        \ 0x2C618aC0e882570c7e65B2aFDAeC5b98B5444387\n\t8. **Governance Delegatee**\
+        \ \n\t\t+ Tags: Nouns Dao Governance Delegatee, Uniswap Governance Delegatee\n\
+        \t9. **Individual** \n\t\t+ Tags: Individual, Vitalik Buterin vitalik.eth\n\
+        \t10. **Key Opinion Leader** \n\t\t+ Tag: Key Opinion Leader\n\t11. **MultiSig\
+        \ Deployer** \n\t\t+ Tag: MultiSig Deployer\n\t12. **OpenSea User** \n\t\t\
+        + Tag: OpenSea User\n\t13. **Snapshot Delegate** \n\t\t+ Tag: Snapshot Delegate\
+        \ for 0xf9d7756B7B891C724B7521C4975D2282105A9e26\n\t14. **Social** \n\t\t\
+        + Tag: vitalik.eth\n\t15. **Tokenized ETH2 Staker** \n\t\t+ Tag: Tokenized\
+        \ ETH2 Staker\n\t16. **Tornado Cash** \n\t\t+ Tags: Tornado Cash Depositor,\
+        \ Tornado Cash Recipient\n\n### **Base:**\n\n* **Categories and Tags:**\n\t\
+        1. **Base First Funder** \n\t\t+ Tag: Base First Funder: 0x3c95f06542dcf6490263B2754a7F3dd9bCea0F9f\n\
+        \t2. **Early Token Holder** \n\t\t+ Tag: Early ZENITH Holder\n\t3. **Gnosis\
+        \ Safe Signer (Current and Previous Safes)** \n\t\t+ Current Signer of: 0x13fa1C3CC0CEFF13364d496336DBf90ff7b2D4D8,\
+        \ 0x50596C4492AE320f713b2046e3A79e2E4129b23a, 0xe89040f1bAcC30a2b0ef1A1Bf92b30Bd88E8D958\n\
+        \t\t+ Previous Signer of: 0x1922C10863d62527d1d21391b8b9b9766f93D851\n\n**Note:**\
+        \ The provided labels offer insights into the address's behavior, ownership,\
+        \ and interactions within both the Ethereum and Base blockchains. These labels\
+        \ can be useful for various analyses, such as identifying key players in the\
+        \ ecosystem, understanding wallet behavior, or tracing the flow of assets."
+      data:
+        address_labels:
+          address: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+          labels:
+          - blockchain: ethereum
+            '0xd8da6bf26964af9d7eed9e03e53415d37aa96045':
+            - category: contract-deployer
+              tags:
+              - Contract Deployer
+            - category: donor
+              tags:
+              - Ukraine Donations Donor
+            - category: early-token-holder
+              tags:
+              - Early PEANUT Holder
+              - Early YAWN Holder
+            - category: ens-manager
+              tags:
+              - $tmnt.eth Manager
+              - tipsforcoins.eth Manager
+              - бутерин.eth Manager
+            - category: ens-manager-prev
+              tags:
+              - quantumexchange.eth Prev. Manager
+              - vytalik.eth Prev. Manager
+            - category: ens-owner
+              tags:
+              - 10kclub.eth Owner
+              - tipsforcoins.eth Owner
+              - бутерин.eth Owner
+            - category: ens-owner-prev
+              tags:
+              - 999poker.eth Prev. Owner
+              - lgbtqai.eth Prev. Owner
+            - category: ens-primary-name
+              tags:
+              - vitalik.eth
+            - category: ethereum-first-funder
+              tags:
+              - 'Ethereum First Funder: 0x1Db3439a222C519ab44bb1144fC28167b4Fa6EE6'
+            - category: gnosis-safe-signer-of-safe
+              tags:
+              - 'Signer of Gnosis Safe: 0x7854e996686edca87933F3247E74353D8691bada'
+            - category: gnosis-safe-signer-of-safe-prev
+              tags:
+              - 'Prev. Signer of Gnosis Safe: 0x2C618aC0e882570c7e65B2aFDAeC5b98B5444387'
+            - category: governance-delegatee
+              tags:
+              - Nouns Dao Governance Delegatee
+              - Uniswap Governance Delegatee
+            - category: individual
+              tags:
+              - Individual
+              - Vitalik Buterin vitalik.eth
+            - category: kol
+              tags:
+              - Key Opinion Leader
+            - category: multisig-deployer
+              tags:
+              - MultiSig Deployer
+            - category: opensea-user
+              tags:
+              - OpenSea User
+            - category: snapshot-delegate
+              tags:
+              - Snapshot Delegate for 0xf9d7756B7B891C724B7521C4975D2282105A9e26
+            - category: social
+              tags:
+              - vitalik.eth
+            - category: tokenized-eth2-staker
+              tags:
+              - Tokenized ETH2 Staker
+            - category: tornado_cash
+              tags:
+              - Tornado Cash Depositor and Recipient
+            - category: tornadocash-depositor
+              tags:
+              - Tornado Cash Depositor
+            - category: tornadocash-recipient
+              tags:
+              - Tornado Cash Recipient
+          - blockchain: base
+            '0xd8da6bf26964af9d7eed9e03e53415d37aa96045':
+            - category: base-first-funder
+              tags:
+              - 'Base First Funder: 0x3c95f06542dcf6490263B2754a7F3dd9bCea0F9f'
+            - category: early-token-holder
+              tags:
+              - Early ZENITH Holder
+            - category: gnosis-safe-signer-of-safe
+              tags:
+              - 'Signer of Gnosis Safe: 0x13fa1C3CC0CEFF13364d496336DBf90ff7b2D4D8'
+              - 'Signer of Gnosis Safe: 0x50596C4492AE320f713b2046e3A79e2E4129b23a'
+              - 'Signer of Gnosis Safe: 0xe89040f1bAcC30a2b0ef1A1Bf92b30Bd88E8D958'
+            - category: gnosis-safe-signer-of-safe-prev
+              tags:
+              - 'Prev. Signer of Gnosis Safe: 0x1922C10863d62527d1d21391b8b9b9766f93D851'
+          ens: vitalik.eth
+    description: Get labels for Vitalik's address (should resolve to vitalik.eth)
+    status: success
+    elapsed_time: 27.174734354019165
+  jesse_base_address:
+    input:
+      query: What is the owner of 0x2211d1D0020DAEA8039E46Cf1367962070d77DA9?
+    output:
+      response: "**Address Label Information for 0x2211d1D0020DAEA8039E46Cf1367962070d77DA9**\n\
+        \n* **Address:** `0x2211d1D0020DAEA8039E46Cf1367962070d77DA9`\n* **Blockchain:**\
+        \ Ethereum\n* **Owner/Associated Identity:**\n\t+ **Category:** Social\n\t\
+        + **Tags:** `smart.jesse.xyz`\n\t+ **ENS (Resolved Name):** `jesse.base.eth`\n\
+        \n**Note:** The provided information suggests an association with a social\
+        \ identity linked to `smart.jesse.xyz` and is also resolved to the ENS name\
+        \ `jesse.base.eth`. However, please note that the accuracy of the \"owner\"\
+        \ identity depends on the data available through the Chainbase API, which\
+        \ may not always reflect the most current or accurate information due to the\
+        \ dynamic nature of blockchain ecosystems. \n\n**If you're looking for:**\n\
+        - More detailed wallet behavior patterns, please specify, and I'll guide you\
+        \ on how to proceed.\n- Information on a different address, feel free to provide\
+        \ the new address (ensuring it's in the 0x format for Ethereum or Base blockchain\
+        \ addresses).\n- Assistance with something else, please describe your query."
+      data:
+        address_labels:
+          address: '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9'
+          labels:
+          - blockchain: ethereum
+            '0x2211d1d0020daea8039e46cf1367962070d77da9':
+            - category: social
+              tags:
+              - smart.jesse.xyz
+          ens: jesse.base.eth
+    description: Get labels for Jesse's address (should resolve to jesse.base.eth)
+    status: success
+    elapsed_time: 15.573439359664917
+  uniswap_token_contract:
+    input:
+      query: Get information about 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984
+    output:
+      response: "**Address Information for 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984**\n\
+        \n* **Blockchain:** Ethereum\n* **Address:** 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984\n\
+        \n**Labels and Categories:**\n\n1. **Decentralized Exchange (DEX)**\n\t* Associated\
+        \ with: **Uniswap** (specifically, **Uniswap (UNI)**)\n2. **ENS (Ethereum\
+        \ Name Service) Owner**\n\t* Owner of: **tiagogreis.eth**\n3. **Governance\
+        \ Delegatee**\n\t* Delegatee for: **Uniswap Governance**\n4. **Governance\
+        \ Token**\n\t* Token associated with governance: **Uniswap Governance Token**\n\
+        5. **Snapshot Delegate**\n\t* Delegate for: **0x42dC230dA9A3bf1Ba6E57B939eAC5017fd5E6880**\
+        \ on Snapshot\n6. **Token Label**\n\t* Identified token: **Uniswap (UNI)**\n\
+        7. **Token Standard**\n\t* Standard: **ERC20 Token**\n\n**Note:** If you were\
+        \ to query using the ENS name **tiagogreis.eth**, please provide the associated\
+        \ 0x address (as you've done here) for label queries, as ENS names alone cannot\
+        \ be directly used for this type of lookup."
+      data:
+        address_labels:
+          address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
+          labels:
+          - blockchain: ethereum
+            '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984':
+            - category: dex
+              tags:
+              - Uniswap Uniswap (UNI)
+            - category: ens-owner
+              tags:
+              - tiagogreis.eth Owner
+            - category: governance-delegatee
+              tags:
+              - Uniswap Governance Delegatee
+            - category: governance-token
+              tags:
+              - Uniswap Governance Token
+            - category: snapshot-delegate
+              tags:
+              - Snapshot Delegate for 0x42dC230dA9A3bf1Ba6E57B939eAC5017fd5E6880
+            - category: token-label
+              tags:
+              - Uniswap (UNI)
+            - category: token-standard
+              tags:
+              - ERC20 Token
+    description: Get labels for Uniswap (UNI) token contract
+    status: success
+    elapsed_time: 11.400444507598877
+  uniswap_v2_router:
+    input:
+      query: Get labels for 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+    output:
+      response: ''
+      data:
+        error: No labels found for this address on Ethereum or Base
+    description: Get labels for Uniswap V2 Router contract
+    status: success
+    elapsed_time: 12.114966869354248
+  opensea_seaport:
+    input:
+      query: Get labels for 0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC
+    output:
+      response: ''
+      data:
+        error: No labels found for this address on Ethereum or Base
+    description: Get labels for OpenSea Seaport contract
+    status: success
+    elapsed_time: 14.907135963439941
+  binance_hot_wallet:
+    input:
+      query: Get labels for 0x28C6c06298d514Db089934071355E5743bf21d60
+    output:
+      response: "**Address Labels for 0x28C6c06298d514Db089934071355E5743bf21d60**\n\
+        \n**Overview**\nThe provided Ethereum and Base blockchain address has multiple\
+        \ labels associated with its activity and ownership. Below is a categorized\
+        \ breakdown of these labels for clarity.\n\n**Ethereum Blockchain Labels**\n\
+        \n* **Owner/Association:**\n\t+ **Binance Hot Wallet**\n\t+ **Institution:**\
+        \ Binance 14\n* **Activity Patterns:**\n\t+ **Contract Deployer**\n\t+ **Hot\
+        \ Wallet**\n\t+ **Tokenized ETH2 Staker**\n\t+ **Tornado Cash Recipient**\
+        \ (also labeled as **Tornadocash-Recipient**)\n* **Specific Interactions:**\n\
+        \t+ **Previous Signer of Gnosis Safe:** 0xe2572Ce62688019a99d00a613D63E8f411410fc7\n\
+        * **Other:**\n\t+ **Binance User**\n\t+ **Donor:** Specifically mentioned\
+        \ as **Ukraine Donations Donor**\n\t+ **Early WBETH Holder**\n\n**Base Blockchain\
+        \ Labels**\n\n* **Activity Patterns:**\n\t+ **Early ROOST Holder**\n* **Specific\
+        \ Interactions:**\n\t+ **Signer of Gnosis Safe:** 0xB1c055dB2FF4b90931120F5462917b8ED65D3faD\n\
+        \n**Key Takeaways:**\n\n- The address is strongly associated with Binance,\
+        \ indicating it might be used for operational or hot wallet purposes.\n- Engagement\
+        \ with various DeFi activities (e.g., Tokenized ETH2 Staking, Tornado Cash\
+        \ usage).\n- Involvement in contract deployment and management through Gnosis\
+        \ Safe.\n- Donation activity to Ukraine, suggesting philanthropic use.\n-\
+        \ Early adoption of specific tokens (WBETH on Ethereum, ROOST on Base)."
+      data:
+        address_labels:
+          address: '0x28C6c06298d514Db089934071355E5743bf21d60'
+          labels:
+          - blockchain: ethereum
+            '0x28c6c06298d514db089934071355e5743bf21d60':
+            - category: cex
+              tags:
+              - Binance Hot Wallet
+              - Centralized Exchange
+            - category: cex users
+              tags:
+              - Binance User
+            - category: contract-deployer
+              tags:
+              - Contract Deployer
+            - category: donor
+              tags:
+              - Ukraine Donations Donor
+            - category: early-token-holder
+              tags:
+              - Early WBETH Holder
+            - category: gnosis-safe-signer-of-safe-prev
+              tags:
+              - 'Prev. Signer of Gnosis Safe: 0xe2572Ce62688019a99d00a613D63E8f411410fc7'
+            - category: hot-wallet
+              tags:
+              - Hot Wallet
+            - category: institution
+              tags:
+              - Binance 14
+            - category: tokenized-eth2-staker
+              tags:
+              - Tokenized ETH2 Staker
+            - category: tornado_cash
+              tags:
+              - Tornado Cash Recipient
+            - category: tornadocash-recipient
+              tags:
+              - Tornado Cash Recipient
+          - blockchain: base
+            '0x28c6c06298d514db089934071355e5743bf21d60':
+            - category: early-token-holder
+              tags:
+              - Early ROOST Holder
+            - category: gnosis-safe-signer-of-safe
+              tags:
+              - 'Signer of Gnosis Safe: 0xB1c055dB2FF4b90931120F5462917b8ED65D3faD'
+    description: Get labels for Binance hot wallet
+    status: success
+    elapsed_time: 30.598108530044556
+  usdt_contract:
+    input:
+      query: Get labels for 0xdAC17F958D2ee523a2206206994597C13D831ec7
+    output:
+      response: "**Address Labels for 0xdAC17F958D2ee523a2206206994597C13D831ec7**\n\
+        \n**Blockchain:** Ethereum\n\n**Labels and Categories for this Address:**\n\
+        \n1. **Banned by USDT**\n\t* Category: banned-by-usdt\n\t* Tags: Banned by\
+        \ USDT\n\n2. **Donation Activity**\n\t* Category: donor\n\t* Tags: Ukraine\
+        \ Donations Donor\n\n3. **ENS Management**\n\t* Category: ens-manager\n\t\
+        * Tags: Manager of pichayap.eth\n\n4. **ENS Ownership**\n\t* Category: ens-owner\n\
+        \t* Tags: Owner of goosevault.eth\n\n5. **Gnosis Safe Signer**\n\t* Category:\
+        \ gnosis-safe-signer-of-safe\n\t* Tags: Signer of Gnosis Safe: 0xeA520e5E88f9c14c2a96d9ABD47a40d610a53551\n\
+        \n6. **Snapshot Delegate**\n\t* Category: snapshot-delegate\n\t* Tags: Snapshot\
+        \ Delegate for 0xFC34385EC20fb5b61C050Df5ce8F7B7e9531f686\n\n7. **Social Identity**\n\
+        \t* Category: social\n\t* Tags: pssssssshao.eth\n\n8. **Stablecoin Activity**\n\
+        \t* Category: stablecoin\n\t* Tags: Tether Tether USD (USDT)\n\n9. **Token\
+        \ Information**\n\t* Category: token-label\n\t* Tags: Tether USD (USDT)\n\n\
+        10. **Token Standard**\n\t* Category: token-standard\n\t* Tags: ERC20 Token\n\
+        \n11. **Tokenized ETH2 Staker**\n\t* Category: tokenized-eth2-staker\n\t*\
+        \ Tags: Tokenized ETH2 Staker\n\n**Note for Future Queries:**\n- If you have\
+        \ an ENS (Ethereum Name Service) name (e.g., vitalik.eth), please provide\
+        \ the corresponding 0x address for label retrieval, as ENS names are not directly\
+        \ supported for this query type."
+      data:
+        address_labels:
+          address: '0xdAC17F958D2ee523a2206206994597C13D831ec7'
+          labels:
+          - blockchain: ethereum
+            '0xdac17f958d2ee523a2206206994597c13d831ec7':
+            - category: banned-by-usdt
+              tags:
+              - Banned by USDT
+            - category: donor
+              tags:
+              - Ukraine Donations Donor
+            - category: ens-manager
+              tags:
+              - pichayap.eth Manager
+            - category: ens-owner
+              tags:
+              - goosevault.eth Owner
+            - category: gnosis-safe-signer-of-safe
+              tags:
+              - 'Signer of Gnosis Safe: 0xeA520e5E88f9c14c2a96d9ABD47a40d610a53551'
+            - category: snapshot-delegate
+              tags:
+              - Snapshot Delegate for 0xFC34385EC20fb5b61C050Df5ce8F7B7e9531f686
+            - category: social
+              tags:
+              - pssssssshao.eth
+            - category: stablecoin
+              tags:
+              - Tether Tether USD (USDT)
+            - category: token-label
+              tags:
+              - Tether USD (USDT)
+            - category: token-standard
+              tags:
+              - ERC20 Token
+            - category: tokenized-eth2-staker
+              tags:
+              - Tokenized ETH2 Staker
+    description: Get labels for USDT token contract
+    status: success
+    elapsed_time: 22.79931354522705
+  random_eoa:
+    input:
+      query: Get labels for 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb
+    output:
+      response: ''
+      data:
+        error: No labels found for this address on Ethereum or Base
+    description: Get labels for a random EOA address
+    status: success
+    elapsed_time: 2.2258379459381104
