@@ -166,6 +166,14 @@ class ExaSearchDigestAgent(MeshAgent):
             processing_time = time.time() - start_time
             logger.info(f"LLM processing completed in {processing_time:.2f}s for search results")
 
+            # Check if all URLs are missing from processed_content
+            all_urls = [result["url"] for result in formatted_results]
+            all_urls_missing = all(url not in processed_content for url in all_urls)
+            
+            if all_urls_missing and all_urls:
+                links_section = "\n\nLinks:\n" + "\n".join(f"[{i}] {url}" for i, url in enumerate(all_urls, 1))
+                processed_content += links_section
+
             return processed_content
 
         except Exception as e:
