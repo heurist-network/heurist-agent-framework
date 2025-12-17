@@ -240,7 +240,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
     #                      ELFA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def _make_request(self, endpoint: str, method: str = "GET", params: Dict = None) -> Dict:
         self._rotate_api_key()
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
@@ -248,7 +247,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         return await self._api_request(url=url, method=method, headers=self.headers, params=params)
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def search_mentions(self, keywords: List[str], days_ago: int = 29, limit: int = 10) -> Dict:
         if limit < 10:
             limit = 10
@@ -286,7 +284,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             return {"status": "error", "error": str(e)}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def get_account_stats(self, username: str) -> Dict:
         logger.info(f"Getting account stats for username: {username}")
         try:
@@ -304,7 +301,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             return {"status": "error", "error": str(e)}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def search_account(self, username: str, days_ago: int = 29, limit: int = 20) -> Dict:
         logger.info(f"Searching account for username: {username}, days_ago: {days_ago}, limit: {limit}")
 
