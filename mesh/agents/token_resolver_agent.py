@@ -864,11 +864,14 @@ class TokenResolverAgent(MeshAgent):
                 prof["categories"] = ti.get("categories") or prof["categories"]
                 links = ti.get("links") or {}
                 prof["links"] = self._merge_links(prof["links"], links)
+                pm = cg.get("price_metrics") or {}
                 prof["fundamentals"] = {
                     "price_usd": mm.get("current_price_usd"),
                     "market_cap_usd": mm.get("market_cap_usd"),
                     "fdv_usd": (cg.get("market_metrics") or {}).get("fully_diluted_valuation_usd"),
                     "volume_all_cex_dex_24h_usd": mm.get("total_volume_usd"),
+                    "price_change_24h": pm.get("price_change_24h"),
+                    "price_change_percentage_24h": pm.get("price_change_percentage_24h"),
                 }
                 cex_data = cg.get("cex_data")
                 if cex_data:
