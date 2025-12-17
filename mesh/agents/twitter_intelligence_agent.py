@@ -12,8 +12,8 @@ DEFAULT_REPLIES_LIMIT = 25  # tweet_detail default replies size
 MIN_AUTHOR_FOLLOWERS = 50  # default author filter
 MIN_TOTAL_ENGAGEMENT = 1  # likes+replies+retweets+quotes >= 1
 
-SEARCH_LIMIT_MIN = 10
-SEARCH_LIMIT_MAX = 20
+SEARCH_LIMIT_MIN = 5
+SEARCH_LIMIT_MAX = 15
 SEARCH_LIMIT_DEFAULT = 10
 
 class TwitterIntelligenceAgent(MeshAgent):
@@ -114,7 +114,7 @@ Provide clear, structured information from Twitter/X to help users understand so
                             "queries": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1-5 search terms (e.g., 'bitcoin', '$ETH', '@coinbase', '\"exact phrase\"'). Case insensitive. Do not use the same query with variations of case. Each of the queries should be within [English: one word or two-word phrase] [Chinese or Korean: one word, no more than 5 characters]. One query should be one concept only. Never use long sentences or long phrases as keywords.",
+                                "description": "1-3 search terms (e.g., 'bitcoin', '$ETH', '@coinbase', '\"exact phrase\"'). Case insensitive. Do not query the same term with variations of case or synonyms. Each of the queries should be within [English: one word or two-word phrase] [Chinese or Korean: one word, no more than 5 characters]. One query should be one concept only. Never use long sentences or long phrases as keywords.",
                             },
                             "limit": {
                                 "type": "integer",
@@ -371,7 +371,7 @@ Provide clear, structured information from Twitter/X to help users understand so
             # Query both sources: API Dance and Elfa
             # 1) Public search (per query) - run in parallel
             public_items: List[Dict[str, Any]] = []
-            search_tasks = [self._search(q, limit=limit) for q in queries[:5]]
+            search_tasks = [self._search(q, limit=limit) for q in queries[:3]]
             search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
 
             for i, pub_res in enumerate(search_results):
@@ -388,7 +388,7 @@ Provide clear, structured information from Twitter/X to help users understand so
                     public_items.extend([self._simplify_tweet(t) for t in pub_tweets])
 
             # 2) Influential mentions (batch)
-            elfa_res = await self._elfa_mentions(queries[:5], limit=max(limit, 10))
+            elfa_res = await self._elfa_mentions(queries[:3], limit=max(limit, 10))
             elfa_items = []
             if "error" not in elfa_res:
                 # Elfa returns {"status":"success","data":[...]} with unwrapped tweet array

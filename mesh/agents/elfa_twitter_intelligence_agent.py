@@ -88,7 +88,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search_mentions",
-                    "description": "Search for mentions of specific tokens or topics on Twitter. This tool finds discussions about cryptocurrencies, blockchain projects, or other topics of interest. It provides the tweets and mentions of smart accounts (only influential ones) and does not contain all tweets. Use this when you want to understand what influential people are saying about a particular token or topic on Twitter. Each of the search keywords should be one word or phrase. A maximum of 5 keywords are allowed. One key word should be one concept. Never use long sentences or phrases as keywords.",
+                    "description": "Search for mentions of specific tokens or topics on Twitter. This tool finds discussions about cryptocurrencies, blockchain projects, or other topics of interest. It provides the tweets and mentions of smart accounts (only influential ones) and does not contain all tweets. Use this when you want to understand what influential people are saying about a particular token or topic on Twitter. Each of the search keywords should be one word or phrase. A maximum of 3 keywords are allowed. One key word should be one concept. Never use long sentences or phrases as keywords.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -254,9 +254,9 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             limit = 20
         if days_ago > 29:
             days_ago = 29
-        if len(keywords) > 5:
-            keywords = keywords[:5]
-            logger.warning(f"Truncated keywords to 5: {keywords}")
+        if len(keywords) > 3:
+            keywords = keywords[:3]
+            logger.warning(f"Truncated keywords to 3: {keywords}")
 
         try:
             end_time = int(time.time() - 60)
