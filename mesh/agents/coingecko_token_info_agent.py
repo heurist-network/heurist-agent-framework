@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional
 
 from decorators import monitor_execution, with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
+from mesh.utils.r2_image_uploader import R2ImageUploader
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +52,8 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
 
         self.public_headers = {"Authorization": f"Bearer {self.api_key}"}
         self.pro_headers = {"x-cg-pro-api-key": self.api_key}
+
+        self.r2_uploader = R2ImageUploader()
 
         self.metadata.update(
             {
@@ -512,19 +515,26 @@ Format your response in clean text. Be objective and informative."""
             actual_coingecko_id = self._resolve_coingecko_id(coingecko_id)
             api_url, headers = self.get_api_config(f"/coins/{actual_coingecko_id}")
             url = f"{api_url}/coins/{actual_coingecko_id}"
-            response = await self._api_request(url=url, headers=headers)
-            if "error" not in response:
-                return response
+            raw_response = await super()._api_request(url=url, headers=headers)
 
-            # if response contains error, try search fallback (only if we didn't already use the map)
+            if "error" not in raw_response:
+                image_urls = raw_response.get("image", {})
+                if image_urls:
+                    await self.r2_uploader.upload_token_images(actual_coingecko_id, image_urls)
+                return self.preprocess_api_response(raw_response)
+
             if actual_coingecko_id == coingecko_id:
                 fallback_id = await self._search_token(coingecko_id)
                 if fallback_id:
                     api_url, headers = self.get_api_config(f"/coins/{fallback_id}")
                     fallback_url = f"{api_url}/coins/{fallback_id}"
-                    fallback_response = await self._api_request(url=fallback_url, headers=headers)
-                    if "error" not in fallback_response:
-                        return fallback_response
+                    raw_fallback = await super()._api_request(url=fallback_url, headers=headers)
+                    if "error" not in raw_fallback:
+                        image_urls = raw_fallback.get("image", {})
+                        if image_urls:
+                            await self.r2_uploader.upload_token_images(fallback_id, image_urls)
+                        return self.preprocess_api_response(raw_fallback)
+
             return {"error": "Failed to fetch token info"}
         except Exception as e:
             logger.error(f"Error: {e}")
