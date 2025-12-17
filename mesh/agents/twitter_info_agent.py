@@ -244,7 +244,6 @@ class TwitterInfoAgent(MeshAgent):
     #                      TWITTER API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def get_user_id(self, identifier: str) -> Dict:
         """Fetch Twitter user ID and profile information using _api_request"""
         try:
@@ -284,7 +283,6 @@ class TwitterInfoAgent(MeshAgent):
             return {"error": f"Failed to fetch user profile: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def get_tweets(self, user_id: str, limit: int = DEFAULT_TIMELINE_LIMIT, cursor: Optional[str] = None) -> Dict:
         params = {"user_id": user_id, "count": min(limit, 50)}
         if cursor:
@@ -304,7 +302,6 @@ class TwitterInfoAgent(MeshAgent):
         return {"tweets": cleaned, "next_cursor": next_cursor}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def get_tweet_detail(self, tweet_id: str, cursor: Optional[str] = None) -> Dict:
         params = {"tweet_id": tweet_id}
         if cursor:
@@ -393,7 +390,6 @@ class TwitterInfoAgent(MeshAgent):
         return result
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def general_search(
         self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None
     ) -> Dict:
