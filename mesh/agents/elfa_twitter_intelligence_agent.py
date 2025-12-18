@@ -222,25 +222,21 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         tweet_ids = list(dict.fromkeys(tweet_ids))
         logger.info(f"Bulk-hydrating {len(tweet_ids)} tweets by ID using TwitterInfoAgent.get_tweets_by_ids")
         bulk = await self._call_agent_tool(
-            "mesh.agents.twitter_info_agent",
-            "TwitterInfoAgent",
-            "get_tweets_by_ids",
-            {"tweet_ids": tweet_ids},
+            "mesh.agents.twitter_info_agent", "TwitterInfoAgent", "get_tweets_by_ids", {"tweet_ids": tweet_ids}
         )
 
         if "error" in bulk:
-            logger.warning(f"Bulk hydration failed: {bulk.get('error')}; falling back to per-tweet fetch")
-            return await self._fetch_batch_tweet_details(tweet_ids, batch_size=5, delay=2.0)
-
-        hydrated = bulk["tweets"]
-        missing = bulk["missing_tweet_ids"]
+            logger.warning(f"Bulk hydration failed: {bulk.get('error')}")
+            hydrated, error_tweet_ids = [], tweet_ids
+        else:
+            hydrated, error_tweet_ids = bulk["tweets"], bulk["error_tweet_ids"]
 
         by_id = {t["id"]: t for t in hydrated}
         ordered = [by_id[tid] for tid in tweet_ids if tid in by_id]
 
-        if missing:
-            logger.info(f"Bulk hydration missed {len(missing)} tweets; falling back to per-tweet detail")
-            fallback = await self._fetch_batch_tweet_details(missing, batch_size=5, delay=2.0)
+        if error_tweet_ids:
+            logger.info(f"Falling back to per-tweet detail for {len(error_tweet_ids)} tweets")
+            fallback = await self._fetch_batch_tweet_details(error_tweet_ids, batch_size=5, delay=2.0)
             ordered.extend(fallback)
 
         logger.info(f"Successfully enriched {len(ordered)} out of {len(tweet_ids)} tweets")

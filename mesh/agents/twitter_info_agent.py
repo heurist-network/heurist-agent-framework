@@ -79,60 +79,6 @@ class TwitterInfoAgent(MeshAgent):
             }
         )
 
-    def _simplify_practicaltools_tweet(self, tweet: Dict[str, Any]) -> Dict[str, Any]:
-        def _to_int(value: Any) -> int:
-            if value is None:
-                return 0
-            if value is True or value is False:
-                return int(value)
-            try:
-                return int(float(value))
-            except (ValueError, TypeError):
-                return 0
-
-        tid = str(tweet["id"])
-        author = tweet.get("author") or {}
-        username = author.get("userName") or ""
-
-        url = tweet.get("url") or tweet.get("twitterUrl") or ""
-        if url.startswith(("https://", "http://")):
-            url = re.sub(r"^https?://", "", url)
-
-        def _type(t: Dict[str, Any]) -> str:
-            if t.get("isRetweet"):
-                return "retweet"
-            if t.get("isReply"):
-                return "reply"
-            if t.get("isQuote"):
-                return "quote"
-            return "tweet"
-
-        result: Dict[str, Any] = {
-            "id": tid,
-            "text": _clean_tweet_text(tweet.get("text") or tweet.get("fullText") or ""),
-            "created_at": _format_date_only(tweet.get("createdAt") or ""),
-            "source": f"x.com/{username}/status/{tid}" if username else url,
-            "author": {
-                "id": str(author.get("id") or ""),
-                "name": author.get("name") or "",
-                "verified": bool(author.get("isVerified", False)),
-                "followers": _to_int(author.get("followers")),
-            },
-            "engagement": {
-                "likes": _to_int(tweet.get("likeCount")),
-                "replies": _to_int(tweet.get("replyCount")),
-                "retweets": _to_int(tweet.get("retweetCount")),
-                "quotes": _to_int(tweet.get("quoteCount")),
-                "views": _to_int(tweet.get("viewCount")),
-            },
-            "type": _type(tweet),
-        }
-
-        if tweet.get("bookmarkCount") is not None:
-            result["engagement"]["bookmarks"] = _to_int(tweet.get("bookmarkCount"))
-
-        return result
-
     def get_system_prompt(self) -> str:
         return """You are a specialized Twitter analyst that helps users get information about Twitter profiles and their recent tweets.
 
@@ -301,6 +247,55 @@ class TwitterInfoAgent(MeshAgent):
 
         return result
 
+    def _simplify_practicaltools_tweet(self, tweet: Dict[str, Any]) -> Dict[str, Any]:
+        def _to_int(value: Any) -> int:
+            if value is None:
+                return 0
+            if value is True or value is False:
+                return int(value)
+            try:
+                return int(float(value))
+            except (ValueError, TypeError):
+                return 0
+
+        tid = str(tweet["id"])
+        author = tweet.get("author") or {}
+        username = author.get("userName") or ""
+
+        url = tweet.get("url") or tweet.get("twitterUrl") or ""
+        if url.startswith(("https://", "http://")):
+            url = re.sub(r"^https?://", "", url)
+
+        def _type(t: Dict[str, Any]) -> str:
+            if t.get("isRetweet"):
+                return "retweet"
+            if t.get("isReply"):
+                return "reply"
+            if t.get("isQuote"):
+                return "quote"
+            return "tweet"
+
+        return {
+            "id": tid,
+            "text": _clean_tweet_text(tweet.get("text") or tweet.get("fullText") or ""),
+            "created_at": _format_date_only(tweet.get("createdAt") or ""),
+            "source": f"x.com/{username}/status/{tid}" if username else url,
+            "author": {
+                "id": str(author.get("id") or ""),
+                "name": author.get("name") or "",
+                "verified": bool(author.get("isVerified", False)),
+                "followers": _to_int(author.get("followers")),
+            },
+            "engagement": {
+                "likes": _to_int(tweet.get("likeCount")),
+                "replies": _to_int(tweet.get("replyCount")),
+                "retweets": _to_int(tweet.get("retweetCount")),
+                "quotes": _to_int(tweet.get("quoteCount")),
+                "views": _to_int(tweet.get("viewCount")),
+            },
+            "type": _type(tweet),
+        }
+
     async def _practicaltools_call(self, endpoint: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
         run_input = {"endpoint": endpoint, "parameters": parameters}
         try:
@@ -325,7 +320,7 @@ class TwitterInfoAgent(MeshAgent):
         ids = [str(x).strip() for x in tweet_ids if str(x).strip()]
         deduped = list(dict.fromkeys(ids))
         if not deduped:
-            return {"tweets": [], "missing_tweet_ids": []}
+            return {"tweets": [], "error_tweet_ids": []}
 
         chunk_size = 20
         by_id: Dict[str, Dict[str, Any]] = {}
@@ -342,8 +337,8 @@ class TwitterInfoAgent(MeshAgent):
                     by_id[simplified["id"]] = simplified
 
         tweets_out = [by_id[tid] for tid in deduped if tid in by_id]
-        missing = [tid for tid in deduped if tid not in by_id]
-        return {"tweets": tweets_out, "missing_tweet_ids": missing}
+        error_tweet_ids = [tid for tid in deduped if tid not in by_id]
+        return {"tweets": tweets_out, "error_tweet_ids": error_tweet_ids}
 
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
@@ -359,19 +354,15 @@ class TwitterInfoAgent(MeshAgent):
                 clean_username = self._clean_username(identifier)
                 params = {"screen_name": clean_username}
 
-            user_data: Dict[str, Any] = {}
-            if self.api_key:
-                logger.info(f"Fetching user profile for identifier: {identifier}")
-                user_data = await self._api_request(
-                    url=self.get_twitter_user_endpoint(), method="GET", headers=self.headers, params=params
-                )
-            else:
-                user_data = {"error": "APIDANCE_API_KEY not set"}
+            logger.info(f"Fetching user profile for identifier: {identifier}")
+            user_data = await self._api_request(
+                url=self.get_twitter_user_endpoint(), method="GET", headers=self.headers, params=params
+            )
 
             if "error" in user_data:
                 # Apidance occasionally returns 404 for the v1.1 show endpoint; fall back to PracticalTools.
                 err = str(user_data.get("error") or "")
-                if self.apify_client and (("404" in err) or ("Not Found" in err) or ("not found" in err)):
+                if ("404" in err) or ("Not Found" in err) or ("not found" in err):
                     logger.warning(f"Apidance user lookup failed ({err}); falling back to PracticalTools user/info")
                     # PracticalTools expects userName without '@'
                     if self._is_numeric_id(identifier):
@@ -421,8 +412,6 @@ class TwitterInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     async def get_tweets(self, user_id: str, limit: int = DEFAULT_TIMELINE_LIMIT, cursor: Optional[str] = None) -> Dict:
-        if not self.api_key:
-            return {"error": "APIDANCE_API_KEY is required for get_user_tweets"}
         params = {"user_id": user_id, "count": min(limit, 50)}
         if cursor:
             params["cursor"] = cursor
@@ -444,8 +433,6 @@ class TwitterInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     async def get_tweet_detail(self, tweet_id: str, cursor: Optional[str] = None) -> Dict:
-        if not self.api_key:
-            return {"error": "APIDANCE_API_KEY is required for get_twitter_detail"}
         params = {"tweet_id": tweet_id}
         if cursor:
             params["cursor"] = cursor
@@ -538,8 +525,6 @@ class TwitterInfoAgent(MeshAgent):
     async def general_search(
         self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None
     ) -> Dict:
-        if not self.api_key:
-            return {"error": "APIDANCE_API_KEY is required for get_general_search"}
         if " " in query and not (query.startswith('"') and query.endswith('"')):
             logger.warning(f"Multi-word search query detected: '{query}' (likely sparse results).")
         params = {"q": query, "sort_by": sort_by}
