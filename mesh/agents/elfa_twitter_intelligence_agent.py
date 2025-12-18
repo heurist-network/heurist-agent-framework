@@ -5,6 +5,7 @@ import random
 import time
 from typing import Any, Dict, List, Optional
 
+from apify_client import ApifyClient
 from dotenv import load_dotenv
 
 from decorators import with_cache, with_retry
@@ -36,6 +37,12 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         if not self.apidance_api_key:
             raise ValueError("APIDANCE_API_KEY environment variable is required")
         self.apidance_base_url = "https://api.apidance.pro"
+
+        self.apify_api_key = os.getenv("APIFY_API_KEY")
+        if not self.apify_api_key:
+            raise ValueError("APIFY_API_KEY environment variable is required")
+        self.apify_client = ApifyClient(self.apify_api_key)
+        self.apify_actor_id = "practicaltools/cheap-simple-twitter-api"
 
         self.metadata.update(
             {
@@ -156,7 +163,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         ]
 
     # ------------------------------------------------------------------------
-    #  Tweet enrichment using TwitterInfoAgent
+    #  Tweet enrichment (Apify bulk + per-tweet fallback)
     # ------------------------------------------------------------------------
 
     async def _fetch_single_tweet_detail(self, tweet_id: str) -> Optional[Dict]:
@@ -197,11 +204,11 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             )
 
             batch_tasks = [self._fetch_single_tweet_detail(tweet_id) for tweet_id in batch]
-            batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
+            batch_results = await asyncio.gather(*batch_tasks)
 
             for tweet_id, result in zip(batch, batch_results):
-                if result is None or isinstance(result, Exception):
-                    logger.warning(f"Failed to fetch tweet {tweet_id}: {result}")
+                if result is None:
+                    logger.warning(f"Failed to fetch tweet {tweet_id}")
                     continue
                 all_results.append(result)
 
@@ -211,34 +218,111 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
 
         return all_results
 
+    def _simplify_practicaltools_tweet(self, tweet: Dict[str, Any]) -> Dict[str, Any]:
+        def _to_int(value: Any) -> int:
+            if value is None:
+                return 0
+            try:
+                return int(float(value))
+            except (TypeError, ValueError):
+                return 0
+
+        tid = str(tweet["id"])
+        author = tweet.get("author") or {}
+        username = author.get("userName") or ""
+
+        url = tweet.get("url") or tweet.get("twitterUrl") or ""
+        if url.startswith("https://"):
+            url = url.removeprefix("https://")
+        if url.startswith("http://"):
+            url = url.removeprefix("http://")
+
+        def _type(t: Dict[str, Any]) -> str:
+            if t.get("isRetweet"):
+                return "retweet"
+            if t.get("isReply"):
+                return "reply"
+            if t.get("isQuote"):
+                return "quote"
+            return "tweet"
+
+        return {
+            "id": tid,
+            "text": (tweet.get("text") or tweet.get("fullText") or "").strip(),
+            "created_at": (tweet.get("createdAt") or "").split("T")[0],
+            "source": f"x.com/{username}/status/{tid}" if username else url,
+            "author": {
+                "id": str(author.get("id") or ""),
+                "username": username,
+                "name": author.get("name") or "",
+                "verified": bool(author.get("isVerified", False)),
+                "followers": _to_int(author.get("followers")),
+            },
+            "engagement": {
+                "likes": _to_int(tweet.get("likeCount")),
+                "replies": _to_int(tweet.get("replyCount")),
+                "retweets": _to_int(tweet.get("retweetCount")),
+                "quotes": _to_int(tweet.get("quoteCount")),
+                "views": _to_int(tweet.get("viewCount")),
+            },
+            "type": _type(tweet),
+        }
+
+    async def _practicaltools_call(self, endpoint: str, parameters: Dict[str, Any]) -> List[Dict[str, Any]]:
+        run_input = {"endpoint": endpoint, "parameters": parameters}
+        run = await asyncio.to_thread(lambda: self.apify_client.actor(self.apify_actor_id).call(run_input=run_input))
+        dataset_id = run.get("defaultDatasetId")
+        if not dataset_id:
+            return []
+        return list(self.apify_client.dataset(dataset_id).iterate_items())
+
+    async def _bulk_hydrate_tweets_by_ids(self, tweet_ids: List[str]) -> Dict[str, Any]:
+        deduped = list(dict.fromkeys([str(x).strip() for x in tweet_ids if str(x).strip()]))
+        if not deduped:
+            return {"tweets": [], "error_tweet_ids": []}
+
+        chunk_size = 20
+        by_id: Dict[str, Dict[str, Any]] = {}
+        try:
+            for i in range(0, len(deduped), chunk_size):
+                chunk = deduped[i : i + chunk_size]
+                items = await self._practicaltools_call("tweet/by_ids", {"tweet_ids": ",".join(chunk)})
+                for item in items:
+                    tid = item.get("id")
+                    if tid:
+                        simplified = self._simplify_practicaltools_tweet(item)
+                        by_id[simplified["id"]] = simplified
+        except Exception as e:
+            logger.warning(f"Bulk hydration failed; falling back to per-tweet: {e}")
+            return {"tweets": [], "error_tweet_ids": deduped}
+
+        tweets_out = [by_id[tid] for tid in deduped if tid in by_id]
+        error_tweet_ids = [tid for tid in deduped if tid not in by_id]
+        return {"tweets": tweets_out, "error_tweet_ids": error_tweet_ids}
+
     async def _enrich_tweets_with_text(self, tweets: List[Dict]) -> List[Dict]:
         """
-        Enrich ELFA tweets using a bulk tweet-id hydration tool to reduce Apidance request frequency.
+        Enrich ELFA tweets by hydrating tweet IDs into full tweet objects.
+
+        Strategy:
+        1) Try bulk hydration via PracticalTools (Apify actor).
+        2) For missing IDs (or if bulk fails), fall back to per-tweet detail calls.
         """
         tweet_ids = [str(tweet.get("tweetId")).strip() for tweet in tweets if tweet.get("tweetId")]
         if not tweet_ids:
             return []
 
         tweet_ids = list(dict.fromkeys(tweet_ids))
-        logger.info(f"Bulk-hydrating {len(tweet_ids)} tweets by ID using TwitterInfoAgent.get_tweets_by_ids")
-        bulk = await self._call_agent_tool(
-            "mesh.agents.twitter_info_agent", "TwitterInfoAgent", "get_tweets_by_ids", {"tweet_ids": tweet_ids}
-        )
+        bulk = await self._bulk_hydrate_tweets_by_ids(tweet_ids)
+        by_id = {t["id"]: t for t in bulk["tweets"]}
 
-        if "error" in bulk:
-            logger.warning(f"Bulk hydration failed: {bulk.get('error')}")
-            hydrated, error_tweet_ids = [], tweet_ids
-        else:
-            hydrated, error_tweet_ids = bulk["tweets"], bulk["error_tweet_ids"]
-
-        by_id = {t["id"]: t for t in hydrated}
-        ordered = [by_id[tid] for tid in tweet_ids if tid in by_id]
-
+        error_tweet_ids = bulk["error_tweet_ids"]
         if error_tweet_ids:
             logger.info(f"Falling back to per-tweet detail for {len(error_tweet_ids)} tweets")
             fallback = await self._fetch_batch_tweet_details(error_tweet_ids, batch_size=5, delay=2.0)
-            ordered.extend(fallback)
+            by_id.update({t["id"]: t for t in fallback})
 
+        ordered = [by_id[tid] for tid in tweet_ids if tid in by_id]
         logger.info(f"Successfully enriched {len(ordered)} out of {len(tweet_ids)} tweets")
         return ordered
 
@@ -354,23 +438,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         except Exception as e:
             logger.error(f"Exception in get_trending_tokens: {str(e)}")
             return {"status": "error", "error": str(e)}
-
-    # ------------------------------------------------------------------------
-    #                      APIDANCE API-SPECIFIC METHODS
-    # ------------------------------------------------------------------------
-    async def get_tweet_detail(self, tweet_id: str, cursor: str = "") -> Dict:
-        endpoint = "sapi/TweetDetail"
-        params = {"tweet_id": tweet_id}
-        if cursor:
-            params["cursor"] = cursor
-        headers = {"apikey": self.apidance_api_key}
-        url = f"{self.apidance_base_url}/{endpoint}"
-        try:
-            result = await self._api_request(url=url, method="GET", headers=headers, params=params)
-            return result if result else {"error": "Empty response from API"}
-        except Exception as e:
-            logger.error(f"Error fetching tweet {tweet_id}: {str(e)}")
-            return {"error": f"Failed to fetch tweet details: {str(e)}"}
 
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
