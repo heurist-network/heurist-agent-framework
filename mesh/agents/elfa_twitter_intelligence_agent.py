@@ -220,21 +220,40 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
 
     async def _enrich_tweets_with_text(self, tweets: List[Dict]) -> List[Dict]:
         """
-        Enrich ELFA tweets using TwitterInfoAgent to get full tweet details.
+        Enrich ELFA tweets using a bulk tweet-id hydration tool to reduce Apidance request frequency.
         """
-        tweet_ids = [tweet.get("tweetId") for tweet in tweets if tweet.get("tweetId")]
+        tweet_ids = [str(tweet.get("tweetId")).strip() for tweet in tweets if tweet.get("tweetId")]
 
         if not tweet_ids:
             return []
 
-        logger.info(f"Fetching full details for {len(tweet_ids)} tweets using TwitterInfoAgent")
+        tweet_ids = list(dict.fromkeys(tweet_ids))
+        logger.info(f"Bulk-hydrating {len(tweet_ids)} tweets by ID using TwitterInfoAgent.get_tweets_by_ids")
+        bulk = await self._call_agent_tool(
+            "mesh.agents.twitter_info_agent",
+            "TwitterInfoAgent",
+            "get_tweets_by_ids",
+            {"tweet_ids": tweet_ids},
+        )
+        if "error" in bulk or bulk.get("status") == "error":
+            logger.warning(f"Bulk hydration failed, falling back to per-tweet detail fetch: {bulk.get('error')}")
+            enriched_tweets = await self._fetch_batch_tweet_details(tweet_ids, batch_size=5, delay=2.0)
+            return [tweet for tweet in enriched_tweets if tweet is not None]
 
-        enriched_tweets = await self._fetch_batch_tweet_details(tweet_ids, batch_size=5, delay=2.0)
+        hydrated = bulk.get("tweets") or []
+        missing = bulk.get("missing_tweet_ids") or []
 
-        result = [tweet for tweet in enriched_tweets if tweet is not None]
+        by_id = {str(t.get("id")): t for t in hydrated if isinstance(t, dict) and t.get("id")}
+        ordered = [by_id[tid] for tid in tweet_ids if tid in by_id]
 
-        logger.info(f"Successfully enriched {len(result)} out of {len(tweet_ids)} tweets")
-        return result
+        # If the bulk actor missed some tweets (deleted/protected), fall back to Apidance for those IDs.
+        if missing:
+            logger.info(f"Bulk hydration missed {len(missing)} tweets; falling back to per-tweet detail for missing IDs")
+            fallback = await self._fetch_batch_tweet_details(missing, batch_size=5, delay=2.0)
+            ordered.extend([t for t in fallback if t is not None])
+
+        logger.info(f"Successfully enriched {len(ordered)} out of {len(tweet_ids)} tweets")
+        return ordered
 
     # ------------------------------------------------------------------------
     #                      ELFA API-SPECIFIC METHODS

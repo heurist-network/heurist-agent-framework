@@ -1,0 +1,963 @@
+metadata:
+  agent: TwitterIntelligenceAgent
+  test_file: twitter_intelligence_agent.py
+  timestamp: '2025-12-18T19:24:05.552358'
+  total_tests: 5
+  passed: 5
+  failed: 0
+results:
+  user_timeline_heurist:
+    input:
+      tool: user_timeline
+      tool_arguments:
+        identifier: '@heurist_ai'
+        limit: 10
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          profile:
+            username: heurist_ai
+            name: Heurist
+            verified: true
+            followers: 33929
+          items:
+          - text: 'Solid research from @OnchainLu The signal cuts through the noise:
+              real x402 adoption lives in micropayments, not vanity metrics. Good
+              to see Heurist Mesh recognized among the servers with sustained, micro-value,
+              repeat usage. The infrastructure layer is proving out.'
+            created_at: '2025-12-17'
+            source: x.com/heurist_ai/status/2001428988892172657
+            author:
+              name: Heurist
+              followers: 33929
+            type: quote
+            engagement:
+              likes: 17
+              replies: 17
+              retweets: 3
+              views: 8501
+          - text: Why guess when you can know?
+            created_at: ''
+            source: x.com/premium/status/1952590396456042557
+            author:
+              name: Premium
+              followers: 1210338
+            type: tweet
+            engagement:
+              likes: 105511
+              retweets: 6834
+              quotes: 331
+              views: 1480191104
+          - text: 'x402 v2 is live. Heurist facilitator and Mesh agents already support
+              the new spec. What v2 adds: wallet-based sessions, multi-chain payments,
+              plugin-driven architecture. Agents can skip full payment flows on repeated
+              calls.'
+            created_at: '2025-12-17'
+            source: x.com/heurist_ai/status/2001355713499795601
+            author:
+              name: Heurist
+              followers: 33929
+            type: tweet
+            engagement:
+              likes: 31
+              replies: 15
+              retweets: 13
+              quotes: 1
+              views: 6409
+          - text: Agentic commerce is going full-stack. Payments, identity, trust,
+              and execution are converging fast.
+            created_at: ''
+            source: x.com/heurist_ai/status/2000866110540062846
+            author:
+              name: Heurist
+              followers: 33929
+            type: quote
+            engagement:
+              likes: 63
+              replies: 15
+              retweets: 40
+              views: 15202
+          - text: In 2023 the EU saw 32.2 kg of e-equipment placed on the market per
+              person, but only 11.6 kg of e-waste collected. That 20.6 kg gap = growing
+              stock of devices. The upcoming Circular Economy Act aims to boost high-quality
+              recycling &amp; make the EU a circular leader by 2030.
+            created_at: ''
+            source: x.com/fitfor55info/status/1998286496466432431
+            author:
+              name: Fit for 55 - Explained
+              followers: 7515
+            type: tweet
+            engagement:
+              likes: 277
+              replies: 26
+              retweets: 7
+              quotes: 1
+              views: 4944039
+          - text: dont miss this one!
+            created_at: '2025-12-10'
+            source: x.com/heurist_ai/status/1998785443358494897
+            author:
+              name: Heurist
+              followers: 33929
+            type: quote
+            engagement:
+              likes: 61
+              replies: 14
+              retweets: 47
+              views: 8199
+          - text: We're in 🤝 Sign up, engage, and get rewarded directly to your Base
+              wallet. Join us →
+            created_at: '2025-12-10'
+            source: x.com/heurist_ai/status/1998779186429808878
+            author:
+              name: Heurist
+              followers: 33929
+            type: quote
+            engagement:
+              likes: 76
+              replies: 17
+              retweets: 46
+              views: 10856
+          - text: '2025 gave us the agent thesis. We''re gathering builders to talk
+              through what''s actually coming in 2026: agents that execute, personal
+              models trained on your own data, and AI systems that transact onchain.
+              Tomorrow, 11 AM EST.'
+            created_at: ''
+            source: x.com/heurist_ai/status/1998440483937296587
+            author:
+              name: Heurist
+              followers: 33929
+            type: tweet
+            engagement:
+              likes: 77
+              replies: 16
+              retweets: 42
+              views: 7242
+          - text: We're teaming up with @AiMoNetwork to make Heurist Mesh available
+              through their marketplace. Open routing to mesh agents, tools, and inference
+              stack. x402 connects.
+            created_at: ''
+            source: x.com/heurist_ai/status/1998231045284753649
+            author:
+              name: Heurist
+              followers: 33929
+            type: quote
+            engagement:
+              likes: 61
+              replies: 15
+              retweets: 37
+              quotes: 1
+              views: 7639
+          - text: 'Ethereum has completed the Fusaka upgrade. Check Etherscan: Mainnet
+              swaps now cost cents. L2 transactions in the $0.0001 range. The economic
+              friction is gone. So, what are we going to build with all this bandwidth?
+              🧵'
+            created_at: '2025-12-05'
+            source: x.com/heurist_ai/status/1996974603831591292
+            author:
+              name: Heurist
+              followers: 33929
+            type: tweet
+            engagement:
+              likes: 54
+              replies: 17
+              retweets: 36
+              quotes: 1
+              views: 6460
+          next_cursor: null
+    description: Fetch recent tweets from @heurist_ai
+    status: success
+    elapsed_time: 5.934458017349243
+  tweet_detail_basic:
+    input:
+      tool: tweet_detail
+      tool_arguments:
+        tweet_id: '1913624766793289972'
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          main:
+            text: Your agents, your way. Create a dedicated MCP server with Heurist
+              as simple as 3 steps 👇
+            created_at: '2025-04-19'
+            source: x.com/heurist_ai/status/1913624766793289972
+            author:
+              name: Heurist
+              followers: 33930
+            type: tweet
+            engagement:
+              likes: 34
+              replies: 12
+              retweets: 13
+              quotes: 4
+              views: 13854
+          next_tool_tips:
+          - Pass show_thread=true to load the full thread and top replies.
+    description: Fetch a single tweet detail (basic)
+    status: success
+    elapsed_time: 0.991753339767456
+  tweet_detail_thread:
+    input:
+      tool: tweet_detail
+      tool_arguments:
+        tweet_id: '1914394032169762877'
+        show_thread: true
+        replies_limit: 10
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          main:
+            text: Big screen moment for AI agents. This is what it feels like to build
+              with Heurist. One interface, endless powers. Plug into the future →
+              mcp dot/ heurist dot/ ai
+            created_at: '2025-04-21'
+            source: x.com/gpt3_eth/status/1914394032169762877
+            author:
+              name: Frank ✈️ (📜,📜)
+              followers: 1856
+            type: quote
+            engagement:
+              likes: 4
+              quotes: 1
+              views: 495
+            quoted_tweet:
+              id: '1913624766793289972'
+              text: Your agents, your way. Create a dedicated MCP server with Heurist
+                as simple as 3 steps 👇
+              created_at: '2025-04-19'
+              source: x.com/heurist_ai/status/1913624766793289972
+              author:
+                id: '1736748346566459392'
+                username: heurist_ai
+                name: Heurist
+                verified: true
+                followers: 33930
+              engagement:
+                likes: 34
+                replies: 12
+                retweets: 13
+                quotes: 4
+                views: 13854
+              type: tweet
+    description: Fetch tweet detail with thread + top replies
+    status: success
+    elapsed_time: 0.6914141178131104
+  twitter_search_bitcoin:
+    input:
+      tool: twitter_search
+      tool_arguments:
+        queries:
+        - bitcoin
+        - $BTC
+        limit: 10
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          influential_mentions:
+          - text: 'RT @pete_rizzo_: JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION
+              WORTH OF ANOTHER COUNTRY HOLDING BTC. HUGE 🔥'
+            created_at: ''
+            source: x.com/pete_rizzo_/status/2001612972452401644
+            author:
+              name: The Bitcoin Historian
+              followers: 205683
+            type: tweet
+            engagement:
+              likes: 51
+              replies: 23
+              retweets: 6
+          - text: 🚨Why $BTC dumps during heavy institutional buying? According to
+              @BullTheoryio, forced sellers (⚒️ miners + early holders) are exiting,
+              while long-term capital absorbs the supply. The 10 a.m. ET dumps are
+              driven by Wall Street opens, flows & algos Once miners and OG holders
+              finish selling, the price will stop falling!
+            created_at: ''
+            source: x.com/CCNDotComNews/status/2001612117506511040
+            author:
+              name: CCN
+              followers: 183444
+            type: tweet
+            engagement:
+              likes: 1
+              replies: 1
+              views: 68
+          - text: 'JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION WORTH OF ANOTHER
+              COUNTRY HOLDING BTC. HUGE 🔥'
+            created_at: ''
+            source: x.com/pete_rizzo_/status/2001607967460696181
+            author:
+              name: The Bitcoin Historian
+              followers: 205683
+            type: tweet
+            engagement:
+              likes: 51
+              replies: 23
+              retweets: 6
+              views: 1976
+          - text: Bitcoin spot ETFs pulled in a massive $457 million in inflows yesterday
+              alone. @saylor loaded up on almost $2 billion worth of $BTC over the
+              past two weeks. Will we see $BTC above 100K, before the EOY?
+            created_at: ''
+            source: x.com/LLuciano_BTC/status/2001606057001734485
+            author:
+              name: Lucky
+              followers: 1985066
+            type: tweet
+            engagement:
+              likes: 367
+              replies: 34
+              retweets: 8
+              views: 14249
+          - text: 'RT @AltCryptoGems: $BTC / $USDT - TA OTD 📊 Oh man, what a predatory
+              price action over the past weeks on . Basically, a Bart patter…'
+            created_at: ''
+            source: x.com/AltCryptoGems/status/2001604163751289028
+            author:
+              name: Sjuul | AltCryptoGems
+              followers: 477228
+            type: tweet
+            engagement:
+              likes: 571
+              replies: 13
+              retweets: 7
+          - text: 'RT @Excellion: Bitmine holds 3,967,210 ETH. At the current market
+              rate of approximately 0.0327 BTC per ETH, selling all of it would yield…'
+            created_at: ''
+            source: x.com/BitPaine/status/2001603373100052620
+            author:
+              name: Bit Paine ⚡️
+              followers: 52108
+            type: tweet
+            engagement:
+              likes: 221
+              replies: 8
+              retweets: 19
+              quotes: 5
+          - text: 'RT @TheDeFiPlug: Price moved because leverage failed, not because
+              macro did. Over the past 24 hours, $BTC and $ETH repriced lower alongsid…'
+            created_at: ''
+            source: x.com/TheDeFiPlug/status/2001602824002506969
+            author:
+              name: THEDEFIPLUG
+              followers: 52504
+            type: tweet
+            engagement:
+              likes: 292
+              replies: 38
+              retweets: 14
+              quotes: 2
+          - text: 'RT @KuCoinInst: Crypto Midweek | Risk-Off Takes Hold Geopolitical
+              tensions and renewed AI investment concerns are converging, pushing
+              marke…'
+            created_at: ''
+            source: x.com/kucoincom/status/2001597833221410954
+            author:
+              name: KuCoin
+              followers: 3557058
+            type: tweet
+            engagement:
+              likes: 18
+              replies: 5
+              retweets: 1
+          - text: 🎙️ @JosefTetek, @1basemoney and @bratricek will be speaking at the
+              world’s biggest and most influential Bitcoin conference. BTC Prague
+              2026 · June 11–13 · Prague 🎟️ Get your ticket today
+            created_at: ''
+            source: x.com/BTCPrague/status/2001597373957406816
+            author:
+              name: BTC Prague
+              followers: 22486
+            type: tweet
+            engagement:
+              likes: 6
+              replies: 2
+              views: 234
+          - text: 'Crypto Midweek | Risk-Off Takes Hold Geopolitical tensions and
+              renewed AI investment concerns are converging, pushing markets into
+              a clear risk-off stance. U.S. equities slid for a fourth straight session
+              as safe havens—gold and oil—moved higher. In crypto, BTC volatility
+              spiked. After briefly testing 90K, Bitcoin reversed with risk appetite
+              and drifted back toward the 85K zone. Altcoins broadly retraced on lighter
+              volumes, keeping sentiment in Extreme Fear (17). What to watch next:
+              - U.S. CPI and major central bank decisions (ECB, BoE, Riksbank) - Whether
+              macro clarity can stabilize risk assets—or deepen the drawdown Are we
+              near a volatility reset, or just mid-cycle noise? 👇'
+            created_at: ''
+            source: x.com/KuCoinInst/status/2001597104922464621
+            author:
+              name: KuCoin VIP & Institutional
+              followers: 1945
+            type: tweet
+            engagement:
+              likes: 18
+              replies: 5
+              retweets: 1
+              views: 3069
+          - text: 'RT @StarPlatinum_: The day Bitcoin almost died this bug remains
+              one of the strangest events ever recorded on the blockchain August 2010:…'
+            created_at: ''
+            source: x.com/StarPlatinum_/status/2001595839794352293
+            author:
+              name: StarPlatinum
+              followers: 86381
+            type: tweet
+            engagement:
+              likes: 562
+              replies: 77
+              retweets: 64
+              quotes: 5
+          - text: still holds strong after the deepest correction of this cycle so
+              far. Down 36% from the highs - and it's not even close to the deepest
+              correction in recent history. $BTC has survived much worse.
+            created_at: ''
+            source: x.com/CryptoJelleNL/status/2001591885463449934
+            author:
+              name: Jelle
+              followers: 113926
+            type: tweet
+            engagement:
+              likes: 138
+              replies: 13
+              retweets: 15
+              views: 4213
+          - text: 'RT @Barchart: Bitcoin Whales have purchased $23.3 Billion worth
+              of $BTC over the last 30 days, the largest monthly purchase in 13 years
+              🤯🤑…'
+            created_at: ''
+            source: x.com/MikeAbundoTech/status/2001589791633347074
+            author:
+              name: Mike Abundo
+              followers: 1225
+            type: tweet
+            engagement:
+              likes: 457
+              replies: 52
+              retweets: 92
+              quotes: 12
+          - text: 'RT @BTCsessions: BTC Sessions BITCOIN CHRISTMAS SPECIAL 2025 -
+              Mow, Moss, Booth, Gladstein, Pouliot + More!'
+            created_at: ''
+            source: x.com/CdnBitcoinConf/status/2001587956444758305
+            author:
+              name: Canadian Bitcoin Conference 2025
+              followers: 5984
+            type: tweet
+            engagement:
+              likes: 71
+              replies: 5
+              retweets: 16
+              quotes: 7
+          general_search_result:
+          - text: Bitcoin zbliża się do poziomu decydującego o zachowaniu inwestorów!
+              Bitcoin handluje w strefie, która może przesądzić o dalszym zachowaniu
+              rynku. To poziom psychologiczny dla długoterminowych holderów. Utrata
+              wsparcia może zwiększyć presję sprzedażową. Utrzymanie poziomu sprzyja
+              cierpliwości inwestorów.
+            created_at: ''
+            source: x.com/KryptoEkipa/status/2001614229086806526
+            author:
+              name: KryptoEkipa
+              followers: 16938
+            type: tweet
+            engagement:
+              likes: 1
+          - text: 🧙‍♀️Piano piano (scopiazzando dai nostri post) tutti cambieranno
+              narrativa su Bitcoin. I primi a sapere sono stati però come sempre gli
+              utenti Elite. ✍️Questi post resteranno ancora una vollta a dimostrazione
+              che l'unico Standard al mondo per la conoscenza e il tracciamento su
+              è🎗️Elite👉
+            created_at: ''
+            source: x.com/CryptoGrassini/status/2001614186338500949
+            author:
+              name: CryptoGrassini
+              followers: 445
+            type: quote
+            engagement:
+              likes: 1
+              views: 5
+          - text: Binance founder CZ predicts $BTC will reach between $120,000 and
+              $150,000 next month.
+            created_at: ''
+            source: x.com/wangbnbwhale/status/2001614166906552599
+            author:
+              name: Wang 王 🔶 BNB
+              followers: 61997
+            type: tweet
+            engagement:
+              likes: 3
+              replies: 1
+              views: 8
+          - text: Loads of people hoped cryptocurrencies such as $BTC and $ETH would
+              replace the current monetary system, but as we all know, this isn’t
+              possible (yet). Almost nobody directly accepts $BTC, $ETH, or other
+              cryptocurrencies, so they’re simply not fit yet to replace the current
+              monetary system. +Self-custody, spending limits, and all of those issues
+              are still present. $AVICI lets you actually use your crypto without
+              giving up control of it. You can send, receive, and spend money worldwide,
+              and everything just works in the background when it comes to conversions.
+              It feels like regular banking, but you’re still holding your own assets.
+            created_at: ''
+            source: x.com/Mr_Bidder/status/2001613852975284618
+            author:
+              name: Mr. Bidder
+              followers: 12232
+            type: quote
+            engagement:
+              likes: 2
+              views: 19
+          - text: The whole timeline says it’s over. But data says $BTC is going to
+              $200,000 next year. I know which one I’m listening to.
+            created_at: ''
+            source: x.com/Daniel_br00kss/status/2001613775808438473
+            author:
+              name: Daniel Brooks
+              followers: 648
+            type: tweet
+            engagement:
+              likes: 1
+              views: 10
+          - text: 🚨 FREE GOLD (XAUUSD) TRADING SIGNALS! 👇👇👇👇👇 96% Accuracy Rate 2–7
+              Profitable Signals Every Day $CRO $VVS $BTC $ETH $SOL $XRP $DOGE $SHIB
+              $PEPE $PI $SUI $AD $TRUMP $HBAR $jxch
+            created_at: ''
+            source: x.com/forex_master56/status/2001613696062062850
+            author:
+              name: FX LENA ♥️
+              followers: 62
+            type: tweet
+            engagement:
+              retweets: 1
+              views: 20
+          - text: '🔻 $BTC slipped back below the broken triangle base after a brief
+              retest, signaling weak follow-through from buyers. The reaction from
+              descending resistance suggests downside pressure could resume if support
+              fails to stabilize price. ✅Full analytics in telegram:'
+            created_at: ''
+            source: x.com/GainMuse_Crypto/status/2001613682590019614
+            author:
+              name: GainMuse
+              followers: 368
+            type: tweet
+            engagement:
+              likes: 1
+              views: 6
+    description: Search for bitcoin related tweets (public + ELFA mentions)
+    status: success
+    elapsed_time: 8.357670307159424
+  nl_search:
+    input:
+      query: Find recent tweets mentioning Bitcoin and summarize the discussion
+    output:
+      response: '**Recent Twitter Discussion Summary: Bitcoin**
+
+
+        **Key Topics:**
+
+
+        1. **Institutional Investment**: Discussions around countries (e.g., Taiwan,
+        UAE, El Salvador, Luxembourg, Czech Republic) buying or holding Bitcoin, indicating
+        growing institutional interest.
+
+        2. **Bitcoin''s Future Value**: Speculations about Bitcoin''s potential price
+        (e.g., $250K) and its implications on the market.
+
+        3. **Volatility and Stability**: Analyses suggesting Bitcoin''s volatility
+        is decreasing, comparing it favorably to stocks like NVIDIA, with expectations
+        for further stability.
+
+        4. **Technological Advancements**: Mentions of projects (e.g., Ztarknet) aiming
+        to leverage Bitcoin''s security and privacy for high-performance execution
+        layers.
+
+        5. **Market Sentiment and HODL Culture**: Reflections on the origins of "HODL"
+        and its enduring significance as a symbol of conviction in holding Bitcoin
+        through market fluctuations.
+
+
+        **Influential Voices:**
+
+
+        1. **@LarkDavis** (1.45M followers) - Shared news on Travel Retail Norway
+        accepting Bitcoin payments.
+
+        2. **@pete_rizzo_** (via @TheBitcoinHistorian, 205K followers) - Revealed
+        Taiwan''s $18.2M worth of Bitcoin holdings.
+
+        3. **@APompliano** (via @cryptogems555, 435K followers) - Highlighted the
+        importance of AI and Bitcoin in upcoming technologies.
+
+        4. **@naiivememe** (318K followers) - Humorously noted the omnipresence of
+        Bitcoin price updates at $250K.
+
+        5. **@CoinBureau** (1.06M followers) - Shared insights on Bitcoin''s decreasing
+        volatility.
+
+
+        **Engagement Highlights:**
+
+
+        * **Most Liked:** @cryptogems555''s retweet of @APompliano (1852 likes)
+
+        * **Most Replied:** @adam3us''s retweet of @pete_rizzo_ (77 replies)
+
+        * **Most Retweeted:** @adam3us''s retweet of @pete_rizzo_ (167 retweets)
+
+
+        **General Search Result Observations (Beyond Influential Mentions):**
+
+
+        * Discussions are not limited to English, with tweets in Polish and Italian
+        reflecting global interest in Bitcoin.
+
+        * Topics extend to the broader crypto market, with mentions of other projects
+        (e.g., PIPPIN, Solana, Zcash).
+
+        * Engagement varies widely across tweets, indicating diverse audience interactions.'
+      data:
+        status: success
+        data:
+          influential_mentions:
+          - text: 'RT @LarkDavis: JUST IN: Travel Retail Norway (a chain of duty-free
+              shops) to accept Bitcoin payments on arrival at Oslo airport. Norway
+              is…'
+            created_at: ''
+            source: x.com/LarkDavis/status/2001613455908888822
+            author:
+              name: Lark Davis
+              followers: 1457865
+            type: tweet
+            engagement:
+              likes: 68
+              replies: 48
+              retweets: 13
+              quotes: 2
+          - text: Money will never stop being relevant because humans will always
+              need a measuring stick to determine relative value. The question is,
+              what will the most optimal measuring stick be in the future? The answer
+              is bitcoin.
+            created_at: ''
+            source: x.com/w_s_bitcoin/status/2001613111087038759
+            author:
+              name: Wicked
+              followers: 90001
+            type: tweet
+            engagement:
+              likes: 2
+              replies: 1
+              views: 100
+          - text: 'RT @pete_rizzo_: JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION
+              WORTH OF ANOTHER COUNTRY HOLDING BTC. HUGE 🔥'
+            created_at: ''
+            source: x.com/pete_rizzo_/status/2001612972452401644
+            author:
+              name: The Bitcoin Historian
+              followers: 205683
+            type: tweet
+            engagement:
+              likes: 51
+              replies: 23
+              retweets: 6
+          - text: 'RT @Laurastacksats: We traveled “in bitcoin” before it was a thing.
+              Me and @Rikki6ixx started @btcexplorers in El Salvador in 2021, then…'
+            created_at: ''
+            source: x.com/JoeNakamoto/status/2001612472008990813
+            author:
+              name: Joe Nakamoto ⚡️
+              followers: 50191
+            type: tweet
+            engagement:
+              likes: 244
+              replies: 32
+              retweets: 29
+              quotes: 6
+          - text: 🚨Why $BTC dumps during heavy institutional buying? According to
+              @BullTheoryio, forced sellers (⚒️ miners + early holders) are exiting,
+              while long-term capital absorbs the supply. The 10 a.m. ET dumps are
+              driven by Wall Street opens, flows & algos Once miners and OG holders
+              finish selling, the price will stop falling!
+            created_at: ''
+            source: x.com/CCNDotComNews/status/2001612117506511040
+            author:
+              name: CCN
+              followers: 183444
+            type: tweet
+            engagement:
+              likes: 1
+              replies: 1
+              views: 68
+          - text: '🔮 🤔 💭 •WMD 👀 ..Double you, em, Dee…. 🫵🏼🫵🏼 🩺🥼 Let’s do a little
+              WordPlay, shall we? (Hint: 🤭 Maybe after we can “play Doctor, next”
+              ✍️ ~Kek Max. II 🫡 🗣️ reporting for comedic duty, anons) 😈 🎭 🤡🥁💥 ~•Did
+              ya Miss Me, chat?!•~ ⚡️ 🧨 🌋 Because… after all, I’m Italian. 🇮🇹😎💪🏼 And
+              👁️ happen to be a modern day Renaissance Twartist; ya know: ..one who
+              has legit traced back his entire earthly genetic heritage to The Source…
+              🪏 👀 🛩️ 🗺️ 🍀 🎰 🎲 ♠️ (which, when we think of it harshly: is really just
+              mere luck of the draw, at the end of the day…. 🃏 it’s a Wild Card, we
+              get dealt by the Hands of Life…. Best, imho, to Play the Odds to your
+              Favor…. If ya catch my drift.. ☯️ 🧠 👀 IE: We are unable to proactively
+              or consciously choose our parents. I just happen to have two that are:
+              still alive, together after 50 years, and happy/healthy. 🤯 ••what a
+              beautiful lovely and totes achievable concept, I know, right?!•• 😉(hi
+              mom) 👋🏼 God Bless. 🕊️☮️❤️ we got as lucky as a huge pile of dinosaur
+              poop, frankly- there are literal billions less fortunate- that fact
+              is not lost on me- and for them, sincerely, my heart weeps; truly) ..from
+              the ancestral roots of the Ancient Slopes of Mount Vesuvius, itself.
+              📰 Pure. Uncut. 💯 DOP ❄️ 😱‼️ (No, officer… 🚨 it means Protected Designation
+              of Origin (PDO) in English, but in my motherland’s tongue, that is DOP,
+              aka: Denominazione di Origine Protetta …which, is pretty f*ing DOPE
+              if ya ask me. 🎭 Anyhoo… 👁️ 🍠 Definitely a Lover, 🧡 not a Fighter. 🥊
+              ☢️ so back to WMDs… 💣 (and not the BS fugazi kind that was lied to us
+              about for 9/11, either) 🧟‍♀️ They say: “Guns don’t Kill People, People
+              do…” And while that’s technically true, the guns sure help, so best
+              know how to properly use them, lest you wind up being the source of
+              death. And that’s never a good thing, anon!! We, whose 🇮🇹😎💪🏼 🧬 ancestors
+              were all: Born on The Boot 👢 are known to ….how do we say, “pack the
+              heat” 🔥 🔫 (in the culinary department, wtf! 🤬 what are you 🫵🏼 thinking,
+              precisely at this moment, anon??) Haters will say I’m conducting mass
+              psychosis and Mind Control on the TimeLine, but it’s really just a clever
+              Use of The Force 😎 🪬 Trick&Treat! 😜 🍆 👅 👨‍🍳 👌🏼 😘 (get your head out
+              the gutter if that’s where it is, dirty dog, you- tsk tsk) lol 🐶 …hold
+              up, anon… chill…… don’t be such a prude. We don’t like jealous girls.
+              😂 is all Gucci, bb 😎 🐝 🐝 😘 lemme cook for a spell… 📜 🌀 Weapon of Mass
+              Destruction Lets Judo Flip these around a Bitcoin for a bit of fun…
+              (Some people say I can be a Dick sometimes… a real HYUGE 🫡🍊🇺🇸 one, especially
+              when 👁️ destroy the Fruits of Labor with automation and 🤖 bots) 🍆 💣
+              🍑 ⚖️ Presenting, LIVE on 𝕏: From a 💯 percent *OGJM who knows how to
+              HODL …. Hint: OGJM=Original Gangster Jedi Master, if you were to Know
+              Me….. IRL… ⚡️🫁•📣🐅🐂🐳🪽🗣️🔊 I 🎁 to y’all this Holiday Season: A New, more
+              Lovable Term for the acronym: WMD: Weapon of Mass Dickruption. 🥁 … ..
+              ……Cuz you love it when I show up and interrupt your thread 🧵 🎤 🕳️ 🤐
+              ~•IYKYK•~ 🎭 🤡🥁💥'
+            created_at: ''
+            source: x.com/hidden_whale/status/2001612003090031098
+            author:
+              name: Crouching Tiger Hidden Whale (b/acc) 🍊🌋🐳
+              followers: 2400
+            type: tweet
+            engagement:
+              replies: 1
+              views: 19
+          - text: 'RT @pete_rizzo_: WHILE YOU ARE SCARED 4 NATIONS JUST STARTED BUYING
+              THE UAE 🇦🇪 EL SALVADOR 🇸🇻 LUXEMBOURG 🇱🇺 CZECH REPUBLIC 🇨🇿…'
+            created_at: ''
+            source: x.com/adam3us/status/2001611878867378411
+            author:
+              name: Adam Back
+              followers: 710027
+            type: tweet
+            engagement:
+              likes: 875
+              replies: 77
+              retweets: 167
+              quotes: 4
+          - text: once Bitcoin hits $250K, we won’t need wifi or internet to update
+              the price, the signs will be everywhere.
+            created_at: ''
+            source: x.com/naiivememe/status/2001611518451028081
+            author:
+              name: naiive
+              followers: 318772
+            type: tweet
+            engagement:
+              likes: 23
+              replies: 10
+              retweets: 4
+              views: 707
+          - text: 'RT @APompliano: It is very clear that artificial intelligence and
+              bitcoin will be two of the most important technologies over the coming
+              de…'
+            created_at: ''
+            source: x.com/cryptogems555/status/2001609796672180686
+            author:
+              name: Crypto GEMs 📈🚀
+              followers: 435255
+            type: tweet
+            engagement:
+              likes: 1852
+              replies: 190
+              retweets: 117
+              quotes: 13
+          - text: 'RT @DreamMemesy: Here''s some stats for you guys. As we go, we''ll
+              look at comparative odds There''s been around 40,000,000 financial assets…'
+            created_at: ''
+            source: x.com/tickerBITCOINbb/status/2001609397517042138
+            author:
+              name: James Slammeron aka MORE LIGHT | $BITCOIN ‡ 🟦🟨🟥
+              followers: 7882
+            type: tweet
+            engagement:
+              likes: 26
+              replies: 3
+              retweets: 13
+              quotes: 2
+          - text: Start trading Bitcoin &amp; Altcoins yourself. Claim a 50% deposit
+              bonus on WEEX. Only with THIS link 👇
+            created_at: ''
+            source: x.com/cryptorover/status/2001609134366724336
+            author:
+              name: Crypto Rover
+              followers: 1453474
+            type: tweet
+            engagement:
+              likes: 51
+              replies: 23
+              retweets: 4
+              views: 8788
+          - text: 'Twelve years ago today, one of crypto’s most iconic words was born
+              👉 ''HODL'' Bitcoin had just crashed nearly 40% in a single day. Panic
+              was spreading fast on the forums. Traders were arguing, emotions were
+              high, and many were ready to cut their losses. Then a user named GameKyuubi
+              made a post titled: “I AM HODLING” He was slightly drunk, frustrated,
+              and honest. In his post, he admitted: “I’m a bad trader and I KNOW I’M
+              A BAD TRADER.” “You only sell in a bear market if you are a good day
+              trader or an illusioned noob.” So he decided to hodl. He meant to write
+              "holding," but the typo stuck. And that typo changed crypto forever.
+              What started as a late-night rant turned into a rallying cry. HODL became
+              a symbol. A mindset. A way of saying: “I’m staying in this no matter
+              what.” It meant holding on through the chaos, the dips, the fear, and
+              the bear markets. It meant conviction, not panic. Over time, people
+              even gave it a new meaning: ''Hold On for Dear Life''. Twelve years
+              later, the word is still with us. Not just as a meme, but as a reminder
+              that belief matters more than timing. HODL on.'
+            created_at: ''
+            source: x.com/wirexapp/status/2001608562116645311
+            author:
+              name: Wirex
+              followers: 102614
+            type: tweet
+            engagement:
+              likes: 11
+              replies: 8
+              retweets: 1
+              views: 175
+          - text: Bitcoin &amp; Crypto The End 🤫 BITUNIX TRADE THE TOP COINS (available
+              everywhere) $10,000 DEPOSIT BONUS 👉 👉 Join The Inner Circle
+            created_at: ''
+            source: x.com/LarkDavis/status/2001608557553451412
+            author:
+              name: Lark Davis
+              followers: 1457865
+            type: tweet
+            engagement:
+              likes: 24
+              replies: 20
+              views: 2433
+          - text: isn’t hype. It’s architecture.”
+            created_at: ''
+            source: x.com/TheBitcoin__/status/2001608384412307493
+            author:
+              name: The ₿itcoin⚡️Libertarian
+              followers: 27668
+            type: tweet
+            engagement:
+              likes: 2
+              retweets: 2
+              views: 39
+          - text: 🚨BITCOIN IS LESS VOLATILE THAN NVIDIA ’s volatility has declined
+              for years as ETFs and institutions broaden its investor base. Bitwise
+              expects $BTC's volatility to fall even further below into 2026.
+            created_at: ''
+            source: x.com/coinbureau/status/2001608381832769686
+            author:
+              name: Coin Bureau
+              followers: 1069780
+            type: tweet
+            engagement:
+              likes: 42
+              replies: 34
+              retweets: 9
+              views: 3337
+          - text: 'JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION WORTH OF ANOTHER
+              COUNTRY HOLDING BTC. HUGE 🔥'
+            created_at: ''
+            source: x.com/pete_rizzo_/status/2001607967460696181
+            author:
+              name: The Bitcoin Historian
+              followers: 205683
+            type: tweet
+            engagement:
+              likes: 52
+              replies: 23
+              retweets: 6
+              views: 2003
+          - text: 'RT @Ztark_Labs: Our goal: All the capabilities of Solana, but built
+              on the security and privacy of Bitcoin and Zcash, without the risk.
+              Zt…'
+            created_at: ''
+            source: x.com/odin_free/status/2001607689357406430
+            author:
+              name: Brother Odin 🥷🏽
+              followers: 38021
+            type: tweet
+            engagement:
+              likes: 5
+              replies: 1
+              retweets: 5
+          - text: 'Our goal: All the capabilities of Solana, but built on the security
+              and privacy of Bitcoin and Zcash, without the risk. Ztarknet brings
+              a high-performance execution layer to the world''s most robust L1s.'
+            created_at: ''
+            source: x.com/Ztark_Labs/status/2001607685037334880
+            author:
+              name: ZTARKNET 🥷
+              followers: 1579
+            type: tweet
+            engagement:
+              likes: 5
+              replies: 1
+              retweets: 5
+              views: 174
+          general_search_result:
+          - text: Pippin Meme Official $PIPPIN Airdrop Our momentum fuels innovation.
+              Plans are advancing rapidly to deliver even more benefits to PIPPIN
+              holders. 🔗 Engineering the future of decentralized finance — today.
+              $SLOP
+            created_at: ''
+            source: x.com/Bullish__Degen/status/2001614246749036673
+            author:
+              name: Bullish Degen
+              followers: 541616
+            type: tweet
+            engagement:
+              likes: 82
+              retweets: 20
+              views: 4
+          - text: Bitcoin zbliża się do poziomu decydującego o zachowaniu inwestorów!
+              Bitcoin handluje w strefie, która może przesądzić o dalszym zachowaniu
+              rynku. To poziom psychologiczny dla długoterminowych holderów. Utrata
+              wsparcia może zwiększyć presję sprzedażową. Utrzymanie poziomu sprzyja
+              cierpliwości inwestorów.
+            created_at: ''
+            source: x.com/KryptoEkipa/status/2001614229086806526
+            author:
+              name: KryptoEkipa
+              followers: 16938
+            type: tweet
+            engagement:
+              likes: 1
+              views: 5
+          - text: 🧙‍♀️Piano piano (scopiazzando dai nostri post) tutti cambieranno
+              narrativa su Bitcoin. I primi a sapere sono stati però come sempre gli
+              utenti Elite. ✍️Questi post resteranno ancora una vollta a dimostrazione
+              che l'unico Standard al mondo per la conoscenza e il tracciamento su
+              è🎗️Elite👉
+            created_at: ''
+            source: x.com/CryptoGrassini/status/2001614186338500949
+            author:
+              name: CryptoGrassini
+              followers: 445
+            type: quote
+            engagement:
+              likes: 1
+              views: 5
+    description: Natural language query using twitter_search
+    status: success
+    elapsed_time: 27.52883768081665
