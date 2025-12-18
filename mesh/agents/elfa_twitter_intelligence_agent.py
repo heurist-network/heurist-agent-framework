@@ -162,10 +162,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
     async def _fetch_single_tweet_detail(self, tweet_id: str) -> Optional[Dict]:
         try:
             result = await self._call_agent_tool(
-                "mesh.agents.twitter_info_agent",
-                "TwitterInfoAgent",
-                "get_twitter_detail",
-                {"tweet_id": tweet_id}
+                "mesh.agents.twitter_info_agent", "TwitterInfoAgent", "get_twitter_detail", {"tweet_id": tweet_id}
             )
             if "error" in result:
                 logger.warning(f"Error fetching tweet {tweet_id}: {result.get('error')}")
@@ -179,7 +176,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
 
     async def _fetch_batch_tweet_details(
         self, tweet_ids: List[str], batch_size: int = 5, delay: float = 0.5
-    ) -> List[Optional[Dict]]:
+    ) -> List[Dict]:
         """
         Fetch full tweet details with controlled parallelism.
 
@@ -191,7 +188,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         Returns:
             List of simplified tweet dicts in TwitterInfoAgent format
         """
-        all_results = []
+        all_results: List[Dict] = []
 
         for i in range(0, len(tweet_ids), batch_size):
             batch = tweet_ids[i : i + batch_size]
@@ -202,15 +199,11 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             batch_tasks = [self._fetch_single_tweet_detail(tweet_id) for tweet_id in batch]
             batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
 
-            processed_results = []
             for tweet_id, result in zip(batch, batch_results):
-                if isinstance(result, Exception):
-                    logger.warning(f"Exception fetching tweet {tweet_id}: {result}")
-                    processed_results.append(None)
-                else:
-                    processed_results.append(result)
-
-            all_results.extend(processed_results)
+                if result is None or isinstance(result, Exception):
+                    logger.warning(f"Failed to fetch tweet {tweet_id}: {result}")
+                    continue
+                all_results.append(result)
 
             if i + batch_size < len(tweet_ids):
                 logger.debug(f"Waiting {delay}s before next batch...")
@@ -223,7 +216,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         Enrich ELFA tweets using a bulk tweet-id hydration tool to reduce Apidance request frequency.
         """
         tweet_ids = [str(tweet.get("tweetId")).strip() for tweet in tweets if tweet.get("tweetId")]
-
         if not tweet_ids:
             return []
 
@@ -235,22 +227,21 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
             "get_tweets_by_ids",
             {"tweet_ids": tweet_ids},
         )
-        if "error" in bulk or bulk.get("status") == "error":
-            logger.warning(f"Bulk hydration failed, falling back to per-tweet detail fetch: {bulk.get('error')}")
-            enriched_tweets = await self._fetch_batch_tweet_details(tweet_ids, batch_size=5, delay=2.0)
-            return [tweet for tweet in enriched_tweets if tweet is not None]
 
-        hydrated = bulk.get("tweets") or []
-        missing = bulk.get("missing_tweet_ids") or []
+        if "error" in bulk:
+            logger.warning(f"Bulk hydration failed: {bulk.get('error')}; falling back to per-tweet fetch")
+            return await self._fetch_batch_tweet_details(tweet_ids, batch_size=5, delay=2.0)
 
-        by_id = {str(t.get("id")): t for t in hydrated if isinstance(t, dict) and t.get("id")}
+        hydrated = bulk["tweets"]
+        missing = bulk["missing_tweet_ids"]
+
+        by_id = {t["id"]: t for t in hydrated}
         ordered = [by_id[tid] for tid in tweet_ids if tid in by_id]
 
-        # If the bulk actor missed some tweets (deleted/protected), fall back to Apidance for those IDs.
         if missing:
-            logger.info(f"Bulk hydration missed {len(missing)} tweets; falling back to per-tweet detail for missing IDs")
+            logger.info(f"Bulk hydration missed {len(missing)} tweets; falling back to per-tweet detail")
             fallback = await self._fetch_batch_tweet_details(missing, batch_size=5, delay=2.0)
-            ordered.extend([t for t in fallback if t is not None])
+            ordered.extend(fallback)
 
         logger.info(f"Successfully enriched {len(ordered)} out of {len(tweet_ids)} tweets")
         return ordered
@@ -293,7 +284,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                     tweet.pop("twitter_id", None)
                     tweet.pop("twitter_user_id", None)
 
-                result["data"] = await self._enrich_tweets_with_text(result["data"][:limit]) # seems api returns more than limit
+                result["data"] = await self._enrich_tweets_with_text(result["data"][:limit])
             result.pop("metadata", None)
 
             logger.info(f"Successfully retrieved and enriched {len(result.get('data', []))} mentions")

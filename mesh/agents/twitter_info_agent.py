@@ -1,14 +1,14 @@
+import asyncio
 import logging
 import os
 import re
-import asyncio
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from dotenv import load_dotenv
 from apify_client import ApifyClient
+from dotenv import load_dotenv
 
-from decorators import with_cache, with_retry
+from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -20,9 +20,9 @@ DEFAULT_TIMELINE_LIMIT = 20
 def _clean_tweet_text(text: str) -> str:
     if not text:
         return text
-    cleaned = re.sub(r'https://t\.co/\S+', '', text)
-    cleaned = re.sub(r'#\w+', '', cleaned) # remove hashtags
-    cleaned = re.sub(r'\s+', ' ', cleaned)
+    cleaned = re.sub(r"https://t\.co/\S+", "", text)
+    cleaned = re.sub(r"#\w+", "", cleaned)  # remove hashtags
+    cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned.strip()
 
 
@@ -30,17 +30,17 @@ def _format_date_only(timestamp: str) -> str:
     if not timestamp:
         return ""
     # Already formatted as YYYY-MM-DD
-    if len(timestamp) == 10 and timestamp.count('-') == 2:
+    if len(timestamp) == 10 and timestamp.count("-") == 2:
         return timestamp
     try:
-        if 'T' in timestamp:
-            dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00')) # "2025-11-12T05:47:53Z" -> "2025-11-12"
+        if "T" in timestamp:
+            dt = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
         else:
-            dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %z %Y") # "Tue Oct 14 19:35:12 +0000 2025" -> "2025-10-14"
+            dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %z %Y")
         return dt.strftime("%Y-%m-%d")
-    except Exception as e:
+    except Exception:
         # logger.warning(f"Failed to format date '{timestamp}': {e}")
-        return timestamp.split('T')[0] if 'T' in timestamp else timestamp
+        return timestamp.split("T")[0] if "T" in timestamp else timestamp
 
 
 class TwitterInfoAgent(MeshAgent):
@@ -48,13 +48,14 @@ class TwitterInfoAgent(MeshAgent):
         super().__init__()
         self.api_key = os.getenv("APIDANCE_API_KEY")
         self.apify_api_key = os.getenv("APIFY_API_KEY")
-        if not self.api_key and not self.apify_api_key:
-            raise ValueError("At least one of APIDANCE_API_KEY or APIFY_API_KEY must be set")
+        if not self.api_key:
+            raise ValueError("APIDANCE_API_KEY environment variable is required")
+        if not self.apify_api_key:
+            raise ValueError("APIFY_API_KEY environment variable is required")
 
         self.base_url = "https://api.apidance.pro"
-        self.headers = {"apikey": self.api_key} if self.api_key else {}
-
-        self.apify_client = ApifyClient(self.apify_api_key) if self.apify_api_key else None
+        self.headers = {"apikey": self.api_key}
+        self.apify_client = ApifyClient(self.apify_api_key)
 
         self.metadata.update(
             {
@@ -78,37 +79,23 @@ class TwitterInfoAgent(MeshAgent):
             }
         )
 
-    def _simplify_practicaltools_tweet(self, tweet: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        if not tweet:
-            return None
-
+    def _simplify_practicaltools_tweet(self, tweet: Dict[str, Any]) -> Dict[str, Any]:
         def _to_int(value: Any) -> int:
             if value is None:
                 return 0
-            if isinstance(value, bool):
+            if value is True or value is False:
                 return int(value)
-            if isinstance(value, (int, float)):
-                return int(value)
-            if isinstance(value, str):
-                s = value.strip()
-                if not s:
-                    return 0
-                try:
-                    return int(float(s))
-                except Exception:
-                    return 0
-            # Defensive: sometimes APIs return unexpected list/dict types
-            return 0
+            try:
+                return int(float(value))
+            except (ValueError, TypeError):
+                return 0
 
-        tid = str(tweet.get("id") or "")
-        if not tid:
-            return None
-
-        author = (tweet.get("author") or {}) if isinstance(tweet.get("author"), dict) else {}
+        tid = str(tweet["id"])
+        author = tweet.get("author") or {}
         username = author.get("userName") or ""
 
         url = tweet.get("url") or tweet.get("twitterUrl") or ""
-        if isinstance(url, str) and url.startswith(("https://", "http://")):
+        if url.startswith(("https://", "http://")):
             url = re.sub(r"^https?://", "", url)
 
         def _type(t: Dict[str, Any]) -> str:
@@ -315,8 +302,6 @@ class TwitterInfoAgent(MeshAgent):
         return result
 
     async def _practicaltools_call(self, endpoint: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        if not self.apify_client:
-            return {"error": "APIFY_API_KEY is not set; PracticalTools actor not available"}
         run_input = {"endpoint": endpoint, "parameters": parameters}
         try:
             run = await asyncio.to_thread(
@@ -337,25 +322,24 @@ class TwitterInfoAgent(MeshAgent):
         Bulk-hydrate tweets by IDs using PracticalTools (Apify actor) to reduce per-ID Apidance calls.
         Intended for internal enrichment (e.g., ELFA -> tweetId hydration).
         """
-        ids = [str(x).strip() for x in (tweet_ids or []) if str(x).strip()]
-        # Deduplicate while preserving order
+        ids = [str(x).strip() for x in tweet_ids if str(x).strip()]
         deduped = list(dict.fromkeys(ids))
         if not deduped:
             return {"tweets": [], "missing_tweet_ids": []}
 
-        # PracticalTools pricing mentions ~20-25 results per response; chunk defensively.
         chunk_size = 20
         by_id: Dict[str, Dict[str, Any]] = {}
         for i in range(0, len(deduped), chunk_size):
             chunk = deduped[i : i + chunk_size]
             res = await self._practicaltools_call("tweet/by_ids", {"tweet_ids": ",".join(chunk)})
             if "error" in res:
-                return res
+                logger.warning(f"Chunk {i // chunk_size + 1} failed: {res['error']}")
+                continue
             items = res.get("items") or []
             for item in items:
-                simplified = self._simplify_practicaltools_tweet(item if isinstance(item, dict) else {})
-                if simplified and simplified.get("id"):
-                    by_id[str(simplified["id"])] = simplified
+                if item.get("id"):
+                    simplified = self._simplify_practicaltools_tweet(item)
+                    by_id[simplified["id"]] = simplified
 
         tweets_out = [by_id[tid] for tid in deduped if tid in by_id]
         missing = [tid for tid in deduped if tid not in by_id]
@@ -395,7 +379,9 @@ class TwitterInfoAgent(MeshAgent):
                     clean_username = self._clean_username(identifier)
                     pt = await self._practicaltools_call("user/info", {"userName": clean_username})
                     if "error" in pt:
-                        return {"error": f"Apidance user lookup failed and PracticalTools fallback failed: {pt['error']}"}
+                        return {
+                            "error": f"Apidance user lookup failed and PracticalTools fallback failed: {pt['error']}"
+                        }
                     items = pt.get("items") or []
                     user_obj = items[0] if items and isinstance(items[0], dict) else {}
                     profile_info = {
