@@ -309,7 +309,9 @@ class TwitterInfoAgent(MeshAgent):
         tweet_data = await self._api_request(
             url=self.get_twitter_detail_endpoint(), method="GET", headers=self.headers, params=params
         )
-        if not tweet_data or "error" in tweet_data:
+        if not tweet_data:
+            return {"error": "get_twitter_detail_endpoint failed or empty response"}
+        if "error" in tweet_data:
             return tweet_data
 
         root = tweet_data.get("data") or tweet_data
