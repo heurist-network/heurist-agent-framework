@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 import random
+import re
 import time
 from typing import Any, Dict, List, Optional
 
@@ -13,6 +14,15 @@ from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 load_dotenv()
+
+
+def _clean_tweet_text(text: str) -> str:
+    if not text:
+        return text
+    cleaned = re.sub(r'https://t\.co/\S+', '', text)
+    cleaned = re.sub(r'#\w+', '', cleaned)
+    cleaned = re.sub(r'\s+', ' ', cleaned)
+    return cleaned.strip()
 
 
 class ElfaTwitterIntelligenceAgent(MeshAgent):
@@ -248,7 +258,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
 
         return {
             "id": tid,
-            "text": (tweet.get("text") or tweet.get("fullText") or "").strip(),
+            "text": _clean_tweet_text(tweet.get("text") or tweet.get("fullText") or ""),
             "created_at": (tweet.get("createdAt") or "").split("T")[0],
             "source": f"x.com/{username}/status/{tid}" if username else url,
             "author": {
