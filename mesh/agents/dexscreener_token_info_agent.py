@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
+from mesh.utils.r2_image_uploader import R2ImageUploader
 
 logger = logging.getLogger(__name__)
 load_dotenv()
@@ -38,6 +39,8 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 ],
             }
         )
+
+        self.r2_uploader = R2ImageUploader()
 
     def get_system_prompt(self) -> str:
         return (
@@ -118,7 +121,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      DEXSCREENER API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    def _clean_pair_data(self, pair: Dict) -> Dict:
+    async def _clean_pair_data(self, pair: Dict) -> Dict:
         for field in ["url", "priceNative"]:
             pair.pop(field, None)
 
@@ -149,7 +152,19 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             except Exception:
                 pair["pairCreatedAt"] = "unknown"
 
-        if "info" in pair and "imageUrl" in pair["info"]:
+        # Upload token image to R2 before removing it
+        if self.r2_uploader and "info" in pair and "imageUrl" in pair["info"]:
+            base_token = pair.get("baseToken", {})
+            chain = pair.get("chainId")
+            address = base_token.get("address")
+            image_url = pair["info"]["imageUrl"]
+
+            if chain and address and image_url:
+                try:
+                    await self.r2_uploader.upload_dexscreener_token_image(chain, address, image_url)
+                except Exception as e:
+                    logger.warning(f"Failed to upload DexScreener image for {chain}:{address}: {e}")
+
             pair["info"].pop("imageUrl", None)
 
         # Normalize token addresses to lowercase
@@ -185,7 +200,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 if market_cap is not None and market_cap < 50000:
                     continue
 
-                cleaned_pair = self._clean_pair_data(pair)
+                cleaned_pair = await self._clean_pair_data(pair)
                 cleaned_pairs.append(cleaned_pair)
 
             if cleaned_pairs:
@@ -214,7 +229,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             return result
 
         if "pairs" in result and result["pairs"] and len(result["pairs"]) > 0:
-            cleaned_pair = self._clean_pair_data(result["pairs"][0])
+            cleaned_pair = await self._clean_pair_data(result["pairs"][0])
             logger.info(f"Found pair info for chain: {chain}, pair address: {pair_address}")
             return {"status": "success", "data": {"pair": cleaned_pair}}
         else:
@@ -244,7 +259,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             if pairs:
                 cleaned_pairs = []
                 for pair in pairs:
-                    cleaned_pair = self._clean_pair_data(pair)
+                    cleaned_pair = await self._clean_pair_data(pair)
                     cleaned_pairs.append(cleaned_pair)
 
                 logger.info(f"Found {len(cleaned_pairs)} pairs for token on chain: {chain}")

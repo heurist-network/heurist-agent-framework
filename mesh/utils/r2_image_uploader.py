@@ -2,6 +2,7 @@ import logging
 import os
 from typing import Optional
 from pathlib import Path
+import re
 
 import aiohttp
 import boto3
@@ -16,6 +17,7 @@ class R2ImageUploader:
         self.access_key = os.getenv("R2_ACCESS_KEY")
         self.secret_key = os.getenv("R2_SECRET_KEY")
         self.bucket_name = "ask-heurist"
+        self.processed = set()
 
         if not all([self.endpoint, self.access_key, self.secret_key]):
             raise ValueError("R2_ENDPOINT, R2_ACCESS_KEY, and R2_SECRET_KEY must be set in environment")
@@ -59,6 +61,12 @@ class R2ImageUploader:
             return False
 
     async def upload_token_images(self, coingecko_id: str, image_urls: dict) -> dict:
+        if coingecko_id in self.processed:
+            logger.info(f"CoinGecko ID {coingecko_id} token image upload skipped")
+            return {"skipped": True, "r2_key": None}
+
+        self.processed.add(coingecko_id) # regardless of success or failure
+
         results = {}
 
         for size in ["thumb", "small"]:
@@ -86,3 +94,33 @@ class R2ImageUploader:
             results[size] = {"success": success, "r2_key": r2_key if success else None}
 
         return results
+
+    async def upload_dexscreener_token_image(self, chain: str, address: str, image_url: str) -> dict:
+        chain_lower = chain.lower()
+        address_lower = address.lower()
+        token_id = f"{chain_lower}_{address_lower}"
+
+        if token_id in self.processed:
+            logger.info(f"DexScreener token image upload skipped for {token_id}")
+            return {"skipped": True, "r2_key": None}
+
+        self.processed.add(token_id) # regardless of success or failure
+
+        url_128 = re.sub(r'width=\d+', 'width=128', image_url)
+        url_128 = re.sub(r'height=\d+', 'height=128', url_128)
+
+        extension = Path(image_url).suffix.split("?")[0] or ".png"
+        r2_key = f"token-icon/{token_id}-128{extension}"
+
+        if self._file_exists(r2_key):
+            logger.info(f"DexScreener image already exists at {r2_key}, skipping upload")
+            return {"skipped": True, "r2_key": r2_key}
+
+        image_data = await self._download_image(url_128)
+        if not image_data:
+            return {"success": False, "error": "Failed to download image"}
+
+        content_type = "image/png" if extension == ".png" else f"image/{extension.lstrip('.')}"
+        success = self._upload_to_r2(r2_key, image_data, content_type)
+
+        return {"success": success, "r2_key": r2_key if success else None}
