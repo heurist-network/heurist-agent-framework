@@ -422,6 +422,8 @@ class TokenResolverAgent(MeshAgent):
             "liquidity_usd": _safe_float(liq),
             "txns24h": (p.get("txns") or {}).get("h24"),
             "price_change": p.get("priceChange"),
+            "market_cap": _safe_float(p.get("marketCap")),
+            "fdv": _safe_float(p.get("fdv")),
             "websites": info.get("websites") or [],
             "socials": info.get("socials") or [],
         }
