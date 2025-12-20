@@ -127,6 +127,13 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 for time_key in ["m5", "h6"]:
                     pair.get(obj_key, {}).pop(time_key, None)
 
+        # Add "%" suffix to priceChange values (only if not already a string)
+        if "priceChange" in pair:
+            price_change = pair["priceChange"]
+            for time_key, value in list(price_change.items()):
+                if value is not None and not isinstance(value, str):
+                    price_change[time_key] = f"{value}%"
+
         if "pairCreatedAt" in pair:
             try:
                 from datetime import datetime

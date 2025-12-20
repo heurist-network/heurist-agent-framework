@@ -46,3 +46,4 @@ Coding Style
 - Use comments sparingly. Function and variable names should be self-explaining and you don't need to comment most of the times
 - If duplicate code is written, consider refactoring.
 - DO NOT use `getattr` or `isinstance` or defensive programming patterns
+- Do not create summary doc after completing a task, unless explicitly asked
