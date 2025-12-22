@@ -215,6 +215,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             if result and "payload" in result and isinstance(result["payload"], str):
                 parsed_data = self._parse_gmgn_token_response(result["payload"], address)
                 result["result"] = parsed_data
+                del result["payload"]
 
             logger.info("Successfully fetched GMGN token info")
             return {"status": "success", "data": result}
