@@ -261,6 +261,11 @@ Format your response in clean text. Be objective and informative."""
             },
         ]
 
+    def _normalize_address(self, address: str) -> str:
+        if address.startswith("0x"):
+            return address.lower()
+        return address
+
     def get_api_config(self, endpoint: str) -> tuple[str, Dict[str, str]]:
         """Determine the appropriate API URL and headers based on the endpoint."""
         if endpoint.startswith("/onchain"):
@@ -417,7 +422,7 @@ Format your response in clean text. Be objective and informative."""
                     "explorers": [u for u in (links.get("blockchain_site") or []) if u],
                 },
             },
-            "platforms": {k: v.lower() if v else v for k, v in data.get("platforms", {}).items()},
+            "platforms": {k: self._normalize_address(v) for k, v in data.get("platforms", {}).items()},
             "market_metrics": {
                 "current_price_usd": market_data.get("current_price", {}).get("usd", "N/A"),
                 "market_cap_usd": market_data.get("market_cap", {}).get("usd", "N/A"),

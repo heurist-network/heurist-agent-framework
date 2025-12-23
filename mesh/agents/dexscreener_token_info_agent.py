@@ -170,13 +170,10 @@ class DexScreenerTokenInfoAgent(MeshAgent):
 
             pair["info"].pop("imageUrl", None)
 
-        # Normalize token addresses to lowercase
-        if "baseToken" in pair and pair["baseToken"].get("address"):
-            pair["baseToken"]["address"] = pair["baseToken"]["address"].lower()
-        if "quoteToken" in pair and pair["quoteToken"].get("address"):
-            pair["quoteToken"]["address"] = pair["quoteToken"]["address"].lower()
-        if "pairAddress" in pair and pair["pairAddress"]:
-            pair["pairAddress"] = pair["pairAddress"].lower()
+        if pair.get("chainId") and pair.get("chainId") != "solana":
+            for k in ["baseToken", "quoteToken", "pairAddress"]:
+                if k in pair and pair[k].get("address"):
+                    pair[k]["address"] = pair[k]["address"].lower()
 
         return pair
 

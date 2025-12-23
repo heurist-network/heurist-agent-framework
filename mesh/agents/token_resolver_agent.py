@@ -413,7 +413,7 @@ class TokenResolverAgent(MeshAgent):
         info = p.get("info") or {}
         chain = p.get("chainId")
         pair_address = p.get("pairAddress")
-        link = f"https://dexscreener.com/{chain}/{pair_address.lower()}"
+        link = f"https://dexscreener.com/{chain}/{pair_address}"
         return {
             "link": link,
             "dex": p.get("dexId"),
@@ -438,7 +438,7 @@ class TokenResolverAgent(MeshAgent):
             chosen = other
         chain = pair.get("chainId")
         tok = {
-            "address": chosen.get("address", "").lower() if chosen.get("address") else None,
+            "address": chosen.get("address") if chosen.get("address") else None,
             "name": chosen.get("name"),
             "symbol": chosen.get("symbol"),
             "chain": chain,
@@ -508,7 +508,7 @@ class TokenResolverAgent(MeshAgent):
                             "name": None,
                             "symbol": None,
                             "chain": chain,
-                            "address": query.lower(),
+                            "address": query,
                             "coingecko_id": None,
                             "price_usd": None,
                             "market_cap_usd": None,
@@ -615,7 +615,7 @@ class TokenResolverAgent(MeshAgent):
                     for platform_id, address in platforms.items():
                         if address and cgid:
                             ds_chain = _normalize_platform_name(platform_id)
-                            contract_key = f"{ds_chain}:{address.lower()}"
+                            contract_key = f"{ds_chain}:{address}"
                             contract_to_cgid_map[contract_key] = cgid
                     logger.info(
                         f"[token_resolver] CoinGecko platforms: {len(platforms)}, contract mappings: {len(contract_to_cgid_map)}"
@@ -680,7 +680,7 @@ class TokenResolverAgent(MeshAgent):
                     ch = p.get("chainId")
                     if not addr or not ch:
                         continue
-                    token_key = f"{ch}:{addr.lower()}"
+                    token_key = f"{ch}:{addr}"
 
                     # Only assign pair metadata (websites/socials) if this token matches the query
                     # AND is the base token (DexScreener puts base token metadata in pair info)
@@ -707,7 +707,7 @@ class TokenResolverAgent(MeshAgent):
                             "name": tok.get("name"),
                             "symbol": tok.get("symbol"),
                             "chain": ch,
-                            "address": addr.lower(),
+                            "address": addr,
                             "coingecko_id": None,
                             "price_usd": preview.get("price_usd"),
                             "market_cap_usd": None,
@@ -735,7 +735,7 @@ class TokenResolverAgent(MeshAgent):
                     obj_chain = obj.get("chain")
                     address = obj.get("address")
                     if obj_chain and address:
-                        contract_key = f"{obj_chain}:{address.lower()}"
+                        contract_key = f"{obj_chain}:{address}"
                         if contract_key in contract_to_cgid_map:
                             obj["coingecko_id"] = contract_to_cgid_map[contract_key]
                             linked_count += 1
