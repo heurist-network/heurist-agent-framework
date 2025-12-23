@@ -289,9 +289,8 @@ class ZoraAgent(MeshAgent):
     #                      ZORA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def explore_collections(self, list_type: str = "TOP_GAINERS", count: int = 10) -> Dict[str, Any]:
         """
         Explore Zora collections by different metrics.
@@ -324,9 +323,8 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error exploring collections: {e}")
             return {"error": f"Failed to explore collections: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_coin_holders(self, address: str, chain_id: int = 8453, count: int = 10) -> Dict[str, Any]:
         """
         Get holders for a specific Zora coin/collection.
@@ -363,9 +361,8 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error getting coin holders: {e}")
             return {"error": f"Failed to get coin holders: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_coin_info(self, collection_address: str, chain_id: int = 8453) -> Dict[str, Any]:
         """
         Get detailed information about a Zora coin/collection.
@@ -399,9 +396,8 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error getting coin info: {e}")
             return {"error": f"Failed to get coin info: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_coin_comments(self, address: str, chain: int = 8453, count: int = 10) -> Dict[str, Any]:
         """
         Get community comments for a Zora coin/collection.
@@ -437,9 +433,8 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error getting coin comments: {e}")
             return {"error": f"Failed to get coin comments: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_profile(self, identifier: str) -> Dict[str, Any]:
         """
         Get detailed information about a user's profile.
@@ -470,9 +465,8 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error getting profile: {e}")
             return {"error": f"Failed to get profile: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_profile_coins(self, identifier: str, count: int = 30, chain_ids: List[int] = None) -> Dict[str, Any]:
         """
         Get coins created by a specific user.
@@ -512,9 +506,8 @@ class ZoraAgent(MeshAgent):
             logger.error(f"Error getting profile coins: {e}")
             return {"error": f"Failed to get profile coins: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_profile_balances(
         self,
         identifier: str,

@@ -117,9 +117,8 @@ class GoplusAnalysisAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      GOPLUS API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def fetch_security_details(self, contract_address: str, chain_id: str = "1") -> Dict[str, Any]:
         """
         Fetch security details of a blockchain token contract from GoPlus API.
@@ -188,9 +187,8 @@ class GoplusAnalysisAgent(MeshAgent):
             logger.error(f"Exception in fetch_security_details: {str(e)}")
             return {"status": "error", "error": f"Failed to fetch security details: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _fetch_solana_security_details(self, contract_address: str) -> Dict[str, Any]:
         """
         Fetch Solana token security details from GoPlus API.

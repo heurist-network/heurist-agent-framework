@@ -73,9 +73,8 @@ class AlloraPricePredictionAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      ALLORA API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_allora_prediction(self, token: str, timeframe: str) -> Dict[str, Any]:
         """Fetch normalized price prediction data from Allora API."""
         if not token or not timeframe:

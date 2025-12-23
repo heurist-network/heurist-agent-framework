@@ -52,6 +52,9 @@ class ChainbaseAddressLabelAgent(MeshAgent):
             }
         )
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
     def get_system_prompt(self) -> str:
         return """You are a helpful assistant that can access Chainbase API to provide address labels for Ethereum and Base blockchain addresses.
         You can get labels that describe owner identity, smart contract names, wallet behavior patterns, and also resolve ENS and Base names.
@@ -90,7 +93,7 @@ class ChainbaseAddressLabelAgent(MeshAgent):
             return None
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _fetch_chainbase_labels(self, address: str, chain_id: int) -> Dict[str, Any]:
         """Fetch address labels from Chainbase API for a specific chain."""
         url = "https://api.chainbase.online/v1/address/labels"
@@ -107,9 +110,8 @@ class ChainbaseAddressLabelAgent(MeshAgent):
             logger.error(f"Chainbase API exception for chain {chain_id}: {e}")
             return {"error": f"Chainbase API error for chain {chain_id}: {e}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_address_labels(self, address: str) -> Dict[str, Any]:
         """Get address labels from both Ethereum and Base chains, plus ENS/Base name resolution."""
         if not address or not address.startswith("0x"):

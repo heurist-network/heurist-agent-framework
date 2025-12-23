@@ -46,6 +46,9 @@ class ZerionWalletAnalysisAgent(ContextAgent):
             }
         )
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
     def get_system_prompt(self) -> str:
         return """You are a crypto wallet analyst that provides factual analysis of wallet holdings based on Zerion API data. Use the appropriate tools to get wallet data.
 
@@ -95,9 +98,8 @@ class ZerionWalletAnalysisAgent(ContextAgent):
             },
         ]
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def fetch_wallet_tokens(self, wallet_address: str) -> Dict:
         """Fetch fungible token holdings from Zerion API"""
         try:
@@ -177,9 +179,8 @@ class ZerionWalletAnalysisAgent(ContextAgent):
             logger.error(f"Error fetching wallet tokens: {e}")
             return {"error": f"Failed to fetch wallet tokens: {str(e)} for wallet address {wallet_address}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def fetch_wallet_nfts(self, wallet_address: str) -> Dict:
         """Fetch NFT collections from Zerion API"""
         try:

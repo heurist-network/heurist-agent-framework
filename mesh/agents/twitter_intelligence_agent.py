@@ -44,6 +44,9 @@ class TwitterIntelligenceAgent(MeshAgent):
             }
         )
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 50
+
     def get_system_prompt(self) -> str:
         return """You are a Twitter/X intelligence specialist that helps users retrieve and analyze Twitter data.
 You have access to tools for fetching user timelines, tweet details with threads/replies, and searching Twitter content.

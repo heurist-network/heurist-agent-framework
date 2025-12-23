@@ -114,9 +114,11 @@ class EvmTokenInfoAgent(MeshAgent):
             }
         ]
 
-    @monitor_execution()
-    @with_cache(ttl_seconds=60)
-    @with_retry(max_retries=3)
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
+    @with_cache(ttl_seconds=120)
+    @with_retry(max_retries=1)
     async def get_recent_large_trades(
         self,
         chain: str,

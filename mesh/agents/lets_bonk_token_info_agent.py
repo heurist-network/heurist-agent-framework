@@ -401,7 +401,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
         except (ValueError, TypeError, ZeroDivisionError):
             return 0
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def query_about_to_graduate_tokens(self, limit: int = None, since_date: Optional[str] = None) -> Dict:
@@ -502,7 +501,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"tokens": [], "total_count": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=60)
     @with_retry(max_retries=3)
     async def query_latest_trades(self, token_address: str, limit: int = None, launchpad: Optional[str] = None) -> Dict:
@@ -606,7 +604,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"trades": [], "total_count": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=30)
     @with_retry(max_retries=3)
     async def query_latest_price(self, token_address: str, launchpad: Optional[str] = None) -> Dict:
@@ -698,7 +695,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"error": f"No price data found for token {token_address}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def query_top_buyers(self, token_address: str, limit: int = None, launchpad: Optional[str] = None) -> Dict:
@@ -782,7 +778,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"top_buyers": [], "total_count": 0, "total_buy_volume_usd": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def query_top_sellers(self, token_address: str, limit: int = None, launchpad: Optional[str] = None) -> Dict:
@@ -866,7 +861,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"top_sellers": [], "total_count": 0, "total_sell_volume_usd": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=180)
     @with_retry(max_retries=3)
     async def query_ohlcv_data(self, token_address: str, limit: int = None, launchpad: Optional[str] = None) -> Dict:
@@ -962,7 +956,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"ohlcv_data": [], "total_count": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
     @with_retry(max_retries=3)
     async def query_pair_address(self, token_address: str, launchpad: Optional[str] = None) -> Dict:
@@ -1054,7 +1047,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"pairs": [], "total_pairs": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=60)  # Short cache for liquidity as it changes frequently
     @with_retry(max_retries=3)
     async def query_liquidity(self, pool_address: str) -> Dict:
@@ -1135,7 +1127,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"error": f"No liquidity data found for pool {pool_address}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=120)
     @with_retry(max_retries=3)
     async def query_recently_created_tokens(self, limit: int = None) -> Dict:
@@ -1209,7 +1200,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"recently_created_tokens": [], "total_count": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=60)
     @with_retry(max_retries=3)
     async def query_bonding_curve_progress(self, token_address: str) -> Dict:
@@ -1304,7 +1294,6 @@ class LetsBonkTokenInfoAgent(MeshAgent):
 
         return {"error": f"No bonding curve data found for token {token_address}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=60)
     @with_retry(max_retries=3)
     async def query_tokens_above_95_percent(self, limit: int = None) -> Dict:

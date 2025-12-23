@@ -165,20 +165,17 @@ RESPONSE GUIDELINES:
         return await self._api_request(url=url, method="GET", params=params or {})
 
     @with_cache(ttl_seconds=7200)
-    @with_retry(max_retries=2)
     async def _premium_index(self, symbol: Optional[str] = None) -> Any:
         params = {"symbol": symbol} if symbol else None
         return await self._get("/fapi/v1/premiumIndex", params=params)
 
-    @with_cache(ttl_seconds=28800)
-    @with_retry(max_retries=2)
+    @with_cache(ttl_seconds=7200)
     async def _funding_info_all(self) -> List[Dict[str, Any]]:
         # fundingInfo returns only symbols that had adjustments; we’ll filter locally.
         res = await self._get("/fapi/v1/fundingInfo")
         return res if isinstance(res, list) else []
 
-    @with_cache(ttl_seconds=28800)
-    @with_retry(max_retries=2)
+    @with_cache(ttl_seconds=7200)
     async def _funding_rate_history(self, symbol: str, limit: int = 2) -> List[Dict[str, Any]]:
         params = {"symbol": symbol, "limit": limit}
         res = await self._get("/fapi/v1/fundingRate", params=params)
@@ -224,7 +221,6 @@ RESPONSE GUIDELINES:
         apr = per_interval_rate * intervals_per_year
         return apr, int(round(intervals_per_year))
 
-    @with_retry(max_retries=2)
     async def _oi_hist_4h_7d(self, symbol: str) -> List[Dict[str, Any]]:
         # 7 days * 24h / 4h = 42 bars
         params = {"symbol": symbol, "period": "4h", "limit": 42}
@@ -285,7 +281,7 @@ RESPONSE GUIDELINES:
     # Public Tool Methods
     # ---------------------------------------------------------------------
     @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=2)
+    @with_retry(max_retries=1)
     async def get_all_funding_rates(self) -> Dict[str, Any]:
         """
         Return funding rates for top 5 Binance USDⓈ-M tokens (BTC, ETH, SOL, BNB, XRP).
@@ -336,7 +332,7 @@ RESPONSE GUIDELINES:
             return {"status": "error", "error": str(e)}
 
     @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=2)
+    @with_retry(max_retries=1)
     async def get_symbol_funding_rates(self, symbol: str) -> Dict[str, Any]:
         """
         Latest funding rate and APR for a single symbol.
@@ -401,7 +397,7 @@ RESPONSE GUIDELINES:
             }
 
     @with_cache(ttl_seconds=360)
-    @with_retry(max_retries=2)
+    @with_retry(max_retries=1)
     async def get_symbol_oi_and_funding(self, symbol: str) -> Dict[str, Any]:
         """
         Combined view for a symbol:
@@ -455,7 +451,7 @@ RESPONSE GUIDELINES:
             return {"status": "error", "error": str(e)}
 
     @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=2)
+    @with_retry(max_retries=1)
     async def find_spot_futures_opportunities(self, min_funding_rate: float = 0.0003) -> Dict[str, Any]:
         """
         On Binance only: list symbols whose latest per-interval funding >= threshold.

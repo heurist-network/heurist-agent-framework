@@ -218,7 +218,6 @@ class BaseUSDCForensicsAgent(MeshAgent):
                 df[col] = df[col].astype(str)
         return df.to_dict(orient="records")
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def usdc_basic_profile(self, address: str) -> Dict[str, Any]:
@@ -281,7 +280,6 @@ class BaseUSDCForensicsAgent(MeshAgent):
         result = self._run_query(query, params)
         return {"status": "success", "data": result[0] if result else {}}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def usdc_top_funders(self, address: str, limit: int = 50) -> Dict[str, Any]:
@@ -319,7 +317,6 @@ class BaseUSDCForensicsAgent(MeshAgent):
         result = self._run_query(query, params)
         return {"status": "success", "data": result}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def usdc_top_sinks(self, address: str, limit: int = 50) -> Dict[str, Any]:
@@ -357,7 +354,6 @@ class BaseUSDCForensicsAgent(MeshAgent):
         result = self._run_query(query, params)
         return {"status": "success", "data": result}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def usdc_net_counterparties(self, address: str, limit: int = 100) -> Dict[str, Any]:
@@ -411,7 +407,6 @@ class BaseUSDCForensicsAgent(MeshAgent):
         result = self._run_query(query, params)
         return {"status": "success", "data": result}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def usdc_daily_activity(self, address: str) -> Dict[str, Any]:
@@ -450,7 +445,6 @@ class BaseUSDCForensicsAgent(MeshAgent):
         result = self._run_query(query, params)
         return {"status": "success", "data": result}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def usdc_hourly_pair_activity(self, address_a: str, address_b: str) -> Dict[str, Any]:

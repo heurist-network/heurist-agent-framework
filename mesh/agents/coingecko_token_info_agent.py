@@ -446,7 +446,7 @@ Format your response in clean text. Be objective and informative."""
 
         return result
 
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _search_token(self, query: str) -> str | None:
         """Internal helper to search for a token and return its id"""
         try:
@@ -509,7 +509,7 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Failed to fetch trending coins: {str(e)}"}
 
     @with_cache(ttl_seconds=3600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _get_token_info(self, coingecko_id: str) -> dict:
         try:
             actual_coingecko_id = self._resolve_coingecko_id(coingecko_id)
@@ -541,7 +541,7 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Failed to fetch token info: {str(e)}"}
 
     @with_cache(ttl_seconds=3600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _get_categories_list(self) -> dict:
         """Get a list of all CoinGecko categories"""
         try:
@@ -554,7 +554,7 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Failed to fetch categories list: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _get_category_data(self, order: Optional[str] = "market_cap_change_24h_desc", limit: int = 5) -> dict:
         """Get market data for cryptocurrency categories with limit"""
         limit = max(3, min(limit, 20))
@@ -584,7 +584,7 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Failed to fetch category data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _get_token_price_multi(
         self,
         ids: str,
@@ -608,7 +608,7 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Failed to fetch multi-token price data: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _get_tokens_by_category(
         self,
         category_id: str,
@@ -639,24 +639,6 @@ Format your response in clean text. Be objective and informative."""
             logger.error(f"Error: {e}")
             return {"error": f"Failed to fetch tokens for category '{category_id}': {str(e)}"}
 
-    @monitor_execution()
-    @with_retry(max_retries=3)
-    async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle incoming messages with direct tool calls."""
-        tool_name = params.get("tool")
-        tool_args = params.get("tool_arguments", {})
-
-        try:
-            if tool_name:
-                logger.info(f"Direct tool call: {tool_name} with args {tool_args}")
-                result = await self._handle_tool_logic(tool_name, tool_args)
-                return {"data": result}
-
-            return {"error": "Tool name must be provided in the parameters."}
-
-        except Exception as e:
-            logger.error(f"Agent execution failed: {str(e)}")
-            return {"error": str(e)}
 
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
@@ -701,7 +683,7 @@ Format your response in clean text. Be objective and informative."""
         return result
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _handle_trending_pools(self, include: str, pools: int) -> Dict[str, Any]:
         valid_includes = ["base_token", "quote_token", "dex", "network"]
         if include not in valid_includes:
@@ -718,7 +700,7 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Failed to fetch trending pools: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def _handle_top_token_holders(self, network: str, address: str) -> Dict[str, Any]:
         try:
             api_url, headers = self.get_api_config(f"/onchain/networks/{network}/tokens/{address}/top_holders")

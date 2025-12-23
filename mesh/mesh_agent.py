@@ -110,7 +110,6 @@ class MeshAgent(ABC):
         pass
 
     @monitor_execution()
-    @with_retry(max_retries=3)
     async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """
         Standard message handling flow, supporting both direct tool calls and natural language queries.

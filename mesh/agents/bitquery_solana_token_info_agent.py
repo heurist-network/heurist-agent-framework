@@ -61,6 +61,9 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             }
         )
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
     def get_system_prompt(self) -> str:
         return (
             "You are a specialized assistant that analyzes Solana token data using the Bitquery API. "
@@ -250,9 +253,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             return 1
         return limit
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_token_metrics(self, token_address: str, quote_token: str = "sol") -> Dict:
         """
         Get detailed token trading information including metrics like volume and market cap.
@@ -346,9 +348,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             logger.error(f"Error in query_token_metrics: {str(e)}")
             return {"error": f"Failed to fetch token trading info: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_top_trending_tokens(self, limit: int = None) -> Dict:
         """
         Get the current top trending tokens on Solana.
@@ -368,9 +369,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
             logger.error(f"Error in get_top_trending_tokens: {str(e)}")
             return {"error": f"Failed to fetch top trending tokens: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_token_holders(self, token_address: str, limit: int = None) -> Dict:
         """
         Query top token holders for a specific token.
@@ -441,9 +441,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
         return {"holders": [], "total_supply": 0, "total_count": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_token_buyers(self, token_address: str, limit: int = None) -> Dict:
         """
         Query first buyers of a specific token.
@@ -513,9 +512,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
         return {"buyers": [], "unique_buyer_count": 0, "total_count": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_top_traders(self, token_address: str, limit: int = None) -> Dict:
         """
         Query top traders for a specific token on Solana DEXs.
@@ -589,9 +587,8 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
 
         return {"traders": [], "total_count": 0, "total_volume_usd": 0}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_holder_status(self, token_address: str, buyer_addresses: List[str]) -> Dict:
         """
         Query holder status for specific addresses for a token.

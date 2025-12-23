@@ -81,9 +81,8 @@ class CarvOnchainDataAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      CARV API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @monitor_execution()
     @with_cache(ttl_seconds=300)  # Cache for 5 minutes
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_onchain_data(self, blockchain: str, query: str) -> Dict:
         """
         Query the CARV API with a natural language question about blockchain metrics.

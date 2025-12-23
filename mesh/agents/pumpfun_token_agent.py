@@ -44,6 +44,9 @@ class PumpFunTokenAgent(MeshAgent):
 
         self.VALID_INTERVALS = {"hours", "days"}
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
     def get_system_prompt(self) -> str:
         return """You are a specialized assistant that analyzes Pump.fun tokens on Solana using Bitquery API. Your capabilities include:
 
@@ -146,9 +149,8 @@ Guidelines:
             logger.error(f"Error in _execute_query: {str(e)}")
             return {"error": f"Query execution failed: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_recent_token_creation(self, interval: str = "hours", offset: int = 1) -> Dict:
         if interval not in self.VALID_INTERVALS:
             return {"error": f"Invalid interval. Must be one of: {', '.join(self.VALID_INTERVALS)}"}
@@ -221,9 +223,8 @@ Guidelines:
 
         return {"tokens": []}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=3600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def query_latest_graduated_tokens(self, timeframe: int = 24) -> Dict:
         """
         Query tokens that have recently graduated on Pump.fun with their prices and market caps.

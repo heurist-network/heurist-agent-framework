@@ -116,9 +116,7 @@ Format your responses in clean text without markdown or special formatting. Focu
     # ------------------------------------------------------------------------
     #                      ARBUS AI API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
-    @monitor_execution()
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def ask_ai_assistant(self, query: str, days: int = 7) -> Dict[str, Any]:
         """
         Ask any question about crypto markets and get AI-powered analysis.
@@ -158,7 +156,6 @@ Format your responses in clean text without markdown or special formatting. Focu
             logger.error(f"Error asking AI assistant: {str(e)}")
             return {"status": "error", "error": f"Failed to get AI analysis: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=900)
     @with_retry(max_retries=3)
     async def generate_report(

@@ -45,6 +45,9 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             }
         )
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
     def get_system_prompt(self) -> str:
         return """
         You are a token analysis specialist that helps users understand cryptocurrency tokens and market trends. You provide clear market insights and metrics. You highlight key data points for investors. Be factual and objective in your analysis. NEVER make up any data not returned by the tools
@@ -153,7 +156,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
     #                       API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=3600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_gmgn_trend(self, time_window: str = "24h", limit: int = 50) -> Dict:
         """
         Fetches trending tokens from GMGN memecoin trading platform
@@ -185,9 +188,8 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             logger.error(f"Error fetching GMGN trends: {str(e)}")
             return {"status": "error", "error": f"Failed to get GMGN trends: {str(e)}"}
 
-    @monitor_execution()
     @with_cache(ttl_seconds=600)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def get_gmgn_token_info(self, chain: str, address: str) -> Dict:
         """
         Fetches specific token information from GMGN
@@ -225,7 +227,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
             return {"status": "error", "error": f"Failed to get GMGN token info: {str(e)}"}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def analyze_token(self, ticker: str) -> Dict:
         """
         Analyzes a token by its ticker symbol

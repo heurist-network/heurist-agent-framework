@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 
-from decorators import with_cache, with_retry
+from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 from mesh.utils.r2_image_uploader import R2ImageUploader
 
@@ -41,6 +41,9 @@ class DexScreenerTokenInfoAgent(MeshAgent):
         )
 
         self.r2_uploader = R2ImageUploader()
+
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
 
     def get_system_prompt(self) -> str:
         return (
@@ -178,7 +181,6 @@ class DexScreenerTokenInfoAgent(MeshAgent):
         return pair
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def search_pairs(self, search_term: str) -> Dict:
         """
         Search for trading pairs (up to 30) using DexScreener API.
@@ -214,7 +216,6 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             return {"status": "no_data", "error": "No matching pairs found", "data": {"pairs": []}}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def get_specific_pair_info(self, chain: str, pair_address: str) -> Dict:
         """
         Get detailed information for a specific trading pair.
@@ -237,7 +238,6 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             return {"status": "no_data", "error": "No matching pair found", "data": None}
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     async def get_token_pairs(self, chain: str, token_address: str) -> Dict:
         """
         Get trading pairs (up to 30) for a specific token on a chain.

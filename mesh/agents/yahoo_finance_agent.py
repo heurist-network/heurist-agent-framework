@@ -83,6 +83,9 @@ class YahooFinanceAgent(MeshAgent):
             }
         )
 
+    def get_default_timeout_seconds(self) -> Optional[int]:
+        return 10
+
     def get_system_prompt(self) -> str:
         return """You are a Yahoo Finance Assistant providing market data and technical analysis.
 
@@ -263,7 +266,7 @@ class YahooFinanceAgent(MeshAgent):
     # ------------------------------------------------------------------------
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def fetch_price_history(
         self,
         symbol: str,
@@ -323,7 +326,7 @@ class YahooFinanceAgent(MeshAgent):
         }
 
     @with_cache(ttl_seconds=120)
-    @with_retry(max_retries=3)
+    @with_retry(max_retries=1)
     async def indicator_snapshot(
         self,
         symbol: str,
