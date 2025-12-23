@@ -955,21 +955,12 @@ class TokenResolverAgent(MeshAgent):
                 ch_map = {"ethereum": "eth", "eth": "eth", "base": "base", "bsc": "bsc", "solana": "sol"}
                 gmgn = await self._gmgn_token_info(ch_map.get(chain, chain), address)
                 if gmgn and not gmgn.get("error") and gmgn.get("status") != "no_data":
-                    # Try to parse payload string quickly for website/twitter/telegram
-                    payload = gmgn.get("data", {}).get("payload") if isinstance(gmgn, dict) else None
-                    links = {}
-                    if isinstance(payload, str):
-                        # very light extraction
-                        m_web = re.findall(r"Website:\s*(\S+)", payload)
-                        m_tw = re.findall(r"Twitter:\s*([^\s]+)", payload)
-                        m_tg = re.findall(r"Telegram:\s*(\S+)", payload)
-                        links = {
-                            "website": m_web or [],
-                            "twitter": [f"https://twitter.com/{x}" if not x.startswith("http") else x for x in m_tw],
-                            "telegram": m_tg or [],
-                        }
-                    prof["links"] = self._merge_links(prof["links"], links)
-                    prof["extras"]["gmgn"] = {"raw": payload} if payload else gmgn
+                    result_str = gmgn.get("result", "")
+
+                    if "No token found" in result_str:
+                        logger.info(f"[token_resolver] GMGN: {result_str}")
+                    else:
+                        prof["extras"]["gmgn"] = gmgn
 
         # Optional: Solana holders/traders
         if "holders" in include or "traders" in include:
