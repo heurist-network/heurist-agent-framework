@@ -47,3 +47,4 @@ Coding Style
 - If duplicate code is written, consider refactoring.
 - DO NOT use `getattr` or `isinstance` or defensive programming patterns
 - Do not create summary doc after completing a task, unless explicitly asked
+- When you are asked to review git staged code changes, give feedback as if you are a senior tech lead ensuring high standards and rank the issues found with high/medium/low. Do not edit code or run git commands that manipulate the repo.
