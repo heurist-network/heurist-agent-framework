@@ -15,6 +15,18 @@ logger = logging.getLogger(__name__)
 EVM_ADDR_RE = re.compile(r"^0x[a-fA-F0-9]{40}$")
 SOLANA_B58_RE = re.compile(r"^[1-9A-HJ-NP-Za-km-z]{32,44}$")
 
+WSOL_ADDRESS = "so11111111111111111111111111111111111111112"
+WETH_ADDRESS_ETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+WETH_ADDRESS_BASE = "0x4200000000000000000000000000000000000006"
+WBNB_ADDRESS = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
+
+WRAPPED_NATIVE_ADDRESSES = frozenset({
+    WSOL_ADDRESS,
+    WETH_ADDRESS_ETH,
+    WETH_ADDRESS_BASE,
+    WBNB_ADDRESS,
+})
+
 ALLOWED_CHAINS = {
     "ethereum",
     "base",
@@ -59,6 +71,22 @@ def _is_evm_address(s: str) -> bool:
 
 def _is_solana_address(s: str) -> bool:
     return bool(SOLANA_B58_RE.match(s or ""))
+
+
+def _is_wrapped_native(address: str) -> bool:
+    if not address:
+        return False
+    return address.lower() in WRAPPED_NATIVE_ADDRESSES
+
+
+def _select_non_native_tokens(base: Dict[str, Any], quote: Dict[str, Any]) -> List[Dict[str, Any]]:
+    base_addr = base.get("address", "")
+    quote_addr = quote.get("address", "")
+    if _is_wrapped_native(base_addr):
+        return [quote]
+    if _is_wrapped_native(quote_addr):
+        return [base]
+    return [base, quote]
 
 
 def _normalize_chain(chain: Optional[str]) -> Optional[str]:
@@ -148,6 +176,12 @@ def _extract_links_from_preview(preview: Dict[str, Any]) -> Dict[str, List]:
         "twitter": [s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "twitter"],
         "telegram": [s.get("url") for s in preview.get("socials", []) if (s or {}).get("type") == "telegram"],
     }
+
+
+def _calculate_pair_score(liquidity_usd: float, volume24h_usd: float) -> float:
+    if liquidity_usd > 300000:
+        return volume24h_usd * 0.2 + liquidity_usd * 0.8
+    return liquidity_usd
 
 
 # -----------------------------
@@ -566,16 +600,21 @@ class TokenResolverAgent(MeshAgent):
             for token_key, obj in best_by_token.items():
                 previews = sorted(
                     [self._pair_to_preview(p) for p in obj["_all_pairs"]],
-                    key=lambda x: (x.get("liquidity_usd") or 0),
+                    key=lambda x: _calculate_pair_score(x.get("liquidity_usd") or 0, x.get("volume24h_usd") or 0),
                     reverse=True,
                 )[:3]
                 obj["top_pairs"] = previews
                 obj.pop("_all_pairs", None)
                 out.append(obj)
 
-            out = sorted(out, key=lambda x: (x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0), reverse=True)[
-                :limit
-            ]
+            out = sorted(
+                out,
+                key=lambda x: _calculate_pair_score(
+                    x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0,
+                    x.get("top_pairs", [{}])[0].get("volume24h_usd") or 0,
+                ),
+                reverse=True,
+            )[:limit]
 
         # Symbol/Name/CGID path
         else:  # qtype in {"symbol", "name", "coingecko_id"}
@@ -644,33 +683,27 @@ class TokenResolverAgent(MeshAgent):
                     )
                     continue
 
-                base = p.get("baseToken") or {}
-                quote = p.get("quoteToken") or {}
-                base_symbol = base.get("symbol", "").upper()
-                quote_symbol = quote.get("symbol", "").upper()
+                base = p.get("baseToken")
+                quote = p.get("quoteToken")
+                if not base or not quote:
+                    continue
                 selected = []
 
                 if qtype == "symbol":
-                    # Trust DexScreener's search - if it returned this pair for the query, both tokens are potentially relevant
-                    # Prefer exact symbol matches but include all to let liquidity ranking decide
-                    if base_symbol == query.upper():
+                    query_upper = query.upper()
+                    if base.get("symbol", "").upper() == query_upper:
                         selected.append(base)
-                    if quote_symbol == query.upper():
+                    if quote.get("symbol", "").upper() == query_upper:
                         selected.append(quote)
-                    # If no exact matches, include both tokens (DexScreener found them for a reason)
-                    if not selected:
-                        selected.extend([base, quote])
                 elif qtype == "name":
-                    # Similar approach for name queries
-                    if base.get("name", "").lower() == query.lower():
+                    query_lower = query.lower()
+                    if base.get("name", "").lower() == query_lower:
                         selected.append(base)
-                    if quote.get("name", "").lower() == query.lower():
+                    if quote.get("name", "").lower() == query_lower:
                         selected.append(quote)
-                    if not selected:
-                        selected.extend([base, quote])
-                elif qtype == "coingecko_id":
-                    # DS doesn't expose CG id; we still keep all to let liquidity sort do the work
-                    selected.extend([base, quote])
+
+                if not selected:
+                    selected = _select_non_native_tokens(base, quote)
 
                 # Extract pair-level links once
                 preview = self._pair_to_preview(p)
@@ -701,6 +734,9 @@ class TokenResolverAgent(MeshAgent):
 
                     ds_links = _extract_links_from_preview(preview) if should_get_links else {}
                     current = token_map.get(token_key)
+                    pair_score = _calculate_pair_score(
+                        preview.get("liquidity_usd") or 0, preview.get("volume24h_usd") or 0
+                    )
                     if not current:
                         # First time seeing this token
                         token_map[token_key] = {
@@ -714,17 +750,16 @@ class TokenResolverAgent(MeshAgent):
                             "top_pairs": [preview],
                             "links": self._merge_links({}, ds_links),
                             "_all_pairs": [p],
-                            "_max_liq": preview.get("liquidity_usd") or 0,
+                            "_max_score": pair_score,
                         }
                     else:
                         # Add this pair to the token's collection
                         token_map[token_key]["_all_pairs"].append(p)
                         token_map[token_key]["links"] = self._merge_links(token_map[token_key]["links"], ds_links)
 
-                        # Update metadata if this pair has higher liquidity
-                        pair_liq = preview.get("liquidity_usd") or 0
-                        if pair_liq > token_map[token_key]["_max_liq"]:
-                            token_map[token_key]["_max_liq"] = pair_liq
+                        # Update metadata if this pair has higher score
+                        if pair_score > token_map[token_key]["_max_score"]:
+                            token_map[token_key]["_max_score"] = pair_score
                             token_map[token_key]["price_usd"] = preview.get("price_usd")
 
             ds_candidates = []
@@ -742,16 +777,21 @@ class TokenResolverAgent(MeshAgent):
 
                 previews = sorted(
                     [self._pair_to_preview(p) for p in obj["_all_pairs"]],
-                    key=lambda x: (x.get("liquidity_usd") or 0),
+                    key=lambda x: _calculate_pair_score(x.get("liquidity_usd") or 0, x.get("volume24h_usd") or 0),
                     reverse=True,
                 )[:3]
                 obj["top_pairs"] = previews
                 obj.pop("_all_pairs", None)
-                obj.pop("_max_liq", None)  # Clean up internal tracking field
+                obj.pop("_max_score", None)  # Clean up internal tracking field
                 ds_candidates.append(obj)
 
             ds_candidates = sorted(
-                ds_candidates, key=lambda x: (x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0), reverse=True
+                ds_candidates,
+                key=lambda x: _calculate_pair_score(
+                    x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0,
+                    x.get("top_pairs", [{}])[0].get("volume24h_usd") or 0,
+                ),
+                reverse=True,
             )
             logger.info(
                 f"[token_resolver] Token map processed: {len(token_map)} unique tokens, {len(ds_candidates)} final candidates, {linked_count} linked to CoinGecko"
