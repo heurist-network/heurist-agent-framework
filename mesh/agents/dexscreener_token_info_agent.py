@@ -171,9 +171,11 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             pair["info"].pop("imageUrl", None)
 
         if pair.get("chainId") and pair.get("chainId") != "solana":
-            for k in ["baseToken", "quoteToken", "pairAddress"]:
+            for k in ["baseToken", "quoteToken"]:
                 if k in pair and pair[k].get("address"):
                     pair[k]["address"] = pair[k]["address"].lower()
+            if "pairAddress" in pair:
+                pair["pairAddress"] = pair["pairAddress"].lower()
 
         return pair
 
