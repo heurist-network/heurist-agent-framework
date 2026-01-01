@@ -1,21 +1,51 @@
-MIT License
+Business Source License 1.1
 
-Copyright (c) 2024 Heurist
+Parameters
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Licensor:           Heurist AI Inc.
+Licensed Work:       Heurist Agent Framework
+Change Date:         2027-12-31
+Change License:      MIT
+Additional Use Grant: Production use of the Licensed Work is permitted, provided that:
+                     1. You do not offer the Licensed Work as a managed service or 
+                        Software-as-a-Service (SaaS); and
+                     2. Your Monthly Recurring Revenue (MRR) from commercial products 
+                        or services that incorporate or utilize the Licensed Work does 
+                        not exceed $10,000 USD. 
+                     Any use beyond these limits requires prior written authorization 
+                     from the Licensor.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Contact:             team@heurist.xyz
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+---------------------------------------------------------------------------------------
+
+License Text
+
+The Licensor hereby grants you the right to copy, modify, create derivative works, 
+redistribute, and make use of the Licensed Work provided that you are not using the 
+Licensed Work in production.
+
+The Licensor hereby grants you the additional right to make use of the Licensed Work 
+for production use, provided such use is not a Competing Use (as defined in the 
+Additional Use Grant).
+
+The Licensor hereby grants you the right to make use of the Licensed Work for 
+production use as allowed by the Additional Use Grant.
+
+The Licensed Work will automatically convert to the Change License on the Change Date. 
+On and after the Change Date, your use of the Licensed Work will be governed by the 
+terms of the Change License.
+
+All use of the Licensed Work is subject to the condition that this license notice 
+(including the Parameters and the License Text) is included in all copies or 
+substantial portions of the Licensed Work.
+
+To the extent that this License is a contract, it is governed by the laws of the 
+jurisdiction where the Licensor is located.
+
+THE LICENSED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR 
+A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE LICENSOR BE LIABLE 
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE LICENSED WORK OR THE USE 
+OR OTHER DEALINGS IN THE LICENSED WORK.

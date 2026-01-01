@@ -214,7 +214,7 @@ This process helps us stay organized, encourages community involvement, and keep
 
 ## License
 
-MIT License - See LICENSE file for details.
+BSL 1.1 - See LICENSE file for details.
 
 ## Contributing
 
