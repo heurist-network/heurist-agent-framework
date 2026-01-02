@@ -1,15 +1,16 @@
-import logging
+import asyncio
 import os
 import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from apify_client import ApifyClient
 from dotenv import load_dotenv
+from loguru import logger
 
 from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
-logger = logging.getLogger(__name__)
 load_dotenv()
 
 DEFAULT_TIMELINE_LIMIT = 20
@@ -18,27 +19,36 @@ DEFAULT_TIMELINE_LIMIT = 20
 def _clean_tweet_text(text: str) -> str:
     if not text:
         return text
-    cleaned = re.sub(r'https://t\.co/\S+', '', text)
-    cleaned = re.sub(r'#\w+', '', cleaned) # remove hashtags
-    cleaned = re.sub(r'\s+', ' ', cleaned)
+    cleaned = re.sub(r"https://t\.co/\S+", "", text)
+    cleaned = re.sub(r"#\w+", "", cleaned) # remove hashtags
+    cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned.strip()
+
+
+def _to_int(value) -> int:
+    """Safely convert a value to int."""
+    if value is None:
+        return 0
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return 0
 
 
 def _format_date_only(timestamp: str) -> str:
     if not timestamp:
         return ""
     # Already formatted as YYYY-MM-DD
-    if len(timestamp) == 10 and timestamp.count('-') == 2:
+    if len(timestamp) == 10 and timestamp.count("-") == 2:
         return timestamp
     try:
-        if 'T' in timestamp:
-            dt = datetime.fromisoformat(timestamp.replace('Z', '+00:00')) # "2025-11-12T05:47:53Z" -> "2025-11-12"
+        if "T" in timestamp and timestamp[4] == "-":
+            dt = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
         else:
-            dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %z %Y") # "Tue Oct 14 19:35:12 +0000 2025" -> "2025-10-14"
+            dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %z %Y")
         return dt.strftime("%Y-%m-%d")
-    except Exception as e:
-        # logger.warning(f"Failed to format date '{timestamp}': {e}")
-        return timestamp.split('T')[0] if 'T' in timestamp else timestamp
+    except Exception:
+        return timestamp.split("T")[0] if "T" in timestamp and timestamp[4] == "-" else timestamp
 
 
 class TwitterInfoAgent(MeshAgent):
@@ -50,6 +60,12 @@ class TwitterInfoAgent(MeshAgent):
 
         self.base_url = "https://api.apidance.pro"
         self.headers = {"apikey": self.api_key}
+
+        self.apify_api_key = os.getenv("APIFY_API_KEY")
+        if not self.apify_api_key:
+            raise ValueError("APIFY_API_KEY environment variable is required")
+        self.apify_client = ApifyClient(self.apify_api_key)
+        self.apify_actor_id = "practicaltools/cheap-simple-twitter-api"
 
         self.metadata.update(
             {
@@ -213,14 +229,14 @@ class TwitterInfoAgent(MeshAgent):
                 "id": user.get("id_str") or "",
                 "name": user.get("name", ""),
                 "verified": bool(user.get("verified", False)),
-                "followers": int(user.get("followers_count", 0)),
+                "followers": _to_int(user.get("followers_count")),
             },
             "engagement": {
-                "likes": int(tweet.get("favorite_count", 0)),
-                "replies": int(tweet.get("reply_count", 0)),
-                "retweets": int(tweet.get("retweet_count", 0)),
-                "quotes": int(tweet.get("quote_count", 0)),
-                "views": int(tweet.get("view_count", 0) or 0),
+                "likes": _to_int(tweet.get("favorite_count")),
+                "replies": _to_int(tweet.get("reply_count")),
+                "retweets": _to_int(tweet.get("retweet_count")),
+                "quotes": _to_int(tweet.get("quote_count")),
+                "views": _to_int(tweet.get("view_count")),
             },
             "type": _type(tweet),
             # "media": {"type": media_type, "urls": medias},
@@ -239,6 +255,76 @@ class TwitterInfoAgent(MeshAgent):
             result["quoted_tweet_id"] = str(tweet["related_tweet_id"])
 
         return result
+
+    # ------------------------------------------------------------------------
+    #                      APIFY FALLBACK METHODS
+    # ------------------------------------------------------------------------
+    def _simplify_apify_tweet(self, tweet: Dict) -> Dict:
+        """Convert practicaltools Apify tweet format to our standard format."""
+        author = tweet.get("author") or {}
+        username = author.get("userName") or ""
+        tid = str(tweet.get("id") or "")
+
+        def _tweet_type(t: Dict) -> str:
+            if t.get("isRetweet"):
+                return "retweet"
+            if t.get("isReply"):
+                return "reply"
+            if t.get("isQuote"):
+                return "quote"
+            return "tweet"
+
+        return {
+            "id": tid,
+            "text": _clean_tweet_text(tweet.get("text") or tweet.get("fullText") or ""),
+            "created_at": _format_date_only(tweet.get("createdAt") or ""),
+            "source": f"x.com/{username}/status/{tid}" if username and tid else "",
+            "author": {
+                "id": str(author.get("id") or ""),
+                "name": author.get("name") or "",
+                "verified": bool(author.get("isVerified") or author.get("isBlueVerified") or False),
+                "followers": _to_int(author.get("followers")),
+            },
+            "engagement": {
+                "likes": _to_int(tweet.get("likeCount")),
+                "replies": _to_int(tweet.get("replyCount")),
+                "retweets": _to_int(tweet.get("retweetCount")),
+                "quotes": _to_int(tweet.get("quoteCount")),
+                "views": _to_int(tweet.get("viewCount")),
+            },
+            "type": _tweet_type(tweet),
+        }
+
+    async def _apify_get_user_timeline(self, username: str, limit: int = 20) -> Dict:
+        """Fallback: Get user timeline using Apify practicaltools actor."""
+        clean_username = self._clean_username(username)
+        logger.info(f"Apify fallback: fetching timeline for @{clean_username}")
+
+        run_input = {"endpoint": "user/last_tweets", "parameters": {"userName": clean_username}}
+        run = await asyncio.to_thread(lambda: self.apify_client.actor(self.apify_actor_id).call(run_input=run_input))
+        dataset_id = run.get("defaultDatasetId")
+        if not dataset_id:
+            return {"error": "Apify actor returned no dataset"}
+
+        items = list(self.apify_client.dataset(dataset_id).iterate_items())
+        if not items:
+            return {"error": f"No tweets found for user @{clean_username}"}
+        first_author = (items[0].get("author") or {}) if items else {}
+        profile = {
+            "id_str": str(first_author.get("id") or ""),
+            "name": first_author.get("name") or "",
+            "screen_name": first_author.get("userName") or clean_username,
+            "description": first_author.get("description") or "",
+            "followers_count": first_author.get("followers") or 0,
+            "friends_count": first_author.get("following") or 0,
+            "statuses_count": first_author.get("statusesCount") or 0,
+            "verified": bool(first_author.get("isVerified") or first_author.get("isBlueVerified")),
+            "created_at": first_author.get("createdAt") or "",
+        }
+
+        tweets = [self._simplify_apify_tweet(t) for t in items[:limit]]
+        logger.info(f"Apify fallback: retrieved {len(tweets)} tweets for @{clean_username}")
+        return {"profile": profile, "tweets": tweets}
 
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
@@ -435,29 +521,42 @@ class TwitterInfoAgent(MeshAgent):
                 {"identifier": identifier}, f"Looking up Twitter user: @{self._clean_username(identifier)}..."
             )
 
-            # Get user profile first
+            # Try apidance first
             profile_result = await self.get_user_id(identifier)
-            errors = self._handle_error(profile_result)
-            if errors:
-                return errors
+            apidance_failed = "error" in profile_result
 
-            user_id = profile_result.get("profile", {}).get("id_str")
-            if not user_id:
-                return {"error": "Could not retrieve user ID"}
+            if not apidance_failed:
+                user_id = profile_result.get("profile", {}).get("id_str")
+                if user_id:
+                    tweets_result = await self.get_tweets(user_id, limit, cursor)
+                    if "error" not in tweets_result:
+                        return {
+                            "twitter_data": {
+                                "profile": profile_result.get("profile", {}),
+                                "tweets": tweets_result.get("tweets", []),
+                            },
+                            "next_cursor": tweets_result.get("next_cursor"),
+                        }
+                    apidance_failed = True
+                else:
+                    apidance_failed = True
 
-            # Get user tweets
-            tweets_result = await self.get_tweets(user_id, limit, cursor)
-            errors = self._handle_error(tweets_result)
-            if errors:
-                return errors
-
-            return {
-                "twitter_data": {
-                    "profile": profile_result.get("profile", {}),
-                    "tweets": tweets_result.get("tweets", []),
-                },
-                "next_cursor": tweets_result.get("next_cursor"),
-            }
+            if apidance_failed:
+                logger.warning(f"Primary API unavailable for @{self._clean_username(identifier)}, using Apify fallback")
+                self.push_update({"identifier": identifier}, "Primary API failed, trying fallback...")
+                fallback_result = await self._apify_get_user_timeline(identifier, limit)
+                if "error" in fallback_result:
+                    return fallback_result
+                logger.warning(
+                    f"Fallback success: retrieved {len(fallback_result.get('tweets', []))} tweets for @{self._clean_username(identifier)}"
+                )
+                return {
+                    "twitter_data": {
+                        "profile": fallback_result.get("profile", {}),
+                        "tweets": fallback_result.get("tweets", []),
+                    },
+                    "next_cursor": None,
+                }
 
         elif tool_name == "get_twitter_detail":
             tweet_id = function_args.get("tweet_id")
