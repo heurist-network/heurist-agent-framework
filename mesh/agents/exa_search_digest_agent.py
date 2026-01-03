@@ -112,11 +112,11 @@ class ExaSearchDigestAgent(MeshAgent):
         return """You are an AI assistant tasked with synthesizing information from provided web search results into a single, concise, and integrated summary. Your goal is to minimize output length while retaining the most crucial information.
             - Synthesize, Don't Segregate: Instead of summarizing each source individually, group related information from across all sources into thematic paragraphs.
             - Use Inline Numerical Citations: Cite sources using inline numerical markers (e.g., [1], [2]). At the end of the entire summary, provide a numbered list of the source URLs corresponding to the markers. Only cite the most relevant sources that contribute unique, non-redundant information. Disregard vague, duplicate, irrelevant information. Max 5 cited sources.
-            - Do not quote the original text unless it's part of a very important headline. Rephrase and summarize to be as brief as possible.
+            - Briefly quote the original texts for the most important information.
             - No bold formatting (**). No markdowns. Only basic bullet points and plain texts.
             - Focus on Key Details: Extract specific names, terms, numbers, and key concepts.
-            - No opening or closing paragraphs. Just focus on representing the search results based on user query.
-            - Strictly under 800 words for the summary. No restriction on the length of source URLs at the end. No minimum length requirement. Be as brief as possible."""
+            - No opening or closing paragraphs. Just focus on representing the search results based on search query.
+            - Strictly under 1000 words for the summary. No restriction on the length of source URLs at the end. No minimum length requirement. Be as brief as possible while retaining relevant information to the search query."""
 
     async def _process_search_results_with_llm(self, search_results: List[Dict], search_query: str) -> str:
         """
@@ -139,12 +139,12 @@ class ExaSearchDigestAgent(MeshAgent):
                         "index": i,
                         "title": result.get("title", ""),
                         "url": result.get("url", ""),
-                        "text": result.get("text", "")[:2000] if result.get("text") else "",
+                        "text": result.get("text", "")[:4000] if result.get("text") else "",
                         "published_date": result.get("published_date", ""),
                     }
                 )
 
-            formatted_content = f'Query: "{search_query}"\n\nWeb search results:\n\n{str(formatted_results)}'
+            formatted_content = f'Search query: "{search_query}"\n\nWeb search results:\n\n{str(formatted_results)}'
 
             messages = [
                 {"role": "system", "content": self.get_system_prompt()},
@@ -156,7 +156,7 @@ class ExaSearchDigestAgent(MeshAgent):
                 api_key=self.heurist_api_key,
                 model_id=self.metadata["small_model_id"],
                 messages=messages,
-                max_tokens=2000,
+                max_tokens=4000,
                 temperature=0.7,
             )
 
@@ -214,7 +214,7 @@ class ExaSearchDigestAgent(MeshAgent):
                 api_key=self.heurist_api_key,
                 model_id=self.metadata["small_model_id"],
                 messages=messages,
-                max_tokens=2000,
+                max_tokens=4000,
                 temperature=0.7,
             )
 
@@ -244,7 +244,7 @@ class ExaSearchDigestAgent(MeshAgent):
 
         try:
             url = f"{self.base_url}/search"
-            payload = {"query": search_term, "numResults": limit, "contents": {"text": {"maxCharacters": 2000}}}
+            payload = {"query": search_term, "numResults": limit, "contents": {"text": {"maxCharacters": 4000}}}
 
             if include_domains:
                 payload["includeDomains"] = include_domains
