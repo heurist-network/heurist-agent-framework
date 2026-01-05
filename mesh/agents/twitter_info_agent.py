@@ -394,7 +394,7 @@ class TwitterInfoAgent(MeshAgent):
 
         # accept either {tweets:[...]} or {data:{tweets:[...], cursor:...}}
         root = tweets_data.get("data") if isinstance(tweets_data, dict) else None
-        tweets = (root or tweets_data).get("tweets", [])
+        tweets = (root or tweets_data).get("tweets") or []
         next_cursor = (root or tweets_data).get("cursor")
 
         cleaned = [self._simplify_tweet_data(t) for t in tweets]
@@ -414,7 +414,7 @@ class TwitterInfoAgent(MeshAgent):
             return tweet_data
 
         root = tweet_data.get("data") or tweet_data
-        tweets = root.get("tweets", [])
+        tweets = root.get("tweets") or []
         next_cursor = root.get("cursor")
 
         result = {"main_tweet": None}
@@ -509,7 +509,7 @@ class TwitterInfoAgent(MeshAgent):
             return search_data
 
         root = search_data.get("data") if isinstance(search_data, dict) else None
-        tweets = (root or search_data).get("tweets", [])
+        tweets = (root or search_data).get("tweets") or []
         next_cursor = (root or search_data).get("cursor")
 
         simplified = [self._simplify_tweet_data(t) for t in tweets]
