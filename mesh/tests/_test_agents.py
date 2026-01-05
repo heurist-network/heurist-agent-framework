@@ -1,4 +1,6 @@
 import asyncio
+import logging
+import os
 import sys
 import time
 from datetime import datetime
@@ -10,6 +12,23 @@ import yaml
 
 class AgentTestBase:
     """Base class for standardized agent testing."""
+
+    @staticmethod
+    def _configure_logging() -> None:
+        """
+        Reduce noisy INFO logs from dependency HTTP clients and agents during test runs.
+        Use `MESH_TEST_LOG_LEVEL=INFO` (or DEBUG) to re-enable verbosity.
+        """
+        level_name = os.getenv("MESH_TEST_LOG_LEVEL", "ERROR").upper()
+        level = getattr(logging, level_name, logging.WARNING)
+
+        logging.basicConfig(level=level, force=True)
+        # Common noisy libraries
+        logging.getLogger("httpx").setLevel(level)
+        logging.getLogger("apify_client").setLevel(level)
+        logging.getLogger("apify_client._http_client").setLevel(level)
+        logging.getLogger("decorators").setLevel(level)
+        logging.getLogger("mesh").setLevel(level)
 
     @staticmethod
     async def run_test(
@@ -25,6 +44,7 @@ class AgentTestBase:
         Returns:
             Dictionary containing all test results
         """
+        AgentTestBase._configure_logging()
         agent = agent_class()
         results = {}
         last_request_time = 0
