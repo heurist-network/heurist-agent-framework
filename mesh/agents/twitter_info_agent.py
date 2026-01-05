@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 import re
 from datetime import datetime
@@ -20,7 +21,7 @@ def _clean_tweet_text(text: str) -> str:
     if not text:
         return text
     cleaned = re.sub(r"https://t\.co/\S+", "", text)
-    cleaned = re.sub(r"#\w+", "", cleaned) # remove hashtags
+    cleaned = re.sub(r"#\w+", "", cleaned)  # remove hashtags
     cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned.strip()
 
@@ -180,7 +181,7 @@ class TwitterInfoAgent(MeshAgent):
         ]
 
     def get_twitter_user_endpoint(self) -> str:
-        return f"{self.base_url}/1.1/users/show.json"
+        return f"{self.base_url}/graphql/UserByScreenName"
 
     def get_twitter_tweets_endpoint(self) -> str:
         return f"{self.base_url}/sapi/UserTweets"
@@ -331,34 +332,46 @@ class TwitterInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
     async def get_user_id(self, identifier: str) -> Dict:
-        """Fetch Twitter user ID and profile information using _api_request"""
+        """Fetch Twitter user ID and profile information using GraphQL endpoint"""
         try:
-            params = {}
             if self._is_numeric_id(identifier):
-                params = {"user_id": identifier}
-            else:
-                clean_username = self._clean_username(identifier)
-                params = {"screen_name": clean_username}
+                logger.warning(
+                    f"Numeric user ID {identifier} not supported by GraphQL endpoint, will try Apify fallback"
+                )
+                return {"error": "Numeric user ID lookup not supported"}
 
-            logger.info(f"Fetching user profile for identifier: {identifier}")
-            user_data = await self._api_request(
+            clean_username = self._clean_username(identifier)
+            variables = {"screen_name": clean_username, "withSafetyModeUserFields": True, "withHighlightedLabel": True}
+            params = {"variables": json.dumps(variables)}
+
+            logger.info(f"Fetching user profile for @{clean_username} via GraphQL")
+            response_data = await self._api_request(
                 url=self.get_twitter_user_endpoint(), method="GET", headers=self.headers, params=params
             )
 
-            if "error" in user_data:
-                logger.error(f"Error fetching user profile: {user_data['error']}")
-                return user_data
+            if "error" in response_data:
+                logger.error(f"Error fetching user profile: {response_data['error']}")
+                return response_data
+
+            # Transform GraphQL response to match expected schema
+            user_result = response_data.get("data", {}).get("user", {}).get("result", {})
+            if not user_result:
+                return {"error": "Invalid response structure from GraphQL endpoint"}
+
+            core = user_result.get("core", {})
+            legacy = user_result.get("legacy", {})
+            verification = user_result.get("verification", {})
 
             profile_info = {
-                "id_str": user_data.get("id_str"),
-                "name": user_data.get("name"),
-                "screen_name": user_data.get("screen_name"),
-                "description": user_data.get("description"),
-                "followers_count": user_data.get("followers_count"),
-                "friends_count": user_data.get("friends_count"),
-                "statuses_count": user_data.get("statuses_count"),
-                "verified": user_data.get("verified", False),
-                "created_at": user_data.get("created_at"),
+                "id_str": str(user_result.get("rest_id", "")),
+                "name": core.get("name", ""),
+                "screen_name": core.get("screen_name", clean_username),
+                "description": legacy.get("description", ""),
+                "followers_count": legacy.get("followers_count", 0),
+                "friends_count": legacy.get("friends_count", 0),
+                "statuses_count": legacy.get("statuses_count", 0),
+                "verified": verification.get("verified", False) or user_result.get("is_blue_verified", False),
+                "created_at": core.get("created_at", ""),
             }
 
             logger.info(f"Successfully fetched profile for user: {profile_info.get('screen_name')}")
