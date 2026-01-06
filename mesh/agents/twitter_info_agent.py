@@ -67,6 +67,7 @@ class TwitterInfoAgent(MeshAgent):
             raise ValueError("APIFY_API_KEY environment variable is required")
         self.apify_client = ApifyClient(self.apify_api_key)
         self.apify_actor_id = "practicaltools/cheap-simple-twitter-api"
+        self.apify_search_actor_id = "gdN28kzr6QsU4nVh8"
 
         self.metadata.update(
             {
@@ -326,6 +327,31 @@ class TwitterInfoAgent(MeshAgent):
         tweets = [self._simplify_apify_tweet(t) for t in items[:limit]]
         logger.info(f"Apify fallback: retrieved {len(tweets)} tweets for @{clean_username}")
         return {"profile": profile, "tweets": tweets}
+
+    async def _apify_general_search(self, query: str, limit: int = 20) -> Dict:
+        """Fallback: Search tweets using Apify advanced search actor."""
+        logger.info(f"Apify fallback: searching for '{query}'")
+
+        run_input = {
+            "endpoint": "tweet/advanced_search",
+            "parameters": {"query": query, "queryType": "Latest"},
+            "maxCost": 0.01,
+        }
+        run = await asyncio.to_thread(
+            lambda: self.apify_client.actor(self.apify_search_actor_id).call(run_input=run_input)
+        )
+        dataset_id = run.get("defaultDatasetId")
+        if not dataset_id:
+            return {"error": "Apify search actor returned no dataset"}
+
+        items = list(self.apify_client.dataset(dataset_id).iterate_items())
+        if not items:
+            logger.info(f"Apify fallback: no results found for query '{query}'")
+            return {"query": query, "tweets": [], "result_count": 0}
+
+        tweets = [self._simplify_apify_tweet(t) for t in items[:limit]]
+        logger.info(f"Apify fallback: retrieved {len(tweets)} tweets for query '{query}'")
+        return {"query": query, "tweets": tweets, "result_count": len(tweets)}
 
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
@@ -589,7 +615,7 @@ class TwitterInfoAgent(MeshAgent):
         elif tool_name == "get_general_search":
             query = function_args.get("q")
             cursor = function_args.get("cursor")
-            limit = function_args.get("limit")
+            limit = function_args.get("limit", 20)
             sort_by = function_args.get("sort_by", "Latest")
             if not query:
                 return {"error": "Missing 'q' parameter"}
@@ -604,11 +630,22 @@ class TwitterInfoAgent(MeshAgent):
             logger.info(f"Performing general search for query '{query}'")
 
             search_result = await self.general_search(query, sort_by=sort_by, cursor=cursor, limit=limit)
-            errors = self._handle_error(search_result)
-            if errors:
-                return errors
+            apidance_failed = "error" in search_result
 
-            return {"search_data": search_result}
+            if not apidance_failed:
+                return {"search_data": search_result}
+
+            logger.warning(f"Primary search API unavailable for query '{query}', using Apify fallback")
+            self.push_update({"query": query}, "Primary search API failed, trying fallback...")
+            fallback_result = await self._apify_general_search(query, limit=limit)
+
+            if "error" in fallback_result:
+                return fallback_result
+
+            logger.warning(
+                f"Fallback success: retrieved {len(fallback_result.get('tweets', []))} tweets for query '{query}'"
+            )
+            return {"search_data": fallback_result}
 
         else:
             error_msg = f"Unsupported tool: {tool_name}"
