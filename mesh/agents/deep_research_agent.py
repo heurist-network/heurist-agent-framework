@@ -5,9 +5,9 @@ from typing import Any, Dict, List, Optional
 from dotenv import load_dotenv
 
 from core.clients.search_client import SearchClient
-from core.components import LLMProvider
 from core.tools.tools_mcp import Tools
 from core.workflows import ResearchWorkflow
+from mesh.gemini import DEFAULT_MODEL_ID, GeminiProvider
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -15,8 +15,7 @@ load_dotenv()
 
 
 class DeepResearchAgent(MeshAgent):
-    SEARCH_MODEL_ID = "anthropic/claude-haiku-4.5"
-    RESEARCH_MODEL_ID = "anthropic/claude-sonnet-4.5"
+    MODEL_ID = DEFAULT_MODEL_ID
 
     def __init__(self):
         super().__init__()
@@ -73,11 +72,8 @@ class DeepResearchAgent(MeshAgent):
         )
         self._last_request_time = 0
 
-        self.search_model = self.SEARCH_MODEL_ID
-        self.research_model = self.RESEARCH_MODEL_ID
-
-        self.metadata["large_model_id"] = self.research_model
-        self.metadata["small_model_id"] = self.search_model
+        self.search_model = self.MODEL_ID
+        self.research_model = self.MODEL_ID
 
         self.search_clients = {}
 
@@ -101,18 +97,10 @@ class DeepResearchAgent(MeshAgent):
                 "DeepResearchAgent requires at least one search provider. Set FIRECRAWL_API_KEY and/or EXA_API_KEY."
             )
 
-        openrouter_base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-        openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
-        if not openrouter_api_key:
-            logger.warning("OPENROUTER_API_KEY not found in environment variables; LLM calls will fail.")
-
         self.tools = Tools()
-        self.llm_provider = LLMProvider(
-            openrouter_base_url,
-            openrouter_api_key,
-            self.research_model,
-            self.search_model,
-            self.tools,
+        self.llm_provider = GeminiProvider(
+            api_key=self.gemini_api_key,
+            model_id=self.research_model,
         )
         self.research_workflow = ResearchWorkflow(self.llm_provider, self.tools, search_clients=self.search_clients)
 

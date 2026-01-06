@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 from firecrawl import FirecrawlApp
 from firecrawl.firecrawl import ScrapeOptions
 
-from core.llm import call_llm_async
 from decorators import with_cache, with_retry
 from mesh.agents.exa_search_agent import build_firecrawl_to_exa_fallback
 from mesh.firecrawl_logger import FirecrawlLogger
+from mesh.gemini import call_gemini_async
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -45,8 +45,6 @@ class FirecrawlSearchDigestAgent(MeshAgent):
                     "Search for the weirdest NFT collections that sold for huge amounts",
                 ],
                 "credits": 2,
-                "large_model_id": "google/gemini-2.5-flash",
-                "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",
@@ -84,10 +82,8 @@ Return clear, focused summaries that extract only the most relevant information.
                 {"role": "user", "content": formatted_content},
             ]
 
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
+            response = await call_gemini_async(
+                api_key=self.gemini_api_key,
                 messages=messages,
                 max_tokens=4000,
                 temperature=0.7,
@@ -115,10 +111,8 @@ Return clear, focused summaries that extract only the most relevant information.
                 {"role": "user", "content": f"Web contents:\n\n{scraped_content}"},
             ]
 
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
+            response = await call_gemini_async(
+                api_key=self.gemini_api_key,
                 messages=messages,
                 max_tokens=4000,
                 temperature=0.7,

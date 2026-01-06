@@ -53,7 +53,7 @@ jobs:
 
           for i in {1..45}; do
             echo "Checking deployment status... (attempt $i/45)"
-            response=$(curl --fail -s --max-time 5 https://sequencer-v2.heurist.xyz/mesh_health || echo "error")
+            response=$(curl --fail -s --max-time 5 https://mesh.heurist.xyz/mesh_health || echo "error")
 
             if [[ "$response" != "error" ]]; then
               commit=$(echo "$response" | jq -r '.commit' 2>/dev/null || echo "")

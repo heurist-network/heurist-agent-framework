@@ -10,19 +10,14 @@ import dotenv
 from loguru import logger
 
 from clients.mesh_client import MeshClient
-from core.llm import call_llm_async, call_llm_with_tools_async
 from decorators import monitor_execution, with_cache, with_retry
+from mesh.gemini import call_gemini_async, call_gemini_with_tools_async
 
 os.environ.clear()
 dotenv.load_dotenv()
 
-# By default, large and small models are the same
-DEFAULT_MODEL_ID = "nvidia/llama-3.1-nemotron-70b-instruct"
-
-HEURIST_BASE_URL = os.getenv("HEURIST_BASE_URL")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 HEURIST_API_KEY = os.getenv("HEURIST_API_KEY")
-# HEURIST_BASE_URL = os.getenv('OPENROUTER_BASE_URL') #os.getenv('HEURIST_BASE_URL')
-# HEURIST_API_KEY = os.getenv('OPENROUTER_API_KEY')
 
 
 class MeshAgent(ABC):
@@ -69,18 +64,16 @@ class MeshAgent(ABC):
             ],
             "external_apis": [],
             "tags": [],
-            "large_model_id": DEFAULT_MODEL_ID,
-            "small_model_id": DEFAULT_MODEL_ID,
             "hidden": False,
             "recommended": False,
             "image_url": "",
             "examples": [],
         }
-        self.heurist_base_url = HEURIST_BASE_URL
         self.heurist_api_key = HEURIST_API_KEY
+        self.gemini_api_key = GEMINI_API_KEY
         self._api_clients: Dict[str, Any] = {}
 
-        self.mesh_client = MeshClient(base_url=os.getenv("PROTOCOL_V2_SERVER_URL", "https://sequencer-v2.heurist.xyz"))
+        self.mesh_client = MeshClient(base_url=os.getenv("MESH_SERVER_URL", "https://mesh.heurist.xyz"))
         self._api_clients["mesh"] = self.mesh_client
 
         self._task_id = None
@@ -139,10 +132,8 @@ class MeshAgent(ABC):
         # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
         # ---------------------
         if query:
-            response = await call_llm_with_tools_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["large_model_id"],
+            response = await call_gemini_with_tools_async(
+                api_key=self.gemini_api_key,
                 system_prompt=self.get_system_prompt(),
                 user_prompt=query,
                 temperature=0.1,
@@ -186,7 +177,7 @@ class MeshAgent(ABC):
                 except TypeError:
                     try:
                         explanation = await self._respond_with_llm(
-                            model_id=self.metadata["large_model_id"],
+                            model_id=None,
                             system_prompt=self.get_system_prompt(),
                             query=query,
                             tool_call_id=tool_call.id,
@@ -201,7 +192,7 @@ class MeshAgent(ABC):
                     explanation = f"Failed to generate response: {str(e)}"
             else:
                 explanation = await self._respond_with_llm(
-                    model_id=self.metadata["large_model_id"],
+                    model_id=None,
                     system_prompt=self.get_system_prompt(),
                     query=query,
                     tool_call_id=tool_call.id,
@@ -475,15 +466,20 @@ class MeshAgent(ABC):
         return {}
 
     async def _respond_with_llm(
-        self, model_id: str, system_prompt: str, query: str, tool_call_id: str, data: dict, temperature: float
+        self,
+        model_id: Optional[str],
+        system_prompt: str,
+        query: str,
+        tool_call_id: str,
+        data: dict,
+        temperature: float,
     ) -> str:
         """
         Reusable helper to ask the LLM to generate a user-friendly explanation
         given a piece of data from a tool call.
         """
-        return await call_llm_async(
-            base_url=self.heurist_base_url,
-            api_key=self.heurist_api_key,
+        return await call_gemini_async(
+            api_key=self.gemini_api_key,
             model_id=model_id,
             messages=[
                 {"role": "system", "content": system_prompt},

@@ -7,8 +7,8 @@ from typing import Any, Dict, List, Optional
 from dotenv import load_dotenv
 from firecrawl import FirecrawlApp
 
-from core.llm import call_llm_async
 from decorators import with_cache, with_retry
+from mesh.gemini import call_gemini_async
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -53,8 +53,6 @@ class EtherscanAgent(MeshAgent):
                     "Get top holders for 0xEF22cb48B8483dF6152e1423b19dF5553BbD818b on Base",
                 ],
                 "credits": 2,
-                "large_model_id": "google/gemini-2.5-flash",
-                "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",
@@ -99,10 +97,8 @@ class EtherscanAgent(MeshAgent):
                 },
             ]
 
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
+            response = await call_gemini_async(
+                api_key=self.gemini_api_key,
                 messages=messages,
                 max_tokens=25000,
                 temperature=0.1,

@@ -44,8 +44,6 @@ class L2BeatAgent(MeshAgent):
                     "What are the top Validiums and Optimiums by TVL?",
                 ],
                 "credits": 1,
-                "large_model_id": "google/gemini-2.5-flash",
-                "small_model_id": "google/gemini-2.5-flash",
             }
         )
 

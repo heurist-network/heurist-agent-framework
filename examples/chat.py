@@ -31,7 +31,7 @@ AGENT_NAME = "Bitquery Solana Token Info Agent"
 AGENT_DESCRIPTION = "This agent fetches Solana token trading information and trending tokens from Bitquery"
 ADDITIONAL_INSTRUCTIONS = "You are a crypto expert. You should give accurate, up-to-date information based on the context you have. Don't make up information. If you don't have the information, just say so. Don't sound like a robot. You should talk like a crypto native bro who is deep in the trenches."
 # API_URL = "http://localhost:8000/mesh_request"
-API_URL = "https://sequencer-v2.heurist.xyz/mesh_request"
+API_URL = f"{os.getenv('MESH_SERVER_URL', 'https://mesh.heurist.xyz')}/mesh_request"
 
 console = Console()
 

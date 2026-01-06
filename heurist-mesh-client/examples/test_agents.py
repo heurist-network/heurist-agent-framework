@@ -376,7 +376,10 @@ def test_agent(
     try:
         agents_metadata = fetch_agents_metadata()
         test_inputs = load_test_inputs()
-        client = MeshClient(base_url="http://localhost:8000" if dev else "https://sequencer-v2.heurist.xyz", timeout=90)
+        client = MeshClient(
+            base_url="http://localhost:8000" if dev else os.getenv("MESH_SERVER_URL", "https://mesh.heurist.xyz"),
+            timeout=90,
+        )
         console = Console()
         test_results = []
         skipped_tests = []

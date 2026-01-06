@@ -238,7 +238,7 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
         origin_api_key = api_key
 
         if request.heurist_api_key:
-            agent.set_heurist_api_key(request.heurist_api_key)  # this is the api key for the agent to use Heurist LLMs
+            agent.set_heurist_api_key(request.heurist_api_key)  # api key for the agent to use Gemini
 
         # Handle API credit deduction if enabled
         await validate_api_credits(request.agent_id, origin_api_key)

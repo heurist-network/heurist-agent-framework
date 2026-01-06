@@ -1267,16 +1267,21 @@ grpc = [
 
 [[package]]
 name = "google-auth"
-version = "2.40.0"
+version = "2.46.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cachetools" },
     { name = "pyasn1-modules" },
     { name = "rsa" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8b/03/6b824ef961fb2ab74f3b54adf2a357f742d88e0667a3471621cb9477da96/google_auth-2.40.0.tar.gz", hash = "sha256:c277cf39f7c192d8540eb6331c08b5a0796e8041af8343ae73dd6b269732ca6c", size = 280934, upload-time = "2025-05-05T18:24:54.79Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/6d/dd93ee542979b681c9a5d33970033807beb5114e6194365464581fefaa3e/google_auth-2.46.0.tar.gz", hash = "sha256:cb04c071a73394a6e3b9e48c1a7f48506001175b33e9679587a0f5320a21a34d", size = 321766, upload-time = "2026-01-05T21:31:47.421Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/40/02101ed0fd0af369558db30f5a90c7d843d5747343bb55f35cb96cd2112b/google_auth-2.40.0-py2.py3-none-any.whl", hash = "sha256:dc3a5078acb1043c3e43685c22d628afe40af8559cf561de388e0c939280fcc8", size = 216004, upload-time = "2025-05-05T18:24:53.115Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/54/b03b568bff5748fd62327a1e36f40dcfa436eaf592fd7a481aa8bd4a3ee7/google_auth-2.46.0-py3-none-any.whl", hash = "sha256:fa51659c3745cb7024dd073f4ab766222767ea5f7dee2472110eaa03c9dbd2cb", size = 233748, upload-time = "2026-01-05T21:31:45.839Z" },
+]
+
+[package.optional-dependencies]
+requests = [
+    { name = "requests" },
 ]
 
 [[package]]
@@ -1351,6 +1356,27 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/61/cb/c585282a03a0cea70fcaa1bf55d5d702d0f2351094d663ec3be1c6c67c52/google_crc32c-1.7.1-cp313-cp313t-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e10554d4abc5238823112c2ad7e4560f96c7bf3820b202660373d769d9e6e4c9", size = 32870, upload-time = "2025-03-26T14:41:37.08Z" },
     { url = "https://files.pythonhosted.org/packages/16/1b/1693372bf423ada422f80fd88260dbfd140754adb15cbc4d7e9a68b1cb8e/google_crc32c-1.7.1-pp311-pypy311_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:85fef7fae11494e747c9fd1359a527e5970fc9603c90764843caabd3a16a0a48", size = 28241, upload-time = "2025-03-26T14:41:45.898Z" },
     { url = "https://files.pythonhosted.org/packages/fd/3c/2a19a60a473de48717b4efb19398c3f914795b64a96cf3fbe82588044f78/google_crc32c-1.7.1-pp311-pypy311_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6efb97eb4369d52593ad6f75e7e10d053cf00c48983f7a973105bc70b0ac4d82", size = 28048, upload-time = "2025-03-26T14:41:46.696Z" },
+]
+
+[[package]]
+name = "google-genai"
+version = "1.56.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "distro" },
+    { name = "google-auth", extra = ["requests"] },
+    { name = "httpx" },
+    { name = "pydantic" },
+    { name = "requests" },
+    { name = "sniffio" },
+    { name = "tenacity" },
+    { name = "typing-extensions" },
+    { name = "websockets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/70/ad/d3ac5a102135bd3f1e4b1475ca65d2bd4bcc22eb2e9348ac40fe3fadb1d6/google_genai-1.56.0.tar.gz", hash = "sha256:0491af33c375f099777ae207d9621f044e27091fafad4c50e617eba32165e82f", size = 340451, upload-time = "2025-12-17T12:35:05.412Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/84/93/94bc7a89ef4e7ed3666add55cd859d1483a22737251df659bf1aa46e9405/google_genai-1.56.0-py3-none-any.whl", hash = "sha256:9e6b11e0c105ead229368cb5849a480e4d0185519f8d9f538d61ecfcf193b052", size = 426563, upload-time = "2025-12-17T12:35:03.717Z" },
 ]
 
 [[package]]
@@ -1486,6 +1512,7 @@ dependencies = [
     { name = "firecrawl-py" },
     { name = "flask", extra = ["async"] },
     { name = "google-cloud-bigquery" },
+    { name = "google-genai" },
     { name = "loguru" },
     { name = "mcp" },
     { name = "openai" },
@@ -1530,6 +1557,7 @@ requires-dist = [
     { name = "flask", specifier = "==3.1.0" },
     { name = "flask", extras = ["async"], specifier = "==3.1.0" },
     { name = "google-cloud-bigquery", specifier = ">=3.27.0" },
+    { name = "google-genai", specifier = ">=1.56.0" },
     { name = "loguru", specifier = "==0.7.3" },
     { name = "mcp", specifier = "==1.6.0" },
     { name = "openai", specifier = "==1.71.0" },

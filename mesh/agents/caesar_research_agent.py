@@ -48,8 +48,6 @@ class CaesarResearchAgent(MeshAgent):
                     "enabled": True,
                     "tool_prices": {"caesar_research": "0.1", "get_research_result": "0.001"},
                 },
-                "large_model_id": "google/gemini-2.5-flash",
-                "small_model_id": "google/gemini-2.5-flash",
             }
         )
 

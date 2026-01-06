@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 from firecrawl import FirecrawlApp
 from firecrawl.firecrawl import ScrapeOptions
 
-from core.llm import call_llm_async
 from decorators import with_cache, with_retry
 from mesh.agents.exa_search_agent import build_firecrawl_to_exa_fallback
 from mesh.firecrawl_logger import FirecrawlLogger
+from mesh.gemini import call_gemini_async
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -93,10 +93,8 @@ class FirecrawlSearchAgent(MeshAgent):
                 },
             ]
 
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
+            response = await call_gemini_async(
+                api_key=self.gemini_api_key,
                 messages=messages,
                 max_tokens=25000,
                 temperature=0.1,

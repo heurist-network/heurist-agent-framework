@@ -5,8 +5,8 @@ from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv  # type: ignore
 
-from core.llm import call_llm_async
 from decorators import with_cache, with_retry
+from mesh.gemini import call_gemini_async
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
@@ -41,8 +41,6 @@ class ExaSearchDigestAgent(MeshAgent):
                     "Search for analysis on current market trends",
                 ],
                 "credits": 2,
-                "large_model_id": "google/gemini-2.5-flash",
-                "small_model_id": "google/gemini-2.5-flash",
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",
@@ -151,10 +149,8 @@ class ExaSearchDigestAgent(MeshAgent):
                 {"role": "user", "content": formatted_content},
             ]
 
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
+            response = await call_gemini_async(
+                api_key=self.gemini_api_key,
                 messages=messages,
                 max_tokens=4000,
                 temperature=0.7,
@@ -209,10 +205,8 @@ class ExaSearchDigestAgent(MeshAgent):
                 {"role": "user", "content": f"URL: {url}\n\nWeb content:\n\n{content_to_process}"},
             ]
 
-            response = await call_llm_async(
-                base_url=self.heurist_base_url,
-                api_key=self.heurist_api_key,
-                model_id=self.metadata["small_model_id"],
+            response = await call_gemini_async(
+                api_key=self.gemini_api_key,
                 messages=messages,
                 max_tokens=4000,
                 temperature=0.7,

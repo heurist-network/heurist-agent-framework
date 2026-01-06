@@ -35,7 +35,6 @@ class CarvOnchainDataAgent(MeshAgent):
                     "How many Bitcoins have been mined since the beginning of 2025?",
                     "What are the top 5 most popular smart contracts on Ethereum in the past 30 days?",
                 ],
-                # "large_model_id": "openai/gpt-4o-mini",
             }
         )
 

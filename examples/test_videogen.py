@@ -17,7 +17,7 @@ if not api_key:
 
 async def main():
     # Initialize the workflow
-    workflow = Workflow(api_key=api_key, workflow_url="https://sequencer-v2.heurist.xyz")
+    workflow = Workflow(api_key=api_key, workflow_url=os.getenv("MESH_SERVER_URL", "https://mesh.heurist.xyz"))
 
     # Create a task (e.g., Text2Video)
     task = Text2VideoTask(prompt="A beautiful sunset over the ocean", timeout_seconds=600, workflow_id="1")

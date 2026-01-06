@@ -297,7 +297,7 @@ async def run_all_tests(continuous: bool = False):
         return
     agents_metadata = fetch_agents_metadata()
     test_inputs = load_test_inputs()
-    client = MeshClient(base_url="https://sequencer-v2.heurist.xyz", timeout=90)
+    client = MeshClient(base_url=os.getenv("MESH_SERVER_URL", "https://mesh.heurist.xyz"), timeout=90)
     while True:
         start_time = time.time()
         logger.info(f"Starting test batch at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -325,7 +325,7 @@ async def run_specific_agent(agent_id: str):
     if agent_id not in test_inputs:
         logger.error(f"No test inputs defined for agent {agent_id}")
         return
-    client = MeshClient(base_url="https://sequencer-v2.heurist.xyz", timeout=90)
+    client = MeshClient(base_url=os.getenv("MESH_SERVER_URL", "https://mesh.heurist.xyz"), timeout=90)
     logger.info(f"Starting test for agent {agent_id}")
     stats = run_tests_for_agent(agent_id, client, test_inputs, agents_metadata)
     await push_to_prometheus(stats)
