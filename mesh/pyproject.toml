@@ -33,6 +33,7 @@ dependencies = [
     "uvicorn==0.34.0", # for mesh api server
     "web3-ethereum-defi==0.28.1", # aave agent
     "yfinance>=0.2.65",
+    "google-genai>=1.56.0",
 ]
 
 # required for spaceandtime agent as it uses old deps

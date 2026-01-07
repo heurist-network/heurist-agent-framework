@@ -3,7 +3,7 @@ import os
 import re
 import ssl
 import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -24,7 +24,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
         if not self.api_key:
             raise ValueError("AIXBT_API_KEY environment variable is required")
 
-        self.base_url = "https://api.aixbt.tech/v1"
+        self.base_url = "https://api.aixbt.tech/v2"
         self.headers = {
             "accept": "*/*",
             "Authorization": f"Bearer {self.api_key}",
@@ -112,7 +112,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search_projects",
-                    "description": "Search for cryptocurrency projects with comprehensive details including fundamental analysis, market performance, social activity, and recent developments. Return detailed insights on project descriptions, token contracts across multiple chains, Twitter handles, community metrics, price movements, and chronological timelines of notable updates. Perfect for discovering trending projects, researching specific tokens by name/ticker/Twitter handle, or filtering projects by blockchain network and popularity scores.",
+                    "description": "Search for cryptocurrency projects with comprehensive details including fundamental analysis, market performance, social activity, and recent developments. Returns detailed insights on project names, descriptions, token contracts across multiple chains (as dict), Twitter handles, ticker symbols, CoinGecko IDs for cross-platform compatibility, and chronological signals/updates of notable project events. Perfect for discovering trending projects, researching specific tokens by name/ticker/Twitter handle, or filtering projects by blockchain network and popularity scores.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -171,6 +171,50 @@ class AIXBTProjectInfoAgent(MeshAgent):
     # ------------------------------------------------------------------------
     #                      AIXBT API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
+    def _process_project(self, project: Dict[str, Any]) -> Dict[str, Any]:
+        """Process v2 API project response to remove unnecessary fields and restructure data"""
+        processed = {
+            "name": project.get("name"),
+            "rationale": project.get("rationale"),
+            "xHandle": project.get("xHandle"),
+        }
+
+        tokens_array = project.get("tokens", [])
+        if tokens_array:
+            tokens_dict = {}
+            for token in tokens_array:
+                chain = token.get("chain")
+                address = token.get("address")
+                if chain and address:
+                    tokens_dict[chain] = address
+            processed["tokens"] = tokens_dict
+        else:
+            processed["tokens"] = {}
+        coingecko_data = project.get("coingeckoData")
+        if coingecko_data:
+            if coingecko_data.get("slug"):
+                processed["coingecko_id"] = coingecko_data.get("slug")
+            if coingecko_data.get("symbol"):
+                processed["ticker"] = coingecko_data.get("symbol").upper()
+            if coingecko_data.get("description"):
+                processed["description"] = coingecko_data.get("description")
+        signals = project.get("signals", [])
+        if signals:
+            processed["signals"] = []
+            for signal in signals:
+                processed_signal = {
+                    "date": signal.get("detectedAt"),
+                    "description": signal.get("description"),
+                }
+                if signal.get("category"):
+                    processed_signal["category"] = signal.get("category")
+                if signal.get("officialSources"):
+                    processed_signal["officialSources"] = signal.get("officialSources")
+
+                processed["signals"].append(processed_signal)
+
+        return processed
+
     @with_cache(ttl_seconds=10000)
     @with_retry(max_retries=3)
     async def search_projects(
@@ -220,13 +264,16 @@ class AIXBTProjectInfoAgent(MeshAgent):
                     return {"error": f"Failed to parse API response: {e}", "projects": []}
 
                 if isinstance(data, list):
-                    return {"projects": data}
+                    processed_projects = [self._process_project(p) for p in data]
+                    return {"projects": processed_projects}
 
                 if isinstance(data, dict):
                     if data.get("status") == 200 and "data" in data:
-                        return {"projects": data["data"]}
+                        processed_projects = [self._process_project(p) for p in data["data"]]
+                        return {"projects": processed_projects}
                     if "projects" in data:
-                        return data
+                        processed_projects = [self._process_project(p) for p in data["projects"]]
+                        return {"projects": processed_projects}
                     return {"error": data.get("error", "Unexpected API response"), "projects": []}
 
                 logger.warning(f"Unexpected format: {data}")
@@ -344,12 +391,6 @@ class AIXBTProjectInfoAgent(MeshAgent):
             if result.get("error"):
                 logger.warning(f"AIXBT error: {result['error']}")
                 return {"error": result["error"], "data": {"projects": []}}
-
-            # Remove 'id' field to reduce response size
-            if "projects" in result:
-                for project in result["projects"]:
-                    if project and "id" in project:
-                        del project["id"]
 
             return {"data": result}
 
