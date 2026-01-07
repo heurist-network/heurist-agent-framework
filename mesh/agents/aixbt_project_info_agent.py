@@ -112,7 +112,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "search_projects",
-                    "description": "Search for cryptocurrency projects with comprehensive details including fundamental analysis, market performance, social activity, and recent developments. Returns detailed insights on project names, descriptions, token contracts across multiple chains (as dict), Twitter handles, ticker symbols, CoinGecko IDs for cross-platform compatibility, and chronological signals/updates of notable project events. Perfect for discovering trending projects, researching specific tokens by name/ticker/Twitter handle, or filtering projects by blockchain network and popularity scores.",
+                    "description": "Search for cryptocurrency projects with comprehensive details including fundamental analysis, market performance, social activity, and recent developments. Returns detailed insights on project names, descriptions, token contracts across multiple chains, Twitter handles, ticker symbols, CoinGecko IDs, and chronological signals/updates of notable project events. Perfect for discovering trending projects, researching specific tokens by name/ticker/Twitter handle, or filtering projects by blockchain network and popularity scores.",
                     "parameters": {
                         "type": "object",
                         "properties": {
