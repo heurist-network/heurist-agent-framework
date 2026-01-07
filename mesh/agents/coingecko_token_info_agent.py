@@ -1,5 +1,7 @@
+import json
 import logging
 import os
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from decorators import monitor_execution, with_cache, with_retry
@@ -8,49 +10,30 @@ from mesh.utils.r2_image_uploader import R2ImageUploader
 
 logger = logging.getLogger(__name__)
 
-COINGECKO_ID_MAP = {
-    "BTC": "bitcoin",
-    "ETH": "ethereum",
-    "USDT": "tether",
-    "XRP": "ripple",
-    "BNB": "binancecoin",
-    "SOL": "solana",
-    "USDC": "usd-coin",
-    "DOGE": "dogecoin",
-    "STETH": "staked-ether",  # Lido Staked Ether
-    "TRX": "tron",
-    "ADA": "cardano",
-    "WSTETH": "wrapped-steth",
-    "AVAX": "avalanche-2",
-    "WBETH": "wrapped-beacon-eth",
-    "LINK": "chainlink",
-    "WBTC": "wrapped-bitcoin",
-    "USDE": "usde",  # Ethena USDe
-    "HYPE": "hyperliquid",
-    "SUI": "sui",
-    "XLM": "stellar",
-    "BCH": "bitcoin-cash",
-    "WEETH": "wrapped-eeth",
-    "WETH": "weth",
-    "HBAR": "hedera-hashgraph",
-    "LEO": "leo-token",
-    "USDS": "usds",
-    "LTC": "litecoin",
-    "CRO": "crypto-com-chain",  # Cronos
-    "TON": "the-open-network",
-}
+
+def load_coingecko_id_map() -> Dict[str, str]:
+    """Load CoinGecko ID mapping from JSON file."""
+    map_file = Path(__file__).parent.parent / "data" / "coingecko_id_map.json"
+
+    if not map_file.exists():
+        logger.warning(f"CoinGecko ID map not found at {map_file}, using empty map")
+        return {}
+
+    with open(map_file, "r") as f:
+        return json.load(f)
+
+
+COINGECKO_ID_MAP = load_coingecko_id_map()
 
 
 class CoinGeckoTokenInfoAgent(MeshAgent):
     def __init__(self):
         super().__init__()
-        self.public_api_url = "https://api.coingecko.com/api/v3"
         self.pro_api_url = "https://pro-api.coingecko.com/api/v3"
         self.api_key = os.getenv("COINGECKO_API_KEY")
         if not self.api_key:
             raise ValueError("COINGECKO_API_KEY environment variable is required")
 
-        self.public_headers = {"Authorization": f"Bearer {self.api_key}"}
         self.pro_headers = {"x-cg-pro-api-key": self.api_key}
 
         self.r2_uploader = R2ImageUploader()
@@ -79,13 +62,6 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
             }
         )
 
-    def _resolve_coingecko_id(self, coingecko_id: str) -> str:
-        """Resolve a CoinGecko ID or symbol to the actual CoinGecko ID using the mapping."""
-        actual_coingecko_id = COINGECKO_ID_MAP.get(coingecko_id.upper(), coingecko_id)
-        if actual_coingecko_id != coingecko_id:
-            logger.info(f"Mapped {coingecko_id} to {actual_coingecko_id} using COINGECKO_ID_MAP")
-        return actual_coingecko_id
-
     def get_system_prompt(self) -> str:
         return """You are a helpful assistant that can access CoinGecko API to provide cryptocurrency token information, market data, trending coins, and category data.
 
@@ -101,7 +77,7 @@ Format your response in clean text. Be objective and informative."""
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "coingecko_id": {"type": "string", "description": "The CoinGecko ID of the token"}
+                            "coingecko_id": {"type": "string", "description": "The CoinGecko ID of the token (preferred), or symbol/name as fallback"}
                         },
                         "required": ["coingecko_id"],
                     },
@@ -263,12 +239,6 @@ Format your response in clean text. Be objective and informative."""
         if address.startswith("0x"):
             return address.lower()
         return address
-
-    def get_api_config(self, endpoint: str) -> tuple[str, Dict[str, str]]:
-        """Determine the appropriate API URL and headers based on the endpoint."""
-        if endpoint.startswith("/onchain"):
-            return self.pro_api_url, self.pro_headers
-        return self.public_api_url, self.public_headers
 
     async def _api_request(
         self, url: str, method: str = "GET", headers: Dict = None, params: Dict = None, json_data: Dict = None
@@ -453,10 +423,9 @@ Format your response in clean text. Be objective and informative."""
     async def _search_token(self, query: str) -> str | None:
         """Internal helper to search for a token and return its id"""
         try:
-            api_url, headers = self.get_api_config("/search")
-            url = f"{api_url}/search"
+            url = f"{self.pro_api_url}/search"
             params = {"query": query}
-            response = await self._api_request(url=url, headers=headers, params=params)
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
 
             if "error" in response or not response.get("coins"):
                 return None
@@ -481,9 +450,8 @@ Format your response in clean text. Be objective and informative."""
     @with_cache(ttl_seconds=3600)  # Cache for 1 hour
     async def _get_trending_coins(self) -> dict:
         try:
-            api_url, headers = self.get_api_config("/search/trending")
-            url = f"{api_url}/search/trending"
-            response = await self._api_request(url=url, headers=headers)
+            url = f"{self.pro_api_url}/search/trending"
+            response = await self._api_request(url=url, headers=self.pro_headers)
 
             if "error" in response:
                 return {"error": response["error"]}
@@ -513,30 +481,42 @@ Format your response in clean text. Be objective and informative."""
 
     @with_cache(ttl_seconds=3600)
     @with_retry(max_retries=1)
-    async def _get_token_info(self, coingecko_id: str) -> dict:
+    async def _get_token_info(self, coingecko_id_like: str) -> dict:
         try:
-            actual_coingecko_id = self._resolve_coingecko_id(coingecko_id)
-            api_url, headers = self.get_api_config(f"/coins/{actual_coingecko_id}")
-            url = f"{api_url}/coins/{actual_coingecko_id}"
-            raw_response = await super()._api_request(url=url, headers=headers)
+            if coingecko_id_like.islower():
+                # All lowercase - treat as coingecko_id directly
+                coingecko_id = coingecko_id_like
+            else:
+                # Has uppercase - check quick lookup map first
+                # Try exact match (for names like "Ethereum"), then uppercase (for symbols like "ETH")
+                coingecko_id = COINGECKO_ID_MAP.get(coingecko_id_like) or COINGECKO_ID_MAP.get(coingecko_id_like.upper())
+                if not coingecko_id:
+                    # Not in map - search for it
+                    coingecko_id = await self._search_token(coingecko_id_like)
+                    if not coingecko_id:
+                        return {"error": "Failed to fetch token info"}
 
-            if "error" not in raw_response:
-                image_urls = raw_response.get("image", {})
+            # Try coins API with resolved coingecko_id
+            url = f"{self.pro_api_url}/coins/{coingecko_id}"
+            response = await super()._api_request(url=url, headers=self.pro_headers)
+
+            if "error" not in response:
+                image_urls = response.get("image", {})
                 if image_urls:
-                    await self.r2_uploader.upload_token_images(actual_coingecko_id, image_urls)
-                return self.preprocess_api_response(raw_response)
+                    await self.r2_uploader.upload_token_images(coingecko_id, image_urls)
+                return self.preprocess_api_response(response)
 
-            if actual_coingecko_id == coingecko_id:
-                fallback_id = await self._search_token(coingecko_id)
-                if fallback_id:
-                    api_url, headers = self.get_api_config(f"/coins/{fallback_id}")
-                    fallback_url = f"{api_url}/coins/{fallback_id}"
-                    raw_fallback = await super()._api_request(url=fallback_url, headers=headers)
-                    if "error" not in raw_fallback:
-                        image_urls = raw_fallback.get("image", {})
+            # Coins API failed for lowercase input - try search as last resort
+            if coingecko_id_like.islower():
+                searched_id = await self._search_token(coingecko_id_like)
+                if searched_id:
+                    url = f"{self.pro_api_url}/coins/{searched_id}"
+                    response = await super()._api_request(url=url, headers=self.pro_headers)
+                    if "error" not in response:
+                        image_urls = response.get("image", {})
                         if image_urls:
-                            await self.r2_uploader.upload_token_images(fallback_id, image_urls)
-                        return self.preprocess_api_response(raw_fallback)
+                            await self.r2_uploader.upload_token_images(searched_id, image_urls)
+                        return self.preprocess_api_response(response)
 
             return {"error": "Failed to fetch token info"}
         except Exception as e:
@@ -548,9 +528,8 @@ Format your response in clean text. Be objective and informative."""
     async def _get_categories_list(self) -> dict:
         """Get a list of all CoinGecko categories"""
         try:
-            api_url, headers = self.get_api_config("/coins/categories/list")
-            url = f"{api_url}/coins/categories/list"
-            response = await self._api_request(url=url, headers=headers)
+            url = f"{self.pro_api_url}/coins/categories/list"
+            response = await self._api_request(url=url, headers=self.pro_headers)
             return {"categories": response} if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error: {e}")
@@ -563,10 +542,9 @@ Format your response in clean text. Be objective and informative."""
         limit = max(3, min(limit, 20))
 
         try:
-            api_url, headers = self.get_api_config("/coins/categories")
-            url = f"{api_url}/coins/categories"
+            url = f"{self.pro_api_url}/coins/categories"
             params = {"order": order} if order else {}
-            response = await self._api_request(url=url, headers=headers, params=params)
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
 
             if "error" in response:
                 return {"error": response["error"]}
@@ -593,8 +571,7 @@ Format your response in clean text. Be objective and informative."""
         ids: str,
     ) -> dict:
         try:
-            api_url, headers = self.get_api_config("/simple/price")
-            url = f"{api_url}/simple/price"
+            url = f"{self.pro_api_url}/simple/price"
             params = {
                 "ids": ids,
                 "vs_currencies": "usd",
@@ -604,7 +581,7 @@ Format your response in clean text. Be objective and informative."""
                 "include_last_updated_at": "true",
             }
 
-            response = await self._api_request(url=url, headers=headers, params=params)
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
             return response if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error: {e}")
@@ -622,8 +599,7 @@ Format your response in clean text. Be objective and informative."""
     ) -> dict:
         """Get tokens within a specific category"""
         try:
-            api_url, headers = self.get_api_config("/coins/markets")
-            url = f"{api_url}/coins/markets"
+            url = f"{self.pro_api_url}/coins/markets"
             params = {
                 "vs_currency": vs_currency,
                 "category": category_id,
@@ -632,7 +608,7 @@ Format your response in clean text. Be objective and informative."""
                 "page": page,
                 "sparkline": "false",
             }
-            response = await self._api_request(url=url, headers=headers, params=params)
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
             return (
                 {"category_tokens": {"category_id": category_id, "tokens": response}}
                 if "error" not in response
@@ -693,10 +669,9 @@ Format your response in clean text. Be objective and informative."""
             return {"error": f"Invalid include parameter: {include}. Must be one of {valid_includes}"}
 
         try:
-            api_url, headers = self.get_api_config("/onchain/pools/trending_search")
-            url = f"{api_url}/onchain/pools/trending_search"
+            url = f"{self.pro_api_url}/onchain/pools/trending_search"
             params = {"include": include, "pools": pools}
-            response = await self._api_request(url=url, headers=headers, params=params)
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
             return {"trending_pools": response} if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error getting trending pools: {e}")
@@ -706,9 +681,8 @@ Format your response in clean text. Be objective and informative."""
     @with_retry(max_retries=1)
     async def _handle_top_token_holders(self, network: str, address: str) -> Dict[str, Any]:
         try:
-            api_url, headers = self.get_api_config(f"/onchain/networks/{network}/tokens/{address}/top_holders")
-            url = f"{api_url}/onchain/networks/{network}/tokens/{address}/top_holders"
-            response = await self._api_request(url=url, headers=headers)
+            url = f"{self.pro_api_url}/onchain/networks/{network}/tokens/{address}/top_holders"
+            response = await self._api_request(url=url, headers=self.pro_headers)
             return {"top_holders": response} if "error" not in response else {"error": response["error"]}
         except Exception as e:
             logger.error(f"Error getting top token holders: {e}")

@@ -22,7 +22,7 @@ ALLOWED_INTERVALS = {"1h", "1d"}
 
 def load_supported_symbols() -> Set[str]:
     """Load supported symbols from the JSON file. No fallback - file must exist."""
-    symbols_file = Path(__file__).parent.parent / "cron" / "yahoo_finance_symbols.json"
+    symbols_file = Path(__file__).parent.parent / "data" / "yahoo_finance_symbols.json"
 
     if not symbols_file.exists():
         error_msg = f"Symbols file not found at {symbols_file}. Please run fetch_yahoo_symbols_auto.py to generate it."
@@ -188,7 +188,7 @@ class YahooFinanceAgent(MeshAgent):
         symbol = symbol.upper().strip()
         if symbol in self.supported_symbols:
             return True, None
-        logger.warning(f"Symbol {symbol} not in supported symbols list, rejecting to save API rate limits")
+        logger.warning(f"Symbol {symbol} not supported by Yahoo Finance, rejecting to save API rate limits")
         return (
             False,
             f"Symbol '{symbol}' is not supported. This symbol is not available in Yahoo Finance or may be a recently launched token. Please use established stocks or major cryptocurrencies with -USD suffix.",
