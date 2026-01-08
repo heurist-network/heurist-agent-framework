@@ -33,8 +33,7 @@ jobs:
           tags: |
             heuristdotai/mesh:latest
             heuristdotai/mesh:${{ github.sha }}
-          build-args: |
-            GITHUB_SHA=${{ github.sha }}
+          build-args: GITHUB_SHA=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -48,53 +47,30 @@ jobs:
           script: |
             set -euo pipefail
 
-            echo "Deploying ${{ github.sha }}"
-
-            # Verify swarm manager
-            if [[ "$(docker info --format '{{.Swarm.ControlAvailable}}')" != "true" ]]; then
-              echo "ERROR: not a swarm manager"; exit 1
-            fi
+            [[ "$(docker info --format '{{.Swarm.ControlAvailable}}')" == "true" ]] || { echo "ERROR: not a swarm manager"; exit 1; }
 
             cd ${{ secrets.REPO_PATH }}
             git fetch origin main && git reset --hard origin/main
-
-            echo "Pulling image..."
             docker pull heuristdotai/mesh:${{ github.sha }}
-
-            echo "Deploying stack..."
             docker stack deploy -c docker-compose.yml mesh
-
-            echo "Cleaning up old images..."
             docker image prune -af --filter "until=96h"
-
-            echo "Restarting x402-gateway..."
-            curl -sf -X POST https://mesh.heurist.xyz/pm2-control/restart/x402-gateway \
-              -H "Authorization: Bearer ${{ secrets.PM2_API_SECRET }}" || echo "WARNING: failed to restart x402-gateway"
-
-            echo "Deployment complete"
-
-      - name: Wait for deployment
-        run: |
-          echo "Waiting up to 4 minutes (initial 45s + 45 attempts * 5s) for deployment..."
-          sleep 45 # initial wait for docker swarm to update
-
-          for i in {1..45}; do
-            echo "Checking deployment status... (attempt $i/45)"
-            response=$(curl --fail -s --max-time 5 https://mesh.heurist.xyz/mesh_health || echo "error")
-
-            if [[ "$response" != "error" ]]; then
-              commit=$(echo "$response" | jq -r '.commit' 2>/dev/null || echo "")
-              echo "Current deployed commit: $commit"
-              if [[ -n "$commit" && "$commit" = "${{ github.sha }}" ]]; then
-                echo "Deployment successful!"
-                exit 0
-              fi
-            else
-              echo "Health check endpoint not ready or returned error."
+            if pm2 pid x402-gateway; then
+              pm2 restart x402-gateway
             fi
 
+      - name: Verify deployment
+        run: |
+          sleep 45
+          for i in {1..45}; do
+            response=$(curl -sf --max-time 5 https://mesh.heurist.xyz/mesh_health || echo "")
+            if [[ -n "$response" ]]; then
+              commit=$(echo "$response" | jq -r '.commit' 2>/dev/null || echo "")
+              echo "Attempt $i/45: deployed=$commit expected=${{ github.sha }}"
+              [[ "$commit" == "${{ github.sha }}" ]] && exit 0
+            else
+              echo "Attempt $i/45: health check not ready"
+            fi
             sleep 5
           done
-
-          echo "Deployment timed out or failed verification after multiple attempts."
+          echo "Deployment verification failed"
           exit 1
