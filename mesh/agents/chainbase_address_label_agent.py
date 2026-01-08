@@ -1,5 +1,4 @@
 import asyncio
-import json
 import logging
 import os
 from typing import Any, Dict, List, Optional
@@ -7,7 +6,7 @@ from typing import Any, Dict, List, Optional
 from ens import ENS
 from web3 import Web3
 
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -38,6 +37,7 @@ class ChainbaseAddressLabelAgent(MeshAgent):
                 "description": "Get all available labels for an ETH or Base address. Labels include owner identity, smart contract name, wallet behavior patterns and other properties. Also resolves ENS and Base names.",
                 "external_apis": ["Chainbase"],
                 "tags": ["Blockchain", "Identity"],
+                "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Chainbase.png",
                 "examples": [
                     "Get labels for address 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
