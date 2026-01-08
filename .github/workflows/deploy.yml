@@ -38,13 +38,40 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Trigger deployment webhook
-        uses: distributhor/workflow-webhook@v3
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
         with:
-          webhook_url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
-          webhook_secret: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}
-          # this runs a webhook on the prod machine, which in turn triggers the .docker/deploy.sh script to deploy the new image
-          data: '{"repository": "${{ github.repository }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "pm2_api_secret": "${{ secrets.PM2_API_SECRET }}", "commits": ${{ toJson(github.event.commits) }}}'
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+
+            echo "Deploying ${{ github.sha }}"
+
+            # Verify swarm manager
+            if [[ "$(docker info --format '{{.Swarm.ControlAvailable}}')" != "true" ]]; then
+              echo "ERROR: not a swarm manager"; exit 1
+            fi
+
+            cd ${{ secrets.REPO_PATH }}
+            git fetch origin main && git reset --hard origin/main
+
+            echo "Pulling image..."
+            docker pull heuristdotai/mesh:${{ github.sha }}
+
+            echo "Deploying stack..."
+            docker stack deploy -c docker-compose.yml mesh
+
+            echo "Cleaning up old images..."
+            docker image prune -af --filter "until=96h"
+
+            echo "Restarting x402-gateway..."
+            curl -sf -X POST https://mesh.heurist.xyz/pm2-control/restart/x402-gateway \
+              -H "Authorization: Bearer ${{ secrets.PM2_API_SECRET }}" || echo "WARNING: failed to restart x402-gateway"
+
+            echo "Deployment complete"
 
       - name: Wait for deployment
         run: |
