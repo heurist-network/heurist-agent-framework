@@ -2,7 +2,7 @@ import json
 import logging
 import re
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 from decorators import with_retry
 from mesh.mesh_agent import MeshAgent
@@ -14,20 +14,6 @@ logger = logging.getLogger(__name__)
 # -----------------------------
 EVM_ADDR_RE = re.compile(r"^0x[a-fA-F0-9]{40}$")
 SOLANA_B58_RE = re.compile(r"^[1-9A-HJ-NP-Za-km-z]{32,44}$")
-
-WSOL_ADDRESS = "so11111111111111111111111111111111111111112"
-WETH_ADDRESS_ETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-WETH_ADDRESS_BASE = "0x4200000000000000000000000000000000000006"
-WBNB_ADDRESS = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
-
-WRAPPED_NATIVE_ADDRESSES = frozenset(
-    {
-        WSOL_ADDRESS,
-        WETH_ADDRESS_ETH,
-        WETH_ADDRESS_BASE,
-        WBNB_ADDRESS,
-    }
-)
 
 ALLOWED_CHAINS = {
     "ethereum",
@@ -66,6 +52,9 @@ YF_DEFAULT_PERIOD = "6mo"
 # Minimum 24h volume threshold for DEX pools (filters out low-activity/fake pools)
 MIN_POOL_VOLUME_24H = 3000
 
+# Minimum liquidity threshold for DEX pools (filters out scam/fake pools with wash trading)
+MIN_POOL_LIQUIDITY_USD = 5000
+
 
 def _is_evm_address(s: str) -> bool:
     return bool(EVM_ADDR_RE.match(s or ""))
@@ -73,22 +62,6 @@ def _is_evm_address(s: str) -> bool:
 
 def _is_solana_address(s: str) -> bool:
     return bool(SOLANA_B58_RE.match(s or ""))
-
-
-def _is_wrapped_native(address: str) -> bool:
-    if not address:
-        return False
-    return address.lower() in WRAPPED_NATIVE_ADDRESSES
-
-
-def _select_non_native_tokens(base: Dict[str, Any], quote: Dict[str, Any]) -> List[Dict[str, Any]]:
-    base_addr = base.get("address", "")
-    quote_addr = quote.get("address", "")
-    if _is_wrapped_native(base_addr):
-        return [quote]
-    if _is_wrapped_native(quote_addr):
-        return [base]
-    return [base, quote]
 
 
 def _normalize_chain(chain: Optional[str]) -> Optional[str]:
@@ -147,15 +120,6 @@ def _clean_empty_fields(obj: Any) -> Any:
         return obj
 
 
-def _is_same_symbol_pair(pair: Dict[str, Any]) -> bool:
-    """Check if a pair has the same symbol for both base and quote tokens (invalid pair)"""
-    base = pair.get("baseToken") or {}
-    quote = pair.get("quoteToken") or {}
-    base_symbol = base.get("symbol", "").upper()
-    quote_symbol = quote.get("symbol", "").upper()
-    return bool(base_symbol and quote_symbol and base_symbol == quote_symbol)
-
-
 def _has_sufficient_volume(pair: Dict[str, Any]) -> bool:
     """Check if a pair has sufficient 24h volume to be considered active.
     Returns True if volume data is not available (benefit of the doubt).
@@ -169,6 +133,77 @@ def _has_sufficient_volume(pair: Dict[str, Any]) -> bool:
         return True  # No 24h volume data, don't filter
 
     return volume_24h >= MIN_POOL_VOLUME_24H
+
+
+def _has_sufficient_liquidity(pair: Dict[str, Any]) -> bool:
+    """Check if a pair has sufficient liquidity to be considered legitimate.
+    Filters out scam tokens with near-zero liquidity but fake/wash trading volume.
+    """
+    liquidity_obj = pair.get("liquidity")
+    if not liquidity_obj:
+        return False  # No liquidity data = likely scam
+
+    liquidity_usd = liquidity_obj.get("usd")
+    if liquidity_usd is None:
+        return False  # No USD liquidity = likely scam
+
+    return liquidity_usd >= MIN_POOL_LIQUIDITY_USD
+
+
+def _filter_pairs(pairs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Filter invalid pairs; apply volume and liquidity thresholds."""
+    if not pairs:
+        return pairs
+
+    valid = []
+    for p in pairs:
+        base = p.get("baseToken") or {}
+        quote = p.get("quoteToken") or {}
+        base_symbol = base.get("symbol", "").upper()
+        quote_symbol = quote.get("symbol", "").upper()
+
+        # Skip same-symbol pairs
+        if base_symbol and quote_symbol and base_symbol == quote_symbol:
+            logger.debug(
+                f"[token_resolver] Skipping invalid same-symbol pair: "
+                f"{base.get('symbol')}/{quote.get('symbol')}"
+            )
+            continue
+
+        # Skip pairs with insufficient liquidity (scam/wash trading filter)
+        if not _has_sufficient_liquidity(p):
+            liquidity_usd = (p.get("liquidity") or {}).get("usd", 0)
+            logger.debug(
+                f"[token_resolver] Skipping low-liquidity pair: "
+                f"{base.get('symbol')}/{quote.get('symbol')} "
+                f"(liq=${liquidity_usd:,.2f})"
+            )
+            continue
+
+        valid.append(p)
+
+    if not valid:
+        return valid
+
+    # Apply volume threshold only if at least one pair meets it
+    sufficient = []
+    insufficient = []
+    for p in valid:
+        if _has_sufficient_volume(p):
+            sufficient.append(p)
+        else:
+            insufficient.append(p)
+
+    if sufficient:
+        for p in insufficient:
+            logger.debug(
+                f"[token_resolver] Skipping low-volume pair: "
+                f"{(p.get('baseToken') or {}).get('symbol')}/{(p.get('quoteToken') or {}).get('symbol')} "
+                f"(vol=${(p.get('volume') or {}).get('h24', 0):,.0f})"
+            )
+        return sufficient
+
+    return valid
 
 
 def _extract_links_from_preview(preview: Dict[str, Any]) -> Dict[str, List]:
@@ -464,23 +499,6 @@ class TokenResolverAgent(MeshAgent):
             "socials": info.get("socials") or [],
         }
 
-    def _extract_token_from_pair(self, pair: Dict[str, Any], prefer_base: bool = True) -> Tuple[Dict[str, Any], str]:
-        base = pair.get("baseToken") or {}
-        quote = pair.get("quoteToken") or {}
-        stables = {"USDC", "USDT", "DAI", "USDe", "FDUSD", "TUSD", "USDJ", "USDD"}
-        chosen = base if prefer_base else quote
-        other = quote if prefer_base else base
-        if (chosen.get("symbol", "").upper() in stables) and (other.get("symbol", "").upper() not in stables):
-            chosen = other
-        chain = pair.get("chainId")
-        tok = {
-            "address": chosen.get("address") if chosen.get("address") else None,
-            "name": chosen.get("name"),
-            "symbol": chosen.get("symbol"),
-            "chain": chain,
-        }
-        return tok, chain
-
     def _merge_links(self, current: Dict[str, Any], add: Dict[str, Any]) -> Dict[str, Any]:
         out = dict(current or {})
         if not add:
@@ -538,65 +556,54 @@ class TokenResolverAgent(MeshAgent):
             pairs_res = await self._ds_token_pairs(chain or "all", query)
             pairs = ((pairs_res or {}).get("data") or {}).get("pairs") or []
             if not pairs:
-                if chain:
-                    results.append(
-                        {
-                            "name": None,
-                            "symbol": None,
-                            "chain": chain,
-                            "address": query,
-                            "coingecko_id": None,
-                            "price_usd": None,
-                            "market_cap_usd": None,
-                            "top_pairs": [],
-                            "links": {},
-                        }
-                    )
+                return {"status": "success", "data": {"results": results, "timestamp": datetime.utcnow().isoformat()}}
+
+            pairs = _filter_pairs(pairs)
+            if not pairs:
                 return {"status": "success", "data": {"results": results, "timestamp": datetime.utcnow().isoformat()}}
 
             best_by_token: Dict[str, Dict[str, Any]] = {}
             for p in pairs:
-                if _is_same_symbol_pair(p):
-                    logger.debug(
-                        f"[token_resolver] Skipping invalid same-symbol pair: "
-                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')}"
-                    )
+                matched_sides = p.get("matched_sides") or []
+                if not matched_sides:
                     continue
-
-                if not _has_sufficient_volume(p):
-                    logger.debug(
-                        f"[token_resolver] Skipping low-volume pair: "
-                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')} "
-                        f"(vol=${(p.get('volume') or {}).get('h24', 0):,.0f})"
-                    )
-                    continue
-
-                token, ch = self._extract_token_from_pair(p, prefer_base=True)
-                addr = token.get("address")
-                if not addr:
-                    continue
-                token_key = f"{ch}:{addr}"
+                base = p.get("baseToken") or {}
+                quote = p.get("quoteToken") or {}
+                ch = p.get("chainId")
                 preview = self._pair_to_preview(p)
-                current = best_by_token.get(token_key)
                 ds_links = _extract_links_from_preview(preview)
-                if not current or (preview.get("liquidity_usd") or 0) > (
-                    current.get("best_pair", {}).get("liquidity_usd") or 0
-                ):
-                    best_by_token[token_key] = {
-                        "name": token.get("name"),
-                        "symbol": token.get("symbol"),
-                        "chain": ch,
-                        "address": addr,
-                        "coingecko_id": None,
-                        "price_usd": preview.get("price_usd"),
-                        "market_cap_usd": None,
-                        "top_pairs": [preview],
-                        "links": self._merge_links({}, ds_links),
-                        "_all_pairs": [p],
-                    }
-                else:
-                    best_by_token[token_key]["_all_pairs"].append(p)
-                    best_by_token[token_key]["links"] = self._merge_links(best_by_token[token_key]["links"], ds_links)
+                pair_score = _calculate_pair_score(
+                    preview.get("liquidity_usd") or 0, preview.get("volume24h_usd") or 0
+                )
+                for side in matched_sides:
+                    token = base if side == "base" else quote
+                    addr = token.get("address")
+                    if not addr:
+                        continue
+                    token_key = f"{ch}:{addr}"
+                    current = best_by_token.get(token_key)
+                    if not current or pair_score > (current.get("_max_score") or 0):
+                        best_by_token[token_key] = {
+                            "name": token.get("name"),
+                            "symbol": token.get("symbol"),
+                            "chain": ch,
+                            "address": addr,
+                            "coingecko_id": None,
+                            "price_usd": preview.get("price_usd"),
+                            "market_cap_usd": None,
+                            "top_pairs": [preview],
+                            "links": self._merge_links({}, ds_links),
+                            "_all_pairs": [p],
+                            "_max_score": pair_score,
+                        }
+                    else:
+                        best_by_token[token_key]["_all_pairs"].append(p)
+                        best_by_token[token_key]["links"] = self._merge_links(
+                            best_by_token[token_key]["links"], ds_links
+                        )
+                        if pair_score > best_by_token[token_key]["_max_score"]:
+                            best_by_token[token_key]["_max_score"] = pair_score
+                            best_by_token[token_key]["price_usd"] = preview.get("price_usd")
 
             out = []
             for token_key, obj in best_by_token.items():
@@ -607,6 +614,7 @@ class TokenResolverAgent(MeshAgent):
                 )[:3]
                 obj["top_pairs"] = previews
                 obj.pop("_all_pairs", None)
+                obj.pop("_max_score", None)
                 out.append(obj)
 
             out = sorted(
@@ -667,48 +675,24 @@ class TokenResolverAgent(MeshAgent):
             logger.info(f"[token_resolver] DexScreener returned {len(pairs)} pairs")
             token_map: Dict[str, Dict[str, Any]] = {}
 
+            pairs = _filter_pairs(pairs)
             for p in pairs:
-                # Skip invalid same-symbol pairs
-                if _is_same_symbol_pair(p):
-                    logger.debug(
-                        f"[token_resolver] Skipping invalid same-symbol pair: "
-                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')}"
-                    )
-                    continue
-
-                # Skip pairs with insufficient volume
-                if not _has_sufficient_volume(p):
-                    logger.debug(
-                        f"[token_resolver] Skipping low-volume pair: "
-                        f"{p.get('baseToken', {}).get('symbol')}/{p.get('quoteToken', {}).get('symbol')} "
-                        f"(vol=${(p.get('volume') or {}).get('h24', 0):,.0f})"
-                    )
-                    continue
-
                 base = p.get("baseToken")
                 quote = p.get("quoteToken")
                 if not base or not quote:
                     continue
+                selected_sides = p.get("selected_sides") or []
+                if not selected_sides:
+                    continue
                 selected = []
-
-                if qtype == "symbol":
-                    query_upper = query.upper()
-                    if base.get("symbol", "").upper() == query_upper:
-                        selected.append(base)
-                    if quote.get("symbol", "").upper() == query_upper:
-                        selected.append(quote)
-                elif qtype == "name":
-                    query_lower = query.lower()
-                    if base.get("name", "").lower() == query_lower:
-                        selected.append(base)
-                    if quote.get("name", "").lower() == query_lower:
-                        selected.append(quote)
-
-                if not selected:
-                    selected = _select_non_native_tokens(base, quote)
+                if "base" in selected_sides:
+                    selected.append(base)
+                if "quote" in selected_sides:
+                    selected.append(quote)
 
                 # Extract pair-level links once
                 preview = self._pair_to_preview(p)
+                matched_sides = set(p.get("matched_sides") or [])
 
                 for tok in selected:
                     addr = tok.get("address")
@@ -719,20 +703,7 @@ class TokenResolverAgent(MeshAgent):
 
                     # Only assign pair metadata (websites/socials) if this token matches the query
                     # AND is the base token (DexScreener puts base token metadata in pair info)
-                    should_get_links = False
-                    if qtype == "symbol":
-                        should_get_links = (
-                            tok.get("symbol", "").upper() == query.upper()
-                            and tok == base  # Only if this is the base token
-                        )
-                    elif qtype == "name":
-                        should_get_links = (
-                            tok.get("name", "").lower() == query.lower()
-                            and tok == base  # Only if this is the base token
-                        )
-                    elif qtype == "coingecko_id":
-                        # For CG queries, only use base token metadata
-                        should_get_links = tok == base
+                    should_get_links = tok == base and "base" in matched_sides
 
                     ds_links = _extract_links_from_preview(preview) if should_get_links else {}
                     current = token_map.get(token_key)
@@ -943,26 +914,16 @@ class TokenResolverAgent(MeshAgent):
                 ds = await self._ds_search_pairs(prof["symbol"])
                 pairs = ((ds or {}).get("data") or {}).get("pairs") or ds.get("pairs") or []
                 cand_previews = []
+                pairs = _filter_pairs(pairs)
                 for p in pairs:
-                    # Skip invalid same-symbol pairs
-                    if _is_same_symbol_pair(p):
+                    matched_sides = p.get("matched_sides") or []
+                    if not matched_sides:
                         continue
-
-                    # Skip pairs with insufficient volume
-                    if not _has_sufficient_volume(p):
-                        continue
-
-                    base = p.get("baseToken") or {}
-                    quote = p.get("quoteToken") or {}
-                    base_symbol = base.get("symbol", "").upper()
-                    quote_symbol = quote.get("symbol", "").upper()
-
-                    if base_symbol == prof["symbol"] or quote_symbol == prof["symbol"]:
-                        prev = self._pair_to_preview(p)
-                        cand_previews.append(prev)
-                        # merge pair websites/socials into links
-                        ds_links = _extract_links_from_preview(prev)
-                        prof["links"] = self._merge_links(prof["links"], ds_links)
+                    prev = self._pair_to_preview(p)
+                    cand_previews.append(prev)
+                    # merge pair websites/socials into links
+                    ds_links = _extract_links_from_preview(prev)
+                    prof["links"] = self._merge_links(prof["links"], ds_links)
                 pairs_out = sorted(cand_previews, key=lambda x: (x.get("liquidity_usd") or 0), reverse=True)[
                     :top_n_pairs
                 ]
@@ -970,8 +931,8 @@ class TokenResolverAgent(MeshAgent):
                 ds = await self._ds_token_pairs(chain or "all", address)
                 ps = ((ds or {}).get("data") or {}).get("pairs") or []
 
-                # Filter out invalid same-symbol pairs and low-volume pairs
-                valid_pairs = [p for p in ps if not _is_same_symbol_pair(p) and _has_sufficient_volume(p)]
+                # Filter out invalid same-symbol pairs and apply volume threshold when possible
+                valid_pairs = _filter_pairs(ps)
 
                 pairs_out = sorted(
                     [self._pair_to_preview(p) for p in valid_pairs],

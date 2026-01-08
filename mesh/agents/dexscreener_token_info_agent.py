@@ -1,4 +1,5 @@
 import logging
+import re
 from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
@@ -9,6 +10,112 @@ from mesh.utils.r2_image_uploader import R2ImageUploader
 
 logger = logging.getLogger(__name__)
 load_dotenv()
+
+EVM_ADDR_RE = re.compile(r"^0x[a-fA-F0-9]{40}$")
+SOLANA_B58_RE = re.compile(r"^[1-9A-HJ-NP-Za-km-z]{32,44}$")
+NAME_NORMALIZE_RE = re.compile(r"[^a-z0-9]+")
+
+WSOL_ADDRESS = "so11111111111111111111111111111111111111112"
+WETH_ADDRESS_ETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+WETH_ADDRESS_BASE = "0x4200000000000000000000000000000000000006"
+WBNB_ADDRESS = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
+
+WRAPPED_NATIVE_ADDRESSES = frozenset(
+    {
+        WSOL_ADDRESS,
+        WETH_ADDRESS_ETH,
+        WETH_ADDRESS_BASE,
+        WBNB_ADDRESS,
+    }
+)
+
+
+def _is_evm_address(value: str) -> bool:
+    return bool(EVM_ADDR_RE.match(value or ""))
+
+
+def _is_solana_address(value: str) -> bool:
+    return bool(SOLANA_B58_RE.match(value or ""))
+
+
+def _normalize_address(value: Optional[str]) -> str:
+    if not value:
+        return ""
+    return value.lower() if _is_evm_address(value) else value
+
+
+def _normalize_name(value: Optional[str]) -> str:
+    if not value:
+        return ""
+    return NAME_NORMALIZE_RE.sub(" ", value.lower()).strip()
+
+
+def _is_wrapped_native_address(value: Optional[str]) -> bool:
+    if not value:
+        return False
+    return value.lower() in WRAPPED_NATIVE_ADDRESSES
+
+
+def _select_non_native_sides(base: Dict[str, Any], quote: Dict[str, Any]) -> List[str]:
+    base_addr = base.get("address")
+    quote_addr = quote.get("address")
+    base_wrapped = _is_wrapped_native_address(base_addr)
+    quote_wrapped = _is_wrapped_native_address(quote_addr)
+    if base_wrapped and not quote_wrapped:
+        return ["quote"]
+    if quote_wrapped and not base_wrapped:
+        return ["base"]
+    return ["base", "quote"]
+
+
+def _match_pair_sides(
+    pair: Dict[str, Any],
+    search_term: Optional[str] = None,
+    token_address: Optional[str] = None,
+) -> Dict[str, List[str]]:
+    base = pair.get("baseToken") or {}
+    quote = pair.get("quoteToken") or {}
+    base_addr = _normalize_address(base.get("address"))
+    quote_addr = _normalize_address(quote.get("address"))
+    matched = []
+
+    if token_address:
+        target = _normalize_address(token_address)
+        if target and base_addr == target:
+            matched.append("base")
+        if target and quote_addr == target:
+            matched.append("quote")
+        return {"matched_sides": matched, "selected_sides": matched}
+
+    term = (search_term or "").strip()
+    if term:
+        if _is_evm_address(term) or _is_solana_address(term):
+            target = _normalize_address(term)
+            if target and base_addr == target:
+                matched.append("base")
+            if target and quote_addr == target:
+                matched.append("quote")
+            return {"matched_sides": matched, "selected_sides": matched}
+
+        term_symbol = term.upper()
+        term_name = _normalize_name(term)
+        base_symbol = (base.get("symbol") or "").upper()
+        quote_symbol = (quote.get("symbol") or "").upper()
+        base_name = _normalize_name(base.get("name"))
+        quote_name = _normalize_name(quote.get("name"))
+        if term_symbol and base_symbol == term_symbol:
+            matched.append("base")
+        if term_symbol and quote_symbol == term_symbol:
+            matched.append("quote")
+        if term_name and base_name == term_name and "base" not in matched:
+            matched.append("base")
+        if term_name and quote_name == term_name and "quote" not in matched:
+            matched.append("quote")
+
+    if matched:
+        return {"matched_sides": matched, "selected_sides": matched}
+
+    return {"matched_sides": [], "selected_sides": _select_non_native_sides(base, quote)}
 
 
 class DexScreenerTokenInfoAgent(MeshAgent):
@@ -157,9 +264,12 @@ class DexScreenerTokenInfoAgent(MeshAgent):
 
         # Upload token image to R2 before removing it
         if self.r2_uploader and "info" in pair and "imageUrl" in pair["info"]:
-            base_token = pair.get("baseToken", {})
+            matched_sides = pair.get("matched_sides") or []
+            selected_sides = pair.get("selected_sides") or []
+            preferred_side = matched_sides[0] if matched_sides else (selected_sides[0] if selected_sides else "base")
+            token = pair.get("baseToken", {}) if preferred_side == "base" else pair.get("quoteToken", {})
             chain = pair.get("chainId")
-            address = base_token.get("address")
+            address = token.get("address")
             image_url = pair["info"]["imageUrl"]
 
             if chain and address and image_url:
@@ -196,9 +306,12 @@ class DexScreenerTokenInfoAgent(MeshAgent):
         if "pairs" in result and result["pairs"]:
             cleaned_pairs = []
             for pair in result["pairs"]:
-                # Only filter if marketCap exists and is below threshold
+                match_info = _match_pair_sides(pair, search_term=search_term)
+                pair.update(match_info)
+
+                # Only filter if marketCap exists and either side matches the query
                 market_cap = pair.get("marketCap")
-                if market_cap is not None and market_cap < 50000:
+                if market_cap is not None and market_cap < 50000 and match_info["matched_sides"]:
                     continue
 
                 cleaned_pair = await self._clean_pair_data(pair)
@@ -258,6 +371,10 @@ class DexScreenerTokenInfoAgent(MeshAgent):
             if pairs:
                 cleaned_pairs = []
                 for pair in pairs:
+                    match_info = _match_pair_sides(pair, token_address=token_address)
+                    if not match_info["matched_sides"]:
+                        continue
+                    pair.update(match_info)
                     cleaned_pair = await self._clean_pair_data(pair)
                     cleaned_pairs.append(cleaned_pair)
 
