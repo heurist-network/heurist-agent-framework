@@ -38,14 +38,13 @@ import json
 import os
 import statistics
 import time
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from apify_client import ApifyClient
 from apify_client._errors import ApifyApiError
 from dotenv import load_dotenv
-
 
 ACTOR_ID = "practicaltools/cheap-simple-twitter-api"
 
@@ -166,6 +165,7 @@ def _call_practicaltools_by_ids(
     returned_ids = {str(it.get("id")) for it in all_items if it.get("id")}
     missing = [tid for tid in ids if tid not in returned_ids]
     return all_items, missing, {"status": "success"}
+
 
 def _simplify_tweet(item: Dict[str, Any]) -> Dict[str, Any]:
     author = (item.get("author") or {}) if isinstance(item.get("author"), dict) else {}
@@ -368,12 +368,12 @@ def main() -> int:
             all_metrics.append(m)
             if m.error:
                 print(
-                    f"[batch={batch_size:>2}] run {i+1}/{args.runs_per_size} ERROR: {m.error} "
+                    f"[batch={batch_size:>2}] run {i + 1}/{args.runs_per_size} ERROR: {m.error} "
                     f"(actor_call={m.actor_call_s:.2f}s)"
                 )
             else:
                 print(
-                    f"[batch={batch_size:>2}] run {i+1}/{args.runs_per_size} "
+                    f"[batch={batch_size:>2}] run {i + 1}/{args.runs_per_size} "
                     f"actor={m.actor_call_s:.2f}s dataset={m.dataset_read_s:.2f}s total={m.total_s:.2f}s "
                     f"returned={m.returned_items} missing={m.missing_ids} "
                     f"runId={m.run_id} datasetId={m.dataset_id}"

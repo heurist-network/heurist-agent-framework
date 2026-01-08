@@ -14,7 +14,9 @@ def clean_old_files(dry_run=False):
     r2_bucket = os.getenv("R2_BUCKET_WAN_VIDEO_AGENT")
 
     if not all([r2_endpoint, r2_access_key, r2_secret_key, r2_bucket]):
-        raise ValueError("R2 credentials (R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY, R2_BUCKET_WAN_VIDEO_AGENT) required")
+        raise ValueError(
+            "R2 credentials (R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY, R2_BUCKET_WAN_VIDEO_AGENT) required"
+        )
 
     s3_client = boto3.client(
         "s3",
@@ -50,5 +52,6 @@ def clean_old_files(dry_run=False):
 
 if __name__ == "__main__":
     import sys
+
     dry_run = "--dry-run" in sys.argv
     clean_old_files(dry_run=dry_run)

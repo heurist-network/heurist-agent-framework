@@ -16,6 +16,7 @@ SEARCH_LIMIT_MIN = 5
 SEARCH_LIMIT_MAX = 15
 SEARCH_LIMIT_DEFAULT = 10
 
+
 class TwitterIntelligenceAgent(MeshAgent):
     def __init__(self):
         super().__init__()

@@ -312,9 +312,7 @@ class TrendingTokenAgent(MeshAgent):
                 )
 
         if include_memes:
-            gmgn_result = self._normalize_tool_result(
-                result_map["gmgn"], "UnifaiTokenAnalysisAgent.get_gmgn_trend"
-            )
+            gmgn_result = self._normalize_tool_result(result_map["gmgn"], "UnifaiTokenAnalysisAgent.get_gmgn_trend")
             pumpfun_result = self._normalize_tool_result(
                 result_map["pumpfun"], "PumpFunTokenAgent.query_latest_graduated_tokens"
             )

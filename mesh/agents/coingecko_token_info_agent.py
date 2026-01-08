@@ -77,7 +77,10 @@ Format your response in clean text. Be objective and informative."""
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "coingecko_id": {"type": "string", "description": "The CoinGecko ID of the token (preferred), or symbol/name as fallback"}
+                            "coingecko_id": {
+                                "type": "string",
+                                "description": "The CoinGecko ID of the token (preferred), or symbol/name as fallback",
+                            }
                         },
                         "required": ["coingecko_id"],
                     },
@@ -489,7 +492,9 @@ Format your response in clean text. Be objective and informative."""
             else:
                 # Has uppercase - check quick lookup map first
                 # Try exact match (for names like "Ethereum"), then uppercase (for symbols like "ETH")
-                coingecko_id = COINGECKO_ID_MAP.get(coingecko_id_like) or COINGECKO_ID_MAP.get(coingecko_id_like.upper())
+                coingecko_id = COINGECKO_ID_MAP.get(coingecko_id_like) or COINGECKO_ID_MAP.get(
+                    coingecko_id_like.upper()
+                )
                 if not coingecko_id:
                     # Not in map - search for it
                     coingecko_id = await self._search_token(coingecko_id_like)
@@ -617,7 +622,6 @@ Format your response in clean text. Be objective and informative."""
         except Exception as e:
             logger.error(f"Error: {e}")
             return {"error": f"Failed to fetch tokens for category '{category_id}': {str(e)}"}
-
 
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None

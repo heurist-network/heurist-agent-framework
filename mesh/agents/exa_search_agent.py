@@ -78,7 +78,10 @@ class ExaSearchAgent(MeshAgent):
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "search_term": {"type": "string", "description": "The search term or natural language query"},
+                            "search_term": {
+                                "type": "string",
+                                "description": "The search term or natural language query",
+                            },
                             "limit": {
                                 "type": "number",
                                 "description": "Maximum number of results to return (default: 10)",

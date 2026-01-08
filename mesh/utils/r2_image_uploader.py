@@ -1,8 +1,8 @@
 import logging
 import os
-from typing import Optional
-from pathlib import Path
 import re
+from pathlib import Path
+from typing import Optional
 
 import aiohttp
 import boto3
@@ -65,7 +65,7 @@ class R2ImageUploader:
             logger.info(f"CoinGecko ID {coingecko_id} token image upload skipped")
             return {"skipped": True, "r2_key": None}
 
-        self.processed.add(coingecko_id) # regardless of success or failure
+        self.processed.add(coingecko_id)  # regardless of success or failure
 
         results = {}
 
@@ -104,10 +104,10 @@ class R2ImageUploader:
             logger.info(f"DexScreener token image upload skipped for {token_id}")
             return {"skipped": True, "r2_key": None}
 
-        self.processed.add(token_id) # regardless of success or failure
+        self.processed.add(token_id)  # regardless of success or failure
 
-        url_128 = re.sub(r'width=\d+', 'width=128', image_url)
-        url_128 = re.sub(r'height=\d+', 'height=128', url_128)
+        url_128 = re.sub(r"width=\d+", "width=128", image_url)
+        url_128 = re.sub(r"height=\d+", "height=128", url_128)
 
         extension = Path(image_url).suffix.split("?")[0] or ".png"
         r2_key = f"token-icon/{token_id}-128{extension}"

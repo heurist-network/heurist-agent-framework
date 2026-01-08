@@ -19,9 +19,9 @@ load_dotenv()
 def _clean_tweet_text(text: str) -> str:
     if not text:
         return text
-    cleaned = re.sub(r'https://t\.co/\S+', '', text)
-    cleaned = re.sub(r'#\w+', '', cleaned)
-    cleaned = re.sub(r'\s+', ' ', cleaned)
+    cleaned = re.sub(r"https://t\.co/\S+", "", text)
+    cleaned = re.sub(r"#\w+", "", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned.strip()
 
 

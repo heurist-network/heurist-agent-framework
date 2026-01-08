@@ -662,7 +662,7 @@ class ResearchWorkflow:
                             # Try to find the closing quote (accounting for escaped quotes)
                             content_end = content_start
                             while content_end < len(response):
-                                if response[content_end] == '"' and response[content_end - 1] != '\\':
+                                if response[content_end] == '"' and response[content_end - 1] != "\\":
                                     break
                                 content_end += 1
 
@@ -670,12 +670,14 @@ class ResearchWorkflow:
                                 extracted_report = response[content_start:content_end]
                                 # Unescape common JSON escape sequences
                                 extracted_report = (
-                                    extracted_report.replace('\\n', '\n')
-                                    .replace('\\t', '\t')
+                                    extracted_report.replace("\\n", "\n")
+                                    .replace("\\t", "\t")
                                     .replace('\\"', '"')
-                                    .replace('\\\\', '\\')
+                                    .replace("\\\\", "\\")
                                 )
-                                sources = "\n\n## Sources\n\n" + "\n".join([f"- {url}" for url in research_result["visited_urls"]])
+                                sources = "\n\n## Sources\n\n" + "\n".join(
+                                    [f"- {url}" for url in research_result["visited_urls"]]
+                                )
                                 logger.info("Successfully extracted report using string parsing fallback")
                                 return extracted_report + sources
             except Exception as extraction_error:
