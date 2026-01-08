@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     command: python -m mesh.mesh_api
     ports:
-      - "8000:8000"
+      - "8800:8000"
     restart: unless-stopped
     env_file:
       - .env
