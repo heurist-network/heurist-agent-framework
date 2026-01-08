@@ -54,13 +54,13 @@ jobs:
             docker pull heuristdotai/mesh:${{ github.sha }}
             docker stack deploy -c docker-compose.yml mesh
             docker image prune -af --filter "until=96h"
-            if pm2 pid x402-gateway; then
-              pm2 restart x402-gateway
+            if pm2 pid x402-gateway > /dev/null; then
+              pm2 restart x402-gateway > /dev/null || echo "WARNING: pm2 restart failed"
             fi
 
       - name: Verify deployment
         run: |
-          sleep 45
+          sleep 30
           for i in {1..45}; do
             response=$(curl -sf --max-time 5 https://mesh.heurist.xyz/mesh_health || echo "")
             if [[ -n "$response" ]]; then
