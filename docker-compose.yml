@@ -22,19 +22,3 @@ services:
         order: start-first
         failure_action: rollback
         delay: 5s
-
-  mesh-manager:
-    image: heuristdotai/mesh:${COMMIT_SHA:-latest}
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: python -m mesh.mesh_manager
-    restart: unless-stopped
-    env_file:
-      - .env
-    deploy:
-      replicas: 2
-      update_config:
-        order: start-first
-        failure_action: rollback
-        delay: 5s
