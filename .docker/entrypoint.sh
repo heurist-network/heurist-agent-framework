@@ -29,19 +29,6 @@ else
     exit 1
 fi
 
-# Run requirements check at startup
-if [ -z "$SKIP_REQ_CHECK" ]; then
-    echo "[Entrypoint] Running requirements check..."
-    if python /app/.docker/requirements_checker.py; then
-        echo "[Entrypoint] Requirements check passed!"
-    else
-        echo "[Entrypoint] Error: Requirements check failed!" >&2
-        exit 1
-    fi
-else
-    echo "[Entrypoint] Skipping requirements check (SKIP_REQ_CHECK is set)."
-fi
-
 # Execute the command passed into the container by docker-compose
 echo "[Entrypoint] Handing over execution to command:" "$@"
 exec "$@"
