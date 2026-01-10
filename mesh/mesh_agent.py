@@ -10,7 +10,7 @@ import dotenv
 from loguru import logger
 
 from clients.mesh_client import MeshClient
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import monitor_execution, with_cache
 from mesh.gemini import call_gemini_async, call_gemini_with_tools_async
 
 os.environ.clear()
@@ -533,10 +533,15 @@ class MeshAgent(ABC):
             logger.error(f"Cleanup failed | Agent: {self.agent_name} | Error: {str(e)}")
 
     @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=3)
     @monitor_execution()
     async def _api_request(
-        self, url: str, method: str = "GET", headers: Dict = None, params: Dict = None, json_data: Dict = None
+        self,
+        url: str,
+        method: str = "GET",
+        headers: Dict = None,
+        params: Dict = None,
+        json_data: Dict = None,
+        timeout: Optional[int] = 30,
     ) -> Dict:
         """
         Generic API request method that can be used by child classes.
@@ -548,6 +553,7 @@ class MeshAgent(ABC):
             headers: HTTP headers
             params: URL parameters
             json_data: JSON payload for POST/PUT requests
+            timeout: Total request timeout in seconds; None disables timeout
 
         Returns:
             Dict with response data or error
@@ -555,29 +561,21 @@ class MeshAgent(ABC):
         if not self.session:
             self.session = aiohttp.ClientSession()
 
+        timeout_cfg = aiohttp.ClientTimeout(total=timeout) if timeout is not None else None
+
         try:
             if method.upper() == "GET":
-                async with self.session.get(url, headers=headers, params=params) as response:
+                async with self.session.get(url, headers=headers, params=params, timeout=timeout_cfg) as response:
                     if response.status == 429:
-                        logger.warning(f"Rate limit exceeded for {url}. Retrying after 5 seconds...")
-                        await asyncio.sleep(5)
-                        async with self.session.get(url, headers=headers, params=params) as retry_response:
-                            retry_response.raise_for_status()
-                            logger.info(f"Request to {url} succeeded after 429 retry")
-                            return await retry_response.json()
+                        logger.warning(f"Rate limit exceeded for {url}.")
                     response.raise_for_status()
                     return await response.json()
             elif method.upper() == "POST":
-                async with self.session.post(url, headers=headers, params=params, json=json_data) as response:
+                async with self.session.post(
+                    url, headers=headers, params=params, json=json_data, timeout=timeout_cfg
+                ) as response:
                     if response.status == 429:
-                        logger.warning(f"Rate limit exceeded for {url}. Retrying after 5 seconds...")
-                        await asyncio.sleep(5)
-                        async with self.session.post(
-                            url, headers=headers, params=params, json=json_data
-                        ) as retry_response:
-                            retry_response.raise_for_status()
-                            logger.info(f"Request to {url} succeeded after 429 retry")
-                            return await retry_response.json()
+                        logger.warning(f"Rate limit exceeded for {url}.")
                     response.raise_for_status()
                     return await response.json()
 

@@ -3,7 +3,7 @@ import os
 import re
 import ssl
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
 import aiohttp
@@ -300,12 +300,12 @@ class AIXBTProjectInfoAgent(MeshAgent):
             logger.warning(f"Failed to parse date '{date_str}': {e}")
             return True
 
-    @with_cache(ttl_seconds=10000)
-    @with_retry(max_retries=3)
-    async def get_market_summary(self, lookback_days: Optional[int] = 1) -> Dict[str, Any]:
-        """Fetch market summary from aixbt.tech/market-insights"""
-        lookback_days = max(1, min(lookback_days or 1, 3))
-
+    def _fetch_day_page(self, date_str: str) -> Optional[Dict[str, Any]]:
+        """Fetch and parse a single day's market insights page.
+        date_str: format YYYY-MM-DD
+        Returns dict with date and news items, or None if failed/empty.
+        """
+        url = f"https://aixbt.tech/market-insights/{date_str}"
         try:
             result = subprocess.run(
                 [
@@ -314,7 +314,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                     "-L",
                     "-H",
                     "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-                    "https://aixbt.tech/market-insights",
+                    url,
                 ],
                 capture_output=True,
                 text=True,
@@ -322,51 +322,74 @@ class AIXBTProjectInfoAgent(MeshAgent):
             )
 
             if result.returncode != 0 or not result.stdout:
-                logger.error(f"Curl failed: return_code={result.returncode}")
-                return {"error": "Failed to fetch market insights", "summaries": []}
+                return None
 
-            summaries = []
-            processed_dates = set()
-            push_blocks = re.findall(r'self\.__next_f\.push\(\[1,"(.*?)"\]\)', result.stdout, re.DOTALL)
+            html = result.stdout
 
+            # Extract push blocks
+            push_blocks = re.findall(r'self\.__next_f\.push\(\[1,"(.*?)"\]\)', html, re.DOTALL)
+
+            # Find the block with market insights (contains "Current Meta Direction" and substantial content)
+            insights_block = None
             for block in push_blocks:
-                if not any(kw in block for kw in ["Bitcoin", "ETH", "DeFi", "Trump", "whale", "Institutional"]):
-                    continue
-                date_match = re.search(r"(\d+(?:st|nd|rd|th)\s+\w+\s+\d{4},\s+\w+)", block)
-                if not date_match or date_match.group(1) in processed_dates:
-                    continue
-                date = date_match.group(1)
-                news_pattern = r'\\"children\\":\\"([^\\]{50,}(?:Trump|Bitcoin|Loss|Profit|Launch|Market|ETH|SOL|DeFi|whale|TVL|liquidity|Institutional|ETF|APY|Portal|Pendle|Solana|BlackRock)[^\\]+)\\"'
-                matches = re.findall(news_pattern, block)
-                news_items = []
-                for match in matches:
-                    cleaned = match.replace("\\n", " ").replace("\\u0026", "&").replace('\\"', '"').strip()
-                    cleaned = re.sub(r"\s+", " ", cleaned)
-                    if (
-                        len(cleaned) > 50
-                        and cleaned not in news_items
-                        and not any(
-                            skip in cleaned
-                            for skip in ["className", "mb-", "block", "Current Meta Direction", "Opportunities"]
-                        )
-                    ):
-                        news_items.append(cleaned)
-                if news_items:
-                    summaries.append({"date": date, "news": news_items[:15]})
-                    processed_dates.add(date)
-                    if len(summaries) >= lookback_days:
-                        break
+                decoded = block.replace('\\"', '"').replace('\\u0026', '&')
+                if 'Current Meta Direction' in decoded and len(decoded) > 2000:
+                    insights_block = decoded
+                    break
 
-            # Filter out stale summaries (> 3 days old)
-            fresh_summaries = [s for s in summaries if not self._is_date_stale(s["date"])]
+            if not insights_block:
+                return None
+
+            # Extract all content from "mb-3 block" className pattern
+            content_pattern = r'"className":"mb-3 block","children":"([^"]*)"'
+            content_blocks = re.findall(content_pattern, insights_block)
+
+            # Filter and collect non-empty content
+            news_items = []
+            for content in content_blocks:
+                content = content.strip()
+                if content and len(content) > 20:  # Skip empty and very short content
+                    news_items.append(content)
+
+            if not news_items:
+                return None
+
+            return {"date": date_str, "news": news_items}
+
+        except subprocess.TimeoutExpired:
+            logger.warning(f"Timeout fetching {url}")
+            return None
+        except Exception as e:
+            logger.warning(f"Error fetching {url}: {e}")
+            return None
+
+    @with_cache(ttl_seconds=10000)
+    @with_retry(max_retries=3)
+    async def get_market_summary(self, lookback_days: Optional[int] = 1) -> Dict[str, Any]:
+        """Fetch market summary from individual day pages at aixbt.tech/market-insights/YYYY-MM-DD"""
+        lookback_days = max(1, min(lookback_days or 1, 3))
+
+        try:
+            summaries = []
+            today = datetime.now()
+
+            # Try today first, then go back. Due to timezone delays, today's page may not exist yet.
+            # We'll try up to lookback_days + 1 dates to account for this.
+            for days_ago in range(lookback_days + 1):
+                if len(summaries) >= lookback_days:
+                    break
+
+                target_date = today - timedelta(days=days_ago)
+                date_str = target_date.strftime("%Y-%m-%d")
+                day_data = self._fetch_day_page(date_str)
+
+                if day_data:
+                    summaries.append(day_data)
 
             return {
                 "lookback_days": lookback_days,
-                "summaries": fresh_summaries[:lookback_days] if fresh_summaries else [],
+                "summaries": summaries,
             }
-        except subprocess.TimeoutExpired:
-            logger.error("Curl timeout after 30s")
-            return {"error": "Request timed out", "summaries": []}
         except Exception as e:
             logger.error(f"Market summary error: {e}")
             return {"error": str(e), "summaries": []}

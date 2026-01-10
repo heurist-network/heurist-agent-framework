@@ -3,6 +3,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
+from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
@@ -14,6 +15,8 @@ PUMPFUN_NOTE = (
 GMGN_NOTE = "gmgn is a memecoin trading platform."
 
 TRENDING_CHAIN_DATA_BASE_URL = "https://mesh-data.heurist.xyz/"
+TELEGRAM_CHANNELS = ("overheardonct", "groupdigest")
+TELEGRAM_CHANNELS_API_BASE_URL = "http://localhost:8000/api/v1/public/telegram-channel"
 
 
 class TrendingTokenAgent(MeshAgent):
@@ -26,7 +29,7 @@ class TrendingTokenAgent(MeshAgent):
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener, Zora and Twitter discussions.",
-                "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa", "Zora"],
+                "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa", "Zora", "AIXBT", "Heurist Telegram"],
                 "tags": ["Token Trends", "Market Data", "x402"],
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/trending-token-agent.png",
@@ -79,7 +82,15 @@ class TrendingTokenAgent(MeshAgent):
                         "required": [],
                     },
                 },
-            }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_market_summary",
+                    "description": "Get a summary of recent market-wide news including macroeconomics, major updates of well-known crypto projects and tokens, and most discussed topics on crypto Twitter and Telegram groups. This tool returns 10~20 bite-sized items about various topics like market trends, opportunities, catalysts and risks. Useful for knowing what's going on in crypto now.",
+                    "parameters": {"type": "object", "properties": {}, "required": []},
+                },
+            },
         ]
 
     async def _handle_tool_logic(
@@ -90,6 +101,8 @@ class TrendingTokenAgent(MeshAgent):
             include_zora = function_args.get("include_zora", False)
             chain = function_args.get("chain", "")
             return await self.get_trending_tokens(include_memes=include_memes, include_zora=include_zora, chain=chain)
+        if tool_name == "get_market_summary":
+            return await self.get_market_summary()
         return {"status": "error", "error": f"Unsupported tool '{tool_name}'"}
 
     def _normalize_tool_result(self, result: Any, context: str) -> Dict[str, Any]:
@@ -118,6 +131,130 @@ class TrendingTokenAgent(MeshAgent):
         except Exception as e:
             logger.warning(f"Failed to parse last_updated timestamp: {e}")
             return None
+
+    def _is_date_stale(self, date_str: str, max_age_days: int = 3) -> bool:
+        """Check if a date string is older than max_age_days."""
+        try:
+            parsed_date = datetime.fromisoformat(date_str.replace(" UTC", "+00:00"))
+            age_days = (datetime.now(timezone.utc) - parsed_date).days
+            return age_days > max_age_days
+        except Exception as e:
+            logger.warning(f"Failed to parse date '{date_str}': {e}")
+            return True
+
+    async def _fetch_aixbt_market_summary(self) -> Dict[str, Any]:
+        result = await self._call_agent_tool_safe(
+            "mesh.agents.aixbt_project_info_agent",
+            "AIXBTProjectInfoAgent",
+            "get_market_summary",
+            {"lookback_days": 1},
+            log_instance=logger,
+            context="AIXBTProjectInfoAgent.get_market_summary",
+        )
+        normalized = self._normalize_tool_result(result, "AIXBTProjectInfoAgent.get_market_summary")
+        if normalized.get("status") == "error" or "error" in normalized:
+            return {
+                "status": "error",
+                "error": normalized.get("error", "AIXBT summary unavailable"),
+            }
+
+        data = normalized.get("data") if isinstance(normalized, dict) else None
+        if not isinstance(data, dict):
+            data = normalized if isinstance(normalized, dict) else {}
+
+        summaries = data.get("summaries")
+        if not summaries:
+            return {"status": "error", "error": "No recent AIXBT market summary available"}
+
+        return {"status": "success", "summary": summaries[0]}
+
+    async def _fetch_telegram_channel(self, channel: str) -> Dict[str, Any]:
+        url = f"{TELEGRAM_CHANNELS_API_BASE_URL}/{channel}"
+        payload = await self._api_request(url=url, method="GET", params={"max_num": 10}, timeout=2)
+        if not isinstance(payload, dict):
+            return {"status": "error", "error": "unexpected response"}
+        if "error" in payload:
+            return {"status": "error", "error": payload["error"]}
+
+        items = payload.get("items")
+        if not items:
+            return {"status": "error", "error": "empty response"}
+
+        item = items[0] if items else None
+        if not isinstance(item, dict):
+            return {"status": "error", "error": "invalid item"}
+
+        message_time = item.get("message_time")
+        message = item.get("message", "")
+        if not message_time or not message:
+            return {"status": "error", "error": "missing fields"}
+        if self._is_date_stale(message_time, max_age_days=3):
+            return {"status": "error", "error": "stale item"}
+
+        return {
+            "status": "success",
+            "item": {
+                "channel": channel,
+                "message": message,
+                "message_time": message_time,
+            },
+        }
+
+    async def _fetch_telegram_topics(self) -> Dict[str, Any]:
+        task_map = {channel: self._fetch_telegram_channel(channel) for channel in TELEGRAM_CHANNELS}
+        results = await asyncio.gather(*task_map.values(), return_exceptions=True)
+        result_map = dict(zip(task_map.keys(), results))
+
+        topics = []
+        for channel, result in result_map.items():
+            normalized = self._normalize_tool_result(result, f"telegram_channel[{channel}]")
+            if normalized.get("status") == "error":
+                continue
+            item = normalized.get("item")
+            if item:
+                topics.append(item)
+
+        status = "success" if topics else "error"
+        return {"status": status, "topics": topics}
+
+    @with_cache(ttl_seconds=3600)
+    async def get_market_summary(self) -> Dict[str, Any]:
+        aixbt_task = self._fetch_aixbt_market_summary()
+        telegram_task = self._fetch_telegram_topics()
+        aixbt_result, telegram_result = await asyncio.gather(aixbt_task, telegram_task, return_exceptions=True)
+
+        aixbt_result = self._normalize_tool_result(aixbt_result, "AIXBT market summary")
+        telegram_result = self._normalize_tool_result(telegram_result, "Telegram topics")
+
+        sections = []
+        if aixbt_result.get("status") == "success":
+            summary = aixbt_result.get("summary", {})
+            news = summary.get("news", [])
+            if news:
+                date = summary.get("date", "unknown date")
+                news_lines = "\n".join(f"- {item}" for item in news)
+                sections.append(f"## AIXBT market summary ({date})\n{news_lines}")
+
+        if telegram_result.get("status") == "success":
+            topics = telegram_result.get("topics", [])
+            if topics:
+                topic_lines = "\n".join(f"- [{item.get('channel')}] {item.get('message')}" for item in topics)
+                sections.append(f"## Most discussed topics in crypto Telegram groups\n{topic_lines}")
+
+        summary_text = "\n\n".join(sections)
+        has_success = bool(sections)
+
+        payload = {
+            "status": "success" if has_success else "error",
+            "data": {
+                "summary": summary_text,
+                "aixbt": aixbt_result,
+                "telegram": telegram_result,
+            },
+        }
+        if not has_success:
+            payload["error"] = "Failed to fetch AIXBT market summary and telegram topics"
+        return payload
 
     def _process_zora_collection(self, node: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Process a single Zora collection node and apply filtering.
