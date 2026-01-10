@@ -16,7 +16,7 @@ GMGN_NOTE = "gmgn is a memecoin trading platform."
 
 TRENDING_CHAIN_DATA_BASE_URL = "https://mesh-data.heurist.xyz/"
 TELEGRAM_CHANNELS = ("overheardonct", "groupdigest")
-TELEGRAM_CHANNELS_API_BASE_URL = "http://localhost:8000/api/v1/public/telegram-channel"
+TELEGRAM_CHANNELS_API_BASE_URL = "https://ask-backend.heurist.xyz/api/v1/public/telegram-channel"
 
 
 class TrendingTokenAgent(MeshAgent):
@@ -248,8 +248,6 @@ class TrendingTokenAgent(MeshAgent):
             "status": "success" if has_success else "error",
             "data": {
                 "summary": summary_text,
-                "aixbt": aixbt_result,
-                "telegram": telegram_result,
             },
         }
         if not has_success:
