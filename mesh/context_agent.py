@@ -70,12 +70,12 @@ class S3ContextStorage(ContextStorage):
         self.bucket = "mesh-context"
         self.s3 = boto3.client(
             "s3",
-            aws_access_key_id=os.getenv("S3_ACCESS_KEY"),
-            aws_secret_access_key=os.getenv("S3_SECRET_KEY"),
-            endpoint_url=os.getenv("S3_ENDPOINT"),
-            region_name=os.getenv("S3_REGION", "auto"),
+            aws_access_key_id=os.getenv("R2_ACCESS_KEY"),
+            aws_secret_access_key=os.getenv("R2_SECRET_KEY"),
+            endpoint_url=os.getenv("R2_ENDPOINT"),
+            region_name="auto",
         )
-        logger.info(f"S3 context storage initialized with bucket {self.bucket}")
+        logger.info(f"R2 context storage initialized with bucket {self.bucket}")
 
     def _get_key(self, user_id: str) -> str:
         sanitized_user_id = user_id.replace("/", "_").replace("\\", "_")
@@ -173,7 +173,7 @@ class NillionContextStorage(ContextStorage):
 
 
 def _has_s3_env():
-    return all(os.getenv(k) for k in ["S3_ACCESS_KEY", "S3_SECRET_KEY", "S3_ENDPOINT"])
+    return all(os.getenv(k) for k in ["R2_ACCESS_KEY", "R2_SECRET_KEY", "R2_ENDPOINT"])
 
 
 def _has_nillion_env():

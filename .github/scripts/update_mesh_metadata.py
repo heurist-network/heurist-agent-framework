@@ -300,18 +300,18 @@ def merge_erc8004_registration_data(agents_dict: Dict[str, dict]) -> Dict[str, d
 
 class MetadataManager:
     def __init__(self):
-        # Only initialize S3 client if all required env vars are present
-        if all(k in os.environ for k in ["S3_ENDPOINT", "S3_ACCESS_KEY", "S3_SECRET_KEY"]):
+        # Only initialize R2 client if all required env vars are present
+        if all(k in os.environ for k in ["R2_ENDPOINT", "R2_ACCESS_KEY", "R2_SECRET_KEY"]):
             self.s3_client = boto3.client(
                 "s3",
-                endpoint_url=os.environ["S3_ENDPOINT"],
-                aws_access_key_id=os.environ["S3_ACCESS_KEY"],
-                aws_secret_access_key=os.environ["S3_SECRET_KEY"],
-                region_name="enam",
+                endpoint_url=os.environ["R2_ENDPOINT"],
+                aws_access_key_id=os.environ["R2_ACCESS_KEY"],
+                aws_secret_access_key=os.environ["R2_SECRET_KEY"],
+                region_name="auto",
             )
         else:
             self.s3_client = None
-            log.info("S3 credentials not found, skipping metadata upload")
+            log.info("R2 credentials not found, skipping metadata upload")
 
         mesh_agent_file = Path("mesh/mesh_agent.py").resolve()
         self.base_metadata = extract_base_metadata(mesh_agent_file)
@@ -462,7 +462,7 @@ class MetadataManager:
             raise
 
     def upload_metadata(self, metadata: Dict) -> None:
-        """Upload metadata to S3 if credentials are available"""
+        """Upload metadata to R2 if credentials are available"""
         if not self.s3_client:
             return
 
@@ -474,9 +474,9 @@ class MetadataManager:
                 Body=metadata_json,
                 ContentType="application/json",
             )
-            log.info("Uploaded metadata to S3")
+            log.info("Uploaded metadata to R2")
         except Exception as e:
-            log.warning(f"Failed to upload metadata to S3: {e}")
+            log.warning(f"Failed to upload metadata to R2: {e}")
             # Don't raise the error, just log it and continue
 
     def write_metadata_local(self, metadata: Dict) -> None:
@@ -511,7 +511,7 @@ def main():
         elif manager.s3_client:
             manager.upload_metadata(metadata)
         else:
-            log.info("S3 credentials not found, writing metadata.json locally")
+            log.info("R2 credentials not found, writing metadata.json locally")
             manager.write_metadata_local(metadata)
 
         table = manager.generate_agent_table(metadata)
