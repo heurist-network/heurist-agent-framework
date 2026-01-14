@@ -165,8 +165,7 @@ def _filter_pairs(pairs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         # Skip same-symbol pairs
         if base_symbol and quote_symbol and base_symbol == quote_symbol:
             logger.debug(
-                f"[token_resolver] Skipping invalid same-symbol pair: "
-                f"{base.get('symbol')}/{quote.get('symbol')}"
+                f"[token_resolver] Skipping invalid same-symbol pair: {base.get('symbol')}/{quote.get('symbol')}"
             )
             continue
 
@@ -255,6 +254,11 @@ class TokenResolverAgent(MeshAgent):
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",
+                },
+                "erc8004_config": {
+                    "enabled": True,
+                    "supported_trust": ["reputation"],
+                    "wallet_chain_id": 8453,
                 },
             }
         )
@@ -573,9 +577,7 @@ class TokenResolverAgent(MeshAgent):
                 ch = p.get("chainId")
                 preview = self._pair_to_preview(p)
                 ds_links = _extract_links_from_preview(preview)
-                pair_score = _calculate_pair_score(
-                    preview.get("liquidity_usd") or 0, preview.get("volume24h_usd") or 0
-                )
+                pair_score = _calculate_pair_score(preview.get("liquidity_usd") or 0, preview.get("volume24h_usd") or 0)
                 for side in matched_sides:
                     token = base if side == "base" else quote
                     addr = token.get("address")

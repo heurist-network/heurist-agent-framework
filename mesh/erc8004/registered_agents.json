@@ -1,0 +1,7 @@
+{
+  "sepolia": {
+    "Token Resolver Agent": "11155111:370",
+    "Trending Token Agent": "11155111:371"
+  },
+  "mainnet": {}
+}

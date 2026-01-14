@@ -369,6 +369,79 @@ uv run python mesh/test_scripts/test_your_agent.py
 }
 ```
 
+## ERC-8004 On-Chain Registration
+
+### Overview
+
+ERC-8004 is an on-chain identity protocol for AI agents on Ethereum. Agents can be registered on Sepolia (testnet) or Mainnet.
+
+### Configuration
+
+Add `erc8004_config` to enable registration:
+
+```python
+"erc8004_config": {
+    "enabled": True,
+    "supported_trust": ["reputation"]  # Trust models
+}
+```
+
+**Supported trust models:**
+- `"reputation"` - Reputation-based trust
+- `"crypto-economic"` - Economic stake-based trust
+- `"tee-attestation"` - TEE attestation-based trust
+
+### Registration Flow
+
+**1. Register agent on-chain:**
+```bash
+# List eligible agents
+uv run python -m mesh.erc8004.cli list --chain sepolia
+
+# Register single agent
+uv run python -m mesh.erc8004.cli register "Token Resolver Agent" --chain sepolia
+
+# Sync all eligible agents
+uv run python -m mesh.erc8004.cli sync --chain sepolia
+```
+
+**2. Auto-update registry:**
+When registered, agent ID is automatically saved to `mesh/erc8004/registered_agents.json`:
+```json
+{
+  "sepolia": {
+    "Token Resolver Agent": "11155111:42"
+  },
+  "mainnet": {}
+}
+```
+
+**3. Metadata publish flow:**
+When `update_mesh_metadata.py` runs, it merges agent IDs from the registry:
+```json
+{
+  "erc8004_config": {
+    "enabled": true,
+    "supported_trust": ["reputation"],
+    "agent_ids": {
+      "sepolia": "11155111:42",
+      "mainnet": "1:123"
+    }
+  }
+}
+```
+
+### Agent ID Format
+
+Agent IDs follow the format: `"chainId:tokenId"` (e.g., `"11155111:42"` for Sepolia)
+
+### Key Points
+
+- Agent IDs are stored in `mesh/erc8004/registered_agents.json`, not in agent source code
+- Registry file is auto-updated on successful registration
+- Metadata publish script merges agent IDs into `metadata.json`
+- Supports both Sepolia (11155111) and Mainnet (1)
+
 ## Advanced Features
 
 ### Timeout Configuration

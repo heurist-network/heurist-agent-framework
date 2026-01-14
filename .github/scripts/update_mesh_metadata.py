@@ -11,8 +11,13 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Dict
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 import boto3  # type: ignore since it's only for github actions
 import requests
+from mesh.erc8004.registry import load_registry
 
 logging.basicConfig(
     level=logging.INFO,
@@ -223,6 +228,45 @@ class AgentMetadataExtractor(ast.NodeVisitor):
         return result
 
 
+def merge_erc8004_agent_ids(agents_dict: Dict[str, dict]) -> Dict[str, dict]:
+    """Merge agent_id from registry into erc8004_config.
+
+    Reads mesh/erc8004/registered_agents.json and adds agent_ids to each
+    agent's erc8004_config in the format:
+    {
+        "erc8004_config": {
+            "enabled": true,
+            "agent_ids": {"sepolia": "11155111:42", "mainnet": "1:123"}
+        }
+    }
+    """
+    try:
+        registry = load_registry()
+    except Exception as e:
+        log.warning(f"Failed to load ERC-8004 registry: {e}")
+        return agents_dict
+
+    # Build name -> agent_ids mapping from registry
+    agent_ids_by_name: Dict[str, Dict[str, str]] = {}
+    for chain_name, chain_agents in registry.items():
+        for agent_name, agent_id in chain_agents.items():
+            if agent_name not in agent_ids_by_name:
+                agent_ids_by_name[agent_name] = {}
+            agent_ids_by_name[agent_name][chain_name] = agent_id
+
+    # Merge into agents_dict
+    for agent_class, agent_data in agents_dict.items():
+        agent_name = agent_data["metadata"].get("name")
+        if not agent_name:
+            continue
+
+        erc8004 = agent_data["metadata"].get("erc8004_config")
+        if erc8004 and agent_name in agent_ids_by_name:
+            erc8004["agent_ids"] = agent_ids_by_name[agent_name]
+
+    return agents_dict
+
+
 class MetadataManager:
     def __init__(self):
         # Only initialize S3 client if all required env vars are present
@@ -320,6 +364,9 @@ class MetadataManager:
                     agent_data["metadata"]["total_calls"] = existing_agent["metadata"]["total_calls"]
                 if "greeting_message" in existing_agent.get("metadata", {}):
                     agent_data["metadata"]["greeting_message"] = existing_agent["metadata"]["greeting_message"]
+
+        # Merge ERC-8004 agent_ids from registry into metadata
+        agents_dict = merge_erc8004_agent_ids(agents_dict)
 
         sorted_agents_dict = {k: agents_dict[k] for k in sorted(agents_dict.keys())}
 

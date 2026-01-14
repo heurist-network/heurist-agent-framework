@@ -63,6 +63,13 @@ class X402Config(TypedDict, total=False):
     tool_prices: Dict[str, str]
 
 
+# --- ERC-8004 Config ---
+class ERC8004Config(TypedDict, total=False):
+    enabled: bool  # Whether to register this agent on-chain
+    supported_trust: List[str]  # Trust models: "reputation", "crypto-economic", "tee-attestation"
+    # agent_id is stored in mesh/erc8004/registered_agents.json, merged into metadata.json at publish time
+
+
 # --- Agent Metadata Types ---
 class AgentMetadataRequired(TypedDict):
     name: str
@@ -84,6 +91,7 @@ class AgentMetadata(AgentMetadataRequired, total=False):
     hidden: bool
     credits: float
     x402_config: X402Config
+    erc8004_config: ERC8004Config
 
 
 os.environ.clear()
