@@ -246,10 +246,10 @@ class TokenResolverAgent(MeshAgent):
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/token-resolver-agent.png",
                 "examples": [
-                    "search query=ETH",
-                    "search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",
-                    "profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['pairs']",
-                    "profile symbol=BTC include=['funding_rates','technical_indicators']",
+                    "token_search query=ETH",
+                    "token_search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",
+                    "token_profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['pairs']",
+                    "token_profile symbol=BTC include=['funding_rates','technical_indicators']",
                 ],
                 "x402_config": {
                     "enabled": True,
@@ -282,7 +282,7 @@ class TokenResolverAgent(MeshAgent):
             {
                 "type": "function",
                 "function": {
-                    "name": "search",
+                    "name": "token_search",
                     "description": "Find tokens by address, ticker/symbol, or token name. Returns up to 5 concise candidates with basic market/trading context. Use this tool for searching new tokens, unfamiliar tokens, or ambiguous queries. Do not search for multiple assets with one search query. This tool may return multiple assets with the same or similar name/symbol, and in this case you should identify the asset with largest market cap / volume or liquidity to identify the probable asset and ignore the others. The result might include scam tokens (indicated by higher-than-usual market cap with very low volume), which is totally normal and you should ignore them without reporting as errors.",
                     "parameters": {
                         "type": "object",
@@ -308,8 +308,8 @@ class TokenResolverAgent(MeshAgent):
             {
                 "type": "function",
                 "function": {
-                    "name": "profile",
-                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, holders (Solana only), traders (Solana only), funding_rates (Binance-listed large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens. Only enable funding rates and technical indicators for large caps.",
+                    "name": "token_profile",
+                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, holders (Solana only), traders (Solana only), funding_rates (Binance-listed large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use token_search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens. Only enable funding rates and technical indicators for large caps.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -533,7 +533,7 @@ class TokenResolverAgent(MeshAgent):
         if not cgid:
             return result
 
-        profile_result = await self._profile(
+        profile_result = await self._token_profile(
             chain=None,
             address=None,
             symbol=None,
@@ -549,7 +549,7 @@ class TokenResolverAgent(MeshAgent):
         return result
 
     @with_retry(max_retries=2)
-    async def _search(self, query: str, chain: Optional[str], qtype: str, limit: int) -> Dict[str, Any]:
+    async def _token_search(self, query: str, chain: Optional[str], qtype: str, limit: int) -> Dict[str, Any]:
         chain = _normalize_chain(chain)
         results: List[Dict[str, Any]] = []
 
@@ -829,7 +829,7 @@ class TokenResolverAgent(MeshAgent):
         return {"status": "success", "data": {"results": cleaned_results, "timestamp": datetime.utcnow().isoformat()}}
 
     @with_retry(max_retries=2)
-    async def _profile(
+    async def _token_profile(
         self,
         chain: Optional[str],
         address: Optional[str],
@@ -1006,18 +1006,18 @@ class TokenResolverAgent(MeshAgent):
         logger.info(f"[token_resolver] Tool call: {tool_name} args={function_args}")
 
         try:
-            if tool_name == "search":
+            if tool_name == "token_search":
                 query = function_args.get("query", "")
                 chain = function_args.get("chain")
                 type_hint = function_args.get("type_hint")
                 limit = 5
                 qtype = self._detect_query_type(query, type_hint)
-                result = await self._search(query=query, chain=chain, qtype=qtype, limit=limit)
+                result = await self._token_search(query=query, chain=chain, qtype=qtype, limit=limit)
                 if errors := self._handle_error(result):
                     return errors
                 return result
 
-            elif tool_name == "profile":
+            elif tool_name == "token_profile":
                 chain = function_args.get("chain")
                 address = function_args.get("address")
                 symbol = function_args.get("symbol")
@@ -1026,7 +1026,7 @@ class TokenResolverAgent(MeshAgent):
                 top_n_pairs = int(function_args.get("top_n_pairs", 3))
                 indicator_interval = function_args.get("indicator_interval", "1d")
 
-                result = await self._profile(
+                result = await self._token_profile(
                     chain=chain,
                     address=address,
                     symbol=symbol,
