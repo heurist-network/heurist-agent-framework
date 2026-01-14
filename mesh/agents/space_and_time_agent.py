@@ -38,7 +38,7 @@ class SpaceTimeAgent(MeshAgent):
                 "description": "This agent can analyze blockchain data by executing SQL queries from natural language using Space and Time, a database with ZK proofs.",
                 "external_apis": ["Space and Time"],
                 "tags": ["Onchain Data"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/SpacenTime.png",
                 "examples": [
                     "Get the number of blocks created on Ethereum per day over the last month",

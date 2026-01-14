@@ -27,7 +27,7 @@ class ExaSearchAgent(MeshAgent):
                 "description": "This agent can search the web using Exa's API and provide direct answers to questions.",
                 "external_apis": ["Exa"],
                 "tags": ["Search"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Exa.png",
                 "examples": [
                     "What is the latest news on Bitcoin?",

@@ -78,7 +78,7 @@ class TwitterInfoAgent(MeshAgent):
                 "description": "This agent fetches a Twitter user's profile information and recent tweets. It's useful for getting project updates or tracking key opinion leaders (KOLs) in the space.",
                 "external_apis": ["Twitter API"],
                 "tags": ["Twitter"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Twitter.png",
                 "examples": [
                     "Summarise recent updates of @heurist_ai",

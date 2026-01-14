@@ -38,7 +38,7 @@ class SolWalletAgent(MeshAgent):
                 "description": "This agent can query Solana wallet assets and recent swap transactions using Helius API.",
                 "external_apis": ["Helius"],
                 "tags": ["Solana"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Solana.png",
             }
         )

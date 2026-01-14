@@ -45,8 +45,8 @@ class BaseUSDCForensicsAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Reveal USDC transaction patterns for any addresses on Base. This agent is your dedicated onchain USDC investigator for the Base network, combining BigQuery data access with a curated set of forensic tools.",
                 "external_apis": ["Google BigQuery"],
-                "tags": ["Blockchain", "Forensics", "USDC", "Base", "x402"],
-                "recommended": True,
+                "tags": ["Blockchain", "Forensics", "USDC", "Base"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Base.png",
                 "examples": [
                     "Show me the USDC profile for 0x7d9d1821d15b9e0b8ab98a058361233e255e405d",

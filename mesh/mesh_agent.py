@@ -3,7 +3,7 @@ import json
 import os
 from abc import ABC, abstractmethod
 from importlib import import_module
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, TypedDict
 
 import aiohttp
 import dotenv
@@ -11,6 +11,80 @@ from loguru import logger
 
 from decorators import monitor_execution, with_cache
 from mesh.gemini import call_gemini_async, call_gemini_with_tools_async
+
+
+# --- Input/Output Field Types ---
+class InputField(TypedDict, total=False):
+    name: str
+    description: str
+    type: str
+    required: bool
+    default: Any
+
+
+class OutputField(TypedDict):
+    name: str
+    description: str
+    type: str
+
+
+# --- Tool Schema Types ---
+class ToolParameterPropertyRequired(TypedDict):
+    type: str
+    description: str
+
+
+class ToolParameterProperty(ToolParameterPropertyRequired, total=False):
+    enum: List[str]
+    default: Any
+
+
+class ToolParameters(TypedDict):
+    type: str
+    properties: Dict[str, ToolParameterProperty]
+    required: List[str]
+
+
+class ToolFunction(TypedDict):
+    name: str
+    description: str
+    parameters: ToolParameters
+
+
+class ToolSchema(TypedDict):
+    type: str
+    function: ToolFunction
+
+
+# --- x402 Payment Config ---
+class X402Config(TypedDict, total=False):
+    enabled: bool
+    default_price_usd: str
+    tool_prices: Dict[str, str]
+
+
+# --- Agent Metadata Types ---
+class AgentMetadataRequired(TypedDict):
+    name: str
+    version: str
+    author: str
+    author_address: str
+    description: str
+    tags: List[str]
+    inputs: List[InputField]
+    outputs: List[OutputField]
+    image_url: str
+
+
+class AgentMetadata(AgentMetadataRequired, total=False):
+    external_apis: List[str]
+    examples: List[str]
+    verified: bool
+    recommended: bool
+    hidden: bool
+    credits: float
+    x402_config: X402Config
+
 
 os.environ.clear()
 dotenv.load_dotenv()
@@ -25,7 +99,7 @@ class MeshAgent(ABC):
     def __init__(self):
         self.agent_name: str = self.__class__.__name__
 
-        self.metadata: Dict[str, Any] = {
+        self.metadata: AgentMetadata = {
             "name": self.agent_name,
             "version": "1.0.0",
             "author": "unknown",
@@ -63,6 +137,7 @@ class MeshAgent(ABC):
             "external_apis": [],
             "tags": [],
             "hidden": False,
+            "verified": False,
             "recommended": False,
             "image_url": "",
             "examples": [],
@@ -79,7 +154,7 @@ class MeshAgent(ABC):
         pass
 
     @abstractmethod
-    def get_tool_schemas(self) -> List[Dict]:
+    def get_tool_schemas(self) -> List[ToolSchema]:
         """Return the tool schemas for the agent"""
         pass
 

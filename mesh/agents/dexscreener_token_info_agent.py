@@ -136,7 +136,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                 "description": "This agent fetches real-time DEX trading data and token information across multiple chains using DexScreener API",
                 "external_apis": ["DexScreener"],
                 "tags": ["Trading"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Dexscreener.png",
                 "examples": [
                     "Show me information about UNI on Uniswap",

@@ -49,7 +49,7 @@ class BitquerySolanaTokenInfoAgent(MeshAgent):
                 "description": "This agent provides comprehensive analysis of Solana tokens using Bitquery API. It can analyze token metrics (volume, price, liquidity), track holders and buyers, monitor trading activity, and identify trending tokens. The agent supports both specific token analysis and market-wide trend discovery.",
                 "external_apis": ["Bitquery"],
                 "tags": ["Solana"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Solana.png",
                 "examples": [
                     "Analyze trending tokens on Solana",

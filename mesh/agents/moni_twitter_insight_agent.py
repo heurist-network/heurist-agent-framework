@@ -30,7 +30,7 @@ class MoniTwitterInsightAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent analyzes Twitter accounts providing insights on smart followers, mentions, and account activity.",
                 "external_apis": ["Moni"],
-                "tags": ["Twitter", "x402"],
+                "tags": ["Twitter"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Moni.png",
                 "examples": [
                     "Show me the follower growth trends for heurist_ai over the last week",

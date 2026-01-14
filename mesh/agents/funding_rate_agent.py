@@ -52,8 +52,8 @@ class FundingRateAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Fetches Binance USDⓈ‑M funding & open interest, summarizes OI trends, and computes APR from funding intervals.",
                 "external_apis": ["Binance USDⓈ‑M Futures"],
-                "tags": ["Arbitrage", "Funding", "Open Interest", "x402"],
-                "recommended": True,
+                "tags": ["Arbitrage", "Funding", "Open Interest"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/FundingRate.png",
                 "examples": [
                     "Get OI trend and funding APR for BTC",

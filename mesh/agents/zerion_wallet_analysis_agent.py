@@ -29,8 +29,8 @@ class ZerionWalletAnalysisAgent(ContextAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can fetch and analyze the token and NFT holdings of a crypto wallet (must be EVM chain)",
                 "external_apis": ["Zerion"],
-                "tags": ["EVM Wallet", "x402"],
-                "recommended": True,
+                "tags": ["EVM Wallet"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Zerion.png",
                 "examples": [
                     "What tokens does 0x7d9d1821d15B9e0b8Ab98A058361233E255E405D hold?",
@@ -256,9 +256,6 @@ class ZerionWalletAnalysisAgent(ContextAgent):
             return {"error": "Missing 'wallet_address' in tool_arguments"}
 
         logger.info(f"Using {tool_name} for {wallet_address}")
-
-        thinking_msg = f"Analyzing wallet {wallet_address}..."
-        self.push_update(function_args, thinking_msg)
 
         if tool_name == "fetch_wallet_tokens":
             result = await self.fetch_wallet_tokens(wallet_address)

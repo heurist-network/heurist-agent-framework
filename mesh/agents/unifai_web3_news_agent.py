@@ -30,8 +30,8 @@ class UnifaiWeb3NewsAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent fetches the latest Web3 and cryptocurrency news using UnifAI's API",
                 "external_apis": ["UnifAI"],
-                "tags": ["News", "x402"],
-                "recommended": True,
+                "tags": ["News"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Unifai.png",
                 "examples": [
                     "What are the latest crypto news?",

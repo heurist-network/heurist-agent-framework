@@ -47,7 +47,7 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                 "description": "This agent can fetch token information, market data, trending coins, and category data from CoinGecko.",
                 "external_apis": ["Coingecko"],
                 "tags": ["Trading"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Coingecko.png",
                 "examples": [
                     "Top 5 crypto by market cap",

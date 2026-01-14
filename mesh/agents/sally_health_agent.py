@@ -27,7 +27,7 @@ class SallyHealthAgent(MeshAgent):
                 "description": "Sally is a health and medical AI assistant. This agent talks to Sally about medical and health topics, providing helpful information and guidance.",
                 "external_apis": ["Sally"],
                 "tags": ["Health"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Sally.png",
                 "examples": [
                     "How can I stay fit with a work from home routine?",

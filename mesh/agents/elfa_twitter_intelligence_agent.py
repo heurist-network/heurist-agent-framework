@@ -62,8 +62,8 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent analyzes a token or a topic or a Twitter account using Twitter data and Elfa API. It highlights smart influencers.",
                 "external_apis": ["Elfa", "Apidance"],
-                "tags": ["Twitter", "x402"],
-                "recommended": True,
+                "tags": ["Twitter"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Elfa.png",
                 "examples": [
                     "Search for mentions of Heurist, HEU, and heurist_ai in the last 30 days",

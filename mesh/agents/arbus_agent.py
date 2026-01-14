@@ -30,7 +30,7 @@ class ArbusAgent(MeshAgent):
                 "description": "This agent provides professional-grade cryptocurrency analysis, sentiment tracking, and market intelligence using Arbus AI. Get AI-powered market insights and structured reports.",
                 "external_apis": ["Arbus AI"],
                 "tags": ["Market Analysis"],
-                "recommended": False,
+                "verified": False,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Arbus.png",
                 "examples": [
                     "Is Bitcoin bullish right now?",

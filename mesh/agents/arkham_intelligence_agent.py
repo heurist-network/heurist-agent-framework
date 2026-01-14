@@ -72,7 +72,7 @@ class ArkhamIntelligenceAgent(MeshAgent):
                 "description": "This agent provides blockchain intelligence using Arkham's API including address analysis, entity identification, portfolio snapshots, and token holder data across 18+ chains",
                 "external_apis": ["Arkham Intelligence"],
                 "tags": ["Intelligence"],
-                "recommended": True,
+                "verified": True,
                 "hidden": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Arkham.png",
                 "examples": [

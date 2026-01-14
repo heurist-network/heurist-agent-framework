@@ -38,8 +38,8 @@ class AIXBTProjectInfoAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can retrieve trending project information including fundamental analysis, social activity, and recent developments using the aixbt API",
                 "external_apis": ["aixbt"],
-                "tags": ["Project Analysis", "x402"],
-                "recommended": True,
+                "tags": ["Project Analysis"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Aixbt.png",
                 "examples": [
                     "Tell me about Heurist",

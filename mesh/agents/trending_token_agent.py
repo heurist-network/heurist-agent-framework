@@ -30,7 +30,8 @@ class TrendingTokenAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener, Zora and Twitter discussions.",
                 "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa", "Zora", "AIXBT", "Heurist Telegram"],
-                "tags": ["Token Trends", "Market Data", "x402"],
+                "tags": ["Token Trends", "Market Data"],
+                "verified": True,
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/trending-token-agent.png",
                 "examples": [

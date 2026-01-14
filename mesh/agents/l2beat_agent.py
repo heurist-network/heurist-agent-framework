@@ -34,7 +34,7 @@ class L2BeatAgent(MeshAgent):
                 "description": "Specialized agent for analyzing Layer 2 scaling solutions data from L2Beat. Provides comprehensive insights into L2 TVL, market share, and transaction costs across different chains and categories (Rollups, Validiums & Optimiums).",
                 "external_apis": ["L2Beat"],
                 "tags": ["L2Beat"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/L2Beat.png",
                 "examples": [
                     "What's the current TVL and market share of top L2 solutions?",

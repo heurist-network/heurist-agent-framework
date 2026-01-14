@@ -427,8 +427,11 @@ def main():
 
         if args.dev:
             manager.write_metadata_local(metadata)
-        else:
+        elif manager.s3_client:
             manager.upload_metadata(metadata)
+        else:
+            log.info("S3 credentials not found, writing metadata.json locally")
+            manager.write_metadata_local(metadata)
 
         table = manager.generate_agent_table(metadata)
         manager.update_readme(table)

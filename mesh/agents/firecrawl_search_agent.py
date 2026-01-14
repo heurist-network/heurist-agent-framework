@@ -36,7 +36,7 @@ class FirecrawlSearchAgent(MeshAgent):
                 "description": "Advanced search agent that uses Firecrawl to perform research with intelligent query generation and content analysis.",
                 "external_apis": ["Firecrawl"],
                 "tags": ["Search"],
-                "recommended": True,
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Firecrawl.png",
                 "examples": [
                     "What are the most bizarre crypto projects that actually succeeded?",

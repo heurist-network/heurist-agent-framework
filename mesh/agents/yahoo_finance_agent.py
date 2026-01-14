@@ -67,8 +67,8 @@ class YahooFinanceAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent uses Yahoo Finance to obtain historical price performance and technical analysis for stocks and cryptocurrencies. Provides OHLCV data and technical indicators with trading signals.",
                 "external_apis": ["Yahoo Finance"],
-                "tags": ["Market Analysis", "x402"],
-                "recommended": True,
+                "tags": ["Market Analysis"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/YFinance.png",
                 "examples": [
                     "Get 1d OHLCV for AAPL for the last 6 months",

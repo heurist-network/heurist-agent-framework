@@ -32,6 +32,7 @@ class ExaSearchDigestAgent(MeshAgent):
                 "description": "Web search agent using Exa API with concise LLM summarization.",
                 "external_apis": ["Exa"],
                 "tags": ["Search"],
+                "verified": True,
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Exa.png",
                 "examples": [

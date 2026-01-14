@@ -21,8 +21,8 @@ class GoplusAnalysisAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent can fetch and analyze security details of blockchain token contracts using GoPlus API.",
                 "external_apis": ["GoPlus"],
-                "tags": ["Security", "x402"],
-                "recommended": True,
+                "tags": ["Security"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Goplus.png",
                 "examples": [
                     "Check the safety of this token: 0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9 on Ethereum",
