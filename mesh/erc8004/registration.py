@@ -9,44 +9,19 @@ from typing import Any
 
 from mesh.erc8004.config import CHAIN_CONFIGS
 
+BASE_URL = "https://mesh.heurist.xyz"
+
 
 def get_mcp_endpoint(agent_name: str) -> str:
-    return f"https://mesh.heurist.xyz/mcp/agents/{agent_name}"
+    return f"{BASE_URL}/mcp/agents/{agent_name}"
 
 
 def is_x402_enabled(metadata: dict[str, Any]) -> bool:
     return metadata.get("x402_config", {}).get("enabled", False)
 
 
-def get_x402_endpoints(agent_name: str, tool_names: list[str]) -> dict[str, Any]:
-    return {
-        "version": "v1",
-        "tools": {
-            tool_name: {
-                "base": f"https://mesh.heurist.xyz/x402/agents/{agent_name}/{tool_name}",
-                "solana": f"https://mesh.heurist.xyz/x402/solana/agents/{agent_name}/{tool_name}",
-            }
-            for tool_name in tool_names
-        },
-    }
-
-
-def build_endpoints(metadata: dict[str, Any], agent_class_name: str) -> list[dict[str, str]]:
-    agent_name = agent_class_name
-    endpoints = [
-        {
-            "name": "MCP",
-            "endpoint": get_mcp_endpoint(agent_name),
-            "version": "2025-06-18",
-        }
-    ]
-
-    return endpoints
-
-
 def get_supported_trust(metadata: dict[str, Any]) -> list[str]:
-    erc8004_config = metadata.get("erc8004_config", {})
-    return erc8004_config.get("supported_trust", ["reputation"])
+    return metadata.get("erc8004_config", {}).get("supported_trust", ["reputation"])
 
 
 def build_registration_file(
@@ -55,37 +30,35 @@ def build_registration_file(
     agent_class_name: str,
     tool_names: list[str],
 ) -> dict:
-    """Convert MeshAgent metadata to ERC-8004 registration file format.
+    """Convert MeshAgent metadata to ERC-8004 registration file format."""
+    x402_enabled = is_x402_enabled(metadata)
 
-    Args:
-        metadata: Agent metadata dict from MeshAgent
-        chain_id: Target chain ID for registration
-
-    Returns:
-        ERC-8004 compliant registration file dict
-    """
-    agent_name = metadata["name"]
-    endpoints = build_endpoints(metadata, agent_class_name)
-
-    metadata_block: dict[str, Any] = {}
-    if is_x402_enabled(metadata):
-        metadata_block["x402Endpoints"] = get_x402_endpoints(agent_class_name, tool_names)
-
-    # Build registration file
-    registration = {
+    registration: dict[str, Any] = {
         "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
-        "name": agent_name,
+        "name": metadata["name"],
         "description": f"{metadata.get('description', '')} Created by Heurist Mesh.",
         "image": metadata.get("image_url"),
-        "endpoints": endpoints,
-        "registrations": [],  # Filled after minting
+        "endpoints": [{"name": "MCP", "endpoint": get_mcp_endpoint(agent_class_name), "version": "2025-06-18"}],
+        "registrations": [],
         "supportedTrust": get_supported_trust(metadata),
         "active": True,
-        "x402support": is_x402_enabled(metadata),
+        "x402support": x402_enabled,
         "updatedAt": int(time.time()),
     }
-    if metadata_block:
-        registration["metadata"] = metadata_block
+
+    if x402_enabled and tool_names:
+        registration["metadata"] = {
+            "x402Endpoints": {
+                "version": "v1",
+                "tools": {
+                    name: {
+                        "base": f"{BASE_URL}/x402/agents/{agent_class_name}/{name}",
+                        "solana": f"{BASE_URL}/x402/solana/agents/{agent_class_name}/{name}",
+                    }
+                    for name in tool_names
+                },
+            }
+        }
 
     return registration
 

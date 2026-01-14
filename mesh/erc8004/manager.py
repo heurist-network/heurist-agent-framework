@@ -162,8 +162,8 @@ class ERC8004Manager:
         from mesh.erc8004.registry import set_agent_id
 
         chain_name = self.config["name"]
-        set_agent_id(agent_name, chain_name, agent_id)
-        logger.info(f"Saved {agent_name} to registry: {chain_name} -> {agent_id}")
+        set_agent_id(agent_class_name, chain_name, agent_id)
+        logger.info(f"Saved {agent_class_name} to registry: {chain_name} -> {agent_id}")
 
         return agent_id
 
@@ -178,12 +178,11 @@ class ERC8004Manager:
         """
         from mesh.erc8004.registry import get_agent_id
 
-        agent_name = metadata["name"]
         chain_name = self.config["name"]
-        agent_id = get_agent_id(agent_name, chain_name)
+        agent_id = get_agent_id(agent_class_name, chain_name)
 
         if not agent_id:
-            raise ValueError(f"Agent {agent_name} not in registry for {chain_name}")
+            raise ValueError(f"Agent {agent_class_name} not in registry for {chain_name}")
 
         # Build new registration data
         reg_data = build_registration_file(metadata, self.chain_id, agent_class_name, tool_names)
@@ -252,7 +251,7 @@ class ERC8004Manager:
 
         for agent_class_name, metadata, tool_names in self._iter_eligible_agents():
             agent_name = metadata["name"]
-            agent_id = get_agent_id(agent_name, chain_name)  # Check registry, not metadata
+            agent_id = get_agent_id(agent_class_name, chain_name)
 
             try:
                 if agent_id:

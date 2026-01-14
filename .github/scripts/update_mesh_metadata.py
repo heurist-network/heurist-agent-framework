@@ -17,7 +17,11 @@ if str(REPO_ROOT) not in sys.path:
 
 import boto3  # type: ignore since it's only for github actions
 import requests
+from dotenv import load_dotenv
+
 from mesh.erc8004.registry import load_registry
+
+load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
@@ -254,15 +258,42 @@ def merge_erc8004_agent_ids(agents_dict: Dict[str, dict]) -> Dict[str, dict]:
                 agent_ids_by_name[agent_name] = {}
             agent_ids_by_name[agent_name][chain_name] = agent_id
 
-    # Merge into agents_dict
+    # Merge into agents_dict (registry uses class names as keys)
     for agent_class, agent_data in agents_dict.items():
-        agent_name = agent_data["metadata"].get("name")
-        if not agent_name:
+        erc8004 = agent_data["metadata"].get("erc8004_config")
+        if erc8004 and agent_class in agent_ids_by_name:
+            erc8004["agent_ids"] = agent_ids_by_name[agent_class]
+
+    return agents_dict
+
+
+def merge_erc8004_registration_data(agents_dict: Dict[str, dict]) -> Dict[str, dict]:
+    """Fetch ERC-8004 registration data from R2 and add to metadata."""
+    try:
+        from mesh.erc8004.r2_client import ERC8004R2Client
+
+        r2_client = ERC8004R2Client()
+    except Exception as e:
+        log.warning(f"Failed to initialize ERC8004 R2 client: {e}")
+        return agents_dict
+
+    for agent_class, agent_data in agents_dict.items():
+        metadata = agent_data["metadata"]
+        erc8004_config = metadata.get("erc8004_config", {})
+        if not erc8004_config.get("agent_ids"):
             continue
 
-        erc8004 = agent_data["metadata"].get("erc8004_config")
-        if erc8004 and agent_name in agent_ids_by_name:
-            erc8004["agent_ids"] = agent_ids_by_name[agent_name]
+        try:
+            registration = r2_client.get_registration(agent_class)
+            if registration:
+                metadata["erc8004"] = {
+                    "registrations": registration.get("registrations", []),
+                    "supportedTrust": registration.get("supportedTrust", []),
+                    "active": registration.get("active", False),
+                    "registrationUrl": f"https://mesh-data.heurist.xyz/erc8004/{agent_class}.json",
+                }
+        except Exception as e:
+            log.warning(f"Failed to fetch ERC-8004 registration for {agent_class}: {e}")
 
     return agents_dict
 
@@ -367,6 +398,9 @@ class MetadataManager:
 
         # Merge ERC-8004 agent_ids from registry into metadata
         agents_dict = merge_erc8004_agent_ids(agents_dict)
+
+        # Merge ERC-8004 registration data from R2
+        agents_dict = merge_erc8004_registration_data(agents_dict)
 
         sorted_agents_dict = {k: agents_dict[k] for k in sorted(agents_dict.keys())}
 

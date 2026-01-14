@@ -36,18 +36,18 @@ def cmd_list(args):
     """List all eligible agents."""
     chain_id = CHAIN_NAME_TO_ID[args.chain]
     manager = ERC8004Manager(chain_id=chain_id)
-    agents = manager.get_eligible_agents()
+    agents = list(manager._iter_eligible_agents())
 
     if not agents:
         print("No eligible agents found (none have erc8004_config.enabled=True)")
         return
 
     print(f"\nEligible agents for ERC-8004 registration on {args.chain} ({len(agents)} total):\n")
-    for metadata in agents:
+    for agent_class_name, metadata, _ in agents:
         name = metadata["name"]
-        agent_id = get_agent_id(name, args.chain)  # Check registry
+        agent_id = get_agent_id(agent_class_name, args.chain)
         status = "Registered" if agent_id else "Not registered"
-        print(f"  - {name}")
+        print(f"  - {name} ({agent_class_name})")
         print(f"      Status: {status}")
         if agent_id:
             print(f"      Agent ID: {agent_id}")
@@ -106,9 +106,9 @@ def cmd_register(args):
         sys.exit(1)
     agent_class_name, metadata, tool_names = result
 
-    agent_id = get_agent_id(metadata["name"], args.chain)
+    agent_id = get_agent_id(agent_class_name, args.chain)
     if agent_id:
-        print(f"Agent '{args.agent_name}' is already registered with ID: {agent_id}")
+        print(f"Agent '{agent_class_name}' is already registered with ID: {agent_id}")
         print("Use 'update' command to update an existing agent.")
         sys.exit(1)
 
@@ -128,9 +128,9 @@ def cmd_update(args):
         sys.exit(1)
     agent_class_name, metadata, tool_names = result
 
-    agent_id = get_agent_id(metadata["name"], args.chain)
+    agent_id = get_agent_id(agent_class_name, args.chain)
     if not agent_id:
-        print(f"Agent '{args.agent_name}' is not registered yet.")
+        print(f"Agent '{agent_class_name}' is not registered yet.")
         print("Use 'register' command first.")
         sys.exit(1)
 

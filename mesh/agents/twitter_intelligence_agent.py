@@ -43,6 +43,10 @@ class TwitterIntelligenceAgent(MeshAgent):
                     "enabled": True,
                     "default_price_usd": "0.01",
                 },
+                "erc8004_config": {
+                    "enabled": True,
+                    "supported_trust": ["reputation"],
+                },
             }
         )
 
