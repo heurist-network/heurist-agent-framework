@@ -199,7 +199,6 @@ async def run_async_agent_task(
         call_args.setdefault("raw_data_only", False)
         call_args["session_context"] = {"api_key": origin_api_key}
         call_args.setdefault("task_id", task_id)
-        call_args.setdefault("origin_task_id", task_id)
 
         result = await agent.call_agent(call_args)
         result_payload = dict(result)

@@ -21,7 +21,6 @@ class BaseAgent(ABC):
 
     def __init__(self):
         self.agent_name: str = self.__class__.__name__
-        self._task_id = None
 
         self.metadata: Dict[str, Any] = {
             "name": self.agent_name,
@@ -40,14 +39,6 @@ class BaseAgent(ABC):
         self.heurist_base_url = HEURIST_BASE_URL
         self.heurist_api_key = HEURIST_API_KEY
         self._api_clients: Dict[str, Any] = {}
-
-        self._task_id = None
-        self._origin_task_id = None
-
-    @property
-    def task_id(self) -> Optional[str]:
-        """Access the current task ID"""
-        return self._task_id
 
     @abstractmethod
     async def handle_message(
@@ -73,9 +64,7 @@ class BaseAgent(ABC):
 
     async def call_agent(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Main entry point that handles the message flow with hooks."""
-        # Set task tracking IDs
-        self._task_id = params.get("origin_task_id") or params.get("task_id")
-        self._origin_task_id = params.get("origin_task_id")
+        task_id = params.get("task_id")
 
         try:
             # Pre-process params through hook
@@ -90,13 +79,11 @@ class BaseAgent(ABC):
             return modified_response or handler_response
 
         except Exception as e:
-            logger.error(f"Task failed | Agent: {self.agent_name} | Task: {self._task_id} | Error: {str(e)}")
+            logger.error(f"Task failed | Agent: {self.agent_name} | Task: {task_id} | Error: {str(e)}")
             raise
 
     async def _before_handle_message(self, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Hook called before message handling. Return modified params or None"""
-        thinking_msg = f"{self.agent_name} is thinking..."
-        self.push_update(params, thinking_msg)
         return None
 
     async def _after_handle_message(self, response: Dict[str, Any]) -> Optional[Dict[str, Any]]:
@@ -105,13 +92,6 @@ class BaseAgent(ABC):
 
     def set_heurist_api_key(self, api_key: str) -> None:
         self.heurist_api_key = api_key
-
-    def push_update(self, params: Dict[str, Any], content: str) -> None:
-        """Always push to origin_task_id if available"""
-        update_task_id = self._origin_task_id or self._task_id
-        if update_task_id:
-            logger.info(f"Pushing update | Task: {update_task_id} | Content: {content}")
-            self.mesh_client.push_update(update_task_id, content)
 
     async def cleanup(self):
         """Cleanup API clients"""

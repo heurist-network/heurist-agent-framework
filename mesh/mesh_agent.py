@@ -9,7 +9,6 @@ import aiohttp
 import dotenv
 from loguru import logger
 
-from clients.mesh_client import MeshClient
 from decorators import monitor_execution, with_cache
 from mesh.gemini import call_gemini_async, call_gemini_with_tools_async
 
@@ -25,7 +24,6 @@ class MeshAgent(ABC):
 
     def __init__(self):
         self.agent_name: str = self.__class__.__name__
-        self._task_id = None
 
         self.metadata: Dict[str, Any] = {
             "name": self.agent_name,
@@ -73,17 +71,7 @@ class MeshAgent(ABC):
         self.gemini_api_key = GEMINI_API_KEY
         self._api_clients: Dict[str, Any] = {}
 
-        self.mesh_client = MeshClient(base_url=os.getenv("MESH_SERVER_URL", "https://mesh.heurist.xyz"))
-        self._api_clients["mesh"] = self.mesh_client
-
-        self._task_id = None
-        self._origin_task_id = None
         self.session = None
-
-    @property
-    def task_id(self) -> Optional[str]:
-        """Access the current task ID"""
-        return self._task_id
 
     @abstractmethod
     def get_system_prompt(self) -> str:
@@ -279,11 +267,9 @@ class MeshAgent(ABC):
         if not module_name or not class_name:
             raise ValueError("Fallback spec must include 'module' and 'class'")
 
-        # Preserve origin/task id and session context
-        if original_params.get("origin_task_id"):
-            input_payload.setdefault("origin_task_id", original_params.get("origin_task_id"))
-        if original_params.get("task_id") and not input_payload.get("origin_task_id"):
-            input_payload.setdefault("origin_task_id", original_params.get("task_id"))
+        # Preserve task id and session context
+        if original_params.get("task_id"):
+            input_payload.setdefault("task_id", original_params.get("task_id"))
 
         input_payload.setdefault("session_context", {})
         if session_context:
@@ -416,9 +402,7 @@ class MeshAgent(ABC):
 
     async def call_agent(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Main entry point that handles the message flow with hooks."""
-        # Set task tracking IDs
-        self._task_id = params.get("origin_task_id") or params.get("task_id")
-        self._origin_task_id = params.get("origin_task_id")
+        task_id = params.get("task_id")
 
         try:
             # Pre-process params through hook
@@ -433,13 +417,11 @@ class MeshAgent(ABC):
             return modified_response or handler_response
 
         except Exception as e:
-            logger.error(f"Task failed | Agent: {self.agent_name} | Task: {self._task_id} | Error: {str(e)}")
+            logger.error(f"Task failed | Agent: {self.agent_name} | Task: {task_id} | Error: {str(e)}")
             raise
 
     async def _before_handle_message(self, params: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Hook called before message handling. Return modified params or None"""
-        thinking_msg = f"{self.agent_name} is thinking..."
-        self.push_update(params, thinking_msg)
         return None
 
     async def _after_handle_message(self, response: Dict[str, Any]) -> Optional[Dict[str, Any]]:
@@ -448,13 +430,6 @@ class MeshAgent(ABC):
 
     def set_heurist_api_key(self, api_key: str) -> None:
         self.heurist_api_key = api_key
-
-    def push_update(self, params: Dict[str, Any], content: str) -> None:
-        """Always push to origin_task_id if available"""
-        update_task_id = self._origin_task_id or self._task_id
-        if update_task_id:
-            logger.info(f"Pushing update | Task: {update_task_id} | Content: {content}")
-            self.mesh_client.push_update(update_task_id, content)
 
     def _handle_error(self, maybe_error: dict) -> dict:
         """

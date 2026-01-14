@@ -556,9 +556,6 @@ class TwitterInfoAgent(MeshAgent):
                 return {"error": "Missing 'username' parameter"}
 
             logger.info(f"Fetching tweets for identifier '{identifier}' with limit={limit}")
-            self.push_update(
-                {"identifier": identifier}, f"Looking up Twitter user: @{self._clean_username(identifier)}..."
-            )
 
             # Try apidance first
             profile_result = await self.get_user_id(identifier)
@@ -582,7 +579,6 @@ class TwitterInfoAgent(MeshAgent):
 
             if apidance_failed:
                 logger.warning(f"Primary API unavailable for @{self._clean_username(identifier)}, using Apify fallback")
-                self.push_update({"identifier": identifier}, "Primary API failed, trying fallback...")
                 fallback_result = await self._apify_get_user_timeline(identifier, limit)
                 if "error" in fallback_result:
                     return fallback_result
@@ -623,9 +619,6 @@ class TwitterInfoAgent(MeshAgent):
             # Log warning for multi-word queries
             if " " in query and not (query.startswith('"') and query.endswith('"')):
                 logger.warning(f"Multi-word search query: '{query}'. Suggesting single keyword search.")
-                self.push_update(
-                    {"query": query}, "Warning: Multi-word searches often return empty results. Searching anyway..."
-                )
 
             logger.info(f"Performing general search for query '{query}'")
 
@@ -636,7 +629,6 @@ class TwitterInfoAgent(MeshAgent):
                 return {"search_data": search_result}
 
             logger.warning(f"Primary search API unavailable for query '{query}', using Apify fallback")
-            self.push_update({"query": query}, "Primary search API failed, trying fallback...")
             fallback_result = await self._apify_general_search(query, limit=limit)
 
             if "error" in fallback_result:
