@@ -326,30 +326,22 @@ class AIXBTProjectInfoAgent(MeshAgent):
 
             html = result.stdout
 
-            # Extract push blocks
-            push_blocks = re.findall(r'self\.__next_f\.push\(\[1,"(.*?)"\]\)', html, re.DOTALL)
+            # Extract list items from the HTML
+            li_items = re.findall(r'<li>(.*?)</li>', html, re.DOTALL)
 
-            # Find the block with market insights (contains "Current Meta Direction" and substantial content)
-            insights_block = None
-            for block in push_blocks:
-                decoded = block.replace('\\"', '"').replace('\\u0026', '&')
-                if 'Current Meta Direction' in decoded and len(decoded) > 2000:
-                    insights_block = decoded
-                    break
-
-            if not insights_block:
+            if not li_items:
                 return None
 
-            # Extract all content from "mb-3 block" className pattern
-            content_pattern = r'"className":"mb-3 block","children":"([^"]*)"'
-            content_blocks = re.findall(content_pattern, insights_block)
-
-            # Filter and collect non-empty content
+            # Clean HTML tags from each item
             news_items = []
-            for content in content_blocks:
-                content = content.strip()
-                if content and len(content) > 20:  # Skip empty and very short content
-                    news_items.append(content)
+            for item in li_items:
+                # Remove HTML tags
+                clean_item = re.sub(r'<[^>]+>', '', item).strip()
+                # Remove extra whitespace
+                clean_item = re.sub(r'\s+', ' ', clean_item)
+
+                if clean_item and len(clean_item) > 50:  # Filter out short/empty items
+                    news_items.append(clean_item)
 
             if not news_items:
                 return None
