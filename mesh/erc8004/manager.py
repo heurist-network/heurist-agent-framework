@@ -63,7 +63,7 @@ class ERC8004Manager:
         )
 
     def _iter_eligible_agents(self) -> list[tuple[str, dict[str, Any], list[str]]]:
-        """Load all agents with erc8004_config.enabled=True.
+        """Load all agents with erc8004.enabled=True.
 
         Returns list of (agent_class_name, metadata, tool_names) tuples.
         """
@@ -83,15 +83,15 @@ class ERC8004Manager:
                 for tool in tool_schemas
                 if tool.get("function", {}).get("name")
             ]
-            erc8004_config = metadata.get("erc8004_config", {})
+            erc8004 = metadata.get("erc8004", {})
 
-            if erc8004_config.get("enabled"):
+            if erc8004.get("enabled"):
                 eligible.append((agent.agent_name, metadata, tool_names))
 
         return eligible
 
     def get_eligible_agents(self) -> list[dict[str, Any]]:
-        """Load all agents with erc8004_config.enabled=True.
+        """Load all agents with erc8004.enabled=True.
 
         Returns list of agent metadata dicts.
         """

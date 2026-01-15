@@ -39,7 +39,7 @@ def cmd_list(args):
     agents = list(manager._iter_eligible_agents())
 
     if not agents:
-        print("No eligible agents found (none have erc8004_config.enabled=True)")
+        print("No eligible agents found (none have erc8004.enabled=True)")
         return
 
     print(f"\nEligible agents for ERC-8004 registration on {args.chain} ({len(agents)} total):\n")
@@ -102,7 +102,7 @@ def cmd_register(args):
 
     result = manager.get_agent_by_name(args.agent_name)
     if not result:
-        print(f"Agent '{args.agent_name}' not found or not eligible (erc8004_config.enabled != True)")
+        print(f"Agent '{args.agent_name}' not found or not eligible (erc8004.enabled != True)")
         sys.exit(1)
     agent_class_name, metadata, tool_names = result
 

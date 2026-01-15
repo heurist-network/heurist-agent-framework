@@ -1,8 +1,8 @@
 {
   "sepolia": {
-    "TokenResolverAgent": "11155111:370",
-    "TrendingTokenAgent": "11155111:371",
-    "TwitterIntelligenceAgent": "11155111:379"
+    "TokenResolverAgent": "11155111:413",
+    "TrendingTokenAgent": "11155111:414",
+    "TwitterIntelligenceAgent": "11155111:415"
   },
   "mainnet": {}
 }

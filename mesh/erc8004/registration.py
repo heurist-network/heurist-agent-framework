@@ -21,7 +21,7 @@ def is_x402_enabled(metadata: dict[str, Any]) -> bool:
 
 
 def get_supported_trust(metadata: dict[str, Any]) -> list[str]:
-    return metadata.get("erc8004_config", {}).get("supported_trust", ["reputation"])
+    return metadata.get("erc8004", {}).get("supported_trust", ["reputation"])
 
 
 def build_registration_file(

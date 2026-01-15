@@ -232,43 +232,8 @@ class AgentMetadataExtractor(ast.NodeVisitor):
         return result
 
 
-def merge_erc8004_agent_ids(agents_dict: Dict[str, dict]) -> Dict[str, dict]:
-    """Merge agent_id from registry into erc8004_config.
-
-    Reads mesh/erc8004/registered_agents.json and adds agent_ids to each
-    agent's erc8004_config in the format:
-    {
-        "erc8004_config": {
-            "enabled": true,
-            "agent_ids": {"sepolia": "11155111:42", "mainnet": "1:123"}
-        }
-    }
-    """
-    try:
-        registry = load_registry()
-    except Exception as e:
-        log.warning(f"Failed to load ERC-8004 registry: {e}")
-        return agents_dict
-
-    # Build name -> agent_ids mapping from registry
-    agent_ids_by_name: Dict[str, Dict[str, str]] = {}
-    for chain_name, chain_agents in registry.items():
-        for agent_name, agent_id in chain_agents.items():
-            if agent_name not in agent_ids_by_name:
-                agent_ids_by_name[agent_name] = {}
-            agent_ids_by_name[agent_name][chain_name] = agent_id
-
-    # Merge into agents_dict (registry uses class names as keys)
-    for agent_class, agent_data in agents_dict.items():
-        erc8004 = agent_data["metadata"].get("erc8004_config")
-        if erc8004 and agent_class in agent_ids_by_name:
-            erc8004["agent_ids"] = agent_ids_by_name[agent_class]
-
-    return agents_dict
-
-
 def merge_erc8004_registration_data(agents_dict: Dict[str, dict]) -> Dict[str, dict]:
-    """Fetch ERC-8004 registration data from R2 and add to metadata."""
+    """Fetch ERC-8004 registration data from R2 and merge into erc8004 field."""
     try:
         from mesh.erc8004.r2_client import ERC8004R2Client
 
@@ -279,19 +244,19 @@ def merge_erc8004_registration_data(agents_dict: Dict[str, dict]) -> Dict[str, d
 
     for agent_class, agent_data in agents_dict.items():
         metadata = agent_data["metadata"]
-        erc8004_config = metadata.get("erc8004_config", {})
-        if not erc8004_config.get("agent_ids"):
+        erc8004 = metadata.get("erc8004", {})
+        if not erc8004.get("enabled"):
             continue
 
         try:
             registration = r2_client.get_registration(agent_class)
             if registration:
-                metadata["erc8004"] = {
-                    "registrations": registration.get("registrations", []),
-                    "supportedTrust": registration.get("supportedTrust", []),
-                    "active": registration.get("active", False),
-                    "registrationUrl": f"https://mesh-data.heurist.xyz/erc8004/{agent_class}.json",
-                }
+                # Merge R2 data into existing erc8004 field, removing duplicates
+                erc8004.pop("supported_trust", None)  # Remove snake_case version
+                erc8004["registrations"] = registration.get("registrations", [])
+                erc8004["supportedTrust"] = registration.get("supportedTrust", [])
+                erc8004["active"] = registration.get("active", False)
+                erc8004["registrationUrl"] = f"https://mesh-data.heurist.xyz/erc8004/{agent_class}.json"
         except Exception as e:
             log.warning(f"Failed to fetch ERC-8004 registration for {agent_class}: {e}")
 
@@ -374,9 +339,6 @@ class MetadataManager:
                     agent_data["metadata"]["total_calls"] = existing_agent["metadata"]["total_calls"]
                 if "greeting_message" in existing_agent.get("metadata", {}):
                     agent_data["metadata"]["greeting_message"] = existing_agent["metadata"]["greeting_message"]
-
-        # Merge ERC-8004 agent_ids from registry into metadata
-        agents_dict = merge_erc8004_agent_ids(agents_dict)
 
         # Merge ERC-8004 registration data from R2
         agents_dict = merge_erc8004_registration_data(agents_dict)
