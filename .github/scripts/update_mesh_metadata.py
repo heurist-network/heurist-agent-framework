@@ -353,27 +353,6 @@ class MetadataManager:
                         "tools": data.get("tools", []),
                     }
 
-                    if agent_data["tools"]:
-                        tool_names = ", ".join(t["function"]["name"] for t in agent_data["tools"])
-                        if isinstance(agent_data["metadata"].get("inputs"), list):
-                            agent_data["metadata"]["inputs"].extend(
-                                [
-                                    {
-                                        "name": "tool",
-                                        "description": f"Directly specify which tool to call: {tool_names}. Bypasses LLM.",
-                                        "type": "str",
-                                        "required": False,
-                                    },
-                                    {
-                                        "name": "tool_arguments",
-                                        "description": "Arguments for the tool call as a dictionary",
-                                        "type": "dict",
-                                        "required": False,
-                                        "default": {},
-                                    },
-                                ]
-                            )
-
                     agents_dict[agent_id] = agent_data
 
             except Exception as e:

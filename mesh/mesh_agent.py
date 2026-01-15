@@ -13,21 +13,6 @@ from decorators import monitor_execution, with_cache
 from mesh.gemini import call_gemini_async, call_gemini_with_tools_async
 
 
-# --- Input/Output Field Types ---
-class InputField(TypedDict, total=False):
-    name: str
-    description: str
-    type: str
-    required: bool
-    default: Any
-
-
-class OutputField(TypedDict):
-    name: str
-    description: str
-    type: str
-
-
 # --- Tool Schema Types ---
 class ToolParameterPropertyRequired(TypedDict):
     type: str
@@ -78,8 +63,6 @@ class AgentMetadataRequired(TypedDict):
     author_address: str
     description: str
     tags: List[str]
-    inputs: List[InputField]
-    outputs: List[OutputField]
     image_url: str
 
 
@@ -113,35 +96,6 @@ class MeshAgent(ABC):
             "author": "unknown",
             "author_address": "0x0000000000000000000000000000000000000000",
             "description": "",
-            "inputs": [
-                {
-                    "name": "query",
-                    "description": "Natural language query to the agent",
-                    "type": "str",
-                    "required": False,
-                },
-                {
-                    "name": "raw_data_only",
-                    "description": "If true, the agent will only return the raw data without LLM explanation",
-                    "type": "bool",
-                    "required": False,
-                    "default": False,
-                },
-            ],
-            "outputs": [
-                {
-                    "name": "response",
-                    "description": "The text response from the agent",
-                    "type": "str",
-                },
-                # fmt: off
-                {
-                    "name": "data",
-                    "description": "Structured data from the agent",
-                    "type": "dict",
-                },
-                # fmt: on
-            ],
             "external_apis": [],
             "tags": [],
             "hidden": False,
