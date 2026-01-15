@@ -36,7 +36,7 @@ class ChainbaseAddressLabelAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Get all available labels for an ETH or Base address. Labels include owner identity, smart contract name, wallet behavior patterns and other properties. Also resolves ENS and Base names.",
                 "external_apis": ["Chainbase"],
-                "tags": ["Blockchain", "Identity"],
+                "tags": ["Blockchain", "Wallet"],
                 "verified": True,
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Chainbase.png",

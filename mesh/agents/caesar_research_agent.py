@@ -34,7 +34,7 @@ class CaesarResearchAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "Advanced research agent using Caesar AI to find and analyze academic papers, articles, and authoritative sources.",
                 "external_apis": ["Caesar"],
-                "tags": ["Research", "Academic", "Citations"],
+                "tags": ["Research", "Academic"],
                 "verified": True,
                 "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Caesar.png",

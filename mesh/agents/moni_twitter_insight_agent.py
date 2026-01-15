@@ -37,6 +37,7 @@ class MoniTwitterInsightAgent(MeshAgent):
                     "What categories of followers does heurist_ai have",
                     "Show me the recent smart mentions for ethereum",
                 ],
+                "verified": True,
                 "credits": 10,
                 "x402_config": {
                     "enabled": True,
