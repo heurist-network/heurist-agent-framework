@@ -56,10 +56,20 @@ class ERC8004Manager:
         if not private_key:
             raise ValueError("ERC8004_PRIVATE_KEY not set")
 
+        # Pass registry addresses from our config to SDK
+        registry_overrides = {}
+        if self.config["identity_registry"] or self.config["reputation_registry"]:
+            registry_overrides[chain_id] = {}
+            if self.config["identity_registry"]:
+                registry_overrides[chain_id]["IDENTITY"] = self.config["identity_registry"]
+            if self.config["reputation_registry"]:
+                registry_overrides[chain_id]["REPUTATION"] = self.config["reputation_registry"]
+
         self.sdk = SDK(
             chainId=chain_id,
             rpcUrl=rpc_url,
             signer=private_key,
+            registryOverrides=registry_overrides,
         )
 
     def _iter_eligible_agents(self) -> list[tuple[str, dict[str, Any], list[str]]]:

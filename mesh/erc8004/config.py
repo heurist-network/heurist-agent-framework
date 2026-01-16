@@ -21,11 +21,11 @@ CHAIN_CONFIGS: dict[int, ChainConfig] = {
         "identity_registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
         "reputation_registry": "0x8004B663056A597Dffe9eCcC1965A193B7388713",
     },
-    1: {  # Ethereum Mainnet (addresses TBD)
+    1: {  # Ethereum Mainnet
         "name": "mainnet",
         "rpc_env": "ETH_RPC_URL",
-        "identity_registry": None,
-        "reputation_registry": None,
+        "identity_registry": "0x106e3d8500B92A86D669702e75097E945C2e2B0e",
+        "reputation_registry": "0x106e3d8500B92A86D669702e75097E945C2e2B0e",
     },
 }
 
