@@ -1,6 +1,8 @@
+import asyncio
 import json
 import logging
 import os
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -58,6 +60,8 @@ class CoinGeckoTokenInfoAgent(MeshAgent):
                     "Compare DeFi tokens",
                     "Get trending on-chain pools",
                     "Get top token holders for a token",
+                    "Get historical token holders chart",
+                    "Get recent trades for a token",
                 ],
             }
         )
@@ -225,12 +229,86 @@ Format your response in clean text. Be objective and informative."""
                 "type": "function",
                 "function": {
                     "name": "get_top_token_holders",
-                    "description": "Get top 50 token holder addresses for a token on a specific network.",
+                    "description": "Get top token holder addresses for a token on a specific network. Max 40 holders.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "network": {"type": "string", "description": "Network ID (e.g., base, bsc, solana, eth)"},
                             "address": {"type": "string", "description": "Token contract address"},
+                            "holders": {
+                                "type": "integer",
+                                "description": "Number of top holders to return.",
+                                "default": 10,
+                                "minimum": 5,
+                                "maximum": 40
+                            },
+                        },
+                        "required": ["network", "address"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_historical_holders",
+                    "description": "Get historical token holders with daily aggregated data and trend analysis.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, polygon)"},
+                            "address": {"type": "string", "description": "Token contract address"},
+                            "days": {
+                                "type": "string",
+                                "description": "Time period: 7 days or 30 days.",
+                                "enum": ["7", "30"],
+                                "default": "7",
+                            },
+                        },
+                        "required": ["network", "address"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_recent_large_trades",
+                    "description": "Get recent large trades on DEX for a specific token. Filters by minimum USD volume.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, bsc)"},
+                            "address": {"type": "string", "description": "Token contract address"},
+                            "min_amount": {
+                                "type": "number",
+                                "description": "Minimum trade volume in USD to include",
+                                "default": 3000,
+                            },
+                        },
+                        "required": ["network", "address"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_token_holders_traders",
+                    "description": "Get token holder and trader data combining: 1) Top holders - ranked wallet addresses with ownership percentages 2) Daily holder trend 3) Large trades in past 24 hours showing buy/sell whale activity.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, bsc, polygon)"},
+                            "address": {"type": "string", "description": "Token contract address"},
+                            "days": {
+                                "type": "string",
+                                "description": "Historical holder data period: 7 or 30 days",
+                                "enum": ["7", "30"],
+                                "default": "7",
+                            },
+                            "min_trade_amount": {
+                                "type": "number",
+                                "description": "Minimum trade volume in USD for recent trades",
+                                "default": 3000,
+                            },
                         },
                         "required": ["network", "address"],
                     },
@@ -651,6 +729,23 @@ Format your response in clean text. Be objective and informative."""
             "get_top_token_holders": lambda: self._handle_top_token_holders(
                 network=function_args["network"],
                 address=function_args["address"],
+                holders=function_args.get("holders", 10),
+            ),
+            "get_historical_holders": lambda: self._handle_historical_holders(
+                network=function_args["network"],
+                address=function_args["address"],
+                days=function_args.get("days", "7"),
+            ),
+            "get_recent_large_trades": lambda: self._handle_recent_large_trades(
+                network=function_args["network"],
+                address=function_args["address"],
+                min_amount=function_args.get("min_amount", 3000),
+            ),
+            "get_token_holders_traders": lambda: self._handle_token_holders_traders(
+                network=function_args["network"],
+                address=function_args["address"],
+                days=function_args.get("days", "7"),
+                min_trade_amount=function_args.get("min_trade_amount", 3000),
             ),
         }
 
@@ -681,13 +776,155 @@ Format your response in clean text. Be objective and informative."""
             logger.error(f"Error getting trending pools: {e}")
             return {"error": f"Failed to fetch trending pools: {str(e)}"}
 
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=1)
-    async def _handle_top_token_holders(self, network: str, address: str) -> Dict[str, Any]:
+    @with_cache(ttl_seconds=600)
+    async def _handle_top_token_holders(self, network: str, address: str, holders: int = 10) -> Dict[str, Any]:
         try:
             url = f"{self.pro_api_url}/onchain/networks/{network}/tokens/{address}/top_holders"
-            response = await self._api_request(url=url, headers=self.pro_headers)
-            return {"top_holders": response} if "error" not in response else {"error": response["error"]}
+            params = {"holders": holders}
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
+
+            if "error" in response:
+                return {"error": response["error"]}
+
+            holders_list = []
+            if "data" in response and "attributes" in response["data"]:
+                for holder in response["data"]["attributes"].get("holders", []):
+                    processed = {
+                        "rank": holder.get("rank"),
+                        "address": holder.get("address"),
+                        "amount": int(float(holder.get("amount", 0))),
+                        "percentage": holder.get("percentage"),
+                        "value": holder.get("value"),
+                    }
+                    if holder.get("label"):
+                        processed["label"] = holder["label"]
+                    holders_list.append(processed)
+
+            return {"top_holders": holders_list}
         except Exception as e:
             logger.error(f"Error getting top token holders: {e}")
             return {"error": f"Failed to fetch top token holders: {str(e)}"}
+
+    @with_cache(ttl_seconds=3600)
+    async def _handle_historical_holders(self, network: str, address: str, days: str = "7") -> Dict[str, Any]:
+        try:
+            url = f"{self.pro_api_url}/onchain/networks/{network}/tokens/{address}/holders_chart"
+            params = {"days": days}
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
+
+            if "error" in response:
+                return {"error": response["error"]}
+
+            holders_list = []
+            if "data" in response and "attributes" in response["data"]:
+                holders_list = response["data"]["attributes"].get("token_holders_list", [])
+
+            daily_data = self._sample_daily_holders(holders_list, int(days))
+
+            trend = self._calculate_trend(daily_data)
+
+            flat_data = []
+            for date_str, count in daily_data:
+                flat_data.extend([date_str, str(count)])
+
+            return {"historical_holders": {"trend": trend, "data": ",".join(flat_data)}}
+        except Exception as e:
+            logger.error(f"Error getting historical holders: {e}")
+            return {"error": f"Failed to fetch historical holders: {str(e)}"}
+
+    def _sample_daily_holders(self, holders_list: list, num_days: int) -> list:
+        """Sample one data point per day from the holders list."""
+        if not holders_list:
+            return []
+
+        sorted_data = sorted(holders_list, key=lambda x: x[0], reverse=True)
+
+        daily_samples = []
+        latest_ts = datetime.fromisoformat(sorted_data[0][0].replace("Z", "+00:00"))
+        latest_date = latest_ts.date()
+        daily_samples.append((str(latest_date), sorted_data[0][1]))
+
+        current_boundary = datetime.combine(latest_date, datetime.min.time(), tzinfo=timezone.utc)
+
+        for day_offset in range(1, num_days):
+            target_boundary = current_boundary - timedelta(days=day_offset)
+
+            best_point = None
+            for ts_str, count in sorted_data:
+                ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+                if ts < target_boundary:
+                    best_point = (str(ts.date()), count)
+                    break
+
+            if best_point:
+                daily_samples.append(best_point)
+
+        return daily_samples
+
+    def _calculate_trend(self, daily_data: list) -> str:
+        """Calculate trend based on oldest vs newest holder count."""
+        if len(daily_data) < 2:
+            return "new_token"
+
+        newest_count = daily_data[0][1]
+        oldest_count = daily_data[-1][1]
+
+        if oldest_count == 0:
+            return "strong_growth" if newest_count > 0 else "flat"
+
+        pct_change = (newest_count - oldest_count) / oldest_count * 100
+
+        if pct_change < -30:
+            return "strong_decline"
+        elif pct_change < -8:
+            return "decline"
+        elif pct_change <= 8:
+            return "flat"
+        elif pct_change <= 30:
+            return "growth"
+        else:
+            return "strong_growth"
+
+    @with_cache(ttl_seconds=600)
+    async def _handle_recent_large_trades(self, network: str, address: str, min_amount: float = 3000) -> Dict[str, Any]:
+        try:
+            url = f"{self.pro_api_url}/onchain/networks/{network}/tokens/{address}/trades"
+            params = {"trade_volume_in_usd_greater_than": min_amount}
+            response = await self._api_request(url=url, headers=self.pro_headers, params=params)
+
+            if "error" in response:
+                return {"recent_large_trades": "not available"}
+
+            trades = []
+            if "data" in response:
+                for trade in response["data"]:
+                    attrs = trade.get("attributes", {})
+                    volume_usd = attrs.get("volume_in_usd", "0")
+                    trades.append({
+                        "tx_from": attrs.get("tx_from_address", ""),
+                        "kind": attrs.get("kind", ""),
+                        "volume_usd": int(float(volume_usd)),
+                        "timestamp": attrs.get("block_timestamp", ""),
+                    })
+
+            return {"recent_large_trades": trades}
+        except Exception as e:
+            logger.error(f"Error getting recent large trades: {e}")
+            return {"recent_large_trades": "not available"}
+
+    async def _handle_token_holders_traders(
+        self, network: str, address: str, days: str = "7", min_trade_amount: float = 3000
+    ) -> Dict[str, Any]:
+        results = await asyncio.gather(
+            self._handle_top_token_holders(network, address, 10),
+            self._handle_historical_holders(network, address, days),
+            self._handle_recent_large_trades(network, address, min_trade_amount),
+        )
+
+        return {
+            "token_holders_traders": {
+                "top_holders": results[0].get("top_holders", []),
+                "historical_holders": results[1].get("historical_holders", {}),
+                "recent_large_trades": results[2].get("recent_large_trades", []),
+            }
+        }
