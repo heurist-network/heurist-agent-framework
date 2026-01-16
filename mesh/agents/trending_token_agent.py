@@ -227,10 +227,21 @@ class TrendingTokenAgent(MeshAgent):
     async def get_market_summary(self) -> Dict[str, Any]:
         aixbt_task = self._fetch_aixbt_market_summary()
         telegram_task = self._fetch_telegram_topics()
-        aixbt_result, telegram_result = await asyncio.gather(aixbt_task, telegram_task, return_exceptions=True)
+        funding_rate_task = self._call_agent_tool_safe(
+            "mesh.agents.funding_rate_agent",
+            "FundingRateAgent",
+            "get_all_funding_rates",
+            {},
+            log_instance=logger,
+            context="FundingRateAgent.get_all_funding_rates",
+        )
+        aixbt_result, telegram_result, funding_rate_result = await asyncio.gather(
+            aixbt_task, telegram_task, funding_rate_task, return_exceptions=True
+        )
 
         aixbt_result = self._normalize_tool_result(aixbt_result, "AIXBT market summary")
         telegram_result = self._normalize_tool_result(telegram_result, "Telegram topics")
+        funding_rate_result = self._normalize_tool_result(funding_rate_result, "Funding rates")
 
         sections = []
         if aixbt_result.get("status") == "success":
@@ -250,10 +261,15 @@ class TrendingTokenAgent(MeshAgent):
         summary_text = "\n\n".join(sections)
         has_success = bool(sections)
 
+        funding_rates = None
+        if "rates" in funding_rate_result:
+            funding_rates = funding_rate_result
+
         payload = {
             "status": "success" if has_success else "error",
             "data": {
                 "summary": summary_text,
+                "funding_rates": funding_rates,
             },
         }
         if not has_success:

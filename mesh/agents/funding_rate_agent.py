@@ -69,7 +69,7 @@ class FundingRateAgent(MeshAgent):
         )
 
     def get_default_timeout_seconds(self) -> Optional[int]:
-        return 6
+        return 10
 
     # ---------------------------------------------------------------------
     # Identity / Prompt
@@ -280,8 +280,7 @@ RESPONSE GUIDELINES:
     # ---------------------------------------------------------------------
     # Public Tool Methods
     # ---------------------------------------------------------------------
-    @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=1)
+    @with_cache(ttl_seconds=300)
     async def get_all_funding_rates(self) -> Dict[str, Any]:
         """
         Return funding rates for top 5 Binance USDⓈ-M tokens (BTC, ETH, SOL, BNB, XRP).
@@ -331,8 +330,7 @@ RESPONSE GUIDELINES:
             logger.exception("get_all_funding_rates failed")
             return {"status": "error", "error": str(e)}
 
-    @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=1)
+    @with_cache(ttl_seconds=300)
     async def get_symbol_funding_rates(self, symbol: str) -> Dict[str, Any]:
         """
         Latest funding rate and APR for a single symbol.
