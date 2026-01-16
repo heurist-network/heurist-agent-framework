@@ -7,6 +7,7 @@ dependencies = [
     "aiohttp==3.11.15",
     "apify-client==1.9.2", # truth social agent
     "boto3>=1.38.13",
+    "asyncpg>=0.29.0", # project knowledge agent
     "duckduckgo-search==7.4.3", # ddg agent
     "fastapi==0.115.12", # for mesh api server
     "firecrawl-py==2.8.0", # firecrawl agent

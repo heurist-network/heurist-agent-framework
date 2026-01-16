@@ -8,6 +8,7 @@ dependencies = [
     "aiohttp==3.11.15",
     "apify-client==1.9.2", # truth social agent
     "asyncio==3.4.3",
+    "asyncpg>=0.29.0", # project knowledge agent
     "boto3==1.37.18", # utils/crypto/crypto_nft.py
     "botocore==1.37.18", # utils/crypto/crypto_nft.py
     "duckduckgo-search==7.4.3", # ddg agent
