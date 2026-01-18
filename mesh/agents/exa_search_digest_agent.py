@@ -105,7 +105,7 @@ class ExaSearchDigestAgent(MeshAgent):
         ]
 
     def get_default_timeout_seconds(self) -> Optional[int]:
-        return 20
+        return 35
 
     def get_system_prompt(self) -> str:
         return """You are an AI assistant tasked with synthesizing information from provided web search results into a single, concise, and integrated summary. Your goal is to minimize output length while retaining the most crucial information.
