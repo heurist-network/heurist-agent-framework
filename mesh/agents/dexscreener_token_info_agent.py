@@ -152,6 +152,10 @@ class DexScreenerTokenInfoAgent(MeshAgent):
     def get_default_timeout_seconds(self) -> Optional[int]:
         return 10
 
+    def supports_proxy_fallback(self) -> bool:
+        """Enable proxy fallback for DexScreener API rate limit handling."""
+        return True
+
     def get_system_prompt(self) -> str:
         return (
             "You are DexScreener Assistant, a professional analyst providing concise token/trading pair information.\n\n"

@@ -11,6 +11,7 @@ from loguru import logger
 
 from decorators import monitor_execution, with_cache
 from mesh.gemini import call_gemini_async, call_gemini_with_tools_async
+from mesh.utils.proxy_client import get_proxy_client
 
 
 # --- Tool Schema Types ---
@@ -109,6 +110,7 @@ class MeshAgent(ABC):
         self._api_clients: Dict[str, Any] = {}
 
         self.session = None
+        self._proxy_client = get_proxy_client()
 
     @abstractmethod
     def get_system_prompt(self) -> str:
@@ -242,6 +244,14 @@ class MeshAgent(ABC):
     def get_tool_timeout_seconds(self) -> Dict[str, int]:
         """Per-tool timeout overrides in seconds. Keyed by tool name."""
         return {}
+
+    def supports_proxy_fallback(self) -> bool:
+        """Return True if this agent should use proxy fallback on 429 rate limits.
+
+        Override this method in specific agents that need proxy fallback support.
+        By default, agents do NOT use proxy fallback - it must be explicitly enabled.
+        """
+        return False
 
     async def get_fallback_for_tool(
         self, tool_name: Optional[str], function_args: Dict[str, Any], original_params: Dict[str, Any]
@@ -559,10 +569,14 @@ class MeshAgent(ABC):
         Generic API request method that can be used by child classes.
         This consolidates the common API request pattern found in all agents.
 
+        On 429 rate limit, automatically falls back to proxy server if the agent
+        has enabled proxy support via supports_proxy_fallback() method.
+        The complete payload (including headers with API keys) is forwarded as-is.
+
         Args:
             url: The API endpoint URL
             method: HTTP method (GET, POST, etc.)
-            headers: HTTP headers
+            headers: HTTP headers (include Authorization header if API needs it)
             params: URL parameters
             json_data: JSON payload for POST/PUT requests
             timeout: Total request timeout in seconds; None disables timeout
@@ -575,11 +589,26 @@ class MeshAgent(ABC):
 
         timeout_cfg = aiohttp.ClientTimeout(total=timeout) if timeout is not None else None
 
+        # Check if this agent has opted in to proxy fallback
+        use_proxy = self.supports_proxy_fallback() and self._proxy_client.enabled
+
         try:
             if method.upper() == "GET":
                 async with self.session.get(url, headers=headers, params=params, timeout=timeout_cfg) as response:
                     if response.status == 429:
                         logger.warning(f"Rate limit exceeded for {url}.")
+                        if use_proxy:
+                            logger.info(f"Attempting proxy fallback for {url}")
+                            proxy_result = await self._proxy_client.forward_request(
+                                agent_name=self.agent_name,
+                                api_url=url,
+                                method=method,
+                                headers=headers,
+                                params=params,
+                            )
+                            if proxy_result.get("status") == "success":
+                                return proxy_result.get("data", {})
+                            return {"error": proxy_result.get("error", "Proxy fallback failed")}
                     response.raise_for_status()
                     return await response.json()
             elif method.upper() == "POST":
@@ -588,6 +617,19 @@ class MeshAgent(ABC):
                 ) as response:
                     if response.status == 429:
                         logger.warning(f"Rate limit exceeded for {url}.")
+                        if use_proxy:
+                            logger.info(f"Attempting proxy fallback for {url}")
+                            proxy_result = await self._proxy_client.forward_request(
+                                agent_name=self.agent_name,
+                                api_url=url,
+                                method=method,
+                                headers=headers,
+                                params=params,
+                                json_data=json_data,
+                            )
+                            if proxy_result.get("status") == "success":
+                                return proxy_result.get("data", {})
+                            return {"error": proxy_result.get("error", "Proxy fallback failed")}
                     response.raise_for_status()
                     return await response.json()
 
