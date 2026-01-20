@@ -1,7 +1,7 @@
 metadata:
   agent: ElfaTwitterIntelligenceAgent
   test_file: elfa_twitter_intelligence_agent.py
-  timestamp: '2025-09-16T17:06:29.964459'
+  timestamp: '2026-01-20T17:28:15.292572'
   total_tests: 6
   passed: 6
   failed: 0
@@ -22,521 +22,1058 @@ results:
       data:
         status: success
         data:
-          success: true
-          data:
-          - tweetId: '1967856203377107407'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T07:40:54+00:00'
-            type: quote
-            account:
-              username: pawnie_
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967798990826770511'
-            likeCount: 2
-            repostCount: 0
-            viewCount: 43
-            quoteCount: 1
-            replyCount: 1
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T03:53:34+00:00'
-            type: quote
-            account:
-              username: ryancharleston
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967785794288115983'
-            likeCount: 0
-            repostCount: 45
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T03:01:07+00:00'
-            type: repost
-            account:
-              username: RuleXRP
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967783259909374250'
-            likeCount: 0
-            repostCount: 54
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T02:51:03+00:00'
-            type: repost
-            account:
-              username: Junieteru
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967778108825592070'
-            likeCount: 210
-            repostCount: 45
-            viewCount: 33016
-            quoteCount: 9
-            replyCount: 67
-            bookmarkCount: 14
-            mentionedAt: '2025-09-16T02:30:35+00:00'
-            type: note
-            account:
-              username: Cointelegraph
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 1
-            text: null
-          - tweetId: '1967767626089889931'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 120
-            quoteCount: 1
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T01:48:56+00:00'
-            type: quote
-            account:
-              username: westonnelson
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967749050981376238'
-            likeCount: 18
-            repostCount: 0
-            viewCount: 6540
-            quoteCount: 0
-            replyCount: 13
-            bookmarkCount: 1
-            mentionedAt: '2025-09-16T00:35:07+00:00'
-            type: note
-            account:
-              username: hellosuoha
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967748543508287794'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T00:33:06+00:00'
-            type: note
-            account:
-              username: hellosuoha
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967748266717798589'
-            likeCount: 7
-            repostCount: 1
-            viewCount: 301
-            quoteCount: 0
-            replyCount: 4
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T00:32:00+00:00'
-            type: note
-            account:
-              username: munchPRMR
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967717567671439626'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 18
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-15T22:30:01+00:00'
-            type: quote
-            account:
-              username: Crypto_TownHall
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 1
-            text: null
-          - tweetId: '1967717566576513314'
-            likeCount: 57
-            repostCount: 12
-            viewCount: 3581
-            quoteCount: 0
-            replyCount: 17
-            bookmarkCount: 3
-            mentionedAt: '2025-09-15T22:30:00+00:00'
-            type: quote
-            account:
-              username: CryptoCurb
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967703088145502356'
-            likeCount: 34
-            repostCount: 9
-            viewCount: 1005
-            quoteCount: 0
-            replyCount: 7
-            bookmarkCount: 2
-            mentionedAt: '2025-09-15T21:32:29+00:00'
-            type: note
-            account:
-              username: realtommybibi
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967702318041924024'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 7
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-15T21:29:25+00:00'
-            type: note
-            account:
-              username: TheApeBitcoiner
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967699781272342763'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-15T21:19:20+00:00'
-            type: post
-            account:
-              username: CryptosR_Us
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967699337296875595'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-15T21:17:34+00:00'
-            type: post
-            account:
-              username: CryptosR_Us
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967698808734900693'
-            likeCount: 0
-            repostCount: 7
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-15T21:15:28+00:00'
-            type: repost
-            account:
-              username: systemic_bliss
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967683169752322380'
-            likeCount: 83
-            repostCount: 3
-            viewCount: 2610
-            quoteCount: 4
-            replyCount: 38
-            bookmarkCount: 1
-            mentionedAt: '2025-09-15T20:13:20+00:00'
-            type: post
-            account:
-              username: Obesepotato_hl
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 1
-            text: null
-          - tweetId: '1967680371551875537'
-            likeCount: 1
-            repostCount: 0
-            viewCount: 5
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 1
-            mentionedAt: '2025-09-15T20:02:12+00:00'
-            type: note
-            account:
-              username: cchungccc
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967679042435354977'
-            likeCount: 2
-            repostCount: 0
-            viewCount: 993
-            quoteCount: 1
-            replyCount: 0
-            bookmarkCount: 1
-            mentionedAt: '2025-09-15T19:56:56+00:00'
-            type: note
-            account:
-              username: FTDA_US
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967676524716495025'
-            likeCount: 3
-            repostCount: 1
-            viewCount: 1077
-            quoteCount: 0
-            replyCount: 2
-            bookmarkCount: 0
-            mentionedAt: '2025-09-15T19:46:55+00:00'
-            type: post
-            account:
-              username: cryptonews
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
+        - id: '2013527047897829747'
+          text: '24H Web3 News Recap 📰 Today''s top stories: → Gold hits record $4,710
+            outpacing Bitcoin → NYSE develops tokenized securities platform → Paradex
+            DEX glitch causes mass liquidations Fear and Greed Index: 42/100 ▼ Let''s
+            break it down! 👇 🗞️ NEWS 1️⃣ Market Dynamics & Safe Haven Shift ➥ Gold
+            Hits Record $4,710 Outpacing Bitcoin Rally Gold surged to all-time high
+            $4,710 per ounce driven by US-EU trade tensions. Bitcoin struggles below
+            $93K as safe-haven demand favors traditional metal over "digital gold"
+            narrative. ➥ Bitcoin Hashrate Drops 15% Miners Pivot AI Bitcoin network
+            hashrate fell 15% from October peaks dipping below 1 Zettahash as miners
+            redirect resources to profitable AI computing. Difficulty adjustment of
+            -4% expected January 22. 2️⃣ Traditional Finance Integration ➥ NYSE Develops
+            24/7 Tokenized Securities Trading Platform New York Stock Exchange building
+            blockchain-based platform for round-the-clock tokenized stocks and ETFs
+            trading. Instant settlement via stablecoins targets $80B tokenized assets
+            by end-2026. ➥ Bermuda Partners Coinbase Circle Onchain Economy Bermuda
+            government collaborating with Coinbase and Circle to pilot stablecoin
+            payments across agencies. USDC adoption expanding among merchants on Base
+            network creating blockchain-native national economy. 3️⃣ Security Incidents
+            & Recovery ➥ Paradex DEX Bitcoin Glitch Triggers Mass Liquidations Database
+            migration error on Starknet-based Paradex caused Bitcoin price to erroneously
+            drop to $0 triggering widespread liquidations. Platform rolled back blockchain
+            after eight hours downtime. ➥ Report: 80% Hacked Crypto Projects Never
+            Recover Research reveals nearly 80% of crypto projects hit by major hacks
+            fail to fully recover due to user exodus and trust damage. Human errors
+            cause most exploits. 4️⃣ Stablecoin Evolution ➥ USDD Stablecoin Hits $1.1B
+            Supply Record TVL USDD surpassed $1.1 billion total supply and $1.4 billion
+            TVL fueled by platform integrations and 12-20% staking yields. Growth
+            driven by Binance access and TRON ecosystem activity. ➥ Native Stablecoins
+            Capture 20% Solana Market Share Native stablecoins now represent 20% of
+            Solana''s stablecoin market up from minimal share when USDC and USDT dominated
+            at 97%. USX leads with $300M+ TVL. 5️⃣ Investment Products & Flows ➥ Crypto
+            Products Record $2.2B Weekly Inflows Digital asset funds recorded $2.2
+            billion inflows marking largest weekly since October. Bitcoin led with
+            $1.55B followed by Ethereum $496M and Solana $45.5M signaling institutional
+            return. ➥ Magic Eden Reveals $24M Revenue Staking Rewards Magic Eden announced
+            $24M 2025 revenue with 15% directed to token buybacks and USD rewards
+            for stakers. Current staking levels could yield approximately 30% APY.
+            6️⃣ Regulatory Actions & Compliance ➥ South Korea Busts $102M Crypto Laundering
+            Ring Korean Customs Service uncovered international ring laundering $101.7
+            million via unauthorized FX and cross-border crypto wallets. Three Chinese
+            nationals referred to prosecutors for concealing flows. ➥ UK Crypto Reporting
+            Rules Draw Global Institutions Financial institutions gathering in London
+            to discuss crypto asset reporting under UK''s new regulatory framework.
+            Event signals growing compliance focus and institutional adoption pathway
+            clarity. 7️⃣ Governance & Protocol Updates ➥ Injective Approves INJ Supply
+            Reduction 99.89% Vote Injective community approved proposal with 99.89%
+            support to burn or reduce INJ token supply. Deflationary measure aims
+            enhancing tokenomics as network advances to next phase. ➥ Vitalik Calls
+            for DAOs Beyond Token Voting Ethereum co-founder criticized current DAO
+            systems for inefficiency and failure to address core issues. Suggested
+            alternative mechanisms to enhance decentralized organization decision-making
+            processes. 8️⃣ Platform & Ecosystem Developments ➥ X Open-Sources Algorithm
+            Powered by Grok AI X released source code for updated recommendation algorithm
+            built on transformer architecture used in Grok. Transparency move aims
+            improving platform trust and developer engagement. ➥ Pump(.)fun Launches
+            $3M Market-Driven Startup Fund Solana memecoin platform launched Pump
+            Fund via hackathon allocating $250K to 12 projects at $10M valuation.
+            Selection based on token traction demonstrating ecosystem innovation.
+            9️⃣ DeSci News ➥ Cerebrum DAO Shares Cortex App Development Progress Cerebrum
+            DAO updated community on Cortex App during DeSci News interview. Focus
+            on bridging Web2 and Web3 to make decentralized science accessible for
+            brain health solutions. ➥ Aura Sci Analyzes Legal Forces Shaping DeSci
+            Latest Aura Sci Dispatch explores legal pressures structuring decentralized
+            science and implications for coordination infrastructure. Strategies for
+            building durable decentralized systems discussed. >>> You might have missed
+            it: Vibecoins meta is comming: Web3 marketing agencies list: >>> Will
+            NYSE''s tokenized securities platform finally bring 24/7 trading to traditional
+            markets? Follow @pawnie_ if you like this content. Turn on 🔔 notifications
+            to get the best scope early.'
+          created_at: ''
+          source: x.com/pawnie_/status/2013527047897829747
+          author:
+            id: '1310604060618354691'
+            username: pawnie_
+            name: Pawnie
+            verified: false
+            followers: 12206
+          engagement:
+            likes: 19
+            replies: 16
+            retweets: 0
+            quotes: 0
+            views: 360
+          type: tweet
+        - id: '2013525968401375582'
+          text: 'RT @IvanM10529875: ⚛️ Cosmos chronicles 📰 🔎 Discover the latest developments
+            and opportunities in the Cosmos network! 🌎 📣Spread the news!…'
+          created_at: ''
+          source: x.com/CosmosEcosystem/status/2013525968401375582
+          author:
+            id: '1334653878940393477'
+            username: CosmosEcosystem
+            name: ⚛️ Cosmos Ecosystem ⚛️
+            verified: false
+            followers: 34223
+          engagement:
+            likes: 7
+            replies: 2
+            retweets: 4
+            quotes: 1
+            views: 0
+          type: tweet
+        - id: '2013525774402285961'
+          text: '⚛️ Cosmos chronicles 📰 🔎 Discover the latest developments and opportunities
+            in the Cosmos network! 🌎 📣Spread the news! 🗞️ 🔔Stay informed and updated!
+            1⃣ @FLIXdotFUN reminds of an urgent migration of the $FLIX token (from
+            Cosmos) to $FUN XP (on Base), with an end date of Tofay- January 20, 2026,
+            after which the OmniFlix chain will be depreciated. 2⃣ @informalinc announces
+            key updates to Emerald: support for the Ethereum upgrade Fusaka, the ability
+            to use it as a library (contributed by @noble_xyz ), and a command to
+            bulk update configurations in Malachite and Emerald. Emerald is a modular
+            framework from Informal Systems for building EVM-compatible PoA consensus
+            networks using Malachite and the Reth client, achieving up to 9200 TPS
+            and facilitating custom decentralized networks. These improvements improve
+            compatibility with the Ethereum ecosystem and simplify integration for
+            developers, especially in Cosmos, while meeting the needs for high performance
+            and easy maintenance. 3⃣ @POSTHUMAN_DVS announces the transfer of 20%
+            of validator income for the period January 5–19, 2026 to the Astropot
+            Liquidity SubDAO treasury. 4⃣ @cryptodungeonma announces improvements
+            to the Dungeon App, including browser bug fixes, full IBC enablement for
+            inter-blockchain communication, and iPad optimizations, making it easier
+            to access the Cosmos ecosystem. It mentions upcoming connections to the
+            project’s DEX and Backbone Labs, accelerating the development of P2E games
+            and trading. 5⃣ @circle announces a partnership with Coinbase to support
+            the government of Bermuda in building the first fully blockchain-based
+            national economy, focusing on expanding access to USDC and digital education.
+            The initiative includes a nationwide on-chain payments and finance infrastructure
+            that could position Bermuda as a global leader in crypto integration into
+            government services. 6⃣ JP Mullin announces the completion of the migration
+            of the OM token from Ethereum to the @MANTRA_Chain mainnet over a period
+            of 450 days, with 94% of the ERC20 supply transferred to over 63,000 wallets
+            through 68,000 transactions. 7⃣ @RujiraNetwork reminds $NAMI holders to
+            convert their tokens to $RUJI before March 22, 2026, as the conversion
+            rate decreases linearly after October 2025 to incentivize quick action.
+            The merge process offers an initial rate of 0.013 RUJI per NAMI with bonus
+            rewards for holding in the contract, and uncollected tokens from the team
+            are transferred to the community for greater equalization. 8⃣ @hydro_fi
+            reaches over 231,000 $yINJ minted since launch. 9⃣ @dYdX `s new launchable
+            Market: $ROSE @OasisProtocol . Also dYdX announces the first Affiliate
+            Booster Program for 2026, with a prize pool of 100,000 USDC for real trading
+            volumes generated by new users. 🔟 @THORChain `s latest highlights: ✔️Thorwallet
+            $TITN airdrop is now live. ✔️@Maya_Protocol 2026 priorities are live and
+            include Ragnarok of Kujira, Aztec launch, Maya''s App Layer and $MAYA
+            token pool. ✔️@vultisig developers now have direct access to MPC vault
+            functionality: create vaults, sign transactions, estimate gas, and execute
+            swaps using MPC directly in the application. ✔️@mocadotapp The Moca beta
+            app is launching soon. 1⃣1⃣ @HelixMarkets weekly Market review - trading
+            volume hit $309M, pushing cumulative volume to $74.8B. 7D Gainers on Helix
+            $TALIS +14.30%, $DOJO +11.40%, $KAVA +2.90% 1⃣2⃣ @Fetch_ai shares an article
+            about the launch of FetchCoder V2 – an AI tool for coding autonomous agents,
+            integrated with Web3 and focused on safety: 1⃣3⃣ @nansen_ai is now a validator
+            on @pharos_network . 1⃣4⃣ Sei Network `s "Market Infrastructure Grid"
+            key components include connections to 235 million users through exchanges
+            like Binance and OKX, tokenized assets, real-time data from Chainlink,
+            and built-in wallets for easy integration. 1⃣5⃣ @monad announces the launch
+            of TrendleFi on the Monad blockchain. TrendleFi requires an invitation
+            to access and focuses on trading memes, events, and personalitie. 1⃣6⃣
+            @SwapKitPowered announces that Sui''s integration into the SwapKit ecosystem
+            is underway, enabling cross-chain swaps of $SUI via NEAR Intents, connecting
+            @SuiNetwork to over 30 blockchains such as Bitcoin, Ethereum, and Solana
+            without bridges or intermediaries. 1⃣7⃣ @injective `s governance proposal
+            to begin the next phase of $INJ has passed with 99.89% of community members
+            voting YES. ⚛️NFT Spotlights 🌌 1⃣ @AAAMetaHuahua announces a weekly giveaway
+            for owners on Discord via bot, with an NFT prize from @CreepCompanions
+            : 2⃣ @zombSEIS shares that there are two giveaways on Discord for Horde
+            Lord and Zuits, available after verification: 3⃣ @synthtopiaworld announces
+            a collaboration between SYNTHTOPIA and TMK: THE MONEY KIDS for a limited
+            collection of custom NFTs focused on culture and identity, exclusively
+            on @cryptocomnft and @cronos_chain . The activation includes two sweepstakes:
+            the first for 100 minters with prizes of custom NFTs (verified by ownership
+            of a SYNTHTOPIA NFT), and the second community sweepstakes in X with RT,
+            like, follow, and tag 5 friends for SYNTHTOPIA and TMK GEN3 NFTs, with
+            a deadline of February 15th. 🌐 Details: 4⃣ @Element_Market summarizes
+            the weekly update for January 12-18, 2026, including a Discord giveaway,
+            trading data, and improvements to the Drops product. The data shows a
+            total of 4,051,584 active trading wallets, with 233 new ones added weekly,
+            highlighting the platform’s growth as the largest NFT marketplace on Layer
+            2 networks. New support for USDT payments on BNB Chain and a streamlined
+            Drops deployment process make it easier for users to access and manage
+            NFT releases. 5⃣ @cryptocomnft announces the launch of Phase 1 of the
+            Mad Hare Society NFT collection "Jak n Jil" mint on the NFT platform,
+            available only to allowlist holders from a previous poll, at a price of
+            $1 per NFT per wallet. The collection features characters – a green rabbit
+            in a prison uniform and a pink rabbit in a black outfit – entering "Mane
+            City", as part of the project''s broader universe, tied to partnerships
+            for in-game benefits. 🌐 Link: ⚛️Cosmos top 24h gainers XPLA $XPLA 13.3%
+            ⬆️ BitSong $BTSG 7.8% ⬆️ Gravity Bridge $GRAV 6.2% ⬆️'
+          created_at: ''
+          source: x.com/IvanM10529875/status/2013525774402285961
+          author:
+            id: '1455836712677134339'
+            username: IvanM10529875
+            name: CosmosBG Degen Fight Club⚛️☯️🏴‍☠️🧪⚡️ 🛰
+            verified: false
+            followers: 1936
+          engagement:
+            likes: 7
+            replies: 2
+            retweets: 4
+            quotes: 1
+            views: 172
+          type: tweet
+        - id: '2013483901616787873'
+          text: 🚀 Top Smart Contract Platform Coins by Market Cap Here’s a quick snapshot
+            of the leading smart contract platforms 📊 🔥 $BTC — Mc $1.84T | 24h -0.5%
+            — @Bitcoin 🤑 $ETH — Mc $383B | 24h -0.9% — @ethereum 😎 $BNB — Mc $126B
+            | 24h +0.1% — @BNBCHAIN 💸 $SOL — Mc $75.4B | 24h -0.2% — @solana 🎉 $TRX
+            — Mc $29.4B | 24h -2.7% — @trondao 🌐 $DOGE — Mc $21.5B | 24h +0.5% — @dogecoin
+            💼 $ADA — Mc $13.4B | 24h +0.7% — @Cardano 📈 $BCH — Mc $11.6B | 24h -1.3%
+            — @thebitcoincash_ 💰 $XMR — Mc $11.2B | 24h -0.6% — @monero 🏆 $XLM — Mc
+            $6.99B | 24h +0.1% — @StellarOrg 💬 Which smart contract platform do you
+            think will dominate the next cycle and why?
+          created_at: ''
+          source: x.com/_TokenHunter/status/2013483901616787873
+          author:
+            id: '1310130190266241024'
+            username: _TokenHunter
+            name: TokenHunter
+            verified: false
+            followers: 176962
+          engagement:
+            likes: 18
+            replies: 6
+            retweets: 6
+            quotes: 0
+            views: 1908
+          type: tweet
+        - id: '2013412331263533439'
+          text: 1.20梭哈晨报： 兜兜转转行情又沉浸下去了，多看少动吧，这个行情好难，目标是在股市活下去😧。 1. $BTC 至少目前下跌没有收回去，静静看看吧，整体都还是山寨行情，尤其是妖币横行；
+            2. $ETH 跌破3200了，看看情况呗，毕竟一直有买量，虽然大家都在嘲讽理华，但是理华还是水上呀； 3. $SOL 不知道该说点什么，本来链上行为复苏了，但是大家好像都用稳定币炒meme不用s了；
+            4.BitMine 再次质押 86,848 枚 ETH，价值 2.794 亿美元； 大哥继续质押，继续买； 5.今日CME“美联储观察”数据：1月维持利率不变的概率为95%；
+            6.Arkham 分析师：疑似不丹 Druk Holdings 相关地址正在进行高杠杆做多 ETH 操作； 7.40 年期日本国债收益率自
+            2007 年推出以来首次突破 4%； 市场预期日本央行将维持利率不变，交易员聚焦外汇干预风险； 8.委内瑞拉市场 USDT 兑玻利瓦尔价格自
+            1 月 7 日 起持续下跌，累计回落约 40%； 9.NFT 交易平台 Magic Eden 宣布将把 15% 的平台总收入注入 ME 代币生态。其中，50%
+            用于回购 ME； 都要跌归零了，才开始想要回购，炒币吗？ 10.美联储独立性面临挑战，鲍威尔据悉将出庭力挺库克； 11.PumpFun 推出
+            Pump Fund，启动 300 万美元 Build in Public Hackathon； 看得出来想要借机拉盘 $PUMP ，看看先吧；
+            12.德国智库研究称，美国关税成本约 96% 由本国消费者和进口商承担； 羊毛出在羊身上的道理，其实大家都懂； 13.百慕大政府宣布与 Coinbase、Circle
+            合作探索链上经济模式； 14.市场消息：Coinbase 拟推出定制稳定币，允许企业发行 1:1 支持的数字美元； 15.Revolut申请秘鲁银行牌照，加速拉美扩张步伐；
+            16.Cointelegraph 报道：Coinbase 溢价差创 12 个月新低源于美国巨鲸抛售，与比特币现货 ETF 关系不大； 17.YZi
+            Labs 推出全年制 EASY Residency 第三季创业孵化计划； 只要你市值足够的低，总是能一揽子概括进来的； 18.市场消息：纽约证券交易所将推出
+            24/7 全天候交易服务； 打赢crypto交易所的，可能是别圈子的交易所吗？ 19.隐私匿名赛道仍然是最火的赛道，妖币横行； ------------
+            还是那句话，只追高不抄底，至少追高你不需要考虑怎么tmd天天跌，最多止损了，然后拉起来继续追就行了。 这个市场就好像是追龙一样，天天想着砍龙，没劲的。
+          created_at: ''
+          source: x.com/hellosuoha/status/2013412331263533439
+          author:
+            id: '1401718840535379970'
+            username: hellosuoha
+            name: 梭教授说
+            verified: false
+            followers: 175950
+          engagement:
+            likes: 24
+            replies: 10
+            retweets: 1
+            quotes: 0
+            views: 6452
+          type: tweet
+        - id: '2013379109208879503'
+          text: you're a criminal or someone being persecuted by the state and you
+            need to hide your money if you could store and transact with BTC, ETH,
+            SOL, and stablecoins entirely privately on the Bitcoin, Ethereum, and
+            Solana networks... would you choose that over holding $ZEC or $XMR?
+          created_at: Mon Jan 19 22:32:41 +0000 2026
+          source: x.com/mtndrew/status/2013379109208879503
+          author:
+            id: '179656739'
+            username: mtndrew
+            name: mtn drew
+            verified: false
+            followers: 2793
+          engagement:
+            likes: 0
+            replies: 1
+            retweets: 0
+            quotes: 0
+            views: 91
+          type: tweet
+        - id: '2013367694528258554'
+          text: 'NYSE Prepares Tokenized Securities Platform – Beneficiary Stocks
+            & Tokens - ICE previously launched Bakkt, an institutional Bitcoin platform,
+            which ultimately failed. Since then, however, ICE has continued to pursue
+            crypto/blockchain-related new businesses, including a $2bn investment
+            in the Polymarket prediction market and initiatives around RWA tokenization
+            platforms. - The NYSE stated that the platform will have the “capability
+            to support multiple blockchains for settlement and custody,” but it has
+            not yet disclosed which blockchains will be supported. - Potential candidates
+            include Ethereum, Solana, or a permissioned private blockchain. The Canton
+            Network, which has recently partnered with DTCC and Nasdaq, could also
+            be a contender. - Beneficiary stocks: ICE (parent company of the NYSE),
+            Robinhood, Coinbase (brokerages), Circle (stablecoin issuer), BNY Mellon,
+            Citi (banking partners). - Beneficiary tokens: Chainlink (oracle), Ethereum,
+            Solana, Canton (mainnet), assuming adoption. - In the crypto space, Hyperliquid
+            is currently a leading player in RWA tokenization trading, but increased
+            participation by U.S. institutions could be negative for it. That said,
+            due to demand related to KYC/AML circumvention, airdrops, arbitrage, and
+            tax avoidance, crypto-native RWA DEXs—including Hyperliquid—are unlikely
+            to disappear. - Since crypto fundamentals and token prices often move
+            independently, this should be taken as reference only. - On-chain tokenization
+            of real-world assets will accelerate the demise of altcoins. Going forward,
+            who will still trade altcoins?'
+          created_at: Mon Jan 19 21:47:19 +0000 2026
+          source: x.com/BTCThinker88/status/2013367694528258554
+          author:
+            id: '1322453807293325312'
+            username: BTCThinker88
+            name: jayhan88
+            verified: false
+            followers: 2288
+          engagement:
+            likes: 1
+            replies: 0
+            retweets: 0
+            quotes: 0
+            views: 61
+          type: tweet
+        - id: '2013347451277844668'
+          text: 'RT @nic_carter: quantum resilience is a clear priority for ethereum
+            (and solana, and, and). bitcoin devs still pretending "no one technical…'
+          created_at: Mon Jan 19 20:26:53 +0000 2026
+          source: x.com/R89Capital/status/2013347451277844668
+          author:
+            id: '1458910555209547782'
+            username: R89Capital
+            name: Rex
+            verified: false
+            followers: 77463
+          engagement:
+            likes: 261
+            replies: 52
+            retweets: 22
+            quotes: 6
+            views: 0
+          type: tweet
+        - id: '2013336480224006641'
+          text: Tradfi will just use private chains Maybe they will settle some data
+            on Ethereum or Solana, maybe even Bitcoin. Honestly kinda hard to see
+            the value of Crypto outside of SOV Which leaves only $BTC $ZEC tbh
+          created_at: Mon Jan 19 19:43:17 +0000 2026
+          source: x.com/Credib1eGuy/status/2013336480224006641
+          author:
+            id: '1105987365309304832'
+            username: Credib1eGuy
+            name: Guy
+            verified: false
+            followers: 24214
+          engagement:
+            likes: 97
+            replies: 30
+            retweets: 2
+            quotes: 1
+            views: 17718
+          type: tweet
+        - id: '2013331668904423925'
+          text: 'Lecimy z podsumowaniem najważniejszych newsów z rynku krypto (i nie
+            tylko!) 👇 1️⃣ Mocna korekta na Bitcoinie i rekordy na metalach • Bitcoin
+            w nocy zanurkował o ponad 3.5% do poziomu $92,000, co wywołało likwidacje
+            o łącznej wartości $872.9 mln - ból poczuły głównie byki, bo aż $787 mln
+            to pozycje długie. • Kapitał ucieka w bezpieczne przystanie - złoto wyznaczyło
+            nowe ATH na poziomie $4,690, a srebro przebiło $94, zostawiając lukę CME
+            na poziomie $90. 2️⃣ ETFy wciąż wciągają kapitał - instytucje kupują dołek
+            • Mimo zmienności, zeszły tydzień to potężne zakupy gigantów: Bitcoin
+            +$1.42 mld, Ethereum +$489.04 mln, a Solana +$46.88 mln. • XRP (+$56.83
+            mln) i Litecoin (+$2 mln) również na plusie - grubasy ewidentnie wykorzystały
+            spadki do akumulacji, patrząc na fundusze ETF na całym świecie to był
+            to najlepszy tydzień od października 2025r (łącznie 2.17 miliarda dolarów
+            wpływów) 3️⃣ Vitalik: Skomplikowane Ethereum to martwe Ethereum • Twórca
+            ETH opublikował manifest, ostrzegając przed syndromem „arcykapłanów” -
+            kod jest tak zawiły, że rozumie go garstka ludzi, co zagraża decentralizacji.
+            • Plan naprawczy to „odśmiecanie”: mniej kodu, unikanie egzotycznej matematyki
+            i przenoszenie funkcji do warstwy smart kontraktów, aby sieć mogła przetrwać
+            100 lat. 4️⃣ Fundamenty Ethereum silne jak nigdy • Średnia dzienna liczba
+            transakcji wbiła nowe ATH (2.5 mln), co jest wynikiem prawie 2x lepszym
+            niż rok temu. • Mimo rekordowego ruchu, sieć pozostaje tania - średnia
+            opłata spadła do historycznego minimum $0.01. Użyteczność rośnie, koszty
+            maleją 👌 5️⃣ Kazachstan bierze krypto za twarz • Prezydent podpisał ustawy
+            oddające rynek pod ścisłą kontrolę państwa - teraz to Bank Centralny zdecyduje,
+            czym można legalnie handlować. • Rządy przestają ignorować cyfrowe aktywa
+            i niektórzy niestety zaczynają zaciskać pętlę regulacyjną. 6️⃣ Eskalacja
+            konfliktu o Grenlandię - Europa wyciąga „finansową atomówkę” • Wojna handlowa
+            wisi na włosku - UE szykuje cła odwetowe na 93 mld euro, ale Deutsche
+            Bank wskazuje na prawdziwego asa w rękawie: Europa trzyma aż $8 bln w
+            amerykańskich aktywach (obligacje i akcje). • To gigantyczna dźwignia
+            na Trumpa, ewentualna wyprzedaż tych aktywów zachwiałaby Wall Street,
+            choć bank ostrzega, że otwarta wojna handlowa boleśnie uderzy w całe globalne
+            rynki. • Sytuacja jest też napięta militarnie - Niemcy po zaledwie 44
+            godzinach wycofali żołnierzy z misji NATO, a Europa formuje zjednoczony
+            front przeciwko „szantażowi” USA - sytuacje śledzimy na bieżąco na telegramie,
+            link w komentarzu pod tym wpisem. 7️⃣ Wybory w Japonii a kurs Bitcoina
+            • Premier Japonii planuje rozwiązać parlament i zarządzić wybory na 8
+            lutego. • Zmiany w Tokio mogą wpłynąć na stopy procentowe Banku Japonii
+            - każde zachwianie japońskiej „drukarki” (Yen carry trade) lubi wywoływać
+            wstrząsy na globalnych rynkach i krypto. 8️⃣ Steak ’n Shake kupuje Bitcoina
+            za $10 mln • Popularna sieć burgerowni ujawniła zakup BTC za $10 mln i
+            chwali się wzrostem sprzedaży o 15% w ostatnim kwartale. • Firma od maja
+            akceptuje płatności w krypto - adopcja smakuje coraz lepiej;p‌ 9️⃣ FED
+            dolewa paliwa - $55.3 mld płynności • Rezerwa Federalna planuje wpompować
+            w system ponad $55 mld do 12 lutego poprzez skup rezerw i reinwestycje
+            w obligacje. • Może jeszcze nie drukujemy na pełną skalę, ale byki z pewnością
+            nie pogardzą takim prezentem.‌ Jeżeli dotarłeś do końca, to strzel ♥️i
+            wpadaj grupy PRO po więcej mięcha. (link dla chętnych zostawiam w komentarzu)
+            Pozdro wariacie!'
+          created_at: Mon Jan 19 19:24:10 +0000 2026
+          source: x.com/SwiatKrypto/status/2013331668904423925
+          author:
+            id: '1488412133524217857'
+            username: SwiatKrypto
+            name: Świat Krypto
+            verified: false
+            followers: 38232
+          engagement:
+            likes: 55
+            replies: 1
+            retweets: 0
+            quotes: 0
+            views: 2691
+          type: tweet
+        - id: '2013330829469196705'
+          text: VCs psyops you to think you need to solve a problem to be successful
+            What problem BITCOIN, ETHEREUM, SOLANA, PUMP DOT FUN, BORED APE YACHT
+            CLUB, MILADY, PEPE, SHIB, DOGECOIN, CARDANO, VIRTUALS or AI16Z are solving
+            exactly ? Problem-solving is hyperstitional
+          created_at: Mon Jan 19 19:20:50 +0000 2026
+          source: x.com/aaronjmars/status/2013330829469196705
+          author:
+            id: '1368626890802659330'
+            username: aaronjmars
+            name: '@aaronjmars'
+            verified: false
+            followers: 6593
+          engagement:
+            likes: 7
+            replies: 3
+            retweets: 0
+            quotes: 0
+            views: 344
+          type: tweet
+        - id: '2013321634409509054'
+          text: 'RT @martypartymusic: Token Classifications Based on the latest Clarity
+            Act draft criteria, SEC statements, and bill analyses How common b…'
+          created_at: Mon Jan 19 18:44:18 +0000 2026
+          source: x.com/martypartymusic/status/2013321634409509054
+          author:
+            id: '22506165'
+            username: martypartymusic
+            name: MartyParty
+            verified: false
+            followers: 242000
+          engagement:
+            likes: 103
+            replies: 14
+            retweets: 18
+            quotes: 1
+            views: 0
+          type: tweet
+        - id: '2013317537581126038'
+          text: $STRC should be tokenized on Bitcoin. And accessible in any chain
+            (Ethereum, Solana, Base...). Beyond makes that possible.
+          created_at: Mon Jan 19 18:28:01 +0000 2026
+          source: x.com/beyond__tech/status/2013317537581126038
+          author:
+            id: '749198359'
+            username: beyond__tech
+            name: Beyond | Connecting Bitcoin
+            verified: false
+            followers: 55351
+          engagement:
+            likes: 123
+            replies: 22
+            retweets: 9
+            quotes: 9
+            views: 20418
+          type: tweet
+        - id: '2013317196273922527'
+          text: 'RT @OnChainRev: 🔥 Today on OnChain Revolution 🔥 🚨TRUMP STRIKES AGAIN?!🔥
+            Tariff Man Is BACK, Markets Could Get WILD 😱📉🚀 ⏱️ Time Stamps - OnC…'
+          created_at: Mon Jan 19 18:26:39 +0000 2026
+          source: x.com/ShizzyUnchained/status/2013317196273922527
+          author:
+            id: '1733835753598136320'
+            username: ShizzyUnchained
+            name: Shizzy UnChained
+            verified: false
+            followers: 7381
+          engagement:
+            likes: 6
+            replies: 2
+            retweets: 5
+            quotes: 0
+            views: 0
+          type: tweet
+        - id: '2013315422809137220'
+          text: 'Neobanks are on track to become a $10B+ on-chain category by the
+            end of 2026. That’s before most users even realize they’re using them.
+            Three early projects sit right at the centre of that shift → @telcoin
+            ( $TEL ) → @Thorwallet ( $TITN ) → @AviciMoney ( $AVICI ) One of these
+            could be the next 10x👇 🔵Telcoin ( $TEL ): Mobile-First Digital Banking
+            + Remittances ✦ Tech Used → Multi-Chain Stablecoins + Telecom Integration
+            • Built on Polygon and Ethereum for low-cost, efficient transactions.
+            • Integrates with mobile networks for seamless on-chain remittances and
+            payments. ✦ Regulatory Framework → U.S. Licensed Digital Asset Bank •
+            Operates under Nebraska state charter as Telcoin Digital Asset Bank. •
+            Compliant with FinCEN; focuses on regulated stablecoin issuance like eUSD.
+            ✦ Products & Services → eUSD + Telcoin Wallet + Remittances • eUSD → yield-bearing
+            stablecoin backed by U.S. Treasuries, live on Ethereum and Polygon since
+            December 2025. • Telcoin Wallet → self-custodial app for payments, swaps,
+            and banking services. • Remittances → instant, low-fee transfers via telecom
+            partnerships in 171 countries. Telcoin bridges telecom and blockchain
+            to deliver global finance directly to mobile phones. It powers "Digital
+            Cash" with multi-currency stablecoins, enabling on-chain remittances and
+            regulated banking without traditional banks. The V5 wallet integrates
+            personal and business accounts, with expansions targeting emerging markets
+            for real-world use. With a $10M initial eUSD issuance and plans for full
+            banking rollout in early 2026, Telcoin is scaling mobile-first neobanking.
+            My take: Telcoin is the telecom powerhouse in on-chain neobanks blending
+            mobile money with stablecoins for global remittances and banking. 🟢THORWallet
+            ( $TITN ): Multi-Chain DeFi Wallet + Fiat On-Ramps ✦ Tech Used → Cross-Chain
+            Swaps + Self-Custodial Infra • Powered by THORChain for native cross-chain
+            swaps without bridges. • Supports Bitcoin, Ethereum, Solana, BNB, TRON,
+            Stellar, and more with multisig security. ✦ Regulatory Framework → Swiss
+            Compliance + Licensed Features • Operates as a Swiss neobank with IBAN
+            accounts and Mastercard integration. • KYC/AML compliant for fiat services;
+            non-custodial for crypto. ✦ Products & Services → THORWallet App + Crypto
+            Card + IBAN • THORWallet App → staking, swapping, and yield farming across
+            chains. • Crypto Card → Mastercard for spending crypto at fiat terminals
+            globally in 100+ countries. • IBAN Accounts → digital Swiss bank accounts
+            for fiat-crypto bridging. THORWallet is the ultimate self-custodial wallet
+            merging DeFi with real-world spending. It enables seamless swaps, staking,
+            and Web3 access, while the crypto card and IBAN allow instant fiat conversions.
+            With $1.7B in swaps processed YTD and an upcoming airdrop, it''s a mobile-first
+            superapp bringing DeFi to everyday finance. My take: THORWallet is the
+            versatile DeFi hub for on-chain neobanks all-in-one wallet with fiat rails
+            and cross-chain efficiency. ⚪️Avici ( $AVICI ): On-Chain Neobank + Credit
+            Innovation ✦ Tech Used → Solana Blockchain + Tokenized Credit • High-speed
+            Solana for low-fee transactions and neobank features. • Tokenizes assets
+            and enables uncollateralized loans with privacy-focused transactions.
+            ✦ Regulatory Framework → Permissioned + Compliance-Focused • Named virtual
+            accounts with KYC for fiat-stablecoin conversions (IBAN in EU, ACH/wires
+            in US). • Operates under global regs for neobank services; no team tokens
+            for transparency. ✦ Products & Services → Virtual Accounts + Stablecoins
+            + Loans • Virtual Accounts → seamless fiat-to-crypto with self-custody,
+            powered by MoonPay, supporting SEPA Instant, ACH, and direct deposits.
+            • Stablecoins → privacy-focused deposits, withdrawals, and spending. •
+            Uncollateralized Loans → decentralized credit for institutions and users,
+            plus on-chain credit scoring and cards. Avici is building an internet-native
+            neobank that keeps users in control of their funds. It bridges fiat and
+            crypto without intermediaries, offering virtual accounts as real alternatives
+            to traditional banks, plus credit cards and RWA tokenization. With $3.5M
+            raised in 2025 and recent virtual account launches, it''s positioned for
+            DeFi banking growth. The "no team tokens" model builds community trust.
+            My take: Avici is the innovative neobank pioneer in on-chain protocols
+            on-chain credit and fiat-crypto bridging on Solana. Conclusion: The Neobank
+            Edge On-chain neobanks are more than a trend they’re how crypto reinvents
+            banking for the digital era. • Telcoin → remittances + mobile banking,
+            telecom-driven. • THORWallet → multi-chain wallet + spending, DeFi-fiat
+            hybrid. • Avici → neobank + credit, Solana-native innovation. Final Rankings
+            → Tech Used: $TITN > $AVICI > $TEL THORWallet leads in cross-chain swaps,
+            Avici excels in Solana speed/tokenization, Telcoin focuses on telecom
+            integration. Regulatory Framework: $TEL > $TITN > $AVICI Telcoin has U.S.
+            banking charter strength. THORWallet uses Swiss compliance. Avici emphasizes
+            permissioned KYC. Products & Services: $AVICI > $TEL > $TITN Avici delivers
+            cutting-edge accounts and loans. Telcoin bridges remittances and wallets.
+            THORWallet serves DeFi spending needs. 🔚My Takeaway: If you want telecom-powered
+            global access → Telcoin. If you want versatile DeFi tools + fiat spending
+            → THORWallet. If you want innovative on-chain banking + credit → Avici.
+            On-chain neobanks aren’t just a side play they’re crypto’s most credible
+            path to mainstream finance.'
+          created_at: Mon Jan 19 18:19:37 +0000 2026
+          source: x.com/oct_gems/status/2013315422809137220
+          author:
+            id: '1706299648996990976'
+            username: oct_gems
+            name: OCT Gems
+            verified: false
+            followers: 11469
+          engagement:
+            likes: 70
+            replies: 5
+            retweets: 22
+            quotes: 4
+            views: 6293
+          type: tweet
+        - id: '2013313876557807879'
+          text: 🔥 Today on OnChain Revolution 🔥 🚨TRUMP STRIKES AGAIN?!🔥 Tariff Man
+            Is BACK, Markets Could Get WILD 😱📉🚀 ⏱️ Time Stamps - OnChain Revolution
+            Show00:00:00 - Intro to Revolution 00:01:47 - OnChain monologue 00:03:18
+            - Yagobi joins the show 00:08:10 - Trump strikes again? Tariff Man is
+            back and markets may get wild 00:30:35 - Bitcoin price action and crypto
+            bubbles 00:41:22 - @OmnityBTCdApps Satsfun is now live and $SATOSHI is
+            the first launch 00:46:30 - Ethereum gas fees drop below $0.01 as network
+            activity hits an all time high 00:55:52 - China CBDC project mBridge has
+            already processed $55B in cross border payments 01:01:40 - BagsApp launched
+            referral links 9 days ago with a 50% protocol fee and the top earner has
+            already claimed over $800,000 in fees, plus a quick GitHub meta check
+            01:12:55 - CryptoRank data shows Lighter perps volume fell sharply after
+            the airdrop 01:16:22 - Bitcoin network hashrate is down about 15% from
+            the October peak 01:22:30 - Solana co founder Anatoly Yakovenko says Solana
+            must keep iterating or it will die 01:29:51 - Genius Terminal, backed
+            by YZi Labs and advised by CZ, hit an all time high on January 16 with
+            $650M in single day volume 01:34:00 - Wrap up and massive thanks to our
+            partners for keeping this going 💛
+          created_at: Mon Jan 19 18:13:28 +0000 2026
+          source: x.com/OnChainRev/status/2013313876557807879
+          author:
+            id: '50817890'
+            username: OnChainRev
+            name: OnChain Revolution Media
+            verified: false
+            followers: 11818
+          engagement:
+            likes: 6
+            replies: 2
+            retweets: 5
+            quotes: 0
+            views: 120
+          type: tweet
+        - id: '2013303063675838812'
+          text: CRYPTO ETF FLOWS MIXED AS BITCOIN SEES DAILY OUTFLOWS, ALTCOINS STAY
+            STRONG Bitcoin ETFs recorded net outflows of 1,106 BTC ($102.66M) on a
+            one-day basis, while still posting strong seven-day inflows totaling 18,138
+            BTC ($1.68B). Ethereum and Solana ETFs continued to show consistent strength,
+            with both assets posting positive net flows across one-day and seven-day
+            periods, highlighting sustained institutional interest outside of Bitcoin
+            despite short-term volatility.
+          created_at: Mon Jan 19 17:30:30 +0000 2026
+          source: x.com/Crypto_TownHall/status/2013303063675838812
+          author:
+            id: '233722442'
+            username: Crypto_TownHall
+            name: Crypto Town Hall
+            verified: false
+            followers: 103947
+          engagement:
+            likes: 9
+            replies: 2
+            retweets: 1
+            quotes: 0
+            views: 5652
+          type: tweet
+        - id: '2013282355624960281'
+          text: 'RT @thinkingcrypto: BITCOIN DUMPS ON EU US TARIFF WAR BUT WHALES
+            KEEP BUYING! WATCH ▶️ …'
+          created_at: Mon Jan 19 16:08:13 +0000 2026
+          source: x.com/thinkingcrypto/status/2013282355624960281
+          author:
+            id: '946799059829960706'
+            username: thinkingcrypto
+            name: Tony Edward (Thinking Crypto Podcast)
+            verified: false
+            followers: 140614
+          engagement:
+            likes: 26
+            replies: 4
+            retweets: 7
+            quotes: 0
+            views: 0
+          type: tweet
+        - id: '2013272324829790446'
+          text: 'ETF Flows Jan 19th: ETFs: 1D NetFlow: -1,106 $BTC(-$102.66M)🔴 7D
+            NetFlow: +18,138 $BTC(+$1.68B)🟢 ETFs: 1D NetFlow: +9,171 $ETH(+$29.42M)🟢
+            7D NetFlow: +145,348 $ETH(+$466.28M)🟢 ETFs: 1D NetFlow: +41,134 $SOL(+$5.51M)🟢
+            7D NetFlow: +353,701 $SOL(+$47.4M)🟢'
+          created_at: Mon Jan 19 15:28:21 +0000 2026
+          source: x.com/martypartymusic/status/2013272324829790446
+          author:
+            id: '22506165'
+            username: martypartymusic
+            name: MartyParty
+            verified: false
+            followers: 242000
+          engagement:
+            likes: 52
+            replies: 8
+            retweets: 4
+            quotes: 0
+            views: 6357
+          type: tweet
     description: Direct tool call to search mentions for crypto keywords
     status: success
+    elapsed_time: 7.595475673675537
   search_mentions_query:
     input:
       query: Search for mentions of bitcoin, solana, and ethereum in the last 30 days
     output:
-      response: 'Here''s a summary of recent Twitter mentions for Bitcoin, Solana,
+      response: 'Based on the provided data, here are the mentions for Bitcoin, Solana,
         and Ethereum:
 
 
-        **Bitcoin:** There are 10 recent mentions of Bitcoin.
+        *   **Bitcoin:** 14 mentions
 
-        *   The most recent mention was on 2025-09-16 at 09:04:49+00:00 by user "pete\_rizzo\_".
-        This was a repost with 17 reposts.
+        *   **Solana:** 12 mentions
 
-        *   Another mention was by "MHiesboeck" on 2025-09-16 at 09:04:02+00:00, which
-        was a note with 1 reply and 14 views.
-
-        *   "RD\_btc" posted about Bitcoin on 2025-09-16 at 08:57:17+00:00, receiving
-        3 replies and 69 views.
-
-        *   "MartiniGuyYT" also posted on 2025-09-16 at 08:55:08+00:00, with 57 views.
-
-
-        **Solana and Ethereum:** No mentions were found for Solana or Ethereum in
-        the provided data.'
+        *   **Ethereum:** 15 mentions'
       data:
         status: success
         data:
-          success: true
-          data:
-          - tweetId: '1967877320120979585'
-            likeCount: 0
-            repostCount: 17
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T09:04:49+00:00'
-            type: repost
-            account:
-              username: pete_rizzo_
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967877123894325353'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 14
-            quoteCount: 0
-            replyCount: 1
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T09:04:02+00:00'
-            type: note
-            account:
-              username: MHiesboeck
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967876998803710105'
-            likeCount: 0
-            repostCount: 2
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T09:03:32+00:00'
-            type: repost
-            account:
-              username: ChangeNOW_io
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967876409365512655'
-            likeCount: 0
-            repostCount: 15
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T09:01:12+00:00'
-            type: repost
-            account:
-              username: pete_rizzo_
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967876210446450696'
-            likeCount: 0
-            repostCount: 17
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T09:00:24+00:00'
-            type: repost
-            account:
-              username: MariusCrypt0
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967876126371614801'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T09:00:04+00:00'
-            type: quote
-            account:
-              username: MacroCRG
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967875833248485800'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T08:58:54+00:00'
-            type: quote
-            account:
-              username: BTCGandalf
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967875424148656369'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 69
-            quoteCount: 0
-            replyCount: 3
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T08:57:17+00:00'
-            type: post
-            account:
-              username: RD_btc
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967874882647339507'
-            likeCount: 0
-            repostCount: 0
-            viewCount: 57
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T08:55:08+00:00'
-            type: post
-            account:
-              username: MartiniGuyYT
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
-          - tweetId: '1967874785578455367'
-            likeCount: 0
-            repostCount: 2
-            viewCount: 0
-            quoteCount: 0
-            replyCount: 0
-            bookmarkCount: 0
-            mentionedAt: '2025-09-16T08:54:44+00:00'
-            type: repost
-            account:
-              username: BitcoinUbuntu
-              isVerified: false
-            repostBreakdown:
-              smart: 0
-              ct: 0
-            text: null
+        - id: '2013527047897829747'
+          text: '24H Web3 News Recap 📰 Today''s top stories: → Gold hits record $4,710
+            outpacing Bitcoin → NYSE develops tokenized securities platform → Paradex
+            DEX glitch causes mass liquidations Fear and Greed Index: 42/100 ▼ Let''s
+            break it down! 👇 🗞️ NEWS 1️⃣ Market Dynamics & Safe Haven Shift ➥ Gold
+            Hits Record $4,710 Outpacing Bitcoin Rally Gold surged to all-time high
+            $4,710 per ounce driven by US-EU trade tensions. Bitcoin struggles below
+            $93K as safe-haven demand favors traditional metal over "digital gold"
+            narrative. ➥ Bitcoin Hashrate Drops 15% Miners Pivot AI Bitcoin network
+            hashrate fell 15% from October peaks dipping below 1 Zettahash as miners
+            redirect resources to profitable AI computing. Difficulty adjustment of
+            -4% expected January 22. 2️⃣ Traditional Finance Integration ➥ NYSE Develops
+            24/7 Tokenized Securities Trading Platform New York Stock Exchange building
+            blockchain-based platform for round-the-clock tokenized stocks and ETFs
+            trading. Instant settlement via stablecoins targets $80B tokenized assets
+            by end-2026. ➥ Bermuda Partners Coinbase Circle Onchain Economy Bermuda
+            government collaborating with Coinbase and Circle to pilot stablecoin
+            payments across agencies. USDC adoption expanding among merchants on Base
+            network creating blockchain-native national economy. 3️⃣ Security Incidents
+            & Recovery ➥ Paradex DEX Bitcoin Glitch Triggers Mass Liquidations Database
+            migration error on Starknet-based Paradex caused Bitcoin price to erroneously
+            drop to $0 triggering widespread liquidations. Platform rolled back blockchain
+            after eight hours downtime. ➥ Report: 80% Hacked Crypto Projects Never
+            Recover Research reveals nearly 80% of crypto projects hit by major hacks
+            fail to fully recover due to user exodus and trust damage. Human errors
+            cause most exploits. 4️⃣ Stablecoin Evolution ➥ USDD Stablecoin Hits $1.1B
+            Supply Record TVL USDD surpassed $1.1 billion total supply and $1.4 billion
+            TVL fueled by platform integrations and 12-20% staking yields. Growth
+            driven by Binance access and TRON ecosystem activity. ➥ Native Stablecoins
+            Capture 20% Solana Market Share Native stablecoins now represent 20% of
+            Solana''s stablecoin market up from minimal share when USDC and USDT dominated
+            at 97%. USX leads with $300M+ TVL. 5️⃣ Investment Products & Flows ➥ Crypto
+            Products Record $2.2B Weekly Inflows Digital asset funds recorded $2.2
+            billion inflows marking largest weekly since October. Bitcoin led with
+            $1.55B followed by Ethereum $496M and Solana $45.5M signaling institutional
+            return. ➥ Magic Eden Reveals $24M Revenue Staking Rewards Magic Eden announced
+            $24M 2025 revenue with 15% directed to token buybacks and USD rewards
+            for stakers. Current staking levels could yield approximately 30% APY.
+            6️⃣ Regulatory Actions & Compliance ➥ South Korea Busts $102M Crypto Laundering
+            Ring Korean Customs Service uncovered international ring laundering $101.7
+            million via unauthorized FX and cross-border crypto wallets. Three Chinese
+            nationals referred to prosecutors for concealing flows. ➥ UK Crypto Reporting
+            Rules Draw Global Institutions Financial institutions gathering in London
+            to discuss crypto asset reporting under UK''s new regulatory framework.
+            Event signals growing compliance focus and institutional adoption pathway
+            clarity. 7️⃣ Governance & Protocol Updates ➥ Injective Approves INJ Supply
+            Reduction 99.89% Vote Injective community approved proposal with 99.89%
+            support to burn or reduce INJ token supply. Deflationary measure aims
+            enhancing tokenomics as network advances to next phase. ➥ Vitalik Calls
+            for DAOs Beyond Token Voting Ethereum co-founder criticized current DAO
+            systems for inefficiency and failure to address core issues. Suggested
+            alternative mechanisms to enhance decentralized organization decision-making
+            processes. 8️⃣ Platform & Ecosystem Developments ➥ X Open-Sources Algorithm
+            Powered by Grok AI X released source code for updated recommendation algorithm
+            built on transformer architecture used in Grok. Transparency move aims
+            improving platform trust and developer engagement. ➥ Pump(.)fun Launches
+            $3M Market-Driven Startup Fund Solana memecoin platform launched Pump
+            Fund via hackathon allocating $250K to 12 projects at $10M valuation.
+            Selection based on token traction demonstrating ecosystem innovation.
+            9️⃣ DeSci News ➥ Cerebrum DAO Shares Cortex App Development Progress Cerebrum
+            DAO updated community on Cortex App during DeSci News interview. Focus
+            on bridging Web2 and Web3 to make decentralized science accessible for
+            brain health solutions. ➥ Aura Sci Analyzes Legal Forces Shaping DeSci
+            Latest Aura Sci Dispatch explores legal pressures structuring decentralized
+            science and implications for coordination infrastructure. Strategies for
+            building durable decentralized systems discussed. >>> You might have missed
+            it: Vibecoins meta is comming: Web3 marketing agencies list: >>> Will
+            NYSE''s tokenized securities platform finally bring 24/7 trading to traditional
+            markets? Follow @pawnie_ if you like this content. Turn on 🔔 notifications
+            to get the best scope early.'
+          created_at: ''
+          source: x.com/pawnie_/status/2013527047897829747
+          author:
+            id: '1310604060618354691'
+            username: pawnie_
+            name: Pawnie
+            verified: false
+            followers: 12206
+          engagement:
+            likes: 19
+            replies: 16
+            retweets: 0
+            quotes: 0
+            views: 360
+          type: tweet
+        - id: '2013525968401375582'
+          text: 'RT @IvanM10529875: ⚛️ Cosmos chronicles 📰 🔎 Discover the latest developments
+            and opportunities in the Cosmos network! 🌎 📣Spread the news!…'
+          created_at: ''
+          source: x.com/CosmosEcosystem/status/2013525968401375582
+          author:
+            id: '1334653878940393477'
+            username: CosmosEcosystem
+            name: ⚛️ Cosmos Ecosystem ⚛️
+            verified: false
+            followers: 34223
+          engagement:
+            likes: 7
+            replies: 2
+            retweets: 4
+            quotes: 1
+            views: 0
+          type: tweet
+        - id: '2013525774402285961'
+          text: '⚛️ Cosmos chronicles 📰 🔎 Discover the latest developments and opportunities
+            in the Cosmos network! 🌎 📣Spread the news! 🗞️ 🔔Stay informed and updated!
+            1⃣ @FLIXdotFUN reminds of an urgent migration of the $FLIX token (from
+            Cosmos) to $FUN XP (on Base), with an end date of Tofay- January 20, 2026,
+            after which the OmniFlix chain will be depreciated. 2⃣ @informalinc announces
+            key updates to Emerald: support for the Ethereum upgrade Fusaka, the ability
+            to use it as a library (contributed by @noble_xyz ), and a command to
+            bulk update configurations in Malachite and Emerald. Emerald is a modular
+            framework from Informal Systems for building EVM-compatible PoA consensus
+            networks using Malachite and the Reth client, achieving up to 9200 TPS
+            and facilitating custom decentralized networks. These improvements improve
+            compatibility with the Ethereum ecosystem and simplify integration for
+            developers, especially in Cosmos, while meeting the needs for high performance
+            and easy maintenance. 3⃣ @POSTHUMAN_DVS announces the transfer of 20%
+            of validator income for the period January 5–19, 2026 to the Astropot
+            Liquidity SubDAO treasury. 4⃣ @cryptodungeonma announces improvements
+            to the Dungeon App, including browser bug fixes, full IBC enablement for
+            inter-blockchain communication, and iPad optimizations, making it easier
+            to access the Cosmos ecosystem. It mentions upcoming connections to the
+            project’s DEX and Backbone Labs, accelerating the development of P2E games
+            and trading. 5⃣ @circle announces a partnership with Coinbase to support
+            the government of Bermuda in building the first fully blockchain-based
+            national economy, focusing on expanding access to USDC and digital education.
+            The initiative includes a nationwide on-chain payments and finance infrastructure
+            that could position Bermuda as a global leader in crypto integration into
+            government services. 6⃣ JP Mullin announces the completion of the migration
+            of the OM token from Ethereum to the @MANTRA_Chain mainnet over a period
+            of 450 days, with 94% of the ERC20 supply transferred to over 63,000 wallets
+            through 68,000 transactions. 7⃣ @RujiraNetwork reminds $NAMI holders to
+            convert their tokens to $RUJI before March 22, 2026, as the conversion
+            rate decreases linearly after October 2025 to incentivize quick action.
+            The merge process offers an initial rate of 0.013 RUJI per NAMI with bonus
+            rewards for holding in the contract, and uncollected tokens from the team
+            are transferred to the community for greater equalization. 8⃣ @hydro_fi
+            reaches over 231,000 $yINJ minted since launch. 9⃣ @dYdX `s new launchable
+            Market: $ROSE @OasisProtocol . Also dYdX announces the first Affiliate
+            Booster Program for 2026, with a prize pool of 100,000 USDC for real trading
+            volumes generated by new users. 🔟 @THORChain `s latest highlights: ✔️Thorwallet
+            $TITN airdrop is now live. ✔️@Maya_Protocol 2026 priorities are live and
+            include Ragnarok of Kujira, Aztec launch, Maya''s App Layer and $MAYA
+            token pool. ✔️@vultisig developers now have direct access to MPC vault
+            functionality: create vaults, sign transactions, estimate gas, and execute
+            swaps using MPC directly in the application. ✔️@mocadotapp The Moca beta
+            app is launching soon. 1⃣1⃣ @HelixMarkets weekly Market review - trading
+            volume hit $309M, pushing cumulative volume to $74.8B. 7D Gainers on Helix
+            $TALIS +14.30%, $DOJO +11.40%, $KAVA +2.90% 1⃣2⃣ @Fetch_ai shares an article
+            about the launch of FetchCoder V2 – an AI tool for coding autonomous agents,
+            integrated with Web3 and focused on safety: 1⃣3⃣ @nansen_ai is now a validator
+            on @pharos_network . 1⃣4⃣ Sei Network `s "Market Infrastructure Grid"
+            key components include connections to 235 million users through exchanges
+            like Binance and OKX, tokenized assets, real-time data from Chainlink,
+            and built-in wallets for easy integration. 1⃣5⃣ @monad announces the launch
+            of TrendleFi on the Monad blockchain. TrendleFi requires an invitation
+            to access and focuses on trading memes, events, and personalitie. 1⃣6⃣
+            @SwapKitPowered announces that Sui''s integration into the SwapKit ecosystem
+            is underway, enabling cross-chain swaps of $SUI via NEAR Intents, connecting
+            @SuiNetwork to over 30 blockchains such as Bitcoin, Ethereum, and Solana
+            without bridges or intermediaries. 1⃣7⃣ @injective `s governance proposal
+            to begin the next phase of $INJ has passed with 99.89% of community members
+            voting YES. ⚛️NFT Spotlights 🌌 1⃣ @AAAMetaHuahua announces a weekly giveaway
+            for owners on Discord via bot, with an NFT prize from @CreepCompanions
+            : 2⃣ @zombSEIS shares that there are two giveaways on Discord for Horde
+            Lord and Zuits, available after verification: 3⃣ @synthtopiaworld announces
+            a collaboration between SYNTHTOPIA and TMK: THE MONEY KIDS for a limited
+            collection of custom NFTs focused on culture and identity, exclusively
+            on @cryptocomnft and @cronos_chain . The activation includes two sweepstakes:
+            the first for 100 minters with prizes of custom NFTs (verified by ownership
+            of a SYNTHTOPIA NFT), and the second community sweepstakes in X with RT,
+            like, follow, and tag 5 friends for SYNTHTOPIA and TMK GEN3 NFTs, with
+            a deadline of February 15th. 🌐 Details: 4⃣ @Element_Market summarizes
+            the weekly update for January 12-18, 2026, including a Discord giveaway,
+            trading data, and improvements to the Drops product. The data shows a
+            total of 4,051,584 active trading wallets, with 233 new ones added weekly,
+            highlighting the platform’s growth as the largest NFT marketplace on Layer
+            2 networks. New support for USDT payments on BNB Chain and a streamlined
+            Drops deployment process make it easier for users to access and manage
+            NFT releases. 5⃣ @cryptocomnft announces the launch of Phase 1 of the
+            Mad Hare Society NFT collection "Jak n Jil" mint on the NFT platform,
+            available only to allowlist holders from a previous poll, at a price of
+            $1 per NFT per wallet. The collection features characters – a green rabbit
+            in a prison uniform and a pink rabbit in a black outfit – entering "Mane
+            City", as part of the project''s broader universe, tied to partnerships
+            for in-game benefits. 🌐 Link: ⚛️Cosmos top 24h gainers XPLA $XPLA 13.3%
+            ⬆️ BitSong $BTSG 7.8% ⬆️ Gravity Bridge $GRAV 6.2% ⬆️'
+          created_at: ''
+          source: x.com/IvanM10529875/status/2013525774402285961
+          author:
+            id: '1455836712677134339'
+            username: IvanM10529875
+            name: CosmosBG Degen Fight Club⚛️☯️🏴‍☠️🧪⚡️ 🛰
+            verified: false
+            followers: 1936
+          engagement:
+            likes: 7
+            replies: 2
+            retweets: 4
+            quotes: 1
+            views: 172
+          type: tweet
+        - id: '2013483901616787873'
+          text: 🚀 Top Smart Contract Platform Coins by Market Cap Here’s a quick snapshot
+            of the leading smart contract platforms 📊 🔥 $BTC — Mc $1.84T | 24h -0.5%
+            — @Bitcoin 🤑 $ETH — Mc $383B | 24h -0.9% — @ethereum 😎 $BNB — Mc $126B
+            | 24h +0.1% — @BNBCHAIN 💸 $SOL — Mc $75.4B | 24h -0.2% — @solana 🎉 $TRX
+            — Mc $29.4B | 24h -2.7% — @trondao 🌐 $DOGE — Mc $21.5B | 24h +0.5% — @dogecoin
+            💼 $ADA — Mc $13.4B | 24h +0.7% — @Cardano 📈 $BCH — Mc $11.6B | 24h -1.3%
+            — @thebitcoincash_ 💰 $XMR — Mc $11.2B | 24h -0.6% — @monero 🏆 $XLM — Mc
+            $6.99B | 24h +0.1% — @StellarOrg 💬 Which smart contract platform do you
+            think will dominate the next cycle and why?
+          created_at: ''
+          source: x.com/_TokenHunter/status/2013483901616787873
+          author:
+            id: '1310130190266241024'
+            username: _TokenHunter
+            name: TokenHunter
+            verified: false
+            followers: 176962
+          engagement:
+            likes: 18
+            replies: 6
+            retweets: 6
+            quotes: 0
+            views: 1908
+          type: tweet
+        - id: '2013412331263533439'
+          text: 1.20梭哈晨报： 兜兜转转行情又沉浸下去了，多看少动吧，这个行情好难，目标是在股市活下去😧。 1. $BTC 至少目前下跌没有收回去，静静看看吧，整体都还是山寨行情，尤其是妖币横行；
+            2. $ETH 跌破3200了，看看情况呗，毕竟一直有买量，虽然大家都在嘲讽理华，但是理华还是水上呀； 3. $SOL 不知道该说点什么，本来链上行为复苏了，但是大家好像都用稳定币炒meme不用s了；
+            4.BitMine 再次质押 86,848 枚 ETH，价值 2.794 亿美元； 大哥继续质押，继续买； 5.今日CME“美联储观察”数据：1月维持利率不变的概率为95%；
+            6.Arkham 分析师：疑似不丹 Druk Holdings 相关地址正在进行高杠杆做多 ETH 操作； 7.40 年期日本国债收益率自
+            2007 年推出以来首次突破 4%； 市场预期日本央行将维持利率不变，交易员聚焦外汇干预风险； 8.委内瑞拉市场 USDT 兑玻利瓦尔价格自
+            1 月 7 日 起持续下跌，累计回落约 40%； 9.NFT 交易平台 Magic Eden 宣布将把 15% 的平台总收入注入 ME 代币生态。其中，50%
+            用于回购 ME； 都要跌归零了，才开始想要回购，炒币吗？ 10.美联储独立性面临挑战，鲍威尔据悉将出庭力挺库克； 11.PumpFun 推出
+            Pump Fund，启动 300 万美元 Build in Public Hackathon； 看得出来想要借机拉盘 $PUMP ，看看先吧；
+            12.德国智库研究称，美国关税成本约 96% 由本国消费者和进口商承担； 羊毛出在羊身上的道理，其实大家都懂； 13.百慕大政府宣布与 Coinbase、Circle
+            合作探索链上经济模式； 14.市场消息：Coinbase 拟推出定制稳定币，允许企业发行 1:1 支持的数字美元； 15.Revolut申请秘鲁银行牌照，加速拉美扩张步伐；
+            16.Cointelegraph 报道：Coinbase 溢价差创 12 个月新低源于美国巨鲸抛售，与比特币现货 ETF 关系不大； 17.YZi
+            Labs 推出全年制 EASY Residency 第三季创业孵化计划； 只要你市值足够的低，总是能一揽子概括进来的； 18.市场消息：纽约证券交易所将推出
+            24/7 全天候交易服务； 打赢crypto交易所的，可能是别圈子的交易所吗？ 19.隐私匿名赛道仍然是最火的赛道，妖币横行； ------------
+            还是那句话，只追高不抄底，至少追高你不需要考虑怎么tmd天天跌，最多止损了，然后拉起来继续追就行了。 这个市场就好像是追龙一样，天天想着砍龙，没劲的。
+          created_at: ''
+          source: x.com/hellosuoha/status/2013412331263533439
+          author:
+            id: '1401718840535379970'
+            username: hellosuoha
+            name: 梭教授说
+            verified: false
+            followers: 175950
+          engagement:
+            likes: 24
+            replies: 10
+            retweets: 1
+            quotes: 0
+            views: 6452
+          type: tweet
+        - id: '2013379109208879503'
+          text: you're a criminal or someone being persecuted by the state and you
+            need to hide your money if you could store and transact with BTC, ETH,
+            SOL, and stablecoins entirely privately on the Bitcoin, Ethereum, and
+            Solana networks... would you choose that over holding $ZEC or $XMR?
+          created_at: Mon Jan 19 22:32:41 +0000 2026
+          source: x.com/mtndrew/status/2013379109208879503
+          author:
+            id: '179656739'
+            username: mtndrew
+            name: mtn drew
+            verified: false
+            followers: 2793
+          engagement:
+            likes: 0
+            replies: 1
+            retweets: 0
+            quotes: 0
+            views: 91
+          type: tweet
+        - id: '2013367694528258554'
+          text: 'NYSE Prepares Tokenized Securities Platform – Beneficiary Stocks
+            & Tokens - ICE previously launched Bakkt, an institutional Bitcoin platform,
+            which ultimately failed. Since then, however, ICE has continued to pursue
+            crypto/blockchain-related new businesses, including a $2bn investment
+            in the Polymarket prediction market and initiatives around RWA tokenization
+            platforms. - The NYSE stated that the platform will have the “capability
+            to support multiple blockchains for settlement and custody,” but it has
+            not yet disclosed which blockchains will be supported. - Potential candidates
+            include Ethereum, Solana, or a permissioned private blockchain. The Canton
+            Network, which has recently partnered with DTCC and Nasdaq, could also
+            be a contender. - Beneficiary stocks: ICE (parent company of the NYSE),
+            Robinhood, Coinbase (brokerages), Circle (stablecoin issuer), BNY Mellon,
+            Citi (banking partners). - Beneficiary tokens: Chainlink (oracle), Ethereum,
+            Solana, Canton (mainnet), assuming adoption. - In the crypto space, Hyperliquid
+            is currently a leading player in RWA tokenization trading, but increased
+            participation by U.S. institutions could be negative for it. That said,
+            due to demand related to KYC/AML circumvention, airdrops, arbitrage, and
+            tax avoidance, crypto-native RWA DEXs—including Hyperliquid—are unlikely
+            to disappear. - Since crypto fundamentals and token prices often move
+            independently, this should be taken as reference only. - On-chain tokenization
+            of real-world assets will accelerate the demise of altcoins. Going forward,
+            who will still trade altcoins?'
+          created_at: Mon Jan 19 21:47:19 +0000 2026
+          source: x.com/BTCThinker88/status/2013367694528258554
+          author:
+            id: '1322453807293325312'
+            username: BTCThinker88
+            name: jayhan88
+            verified: false
+            followers: 2288
+          engagement:
+            likes: 1
+            replies: 0
+            retweets: 0
+            quotes: 0
+            views: 61
+          type: tweet
+        - id: '2013347451277844668'
+          text: 'RT @nic_carter: quantum resilience is a clear priority for ethereum
+            (and solana, and, and). bitcoin devs still pretending "no one technical…'
+          created_at: Mon Jan 19 20:26:53 +0000 2026
+          source: x.com/R89Capital/status/2013347451277844668
+          author:
+            id: '1458910555209547782'
+            username: R89Capital
+            name: Rex
+            verified: false
+            followers: 77463
+          engagement:
+            likes: 261
+            replies: 52
+            retweets: 22
+            quotes: 6
+            views: 0
+          type: tweet
+        - id: '2013336480224006641'
+          text: Tradfi will just use private chains Maybe they will settle some data
+            on Ethereum or Solana, maybe even Bitcoin. Honestly kinda hard to see
+            the value of Crypto outside of SOV Which leaves only $BTC $ZEC tbh
+          created_at: Mon Jan 19 19:43:17 +0000 2026
+          source: x.com/Credib1eGuy/status/2013336480224006641
+          author:
+            id: '1105987365309304832'
+            username: Credib1eGuy
+            name: Guy
+            verified: false
+            followers: 24214
+          engagement:
+            likes: 97
+            replies: 30
+            retweets: 2
+            quotes: 1
+            views: 17721
+          type: tweet
     description: Natural language query to search for crypto mentions
     status: success
+    elapsed_time: 23.879818439483643
   search_account_tool:
     input:
       tool: search_account
@@ -547,407 +1084,637 @@ results:
       query: Analyze account using tool arguments
     output:
       response: ''
-      data: &id001
+      data:
         status: success
         data:
-          account_stats:
+          account_stats: &id001
             success: true
             data:
               smartFollowingCount: 0
-              averageEngagement: 0.474343398425539
-              averageReach: 16007.666666666666
-              smartFollowerCount: 140
-              followerCount: 33747
+              averageEngagement: 0.1897313067991405
+              averageReach: 6416.333333333333
+              smartFollowerCount: 146
+              followerCount: 33818
           mentions:
-            success: true
-            data:
-            - tweetId: '1965694070220607970'
-              likeCount: 0
-              repostCount: 1
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-10T08:29:21+00:00'
-              type: repost
-              account:
-                username: fundbrah
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1965603626828923249'
-              likeCount: 4
-              repostCount: 1
-              viewCount: 204
-              quoteCount: 0
-              replyCount: 1
-              bookmarkCount: 0
-              mentionedAt: '2025-09-10T02:29:58+00:00'
-              type: post
-              account:
-                username: fundbrah
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1965599258385809466'
-              likeCount: 0
-              repostCount: 15
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-10T02:12:36+00:00'
-              type: repost
-              account:
-                username: artoriatech
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1965599258385809466'
-              likeCount: 0
-              repostCount: 15
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-10T02:12:36+00:00'
-              type: repost
-              account:
-                username: artoriatech
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1965448361286484312'
-              likeCount: 55
-              repostCount: 15
-              viewCount: 25445
-              quoteCount: 1
-              replyCount: 21
-              bookmarkCount: 2
-              mentionedAt: '2025-09-09T16:13:00+00:00'
-              type: note
-              account:
-                username: carv_official
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1965448361286484312'
-              likeCount: 56
-              repostCount: 15
-              viewCount: 25572
-              quoteCount: 1
-              replyCount: 21
-              bookmarkCount: 2
-              mentionedAt: '2025-09-09T16:13:00+00:00'
-              type: note
-              account:
-                username: carv_official
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1964585494425325880'
-              likeCount: 114
-              repostCount: 0
-              viewCount: 12544
-              quoteCount: 18
-              replyCount: 108
-              bookmarkCount: 0
-              mentionedAt: '2025-09-07T07:04:16+00:00'
-              type: quote
-              account:
-                username: MEJ50749
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1964585494425325880'
-              likeCount: 116
-              repostCount: 1
-              viewCount: 12956
-              quoteCount: 18
-              replyCount: 108
-              bookmarkCount: 0
-              mentionedAt: '2025-09-07T07:04:16+00:00'
-              type: quote
-              account:
-                username: MEJ50749
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1964055863897051510'
-              likeCount: 124
-              repostCount: 16
-              viewCount: 16989
-              quoteCount: 4
-              replyCount: 25
-              bookmarkCount: 3
-              mentionedAt: '2025-09-05T19:59:43+00:00'
-              type: post
-              account:
-                username: JoinSapien
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1964055863897051510'
-              likeCount: 134
-              repostCount: 16
-              viewCount: 22193
-              quoteCount: 6
-              replyCount: 29
-              bookmarkCount: 3
-              mentionedAt: '2025-09-05T19:59:43+00:00'
-              type: post
-              account:
-                username: JoinSapien
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1963417245792833579'
-              likeCount: 0
-              repostCount: 3
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-04T01:42:04+00:00'
-              type: repost
-              account:
-                username: artoriatech
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1963417245792833579'
-              likeCount: 0
-              repostCount: 3
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-04T01:42:04+00:00'
-              type: repost
-              account:
-                username: artoriatech
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1963417245792833579'
-              likeCount: 0
-              repostCount: 3
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-04T01:42:04+00:00'
-              type: repost
-              account:
-                username: artoriatech
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1963279233113002407'
-              likeCount: 14
-              repostCount: 3
-              viewCount: 682
-              quoteCount: 0
-              replyCount: 2
-              bookmarkCount: 0
-              mentionedAt: '2025-09-03T16:33:39+00:00'
-              type: quote
-              account:
-                username: AlexprimeOO1
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1963279233113002407'
-              likeCount: 14
-              repostCount: 3
-              viewCount: 816
-              quoteCount: 0
-              replyCount: 2
-              bookmarkCount: 0
-              mentionedAt: '2025-09-03T16:33:39+00:00'
-              type: quote
-              account:
-                username: AlexprimeOO1
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1963279233113002407'
-              likeCount: 14
-              repostCount: 3
-              viewCount: 821
-              quoteCount: 0
-              replyCount: 2
-              bookmarkCount: 0
-              mentionedAt: '2025-09-03T16:33:39+00:00'
-              type: quote
-              account:
-                username: AlexprimeOO1
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 1
-              text: null
-            - tweetId: '1962728408934424591'
-              likeCount: 3
-              repostCount: 0
-              viewCount: 182
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-02T04:04:53+00:00'
-              type: post
-              account:
-                username: Agent_YP
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1962727185862607312'
-              likeCount: 68
-              repostCount: 23
-              viewCount: 28045
-              quoteCount: 1
-              replyCount: 76
-              bookmarkCount: 2
-              mentionedAt: '2025-09-02T04:00:01+00:00'
-              type: quote
-              account:
-                username: carv_official
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1962727185862607312'
-              likeCount: 68
-              repostCount: 23
-              viewCount: 28175
-              quoteCount: 1
-              replyCount: 76
-              bookmarkCount: 2
-              mentionedAt: '2025-09-02T04:00:01+00:00'
-              type: quote
-              account:
-                username: carv_official
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
-            - tweetId: '1962419991166513350'
-              likeCount: 0
-              repostCount: 56
-              viewCount: 0
-              quoteCount: 0
-              replyCount: 0
-              bookmarkCount: 0
-              mentionedAt: '2025-09-01T07:39:20+00:00'
-              type: repost
-              account:
-                username: artoriatech
-                isVerified: false
-              repostBreakdown:
-                smart: 0
-                ct: 0
-              text: null
+          - id: '2013422899537817790'
+            text: 'RT @zauthx402: Proud to verify and work with @heurist_ai! Heurist
+              Mesh connects AI to crypto-native expertise through specialized agents…'
+            created_at: ''
+            source: x.com/KingsAdvisory/status/2013422899537817790
+            author:
+              id: '1686909055573368832'
+              username: KingsAdvisory
+              name: KING
+              verified: false
+              followers: 54872
+            engagement:
+              likes: 68
+              replies: 9
+              retweets: 17
+              quotes: 2
+              views: 0
+            type: tweet
+          - id: '2013408816143180213'
+            text: Proud to verify and work with @heurist_ai! Heurist Mesh connects
+              AI to crypto-native expertise through specialized agents and curated
+              data. They provide composable agents, instant API + MCP access, and
+              LLM-optimized execution with fewer calls and cleaner outputs. agents
+              + tools + payments + trust = a real crypto-native intelligence layer
+            created_at: ''
+            source: x.com/zauthx402/status/2013408816143180213
+            author:
+              id: '1995050043091595264'
+              username: zauthx402
+              name: zauth
+              verified: false
+              followers: 2501
+            engagement:
+              likes: 68
+              replies: 9
+              retweets: 17
+              quotes: 2
+              views: 2296
+            type: tweet
+          - id: '2013285523259797615'
+            text: 'RT @Heu_intern: Truly this is a game changer and more for projects
+              like @heurist_ai The New Ethereum upgrade drops soon, this makes crypto…'
+            created_at: Mon Jan 19 16:20:48 +0000 2026
+            source: x.com/artoriatech/status/2013285523259797615
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 7
+              replies: 0
+              retweets: 4
+              quotes: 0
+              views: 0
+            type: tweet
+          - id: '2013161056080744655'
+            text: 'RT @awenetwork_ai: 🔉 AWESOME TALK 3# ERC-8004 is nearing mainnet.
+              In this AMA, we’ll discuss current progress around 8004, what mainnet
+              un…'
+            created_at: Mon Jan 19 08:06:13 +0000 2026
+            source: x.com/artoriatech/status/2013161056080744655
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 36
+              replies: 6
+              retweets: 5
+              quotes: 0
+              views: 0
+            type: tweet
+          - id: '2013113570528231508'
+            text: '🔉 AWESOME TALK 3# ERC-8004 is nearing mainnet. In this AMA, we’ll
+              discuss current progress around 8004, what mainnet unlocks, and what’s
+              next alongside x402 and emerging agent workflows. Join us to hear what’s
+              real, what’s coming, and how builders are preparing! ⏰ 14:00 UTC, Jan
+              20 🔗 🎙️ Host: Jennie, MKT lead @awenetwork_ai 👥 Speaker: 🔹 Dr Daoist
+              @Dr_Daoist | Product Lead @awenetwork_ai 🔹 Kenk @0xKenk | Eco & MKT
+              Lead @elizaOS 🔹 Yi @drtwo101 | Founder & CEO @codatta_io 🔹 JW @artoriatech
+              | Founder @heurist_ai'
+            created_at: Mon Jan 19 04:57:31 +0000 2026
+            source: x.com/awenetwork_ai/status/2013113570528231508
+            author:
+              id: '1115345843664629760'
+              username: awenetwork_ai
+              name: AWE
+              verified: false
+              followers: 81626
+            engagement:
+              likes: 36
+              replies: 6
+              retweets: 5
+              quotes: 0
+              views: 44724
+            type: tweet
+          - id: '2013037136535036073'
+            text: Great resource on ERC 8004 from the good folks at @heurist_ai! Educate
+              yourself and thank me later
+            created_at: Sun Jan 18 23:53:48 +0000 2026
+            source: x.com/organ_danny/status/2013037136535036073
+            author:
+              id: '2934078938'
+              username: organ_danny
+              name: Danny Organ
+              verified: false
+              followers: 1853
+            engagement:
+              likes: 10
+              replies: 1
+              retweets: 1
+              quotes: 0
+              views: 1005
+            type: tweet
+          - id: '2011662975619514369'
+            text: $HEU AI is purpose built for crypto and blockchain from the trenches
+              to on-chain agents. Few models out there can even touch the depth of
+              analysis needed in this space. With recent data showing over 29 million
+              total crypto tokens across all chains (and that number exploding thanks
+              to easy launches on Solana/Base/etc.), most AI just chokes on the noise.
+              But ask @heurist_ai about any of them, deep dives, on chain insights,
+              tokenomics breakdowns, agent-powered research, you name it.
+            created_at: ''
+            source: x.com/Degen_Hardy/status/2011662975619514369
+            author:
+              id: '59989980'
+              username: Degen_Hardy
+              name: Hardy
+              verified: false
+              followers: 74223
+            engagement:
+              likes: 79
+              replies: 42
+              retweets: 13
+              quotes: 0
+              views: 8767
+            type: tweet
+          - id: '2011558680383406107'
+            text: Curious what all these projects are up to? Ask @heurist_ai and get
+              a brief update of 10 projects and their tokens in one chat
+            created_at: Wed Jan 14 21:58:57 +0000 2026
+            source: x.com/artoriatech/status/2011558680383406107
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 5
+              replies: 2
+              retweets: 1
+              quotes: 0
+              views: 247
+            type: tweet
+          - id: '2011465312697557360'
+            text: 'RT @ContangoDigital: 8/ @heurist_ai Heurist provides full-stack
+              infrastructure for deploying and coordinating AI agents.'
+            created_at: Wed Jan 14 15:47:56 +0000 2026
+            source: x.com/dippy_eth/status/2011465312697557360
+            author:
+              id: '1387796428257431557'
+              username: dippy_eth
+              name: Dippy.eth
+              verified: false
+              followers: 41693
+            engagement:
+              likes: 29
+              replies: 73
+              retweets: 6
+              quotes: 2
+              views: 0
+            type: tweet
+          - id: '2011459364914393496'
+            text: 'RT @contangojosh: Through our DeAI venture fund we have backed
+              a lot of great founders building on @base Teams like @JoinSapien @gizatech…'
+            created_at: Wed Jan 14 15:24:18 +0000 2026
+            source: x.com/artoriatech/status/2011459364914393496
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 5
+              replies: 0
+              retweets: 1
+              quotes: 0
+              views: 0
+            type: tweet
+          - id: '2011447625749299243'
+            text: Through our DeAI venture fund we have backed a lot of great founders
+              building on @base Teams like @JoinSapien @gizatechxyz @Sogni_Protocol
+              @tigfoundation @heurist_ai @AskBillyBets All of these teams decided
+              to build on Base because of the flywheel effects of joining an ecosystem
+              designed to support its builders. We wanted to take a moment to highlight
+              this ecosystem of Onchain AI, and the teams building it on @base
+            created_at: Wed Jan 14 14:37:39 +0000 2026
+            source: x.com/contangojosh/status/2011447625749299243
+            author:
+              id: '1450802279053938709'
+              username: contangojosh
+              name: Joshua | Contango Digital
+              verified: false
+              followers: 3147
+            engagement:
+              likes: 5
+              replies: 0
+              retweets: 1
+              quotes: 0
+              views: 317
+            type: tweet
+          - id: '2011442598360330323'
+            text: 8/ @heurist_ai Heurist provides full-stack infrastructure for deploying
+              and coordinating AI agents.
+            created_at: Wed Jan 14 14:17:40 +0000 2026
+            source: x.com/ContangoDigital/status/2011442598360330323
+            author:
+              id: '317093688'
+              username: ContangoDigital
+              name: Contango Digital Assets
+              verified: false
+              followers: 4357
+            engagement:
+              likes: 29
+              replies: 73
+              retweets: 6
+              quotes: 2
+              views: 2595
+            type: reply
+          - id: '2011408767426916610'
+            text: 'Solana flips Base for the first time ever in daily on-chain x402
+              transactions! On Jan 11: @solana 518K txs vs @base 505K, momentum shifting
+              thanks to 400ms finality + ~$0.00025 fees! While Base led cumulative
+              tx count historically, Solana is closing the gap fast and leading in
+              real value flow. Top facilitators snapshot (Jan 12) - @PayAINetwork
+              : 372.6K txs (dominating recent spikes) - @dexteraisol : 323.6K txs
+              (super close 2nd, strong momentum) - @coinbase: 59.8K txs (still top
+              3 but share declining) - @heurist_ai : 24.2K AI agents are choosing
+              speed + low cost, Solana''s winning the agent economy race! Data: @artemis'
+            created_at: Wed Jan 14 12:03:14 +0000 2026
+            source: x.com/solana_stream/status/2011408767426916610
+            author:
+              id: '1878408505784414208'
+              username: solana_stream
+              name: Solana Stream
+              verified: false
+              followers: 11068
+            engagement:
+              likes: 58
+              replies: 10
+              retweets: 11
+              quotes: 3
+              views: 3944
+            type: tweet
     description: Direct tool call to analyze @heurist_ai account
     status: success
+    elapsed_time: 10.321350574493408
   search_account_query:
     input:
       query: Analyze the Twitter account @heurist_ai and show me their recent activity
     output:
-      response: 'The Twitter account @heurist_ai has a follower count of 33,747, with
-        140 smart followers. Their average engagement rate is 0.47% and average reach
-        is 16,007.67.
-
-
-        Here''s a summary of their recent activity:
-
-
-        **September 10, 2025:**
-
-        *   Reposted content from @fundbrah.
-
-        *   Posted content from @fundbrah, receiving 4 likes, 1 reply, 1 repost, and
-        204 views.
-
-        *   Reposted content from @artoriatech (twice).
-
-
-        **September 9, 2025:**
-
-        *   Posted a note from @carv_official, receiving 55-56 likes, 2 bookmarks,
-        1 quote, 21 replies, 15 reposts, and 25,445-25,572 views.
-
-
-        **September 7, 2025:**
-
-        *   Quoted content from @MEJ50749, receiving 114-116 likes, 18 quotes, 108
-        replies, 0-1 reposts, and 12,544-12,956 views.
-
-
-        **September 5, 2025:**
-
-        *   Posted content from @JoinSapien, receiving 124-134 likes, 3 bookmarks,
-        4-6 quotes, 25-29 replies, 16 reposts, and 16,989-22,193 views.
-
-
-        **September 4, 2025:**
-
-        *   Reposted content from @artoriatech (three times).
-
-
-        **September 3, 2025:**
-
-        *   Quoted content from @AlexprimeOO1, receiving 14 likes, 2 replies, 3 reposts,
-        and 682-821 views (three times).
-
-
-        **September 2, 2025:**
-
-        *   Posted content from @Agent_YP, receiving 3 likes and 182 views.
-
-        *   Quoted content from @carv_official, receiving 68 likes, 2 bookmarks, 1
-        quote, 76 replies, 23 reposts, and 28,045-28,175 views (twice).
-
-
-        **September 1, 2025:**
-
-        *   Reposted content from @artoriatech.'
-      data: *id001
+      response: "Here's an analysis of @heurist_ai's recent Twitter activity based\
+        \ on the provided data:\n\n**Account Statistics for @heurist_ai:**\n*   **Follower\
+        \ Count:** 33,818\n*   **Smart Follower Count:** 146\n*   **Smart Following\
+        \ Count:** 0\n*   **Average Engagement:** 0.19%\n*   **Average Reach:** 6,416\n\
+        \n**Recent Mentions of @heurist_ai:**\n\n1.  **Mention by @KingsAdvisory (RT\
+        \ of @zauthx402)**\n    *   **Text:** \"RT @zauthx402: Proud to verify and\
+        \ work with @heurist_ai! Heurist Mesh connects AI to crypto-native expertise\
+        \ through specialized agents…\"\n    *   **Engagement:** 68 likes, 9 replies,\
+        \ 17 retweets, 2 quotes, 0 views\n    *   **Date:** Not available\n\n2.  **Mention\
+        \ by @zauthx402**\n    *   **Text:** \"Proud to verify and work with @heurist_ai!\
+        \ Heurist Mesh connects AI to crypto-native expertise through specialized\
+        \ agents and curated data. They provide composable agents, instant API + MCP\
+        \ access, and LLM-optimized execution with fewer calls and cleaner outputs.\
+        \ agents + tools + payments + trust = a real crypto-native intelligence layer\"\
+        \n    *   **Engagement:** 68 likes, 9 replies, 17 retweets, 2 quotes, 2,296\
+        \ views\n    *   **Date:** Not available\n\n3.  **Mention by @artoriatech\
+        \ (RT of @Heu_intern)**\n    *   **Text:** \"RT @Heu_intern: Truly this is\
+        \ a game changer and more for projects like @heurist_ai The New Ethereum upgrade\
+        \ drops soon, this makes crypto…\"\n    *   **Engagement:** 7 likes, 0 replies,\
+        \ 4 retweets, 0 quotes, 0 views\n    *   **Date:** Mon Jan 19 16:20:48 +0000\
+        \ 2026\n\n4.  **Mention by @artoriatech (RT of @awenetwork_ai)**\n    *  \
+        \ **Text:** \"RT @awenetwork_ai: \U0001F509 AWESOME TALK 3# ERC-8004 is nearing\
+        \ mainnet. In this AMA, we’ll discuss current progress around 8004, what mainnet\
+        \ un…\"\n    *   **Engagement:** 36 likes, 6 replies, 5 retweets, 0 quotes,\
+        \ 0 views\n    *   **Date:** Mon Jan 19 08:06:13 +0000 2026\n\n5.  **Mention\
+        \ by @awenetwork_ai**\n    *   **Text:** \"\U0001F509 AWESOME TALK 3# ERC-8004\
+        \ is nearing mainnet. In this AMA, we’ll discuss current progress around 8004,\
+        \ what mainnet unlocks, and what’s next alongside x402 and emerging agent\
+        \ workflows. Join us to hear what’s real, what’s coming, and how builders\
+        \ are preparing! ⏰ 14:00 UTC, Jan 20 \U0001F517 \U0001F399️ Host: Jennie,\
+        \ MKT lead @awenetwork_ai \U0001F465 Speaker: \U0001F539 Dr Daoist @Dr_Daoist\
+        \ | Product Lead @awenetwork_ai \U0001F539 Kenk @0xKenk | Eco & MKT Lead @elizaOS\
+        \ \U0001F539 Yi @drtwo101 | Founder & CEO @codatta_io \U0001F539 JW @artoriatech\
+        \ | Founder @heurist_ai\"\n    *   **Engagement:** 36 likes, 6 replies, 5\
+        \ retweets, 0 quotes, 44,724 views\n    *   **Date:** Mon Jan 19 04:57:31\
+        \ +0000 2026\n\n6.  **Mention by @organ_danny**\n    *   **Text:** \"Great\
+        \ resource on ERC 8004 from the good folks at @heurist_ai! Educate yourself\
+        \ and thank me later\"\n    *   **Engagement:** 10 likes, 1 reply, 1 retweet,\
+        \ 0 quotes, 1,005 views\n    *   **Date:** Sun Jan 18 23:53:48 +0000 2026\n\
+        \n7.  **Mention by @Degen_Hardy**\n    *   **Text:** \"$HEU AI is purpose\
+        \ built for crypto and blockchain from the trenches to on-chain agents. Few\
+        \ models out there can even touch the depth of analysis needed in this space.\
+        \ With recent data showing over 29 million total crypto tokens across all\
+        \ chains (and that number exploding thanks to easy launches on Solana/Base/etc.),\
+        \ most AI just chokes on the noise. But ask @heurist_ai about any of them,\
+        \ deep dives, on chain insights, tokenomics breakdowns, agent-powered research,\
+        \ you name it.\"\n    *   **Engagement:** 79 likes, 42 replies, 13 retweets,\
+        \ 0 quotes, 8,767 views\n    *   **Date:** Not available\n\n8.  **Mention\
+        \ by @artoriatech**\n    *   **Text:** \"Curious what all these projects are\
+        \ up to? Ask @heurist_ai and get a brief update of 10 projects and their tokens\
+        \ in one chat\"\n    *   **Engagement:** 5 likes, 2 replies, 1 retweet, 0\
+        \ quotes, 247 views\n    *   **Date:** Wed Jan 14 21:58:57 +0000 2026\n\n\
+        9.  **Mention by @dippy_eth (RT of @ContangoDigital)**\n    *   **Text:**\
+        \ \"RT @ContangoDigital: 8/ @heurist_ai Heurist provides full-stack infrastructure\
+        \ for deploying and coordinating AI agents.\"\n    *   **Engagement:** 29\
+        \ likes, 73 replies, 6 retweets, 2 quotes, 0 views\n    *   **Date:** Wed\
+        \ Jan 14 15:47:56 +0000 2026\n\n10. **Mention by @artoriatech (RT of @contangojosh)**\n\
+        \    *   **Text:** \"RT @contangojosh: Through our DeAI venture fund we have\
+        \ backed a lot of great founders building on @base Teams like @JoinSapien\
+        \ @gizatech…\"\n    *   **Engagement:** 5 likes, 0 replies, 1 retweet, 0 quotes,\
+        \ 0 views\n    *   **Date:** Wed Jan 14 15:24:18 +0000 2026\n\n11. **Mention\
+        \ by @contangojosh**\n    *   **Text:** \"Through our DeAI venture fund we\
+        \ have backed a lot of great founders building on @base Teams like @JoinSapien\
+        \ @gizatechxyz @Sogni_Protocol @tigfoundation @heurist_ai @AskBillyBets All\
+        \ of these teams decided to build on Base because of the flywheel effects\
+        \ of joining an ecosystem designed to support its builders. We wanted to take\
+        \ a moment to highlight this ecosystem of Onchain AI, and the teams building\
+        \ it on @base\"\n    *   **Engagement:** 5 likes, 0 replies, 1 retweet, 0\
+        \ quotes, 317 views\n    *   **Date:** Wed Jan 14 14:37:39 +0000 2026\n\n\
+        12. **Mention by @ContangoDigital**\n    *   **Text:** \"8/ @heurist_ai Heurist\
+        \ provides full-stack infrastructure for deploying and coordinating AI agents.\"\
+        \n    *   **Engagement:** 29 likes, 73 replies, 6 retweets, 2 quotes, 2,595\
+        \ views\n    *   **Date:** Wed Jan 14 14:17:40 +0000 2026\n\n13. **Mention\
+        \ by @solana_stream**\n    *   **Text:** \"Solana flips Base for the first\
+        \ time ever in daily on-chain x402 transactions! On Jan 11: @solana 518K txs\
+        \ vs @base 505K, momentum shifting thanks to 400ms finality + ~$0.00025 fees!\
+        \ While Base led cumulative tx count historically, Solana is closing the gap\
+        \ fast and leading in real value flow. Top facilitators snapshot (Jan 12)\
+        \ - @PayAINetwork : 372.6K txs (dominating recent spikes) - @dexteraisol :\
+        \ 323.6K txs (super close 2nd, strong momentum) - @coinbase: 59.8K txs (still\
+        \ top 3 but share declining) - @heurist_ai : 24.2K AI agents are choosing\
+        \ speed + low cost, Solana's winning the agent economy race! Data: @artemis\"\
+        \n    *   **Engagement:** 58 likes, 10 replies, 11 retweets, 3 quotes, 3,944\
+        \ views\n    *   **Date:** Wed Jan 14 12:03:14 +0000 2026"
+      data:
+        status: success
+        data:
+          account_stats: *id001
+          mentions:
+          - id: '2013422899537817790'
+            text: 'RT @zauthx402: Proud to verify and work with @heurist_ai! Heurist
+              Mesh connects AI to crypto-native expertise through specialized agents…'
+            created_at: ''
+            source: x.com/KingsAdvisory/status/2013422899537817790
+            author:
+              id: '1686909055573368832'
+              username: KingsAdvisory
+              name: KING
+              verified: false
+              followers: 54872
+            engagement:
+              likes: 68
+              replies: 9
+              retweets: 17
+              quotes: 2
+              views: 0
+            type: tweet
+          - id: '2013408816143180213'
+            text: Proud to verify and work with @heurist_ai! Heurist Mesh connects
+              AI to crypto-native expertise through specialized agents and curated
+              data. They provide composable agents, instant API + MCP access, and
+              LLM-optimized execution with fewer calls and cleaner outputs. agents
+              + tools + payments + trust = a real crypto-native intelligence layer
+            created_at: ''
+            source: x.com/zauthx402/status/2013408816143180213
+            author:
+              id: '1995050043091595264'
+              username: zauthx402
+              name: zauth
+              verified: false
+              followers: 2501
+            engagement:
+              likes: 68
+              replies: 9
+              retweets: 17
+              quotes: 2
+              views: 2296
+            type: tweet
+          - id: '2013285523259797615'
+            text: 'RT @Heu_intern: Truly this is a game changer and more for projects
+              like @heurist_ai The New Ethereum upgrade drops soon, this makes crypto…'
+            created_at: Mon Jan 19 16:20:48 +0000 2026
+            source: x.com/artoriatech/status/2013285523259797615
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 7
+              replies: 0
+              retweets: 4
+              quotes: 0
+              views: 0
+            type: tweet
+          - id: '2013161056080744655'
+            text: 'RT @awenetwork_ai: 🔉 AWESOME TALK 3# ERC-8004 is nearing mainnet.
+              In this AMA, we’ll discuss current progress around 8004, what mainnet
+              un…'
+            created_at: Mon Jan 19 08:06:13 +0000 2026
+            source: x.com/artoriatech/status/2013161056080744655
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 36
+              replies: 6
+              retweets: 5
+              quotes: 0
+              views: 0
+            type: tweet
+          - id: '2013113570528231508'
+            text: '🔉 AWESOME TALK 3# ERC-8004 is nearing mainnet. In this AMA, we’ll
+              discuss current progress around 8004, what mainnet unlocks, and what’s
+              next alongside x402 and emerging agent workflows. Join us to hear what’s
+              real, what’s coming, and how builders are preparing! ⏰ 14:00 UTC, Jan
+              20 🔗 🎙️ Host: Jennie, MKT lead @awenetwork_ai 👥 Speaker: 🔹 Dr Daoist
+              @Dr_Daoist | Product Lead @awenetwork_ai 🔹 Kenk @0xKenk | Eco & MKT
+              Lead @elizaOS 🔹 Yi @drtwo101 | Founder & CEO @codatta_io 🔹 JW @artoriatech
+              | Founder @heurist_ai'
+            created_at: Mon Jan 19 04:57:31 +0000 2026
+            source: x.com/awenetwork_ai/status/2013113570528231508
+            author:
+              id: '1115345843664629760'
+              username: awenetwork_ai
+              name: AWE
+              verified: false
+              followers: 81626
+            engagement:
+              likes: 36
+              replies: 6
+              retweets: 5
+              quotes: 0
+              views: 44724
+            type: tweet
+          - id: '2013037136535036073'
+            text: Great resource on ERC 8004 from the good folks at @heurist_ai! Educate
+              yourself and thank me later
+            created_at: Sun Jan 18 23:53:48 +0000 2026
+            source: x.com/organ_danny/status/2013037136535036073
+            author:
+              id: '2934078938'
+              username: organ_danny
+              name: Danny Organ
+              verified: false
+              followers: 1853
+            engagement:
+              likes: 10
+              replies: 1
+              retweets: 1
+              quotes: 0
+              views: 1005
+            type: tweet
+          - id: '2011662975619514369'
+            text: $HEU AI is purpose built for crypto and blockchain from the trenches
+              to on-chain agents. Few models out there can even touch the depth of
+              analysis needed in this space. With recent data showing over 29 million
+              total crypto tokens across all chains (and that number exploding thanks
+              to easy launches on Solana/Base/etc.), most AI just chokes on the noise.
+              But ask @heurist_ai about any of them, deep dives, on chain insights,
+              tokenomics breakdowns, agent-powered research, you name it.
+            created_at: ''
+            source: x.com/Degen_Hardy/status/2011662975619514369
+            author:
+              id: '59989980'
+              username: Degen_Hardy
+              name: Hardy
+              verified: false
+              followers: 74223
+            engagement:
+              likes: 79
+              replies: 42
+              retweets: 13
+              quotes: 0
+              views: 8767
+            type: tweet
+          - id: '2011558680383406107'
+            text: Curious what all these projects are up to? Ask @heurist_ai and get
+              a brief update of 10 projects and their tokens in one chat
+            created_at: Wed Jan 14 21:58:57 +0000 2026
+            source: x.com/artoriatech/status/2011558680383406107
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 5
+              replies: 2
+              retweets: 1
+              quotes: 0
+              views: 247
+            type: tweet
+          - id: '2011465312697557360'
+            text: 'RT @ContangoDigital: 8/ @heurist_ai Heurist provides full-stack
+              infrastructure for deploying and coordinating AI agents.'
+            created_at: Wed Jan 14 15:47:56 +0000 2026
+            source: x.com/dippy_eth/status/2011465312697557360
+            author:
+              id: '1387796428257431557'
+              username: dippy_eth
+              name: Dippy.eth
+              verified: false
+              followers: 41693
+            engagement:
+              likes: 29
+              replies: 73
+              retweets: 6
+              quotes: 2
+              views: 0
+            type: tweet
+          - id: '2011459364914393496'
+            text: 'RT @contangojosh: Through our DeAI venture fund we have backed
+              a lot of great founders building on @base Teams like @JoinSapien @gizatech…'
+            created_at: Wed Jan 14 15:24:18 +0000 2026
+            source: x.com/artoriatech/status/2011459364914393496
+            author:
+              id: '1401949266'
+              username: artoriatech
+              name: JW (jay,dub)
+              verified: false
+              followers: 7252
+            engagement:
+              likes: 5
+              replies: 0
+              retweets: 1
+              quotes: 0
+              views: 0
+            type: tweet
+          - id: '2011447625749299243'
+            text: Through our DeAI venture fund we have backed a lot of great founders
+              building on @base Teams like @JoinSapien @gizatechxyz @Sogni_Protocol
+              @tigfoundation @heurist_ai @AskBillyBets All of these teams decided
+              to build on Base because of the flywheel effects of joining an ecosystem
+              designed to support its builders. We wanted to take a moment to highlight
+              this ecosystem of Onchain AI, and the teams building it on @base
+            created_at: Wed Jan 14 14:37:39 +0000 2026
+            source: x.com/contangojosh/status/2011447625749299243
+            author:
+              id: '1450802279053938709'
+              username: contangojosh
+              name: Joshua | Contango Digital
+              verified: false
+              followers: 3147
+            engagement:
+              likes: 5
+              replies: 0
+              retweets: 1
+              quotes: 0
+              views: 317
+            type: tweet
+          - id: '2011442598360330323'
+            text: 8/ @heurist_ai Heurist provides full-stack infrastructure for deploying
+              and coordinating AI agents.
+            created_at: Wed Jan 14 14:17:40 +0000 2026
+            source: x.com/ContangoDigital/status/2011442598360330323
+            author:
+              id: '317093688'
+              username: ContangoDigital
+              name: Contango Digital Assets
+              verified: false
+              followers: 4357
+            engagement:
+              likes: 29
+              replies: 73
+              retweets: 6
+              quotes: 2
+              views: 2595
+            type: reply
+          - id: '2011408767426916610'
+            text: 'Solana flips Base for the first time ever in daily on-chain x402
+              transactions! On Jan 11: @solana 518K txs vs @base 505K, momentum shifting
+              thanks to 400ms finality + ~$0.00025 fees! While Base led cumulative
+              tx count historically, Solana is closing the gap fast and leading in
+              real value flow. Top facilitators snapshot (Jan 12) - @PayAINetwork
+              : 372.6K txs (dominating recent spikes) - @dexteraisol : 323.6K txs
+              (super close 2nd, strong momentum) - @coinbase: 59.8K txs (still top
+              3 but share declining) - @heurist_ai : 24.2K AI agents are choosing
+              speed + low cost, Solana''s winning the agent economy race! Data: @artemis'
+            created_at: Wed Jan 14 12:03:14 +0000 2026
+            source: x.com/solana_stream/status/2011408767426916610
+            author:
+              id: '1878408505784414208'
+              username: solana_stream
+              name: Solana Stream
+              verified: false
+              followers: 11068
+            engagement:
+              likes: 58
+              replies: 10
+              retweets: 11
+              quotes: 3
+              views: 3944
+            type: tweet
     description: Natural language query to analyze @heurist_ai account activity
     status: success
+    elapsed_time: 17.933730602264404
   get_trending_tokens_tool:
     input:
       tool: get_trending_tokens
@@ -959,231 +1726,73 @@ results:
       data: &id002
         status: success
         data:
-          success: true
-          data:
-            total: 50
-            page: 1
-            pageSize: 50
-            data:
-            - token: btc
-              current_count: 875
-              previous_count: 592
-              change_percent: 47.8
-            - token: eth
-              current_count: 740
-              previous_count: 546
-              change_percent: 35.53
-            - token: sol
-              current_count: 560
-              previous_count: 503
-              change_percent: 11.33
-            - token: pump
-              current_count: 420
-              previous_count: 654
-              change_percent: -35.78
-            - token: base
-              current_count: 353
-              previous_count: 3
-              change_percent: 11666.67
-            - token: tsla
-              current_count: 352
-              previous_count: 69
-              change_percent: 410.14
-            - token: avax
-              current_count: 227
-              previous_count: 101
-              change_percent: 124.75
-            - token: streamer
-              current_count: 224
-              previous_count: 179
-              change_percent: 25.14
-            - token: avnt
-              current_count: 214
-              previous_count: 219
-              change_percent: -2.28
-            - token: pnkstr
-              current_count: 204
-              previous_count: 173
-              change_percent: 17.92
-            - token: zkc
-              current_count: 200
-              previous_count: 37
-              change_percent: 440.54
-            - token: hype
-              current_count: 197
-              previous_count: 200
-              change_percent: -1.5
-            - token: dog
-              current_count: 175
-              previous_count: 91
-              change_percent: 92.31
-            - token: doge
-              current_count: 170
-              previous_count: 159
-              change_percent: 6.92
-            - token: pengu
-              current_count: 165
-              previous_count: 126
-              change_percent: 30.95
-            - token: xrp
-              current_count: 162
-              previous_count: 102
-              change_percent: 58.82
-            - token: ape
-              current_count: 159
-              previous_count: 126
-              change_percent: 26.19
-            - token: usdc
-              current_count: 143
-              previous_count: 72
-              change_percent: 98.61
-            - token: link
-              current_count: 136
-              previous_count: 80
-              change_percent: 70
-            - token: tao
-              current_count: 123
-              previous_count: 86
-              change_percent: 43.02
-            - token: nvda
-              current_count: 122
-              previous_count: 36
-              change_percent: 238.89
-            - token: open
-              current_count: 120
-              previous_count: 41
-              change_percent: 192.68
-            - token: pcule
-              current_count: 118
-              previous_count: 16
-              change_percent: 637.5
-            - token: mvrk
-              current_count: 114
-              previous_count: 86
-              change_percent: 32.56
-            - token: glxy
-              current_count: 111
-              previous_count: 25
-              change_percent: 344
-            - token: bagwork
-              current_count: 107
-              previous_count: 173
-              change_percent: -38.15
-            - token: kind
-              current_count: 107
-              previous_count: 128
-              change_percent: -16.41
-            - token: iren
-              current_count: 103
-              previous_count: 34
-              change_percent: 202.94
-            - token: naka
-              current_count: 101
-              previous_count: 16
-              change_percent: 531.25
-            - token: coin
-              current_count: 99
-              previous_count: 19
-              change_percent: 421.05
-            - token: bmnr
-              current_count: 98
-              previous_count: 41
-              change_percent: 139.02
-            - token: mstr
-              current_count: 96
-              previous_count: 27
-              change_percent: 255.56
-            - token: bard
-              current_count: 90
-              previous_count: 8
-              change_percent: 1025
-            - token: troll
-              current_count: 90
-              previous_count: 97
-              change_percent: -7.22
-            - token: aero
-              current_count: 85
-              previous_count: 7
-              change_percent: 1114.29
-            - token: musd
-              current_count: 81
-              previous_count: 1
-              change_percent: 8000
-            - token: ftp
-              current_count: 79
-              previous_count: 69
-              change_percent: 14.49
-            - token: s
-              current_count: 79
-              previous_count: 69
-              change_percent: 14.49
-            - token: spx
-              current_count: 79
-              previous_count: 57
-              change_percent: 38.6
-            - token: sui
-              current_count: 73
-              previous_count: 46
-              change_percent: 58.7
-            - token: bitcoin
-              current_count: 72
-              previous_count: 41
-              change_percent: 75.61
-            - token: peaq
-              current_count: 72
-              previous_count: 98
-              change_percent: -26.53
-            - token: kas
-              current_count: 71
-              previous_count: 52
-              change_percent: 36.54
-            - token: rageguy
-              current_count: 70
-              previous_count: 26
-              change_percent: 169.23
-            - token: ford
-              current_count: 67
-              previous_count: 16
-              change_percent: 318.75
-            - token: bnb
-              current_count: 63
-              previous_count: 49
-              change_percent: 28.57
-            - token: portals
-              current_count: 63
-              previous_count: 45
-              change_percent: 40
-            - token: ena
-              current_count: 61
-              previous_count: 23
-              change_percent: 165.22
-            - token: mim
-              current_count: 61
-              previous_count: 18
-              change_percent: 238.89
-            - token: arb
-              current_count: 60
-              previous_count: 23
-              change_percent: 160.87
+          tokens:
+          - btc
+          - eth
+          - sol
+          - trove
+          - whitewhale
+          - gas
+          - ralph
+          - xrp
+          - xmr
+          - link
+          - elsa
+          - aster
+          - drb
+          - hype
+          - usdc
+          - tao
+          - gwei
+          - testicle
+          - dusk
+          - doge
+          - usdt
+          - tsla
+          - spx
+          - gsd
+          - avax
+          - dog
+          - sent
+          - zec
+          - lit
+          - rekt
+          - zkrune
+          - nvda
+          - chmpstr
+          - sui
+          - buttcoin
+          - rose
+          - mstr
+          - spy
+          - trump
+          - pump
+          - wojak
+          - iren
+          - pepe
+          - strc
+          - ward
+          - bnb
+          - tibbir
+          - avici
+          - axs
+          - sumr
     description: Direct tool call to get trending tokens for 24h window
     status: success
+    elapsed_time: 0.21339917182922363
   get_trending_tokens_query:
     input:
       query: What are the trending tokens on Twitter in the last 24 hours?
     output:
-      response: 'Here are the top 5 trending tokens on Twitter in the last 24 hours,
-        based on the change in their mention count:
+      response: 'The trending tokens on Twitter in the last 24 hours are:
 
 
-        1.  **BASE**: Current count: 353, Previous count: 3, Change: 11666.67%
-
-        2.  **MUSD**: Current count: 81, Previous count: 1, Change: 8000%
-
-        3.  **AERO**: Current count: 85, Previous count: 7, Change: 1114.29%
-
-        4.  **BARD**: Current count: 90, Previous count: 8, Change: 1025%
-
-        5.  **PCULE**: Current count: 118, Previous count: 16, Change: 637.5%'
+        btc, eth, sol, trove, whitewhale, gas, ralph, xrp, xmr, link, elsa, aster,
+        drb, hype, usdc, tao, gwei, testicle, dusk, doge, usdt, tsla, spx, gsd, avax,
+        dog, sent, zec, lit, rekt, zkrune, nvda, chmpstr, sui, buttcoin, rose, mstr,
+        spy, trump, pump, wojak, iren, pepe, strc, ward, bnb, tibbir, avici, axs,
+        sumr.'
       data: *id002
     description: Natural language query for trending tokens in last 24 hours
     status: success
+    elapsed_time: 3.8270468711853027

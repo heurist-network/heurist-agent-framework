@@ -1,42 +1,27 @@
 import logging
-import os
-import random
 import time
 from typing import Any, Dict, List, Optional
 
-from dotenv import load_dotenv  # type: ignore
+from dotenv import load_dotenv
 
 from decorators import with_cache, with_retry
 from mesh.gemini import call_gemini_async
 from mesh.mesh_agent import MeshAgent
+from mesh.utils.api_key_manager import APIKeyManager
 
 load_dotenv()
 logger = logging.getLogger(__name__)
-
-NON_ROTATABLE_ERRORS = ["500", "404", "422", "not found", "unprocessable"]
 
 
 class ExaSearchDigestAgent(MeshAgent):
     def __init__(self):
         super().__init__()
-        api_keys_str = os.getenv("EXA_API_KEY")
-        if not api_keys_str:
-            raise ValueError("EXA_API_KEY environment variable is required")
-
-        self.api_keys = [k.strip() for k in api_keys_str.split(",") if k.strip()]
-        if not self.api_keys:
-            raise ValueError("No valid API keys found in EXA_API_KEY")
-
-        self.current_key_index = random.randint(0, len(self.api_keys) - 1)
-        self.current_api_key = self.api_keys[self.current_key_index]
-
-        logger.info(
-            f"Exa Digest agent initialized with {len(self.api_keys)} API key(s), "
-            f"starting with index {self.current_key_index} (key: {self._mask_key(self.current_api_key)})"
-        )
-
         self.base_url = "https://api.exa.ai"
-        self._update_headers()
+        self.key_manager = APIKeyManager.from_env(
+            env_var="EXA_API_KEY",
+            rotation_mode="error",
+            logger_name="ExaSearchDigestAgent",
+        )
 
         self.metadata.update(
             {
@@ -63,80 +48,6 @@ class ExaSearchDigestAgent(MeshAgent):
                 },
             }
         )
-
-    def _mask_key(self, key: str) -> str:
-        if len(key) <= 8:
-            return "****"
-        return f"{key[:4]}...{key[-4:]}"
-
-    def _update_headers(self):
-        self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.current_api_key}"}
-
-    def _rotate_key(self) -> bool:
-        if len(self.api_keys) <= 1:
-            logger.warning("Only one API key available, cannot rotate")
-            return False
-
-        previous_index = self.current_key_index
-        self.current_key_index = (self.current_key_index + 1) % len(self.api_keys)
-        self.current_api_key = self.api_keys[self.current_key_index]
-        self._update_headers()
-
-        logger.info(
-            f"Rotated API key: index {previous_index} -> {self.current_key_index} "
-            f"(key: {self._mask_key(self.current_api_key)})"
-        )
-        return True
-
-    def _should_rotate(self, error_msg: str) -> bool:
-        error_lower = error_msg.lower()
-        return not any(code in error_lower for code in NON_ROTATABLE_ERRORS)
-
-    async def _request_with_key_rotation(
-        self, url: str, method: str = "GET", params: Dict = None, json_data: Dict = None, timeout: int = 30
-    ) -> Dict:
-        attempted_keys = set()
-        last_error = None
-
-        while len(attempted_keys) < len(self.api_keys):
-            attempted_keys.add(self.current_key_index)
-            logger.info(f"Exa API request with key index {self.current_key_index} (key: {self._mask_key(self.current_api_key)})")
-
-            try:
-                result = await super()._api_request(
-                    url=url, method=method, headers=self.headers, params=params, json_data=json_data, timeout=timeout
-                )
-
-                if "error" in result:
-                    error_msg = str(result.get("error", ""))
-                    if not self._should_rotate(error_msg):
-                        logger.error(f"Non-rotatable error: {result['error']}")
-                        return result
-
-                    logger.warning(f"Rotatable error encountered: {result['error']}")
-                    last_error = result
-
-                    if self._rotate_key():
-                        continue
-                    return result
-
-                return result
-
-            except Exception as e:
-                error_msg = str(e)
-                if not self._should_rotate(error_msg):
-                    logger.error(f"Non-rotatable exception: {e}")
-                    return {"error": error_msg}
-
-                logger.warning(f"Exception during request, rotating key: {e}")
-                last_error = {"error": error_msg}
-
-                if self._rotate_key():
-                    continue
-                return {"error": error_msg}
-
-        logger.error(f"All {len(self.api_keys)} API keys exhausted")
-        return last_error or {"error": "All API keys exhausted"}
 
     def get_tool_schemas(self) -> List[Dict]:
         return [
@@ -207,16 +118,7 @@ class ExaSearchDigestAgent(MeshAgent):
             - Strictly under 1000 words for the summary. No restriction on the length of source URLs at the end. No minimum length requirement. Be as brief as possible while retaining relevant information to the search query."""
 
     async def _process_search_results_with_llm(self, search_results: List[Dict], search_query: str) -> str:
-        """
-        Process search results with LLM for concise summaries.
-
-        Args:
-            search_results: List of search result dictionaries from Exa API
-            search_query: Original search query for context
-
-        Returns:
-            str: LLM-generated summary with inline citations or fallback text
-        """
+        """Process search results with LLM for concise summaries."""
         start_time = time.time()
 
         try:
@@ -252,7 +154,6 @@ class ExaSearchDigestAgent(MeshAgent):
             processing_time = time.time() - start_time
             logger.info(f"LLM processing completed in {processing_time:.2f}s for search results")
 
-            # Check if all URLs are missing from processed_content
             all_urls = [result["url"] for result in formatted_results]
             all_urls_missing = all(url not in processed_content for url in all_urls)
 
@@ -275,16 +176,7 @@ class ExaSearchDigestAgent(MeshAgent):
             return fallback
 
     async def _process_scraped_content_with_llm(self, scraped_content: str, url: str) -> str:
-        """
-        Process scraped content with LLM for summarization.
-
-        Args:
-            scraped_content: Raw text content from scraped URL
-            url: Source URL for context
-
-        Returns:
-            str: LLM-generated summary or truncated fallback content
-        """
+        """Process scraped content with LLM for summarization."""
         start_time = time.time()
 
         try:
@@ -324,6 +216,7 @@ class ExaSearchDigestAgent(MeshAgent):
         limit: int = 10,
         include_domains: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
+        """Execute Exa web search with LLM summarization."""
         logger.info(f"Executing Exa web search for '{search_term}' with time_filter='{time_filter}', limit={limit}")
 
         try:
@@ -350,7 +243,12 @@ class ExaSearchDigestAgent(MeshAgent):
                     payload["startPublishedDate"] = start_date.strftime("%Y-%m-%dT00:00:00.000Z")
                     logger.info(f"Applied time filter: {time_filter} (from {start_date})")
 
-            response = await self._request_with_key_rotation(url=url, method="POST", json_data=payload)
+            response = await self.key_manager.request_with_rotation(
+                request_func=super()._api_request,
+                url=url,
+                method="POST",
+                json_data=payload,
+            )
 
             if "error" in response:
                 logger.error(f"Exa search API error: {response['error']}")
@@ -391,13 +289,19 @@ class ExaSearchDigestAgent(MeshAgent):
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def exa_scrape_url(self, url: str) -> Dict[str, Any]:
+        """Scrape URL content with LLM summarization."""
         logger.info(f"Scraping URL with Exa: {url}")
 
         try:
             api_url = f"{self.base_url}/contents"
             payload = {"urls": [url], "text": {"maxCharacters": 10000}, "livecrawl": "fallback"}
 
-            response = await self._request_with_key_rotation(url=api_url, method="POST", json_data=payload)
+            response = await self.key_manager.request_with_rotation(
+                request_func=super()._api_request,
+                url=api_url,
+                method="POST",
+                json_data=payload,
+            )
 
             if "error" in response:
                 logger.error(f"Exa contents API error: {response['error']}")
@@ -436,6 +340,7 @@ class ExaSearchDigestAgent(MeshAgent):
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
+        """Handle execution of specific tools and return the raw data."""
         logger.info(f"Handling tool call: {tool_name} with args: {function_args}")
 
         if tool_name == "exa_web_search":

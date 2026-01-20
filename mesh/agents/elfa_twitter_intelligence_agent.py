@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import os
-import random
 import re
 import time
 from typing import Any, Dict, List, Optional
@@ -11,6 +10,7 @@ from dotenv import load_dotenv
 
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
+from mesh.utils.api_key_manager import APIKeyManager
 
 logger = logging.getLogger(__name__)
 load_dotenv()
@@ -25,23 +25,22 @@ def _clean_tweet_text(text: str) -> str:
     return cleaned.strip()
 
 
+def _elfa_header_builder(api_key: str) -> Dict[str, str]:
+    """Build headers for Elfa API."""
+    return {"x-elfa-api-key": api_key, "Accept": "application/json"}
+
+
 class ElfaTwitterIntelligenceAgent(MeshAgent):
     def __init__(self):
         super().__init__()
-        api_keys_str = os.getenv("ELFA_API_KEY")
-        if not api_keys_str:
-            raise ValueError("ELFA_API_KEY environment variable is required")
-
-        self.api_keys = [key.strip() for key in api_keys_str.split(",") if key.strip()]
-        if not self.api_keys:
-            raise ValueError("No valid API keys found in ELFA_API_KEY")
-
-        self.current_api_key = random.choice(self.api_keys)
-        self.last_rotation_time = time.time()
-        self.rotation_interval = 300  # Rotate every 5 minutes
-
         self.base_url = "https://api.elfa.ai/v2"
-        self._update_headers()
+        self.key_manager = APIKeyManager.from_env(
+            env_var="ELFA_API_KEY",
+            rotation_mode="time",
+            rotation_interval=300,
+            header_builder=_elfa_header_builder,
+            logger_name="ElfaTwitterAgent",
+        )
 
         self.apidance_api_key = os.getenv("APIDANCE_API_KEY")
         if not self.apidance_api_key:
@@ -78,19 +77,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 },
             }
         )
-
-    def _update_headers(self):
-        """Update headers with current API key"""
-        self.headers = {"x-elfa-api-key": self.current_api_key, "Accept": "application/json"}
-
-    def _rotate_api_key(self):
-        """Rotate API key if enough time has passed"""
-        current_time = time.time()
-        if current_time - self.last_rotation_time >= self.rotation_interval:
-            self.current_api_key = random.choice(self.api_keys)
-            self._update_headers()
-            self.last_rotation_time = current_time
-            logger.info("Rotated API key")
 
     def get_system_prompt(self) -> str:
         return (
@@ -194,17 +180,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
     async def _fetch_batch_tweet_details(
         self, tweet_ids: List[str], batch_size: int = 5, delay: float = 0.5
     ) -> List[Dict]:
-        """
-        Fetch full tweet details with controlled parallelism.
-
-        Args:
-            tweet_ids: List of tweet IDs to fetch
-            batch_size: Number of tweets to fetch in parallel
-            delay: Delay between batches in seconds
-
-        Returns:
-            List of simplified tweet dicts in TwitterInfoAgent format
-        """
+        """Fetch full tweet details with controlled parallelism."""
         all_results: List[Dict] = []
 
         for i in range(0, len(tweet_ids), batch_size):
@@ -311,13 +287,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
         return {"tweets": tweets_out, "error_tweet_ids": error_tweet_ids}
 
     async def _enrich_tweets_with_text(self, tweets: List[Dict]) -> List[Dict]:
-        """
-        Enrich ELFA tweets by hydrating tweet IDs into full tweet objects.
-
-        Strategy:
-        1) Try bulk hydration via PracticalTools (Apify actor).
-        2) For missing IDs (or if bulk fails), fall back to per-tweet detail calls.
-        """
+        """Enrich ELFA tweets by hydrating tweet IDs into full tweet objects."""
         tweet_ids = [str(tweet.get("tweetId")).strip() for tweet in tweets if tweet.get("tweetId")]
         if not tweet_ids:
             return []
@@ -341,10 +311,9 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
     # ------------------------------------------------------------------------
     @with_cache(ttl_seconds=300)
     async def _make_request(self, endpoint: str, method: str = "GET", params: Dict = None) -> Dict:
-        self._rotate_api_key()
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
         logger.info(f"Making request to ELFA API: {endpoint}")
-        return await self._api_request(url=url, method=method, headers=self.headers, params=params)
+        return await self._api_request(url=url, method=method, headers=self.key_manager.get_headers(), params=params)
 
     @with_cache(ttl_seconds=300)
     async def search_mentions(self, keywords: List[str], days_ago: int = 29, limit: int = 10) -> Dict:
@@ -438,7 +407,6 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                 logger.error(f"Error getting trending tokens: {result['error']}")
                 return result
 
-            # Extract token names only
             tokens = []
             if result.get("data") and result["data"].get("data"):
                 tokens = [item.get("token") for item in result["data"]["data"] if item.get("token")]
