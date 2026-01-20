@@ -15,6 +15,10 @@ logger = logging.getLogger(__name__)
 
 NON_ROTATABLE_ERRORS = ["500", "404", "422", "not found", "unprocessable"]
 
+SEARCH_TEXT_MAX_CHARS = 25000
+SCRAPE_TEXT_MAX_CHARS = 50000
+LLM_MAX_TOKENS = 8000
+
 
 class ExaSearchDigestAgent(MeshAgent):
     def __init__(self):
@@ -152,6 +156,10 @@ class ExaSearchDigestAgent(MeshAgent):
                                 "type": "string",
                                 "description": "Natural language search query. Phrase naturally and concisely. Boolean operators (AND/OR) are NOT supported.",
                             },
+                            "disambiguation": {
+                                "type": "string",
+                                "description": "If the search query contains ambiguous entity names, new projects, new technology, or niche acronyms AND when you have contexts pointing to what it is exactly, describe the entity with one sentence to help clarify, for example 'Heurist is a Web3 AI project'. If you don't have confident clarifications or when searching common-sense info, leave this field blank."
+                            },
                             "time_filter": {
                                 "type": "string",
                                 "description": "REQUIRED for time-sensitive queries",
@@ -160,7 +168,7 @@ class ExaSearchDigestAgent(MeshAgent):
                             "limit": {
                                 "type": "integer",
                                 "description": "Number of pages",
-                                "minimum": 5,
+                                "minimum": 6,
                                 "maximum": 10,
                                 "default": 10,
                             },
@@ -178,13 +186,17 @@ class ExaSearchDigestAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_scrape_url",
-                    "description": "Scrape full contents from a specific URL and return a summary.",
+                    "description": "Scrape full contents from a specific URL and use LLM to create a summary or extract information.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "url": {
                                 "type": "string",
                                 "description": "Source URL",
+                            },
+                            "extract_prompt": {
+                                "type": "string",
+                                "description": "Instruction to LLM to process the scraped contents. Max 3 sentences. Use this when you want to extract specific information from the page. If this field is empty, a summary will be returned."
                             }
                         },
                         "required": ["url"],
@@ -206,13 +218,16 @@ class ExaSearchDigestAgent(MeshAgent):
             - No opening or closing paragraphs. Just focus on representing the search results based on search query.
             - Strictly under 1000 words for the summary. No restriction on the length of source URLs at the end. No minimum length requirement. Be as brief as possible while retaining relevant information to the search query."""
 
-    async def _process_search_results_with_llm(self, search_results: List[Dict], search_query: str) -> str:
+    async def _process_search_results_with_llm(
+        self, search_results: List[Dict], search_query: str, disambiguation: Optional[str] = None
+    ) -> str:
         """
         Process search results with LLM for concise summaries.
 
         Args:
             search_results: List of search result dictionaries from Exa API
             search_query: Original search query for context
+            disambiguation: Optional context to clarify ambiguous entities
 
         Returns:
             str: LLM-generated summary with inline citations or fallback text
@@ -227,22 +242,26 @@ class ExaSearchDigestAgent(MeshAgent):
                         "index": i,
                         "title": result.get("title", ""),
                         "url": result.get("url", ""),
-                        "text": result.get("text", "")[:4000] if result.get("text") else "",
+                        "text": result.get("text", "")[:SEARCH_TEXT_MAX_CHARS] if result.get("text") else "",
                         "published_date": result.get("published_date", ""),
                     }
                 )
 
             formatted_content = f'Search query: "{search_query}"\n\nWeb search results:\n\n{str(formatted_results)}'
 
+            system_prompt = self.get_system_prompt()
+            if disambiguation:
+                system_prompt += f"\n\nIMPORTANT CONTEXT: {disambiguation}"
+
             messages = [
-                {"role": "system", "content": self.get_system_prompt()},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": formatted_content},
             ]
 
             response = await call_gemini_async(
                 api_key=self.gemini_api_key,
                 messages=messages,
-                max_tokens=4000,
+                max_tokens=LLM_MAX_TOKENS,
                 temperature=0.7,
             )
 
@@ -274,13 +293,16 @@ class ExaSearchDigestAgent(MeshAgent):
                 fallback += f"   {result.get('text', '')[:200]}...\n\n"
             return fallback
 
-    async def _process_scraped_content_with_llm(self, scraped_content: str, url: str) -> str:
+    async def _process_scraped_content_with_llm(
+        self, scraped_content: str, url: str, extract_prompt: Optional[str] = None
+    ) -> str:
         """
         Process scraped content with LLM for summarization.
 
         Args:
             scraped_content: Raw text content from scraped URL
             url: Source URL for context
+            extract_prompt: Optional instruction to extract specific information
 
         Returns:
             str: LLM-generated summary or truncated fallback content
@@ -288,17 +310,21 @@ class ExaSearchDigestAgent(MeshAgent):
         start_time = time.time()
 
         try:
-            content_to_process = scraped_content[:10000] if len(scraped_content) > 10000 else scraped_content
+            content_to_process = scraped_content[:SCRAPE_TEXT_MAX_CHARS] if len(scraped_content) > SCRAPE_TEXT_MAX_CHARS else scraped_content
+
+            system_prompt = self.get_system_prompt()
+            if extract_prompt:
+                system_prompt += f"\n\nSPECIFIC EXTRACTION INSTRUCTION: {extract_prompt}"
 
             messages = [
-                {"role": "system", "content": self.get_system_prompt()},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"URL: {url}\n\nWeb content:\n\n{content_to_process}"},
             ]
 
             response = await call_gemini_async(
                 api_key=self.gemini_api_key,
                 messages=messages,
-                max_tokens=4000,
+                max_tokens=LLM_MAX_TOKENS,
                 temperature=0.7,
             )
 
@@ -323,12 +349,13 @@ class ExaSearchDigestAgent(MeshAgent):
         time_filter: Optional[str] = None,
         limit: int = 10,
         include_domains: Optional[List[str]] = None,
+        disambiguation: Optional[str] = None,
     ) -> Dict[str, Any]:
         logger.info(f"Executing Exa web search for '{search_term}' with time_filter='{time_filter}', limit={limit}")
 
         try:
             url = f"{self.base_url}/search"
-            payload = {"query": search_term, "numResults": limit, "contents": {"text": {"maxCharacters": 4000}}}
+            payload = {"query": search_term, "numResults": limit, "contents": {"text": {"maxCharacters": SEARCH_TEXT_MAX_CHARS}}}
 
             if include_domains:
                 payload["includeDomains"] = include_domains
@@ -380,7 +407,7 @@ class ExaSearchDigestAgent(MeshAgent):
 
             logger.info(f"Search completed successfully with {len(formatted_results)} results")
 
-            processed_summary = await self._process_search_results_with_llm(formatted_results, search_term)
+            processed_summary = await self._process_search_results_with_llm(formatted_results, search_term, disambiguation)
 
             return {"status": "success", "data": {"processed_summary": processed_summary}}
 
@@ -390,12 +417,12 @@ class ExaSearchDigestAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def exa_scrape_url(self, url: str) -> Dict[str, Any]:
+    async def exa_scrape_url(self, url: str, extract_prompt: Optional[str] = None) -> Dict[str, Any]:
         logger.info(f"Scraping URL with Exa: {url}")
 
         try:
             api_url = f"{self.base_url}/contents"
-            payload = {"urls": [url], "text": {"maxCharacters": 10000}, "livecrawl": "fallback"}
+            payload = {"urls": [url], "text": {"maxCharacters": SCRAPE_TEXT_MAX_CHARS}, "livecrawl": "fallback"}
 
             response = await self._request_with_key_rotation(url=api_url, method="POST", json_data=payload)
 
@@ -425,7 +452,7 @@ class ExaSearchDigestAgent(MeshAgent):
 
             logger.info(f"Successfully scraped {len(scraped_text)} characters from URL")
 
-            processed_summary = await self._process_scraped_content_with_llm(scraped_text, url)
+            processed_summary = await self._process_scraped_content_with_llm(scraped_text, url, extract_prompt)
 
             return {"status": "success", "data": {"processed_summary": processed_summary}}
 
@@ -443,6 +470,7 @@ class ExaSearchDigestAgent(MeshAgent):
             time_filter = function_args.get("time_filter")
             limit = int(function_args.get("limit", 10))
             include_domains = function_args.get("include_domains")
+            disambiguation = function_args.get("disambiguation")
 
             if not search_term:
                 logger.error("Missing 'search_term' parameter")
@@ -450,16 +478,17 @@ class ExaSearchDigestAgent(MeshAgent):
 
             limit = max(5, min(10, limit))
 
-            result = await self.exa_web_search(search_term, time_filter, limit, include_domains)
+            result = await self.exa_web_search(search_term, time_filter, limit, include_domains, disambiguation)
 
         elif tool_name == "exa_scrape_url":
             url = function_args.get("url")
+            extract_prompt = function_args.get("extract_prompt")
 
             if not url:
                 logger.error("Missing 'url' parameter")
                 return {"status": "error", "error": "Missing 'url' parameter"}
 
-            result = await self.exa_scrape_url(url)
+            result = await self.exa_scrape_url(url, extract_prompt)
 
         else:
             logger.error(f"Unsupported tool: {tool_name}")
