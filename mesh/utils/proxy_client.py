@@ -29,7 +29,7 @@ class ProxyFallbackClient:
         self.enabled = os.getenv("PROXY_ENABLED", "false").lower() == "true"
         servers_env = os.getenv("MESH_PROXY_URLS") or os.getenv("PROXY_SERVERS", "")
         self.servers = [s.strip() for s in servers_env.split(",") if s.strip()]
-        self.auth_key = os.getenv("HEURIST_API_KEY", "")
+        self.auth_key = os.getenv("PROTOCOL_V2_API_KEY", "")
         self.timeout = int(os.getenv("PROXY_TIMEOUT", "30"))
         self._current_server_idx = 0
 
@@ -85,7 +85,7 @@ class ProxyFallbackClient:
             return {"status": "error", "error": "No proxy servers configured"}
 
         if not self.auth_key:
-            return {"status": "error", "error": "HEURIST_API_KEY not configured for proxy authentication"}
+            return {"status": "error", "error": "PROTOCOL_V2_API_KEY not configured for proxy authentication"}
 
         payload = {
             "agent_name": agent_name,
