@@ -288,7 +288,7 @@ class ExaSearchAgent(MeshAgent):
                 payload["startPublishedDate"] = start_published_date
                 logger.info(f"Filtering results published after: {start_published_date}")
 
-            response = await self._api_request(url=url, method="POST", headers=self.headers, json_data=payload)
+            response = await self._request_with_key_rotation(url=url, method="POST", json_data=payload)
 
             if "error" in response:
                 logger.error(f"Exa search API error: {response['error']}")
@@ -325,7 +325,7 @@ class ExaSearchAgent(MeshAgent):
             url = f"{self.base_url}/answer"
             payload = {"query": question}  # API still uses 'query'
 
-            response = await self._api_request(url=url, method="POST", headers=self.headers, json_data=payload)
+            response = await self._request_with_key_rotation(url=url, method="POST", json_data=payload)
 
             if "error" in response:
                 logger.error(f"Exa answer API error: {response['error']}")
