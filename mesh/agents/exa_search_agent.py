@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 from typing import Any, Dict, List, Optional
 
 from decorators import with_cache, with_retry
@@ -7,16 +8,30 @@ from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
 
+NON_ROTATABLE_ERRORS = ["500", "404", "422", "not found", "unprocessable"]
+
 
 class ExaSearchAgent(MeshAgent):
     def __init__(self):
         super().__init__()
-        self.api_key = os.getenv("EXA_API_KEY")
-        if not self.api_key:
+        api_keys_str = os.getenv("EXA_API_KEY")
+        if not api_keys_str:
             raise ValueError("EXA_API_KEY environment variable is required")
 
+        self.api_keys = [k.strip() for k in api_keys_str.split(",") if k.strip()]
+        if not self.api_keys:
+            raise ValueError("No valid API keys found in EXA_API_KEY")
+
+        self.current_key_index = random.randint(0, len(self.api_keys) - 1)
+        self.current_api_key = self.api_keys[self.current_key_index]
+
+        logger.info(
+            f"Exa agent initialized with {len(self.api_keys)} API key(s), "
+            f"starting with index {self.current_key_index} (key: {self._mask_key(self.current_api_key)})"
+        )
+
         self.base_url = "https://api.exa.ai"
-        self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"}
+        self._update_headers()
 
         self.metadata.update(
             {
@@ -36,6 +51,128 @@ class ExaSearchAgent(MeshAgent):
                 ],
             }
         )
+
+    def _mask_key(self, key: str) -> str:
+        """Returns masked API key for safe logging (e.g., 'abc1...xyz9')."""
+        if len(key) <= 8:
+            return "****"
+        return f"{key[:4]}...{key[-4:]}"
+
+    def _update_headers(self):
+        """Updates request headers with the current API key."""
+        self.headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.current_api_key}"}
+
+    def _rotate_key(self) -> bool:
+        """
+        Rotates to the next API key in the list.
+
+        Returns:
+            True if rotation occurred, False if only one key is available.
+        """
+        if len(self.api_keys) <= 1:
+            logger.warning("Only one API key available, cannot rotate")
+            return False
+
+        previous_index = self.current_key_index
+        self.current_key_index = (self.current_key_index + 1) % len(self.api_keys)
+        self.current_api_key = self.api_keys[self.current_key_index]
+        self._update_headers()
+
+        logger.info(
+            f"Rotated API key: index {previous_index} -> {self.current_key_index} "
+            f"(key: {self._mask_key(self.current_api_key)})"
+        )
+        return True
+
+    def _should_rotate(self, error_msg: str) -> bool:
+        """
+        Determines if the error should trigger key rotation.
+
+        Returns:
+            True if rotation should occur, False for non-rotatable errors (500/404/422).
+        """
+        error_lower = error_msg.lower()
+        return not any(code in error_lower for code in NON_ROTATABLE_ERRORS)
+
+    async def _request_with_key_rotation(
+        self,
+        url: str,
+        method: str = "GET",
+        headers: Dict = None,
+        params: Dict = None,
+        json_data: Dict = None,
+        timeout: int = 30,
+    ) -> Dict:
+        """
+        Makes an API request with automatic key rotation on rotatable errors.
+
+        Tries each available API key once before giving up. Rotates on errors
+        like 429 (rate limit) but not on 500, 404, or 422 errors.
+
+        Args:
+            url: API endpoint URL
+            method: HTTP method (GET, POST, etc.)
+            headers: Request headers (uses self.headers if None)
+            params: URL query parameters
+            json_data: JSON request body
+            timeout: Request timeout in seconds
+
+        Returns:
+            API response dict or error dict
+        """
+        request_headers = headers or self.headers
+        attempted_keys = set()
+        last_error = None
+
+        while len(attempted_keys) < len(self.api_keys):
+            attempted_keys.add(self.current_key_index)
+            logger.info(
+                f"Exa API request with key index {self.current_key_index} "
+                f"(key: {self._mask_key(self.current_api_key)})"
+            )
+
+            try:
+                result = await super()._api_request(
+                    url=url,
+                    method=method,
+                    headers=request_headers,
+                    params=params,
+                    json_data=json_data,
+                    timeout=timeout,
+                )
+
+                if "error" in result:
+                    error_msg = str(result.get("error", ""))
+                    if not self._should_rotate(error_msg):
+                        logger.error(f"Non-rotatable error: {result['error']}")
+                        return result
+
+                    logger.warning(f"Rotatable error encountered: {result['error']}")
+                    last_error = result
+
+                    if self._rotate_key():
+                        request_headers = self.headers
+                        continue
+                    return result
+
+                return result
+
+            except Exception as e:
+                error_msg = str(e)
+                if not self._should_rotate(error_msg):
+                    logger.error(f"Non-rotatable exception: {e}")
+                    return {"error": error_msg}
+
+                logger.warning(f"Exception during request, rotating key: {e}")
+                last_error = {"error": error_msg}
+
+                if self._rotate_key():
+                    request_headers = self.headers
+                    continue
+                return {"error": error_msg}
+
+        logger.error(f"All {len(self.api_keys)} API keys exhausted")
+        return last_error or {"error": "All API keys exhausted"}
 
     def get_system_prompt(self) -> str:
         return """
