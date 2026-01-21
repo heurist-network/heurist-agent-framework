@@ -23,6 +23,21 @@ TEST_CASES = {
         },
         "description": "Direct tool call to get tweet details for second test tweet",
     },
+    # X Article functionality - Tweet with article content
+    "article_direct_link": {
+        "input": {
+            "tool": "get_twitter_detail",
+            "tool_arguments": {"tweet_id": "2012208491578950089"},
+        },
+        "description": "Direct article link - WalletConnect Pay Is Available Worldwide",
+    },
+    "article_embedded_in_post": {
+        "input": {
+            "tool": "get_twitter_detail",
+            "tool_arguments": {"tweet_id": "2013381978544894043"},
+        },
+        "description": "Article embedded in a post - The Future of Payments",
+    },
     # General search functionality
     "search_heurist_ai": {
         "input": {

@@ -5,6 +5,7 @@ import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+import aiohttp
 from apify_client import ApifyClient
 from dotenv import load_dotenv
 from loguru import logger
@@ -15,6 +16,7 @@ from mesh.mesh_agent import MeshAgent
 load_dotenv()
 
 DEFAULT_TIMELINE_LIMIT = 20
+FXTWITTER_API_BASE = "https://api.fxtwitter.com"
 
 
 def _clean_tweet_text(text: str) -> str:
@@ -248,6 +250,12 @@ class TwitterInfoAgent(MeshAgent):
         if tweet.get("urls"):
             result["urls"] = tweet.get("urls")
 
+        # for tweet contains article
+        if self._has_article(tweet):
+            result["next_step"] = (
+                f"This tweet contains an article. Use get_twitter_detail tool with tweet_id '{tid}' to read the full article content."
+            )
+
         if tweet.get("in_reply_to_status_id_str"):
             result["in_reply_to_tweet_id"] = tweet.get("in_reply_to_status_id_str")
             result["in_reply_to_user"] = tweet.get("in_reply_to_status", {}).get("user", {}).get("screen_name", "")
@@ -257,6 +265,90 @@ class TwitterInfoAgent(MeshAgent):
             result["quoted_tweet_id"] = str(tweet["related_tweet_id"])
 
         return result
+
+    # ------------------------------------------------------------------------
+    #                      ARTICLE READING METHODS (FXTwitter)
+    # ------------------------------------------------------------------------
+    def _has_article(self, tweet: Dict) -> bool:
+        """Check if tweet contains an X article link in entities.urls or urls"""
+        urls = tweet.get("entities", {}).get("urls", []) or tweet.get("urls", []) or []
+        for url_item in urls:
+            if isinstance(url_item, dict):
+                url = url_item.get("expanded_url", "") or url_item.get("url", "")
+            else:
+                url = str(url_item) if url_item else ""
+            if "x.com/i/article/" in url or "twitter.com/i/article/" in url:
+                return True
+        return False
+
+    def _extract_article_content(self, article: Dict, author: Dict) -> Dict:
+        """
+        Extract and return only essential article fields from FXTwitter response.
+        Returns: created_at, title, and content blocks with text only.
+        """
+        content_blocks = []
+        raw_content = article.get("content", {})
+        for block in raw_content.get("blocks", []):
+            text = block.get("text", "").strip()
+            if text:
+                content_blocks.append({"text": text})
+
+        return {
+            "article": {
+                "created_at": article.get("created_at", ""),
+                "title": article.get("title", ""),
+                "content": {"blocks": content_blocks},
+            }
+        }
+
+    @with_cache(ttl_seconds=86400)  # 24 hours cache
+    async def _read_article(self, username: str, tweet_id: str) -> Dict:
+        """
+        Fetch X article content using FXTwitter API.
+
+        Args:
+            username: Twitter username (without @)
+            tweet_id: Tweet ID containing the article
+
+        Returns:
+            Dict with article title, author info, and full content
+        """
+        url = f"{FXTWITTER_API_BASE}/{username}/status/{tweet_id}"
+        logger.info(f"Fetching article from FXTwitter: {url}")
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, timeout=aiohttp.ClientTimeout(total=30)) as response:
+                    if response.status != 200:
+                        logger.error(f"FXTwitter API error: status {response.status}")
+                        return {"error": f"FXTwitter API returned status {response.status}"}
+
+                    data = await response.json()
+
+            if data.get("code") != 200:
+                return {"error": f"FXTwitter API error: {data.get('message', 'Unknown error')}"}
+
+            tweet = data.get("tweet", {})
+            article = tweet.get("article")
+
+            if not article:
+                return {"error": "No article found in tweet"}
+
+            author = tweet.get("author", {})
+            article_data = self._extract_article_content(article, author)
+
+            logger.info(f"Successfully fetched article: {article_data.get('title', 'No title')[:50]}...")
+            return article_data
+
+        except asyncio.TimeoutError:
+            logger.error("FXTwitter API timeout")
+            return {"error": "FXTwitter API request timed out"}
+        except aiohttp.ClientError as e:
+            logger.error(f"FXTwitter API client error: {e}")
+            return {"error": f"FXTwitter API request failed: {str(e)}"}
+        except Exception as e:
+            logger.error(f"Error fetching article: {e}")
+            return {"error": f"Failed to fetch article: {str(e)}"}
 
     # ------------------------------------------------------------------------
     #                      APIFY FALLBACK METHODS
@@ -276,7 +368,7 @@ class TwitterInfoAgent(MeshAgent):
                 return "quote"
             return "tweet"
 
-        return {
+        result = {
             "id": tid,
             "text": _clean_tweet_text(tweet.get("text") or tweet.get("fullText") or ""),
             "created_at": _format_date_only(tweet.get("createdAt") or ""),
@@ -296,6 +388,14 @@ class TwitterInfoAgent(MeshAgent):
             },
             "type": _tweet_type(tweet),
         }
+
+        # Check for article in Apify format (entities.urls or urls)
+        if self._has_article(tweet):
+            result["next_step"] = (
+                f"This tweet contains an article. Use get_twitter_detail tool with tweet_id '{tid}' to read the full article content."
+            )
+
+        return result
 
     async def _apify_get_user_timeline(self, username: str, limit: int = 20) -> Dict:
         """Fallback: Get user timeline using Apify practicaltools actor."""
@@ -605,6 +705,36 @@ class TwitterInfoAgent(MeshAgent):
             errors = self._handle_error(tweet_detail_result)
             if errors:
                 return errors
+
+            # Check if main tweet or quoted tweet contains an article and fetch its content
+            main_tweet = tweet_detail_result.get("main_tweet", {})
+            if main_tweet:
+                def _get_username_from_source(source: str) -> str:
+                    if source and "/" in source:
+                        parts = source.split("/")
+                        if len(parts) >= 2:
+                            return parts[1] if parts[0] == "x.com" else parts[0]
+                    return ""
+
+                if self._has_article(main_tweet):
+                    source = main_tweet.get("source", "")
+                    username = _get_username_from_source(source)
+                    if username:
+                        article_result = await self._read_article(username, tweet_id)
+                        if "error" not in article_result and article_result.get("article"):
+                            logger.info("Article found in main tweet, returning article only")
+                            return {"tweet_data": {"article": article_result["article"]}}
+
+                quoted_tweet = main_tweet.get("quoted_tweet", {})
+                if quoted_tweet and self._has_article(quoted_tweet):
+                    quoted_source = quoted_tweet.get("source", "")
+                    quoted_username = _get_username_from_source(quoted_source)
+                    quoted_id = quoted_tweet.get("id", "")
+                    if quoted_username and quoted_id:
+                        quoted_article_result = await self._read_article(quoted_username, quoted_id)
+                        if "error" not in quoted_article_result and quoted_article_result.get("article"):
+                            logger.info("Article found in quoted tweet, returning article only")
+                            return {"tweet_data": {"article": quoted_article_result["article"]}}
 
             return {"tweet_data": tweet_detail_result}
 
