@@ -286,18 +286,18 @@ class TwitterInfoAgent(MeshAgent):
         Extract and return only essential article fields from FXTwitter response.
         Returns: created_at, title, and content blocks with text only.
         """
-        content_blocks = []
+        content_texts = []
         raw_content = article.get("content", {})
         for block in raw_content.get("blocks", []):
             text = block.get("text", "").strip()
             if text:
-                content_blocks.append({"text": text})
+                content_texts.append(text)
 
         return {
             "article": {
                 "created_at": article.get("created_at", ""),
                 "title": article.get("title", ""),
-                "content": {"blocks": content_blocks},
+                "content": "\n".join(content_texts),
             }
         }
 
