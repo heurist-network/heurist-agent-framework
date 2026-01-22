@@ -243,6 +243,9 @@ Provide clear, structured information from Twitter/X to help users understand so
                 "text": t.get("in_reply_to_tweet_text", ""),
             }
 
+        if t.get("article"):
+            result["article"] = t.get("article")
+
         return result
 
     def _remove_internal_ids(self, items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

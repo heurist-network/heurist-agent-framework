@@ -453,6 +453,24 @@ class TwitterInfoAgent(MeshAgent):
         logger.info(f"Apify fallback: retrieved {len(tweets)} tweets for query '{query}'")
         return {"query": query, "tweets": tweets, "result_count": len(tweets)}
 
+    async def _apify_get_tweet_detail(self, tweet_id: str) -> Dict:
+        """Fallback: Get single tweet detail using Apify practicaltools tweet/by_ids endpoint."""
+        logger.info(f"Apify fallback: fetching tweet detail for {tweet_id}")
+
+        run_input = {"endpoint": "tweet/by_ids", "parameters": {"tweet_ids": tweet_id}}
+        run = await asyncio.to_thread(lambda: self.apify_client.actor(self.apify_actor_id).call(run_input=run_input))
+        dataset_id = run.get("defaultDatasetId")
+        if not dataset_id:
+            return {"error": "Apify actor returned no dataset"}
+
+        items = list(self.apify_client.dataset(dataset_id).iterate_items())
+        if not items:
+            return {"error": f"No tweet found for ID {tweet_id}"}
+
+        main_tweet = self._simplify_apify_tweet(items[0])
+        logger.info(f"Apify fallback: retrieved tweet detail for {tweet_id}")
+        return {"main_tweet": main_tweet}
+
     # ------------------------------------------------------------------------
     #                      TWITTER API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
@@ -702,6 +720,14 @@ class TwitterInfoAgent(MeshAgent):
             logger.info(f"Fetching tweet details for tweet_id '{tweet_id}'")
 
             tweet_detail_result = await self.get_tweet_detail(tweet_id, cursor)
+
+            # Fallback to Apify if APIDance fails
+            if "error" in tweet_detail_result:
+                logger.warning(f"Primary API unavailable for tweet {tweet_id}, using Apify fallback")
+                tweet_detail_result = await self._apify_get_tweet_detail(tweet_id)
+                if "error" in tweet_detail_result:
+                    return tweet_detail_result
+
             errors = self._handle_error(tweet_detail_result)
             if errors:
                 return errors
@@ -722,8 +748,10 @@ class TwitterInfoAgent(MeshAgent):
                     if username:
                         article_result = await self._read_article(username, tweet_id)
                         if "error" not in article_result and article_result.get("article"):
-                            logger.info("Article found in main tweet, returning article only")
-                            return {"tweet_data": {"article": article_result["article"]}}
+                            logger.info("Article found in main tweet, attaching to main_tweet")
+                            tweet_detail_result["main_tweet"]["article"] = article_result["article"]
+                            if "next_step" in tweet_detail_result["main_tweet"]:
+                                del tweet_detail_result["main_tweet"]["next_step"]
 
                 quoted_tweet = main_tweet.get("quoted_tweet", {})
                 if quoted_tweet and self._has_article(quoted_tweet):
@@ -733,8 +761,10 @@ class TwitterInfoAgent(MeshAgent):
                     if quoted_username and quoted_id:
                         quoted_article_result = await self._read_article(quoted_username, quoted_id)
                         if "error" not in quoted_article_result and quoted_article_result.get("article"):
-                            logger.info("Article found in quoted tweet, returning article only")
-                            return {"tweet_data": {"article": quoted_article_result["article"]}}
+                            logger.info("Article found in quoted tweet, attaching to quoted_tweet")
+                            tweet_detail_result["main_tweet"]["quoted_tweet"]["article"] = quoted_article_result["article"]
+                            if "next_step" in tweet_detail_result["main_tweet"]["quoted_tweet"]:
+                                del tweet_detail_result["main_tweet"]["quoted_tweet"]["next_step"]
 
             return {"tweet_data": tweet_detail_result}
 
