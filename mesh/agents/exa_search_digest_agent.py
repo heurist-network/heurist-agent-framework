@@ -186,7 +186,7 @@ class ExaSearchDigestAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_scrape_url",
-                    "description": "Scrape full contents from a specific URL and use LLM to create a summary or extract information.",
+                    "description": "Scrape full contents from a specific URL and use LLM to create a summary or extract information (Do not use this for x.com twitter.com links - use Twitter agent tools instead)",
                     "parameters": {
                         "type": "object",
                         "properties": {
