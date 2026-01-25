@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build & Run Commands
-Only apply these to production code, not testing scripts, and only run if explicitly asked by user.
+Only apply these to production code, not testing scripts. Don't run this after a code change, only run if explicitly asked by user. 
 - **Lint**: `ruff check --fix --line-length=120 --select=I <path>`
 - **Format**: `ruff format --line-length=120 <path>`
 - **Install dependencies with uv**: `uv add <package_name>`

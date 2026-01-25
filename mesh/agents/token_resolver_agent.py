@@ -55,6 +55,25 @@ MIN_POOL_VOLUME_24H = 3000
 # Minimum liquidity threshold for DEX pools (filters out scam/fake pools with wash trading)
 MIN_POOL_LIQUIDITY_USD = 5000
 
+# Common suffixes in crypto project names to strip before fuzzy matching
+COMMON_CRYPTO_SUFFIXES = {
+    "finance",
+    "labs",
+    "protocol",
+    "network",
+    "dao",
+    "token",
+    "coin",
+    "ai",
+    "chain",
+    "swap",
+    "dex",
+    "defi",
+    "exchange",
+    "capital",
+    "ventures",
+}
+
 
 def _is_evm_address(s: str) -> bool:
     return bool(EVM_ADDR_RE.match(s or ""))
@@ -97,6 +116,44 @@ def _uniq(seq: List[Any]) -> List[Any]:
             seen.add(k)
             out.append(item)
     return out
+
+
+def _strip_common_suffixes(text: str) -> str:
+    """Strip common crypto suffixes from multi-word names for fuzzy matching."""
+    words = text.lower().split()
+    if len(words) < 2:
+        return text.lower()
+    filtered = [w for w in words if w not in COMMON_CRYPTO_SUFFIXES]
+    return " ".join(filtered) if filtered else text.lower()
+
+
+def _is_fuzzy_match(query: str, token_name: str, token_symbol: str, min_len: int = 3) -> bool:
+    """Check if query fuzzy-matches token name or symbol."""
+    query_lower = query.lower().strip()
+
+    # Exact symbol match (case-insensitive)
+    if token_symbol and query_lower == token_symbol.lower():
+        return True
+
+    # Strip suffixes for multi-word comparison
+    query_core = _strip_common_suffixes(query_lower)
+    name_core = _strip_common_suffixes(token_name or "")
+
+    # Skip if query core is too short
+    if len(query_core) < min_len:
+        return True  # Don't filter very short queries
+
+    # Substring match: query_core in name_core or name_core in query_core
+    if query_core in name_core or name_core in query_core:
+        return True
+
+    # Also check symbol substring
+    symbol_lower = (token_symbol or "").lower()
+    if len(symbol_lower) >= min_len:
+        if query_core in symbol_lower or symbol_lower in query_core:
+            return True
+
+    return False
 
 
 def _clean_empty_fields(obj: Any) -> Any:
@@ -184,6 +241,10 @@ def _filter_pairs(pairs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     if not valid:
         return valid
 
+    # If only 1 pair, don't apply volume/liquidity filter                                                                                     
+    if len(valid) == 1:                                                                                                                       
+        return valid
+
     # Apply volume threshold only if at least one pair meets it
     sufficient = []
     insufficient = []
@@ -214,10 +275,42 @@ def _extract_links_from_preview(preview: Dict[str, Any]) -> Dict[str, List]:
     }
 
 
+def _calculate_name_match_score(query: str, token_name: str, token_symbol: str) -> float:
+    """Calculate bonus score based on how well the token matches the query."""
+    query_core = _strip_common_suffixes(query.lower().strip())
+    name_core = _strip_common_suffixes((token_name or "").lower())
+    symbol_lower = (token_symbol or "").lower()
+
+    # Exact match on symbol or name (after suffix stripping)
+    if query_core == symbol_lower or query_core == name_core:
+        return 1_000_000
+
+    # Prefix match: query starts with name or name starts with query
+    if len(query_core) >= 3 and len(name_core) >= 3:
+        if name_core.startswith(query_core) or query_core.startswith(name_core):
+            return 300_000
+
+    # Symbol prefix match
+    if len(query_core) >= 2 and len(symbol_lower) >= 2:
+        if symbol_lower.startswith(query_core) or query_core.startswith(symbol_lower):
+            return 300_000
+
+    return 0
+
+
 def _calculate_pair_score(liquidity_usd: float, volume24h_usd: float) -> float:
     if liquidity_usd > 300000:
         return volume24h_usd * 0.2 + liquidity_usd * 0.8
     return liquidity_usd
+
+
+def _calculate_token_score(
+    query: str, token_name: str, token_symbol: str, liquidity_usd: float, volume24h_usd: float
+) -> float:
+    """Calculate total score including name match bonus and liquidity/volume."""
+    name_bonus = _calculate_name_match_score(query, token_name, token_symbol)
+    pair_score = _calculate_pair_score(liquidity_usd, volume24h_usd)
+    return name_bonus + pair_score
 
 
 # -----------------------------
@@ -678,6 +771,22 @@ class TokenResolverAgent(MeshAgent):
             logger.info(f"[token_resolver] DexScreener returned {len(pairs)} pairs")
             token_map: Dict[str, Dict[str, Any]] = {}
 
+            # Pre-filter pairs: keep only those with at least one token that fuzzy-matches the query
+            def _pair_has_fuzzy_match(pair: Dict[str, Any]) -> bool:
+                selected_sides = pair.get("selected_sides") or []
+                base = pair.get("baseToken") or {}
+                quote = pair.get("quoteToken") or {}
+                if "base" in selected_sides:
+                    if _is_fuzzy_match(query, base.get("name", ""), base.get("symbol", "")):
+                        return True
+                if "quote" in selected_sides:
+                    if _is_fuzzy_match(query, quote.get("name", ""), quote.get("symbol", "")):
+                        return True
+                return False
+
+            pairs = [p for p in pairs if _pair_has_fuzzy_match(p)]
+            logger.info(f"[token_resolver] After fuzzy pre-filter: {len(pairs)} pairs")
+
             pairs = _filter_pairs(pairs)
             for p in pairs:
                 base = p.get("baseToken")
@@ -702,6 +811,11 @@ class TokenResolverAgent(MeshAgent):
                     ch = p.get("chainId")
                     if not addr or not ch:
                         continue
+
+                    # Filter out completely unrelated tokens using fuzzy matching
+                    if not _is_fuzzy_match(query, tok.get("name", ""), tok.get("symbol", "")):
+                        continue
+
                     token_key = f"{ch}:{addr}"
 
                     # Only assign pair metadata (websites/socials) if this token matches the query
@@ -763,7 +877,10 @@ class TokenResolverAgent(MeshAgent):
 
             ds_candidates = sorted(
                 ds_candidates,
-                key=lambda x: _calculate_pair_score(
+                key=lambda x: _calculate_token_score(
+                    query,
+                    x.get("name", ""),
+                    x.get("symbol", ""),
                     x.get("top_pairs", [{}])[0].get("liquidity_usd") or 0,
                     x.get("top_pairs", [{}])[0].get("volume24h_usd") or 0,
                 ),
