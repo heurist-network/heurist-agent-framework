@@ -38,11 +38,11 @@ def build_registration_file(
         "name": metadata["name"],
         "description": f"{metadata.get('description', '')} Created by Heurist Mesh.",
         "image": metadata.get("image_url"),
-        "endpoints": [{"name": "MCP", "endpoint": get_mcp_endpoint(agent_class_name), "version": "2025-06-18"}],
+        "services": [{"name": "MCP", "endpoint": get_mcp_endpoint(agent_class_name), "version": "2025-06-18"}],
         "registrations": [],
         "supportedTrust": get_supported_trust(metadata),
         "active": True,
-        "x402support": x402_enabled,
+        "x402Support": x402_enabled,
         "updatedAt": int(time.time()),
     }
 

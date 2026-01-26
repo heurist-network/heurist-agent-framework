@@ -159,7 +159,8 @@ class ERC8004Manager:
         )
 
         # Register on-chain with HTTP URL
-        agent.register(reg_url)
+        tx_handle = agent.register(reg_url)
+        tx_handle.wait_confirmed(timeout=180)
         agent_id = agent.agentId
 
         logger.info(f"Registered agent {agent_name} with ID: {agent_id}")
@@ -194,6 +195,8 @@ class ERC8004Manager:
         if not agent_id:
             raise ValueError(f"Agent {agent_class_name} not in registry for {chain_name}")
 
+        agent_name = metadata["name"]
+
         # Build new registration data
         reg_data = build_registration_file(metadata, self.chain_id, agent_class_name, tool_names)
         reg_data = add_registration_info(reg_data, agent_id, self.chain_id)
@@ -223,7 +226,8 @@ class ERC8004Manager:
             teeAttestation="tee-attestation" in supported_trust,
         )
         agent.setX402Support(is_x402_enabled(metadata))
-        agent.register(reg_url)
+        tx_handle = agent.register(reg_url)
+        tx_handle.wait_confirmed(timeout=180)
 
         logger.info(f"Updated agent {agent_name}")
         return agent_id, True
@@ -234,10 +238,10 @@ class ERC8004Manager:
             "name",
             "description",
             "image",
-            "endpoints",
+            "services",
             "supportedTrust",
             "active",
-            "x402support",
+            "x402Support",
             "metadata",
         ]
         for field in compare_fields:
