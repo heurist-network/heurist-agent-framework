@@ -24,9 +24,10 @@ The Heurist Agent Framework is built on a modular architecture that allows an AI
 
 - [Features](#features)
 - [Heurist Mesh](#heurist-mesh)
+  - [Why Heurist Mesh?](#why-heurist-mesh)
+  - [Agent Categories](#agent-categories)
+  - [Get Started with Mesh](#get-started-with-mesh)
   - [MCP Support](#mcp-support)
-  - [Recommended Mesh Agents](#recommended-mesh-agents)
-  - [Full List of Mesh Agents](#full-list-of-mesh-agents)
   - [Usage and Development Guide](#usage-and-development-guide)
 - [Heurist Agent Framework Architecture](#heurist-agent-framework-architecture)
   - [Agent Structure](#agent-structure)
@@ -66,20 +67,40 @@ The Heurist Agent Framework is built on a modular architecture that allows an AI
 
 ![mesh](https://github.com/user-attachments/assets/77a2ab3b-e35c-4313-8a5b-a0e751cac879)
 
-**Heurist Mesh** is the skills marketplace for Web3 AI. It is an open network of specialized, composable AI agents. Each agent is a unit that can check token performance, understand social sentiment, generate reports, or perform actions while collectively forming an intelligent swarm to tackle complex tasks. Each agent and each tool is accessible via REST API and MCP, and can be used in conjunction with any agent framework or application.
+**[Heurist Mesh](https://mesh.heurist.ai)** is the skills marketplace for AI agents - your gateway to Web3 intelligence. General-purpose AI models lack specialized knowledge about Web3 and often fail to deliver accurate results. Heurist Mesh solves this by providing 30+ specialized AI agents that are experts in crypto analytics, ready to give your applications or AI agents the Web3 expertise they need.
 
-Want to integrate Heurist Mesh in your application? Check out the [Mesh README](./mesh/README.md) for detailed guidelines, examples, and best practices.
+### Why Heurist Mesh?
 
+- **Curated Web3 Tools**: We curate the best Web3 data sources and APIs, constantly monitored and updated for reliable performance.
+- **Optimized for Agents**: Input/output formats optimized for AI agents - 70% fewer tool calls, 30-50% less token usage vs simple API wrappers.
+- **Composable Architecture**: Mix and match specialized agents to build powerful workflows.
+- **Flexible Access**: REST API with API key, [x402-enabled](https://docs.cdp.coinbase.com/x402) pay-per-use with USDC on Base, and MCP access.
+- **Trusted Agent Standard**: Every agent MCP is registered on the [ERC-8004](https://eips.ethereum.org/EIPS/eip-8004) trusted agent standard on Ethereum.
+
+### Agent Categories
+
+| Category | Description | Example Agents |
+|----------|-------------|----------------|
+| **Aggregated Crypto Insights** | Comprehensive token and market intelligence (recommended) | Token Resolver, Trending Tokens, Twitter Intelligence |
+| **Token Information** | Price data, market metrics, token analytics | CoinGecko, DexScreener, Bitquery, aixbt |
+| **Social Media** | Twitter/X analysis, influencer tracking, sentiment | Elfa, Moni, Twitter Info |
+| **Blockchain Data** | On-chain analytics, address intelligence, forensics | Etherscan, ChainBase, Space and Time |
+| **Web Search** | Web research with AI summarization | Exa, Firecrawl, Caesar |
+| **Crypto Products** | Platform-specific tools for DeFi and NFTs | Pump.fun, LetsBonk, Zora, Aave |
+| **Wallet Analysis** | Portfolio tracking and wallet behavior analysis | Pond AI, GoPlus, Zerion |
+
+### Get Started with Mesh
+
+- **Mesh Portal**: [mesh.heurist.ai](https://mesh.heurist.ai) - Browse agents and deploy dedicated MCP servers
+- **REST API**: [API Documentation](https://docs.heurist.ai/dev-guide/heurist-mesh/)
+- **X402 API**: [mesh.heurist.xyz/x402/agents](https://mesh.heurist.xyz/x402/agents) - Pay-per-use with USDC on Base
+- **Full Agent List**: [View all agents](./mesh/README.md#appendix-all-available-mesh-agents)
 
 ### MCP Support
 
 All Heurist Mesh agents are accessible via MCP. This means you can access them from any AI clients and frameworks that support MCP, including Claude, ChatGPT, Cursor, LangChain, Google ADK, n8n, etc.
 
-Visit [MCP Portal](https://mcp.heurist.ai) to customize your MCP server by mixing and matching the agents that you need. The MCP server source code is available at [Github: heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mesh-mcp-server).
-
-### Full List of Mesh Agents
-
-[View the full list](./mesh/README.md#appendix-all-available-mesh-agents)
+Visit [Heurist Mesh Console](https://mesh.heurist.ai/console) to view all MCP endpoints, and create private dedicated MCP servers by mixing and matching the agents that you need. The MCP server source code is available at [Github: heurist-mesh-mcp-server](https://github.com/heurist-network/heurist-mesh-mcp-server).
 
 ### Usage and Development Guide
 
