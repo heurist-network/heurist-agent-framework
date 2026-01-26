@@ -382,7 +382,7 @@ class TokenResolverAgent(MeshAgent):
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "0x… (EVM), Solana mint, ticker/symbol or token name",
+                                "description": "0x… (EVM), Solana mint, ticker/symbol or token name. When searching by name, do not add common crypto suffix such as 'protocol' or 'network'",
                             },
                             "chain": {
                                 "type": "string",
@@ -402,13 +402,13 @@ class TokenResolverAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "token_profile",
-                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, holders (Solana only), traders (Solana only), funding_rates (Binance-listed large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token is not well-known, use token_search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens. Only enable funding rates and technical indicators for large caps.",
+                    "description": "Get detailed profile and market data of a token. Identify it by ONE OF: chain+address (for contract tokens) or symbol (for native/well-known tokens) or coingecko_id. Optional sections to return: pairs, funding_rates (Binance-listed large caps only), technical_indicators (large caps only). Use this tool for well-known tokens such as BTC, ETH, SOL, or for tokens that you already know its chain+address or Coingecko ID. Prefer to use Coingecko ID if available. If the token address or coingecko_id is not known, use token_search tool first to get the disambiguated token information. Only enable pairs section if the token is an altcoin or you believe it has a DEX pool (some tokens are only traded on CEXs). Do not enable pairs section for large caps tokens. Only enable funding rates and technical indicators for large caps.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "chain": {
                                 "type": "string",
-                                "description": "Blockchain network (e.g., ethereum, base, bsc, solana)",
+                                "description": "Blockchain such as ethereum, base, bsc, solana",
                             },
                             "address": {
                                 "type": "string",
@@ -425,8 +425,6 @@ class TokenResolverAgent(MeshAgent):
                                     "type": "string",
                                     "enum": [
                                         "pairs",
-                                        "holders",
-                                        "traders",
                                         "funding_rates",
                                         "technical_indicators",
                                     ],
@@ -492,30 +490,6 @@ class TokenResolverAgent(MeshAgent):
         except Exception as e:
             logger.info(f"[token_resolver] GMGN unavailable: {e}")
             return {"status": "no_data", "error": "gmgn_unavailable"}
-
-    async def _bq_solana_holders(self, mint: str, limit: int = 5) -> Dict[str, Any]:
-        try:
-            return await self._call_agent_tool(
-                "mesh.agents.bitquery_solana_token_info_agent",
-                "BitquerySolanaTokenInfoAgent",
-                "query_token_holders",
-                {"token_address": mint, "limit": limit},
-            )
-        except Exception as e:
-            logger.info(f"[token_resolver] Bitquery holders unavailable: {e}")
-            return {"status": "no_data", "error": "bitquery_unavailable"}
-
-    async def _bq_solana_traders(self, mint: str, limit: int = 5) -> Dict[str, Any]:
-        try:
-            return await self._call_agent_tool(
-                "mesh.agents.bitquery_solana_token_info_agent",
-                "BitquerySolanaTokenInfoAgent",
-                "query_top_traders",
-                {"token_address": mint, "limit": limit},
-            )
-        except Exception as e:
-            logger.info(f"[token_resolver] Bitquery traders unavailable: {e}")
-            return {"status": "no_data", "error": "bitquery_unavailable"}
 
     async def _funding_rates(self, symbol: str) -> Dict[str, Any]:
         try:
@@ -1084,18 +1058,6 @@ class TokenResolverAgent(MeshAgent):
                         logger.info(f"[token_resolver] GMGN: {result_str}")
                     else:
                         prof["extras"]["gmgn"] = gmgn
-
-        # Optional: Solana holders/traders
-        if "holders" in include or "traders" in include:
-            if chain == "solana" and address:
-                if "holders" in include:
-                    holders = await self._bq_solana_holders(address, limit=5)
-                    if holders and not holders.get("error"):
-                        prof["extras"]["holders"] = holders
-                if "traders" in include:
-                    traders = await self._bq_solana_traders(address, limit=5)
-                    if traders and not traders.get("error"):
-                        prof["extras"]["traders"] = traders
 
         # Optional: Funding rates + Technical indicators for large caps
         sym = (symbol or prof.get("symbol") or "").upper()

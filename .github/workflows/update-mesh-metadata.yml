@@ -52,3 +52,18 @@ jobs:
           git config --local user.name "GitHub Action"
           git add mesh/README.md
           git diff --quiet && git diff --staged --quiet || (git commit -m "docs: update mesh agents table [skip ci]" && git push)
+
+      - name: Notify Ask Heurist to reload mesh tools
+        if: success()
+        env:
+          ASK_HEURIST_API_URL: ${{ secrets.ASK_HEURIST_API_URL }}
+          ASK_HEURIST_WEBHOOK_SECRET: ${{ secrets.ASK_HEURIST_WEBHOOK_SECRET }}
+        run: |
+          if [ -n "$ASK_HEURIST_API_URL" ] && [ -n "$ASK_HEURIST_WEBHOOK_SECRET" ]; then
+            curl -sf -X POST "${ASK_HEURIST_API_URL}/api/v1/internal/reload-mesh-tools" \
+              -H "X-Webhook-Secret: ${ASK_HEURIST_WEBHOOK_SECRET}" \
+              && echo "Mesh tools reloaded successfully" \
+              || echo "Warning: Failed to reload mesh tools"
+          else
+            echo "Skipping reload: ASK_HEURIST_API_URL or ASK_HEURIST_WEBHOOK_SECRET not configured"
+          fi
