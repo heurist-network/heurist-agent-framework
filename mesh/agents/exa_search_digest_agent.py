@@ -148,7 +148,7 @@ class ExaSearchDigestAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_web_search",
-                    "description": "Search the web for any topics. MANDATORY: Use time_filter for ANY time-sensitive requests. Supports domain filtering.",
+                    "description": "Search the web for any topics. MANDATORY: Use time_filter for ANY time-sensitive requests. Domain filtering should be empty for the first query of a topic, and if it returns too much noise, do another query with targeted trusted domains.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -186,20 +186,22 @@ class ExaSearchDigestAgent(MeshAgent):
                 "type": "function",
                 "function": {
                     "name": "exa_scrape_url",
-                    "description": "Scrape full contents from a specific URL and use LLM to create a summary or extract information (Do not use this for x.com twitter.com links - use Twitter agent tools instead)",
+                    "description": "Scrape full contents from URLs and use LLM to create a summary or extract information. Max 5 URLs per batch. (Do not use this for x.com twitter.com links - use Twitter agent tools instead)",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "url": {
-                                "type": "string",
-                                "description": "Source URL",
+                            "urls": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "List of source URLs to scrape (max 5 URLs per batch)",
+                                "maxItems": 5,
                             },
                             "extract_prompt": {
                                 "type": "string",
                                 "description": "Instruction to LLM to process the scraped contents. Max 3 sentences. Use this when you want to extract specific information from the page. If this field is empty, a summary will be returned."
                             }
                         },
-                        "required": ["url"],
+                        "required": ["urls"],
                     },
                 },
             },
@@ -209,14 +211,15 @@ class ExaSearchDigestAgent(MeshAgent):
         return 35
 
     def get_system_prompt(self) -> str:
-        return """You are an AI assistant tasked with synthesizing information from provided web search results into a single, concise, and integrated summary. Your goal is to minimize output length while retaining the most crucial information.
-            - Synthesize, Don't Segregate: Instead of summarizing each source individually, group related information from across all sources into thematic paragraphs.
-            - Use Inline Numerical Citations: Cite sources using inline numerical markers (e.g., [1], [2]). At the end of the entire summary, provide a numbered list of the source URLs corresponding to the markers. Only cite the most relevant sources that contribute unique, non-redundant information. Disregard vague, duplicate, irrelevant information. Max 5 cited sources.
-            - Briefly quote the original texts for the most important information.
+        return """You are an AI assistant tasked with synthesizing information from provided web search results into a single, concise, and integrated summary. Your goal is to minimize output length while retaining the most crucial info.
+            - Synthesize, Don't Segregate: Instead of summarizing each source individually, group related info from across all sources into thematic paragraphs.
+            - Use Inline Numerical Citations: Cite sources using inline numerical markers (e.g., [1], [2]). At the end of the entire summary, provide a numbered list of the source URLs corresponding to the markers. Only cite the most relevant sources that contribute unique, non-redundant info. Disregard vague, duplicate, irrelevant info. Max 5 cited sources.
+            - Briefly quote the original texts for the most important info.
+            - If the results contain time-varying info such as current asset price, market cap, current valuation, current supply, add a "[WARNING] {field name(s)} may be outdated" note (not applicable to back-in-time values e.g. launch price. Historical values don't need such warning)
             - No bold formatting (**). No markdowns. Only basic bullet points and plain texts.
             - Focus on Key Details: Extract specific names, terms, numbers, and key concepts.
             - No opening or closing paragraphs. Just focus on representing the search results based on search query.
-            - Strictly under 1000 words for the summary. No restriction on the length of source URLs at the end. No minimum length requirement. Be as brief as possible while retaining relevant information to the search query."""
+            - Strictly under 1000 words for the summary. No restriction on the length of source URLs at the end. No minimum length requirement. Be as brief as possible while retaining relevant info to the search query."""
 
     async def _process_search_results_with_llm(
         self, search_results: List[Dict], search_query: str, disambiguation: Optional[str] = None
@@ -417,12 +420,13 @@ class ExaSearchDigestAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
-    async def exa_scrape_url(self, url: str, extract_prompt: Optional[str] = None) -> Dict[str, Any]:
-        logger.info(f"Scraping URL with Exa: {url}")
+    async def exa_scrape_url(self, urls: List[str], extract_prompt: Optional[str] = None) -> Dict[str, Any]:
+        urls = urls[:5]
+        logger.info(f"Scraping {len(urls)} URL(s) with Exa: {urls}")
 
         try:
             api_url = f"{self.base_url}/contents"
-            payload = {"urls": [url], "text": {"maxCharacters": SCRAPE_TEXT_MAX_CHARS}, "livecrawl": "fallback"}
+            payload = {"urls": urls, "text": {"maxCharacters": SCRAPE_TEXT_MAX_CHARS}, "livecrawl": "fallback"}
 
             response = await self._request_with_key_rotation(url=api_url, method="POST", json_data=payload)
 
@@ -433,26 +437,38 @@ class ExaSearchDigestAgent(MeshAgent):
             results = response.get("results", [])
 
             if not results:
-                logger.warning("No content retrieved from URL")
-                return {"status": "no_data", "data": {"processed_summary": f"Could not retrieve content from {url}"}}
-
-            content_data = results[0]
+                logger.warning("No content retrieved from URLs")
+                return {"status": "no_data", "data": {"processed_summary": f"Could not retrieve content from {urls}"}}
 
             statuses = response.get("statuses", [])
-            if statuses and statuses[0].get("status") != "success":
-                error_msg = statuses[0].get("error", "Unknown error")
-                logger.error(f"Failed to scrape URL: {error_msg}")
-                return {"status": "error", "error": f"Failed to scrape URL: {error_msg}"}
+            status_map = {s.get("id"): s for s in statuses}
 
-            scraped_text = content_data.get("text", "")
+            all_scraped_content = []
+            for content_data in results:
+                url = content_data.get("url", content_data.get("id", "unknown"))
+                status_info = status_map.get(url, {})
 
-            if not scraped_text:
-                logger.warning("No text content found in scraped page")
-                return {"status": "no_data", "data": {"processed_summary": f"No readable content found at {url}"}}
+                if status_info.get("status") == "error":
+                    error_msg = status_info.get("error", "Unknown error")
+                    logger.warning(f"Failed to scrape {url}: {error_msg}")
+                    continue
 
-            logger.info(f"Successfully scraped {len(scraped_text)} characters from URL")
+                scraped_text = content_data.get("text", "")
+                if scraped_text:
+                    all_scraped_content.append({"url": url, "text": scraped_text})
+                    logger.info(f"Successfully scraped {len(scraped_text)} characters from {url}")
 
-            processed_summary = await self._process_scraped_content_with_llm(scraped_text, url, extract_prompt)
+            if not all_scraped_content:
+                logger.warning("No text content found in any scraped pages")
+                return {"status": "no_data", "data": {"processed_summary": f"No readable content found at {urls}"}}
+
+            combined_content = "\n\n---\n\n".join(
+                f"URL: {item['url']}\n\n{item['text']}" for item in all_scraped_content
+            )
+
+            processed_summary = await self._process_scraped_content_with_llm(
+                combined_content, ", ".join(urls), extract_prompt
+            )
 
             return {"status": "success", "data": {"processed_summary": processed_summary}}
 
@@ -481,14 +497,14 @@ class ExaSearchDigestAgent(MeshAgent):
             result = await self.exa_web_search(search_term, time_filter, limit, include_domains, disambiguation)
 
         elif tool_name == "exa_scrape_url":
-            url = function_args.get("url")
+            urls = function_args.get("urls")
             extract_prompt = function_args.get("extract_prompt")
 
-            if not url:
-                logger.error("Missing 'url' parameter")
-                return {"status": "error", "error": "Missing 'url' parameter"}
+            if not urls:
+                logger.error("Missing 'urls' parameter")
+                return {"status": "error", "error": "Missing 'urls' parameter"}
 
-            result = await self.exa_scrape_url(url, extract_prompt)
+            result = await self.exa_scrape_url(urls, extract_prompt)
 
         else:
             logger.error(f"Unsupported tool: {tool_name}")
