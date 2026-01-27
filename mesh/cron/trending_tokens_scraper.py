@@ -1,7 +1,6 @@
 """
-Trending Tokens Scraper (No Chrome Required)
+Get Trending Tokens
 Fetches top 20 trending tokens from DexScreener for multiple chains and uploads to R2.
-Uses curl_cffi to bypass Cloudflare via TLS fingerprint impersonation.
 Designed to run as a PM2 cron job.
 """
 
@@ -226,8 +225,19 @@ class TrendingTokensScraper:
         tasks = [self._fetch_pair_details(session, semaphore, chain, addr) for addr in pair_addresses]
         results = await asyncio.gather(*tasks)
 
-        token_details = [r for r in results if r is not None]
-        logger.info(f"Completed {chain}: {len(token_details)} tokens")
+        # Dedup by token address — multiple pairs can resolve to the same token
+        seen_addresses = set()
+        token_details = []
+        for r in results:
+            if r is None:
+                continue
+            addr = r.get("address", "").lower()
+            if addr in seen_addresses:
+                continue
+            seen_addresses.add(addr)
+            token_details.append(r)
+
+        logger.info(f"Completed {chain}: {len(token_details)} unique tokens")
         return token_details
 
     def upload_to_r2(self, chain: str, tokens: List[Dict]):
