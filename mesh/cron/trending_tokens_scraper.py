@@ -283,6 +283,9 @@ class TrendingTokensScraper:
         logger.info(f"Duration: {duration:.2f}s | Total tokens: {total_tokens}")
         for chain, tokens in all_results.items():
             logger.info(f"  {chain}: {len(tokens)} tokens")
+        logger.info("Files uploaded to R2:")
+        for chain in all_results:
+            logger.info(f"  - https://mesh-data.heurist.xyz/trending_tokens_{chain}.json")
         logger.info("=" * 80)
 
 
