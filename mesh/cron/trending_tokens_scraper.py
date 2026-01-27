@@ -1,31 +1,28 @@
 """
-Trending Tokens Scraper
-Fetches top 20 trending tokens from DexScreener for multiple chains and uploads to R2
-Designed to run as a PM2 cron job
+Trending Tokens Scraper (No Chrome Required)
+Fetches top 20 trending tokens from DexScreener for multiple chains and uploads to R2.
+Uses curl_cffi to bypass Cloudflare without a browser.
+Designed to run as a PM2 cron job.
 """
 
 import asyncio
 import json
 import logging
 import os
-import time
 from datetime import datetime
 from typing import Dict, List, Optional
 
 import aiohttp
 import boto3
-import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
+from curl_cffi import requests as cffi_requests
 from dotenv import load_dotenv
 
-# Setup logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# Load environment variables
 load_dotenv()
 
-# Configuration
 CHAINS = {
     "solana": "https://dexscreener.com/solana",
     "bsc": "https://dexscreener.com/bsc",
@@ -34,11 +31,9 @@ CHAINS = {
 }
 
 TOP_N_TOKENS = 20
-RATE_LIMIT_DELAY = 0.5  # 500ms between API calls (well below 300 req/min limit)
-PAGE_LOAD_WAIT = 30  # Wait time for Cloudflare check
+RATE_LIMIT_DELAY = 0.5
 R2_BUCKET = "mesh"
 
-# R2 Configuration from environment
 R2_ENDPOINT = os.getenv("R2_ENDPOINT")
 R2_ACCESS_KEY = os.getenv("R2_ACCESS_KEY")
 R2_SECRET_KEY = os.getenv("R2_SECRET_KEY")
@@ -77,7 +72,8 @@ class TrendingTokensScraper:
 
     def scrape_trending_pairs(self, chain: str, url: str) -> List[str]:
         """
-        Scrape trending pair addresses from DexScreener using browser automation
+        Scrape trending pair addresses from DexScreener using curl_cffi.
+        Bypasses Cloudflare via TLS fingerprint impersonation — no browser needed.
 
         Args:
             chain: Chain identifier (solana, bsc, ethereum, base)
@@ -88,42 +84,21 @@ class TrendingTokensScraper:
         """
         logger.info(f"Scraping {chain} trending pairs from {url}")
 
-        # Configure Chrome options
-        options = uc.ChromeOptions()
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_argument("--window-size=1920,1080")
-
-        driver = None
         pair_addresses = []
 
         try:
-            # Let undetected-chromedriver automatically download matching ChromeDriver version
-            # Explicitly specify Chrome version 141 to match installed browser
-            driver = uc.Chrome(options=options, use_subprocess=True, version_main=141)
+            response = cffi_requests.get(url, impersonate="chrome", timeout=30)
 
-            logger.info(f"Navigating to: {url}")
-            driver.get(url)
+            if response.status_code != 200:
+                logger.error(f"HTTP {response.status_code} for {url}")
+                return []
 
-            # Wait for Cloudflare check and page load
-            logger.info(f"Waiting for page to load ({PAGE_LOAD_WAIT}s)...")
-            time.sleep(PAGE_LOAD_WAIT)
+            if "Just a moment" in response.text:
+                logger.error(f"Cloudflare challenge not bypassed for {chain}")
+                return []
 
-            page_title = driver.title
-            logger.info(f"Page loaded: {page_title}")
+            soup = BeautifulSoup(response.text, "html.parser")
 
-            if "Just a moment" in page_title:
-                logger.warning("Still on Cloudflare check, waiting longer...")
-                time.sleep(PAGE_LOAD_WAIT)
-
-            # Get page HTML
-            html = driver.page_source
-
-            # Parse HTML
-            soup = BeautifulSoup(html, "html.parser")
-
-            # Find the trending table
             table = soup.find("div", class_="ds-dex-table ds-dex-table-top")
 
             if not table:
@@ -135,14 +110,11 @@ class TrendingTokensScraper:
                     logger.error("No dex table found")
                     return []
 
-            # Find all token links in the table
             links = table.find_all("a", href=True)
 
             for link in links[:TOP_N_TOKENS]:
                 href = link.get("href", "")
 
-                # Extract pair address from URL
-                # URL format: /solana/{pair_address} or /bsc/{pair_address}, etc.
                 if f"/{chain}/" in href:
                     parts = href.split(f"/{chain}/")
                     if len(parts) > 1:
@@ -155,11 +127,6 @@ class TrendingTokensScraper:
         except Exception as e:
             logger.error(f"Error scraping {chain}: {e}", exc_info=True)
 
-        finally:
-            if driver:
-                driver.quit()
-                logger.info("Browser closed")
-
         return pair_addresses
 
     def _is_stable_or_native_token(self, symbol: str, address: str) -> bool:
@@ -169,13 +136,9 @@ class TrendingTokensScraper:
 
         symbol_upper = symbol.upper()
 
-        # Common stablecoins
         stablecoins = ["USDT", "USDC", "DAI", "BUSD", "TUSD", "USDD", "FRAX", "USDP", "GUSD", "PYUSD"]
-
-        # Native and wrapped native tokens
         native_tokens = ["SOL", "WSOL", "ETH", "WETH", "BNB", "WBNB", "MATIC", "WMATIC", "AVAX", "WAVAX"]
 
-        # Common DEX base tokens
         common_addresses = [
             "So11111111111111111111111111111111111111112",  # Wrapped SOL
             "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".lower(),  # WETH
@@ -214,7 +177,6 @@ class TrendingTokensScraper:
                         base_token = pair.get("baseToken", {})
                         quote_token = pair.get("quoteToken", {})
 
-                        # Select the volatile token (not stablecoin or native)
                         base_is_stable = self._is_stable_or_native_token(
                             base_token.get("symbol", ""), base_token.get("address", "")
                         )
@@ -222,40 +184,27 @@ class TrendingTokensScraper:
                             quote_token.get("symbol", ""), quote_token.get("address", "")
                         )
 
-                        # Token selection logic:
-                        # 1. If both are stable/native: skip this pair (return None)
-                        # 2. If only quote is stable/native: select base
-                        # 3. If only base is stable/native: select quote
-                        # 4. If neither are stable/native: select base (default)
-
                         if base_is_stable and quote_is_stable:
-                            # Both are stable/native, skip this pair
                             logger.warning(f"Skipping pair {pair_address}: both tokens are stable/native")
                             return None
                         elif base_is_stable and not quote_is_stable:
                             selected_token = quote_token
                         else:
-                            # Either quote is stable (and base is not), or both are volatile
-                            # In both cases, pick base token
                             selected_token = base_token
 
-                        # Extract simplified token info
                         result = {
                             "address": selected_token.get("address"),
                             "name": selected_token.get("name"),
                             "symbol": selected_token.get("symbol"),
                         }
 
-                        # Add social/info fields if available
                         if "info" in pair:
                             info = pair["info"]
                             links = {}
 
-                            # Add websites
                             if info.get("websites"):
                                 links["websites"] = [w.get("url") for w in info["websites"] if w.get("url")]
 
-                            # Add socials
                             if info.get("socials"):
                                 for social in info["socials"]:
                                     social_type = social.get("type", social.get("platform", ""))
@@ -294,14 +243,12 @@ class TrendingTokensScraper:
         """
         logger.info(f"Processing chain: {chain}")
 
-        # Step 1: Scrape trending pair addresses
         pair_addresses = self.scrape_trending_pairs(chain, url)
 
         if not pair_addresses:
             logger.warning(f"No pair addresses found for {chain}")
             return []
 
-        # Step 2: Fetch details for each pair with rate limiting
         token_details = []
 
         for i, pair_address in enumerate(pair_addresses, 1):
@@ -312,7 +259,6 @@ class TrendingTokensScraper:
             if details:
                 token_details.append(details)
 
-            # Rate limiting
             if i < len(pair_addresses):
                 await asyncio.sleep(RATE_LIMIT_DELAY)
 
@@ -331,7 +277,6 @@ class TrendingTokensScraper:
             data = {"chain": chain, "last_updated": datetime.now().isoformat(), "tokens": tokens}
 
             json_data = json.dumps(data, indent=2, ensure_ascii=False)
-
             filename = f"trending_tokens_{chain}.json"
 
             self.s3_client.put_object(
@@ -353,7 +298,6 @@ class TrendingTokensScraper:
         all_results = {}
 
         try:
-            # Process each chain sequentially to avoid overloading
             for chain, url in CHAINS.items():
                 logger.info(f"\n{'=' * 80}")
                 logger.info(f"Processing: {chain.upper()}")
@@ -362,14 +306,11 @@ class TrendingTokensScraper:
                 token_details = await self.process_chain(chain, url)
                 all_results[chain] = token_details
 
-                # Upload to R2 immediately after each chain
                 if token_details:
                     self.upload_to_r2(chain, token_details)
 
-                # Add delay between chains to be respectful
                 await asyncio.sleep(2)
 
-            # Summary
             end_time = datetime.now()
             duration = (end_time - start_time).total_seconds()
 
@@ -382,7 +323,7 @@ class TrendingTokensScraper:
             logger.info(f"Total tokens scraped: {total_tokens}")
             for chain, tokens in all_results.items():
                 logger.info(f"  {chain}: {len(tokens)} tokens")
-            logger.info(f"Files uploaded to R2:")
+            logger.info("Files uploaded to R2:")
             for chain in all_results.keys():
                 logger.info(f"  - https://mesh-data.heurist.xyz/trending_tokens_{chain}.json")
             logger.info("=" * 80)
