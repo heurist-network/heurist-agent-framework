@@ -392,9 +392,9 @@ class ExaSearchDigestAgent(MeshAgent):
                 logger.warning("Search completed but no results were found")
                 result = {"status": "no_data", "data": {"processed_summary": "No results found for your search query."}}
                 if time_filter == "past_week":
-                    result["next_step"] = "Try a broader search with past_month or past_year"
+                    result["next_tool_tips"] = "Try a broader search with past_month or past_year"
                 elif time_filter == "past_month":
-                    result["next_step"] = "Try a broader search with past_year"
+                    result["next_tool_tips"] = "Try a broader search with past_year"
                 return result
 
             formatted_results = []
