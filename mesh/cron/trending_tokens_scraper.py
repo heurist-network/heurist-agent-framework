@@ -1,7 +1,7 @@
 """
 Trending Tokens Scraper (No Chrome Required)
 Fetches top 20 trending tokens from DexScreener for multiple chains and uploads to R2.
-Uses curl_cffi to bypass Cloudflare without a browser.
+Uses curl_cffi to bypass Cloudflare via TLS fingerprint impersonation.
 Designed to run as a PM2 cron job.
 """
 
@@ -9,6 +9,7 @@ import asyncio
 import json
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -31,12 +32,27 @@ CHAINS = {
 }
 
 TOP_N_TOKENS = 20
-RATE_LIMIT_DELAY = 0.5
+MAX_RETRIES = 3
+# DexScreener API allows 300 req/min — 5 concurrent is conservative
+API_CONCURRENCY = 5
 R2_BUCKET = "mesh"
 
 R2_ENDPOINT = os.getenv("R2_ENDPOINT")
 R2_ACCESS_KEY = os.getenv("R2_ACCESS_KEY")
 R2_SECRET_KEY = os.getenv("R2_SECRET_KEY")
+
+STABLECOINS = frozenset(["USDT", "USDC", "DAI", "BUSD", "TUSD", "USDD", "FRAX", "USDP", "GUSD", "PYUSD"])
+NATIVE_TOKENS = frozenset(["SOL", "WSOL", "ETH", "WETH", "BNB", "WBNB", "MATIC", "WMATIC", "AVAX", "WAVAX"])
+KNOWN_BASE_ADDRESSES = frozenset(
+    [
+        "So11111111111111111111111111111111111111112",  # Wrapped SOL
+        "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",  # WETH
+        "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",  # WBNB
+        "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",  # USDC on Base
+        "0x4200000000000000000000000000000000000006",  # WETH on Base
+        "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b",  # Virtual on Base
+    ]
+)
 
 
 class TrendingTokensScraper:
@@ -44,10 +60,8 @@ class TrendingTokensScraper:
 
     def __init__(self):
         self.s3_client = self._init_s3_client()
-        self.session = None
 
     def _init_s3_client(self):
-        """Initialize boto3 S3 client for R2"""
         if not all([R2_ENDPOINT, R2_ACCESS_KEY, R2_SECRET_KEY]):
             raise ValueError("R2 credentials not found in environment variables")
 
@@ -59,284 +73,210 @@ class TrendingTokensScraper:
             region_name="auto",
         )
 
-    async def _init_session(self):
-        """Initialize aiohttp session"""
-        if self.session is None:
-            self.session = aiohttp.ClientSession()
-
-    async def _close_session(self):
-        """Close aiohttp session"""
-        if self.session:
-            await self.session.close()
-            self.session = None
-
-    def scrape_trending_pairs(self, chain: str, url: str) -> List[str]:
+    def _scrape_trending_pairs(self, chain: str, url: str) -> List[str]:
         """
         Scrape trending pair addresses from DexScreener using curl_cffi.
         Bypasses Cloudflare via TLS fingerprint impersonation — no browser needed.
-
-        Args:
-            chain: Chain identifier (solana, bsc, ethereum, base)
-            url: DexScreener URL for the chain
-
-        Returns:
-            List of pair addresses
+        Retries up to MAX_RETRIES on failure.
         """
         logger.info(f"Scraping {chain} trending pairs from {url}")
 
-        pair_addresses = []
+        for attempt in range(1, MAX_RETRIES + 1):
+            try:
+                response = cffi_requests.get(url, impersonate="chrome", timeout=30)
 
-        try:
-            response = cffi_requests.get(url, impersonate="chrome", timeout=30)
+                if response.status_code != 200:
+                    logger.warning(f"HTTP {response.status_code} for {url} (attempt {attempt}/{MAX_RETRIES})")
+                    continue
 
-            if response.status_code != 200:
-                logger.error(f"HTTP {response.status_code} for {url}")
-                return []
+                if "Just a moment" in response.text:
+                    logger.warning(f"Cloudflare challenge hit for {chain} (attempt {attempt}/{MAX_RETRIES})")
+                    continue
 
-            if "Just a moment" in response.text:
-                logger.error(f"Cloudflare challenge not bypassed for {chain}")
-                return []
+                soup = BeautifulSoup(response.text, "html.parser")
 
-            soup = BeautifulSoup(response.text, "html.parser")
+                table = soup.find("div", class_="ds-dex-table ds-dex-table-top")
+                if not table:
+                    all_tables = soup.find_all("div", class_=lambda x: x and "ds-dex-table" in x if x else False)
+                    table = all_tables[0] if all_tables else None
 
-            table = soup.find("div", class_="ds-dex-table ds-dex-table-top")
+                if not table:
+                    logger.warning(f"No dex table found for {chain} (attempt {attempt}/{MAX_RETRIES})")
+                    continue
 
-            if not table:
-                logger.warning("ds-dex-table-top not found, trying any ds-dex-table...")
-                all_tables = soup.find_all("div", class_=lambda x: x and "ds-dex-table" in x if x else False)
-                if all_tables:
-                    table = all_tables[0]
-                else:
-                    logger.error("No dex table found")
-                    return []
-
-            links = table.find_all("a", href=True)
-
-            for link in links[:TOP_N_TOKENS]:
-                href = link.get("href", "")
-
-                if f"/{chain}/" in href:
+                seen = set()
+                pair_addresses = []
+                for link in table.find_all("a", href=True):
+                    href = link.get("href", "")
+                    if f"/{chain}/" not in href:
+                        continue
                     parts = href.split(f"/{chain}/")
-                    if len(parts) > 1:
-                        pair_address = parts[1].split("?")[0].strip("/")
-                        if pair_address:
-                            pair_addresses.append(pair_address)
+                    if len(parts) < 2:
+                        continue
+                    addr = parts[1].split("?")[0].strip("/")
+                    if addr and addr not in seen:
+                        seen.add(addr)
+                        pair_addresses.append(addr)
+                    if len(pair_addresses) >= TOP_N_TOKENS:
+                        break
 
-            logger.info(f"Found {len(pair_addresses)} pair addresses for {chain}")
+                logger.info(f"Found {len(pair_addresses)} pair addresses for {chain}")
+                return pair_addresses
 
-        except Exception as e:
-            logger.error(f"Error scraping {chain}: {e}", exc_info=True)
+            except Exception as e:
+                logger.warning(f"Error scraping {chain} (attempt {attempt}/{MAX_RETRIES}): {e}")
 
-        return pair_addresses
+        logger.error(f"Failed to scrape {chain} after {MAX_RETRIES} attempts")
+        return []
 
-    def _is_stable_or_native_token(self, symbol: str, address: str) -> bool:
-        """Check if token is a stablecoin or native/wrapped native token"""
+    @staticmethod
+    def _is_stable_or_native(symbol: str, address: str) -> bool:
         if not symbol:
             return False
+        upper = symbol.upper()
+        return upper in STABLECOINS or upper in NATIVE_TOKENS or address.lower() in KNOWN_BASE_ADDRESSES
 
-        symbol_upper = symbol.upper()
+    @staticmethod
+    def _extract_token_result(pair: Dict) -> Optional[Dict]:
+        """Pick the volatile token from a pair and extract its info + links."""
+        base = pair.get("baseToken", {})
+        quote = pair.get("quoteToken", {})
 
-        stablecoins = ["USDT", "USDC", "DAI", "BUSD", "TUSD", "USDD", "FRAX", "USDP", "GUSD", "PYUSD"]
-        native_tokens = ["SOL", "WSOL", "ETH", "WETH", "BNB", "WBNB", "MATIC", "WMATIC", "AVAX", "WAVAX"]
+        base_stable = TrendingTokensScraper._is_stable_or_native(base.get("symbol", ""), base.get("address", ""))
+        quote_stable = TrendingTokensScraper._is_stable_or_native(quote.get("symbol", ""), quote.get("address", ""))
 
-        common_addresses = [
-            "So11111111111111111111111111111111111111112",  # Wrapped SOL
-            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".lower(),  # WETH
-            "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c".lower(),  # WBNB
-            "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913".lower(),  # USDC on Base
-            "0x4200000000000000000000000000000000000006".lower(),  # WETH on Base
-            "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b".lower(),  # Virtual on Base
-        ]
-
-        return symbol_upper in stablecoins or symbol_upper in native_tokens or address.lower() in common_addresses
-
-    async def fetch_pair_details(self, chain: str, pair_address: str) -> Optional[Dict]:
-        """
-        Fetch detailed pair information from DexScreener API
-        Returns only token info and social links, selecting the volatile token
-
-        Args:
-            chain: Chain identifier
-            pair_address: Pair contract address
-
-        Returns:
-            Dict with token info or None if not found
-        """
-        await self._init_session()
-
-        url = f"https://api.dexscreener.com/latest/dex/pairs/{chain}/{pair_address}"
-
-        try:
-            async with self.session.get(url) as response:
-                if response.status == 200:
-                    data = await response.json()
-
-                    if "pairs" in data and data["pairs"] and len(data["pairs"]) > 0:
-                        pair = data["pairs"][0]
-
-                        base_token = pair.get("baseToken", {})
-                        quote_token = pair.get("quoteToken", {})
-
-                        base_is_stable = self._is_stable_or_native_token(
-                            base_token.get("symbol", ""), base_token.get("address", "")
-                        )
-                        quote_is_stable = self._is_stable_or_native_token(
-                            quote_token.get("symbol", ""), quote_token.get("address", "")
-                        )
-
-                        if base_is_stable and quote_is_stable:
-                            logger.warning(f"Skipping pair {pair_address}: both tokens are stable/native")
-                            return None
-                        elif base_is_stable and not quote_is_stable:
-                            selected_token = quote_token
-                        else:
-                            selected_token = base_token
-
-                        result = {
-                            "address": selected_token.get("address"),
-                            "name": selected_token.get("name"),
-                            "symbol": selected_token.get("symbol"),
-                        }
-
-                        if "info" in pair:
-                            info = pair["info"]
-                            links = {}
-
-                            if info.get("websites"):
-                                links["websites"] = [w.get("url") for w in info["websites"] if w.get("url")]
-
-                            if info.get("socials"):
-                                for social in info["socials"]:
-                                    social_type = social.get("type", social.get("platform", ""))
-                                    social_url = social.get("url", "")
-                                    if social_type and social_url:
-                                        if social_type not in links:
-                                            links[social_type] = []
-                                        links[social_type].append(social_url)
-
-                            if links:
-                                result["links"] = links
-
-                        logger.info(f"Fetched details for {chain}/{pair_address}: {result.get('symbol')}")
-                        return result
-                    else:
-                        logger.warning(f"No pair data found for {chain}/{pair_address}")
-                        return None
-                else:
-                    logger.error(f"API error {response.status} for {chain}/{pair_address}")
-                    return None
-
-        except Exception as e:
-            logger.error(f"Error fetching pair details for {chain}/{pair_address}: {e}")
+        if base_stable and quote_stable:
             return None
 
-    async def process_chain(self, chain: str, url: str) -> List[Dict]:
-        """
-        Process a single chain: scrape pairs and fetch details
+        selected = quote if (base_stable and not quote_stable) else base
 
-        Args:
-            chain: Chain identifier
-            url: DexScreener URL
+        result = {
+            "address": selected.get("address"),
+            "name": selected.get("name"),
+            "symbol": selected.get("symbol"),
+        }
 
-        Returns:
-            List of token details
-        """
+        info = pair.get("info")
+        if info:
+            links = {}
+            if info.get("websites"):
+                links["websites"] = [w["url"] for w in info["websites"] if w.get("url")]
+            for social in info.get("socials", []):
+                stype = social.get("type", social.get("platform", ""))
+                surl = social.get("url", "")
+                if stype and surl:
+                    links.setdefault(stype, []).append(surl)
+            if links:
+                result["links"] = links
+
+        return result
+
+    async def _fetch_pair_details(
+        self, session: aiohttp.ClientSession, semaphore: asyncio.Semaphore, chain: str, pair_address: str
+    ) -> Optional[Dict]:
+        url = f"https://api.dexscreener.com/latest/dex/pairs/{chain}/{pair_address}"
+
+        for attempt in range(1, MAX_RETRIES + 1):
+            try:
+                async with semaphore:
+                    async with session.get(url) as response:
+                        if response.status == 429:
+                            wait = 2**attempt
+                            logger.warning(f"Rate limited on {chain}/{pair_address}, backing off {wait}s")
+                            await asyncio.sleep(wait)
+                            continue
+
+                        if response.status != 200:
+                            logger.warning(f"API {response.status} for {chain}/{pair_address} (attempt {attempt})")
+                            continue
+
+                        data = await response.json()
+
+                pairs = data.get("pairs")
+                if not pairs:
+                    logger.warning(f"No pair data for {chain}/{pair_address}")
+                    return None
+
+                result = self._extract_token_result(pairs[0])
+                if result:
+                    logger.info(f"Fetched {chain}/{pair_address}: {result.get('symbol')}")
+                else:
+                    logger.warning(f"Skipping {chain}/{pair_address}: both tokens are stable/native")
+                return result
+
+            except Exception as e:
+                logger.warning(f"Error fetching {chain}/{pair_address} (attempt {attempt}): {e}")
+
+        logger.error(f"Failed to fetch {chain}/{pair_address} after {MAX_RETRIES} attempts")
+        return None
+
+    async def _process_chain(
+        self, session: aiohttp.ClientSession, semaphore: asyncio.Semaphore, chain: str, url: str
+    ) -> List[Dict]:
         logger.info(f"Processing chain: {chain}")
 
-        pair_addresses = self.scrape_trending_pairs(chain, url)
+        loop = asyncio.get_running_loop()
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            pair_addresses = await loop.run_in_executor(pool, self._scrape_trending_pairs, chain, url)
 
         if not pair_addresses:
             logger.warning(f"No pair addresses found for {chain}")
             return []
 
-        token_details = []
+        tasks = [self._fetch_pair_details(session, semaphore, chain, addr) for addr in pair_addresses]
+        results = await asyncio.gather(*tasks)
 
-        for i, pair_address in enumerate(pair_addresses, 1):
-            logger.info(f"Fetching details for {chain} pair {i}/{len(pair_addresses)}: {pair_address}")
-
-            details = await self.fetch_pair_details(chain, pair_address)
-
-            if details:
-                token_details.append(details)
-
-            if i < len(pair_addresses):
-                await asyncio.sleep(RATE_LIMIT_DELAY)
-
-        logger.info(f"Completed {chain}: {len(token_details)} tokens with full details")
+        token_details = [r for r in results if r is not None]
+        logger.info(f"Completed {chain}: {len(token_details)} tokens")
         return token_details
 
     def upload_to_r2(self, chain: str, tokens: List[Dict]):
-        """
-        Upload chain data to R2 bucket as a single file per chain
-
-        Args:
-            chain: Chain identifier (solana, bsc, ethereum, base)
-            tokens: List of token data
-        """
         try:
             data = {"chain": chain, "last_updated": datetime.now().isoformat(), "tokens": tokens}
-
             json_data = json.dumps(data, indent=2, ensure_ascii=False)
             filename = f"trending_tokens_{chain}.json"
 
             self.s3_client.put_object(
                 Bucket=R2_BUCKET, Key=filename, Body=json_data.encode("utf-8"), ContentType="application/json"
             )
-
-            logger.info(f"Uploaded {filename} to R2 bucket {R2_BUCKET} ({len(tokens)} tokens)")
+            logger.info(f"Uploaded {filename} to R2 ({len(tokens)} tokens)")
 
         except Exception as e:
             logger.error(f"Error uploading {chain} to R2: {e}", exc_info=True)
 
     async def run(self):
-        """Main execution method"""
         logger.info("=" * 80)
         logger.info("TRENDING TOKENS SCRAPER - STARTING")
         logger.info("=" * 80)
 
         start_time = datetime.now()
-        all_results = {}
+        semaphore = asyncio.Semaphore(API_CONCURRENCY)
 
-        try:
-            for chain, url in CHAINS.items():
-                logger.info(f"\n{'=' * 80}")
-                logger.info(f"Processing: {chain.upper()}")
-                logger.info(f"{'=' * 80}")
+        async with aiohttp.ClientSession() as session:
+            # Scrape all chains in parallel, then fetch pair details concurrently
+            chain_tasks = {
+                chain: self._process_chain(session, semaphore, chain, url) for chain, url in CHAINS.items()
+            }
+            all_results = {}
+            for chain, task in chain_tasks.items():
+                all_results[chain] = await task
 
-                token_details = await self.process_chain(chain, url)
-                all_results[chain] = token_details
-
-                if token_details:
-                    self.upload_to_r2(chain, token_details)
-
-                await asyncio.sleep(2)
-
-            end_time = datetime.now()
-            duration = (end_time - start_time).total_seconds()
-
-            total_tokens = sum(len(tokens) for tokens in all_results.values())
-
-            logger.info("\n" + "=" * 80)
-            logger.info("SCRAPING COMPLETED SUCCESSFULLY")
-            logger.info("=" * 80)
-            logger.info(f"Duration: {duration:.2f} seconds")
-            logger.info(f"Total tokens scraped: {total_tokens}")
             for chain, tokens in all_results.items():
-                logger.info(f"  {chain}: {len(tokens)} tokens")
-            logger.info("Files uploaded to R2:")
-            for chain in all_results.keys():
-                logger.info(f"  - https://mesh-data.heurist.xyz/trending_tokens_{chain}.json")
-            logger.info("=" * 80)
+                if tokens:
+                    self.upload_to_r2(chain, tokens)
 
-        except Exception as e:
-            logger.error(f"Error in main execution: {e}", exc_info=True)
+        duration = (datetime.now() - start_time).total_seconds()
+        total_tokens = sum(len(t) for t in all_results.values())
 
-        finally:
-            await self._close_session()
+        logger.info("=" * 80)
+        logger.info("SCRAPING COMPLETED")
+        logger.info(f"Duration: {duration:.2f}s | Total tokens: {total_tokens}")
+        for chain, tokens in all_results.items():
+            logger.info(f"  {chain}: {len(tokens)} tokens")
+        logger.info("=" * 80)
 
 
 async def main():
-    """Entry point"""
     scraper = TrendingTokensScraper()
     await scraper.run()
 
