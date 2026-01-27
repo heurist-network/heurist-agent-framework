@@ -19,6 +19,7 @@ The scraper intelligently selects volatile tokens from trading pairs:
 - **Skips pairs** where both tokens are stablecoins/native tokens (USDT/USDC/ETH/SOL/etc.)
 - **Prefers volatile tokens** over stablecoins in mixed pairs
 - **Defaults to base token** when both tokens are volatile
+- **Deduplicates** by token address — multiple pairs resolving to the same token only appear once
 
 **Filtered tokens** (excluded from results):
 - Stablecoins: USDT, USDC, DAI, BUSD, TUSD, USDD, FRAX, USDP, GUSD, PYUSD
@@ -33,10 +34,10 @@ Only stores essential token information:
 - Includes `last_updated` timestamp for freshness
 
 ### Technical Implementation
-- **Browser automation**: Uses `undetected-chromedriver` to bypass Cloudflare protection
-- **Headless operation**: Runs with `xvfb` virtual display
-- **Rate limiting**: 500ms delay between API calls (well below 300 req/min limit)
-- **Async API fetching**: Using aiohttp for efficient parallel requests
+- **Cloudflare bypass**: Uses `curl_cffi` with TLS fingerprint impersonation (no browser needed)
+- **Concurrent scraping**: All chains scraped in parallel via ThreadPoolExecutor
+- **Concurrent API calls**: Pair details fetched with asyncio.gather, capped at 5 concurrent requests
+- **Retries**: Up to 3 attempts on both scraping and API calls, with exponential backoff on 429s
 - **R2 integration**: Automatic upload of one file per chain
 
 ## File Structure
@@ -45,9 +46,6 @@ Only stores essential token information:
 /home/appuser/heurist-agent-framework/mesh/cron/
 ├── trending_tokens_scraper.py   # Main scraper script
 ├── ecosystem.config.js           # PM2 configuration
-├── test_scraper.py              # Test script (Solana only)
-├── test_ethereum.py             # Test script (Ethereum)
-├── test_r2_upload.py            # R2 upload test
 ├── README.md                    # This file
 └── logs/                        # PM2 log files
 ```
@@ -57,15 +55,10 @@ Only stores essential token information:
 ### 1. Install Dependencies
 
 ```bash
-# Install required Python packages
-uv pip install undetected-chromedriver beautifulsoup4 boto3 aiohttp python-dotenv
-
-# Ensure Chrome and xvfb are installed
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-sudo apt-get update
-sudo apt-get install -y google-chrome-stable xvfb
+uv pip install curl-cffi beautifulsoup4 boto3 aiohttp python-dotenv
 ```
+
+No Chrome, xvfb, or browser dependencies required.
 
 ### 2. Configure Environment Variables
 
@@ -76,8 +69,6 @@ R2_ENDPOINT=https://f85724868ca3f6675d406037f6fad7a2.r2.cloudflarestorage.com
 R2_ACCESS_KEY=<your_access_key>
 R2_SECRET_KEY=<your_secret_key>
 ```
-
-These are already configured in the existing `.env` file.
 
 ### 3. Start with PM2
 
@@ -107,8 +98,8 @@ pm2 startup
 ### 4. Manual Run (for testing)
 
 ```bash
-cd /home/appuser/heurist-agent-framework/mesh/cron
-xvfb-run -a uv run python trending_tokens_scraper.py
+cd /home/appuser/heurist-agent-framework
+.venv/bin/python mesh/cron/trending_tokens_scraper.py
 ```
 
 ## PM2 Configuration
@@ -216,39 +207,28 @@ tail -f /home/appuser/heurist-agent-framework/mesh/cron/logs/trending-tokens-out
 
 ## Performance
 
-**Per chain**:
-- Scraping: ~30-60 seconds (Cloudflare bypass + page load)
-- API fetching: ~10-20 seconds (20 tokens with rate limiting)
-- Total: ~40-80 seconds per chain
+**Total runtime** (all 4 chains): ~7-10 seconds
 
-**Total runtime** (all 4 chains): ~3-6 minutes
+Chains are scraped in parallel and API calls are concurrent (5 at a time), so the total runtime is dominated by network latency rather than sequential processing.
 
 ## Rate Limits
 
 DexScreener API limits:
 - **Rate limit**: 300 requests per minute
-- **Script behavior**: 500ms delay between requests = ~120 req/min maximum
-- **Safety margin**: 2.5x below limit
+- **Script behavior**: 5 concurrent requests with semaphore, exponential backoff on 429s
+- **Total requests**: ~80 per run (20 pairs × 4 chains)
 
 ## Troubleshooting
 
-### Chrome/ChromeDriver Issues
-```bash
-# Check Chrome installation
-google-chrome --version
-
-# Check xvfb
-which xvfb-run
-
-# Test Chrome with xvfb
-xvfb-run -a google-chrome --version
-```
+### Cloudflare Bypass Fails
+If `curl_cffi` stops working (Cloudflare updates their detection):
+- Update `curl_cffi`: `uv pip install --upgrade curl-cffi`
+- Try a different impersonation target in the script (e.g. `chrome110`, `safari`)
 
 ### API Rate Limiting
 If you hit rate limits:
-- The script includes 500ms delays between requests
-- Processing 20 tokens × 4 chains = 80 requests
-- Well below the 300 req/min limit
+- The script automatically backs off with exponential delay on 429 responses
+- Reduce `API_CONCURRENCY` in the script if needed
 
 ### R2 Upload Errors
 Check R2 credentials:
@@ -307,24 +287,3 @@ for token in tokens[:5]:
     if 'links' in token:
         print(f"  Links: {token['links']}")
 ```
-
-## Testing Results
-
-### Solana Test
-✅ Successfully scraped 20 trending tokens
-✅ Uploaded to R2 bucket `mesh`
-✅ File size: ~7KB
-
-### Ethereum Test
-✅ Successfully scraped 19 trending tokens (1 pair skipped - both stable)
-✅ Uploaded to R2 bucket `mesh`
-✅ File size: ~7KB
-✅ Edge case handling verified (USDT/USDC pair skipped)
-
-## Notes
-
-- The scraper respects DexScreener's rate limits
-- Browser automation ensures we get real trending data (not just boosted tokens)
-- Data is simplified to avoid storing stale price information
-- Each chain has its own file for easier consumption
-- Smart token selection filters out low-value pairs automatically
