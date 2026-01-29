@@ -306,6 +306,7 @@ Provide clear, structured information from Twitter/X to help users understand so
                 "profile": {
                     "username": profile.get("screen_name") or profile.get("username"),
                     "name": profile.get("name"),
+                    "description": profile.get("description"),
                     "verified": bool(profile.get("verified", False)),
                     "followers": profile.get("followers_count") or profile.get("followers", 0),
                 },

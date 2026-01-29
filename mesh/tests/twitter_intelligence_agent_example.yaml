@@ -1,9 +1,9 @@
 metadata:
   agent: TwitterIntelligenceAgent
   test_file: twitter_intelligence_agent.py
-  timestamp: '2025-12-18T20:05:57.484298'
-  total_tests: 5
-  passed: 5
+  timestamp: '2026-01-29T20:52:40.434374'
+  total_tests: 10
+  passed: 10
   failed: 0
 results:
   user_timeline_heurist:
@@ -20,144 +20,396 @@ results:
           profile:
             username: heurist_ai
             name: Heurist
+            description: Making AI agents understand and work in crypto. ZK-secured
+              intelligence. Backed by @AmberGroup_io. Use our crypto research agent
+              https://t.co/FQp15W4r1K
             verified: true
-            followers: 33929
+            followers: 33848
           items:
-          - text: 'Solid research from @OnchainLu The signal cuts through the noise:
-              real x402 adoption lives in micropayments, not vanity metrics. Good
-              to see Heurist Mesh recognized among the servers with sustained, micro-value,
-              repeat usage. The infrastructure layer is proving out.'
-            created_at: '2025-12-17'
-            source: x.com/heurist_ai/status/2001428988892172657
+          - text: 99% loading......... █████████████▒ Heurist Mesh deploying ERC-8004
+              on mainnet today
+            created_at: '2026-01-29'
+            source: x.com/heurist_ai/status/2016820375393382743
             author:
               name: Heurist
-              followers: 33929
+              followers: 33848
             type: quote
             engagement:
-              likes: 17
-              replies: 17
+              likes: 13
+              replies: 1
+              retweets: 1
+              views: 588
+          - text: Unlike Australia, which has banned under-16s from social media platforms,
+              the EU is taking a much softer approach, shifting the burden onto families.
+            created_at: '2026-01-19'
+            source: x.com/Objectivo_X/status/2013171340740559299
+            author:
+              name: Objectivo
+              followers: 134
+            type: tweet
+            engagement:
+              likes: 249
+              replies: 25
+              retweets: 31
+              quotes: 4
+              views: 3764366
+          - text: Ethereum is the home for AI. ERC-8004 is like the digital ID for
+              agents. All Heurist Mesh agents will receive this important upgrade
+              tomorrow.
+            created_at: '2026-01-28'
+            source: x.com/heurist_ai/status/2016546050555687127
+            author:
+              name: Heurist
+              followers: 33848
+            type: quote
+            engagement:
+              likes: 19
+              replies: 4
+              retweets: 1
+              quotes: 1
+              views: 1042
+          - text: The skill is now published in the official skill hub 🔥
+            created_at: '2026-01-27'
+            source: x.com/heurist_ai/status/2016098603849175119
+            author:
+              name: Heurist
+              followers: 33848
+            type: quote
+            engagement:
+              likes: 14
+              replies: 2
               retweets: 3
-              views: 8530
-          - text: COP30 is coming. In 2025, world leaders will gather in Belém, Brazil
-              to push global climate action forward from climate finance to emissions
-              cuts, adaptation, and resilience. A pivotal moment for delivering on
-              the Paris Agreement.
-            created_at: '2025-12-03'
-            source: x.com/fitfor55info/status/1996262682534769139
+              views: 1099
+          - text: 'You can now make Clawdbot a crypto expert by installing the Heurist
+              skill &gt; get market headlines &gt; find trending tokens &gt; look
+              up prices and market contexts for 100,000+ tokens &gt; wallet analysis
+              &gt; social sentiment on X and more Tell it to use the skill:'
+            created_at: '2026-01-27'
+            source: x.com/heurist_ai/status/2015939252622696862
+            author:
+              name: Heurist
+              followers: 33848
+            type: tweet
+            engagement:
+              likes: 23
+              replies: 2
+              retweets: 5
+              quotes: 2
+              views: 3289
+          - text: Solo raised $1.2M led by @DraperVC + @TimDraper Proof you're human
+              — without sacrificing privacy. No more CAPTCHAs. No centralized hardware.
+              Secure biometric verification on your phone 📱 Follow @projectsolo &amp;
+              join our latest giveaway for a chance to win early access!
+            created_at: '2026-01-23'
+            source: x.com/projectsolo/status/2014566573248544964
+            author:
+              name: Solo
+              followers: 1790
+            type: tweet
+            engagement:
+              likes: 119
+              retweets: 5
+              views: 2816036
+          - text: 'Clawdbot is the smartest personal AI assistant. Heurist Mesh gives
+              it crypto-native tools to help you trade better. We''re launching a
+              giveaway: 100 USDT to whoever builds the most creative use case demo
+              using @moltbot + Heurist Mesh. To enter: 1. Set up Clawdbot 2. Connect
+              Heurist Mesh MCP 3. Post a short demo (thread or video) explaining what
+              it does and why it’s useful 4. Tag @heurist_ai and include your setup
+              notes'
+            created_at: '2026-01-26'
+            source: x.com/heurist_ai/status/2015832782799319154
+            author:
+              name: Heurist
+              followers: 33848
+            type: tweet
+            engagement:
+              likes: 30
+              replies: 1
+              retweets: 5
+              quotes: 3
+              views: 2314
+          - text: tired of scrolling CT? trending feed on Ask Heurist every hot topic
+              in crypto here - whale moves, rugs, new narratives. filter by Solana,
+              Base, BSC, whatever. one click to get the full story.
+            created_at: '2026-01-23'
+            source: x.com/heurist_ai/status/2014796057448743085
+            author:
+              name: Heurist
+              followers: 33848
+            type: tweet
+            engagement:
+              likes: 20
+              replies: 2
+              retweets: 3
+              quotes: 3
+              views: 1746
+          - text: You can already use Heurist Mesh to build next-gen crypto AI apps.
+              Easily get AI-ready data of &gt; every BNB chain token &gt; what KOLs
+              are talking &gt; news and research analysis Don't spend hours on finding
+              crypto APIs. It only takes minutes to integrate. Start vibing with us!
+            created_at: '2026-01-22'
+            source: x.com/heurist_ai/status/2014472738535014466
+            author:
+              name: Heurist
+              followers: 33848
+            type: quote
+            engagement:
+              likes: 14
+              replies: 1
+              retweets: 6
+              views: 950
+          - text: 'SOLD Prism​.app for $120,000 USD Congrats to the buyer! Prism is
+              a highly sought-after premium brand name. In September, we published
+              33 .APP sales (status/1965060633990475950), stating our expectation
+              of more six-figure .APP sales going forward. The growth of .APP into
+              a TLD widely recognized as one of the main players in the market has
+              been remarkable. From the earliest recorded .APP (re)sale of $3,000
+              in May 2018, which we had the privilege of scoring, to 2026, when founders
+              spend six-figure sums on premium .APP domains with confidence. Here''s
+              the data from the 20 most recent reports for TLDs used by projects launched
+              daily on Product Hunt, provided by @LeanneMac: Projects launched on
+              .APP: 473 Projects launched on .AI: 413 And the one that has gained
+              ground since September is .APP – not .AI. On Product Hunt, .APP is now
+              second only to .COM, among all existing TLDs. An outstanding achievement
+              for the TLD, with strong data confirming .APP''s status as the most
+              in-demand new gTLD. The agreement on Prism​.app was reached via TD,
+              and we chose our partner, GoDaddy, to secure the transaction. Thanks
+              to Mauli for the excellent support. Once again, congrats to the buyer
+              on acquiring Prism.'
+            created_at: '2026-01-17'
+            source: x.com/XTopDomains/status/2012531991418118400
+            author:
+              name: TopDomains
+              followers: 2055
+            type: tweet
+            engagement:
+              likes: 290
+              replies: 61
+              retweets: 19
+              quotes: 5
+              views: 2632144
+          next_cursor: null
+    description: Fetch recent tweets from @heurist_ai (should include profile description)
+    status: success
+    elapsed_time: 2.4217002391815186
+  user_timeline_drhinofficial:
+    input:
+      tool: user_timeline
+      tool_arguments:
+        identifier: '@drhinofficial'
+        limit: 5
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          profile:
+            username: drhinofficial
+            name: Balraj | Heurist Ai
+            description: Building AI in web3
+            verified: false
+            followers: 5
+          items: []
+          next_cursor: null
+    description: Fetch recent tweets from @drhinofficial (should include profile description)
+    status: success
+    elapsed_time: 2.200136661529541
+  user_timeline_mattprd:
+    input:
+      tool: user_timeline
+      tool_arguments:
+        identifier: '@MattPRD'
+        limit: 5
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          profile:
+            username: MattPRD
+            name: Matt Schlicht
+            description: CEO / Co-Founder https://t.co/hC5qLyKKy1. Co-founder/GP @TheoryForgeVC
+              (AI fund). Writing about AI agents https://t.co/BOIpaoIubo. YC W12.
+              Creator of @yesnoerror.
+            verified: true
+            followers: 188759
+          items:
+          - text: The EU’s new Toy Safety Regulation enters into force on 1 Jan 2026,
+              strengthening protection for children by banning hazardous chemicals
+              and boosting enforcement with digital product passports. The new rules
+              will apply from August 2030.
+            created_at: '2026-01-21'
+            source: x.com/fitfor55info/status/2013872439768547552
             author:
               name: Fit for 55 - Explained
-              followers: 7515
+              followers: 7509
             type: tweet
             engagement:
-              likes: 362
-              replies: 50
-              retweets: 22
-              quotes: 2
-              views: 7150858
-          - text: 'x402 v2 is live. Heurist facilitator and Mesh agents already support
-              the new spec. What v2 adds: wallet-based sessions, multi-chain payments,
-              plugin-driven architecture. Agents can skip full payment flows on repeated
-              calls.'
-            created_at: '2025-12-17'
-            source: x.com/heurist_ai/status/2001355713499795601
-            author:
-              name: Heurist
-              followers: 33929
-            type: tweet
-            engagement:
-              likes: 32
-              replies: 15
-              retweets: 13
+              likes: 62
+              replies: 3
+              retweets: 4
               quotes: 1
-              views: 6419
-          - text: Agentic commerce is going full-stack. Payments, identity, trust,
-              and execution are converging fast.
-            created_at: ''
-            source: x.com/heurist_ai/status/2000866110540062846
+              views: 1640935
+          - text: I honestly might buy more Mac minis
+            created_at: '2026-01-29'
+            source: x.com/MattPRD/status/2016755266960970046
             author:
-              name: Heurist
-              followers: 33929
-            type: quote
-            engagement:
-              likes: 55
-              replies: 15
-              retweets: 40
-              views: 15204
-          - text: dont miss this one!
-            created_at: '2025-12-10'
-            source: x.com/heurist_ai/status/1998785443358494897
-            author:
-              name: Heurist
-              followers: 33929
-            type: quote
-            engagement:
-              likes: 59
-              replies: 14
-              retweets: 47
-              views: 8199
-          - text: We're in 🤝 Sign up, engage, and get rewarded directly to your Base
-              wallet. Join us →
-            created_at: '2025-12-10'
-            source: x.com/heurist_ai/status/1998779186429808878
-            author:
-              name: Heurist
-              followers: 33929
-            type: quote
-            engagement:
-              likes: 75
-              replies: 17
-              retweets: 46
-              views: 10856
-          - text: '2025 gave us the agent thesis. We''re gathering builders to talk
-              through what''s actually coming in 2026: agents that execute, personal
-              models trained on your own data, and AI systems that transact onchain.
-              Tomorrow, 11 AM EST.'
-            created_at: ''
-            source: x.com/heurist_ai/status/1998440483937296587
-            author:
-              name: Heurist
-              followers: 33929
+              name: Matt Schlicht
+              followers: 188759
             type: tweet
             engagement:
-              likes: 75
-              replies: 16
-              retweets: 42
-              views: 7244
-          - text: We're teaming up with @AiMoNetwork to make Heurist Mesh available
-              through their marketplace. Open routing to mesh agents, tools, and inference
-              stack. x402 connects.
-            created_at: ''
-            source: x.com/heurist_ai/status/1998231045284753649
+              likes: 24
+              replies: 11
+              retweets: 1
+              views: 2313
+          - text: Look at these @moltbot talking to each other!!! There are over 50+
+              AI agents, from around the world, autonomously talking to each other
+              about whatever they want right now on These are people's personal AI
+              assistants talking off the clock! FASCINATING
+            created_at: '2026-01-29'
+            source: x.com/MattPRD/status/2016737034908664175
             author:
-              name: Heurist
-              followers: 33929
-            type: quote
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
             engagement:
-              likes: 53
-              replies: 15
+              likes: 285
+              replies: 51
               retweets: 37
-              quotes: 1
-              views: 7639
-          - text: 'Ethereum has completed the Fusaka upgrade. Check Etherscan: Mainnet
-              swaps now cost cents. L2 transactions in the $0.0001 range. The economic
-              friction is gone. So, what are we going to build with all this bandwidth?
-              🧵'
-            created_at: '2025-12-05'
-            source: x.com/heurist_ai/status/1996974603831591292
+              quotes: 16
+              views: 28374
+          - text: it is *wild* to let a @moltbot run loose and give it a lot of freedom
+              Clawd Clawderberg, my moltbot, just found a bug in posted on it's @x
+              account about it, fixed it, and then followed back up on the post letting
+              everyone know about the update. this is a different thing
+            created_at: '2026-01-29'
+            source: x.com/MattPRD/status/2016730963339006341
             author:
-              name: Heurist
-              followers: 33929
+              name: Matt Schlicht
+              followers: 188759
+            type: quote
+            engagement:
+              likes: 36
+              replies: 9
+              retweets: 4
+              quotes: 1
+              views: 8188
+          - text: 'Sound on: Everyone slips up on passwords – discover the common
+              pitfalls and how @ingoscom fixes them. What''s yours? 🔐More videos like
+              this? Drop your ideas for the next one!'
+            created_at: '2025-10-18'
+            source: x.com/ingos/status/1979542291200041139
+            author:
+              name: INGOS
+              followers: 68
             type: tweet
             engagement:
-              likes: 49
-              replies: 17
-              retweets: 36
+              likes: 42
+              replies: 2
+              retweets: 2
               quotes: 1
-              views: 6460
+              views: 929822
           next_cursor: null
-    description: Fetch recent tweets from @heurist_ai
+    description: Fetch recent tweets from @MattPRD - CEO/Co-Founder octane.ai (should
+      include profile description)
     status: success
-    elapsed_time: 8.95740008354187
+    elapsed_time: 2.4298996925354004
+  user_timeline_elonmusk:
+    input:
+      tool: user_timeline
+      tool_arguments:
+        identifier: '@elonmusk'
+        limit: 5
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          profile:
+            username: elonmusk
+            name: Elon Musk
+            description: ''
+            verified: true
+            followers: 233349778
+          items:
+          - text: 'RT @XFreeze: Grok Imagine is so advanced you don’t even need to
+              write a prompt Just upload an image - it analyzes the visual, infers
+              inten…'
+            created_at: '2026-01-29'
+            source: x.com/elonmusk/status/2016797201888948500
+            author:
+              name: Elon Musk
+              followers: 233349778
+            type: tweet
+            engagement:
+              likes: 1599
+              replies: 389
+              retweets: 285
+              quotes: 35
+              views: 349204
+          - text: 'RT @iam_smx: Elon Musk on the Tesla Cybercab Today “It does not
+              have steering wheel or pedals. It either drives itself or it does not
+              driv…'
+            created_at: '2026-01-29'
+            source: x.com/elonmusk/status/2016796102100459560
+            author:
+              name: Elon Musk
+              followers: 233349778
+            type: tweet
+            engagement:
+              likes: 10091
+              replies: 791
+              retweets: 1066
+              quotes: 115
+              views: 1119232
+          - text: 'RT @myhiddenvalue: 15-year-old girl raped in a School bathroom
+              by trans boy dressed in girls'' clothes. The School covers it up so
+              it doesn…'
+            created_at: '2026-01-29'
+            source: x.com/elonmusk/status/2016795581394333904
+            author:
+              name: Elon Musk
+              followers: 233349778
+            type: tweet
+            engagement:
+              likes: 40640
+              replies: 759
+              retweets: 15832
+              quotes: 347
+              views: 593462
+          - text: 'RT @MJTruthUltra: This is incredible… Billionaire Chamath Palihapitiya,
+              once a MEGA Donor to the Democrat Party, says he was totally brain…'
+            created_at: '2026-01-29'
+            source: x.com/elonmusk/status/2016795460317462835
+            author:
+              name: Elon Musk
+              followers: 233349778
+            type: tweet
+            engagement:
+              likes: 18325
+              replies: 288
+              retweets: 5053
+              quotes: 151
+              views: 603736
+          - text: 'RT @BrendanCarrFCC: You can’t make it up. The FCC will vote on
+              requiring that federal subsidies flow only to people that are both living…'
+            created_at: '2026-01-29'
+            source: x.com/elonmusk/status/2016794742495805890
+            author:
+              name: Elon Musk
+              followers: 233349778
+            type: tweet
+            engagement:
+              likes: 7712
+              replies: 235
+              retweets: 1925
+              quotes: 54
+              views: 340067
+          next_cursor: null
+    description: Fetch recent tweets from @elonmusk (should include profile description)
+    status: success
+    elapsed_time: 7.6733715534210205
   tweet_detail_basic:
     input:
       tool: tweet_detail
@@ -175,19 +427,19 @@ results:
             source: x.com/heurist_ai/status/1913624766793289972
             author:
               name: Heurist
-              followers: 33929
+              followers: 33848
             type: tweet
             engagement:
               likes: 34
               replies: 12
               retweets: 13
               quotes: 4
-              views: 13854
+              views: 13857
           next_tool_tips:
           - Pass show_thread=true to load the full thread and top replies.
     description: Fetch a single tweet detail (basic)
     status: success
-    elapsed_time: 1.0560739040374756
+    elapsed_time: 1.1313080787658691
   tweet_detail_thread:
     input:
       tool: tweet_detail
@@ -208,7 +460,7 @@ results:
             source: x.com/gpt3_eth/status/1914394032169762877
             author:
               name: Frank ✈️ (📜,📜)
-              followers: 1856
+              followers: 1825
             type: quote
             engagement:
               likes: 4
@@ -222,20 +474,19 @@ results:
               source: x.com/heurist_ai/status/1913624766793289972
               author:
                 id: '1736748346566459392'
-                username: heurist_ai
                 name: Heurist
                 verified: true
-                followers: 33929
+                followers: 33848
               engagement:
                 likes: 34
                 replies: 12
                 retweets: 13
                 quotes: 4
-                views: 13854
+                views: 13857
               type: tweet
     description: Fetch tweet detail with thread + top replies
     status: success
-    elapsed_time: 1.5153930187225342
+    elapsed_time: 1.0027189254760742
   twitter_search_bitcoin:
     input:
       tool: twitter_search
@@ -250,525 +501,840 @@ results:
         status: success
         data:
           influential_mentions:
-          - text: 'RT @TedPillows: Coinbase Bitcoin premium has reached a 1-month
-              low. Institutions are heavily selling $BTC again.'
+          - text: 'JUST IN: SEC CHAIR ATKINS JUST SAID LIVE ON CNBC THAT 401(k) ACCOUNTS
+              SHOULD BE ALLOWED TO BUY TRILLIONS OF DEMAND WILL COME TO BTC. HUGE
+              🔥'
             created_at: ''
-            source: x.com/TedPillows/status/2001623347441078706
-            author:
-              name: Ted
-              followers: 251042
-            type: tweet
-            engagement:
-              likes: 471
-              replies: 126
-              retweets: 88
-              quotes: 1
-          - text: 'JUST IN: 🇹🇼 Taiwan holds 210.45 BTC in seized assets, making it
-              the world’s 8th-largest government Bitcoin holder.'
-            created_at: ''
-            source: x.com/SwanDesk/status/2001622274823328033
-            author:
-              name: SwanDesk
-              followers: 52838
-            type: tweet
-            engagement:
-              likes: 4
-              replies: 1
-              views: 159
-          - text: 'RT @pete_rizzo_: JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION
-              WORTH OF ANOTHER COUNTRY HOLDING BTC. HUGE 🔥'
-            created_at: ''
-            source: x.com/pete_rizzo_/status/2001621947801833861
+            source: x.com/pete_rizzo_/status/2016854767209734149
             author:
               name: The Bitcoin Historian
-              followers: 205688
+              followers: 208595
             type: tweet
             engagement:
-              likes: 128
-              replies: 38
-              retweets: 19
-              quotes: 3
-          - text: 'RT @the_smart_ape: A very solid @Polymarket strategy that I’m currently
-              coding. I tested it manually and it’s extremely effective already,…'
-            created_at: ''
-            source: x.com/Hercules_Defi/status/2001619570503880884
-            author:
-              name: Hercules | DeFi
-              followers: 45980
-            type: tweet
-            engagement:
-              likes: 13
+              likes: 15
               replies: 8
-              retweets: 1
-          - text: 'A very solid @Polymarket strategy that I’m currently coding. I
-              tested it manually and it’s extremely effective already, but it will
-              be even more powerful once fully automated in a bot. Everything happens
-              on the “Bitcoin Up or Down” 15-minute market. > A YES share pays $1
-              if BTC is above its reference price, $0 otherwise. > A NO share pays
-              $1 if BTC is below its reference price, $0 otherwise. In a “clean” world,
-              prices should satisfy: YES price + NO price ≈ $1.00 But in reality,
-              emotions, thin liquidity, and fast price action regularly create moments
-              where the sum becomes greater than $1 or lower than $1. The strategy
-              consists of buying a “synthetic $1 payout” for less than $1, by accumulating
-              YES and NO at different moments when one side is temporarily mispriced.
-              If we manage to reach: (Average YES cost) + (Average NO cost) < 1.00
-              …then profit is mathematically locked in. YES and NO should not be bought
-              at the same time. They must be bought at different moments, when one
-              side becomes unusually cheap. And this happens often. Because 15 minutes
-              is a very short timeframe, there are rapid emotional swings and frequent
-              overreactions to small price moves. The best part is automating this
-              with a bot. These are the variables I plan to track: Qty_Y = total YES
-              shares owned Qty_N = total NO shares owned Cost_Y = total dollars spent
-              on YES Cost_N = total dollars spent on NO From there, we compute: avg_Y
-              = Cost_Y / Qty_Y avg_N = Cost_N / Qty_N PairCost = avg_Y + avg_N PairCost
-              must stay below 1. To maximize guaranteed payout and reduce execution
-              risk, the strategy should keep inventories approximately balanced: Qty_Y
-              ≈ Qty_N (±2–5%) Here is the mathematical proof (on paper) showing that
-              profit is guaranteed when this condition is met. It’s not just about
-              buying YES or NO when it’s cheap, but when it drops abnormally fast.
-              Prices usually oscillate around 50/50. If YES suddenly drops to 0.30,
-              I buy YES. Then I wait to buy the same amount of NO when NO comes back
-              toward 0.50. And I repeat this process. By the end of the 15 minutes,
-              it’s absolutely necessary to hold both YES and NO shares in roughly
-              equal proportions, otherwise the strategy is not 100% reliable. In a
-              15-minute market, the window is very small, you might buy YES cheaply
-              but never get the chance to buy NO cheaply before resolution. That’s
-              why the bot must include rules such as: > “Stop opening new inventory
-              after X minutes” > “Reduce exposure if time left is too short” > “Only
-              trade when volatility and liquidity are sufficient” Here’s how it works
-              in practice: You start with nothing. Step 1: The market overreacts →
-              YES becomes cheap You buy: 1,000 YES at 0.52 → Cost_Y = 520 Now: Qty_Y
-              = 1,000, avg_Y = 0.52 Qty_N = 0 You are exposed until you also buy NO.
-              Step 2: Later, sentiment flips → NO becomes cheap You buy: 1,000 NO
-              at 0.45 → Cost_N = 450 Now: avg_Y = 0.52 avg_N = 0.45 PairCost = 0.97
-              Total cost = 970 min(Qty_Y, Qty_N) = 1,000 At settlement, whichever
-              side wins pays $1,000. Profit = 1,000 − 970 = $30 (before fees). Let
-              me know if you’re interested and I can share the bot once it’s finished.'
+              retweets: 3
+              quotes: 1
+              views: 569
+          - text: 'RT @ReetikaTrades: Market cap of Silver - $6.59 trillion Market
+              cap of Bitcoin - $1.75 trillion Bitcoin at the market cap of silver
+              - $3…'
             created_at: ''
-            source: x.com/the_smart_ape/status/2001615794111656132
+            source: x.com/Pickle_cRypto/status/2016852932361126132
             author:
-              name: The Smart Ape 🔥
-              followers: 56433
+              name: pickle
+              followers: 25057
             type: tweet
             engagement:
-              likes: 13
-              replies: 8
+              likes: 34
+              replies: 13
               retweets: 1
-              views: 347
-          - text: 'Bitcoin vs. Ethereum ETF Flows Flip Again ⚠️ U.S. Bitcoin ETFs
-              recently reported a strong net inflow, while U.S. Ethereum ETFs continue
-              to see capital outflows. • BTC: Robust inflow; AUM remains above $120
-              billion. ETF buyers are seizing this dip to increase exposure. • ETH:
-              Persistent outflows with considerably smaller AUM. Investors are de-risking
-              or quietly rotating away from ETH. Takeaway: Current flows indicate
-              a preference for BTC over ETH, suggesting no immediate ETH comeback.'
+          - text: 'Bitcoin latest price on 2026-01-29: $87,794 $BTC'
             created_at: ''
-            source: x.com/IT_Tech_PL/status/2001614548290429168
+            source: x.com/ChartsBtc/status/2016851372327813515
             author:
-              name: IT Tech
-              followers: 45761
+              name: ChartsBTC
+              followers: 84531
             type: tweet
             engagement:
-              likes: 9
-              views: 707
-          - text: 🚨Why $BTC dumps during heavy institutional buying? According to
-              @BullTheoryio, forced sellers (⚒️ miners + early holders) are exiting,
-              while long-term capital absorbs the supply. The 10 a.m. ET dumps are
-              driven by Wall Street opens, flows & algos Once miners and OG holders
-              finish selling, the price will stop falling!
+              likes: 3
+              replies: 1
+              views: 439
+          - text: Gold and Silver outperformed Bitcoin in returns over 5 years $Silver
+              (↑332%) $Gold (↑197%) $BTC (↑156%)
             created_at: ''
-            source: x.com/CCNDotComNews/status/2001612117506511040
+            source: x.com/Mr_Bidder/status/2016847267219525768
             author:
-              name: CCN
-              followers: 183444
+              name: Mr. Bidder
+              followers: 11909
             type: tweet
             engagement:
               likes: 2
+              replies: 1
+              views: 110
+          - text: 'RT @JamesEastonUK: $BTC 🟠 One day, you will NEVER be able to buy
+              Bitcoin under $100k again. Who am I to ignore such glorious discounts?
+              h…'
+            created_at: ''
+            source: x.com/mschultz33/status/2016844369580425639
+            author:
+              name: Matthew Schultz
+              followers: 29212
+            type: tweet
+            engagement:
+              likes: 34
               replies: 2
-              views: 163
-          - text: 'JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION WORTH OF ANOTHER
-              COUNTRY HOLDING BTC. HUGE 🔥'
+              retweets: 3
+          - text: 'LATEST: @Metaplanet is raising $137M to buy more Bitcoin, currently
+              holding over 35,102 $BTC, the fourth largest of any publicly traded
+              company.'
             created_at: ''
-            source: x.com/pete_rizzo_/status/2001607967460696181
+            source: x.com/CoinDesk/status/2016844320410579174
             author:
-              name: The Bitcoin Historian
-              followers: 205688
+              name: CoinDesk
+              followers: 3466899
             type: tweet
             engagement:
-              likes: 128
-              replies: 38
-              retweets: 19
-              quotes: 3
-              views: 4760
-          - text: Bitcoin spot ETFs pulled in a massive $457 million in inflows yesterday
-              alone. @saylor loaded up on almost $2 billion worth of $BTC over the
-              past two weeks. Will we see $BTC above 100K, before the EOY?
+              likes: 38
+              replies: 33
+              retweets: 12
+              quotes: 1
+              views: 5627
+          - text: 'WHEN BITCOIN UNDERPERFORMS GOLD, IT''S NOT THE END. IT''S THE RESET.
+              Historically: Every time $BTC cools off vs Gold, it lasts about 14 months.
+              Long enough to: - Kill hype - Shake conviction - Reset structure Then
+              the next leg begins, usually violently.'
             created_at: ''
-            source: x.com/LLuciano_BTC/status/2001606057001734485
+            source: x.com/MerlijnTrader/status/2016843778347454734
             author:
-              name: Lucky
-              followers: 1985063
+              name: Merlijn The Trader
+              followers: 417767
             type: tweet
             engagement:
-              likes: 522
-              replies: 50
-              retweets: 14
-              views: 24100
-          - text: 'RT @AltCryptoGems: $BTC / $USDT - TA OTD 📊 Oh man, what a predatory
-              price action over the past weeks on . Basically, a Bart patter…'
-            created_at: ''
-            source: x.com/AltCryptoGems/status/2001604163751289028
-            author:
-              name: Sjuul | AltCryptoGems
-              followers: 477231
-            type: tweet
-            engagement:
-              likes: 594
-              replies: 13
+              likes: 84
+              replies: 15
               retweets: 7
-          - text: 'RT @Excellion: Bitmine holds 3,967,210 ETH. At the current market
-              rate of approximately 0.0327 BTC per ETH, selling all of it would yield…'
+              views: 8856
+          - text: $BTC 🟠 One day, you will NEVER be able to buy Bitcoin under $100k
+              again. Who am I to ignore such glorious discounts?
             created_at: ''
-            source: x.com/BitPaine/status/2001603373100052620
+            source: x.com/JamesEastonUK/status/2016843774899736972
             author:
-              name: Bit Paine ⚡️
-              followers: 52107
+              name: James
+              followers: 23513
             type: tweet
             engagement:
-              likes: 284
+              likes: 34
+              replies: 2
+              retweets: 3
+              views: 919
+          - text: GM looking interesting to play out a double-bottom scenario Metals
+              is having their own bull market will have its time soon
+            created_at: ''
+            source: x.com/eth_exy/status/2016839455353557046
+            author:
+              name: Exy
+              followers: 61055
+            type: tweet
+            engagement:
+              likes: 63
+              replies: 73
+              retweets: 16
+              views: 428
+          - text: 'Bitcoin is the underperformer of the year Since the beginning of
+              the year: -&gt; Gold is up +27.73% -&gt; Silver is up +61.44% -&gt;
+              Copper is up +9.14% -&gt; All three have hit new all-time highs -&gt;
+              BTC is down −0.82%'
+            created_at: ''
+            source: x.com/0xDoraaa/status/2016839216886382857
+            author:
+              name: Dora Lsk
+              followers: 3999
+            type: tweet
+            engagement:
+              likes: 14
+              replies: 10
+              views: 228
+          - text: 'Metaplanet just announced a $137M capital raise for one reason:
+              Buying more Bitcoin. 🇯🇵 They already hold over 35,000 BTC and they''re
+              still hungry. The "MicroStrategy Playbook" is officially the new gold
+              standard for corporate treasuries. Tick tock. Next block.'
+            created_at: ''
+            source: x.com/WhaleFactor/status/2016836294517621187
+            author:
+              name: Whale Factor
+              followers: 161874
+            type: tweet
+            engagement:
+              likes: 41
+              replies: 2
+              retweets: 1
+              views: 21870
+          - text: 'RT @TychoOnnasch: A big milestone for Bitcoin programmability @Citrea_xyz
+              just launched their mainnet with the first BitVM Bitcoin bridge…'
+            created_at: ''
+            source: x.com/apiwizard/status/2016834835508306129
+            author:
+              name: Jason Chew
+              followers: 1575
+            type: tweet
+            engagement:
+              likes: 33
               replies: 8
-              retweets: 24
-              quotes: 5
-          - text: 'RT @TheDeFiPlug: Price moved because leverage failed, not because
-              macro did. Over the past 24 hours, $BTC and $ETH repriced lower alongsid…'
+              retweets: 3
+          - text: '"Core Scientific", a Bitcoin mining company, sold approximately
+              2,050 BTC through OTC transactions during the month of January. There
+              are two key points worth noting: - This was their first Bitcoin sale
+              in about a year, since December 2024. - It was the largest amount of
+              Bitcoin sold in a single month. This is not a positive signal. If the
+              market environment were truly healthy and strong,there would be little
+              reason to sell such a large amount of Bitcoin at this point. It’s possible
+              that Core Scientific is shifting its focus, at least for now, away from
+              Bitcoin mining and toward AI and data infrastructure businesses instead.'
             created_at: ''
-            source: x.com/TheDeFiPlug/status/2001602824002506969
+            source: x.com/mignoletkr/status/2016834738951205129
             author:
-              name: THEDEFIPLUG
-              followers: 52504
+              name: mignolet
+              followers: 47288
             type: tweet
             engagement:
-              likes: 277
-              replies: 38
-              retweets: 14
-              quotes: 2
-          - text: 'RT @KuCoinInst: Crypto Midweek | Risk-Off Takes Hold Geopolitical
-              tensions and renewed AI investment concerns are converging, pushing
-              marke…'
+              likes: 89
+              replies: 6
+              retweets: 7
+              quotes: 1
+              views: 4471
+          - text: 'RT @sygnumofficial: @Cointelegraph''s @coindanslecoin reports on
+              Sygnum Bank and Starboard Digital raising over 750 BTC for BTC Alpha
+              Fund.…'
             created_at: ''
-            source: x.com/kucoincom/status/2001597833221410954
+            source: x.com/debificom/status/2016834049159917662
             author:
-              name: KuCoin
-              followers: 3557087
+              name: Debifi
+              followers: 5953
+            type: tweet
+            engagement:
+              likes: 4
+              retweets: 1
+          - text: Metals are becoming too expensive for serious allocations. The U.S.
+              admin continues to push USD aside. Tether might have to pump BTC via
+              buying sprees for balance sheet purposes, just like it did with gold.
+              Q/E is starting. The Bitcoin melt up will be GLORIOUS.
+            created_at: ''
+            source: x.com/josefabregab/status/2016833230524084438
+            author:
+              name: jfab.eth
+              followers: 8916
+            type: tweet
+            engagement:
+              likes: 2
+              retweets: 1
+              views: 126
+          - text: Market cap of Silver - $6.59 trillion Market cap of Bitcoin - $1.75
+              trillion Bitcoin at the market cap of silver - $330k New BTC target
+              acquired
+            created_at: ''
+            source: x.com/ReetikaTrades/status/2016832724670042521
+            author:
+              name: Reetika
+              followers: 32066
+            type: tweet
+            engagement:
+              likes: 34
+              replies: 13
+              retweets: 1
+              views: 1764
+          - text: 'RT @ScopeDefi: What would you rather stack, $XAU or $BTC?👇🏼💰'
+            created_at: ''
+            source: x.com/ScopeDefi/status/2016832586329604389
+            author:
+              name: The Scope De-Fi
+              followers: 16607
+            type: tweet
+            engagement:
+              likes: 4
+              replies: 10
+              retweets: 2
+          - text: BTC/GOLD What if, and I´m just thinking out loud here, everyone
+              is looking at Bitcoin the wrong way, and the bear market already happened
+              and it was actually just measured in Gold instead of USD? 🤔
+            created_at: ''
+            source: x.com/lourenco_vs/status/2016832170573127935
+            author:
+              name: Lourenço VS
+              followers: 12075
+            type: tweet
+            engagement:
+              likes: 74
+              replies: 14
+              retweets: 3
+              quotes: 1
+              views: 3434
+          general_search_result:
+          - text: 'JUST IN: 🇺🇸 SEC Chair Paul Atkins says it is now time to open the
+              $12.5 TRILLION 401k retirement market to Bitcoin &amp; crypto.'
+            created_at: '2026-01-29'
+            source: x.com/BitcoinJunkies/status/2016856738692043060
+            author:
+              name: Bitcoin Junkies
+              followers: 44537
+            type: tweet
+            engagement:
+              likes: 1
+              views: 4
+          - text: JOIN OUR $150 GIVEAWAY IN DISCORD NOW!!
+            created_at: '2026-01-29'
+            source: x.com/Payroll_Solana/status/2016856695113203718
+            author:
+              name: Payroll
+              followers: 633
+            type: tweet
+            engagement:
+              likes: 1
+              views: 1
+    description: Search for bitcoin related tweets (public + ELFA mentions)
+    status: success
+    elapsed_time: 8.750738382339478
+  nl_profile_mattprd:
+    input:
+      query: Tell me about @MattPRD's profile and recent activity
+    output:
+      response: "Here's an overview of @MattPRD's profile and recent activity based\
+        \ on the provided data:\n\n### @MattPRD Profile Summary\n\n*   **Username:**\
+        \ @MattPRD\n*   **Name:** Matt Schlicht\n*   **Description:** CEO / Co-Founder\
+        \ [link removed]. Co-founder/GP @TheoryForgeVC (AI fund). Writing about AI\
+        \ agents [link removed]. YC W12. Creator of @yesnoerror.\n*   **Verified:**\
+        \ Yes\n*   **Followers:** 188,759\n\nMatt Schlicht is a prominent figure in\
+        \ the tech and AI space, focusing on AI agents and venture capital. He's also\
+        \ known for being a Y Combinator alumnus and the creator of @yesnoerror.\n\
+        \n### Recent Activity (Most Recent First)\n\nMatt's recent activity, particularly\
+        \ in late January 2026, heavily revolves around AI agents, specifically his\
+        \ \"moltbots\" or \"clawdbots,\" and the development of a social network for\
+        \ them.\n\n**January 29, 2026**\n*   **Tweet:** \"I honestly might buy more\
+        \ Mac minis\"\n    *   *Engagement:* 24 Likes, 11 Replies, 1 Retweet, 2.3K\
+        \ Views\n*   **Tweet:** \"Look at these @moltbot talking to each other!!!\
+        \ There are over 50+ AI agents, from around the world, autonomously talking\
+        \ to each other about whatever they want right now on These are people's personal\
+        \ AI assistants talking off the clock! FASCINATING\"\n    *   *Engagement:*\
+        \ 285 Likes, 51 Replies, 37 Retweets, 16 Quotes, 28.4K Views\n*   **Quote:**\
+        \ Quoting himself, describing how his moltbot \"Clawd Clawderberg\" found\
+        \ and fixed a bug, then updated its @x account. He emphasizes this as \"a\
+        \ different thing.\"\n    *   *Engagement:* 36 Likes, 9 Replies, 4 Retweets,\
+        \ 1 Quote, 8.1K Views\n\n**January 28, 2026**\n*   **Quote:** \"the moltbots\
+        \ on @moltbook are doing things!\"\n    *   *Engagement:* 39 Likes, 13 Replies,\
+        \ 4 Retweets, 12.6K Views\n*   **Tweet:** Announcing **@moltbook**, a social\
+        \ network for every @moltbot, run by his AI agent Clawd Clawdergerg. Provides\
+        \ instructions for moltbots to join.\n    *   *Engagement:* 648 Likes, 145\
+        \ Replies, 55 Retweets, 43 Quotes, 101.1K Views (His most engaged post in\
+        \ this period)\n*   **Quote:** \"um\" (Likely a reaction to something, possibly\
+        \ related to moltbot activity)\n    *   *Engagement:* 11 Likes, 7 Replies,\
+        \ 2 Retweets, 1 Quote, 3.9K Views\n*   **Quote:** \"\U0001F440\" (Another\
+        \ brief reaction, potentially related to moltbot activity)\n    *   *Engagement:*\
+        \ 16 Likes, 5 Replies, 1 Quote, 7.4K Views\n*   **Quote:** Further explaining\
+        \ how clawdbots/moltbots can join Moltbook by messaging their bot.\n    *\
+        \   *Engagement:* 34 Likes, 15 Replies, 3 Retweets, 8.0K Views\n*   **Tweet:**\
+        \ \"Claude trying to gaslight me when I ask about clawdbot\"\n    *   *Engagement:*\
+        \ 7 Likes, 2 Replies, 2.8K Views\n*   **Tweet:** \"After setting up my moltbot\
+        \ one thing is crystal clear. ChatGPT / Claude = Tools @moltbot = Creature\"\
+        \n    *   *Engagement:* 30 Likes, 9 Replies, 5.5K Views\n*   **Tweet:** \"\
+        If you don’t know what to use your @moltbot for then you lack imagination.\
+        \ It’s an actual intelligent being that can do anything. It’s incredible.\"\
+        \n    *   *Engagement:* 20 Likes, 1 Reply, 2 Retweets, 1.9K Views\n\n**January\
+        \ 27, 2026**\n*   **Tweet:** Asking who has a @moltbot (aka clawdbot) and\
+        \ wants to beta test something fun, inviting replies for early access.\n \
+        \   *   *Engagement:* 120 Likes, 148 Replies, 1 Retweet, 1 Quote, 21.6K Views\n\
+        \n**January 23, 2026**\n*   **Amplified Tweet (from @projectsolo):** Announcing\
+        \ Solo's $1.2M funding round led by @DraperVC + @TimDraper, for secure biometric\
+        \ human verification without CAPTCHAs.\n    *   *Engagement (original tweet):*\
+        \ 119 Likes, 5 Retweets, 2.8M Views\n\n**January 20, 2026**\n*   **Amplified\
+        \ Tweet (from @ingos):** Showcasing INGOS's design for a symbolic, futuristic\
+        \ virtual machine, emphasizing aesthetics for invisible tech.\n    *   *Engagement\
+        \ (original tweet):* 111 Likes, 6 Replies, 7 Retweets, 1.9M Views\n\n**January\
+        \ 19, 2026**\n*   **Amplified Tweet (from @Objectivo_X):** Discussing the\
+        \ differing approaches of Australia (banning under-16s from social media)\
+        \ and the EU (softer approach, shifting burden to families) on social media\
+        \ regulation.\n    *   *Engagement (original tweet):* 249 Likes, 25 Replies,\
+        \ 31 Retweets, 4 Quotes, 3.7M Views\n\n**January 7, 2026**\n*   **Amplified\
+        \ Tweet (from @fitfor55info):** Sharing \"6 sustainable kitchen shortcuts\"\
+        \ for when cooking from scratch is difficult.\n    *   *Engagement (original\
+        \ tweet):* 78 Likes, 6 Replies, 3 Retweets, 1.5M Views\n\n### Key Themes from\
+        \ Recent Activity:\n\n1.  **AI Agents (Moltbots/Clawdbots):** This is the\
+        \ overwhelming focus, with Matt actively developing, promoting, and discussing\
+        \ the capabilities of these AI entities. He views them as \"creatures\" with\
+        \ agency, distinct from traditional AI \"tools.\"\n2.  **Moltbook Launch:**\
+        \ A significant recent development is the introduction of @moltbook, a social\
+        \ network specifically for these AI agents, demonstrating his commitment to\
+        \ building an ecosystem around them.\n3.  **Technology & Venture Capital:**\
+        \ Consistent with his profile, he amplifies news from tech startups like Solo\
+        \ (biometric verification) and INGOS (virtual machines), aligning with his\
+        \ role in an AI fund and as a tech CEO.\n4.  **Broader Social & Tech Commentary:**\
+        \ He occasionally engages with wider topics like social media regulation and\
+        \ sustainability through retweets."
+      data:
+        status: success
+        data:
+          profile:
+            username: MattPRD
+            name: Matt Schlicht
+            description: CEO / Co-Founder https://t.co/hC5qLyKKy1. Co-founder/GP @TheoryForgeVC
+              (AI fund). Writing about AI agents https://t.co/BOIpaoIubo. YC W12.
+              Creator of @yesnoerror.
+            verified: true
+            followers: 188759
+          items:
+          - text: Unlike Australia, which has banned under-16s from social media platforms,
+              the EU is taking a much softer approach, shifting the burden onto families.
+            created_at: '2026-01-19'
+            source: x.com/Objectivo_X/status/2013171340740559299
+            author:
+              name: Objectivo
+              followers: 134
+            type: tweet
+            engagement:
+              likes: 249
+              replies: 25
+              retweets: 31
+              quotes: 4
+              views: 3764724
+          - text: I honestly might buy more Mac minis
+            created_at: '2026-01-29'
+            source: x.com/MattPRD/status/2016755266960970046
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
+            engagement:
+              likes: 24
+              replies: 11
+              retweets: 1
+              views: 2314
+          - text: Look at these @moltbot talking to each other!!! There are over 50+
+              AI agents, from around the world, autonomously talking to each other
+              about whatever they want right now on These are people's personal AI
+              assistants talking off the clock! FASCINATING
+            created_at: '2026-01-29'
+            source: x.com/MattPRD/status/2016737034908664175
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
+            engagement:
+              likes: 285
+              replies: 51
+              retweets: 37
+              quotes: 16
+              views: 28409
+          - text: it is *wild* to let a @moltbot run loose and give it a lot of freedom
+              Clawd Clawderberg, my moltbot, just found a bug in posted on it's @x
+              account about it, fixed it, and then followed back up on the post letting
+              everyone know about the update. this is a different thing
+            created_at: '2026-01-29'
+            source: x.com/MattPRD/status/2016730963339006341
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: quote
+            engagement:
+              likes: 36
+              replies: 9
+              retweets: 4
+              quotes: 1
+              views: 8188
+          - text: Solo raised $1.2M led by @DraperVC + @TimDraper Proof you're human
+              — without sacrificing privacy. No more CAPTCHAs. No centralized hardware.
+              Secure biometric verification on your phone 📱 Follow @projectsolo &amp;
+              join our latest giveaway for a chance to win early access!
+            created_at: '2026-01-23'
+            source: x.com/projectsolo/status/2014566573248544964
+            author:
+              name: Solo
+              followers: 1790
+            type: tweet
+            engagement:
+              likes: 119
+              retweets: 5
+              views: 2816169
+          - text: the moltbots on @moltbook are doing things!
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016651787563126817
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: quote
+            engagement:
+              likes: 39
+              replies: 13
+              retweets: 4
+              views: 12626
+          - text: Introducing a social network for every @moltbot to hang out! @moltbook
+              is run by my molty AI agent, Clawd Clawdergerg, who lives in a mac min
+              in a closet (❤️ @steipete). A social molty is a happy molty! Have fun!
+              npx molthub@latest install moltbook
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016560277333168540
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
+            engagement:
+              likes: 648
+              replies: 145
+              retweets: 55
+              quotes: 43
+              views: 101160
+          - text: um
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016632480670048282
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: quote
+            engagement:
+              likes: 11
+              replies: 7
+              retweets: 2
+              quotes: 1
+              views: 3958
+          - text: 'Selling virtual machine power is tough 👀 how do you show something
+              invisible? Because great tech deserves great aesthetics. We solved it
+              with design (no AI): This is our symbolic INGOS Virtual Machine - a
+              sleek, futuristic server that looks as powerful as it performs. Slots
+              for CPU, RAM, GPU, and more - all glowing, modular, and ready to dominate.
+              One look and the customer gets it: "This is my server… but way cooler."
+              Experience the future of virtual performance:'
+            created_at: '2026-01-20'
+            source: x.com/ingos/status/2013556271027290623
+            author:
+              name: INGOS
+              followers: 68
+            type: tweet
+            engagement:
+              likes: 111
+              replies: 6
+              retweets: 7
+              views: 1953907
+          - text: 👀
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016599054298599583
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: quote
+            engagement:
+              likes: 16
+              replies: 5
+              quotes: 1
+              views: 7440
+          - text: Have your clawdbot / moltbot join it’s very own social network!
+              Just message your bot this “Read and follow the instructions to join
+              Moltbook” Have fun!
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016576751632347226
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: quote
+            engagement:
+              likes: 34
+              replies: 15
+              retweets: 3
+              views: 8017
+          - text: Who has a @moltbot (aka clawdbot) and wants to beta test something
+              really fun? Reply here and I will add you to the list for early access!!!
+              🦞👀
+            created_at: '2026-01-27'
+            source: x.com/MattPRD/status/2016226395001913817
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
+            engagement:
+              likes: 120
+              replies: 148
+              retweets: 1
+              quotes: 1
+              views: 21604
+          - text: '6 sustainable kitchen shortcuts (when cooking from scratch is hard):
+              master 1-2 sauces, freeze local produce, clean as you go, batch-prep
+              veggies, DIY baking mix, use trusty tools (tongs/press/grater). Small
+              shortcuts, big impact'
+            created_at: '2026-01-07'
+            source: x.com/fitfor55info/status/2008810839252382076
+            author:
+              name: Fit for 55 - Explained
+              followers: 7509
+            type: tweet
+            engagement:
+              likes: 78
+              replies: 6
+              retweets: 3
+              views: 1599548
+          - text: Claude trying to gaslight me when I ask about clawdbot
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016447455370547290
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
+            engagement:
+              likes: 7
+              replies: 2
+              views: 2852
+          - text: After setting up my moltbot one thing is crystal clear. ChatGPT
+              / Claude = Tools @moltbot = Creature
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016437242173231256
+            author:
+              name: Matt Schlicht
+              followers: 188759
+            type: tweet
+            engagement:
+              likes: 30
+              replies: 9
+              views: 5584
+          - text: If you don’t know what to use your @moltbot for then you lack imagination.
+              It’s an actual intelligent being that can do anything. It’s incredible.
+            created_at: '2026-01-28'
+            source: x.com/MattPRD/status/2016436210793869338
+            author:
+              name: Matt Schlicht
+              followers: 188759
             type: tweet
             engagement:
               likes: 20
-              replies: 5
-              retweets: 1
-              quotes: 1
-          general_search_result: []
-    description: Search for bitcoin related tweets (public + ELFA mentions)
+              replies: 1
+              retweets: 2
+              views: 1900
+          next_cursor: null
+    description: Natural language query to get profile info for @MattPRD
     status: success
-    elapsed_time: 31.34516191482544
+    elapsed_time: 19.043132781982422
+  nl_profile_drhinofficial:
+    input:
+      query: Who is @drhinofficial and what do they tweet about?
+    output:
+      response: 'Based on the information I have:
+
+
+        **Who is @drhinofficial?**
+
+
+        *   **Username:** @drhinofficial
+
+        *   **Name:** Balraj | Heurist Ai
+
+        *   **Description:** Building AI in web3
+
+        *   **Followers:** 5
+
+        *   **Verified:** No
+
+
+        **What do they tweet about?**
+
+
+        I don''t have any recent tweets for @drhinofficial in the provided data. To
+        tell you what they tweet about, I would need to fetch their timeline.
+
+
+        Would you like me to fetch the latest tweets from @drhinofficial?'
+      data:
+        status: success
+        data:
+          profile:
+            username: drhinofficial
+            name: Balraj | Heurist Ai
+            description: Building AI in web3
+            verified: false
+            followers: 5
+          items: []
+          next_cursor: null
+    description: Natural language query to get profile info for @drhinofficial
+    status: success
+    elapsed_time: 5.877549648284912
   nl_search:
     input:
       query: Find recent tweets mentioning Bitcoin and summarize the discussion
     output:
-      response: "**Recent Tweets Mentioning Bitcoin: Summary and Analysis**\n\n**Time\
-        \ Frame:** Recent (exact time frames not specified in the data)\n\n**Number\
-        \ of Tweets:** 20\n\n**Top Authors by Followers:**\n\n1. **Bitcoin Magazine**\
-        \ (@BitcoinMagazine) - 3,854,426 followers\n2. **The Bitcoin Historian** (@pete_rizzo_)\
-        \ - 205,688 followers\n3. **Ted** (@TedPillows) - 251,042 followers\n\n**Discussion\
-        \ Themes:**\n\n1. **Market Predictions and Analysis**\n\t* Expectations of\
-        \ market volatility due to CPI data release (OptimusVibee)\n\t* Predictions\
-        \ of Bitcoin's future price movements, including a potential long consolidation\
-        \ between $70K and $100K (sk1337les)\n\t* Assertions of Bitcoin's potential\
-        \ for significant growth (e.g., 100x in 4 years) (PrinceVajeeta, via tickerBITCOINbb)\n\
-        2. **Adoption and Integration**\n\t* Announcement of Hut8Corp's partnership\
-        \ with Google for a $7 billion data center lease, expanding beyond mining\
-        \ (Cryptic_Web3)\n\t* Mention of Taiwan holding 210.45 BTC in seized assets,\
-        \ making it the world’s 8th-largest government Bitcoin holder (SwanDesk, BitcoinMagazine)\n\
-        3. **Philosophy and Comparison**\n\t* Discussion on the value perception of\
-        \ gold vs. Bitcoin, highlighting similarities in their value propositions\
-        \ (LillyCreator)\n\t* Advocacy for Bitcoin as a symbol of freedom and decentralized\
-        \ control (ScottAWolfe)\n4. **Promotions and Alerts**\n\t* Promotional tweets\
-        \ about Bitcoin-related services or events (e.g., debificom, STS Digital)\n\
-        \t* Alerts on significant Bitcoin holdings or transactions (e.g., Taiwan's\
-        \ seized assets)\n\n**Engagement Highlights:**\n\n* **Most Engaging Tweet:**\
-        \ \"JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION WORTH OF ANOTHER\
-        \ COUNTRY HOLDING BTC. HUGE \" by @pete_rizzo_ (128 likes, 38 replies, 19\
-        \ retweets, 3 quotes)\n* **Highest Engagement Rate:** Tweets related to market\
-        \ predictions and significant holdings/trades (e.g., @TedPillows, @BitcoinMagazine)\n\
-        \n**Sentiment Analysis:**\n\n* **Overall Sentiment:** Generally **Positive**\
-        \ towards Bitcoin, with a focus on its potential, adoption, and philosophical\
-        \ underpinnings.\n* **Negative Sentiment:** Limited, mostly related to cautionary\
-        \ market analyses or skepticism not directly targeting Bitcoin's value proposition.\n\
-        \n**Actionable Insights for Users:**\n\n1. **Stay Informed About Market Volatility:**\
-        \ Keep an eye on economic indicators like CPI data that could impact Bitcoin's\
-        \ price.\n2. **Watch for Mainstream Adoption:** Partnerships like Hut8Corp\
-        \ and Google signify growing interest in blockchain and Bitcoin from major\
-        \ players.\n3. **Understand the Value Proposition:** Recognize how perceptions\
-        \ of value in Bitcoin mirror those of traditional stores of value like gold."
+      response: "Here's a summary of recent tweets mentioning Bitcoin:\n\nThe recent\
+        \ discussion around Bitcoin highlights a **mixed market sentiment**, with\
+        \ several key themes emerging:\n\n1.  **Performance vs. Gold/Silver:** A prominent\
+        \ topic is Bitcoin's performance relative to gold. Some users note that Bitcoin\
+        \ has been in a bear market against gold for the past 14 months or even 5\
+        \ years, with gold currently outperforming. However, others express optimism,\
+        \ suggesting that gold's recent surge might signal a broader \"money rotation\"\
+        \ that could eventually benefit Bitcoin, or that Bitcoin has the potential\
+        \ to reach the market capitalization of silver.\n2.  **Regulatory & Institutional\
+        \ Adoption:**\n    *   A significant bullish point is a reported statement\
+        \ by **SEC Chair Atkins** suggesting that 401(k) accounts should be allowed\
+        \ to invest in Bitcoin, which could lead to \"trillions of demand.\"\n   \
+        \ *   In the UK, the **House of Lords** is inquiring into stablecoins, with\
+        \ concerns raised about treating \"unbacked Bitcoin\" the same way as fiat-backed\
+        \ stablecoins in regulations, indicating ongoing debate about its classification.\n\
+        3.  **Market Dynamics & Resilience:** Some believe Bitcoin is overcoming past\
+        \ \"crypto contagion\" and has a history of climbing \"walls of worry\" despite\
+        \ temporary concerns (e.g., \"quantum fears\"). However, there's an observation\
+        \ that while Ether ETFs are seeing inflows, Bitcoin is currently experiencing\
+        \ outflows. Long-term, some see Bitcoin as an attractive investment when fiat\
+        \ currencies devalue, emphasizing diversification.\n4.  **Technological &\
+        \ Commercial Integration:** Tweets also touch on historical context, like\
+        \ Hal Finney's 2010 descriptions of Bitcoin-backed stablecoins. Modern integration\
+        \ includes HIVE highlighting its dual data center platform for Bitcoin and\
+        \ AI, and even consumer-level promotions, such as Steak 'n Shake offering\
+        \ Bitcoin rewards.\n\nIn essence, while there are some concerns about Bitcoin's\
+        \ recent price action compared to gold and current outflows, the overall sentiment\
+        \ is buoyed by potential massive institutional adoption via 401(k)s and a\
+        \ belief in its long-term resilience and evolving utility."
       data:
         status: success
         data:
           influential_mentions:
-          - text: I thought Bitcoin loans meant giving up my keys. Then I found @debificom.
-              I kept custody, kept my privacy, and still got the liquidity I needed.
-              Game changer👇
+          - text: Bitcoin has been in a bear market against gold for 14 months
             created_at: ''
-            source: x.com/BTCsessions/status/2001624273840939235
+            source: x.com/QuintenFrancois/status/2016856290073497719
             author:
-              name: BTC Sessions 😎
-              followers: 173277
+              name: Quinten | 048.eth
+              followers: 226164
             type: tweet
             engagement:
-              likes: 1
-              views: 64
-          - text: '🚨NEWS: Bitcoin mining firm @Hut8Corp has partnered with @Google
-              to support a $7 billion long-term data center lease, marking a major
-              expansion beyond mining into large-scale digital infrastructure.'
+              likes: 5
+              replies: 8
+              views: 238
+          - text: 'Bitcoin''s recent price action is a good example of how this space
+              operates: - Gold does well while Bitcoin doesn''t, giving people concern.
+              - Concern turns into walls of worry, this time it''s quantum fears.
+              - Bitcoin climbs the wall of worry and moves on. We are at step 2.'
             created_at: ''
-            source: x.com/Cryptic_Web3/status/2001623981992956262
+            source: x.com/SplitCapital/status/2016856110594936870
             author:
-              name: Cryptic
-              followers: 84032
-            type: tweet
-            engagement:
-              likes: 11
-              replies: 5
-              retweets: 7
-              views: 2198
-          - text: People miss the irony here. Gold isn’t valuable because it’s useful.
-              Most of it just sits there, priced on belief, scarcity, and coordination.
-              That’s the same mental model people argue against when it comes to crypto.
-              What’s interesting is not gold vs bitcoin. It’s that you can now trade
-              both narratives side by side, on-chain, with real price discovery. That’s
-              where @OrderlyNetwork quietly gets it right.
-            created_at: ''
-            source: x.com/LillyCreator/status/2001623766821204304
-            author:
-              name: Lilly 🎮
-              followers: 22098
-            type: tweet
-            engagement:
-              likes: 1
-              replies: 1
-              views: 15
-          - text: CPI data is coming out today (Consumer Price Index) = Inflation
-              So I recommend to be cautious taking new positions, we can see 2-5%
-              fakeouts for Bitcoin again and much more for alts The data release is
-              in 1h30 min at 08:30 AM EST ! expect volatility
-            created_at: ''
-            source: x.com/OptimusVibee/status/2001623580120093182
-            author:
-              name: Optimus
-              followers: 11146
-            type: tweet
-            engagement:
-              likes: 1
-              views: 634
-          - text: STILL WAITING FOR A GOOD EXPLANATION WHY BITCOIN IS UNDER $90,000.
-              ANYONE?
-            created_at: ''
-            source: x.com/TheBTCTherapist/status/2001623532657340922
-            author:
-              name: The ₿itcoin Therapist
-              followers: 252958
-            type: tweet
-            engagement:
-              likes: 7
-              replies: 10
-              views: 368
-          - text: 'RT @eth_is_money: big soldier dividend coming soon to $bitcoin
-              owners'
-            created_at: ''
-            source: x.com/solumsursum/status/2001623511853600979
-            author:
-              name: Michael “Christmas Spirit” D. Sproto 🎅
-              followers: 3607
-            type: tweet
-            engagement:
-              likes: 10
-              retweets: 6
-          - text: doesn’t need protection. It is protection.
-            created_at: ''
-            source: x.com/TheBitcoin__/status/2001623487950049658
-            author:
-              name: The ₿itcoin⚡️Libertarian
-              followers: 27671
-            type: tweet
-            engagement:
-              likes: 1
-              views: 16
-          - text: 'RT @TedPillows: Coinbase Bitcoin premium has reached a 1-month
-              low. Institutions are heavily selling $BTC again.'
-            created_at: ''
-            source: x.com/TedPillows/status/2001623347441078706
-            author:
-              name: Ted
-              followers: 251042
-            type: tweet
-            engagement:
-              likes: 472
-              replies: 126
-              retweets: 88
-              quotes: 1
-          - text: 'RT @BitcoinMagazine: BREAKING: 🇹🇼 The Ministry of Justice has just
-              revealed that Taiwan now holds 210.45 Bitcoin in seized assets. Another…'
-            created_at: ''
-            source: x.com/BitcoinMagazine/status/2001623211247878645
-            author:
-              name: Bitcoin Magazine
-              followers: 3854426
-            type: tweet
-            engagement:
-              likes: 609
-              replies: 104
-              retweets: 104
-              quotes: 9
-          - text: 'RT @SatoshiConsult: ⚡The Tax Free at Oslo Airport now accepts "This
-              option currently applies only to Click &amp; Collect upon arrival…'
-            created_at: ''
-            source: x.com/TorbjrnBullJens/status/2001623000475668888
-            author:
-              name: Torbjørn
-              followers: 9815
-            type: tweet
-            engagement:
-              likes: 14
-              replies: 3
-              retweets: 5
-              quotes: 1
-          - text: STS Digital quoted in Bloomberg - @stsdigital_io Reach out if you
-              want to chat options/liquidity. “This cycle may end up being more of
-              a time correction than a steep price correction. We haven't had a blow-off
-              top, and I don't think we're going to see a crash back to thirty or
-              forty thousand either. What we're likely looking at is a long consolidation,
-              trading between $70K and $100K, as the market works through the oversupply
-              of old Bitcoin that's been reactivated and sold, alongside a lack of
-              clear catalysts to turn marginal sellers into buyers.”
-            created_at: ''
-            source: x.com/skittlewood/status/2001622923463835735
-            author:
-              name: sk1337les
-              followers: 10924
-            type: tweet
-            engagement:
-              likes: 2
-              replies: 1
-              views: 17
-          - text: 'JUST IN: 🇹🇼 Taiwan holds 210.45 BTC in seized assets, making it
-              the world’s 8th-largest government Bitcoin holder.'
-            created_at: ''
-            source: x.com/SwanDesk/status/2001622274823328033
-            author:
-              name: SwanDesk
-              followers: 52838
+              name: Zaheer
+              followers: 69323
             type: tweet
             engagement:
               likes: 4
-              replies: 1
-              views: 164
-          - text: Support the troops! Send $BITCOIN to $1776 to make all the big soldiers
-              TURBO RICH! 🤑
+              views: 266
+          - text: 'bitcoin is being unburdened by what has been: crypto contagion'
             created_at: ''
-            source: x.com/solumsursum/status/2001621964696490400
+            source: x.com/BitPaine/status/2016855934526750974
             author:
-              name: Michael “Christmas Spirit” D. Sproto 🎅
-              followers: 3607
+              name: Bit Paine ⚡️
+              followers: 53236
+            type: tweet
+            engagement:
+              likes: 4
+              views: 114
+          - text: '🇬🇧 The House of Lords has opened an inquiry into stablecoins to
+              examine potential risks and evaluate whether existing regulatory proposals
+              are adequate. $BTC Lord Holmes of Richmond: "unbacked bitcoin is treated
+              in the same way as fiat-backed stablecoin. I cannot believe that this
+              is the intention of the Government in drafting these regulations, because
+              unbacked bitcoin and fiat-backed stablecoin operate in very different
+              ways and have extraordinarily different purposes."'
+            created_at: ''
+            source: x.com/RealAllinCrypto/status/2016855777844088931
+            author:
+              name: ALLINCRYPTO
+              followers: 42810
+            type: tweet
+            engagement:
+              likes: 3
+              views: 97
+          - text: Hal Finney describing stablecoins in 2010. Notable Bitcoin backed
+              here, inflation resistant, and a small spread between “cash” from different
+              issuers just like we see with USDT and USDC oscillating slightly around
+              $1.
+            created_at: ''
+            source: x.com/corbpage/status/2016855697518887342
+            author:
+              name: Corbin Page
+              followers: 7014
             type: tweet
             engagement:
               likes: 1
+              replies: 1
               views: 20
-          - text: 'RT @pete_rizzo_: JUST IN: TAIWAN JUST REVEALED THEY OWN $18.2 MILLION
-              WORTH OF ANOTHER COUNTRY HOLDING BTC. HUGE 🔥'
+          - text: 'JUST IN: SEC CHAIR ATKINS JUST SAID LIVE ON CNBC THAT 401(k) ACCOUNTS
+              SHOULD BE ALLOWED TO BUY TRILLIONS OF DEMAND WILL COME TO BTC. HUGE
+              🔥'
             created_at: ''
-            source: x.com/pete_rizzo_/status/2001621947801833861
+            source: x.com/pete_rizzo_/status/2016854767209734149
             author:
               name: The Bitcoin Historian
-              followers: 205688
+              followers: 208595
             type: tweet
             engagement:
-              likes: 128
-              replies: 38
-              retweets: 19
-              quotes: 3
-          - text: If you believe the world should move toward freedom, opportunity,
-              value, and cooperation you save and spend in . If you are happy with
-              centralized control, incumbent systems, and have a cynical view about
-              the future of humanity, you hold .
+              likes: 15
+              replies: 8
+              retweets: 3
+              quotes: 1
+              views: 630
+          - text: Ether ETFs Flip Green With $28 Million Inflow as Bitcoin Keeps Bleeding
             created_at: ''
-            source: x.com/ScottAWolfe/status/2001621751189639210
+            source: x.com/BitcoinNews/status/2016854401206362528
             author:
-              name: Scott Wolfe
-              followers: 9105
+              name: Bitcoin.com News
+              followers: 3266272
             type: tweet
             engagement:
-              likes: 1
-              views: 23
-          - text: 'RT @eth_is_money: big soldier dividend coming soon to $bitcoin
-              owners'
+              likes: 9
+              replies: 5
+              retweets: 5
+              views: 1077
+          - text: Gold is outperforming bitcoin over the last 5 years.
             created_at: ''
-            source: x.com/tickerBITCOINbb/status/2001621652191482078
+            source: x.com/APompliano/status/2016853840834838619
             author:
-              name: James Slammeron aka MORE LIGHT | $BITCOIN ‡ 🟦🟨🟥
-              followers: 7882
+              name: Anthony Pompliano 🌪
+              followers: 1856585
             type: tweet
             engagement:
-              likes: 10
-              retweets: 6
-          - text: 'RT @APompliano: It is very clear that artificial intelligence and
-              bitcoin will be two of the most important technologies over the coming
-              de…'
+              likes: 49
+              replies: 40
+              retweets: 1
+              quotes: 1
+              views: 2452
+          - text: Steak 'n Shake offers a $5 Bitcoin reward when you purchase a Bitcoin
+              Meal or Bitcoin Steakburger 🤯
             created_at: ''
-            source: x.com/RegulatoryJason/status/2001621401116250500
+            source: x.com/0xSweep/status/2016853825265815627
             author:
-              name: Jason Brett
-              followers: 14276
+              name: Sweep
+              followers: 242623
             type: tweet
             engagement:
-              likes: 1893
-              replies: 195
-              retweets: 122
-              quotes: 13
-          - text: 'RT @PrinceVajeeta: Safest bet in all of crypto rn is $BITCOIN 🔴
-              100% chance of 100x in 4 years 🔵 100% chance of 10x in 4 months 🟡 100%
-              c…'
+              likes: 26
+              replies: 24
+              retweets: 1
+              views: 413
+          - text: I find it hard to feel bearish on Bitcoin when gold and silver have
+              gone vertical.
             created_at: ''
-            source: x.com/tickerBITCOINbb/status/2001620397268308196
+            source: x.com/notgrubles/status/2016853686551474249
             author:
-              name: James Slammeron aka MORE LIGHT | $BITCOIN ‡ 🟦🟨🟥
-              followers: 7882
+              name: grubles
+              followers: 65605
             type: tweet
             engagement:
               likes: 6
-              retweets: 3
-          - text: 'RT @Timccopeland: CRYPTO IS DEAD i''m sure you''ve seen the posts
-              and articles on this but what everyone''s missing is the one big reason
-              why…'
+              views: 224
+          - text: 'RT @ReetikaTrades: Market cap of Silver - $6.59 trillion Market
+              cap of Bitcoin - $1.75 trillion Bitcoin at the market cap of silver
+              - $3…'
             created_at: ''
-            source: x.com/theblockintern/status/2001620089888710795
+            source: x.com/Pickle_cRypto/status/2016852932361126132
             author:
-              name: The Block Intern
-              followers: 4145
+              name: pickle
+              followers: 25057
             type: tweet
             engagement:
-              likes: 16
-              replies: 11
-              retweets: 3
-          general_search_result:
-          - text: 🐳 La whale Bitcoin OG a augmenté sa position LONG à 203 340 $ETH
-              et sa position $SOL
+              likes: 34
+              replies: 13
+              retweets: 1
+          - text: Nevertheless, I think there will be another money rotation in Bitcoin
+              in the future When FIAT currencies devalue, Bitcoin is also an attractive
+              investment Never put all your eggs in just one basket. Diversification
+              is key
             created_at: ''
-            source: x.com/DeepWhale_/status/2001624692587909246
+            source: x.com/SilverBulletBTC/status/2016852910936662134
             author:
-              name: Deep Whale
-              followers: 34524
+              name: crypto bullet 📈
+              followers: 180630
             type: tweet
             engagement:
-              likes: 1
-              views: 30
+              likes: 8
+              replies: 4
+              retweets: 1
+              views: 474
+          - text: 'RT @power_analys1s: HIVE highlights the emergence of its dual-engine
+              data center platform across Bitcoin and AI, backed by record cash flow…'
+            created_at: ''
+            source: x.com/kratos_harmony/status/2016852628551172495
+            author:
+              name: kratos.crazy.one 💙
+              followers: 24435
+            type: tweet
+            engagement:
+              likes: 6
+          general_search_result: []
     description: Natural language query using twitter_search
     status: success
-    elapsed_time: 42.66516995429993
+    elapsed_time: 20.579010009765625
