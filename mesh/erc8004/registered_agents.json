@@ -4,5 +4,13 @@
     "TrendingTokenAgent": "11155111:414",
     "TwitterIntelligenceAgent": "11155111:415"
   },
-  "mainnet": {}
+  "mainnet": {
+    "TokenResolverAgent": "1:2364",
+    "ExaSearchDigestAgent": "1:10299",
+    "ChainbaseAddressLabelAgent": "1:10300",
+    "TrendingTokenAgent": "1:10301",
+    "TwitterIntelligenceAgent": "1:10302",
+    "CaesarResearchAgent": "1:10303",
+    "ZerionWalletAnalysisAgent": "1:10304"
+  }
 }

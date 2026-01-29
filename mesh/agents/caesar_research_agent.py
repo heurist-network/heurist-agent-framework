@@ -49,6 +49,11 @@ class CaesarResearchAgent(MeshAgent):
                     "enabled": True,
                     "tool_prices": {"caesar_research": "0.1", "get_research_result": "0.001"},
                 },
+                "erc8004": {
+                    "enabled": True,
+                    "supported_trust": ["reputation"],
+                    "wallet_chain_id": 1,
+                },
             }
         )
 

@@ -46,6 +46,7 @@ class TwitterIntelligenceAgent(MeshAgent):
                 "erc8004": {
                     "enabled": True,
                     "supported_trust": ["reputation"],
+                    "wallet_chain_id": 1,
                 },
             }
         )

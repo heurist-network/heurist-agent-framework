@@ -24,8 +24,8 @@ CHAIN_CONFIGS: dict[int, ChainConfig] = {
     1: {  # Ethereum Mainnet
         "name": "mainnet",
         "rpc_env": "ETH_RPC_URL",
-        "identity_registry": "0x106e3d8500B92A86D669702e75097E945C2e2B0e",
-        "reputation_registry": "0x106e3d8500B92A86D669702e75097E945C2e2B0e",
+        "identity_registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+        "reputation_registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
     },
 }
 

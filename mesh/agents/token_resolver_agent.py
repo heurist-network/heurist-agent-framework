@@ -351,7 +351,7 @@ class TokenResolverAgent(MeshAgent):
                 "erc8004": {
                     "enabled": True,
                     "supported_trust": ["reputation"],
-                    "wallet_chain_id": 8453,
+                    "wallet_chain_id": 1,
                 },
             }
         )
