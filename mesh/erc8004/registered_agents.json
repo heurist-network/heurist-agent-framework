@@ -11,6 +11,7 @@
     "TrendingTokenAgent": "1:10301",
     "TwitterIntelligenceAgent": "1:10302",
     "CaesarResearchAgent": "1:10303",
-    "ZerionWalletAnalysisAgent": "1:10304"
+    "ZerionWalletAnalysisAgent": "1:10304",
+    "AskHeuristAgent": "1:15681"
   }
 }
