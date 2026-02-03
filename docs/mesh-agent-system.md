@@ -478,17 +478,98 @@ async def get_fallback_for_tool(
     return None
 ```
 
-### Calling Other Agents
+### Calling Other Agents (Cross-Agent Tool Calls)
 
+Agents can call tools from other agents using `_call_agent_tool`. This enables composition of specialized agents into higher-level functionality.
+
+**Method Signature:**
 ```python
-# Call another agent's tool
+await self._call_agent_tool(
+    module: str,      # Module path (e.g., "mesh.agents.twitter_info_agent")
+    class_name: str,  # Agent class name (e.g., "TwitterInfoAgent")
+    tool_name: str,   # Tool to call (e.g., "get_user_tweets")
+    tool_args: dict   # Arguments for the tool
+) -> Dict[str, Any]
+```
+
+**Basic Example:**
+```python
 result = await self._call_agent_tool(
-    module="mesh.agents.coingecko_token_info_agent",
-    class_name="CoinGeckoTokenInfoAgent",
-    tool_name="get_token_info",
-    tool_args={"symbol": "ETH"}
+    "mesh.agents.coingecko_token_info_agent",
+    "CoinGeckoTokenInfoAgent",
+    "get_token_info",
+    {"symbol": "ETH"}
 )
 ```
+
+**Recommended Pattern - Internal Wrapper Methods:**
+
+Create internal methods that wrap cross-agent calls for cleaner code:
+
+```python
+class TwitterIntelligenceAgent(MeshAgent):
+    async def _get_user_tweets(self, username: str, limit: int, cursor: Optional[str]) -> Dict[str, Any]:
+        args = {"username": username, "limit": limit}
+        if cursor:
+            args["cursor"] = cursor
+        return await self._call_agent_tool(
+            "mesh.agents.twitter_info_agent",
+            "TwitterInfoAgent",
+            "get_user_tweets",
+            args,
+        )
+
+    async def _search(self, q: str, limit: int) -> Dict[str, Any]:
+        return await self._call_agent_tool(
+            "mesh.agents.twitter_info_agent",
+            "TwitterInfoAgent",
+            "get_general_search",
+            {"q": q, "limit": limit, "sort_by": "Latest"},
+        )
+
+    async def _elfa_mentions(self, keywords: List[str], limit: int) -> Dict[str, Any]:
+        return await self._call_agent_tool(
+            "mesh.agents.elfa_twitter_intelligence_agent",
+            "ElfaTwitterIntelligenceAgent",
+            "search_mentions",
+            {"keywords": keywords, "limit": limit},
+        )
+```
+
+**Aggregating Results from Multiple Agents:**
+
+Use `asyncio.gather` to call multiple agents in parallel:
+
+```python
+async def _handle_tool_logic(self, tool_name: str, function_args: dict, session_context=None):
+    if tool_name == "twitter_search":
+        queries = function_args.get("queries", [])
+        limit = function_args.get("limit", 10)
+
+        # Run searches in parallel
+        search_tasks = [self._search(q, limit=limit) for q in queries[:3]]
+        search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
+
+        # Also fetch from another agent
+        elfa_res = await self._elfa_mentions(queries[:3], limit=limit)
+
+        # Process and combine results
+        all_items = []
+        for res in search_results:
+            if not isinstance(res, Exception) and "error" not in res:
+                tweets = res.get("tweets", [])
+                all_items.extend(tweets)
+
+        # Deduplicate and return combined results
+        return {"status": "success", "data": self._dedupe_items(all_items)}
+```
+
+**When to Use Cross-Agent Calls:**
+
+- Composing specialized agents into higher-level functionality
+- Aggregating data from multiple sources
+- Normalizing/transforming data from underlying agents
+- Adding filtering, deduplication, or enrichment logic
 
 
 ## Best Practices
