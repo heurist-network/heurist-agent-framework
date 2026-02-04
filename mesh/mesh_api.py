@@ -22,6 +22,7 @@ sys.path.append(str(project_root))
 
 from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
+from mesh.usage_tracker import record_usage  # noqa: E402
 
 
 # exclude `mesh_health` logs as it's used for health checks
@@ -141,10 +142,11 @@ class MeshTaskQueryRequest(BaseModel):
     api_key: str | None = None
 
 
-async def validate_api_credits(agent_id: str, origin_api_key: str) -> None:
+async def validate_api_credits(agent_id: str, origin_api_key: str) -> Optional[str]:
+    """Validate API credits and return user_id on success."""
     credits_api_url = os.getenv("HEURIST_CREDITS_DEDUCTION_API")
     if not credits_api_url:
-        return
+        return None
 
     credits_api_auth = os.getenv("HEURIST_CREDITS_DEDUCTION_AUTH")
     if not credits_api_auth:
@@ -171,6 +173,9 @@ async def validate_api_credits(agent_id: str, origin_api_key: str) -> None:
             ) as response:
                 if response.status != 200:
                     raise HTTPException(status_code=403, detail="API credit validation failed")
+                # Record usage after successful credit deduction
+                asyncio.create_task(record_usage(user_id, agent_id, 1.0))
+                return user_id
     except ValueError:
         raise HTTPException(status_code=401, detail="Invalid API key format")
     except HTTPException:
