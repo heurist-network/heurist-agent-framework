@@ -1,16 +1,22 @@
 """
 Project Knowledge Agent - provides access to project information database.
 Supports searching projects by name, symbol, x handle, and contract address.
+Also supports semantic search for discovering projects using natural language.
 """
 
 import asyncio
 import logging
+import os
 from typing import Any, Dict, List, Optional
 
+from dotenv import load_dotenv
+
 from clients.project_knowledge_client import ProjectKnowledgeClient
+from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
 logger = logging.getLogger(__name__)
+load_dotenv()
 
 EXCLUDED_FIELDS = {"active", "logo_url"}
 
@@ -21,6 +27,9 @@ class ProjectKnowledgeAgent(MeshAgent):
     def __init__(self):
         super().__init__()
         self.client = ProjectKnowledgeClient()
+        self.pageindex_base_url = (os.getenv("PAGEINDEX_URL") or "").rstrip("/")
+        self.internal_api_key = os.getenv("INTERNAL_API_KEY")
+        self.pageindex_model = "gpt-5.1"
 
         self.metadata.update(
             {
@@ -30,13 +39,15 @@ class ProjectKnowledgeAgent(MeshAgent):
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent provides access to a comprehensive database of crypto projects. It can search for projects by name, token symbol, or X handle, and retrieve detailed project information including funding, team, events, and more.",
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/ProjectKnowledge.png",
-                "external_apis": ["PostgreSQL", "AIXBT"],
+                "external_apis": ["PostgreSQL", "AIXBT", "PageIndex"],
                 "tags": ["Projects", "Research"],
                 "verified": True,
                 "examples": [
                     "Get information about Ethereum",
                     "Search for projects by symbol BTC",
                     "Get project details for @ethereum",
+                    "Find DeFi projects funded by Paradigm in 2024",
+                    "AI projects listed on Binance with recent airdrops",
                 ],
             }
         )
@@ -65,7 +76,7 @@ Format your response in clean text. Be objective and informative."""
                 "type": "function",
                 "function": {
                     "name": "get_project",
-                    "description": "Get crypto project details including description, twitter handle, defillama slug, token info (CA on multiple chains, coingecko id, symbol, WITHOUT market data), team, investors, chronological events, similar projects. Lookup parameter MUST be ONE OF name, symbol, x_handle, or contract_address. Not all result fields are available. New or small projects might be missing. Data aggregated from multiple sources may have inconsistencies. Name lookups can be ambiguous - must verify the returned entity matches the user intent. In case of mismatch, ignore the tool response.",
+                    "description": "Get crypto project details including description, twitter handle, defillama slug, token info (CA on multiple chains, coingecko id, symbol, WITHOUT market data), team, investors, chronological events, similar projects. Lookup parameter MUST be ONE OF name, symbol, x_handle, or contract_address. Not all result fields are available. New or small projects without VC backing might be missing. Data aggregated from multiple sources may have inconsistencies. Name lookups can be ambiguous - must verify the returned entity matches the user intent. In case of mismatch, ignore the tool response.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -90,6 +101,30 @@ Format your response in clean text. Be objective and informative."""
                     },
                 },
             },
+            {
+                "type": "function",
+                "function": {
+                    "name": "semantic_search_projects",
+                    "description": "Search crypto projects using natural language criteria. Supports investor filters, tag/category filters, funding years, event years, exchange listings, and event keywords. You can combine multiple constraints in one query. Example queries: 'DeFi projects funded by Paradigm in 2024', 'AI projects listed on Binance with airdrop events in 2025'. Returns matching projects with relevant fields (name, one_liner, tags, investors, fundraising, events, exchanges). Best for discovery and filtering across 10k+ indexed projects. New or small projects without VC backing might be missing. For single project lookup by exact name/symbol/address/twitter, use get_project instead.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "Natural language query describing what to find. Include any combination of: investor names like a16z, Paradigm; tags/categories like DeFi, AI, Infra, Layer1, Layer2, zk, NFT, Privacy, Gaming, DePIN, Stablecoin Protocol, DEX, Lending, Derivatives; funded years; event years; exchanges like Binance, Binance Alpha, Coinbase, OKX, Bybit; events like airdrop, mainnet, listing, partnership, exploit/hack, TGE; description of the project business",
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Maximum number of projects to return",
+                                "default": 20,
+                                "minimum": 1,
+                                "maximum": 100,
+                            },
+                        },
+                        "required": ["query"],
+                    },
+                },
+            },
         ]
 
     async def _handle_tool_logic(
@@ -105,6 +140,11 @@ Format your response in clean text. Be objective and informative."""
                 symbol=function_args.get("symbol"),
                 x_handle=function_args.get("x_handle"),
                 contract_address=function_args.get("contract_address"),
+            )
+        elif tool_name == "semantic_search_projects":
+            return await self._search_projects_semantic(
+                query=function_args.get("query", ""),
+                limit=function_args.get("limit", 20),
             )
         return {"error": f"Unknown tool: {tool_name}"}
 
@@ -147,6 +187,7 @@ Format your response in clean text. Be objective and informative."""
 
         return projects[0]
 
+    @with_cache(ttl_seconds=300)
     async def _get_project(
         self,
         name: Optional[str] = None,
@@ -196,6 +237,35 @@ Format your response in clean text. Be objective and informative."""
             "database_project": db_result,
             "aixbt_data": aixbt_result,
         }
+
+    @with_cache(ttl_seconds=300)
+    async def _search_projects_semantic(self, query: str, limit: int = 20) -> Dict[str, Any]:
+        """Call PageIndex RAG service to search projects with natural language."""
+        if not self.pageindex_base_url:
+            return {"error": "PAGEINDEX_URL environment variable is required for semantic search"}
+        if not self.internal_api_key:
+            return {"error": "INTERNAL_API_KEY environment variable is required for semantic search"}
+        if not query or not query.strip():
+            return {"error": "Query must be a non-empty string"}
+
+        try:
+            validated_limit = int(limit)
+        except (TypeError, ValueError):
+            validated_limit = 20
+        validated_limit = max(1, min(validated_limit, 50))
+
+        result = await self._api_request(
+            url=f"{self.pageindex_base_url}/api/v1/query",
+            method="POST",
+            headers={"Content-Type": "application/json", "X-API-Key": self.internal_api_key},
+            json_data={"query": query.strip(), "limit": validated_limit, "model": self.pageindex_model},
+            timeout=30,
+        )
+        if not isinstance(result, dict):
+            return {"error": "PageIndex API returned an unexpected response format"}
+        if result.get("error"):
+            return {"error": f"PageIndex API error: {result['error']}"}
+        return result
 
     async def cleanup(self):
         """Cleanup resources including database connection pool."""

@@ -21,8 +21,21 @@ DATABASE_URL = os.getenv("POSTGRESQL_URL")
 # Common suffix words that can be stripped from queries
 # Must match the suffixes in strip_crypto_suffix SQL function
 SUFFIX_WORDS = {
-    "finance", "labs", "protocol", "network", "dao", "token", "coin",
-    "ai", "chain", "swap", "dex", "defi", "exchange", "capital", "ventures"
+    "finance",
+    "labs",
+    "protocol",
+    "network",
+    "dao",
+    "token",
+    "coin",
+    "ai",
+    "chain",
+    "swap",
+    "dex",
+    "defi",
+    "exchange",
+    "capital",
+    "ventures",
 }
 
 
@@ -74,16 +87,16 @@ class ProjectKnowledgeClient:
         raw_input = raw_input.strip()
 
         # Remove @ prefix
-        if raw_input.startswith('@'):
+        if raw_input.startswith("@"):
             return raw_input[1:].lower()
 
         # Extract from full URL
-        match = re.match(r'^https?://(x\.com|twitter\.com)/([^/?]+)', raw_input, re.IGNORECASE)
+        match = re.match(r"^https?://(x\.com|twitter\.com)/([^/?]+)", raw_input, re.IGNORECASE)
         if match:
             return match.group(2).lower()
 
         # Extract from URL without https://
-        match = re.match(r'^(x\.com|twitter\.com)/([^/?]+)', raw_input, re.IGNORECASE)
+        match = re.match(r"^(x\.com|twitter\.com)/([^/?]+)", raw_input, re.IGNORECASE)
         if match:
             return match.group(2).lower()
 
@@ -510,9 +523,9 @@ class ProjectKnowledgeClient:
         Returns:
             True if project should be excluded
         """
-        events = project.get('events')
-        investors = project.get('investors')
-        fundraising = project.get('fundraising')
+        events = project.get("events")
+        investors = project.get("investors")
+        fundraising = project.get("fundraising")
 
         has_events = events and len(events) > 0
         has_investors = investors and len(investors) > 0
@@ -532,23 +545,24 @@ class ProjectKnowledgeClient:
             return value
         if isinstance(value, str):
             import json
+
             return json.loads(value)
         return []
 
     def _format_team(self, team: Any) -> List[str]:
         """Format team list to simplified strings like 'Role: Name'."""
         items = self._parse_json_field(team)
-        return [f"{m.get('role', 'Member')}: {m.get('name', '')}" for m in items if m.get('name')]
+        return [f"{m.get('role', 'Member')}: {m.get('name', '')}" for m in items if m.get("name")]
 
     def _format_investors(self, investors: Any, max_count: int = 10) -> List[str]:
         """Format investors list to names with lead indicator. Max 10 shown."""
         items = self._parse_json_field(investors)
         result = []
         for inv in items:
-            name = inv.get('name', '')
+            name = inv.get("name", "")
             if not name:
                 continue
-            if inv.get('is_lead'):
+            if inv.get("is_lead"):
                 result.append(f"{name} (Lead)")
             else:
                 result.append(name)
@@ -563,9 +577,9 @@ class ProjectKnowledgeClient:
         items = self._parse_json_field(fundraising)
         result = []
         for fr in items:
-            date = fr.get('date', '')
-            round_name = fr.get('round_name', '')
-            amount = fr.get('amount_display', '')
+            date = fr.get("date", "")
+            round_name = fr.get("round_name", "")
+            amount = fr.get("amount_display", "")
             if date and round_name:
                 result.append(f"{date}: {round_name} {amount}".strip())
         return result
@@ -574,11 +588,11 @@ class ProjectKnowledgeClient:
         """Format events list to 'date: detail' strings. Only recent 6 shown."""
         items = self._parse_json_field(events)
         # Sort by date descending to get most recent first
-        items.sort(key=lambda x: x.get('date', ''), reverse=True)
+        items.sort(key=lambda x: x.get("date", ""), reverse=True)
         result = []
         for ev in items[:max_count]:
-            date = ev.get('date', '')
-            detail = ev.get('event_detail', '')
+            date = ev.get("date", "")
+            detail = ev.get("event_detail", "")
             if date and detail:
                 result.append(f"{date}: {detail}")
         return result
@@ -586,7 +600,7 @@ class ProjectKnowledgeClient:
     def _format_similar_projects(self, similar_projects: Any) -> List[str]:
         """Format similar projects to 'Name: Description'."""
         items = self._parse_json_field(similar_projects)
-        return [f"{p.get('name', '')}: {p.get('description', '')}" for p in items if p.get('name')]
+        return [f"{p.get('name', '')}: {p.get('description', '')}" for p in items if p.get("name")]
 
     def _format_project(self, project: Dict[str, Any]) -> Dict[str, Any]:
         """Format project dict for API response."""
@@ -614,12 +628,12 @@ class ProjectKnowledgeClient:
             "defillama_slugs": defillama_slugs if defillama_slugs else None,
             "tags": tags if tags else None,
             # waiting for data fix
-            #"team": self._format_team(project.get("team")),
+            "team": self._format_team(project.get("team")),
             "investors": self._format_investors(project.get("investors")),
             "fundraising": self._format_fundraising(project.get("fundraising")),
             "events": self._format_events(project.get("events")),
             "exchanges": self._parse_json_field(project.get("exchanges")) or None,
-            #"similar_projects": self._format_similar_projects(project.get("similar_projects")),
+            # "similar_projects": self._format_similar_projects(project.get("similar_projects")),
             "updated_at": str(project.get("updated_at"))[:10] if project.get("updated_at") else None,
         }
 
