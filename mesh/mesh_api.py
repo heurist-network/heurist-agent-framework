@@ -149,16 +149,22 @@ class MeshTaskQueryRequest(BaseModel):
 DYNAMODB_TABLE_NAME = os.getenv("DYNAMODB_TABLE_NAME")
 AUTH_ENABLED = os.getenv("AUTH_ENABLED")
 AWS_REGION = os.getenv("AWS_REGION")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 _dynamodb_table = None
 
 
 def _get_dynamodb_table():
     global _dynamodb_table
     if _dynamodb_table is None and DYNAMODB_TABLE_NAME:
+        # Build kwargs for boto3
+        kwargs = {}
         if AWS_REGION:
-            dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
-        else:
-            dynamodb = boto3.resource("dynamodb")
+            kwargs["region_name"] = AWS_REGION
+        if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+            kwargs["aws_access_key_id"] = AWS_ACCESS_KEY_ID
+            kwargs["aws_secret_access_key"] = AWS_SECRET_ACCESS_KEY
+        dynamodb = boto3.resource("dynamodb", **kwargs)
         _dynamodb_table = dynamodb.Table(DYNAMODB_TABLE_NAME)
     return _dynamodb_table
 
