@@ -5,10 +5,12 @@ import sys
 import time
 from contextlib import asynccontextmanager
 from datetime import datetime
+from decimal import Decimal
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
-import aiohttp
+import boto3
+import botocore.exceptions
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
@@ -127,6 +129,7 @@ class MeshRequest(BaseModel):
     input: Dict[str, Any]
     api_key: str | None = None
     heurist_api_key: str | None = None
+    credits: float | None = None
 
 
 class MeshTaskCreateRequest(BaseModel):
@@ -135,6 +138,7 @@ class MeshTaskCreateRequest(BaseModel):
     api_key: str | None = None
     heurist_api_key: str | None = None
     agent_type: Optional[str] = None
+    credits: float | None = None
 
 
 class MeshTaskQueryRequest(BaseModel):
@@ -142,47 +146,128 @@ class MeshTaskQueryRequest(BaseModel):
     api_key: str | None = None
 
 
-async def validate_api_credits(agent_id: str, origin_api_key: str) -> Optional[str]:
-    """Validate API credits and return user_id on success."""
-    credits_api_url = os.getenv("HEURIST_CREDITS_DEDUCTION_API")
-    if not credits_api_url:
-        return None
+DYNAMODB_TABLE_NAME = os.getenv("DYNAMODB_TABLE_NAME")
+AUTH_ENABLED = os.getenv("AUTH_ENABLED")
+AWS_REGION = os.getenv("AWS_REGION")
+_dynamodb_table = None
 
-    credits_api_auth = os.getenv("HEURIST_CREDITS_DEDUCTION_AUTH")
-    if not credits_api_auth:
-        raise HTTPException(status_code=500, detail="Credits API auth not configured")
+
+def _get_dynamodb_table():
+    global _dynamodb_table
+    if _dynamodb_table is None and DYNAMODB_TABLE_NAME:
+        if AWS_REGION:
+            dynamodb = boto3.resource("dynamodb", region_name=AWS_REGION)
+        else:
+            dynamodb = boto3.resource("dynamodb")
+        _dynamodb_table = dynamodb.Table(DYNAMODB_TABLE_NAME)
+    return _dynamodb_table
+
+
+def parse_api_key(origin_api_key: str) -> tuple[str, str]:
+    if "#" in origin_api_key:
+        user_id, api_key_part = origin_api_key.split("#", 1)
+    elif "-" in origin_api_key:
+        user_id, api_key_part = origin_api_key.split("-", 1)
+    else:
+        raise ValueError("Invalid API key format")
+    return user_id, api_key_part
+
+
+def _sync_validate_and_check_credits(user_id: str, api_key_part: str, required_credits: float) -> Decimal:
+    """Synchronous DynamoDB validation - called via asyncio.to_thread()"""
+    table = _get_dynamodb_table()
+
+    # 1. Validate API key exists
+    api_key_response = table.get_item(Key={"user_id": user_id, "api_key": api_key_part})
+    if "Item" not in api_key_response:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
+    # 2. Get user data and check credits
+    user_data_response = table.get_item(Key={"user_id": user_id, "api_key": "USER_DATA"})
+    if "Item" not in user_data_response:
+        raise HTTPException(status_code=401, detail="User data not found")
+
+    user_data = user_data_response["Item"]
+    remaining_credits = Decimal(str(user_data.get("remaining_credits", 0)))
+
+    if remaining_credits < Decimal(str(required_credits)):
+        raise HTTPException(status_code=402, detail="Insufficient credits")
+
+    return remaining_credits
+
+
+async def validate_and_check_credits(user_id: str, api_key_part: str, required_credits: float = 1.0) -> Decimal:
+    if not AUTH_ENABLED:
+        return Decimal("999999")
 
     try:
-        if "#" in origin_api_key:
-            user_id, api_key_part = origin_api_key.split("#", 1)
-        else:
-            user_id, api_key_part = origin_api_key.split("-", 1)
-
-        logger.info(f"Deducting credits for agent {agent_id} with user_id {user_id}")
-
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                credits_api_url,
-                headers={"Authorization": credits_api_auth},
-                json={
-                    "user_id": user_id,
-                    "api_key": api_key_part,
-                    "model_type": "AGENT",
-                    "model_id": agent_id,
-                },
-            ) as response:
-                if response.status != 200:
-                    raise HTTPException(status_code=403, detail="API credit validation failed")
-                # Record usage after successful credit deduction
-                asyncio.create_task(record_usage(user_id, agent_id, 1.0))
-                return user_id
-    except ValueError:
-        raise HTTPException(status_code=401, detail="Invalid API key format")
+        return await asyncio.to_thread(_sync_validate_and_check_credits, user_id, api_key_part, required_credits)
     except HTTPException:
         raise
     except Exception as exc:
-        logger.error(f"Error validating API credits: {exc}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Error validating API credits")
+        logger.error(f"DynamoDB validation error: {exc}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Credit validation error")
+
+
+def _sync_deduct_credits(user_id: str, credits_to_deduct: float) -> bool:
+    """Synchronous credit deduction - called via asyncio.to_thread()"""
+    table = _get_dynamodb_table()
+    table.update_item(
+        Key={"user_id": user_id, "api_key": "USER_DATA"},
+        UpdateExpression="SET remaining_credits = remaining_credits - :amount",
+        ConditionExpression="remaining_credits >= :amount",
+        ExpressionAttributeValues={":amount": Decimal(str(credits_to_deduct))},
+    )
+    return True
+
+
+async def deduct_credits_dynamodb(user_id: str, agent_id: str, credits_to_deduct: float) -> bool:
+    if not AUTH_ENABLED or credits_to_deduct <= 0:
+        return True
+
+    try:
+        await asyncio.to_thread(_sync_deduct_credits, user_id, credits_to_deduct)
+        logger.info(f"Deducted {credits_to_deduct} credits from {user_id} for {agent_id}")
+        return True
+
+    except botocore.exceptions.ClientError as exc:
+        if exc.response.get("Error", {}).get("Code") == "ConditionalCheckFailedException":
+            logger.warning(f"Insufficient credits for user {user_id} (race condition)")
+            return False
+        logger.error(f"Credit deduction error: {exc}", exc_info=True)
+        return False
+    except Exception as exc:
+        logger.error(f"Credit deduction error: {exc}", exc_info=True)
+        return False
+
+
+async def pre_validate_credits(origin_api_key: str, agent_credits: float = 1.0) -> str:
+    if not AUTH_ENABLED:
+        return "anonymous"
+    try:
+        user_id, api_key_part = parse_api_key(origin_api_key)
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid API key format")
+
+    await validate_and_check_credits(user_id, api_key_part, agent_credits)
+    return user_id
+
+
+async def deduct_credits(
+    user_id: str,
+    api_key_part: str,
+    agent_id: str,
+    agent_credits: float,
+) -> bool:
+    if not AUTH_ENABLED or agent_credits <= 0:
+        return True
+
+    success = await deduct_credits_dynamodb(user_id, agent_id, agent_credits)
+
+    if success:
+        asyncio.create_task(record_usage(user_id, agent_id, agent_credits))
+
+    return success
 
 
 async def run_async_agent_task(
@@ -191,7 +276,11 @@ async def run_async_agent_task(
     payload: Dict[str, Any],
     origin_api_key: str,
     heurist_api_key: Optional[str],
+    agent_credits: float = 1.0,
+    user_id: str = "",
+    api_key_part: str = "",
 ) -> None:
+    """Run agent task asynchronously. Credits are deducted only on success."""
     task_store.mark_running(task_id)
 
     try:
@@ -206,6 +295,11 @@ async def run_async_agent_task(
         call_args.setdefault("task_id", task_id)
 
         result = await agent.call_agent(call_args)
+
+        # DEDUCT: Only after successful agent execution
+        if user_id and api_key_part:
+            await deduct_credits(user_id, api_key_part, agent_id, agent_credits)
+
         result_payload = dict(result)
         result_payload["success"] = True
         task_store.mark_completed(task_id, result_payload)
@@ -236,25 +330,33 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
     if request.agent_id not in agents_dict:
         raise HTTPException(status_code=404, detail=f"Agent {request.agent_id} not found")
 
+    agent = await agent_pool.get_agent(request.agent_id)
+    origin_api_key = api_key
+
+    if request.credits is not None:
+        agent_credits = request.credits
+    else:
+        agent_credits = agent.metadata.get("credits", 1.0)
     try:
-        # Get agent from pool instead of creating a new instance each time
-        agent = await agent_pool.get_agent(request.agent_id)
-        origin_api_key = api_key
+        user_id, api_key_part = parse_api_key(origin_api_key)
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid API key format")
+    await pre_validate_credits(origin_api_key, agent_credits)
 
+    try:
         if request.heurist_api_key:
-            agent.set_heurist_api_key(request.heurist_api_key)  # api key for the agent to use Gemini
-
-        # Handle API credit deduction if enabled
-        await validate_api_credits(request.agent_id, origin_api_key)
+            agent.set_heurist_api_key(request.heurist_api_key)
 
         call_args = dict(request.input)
         call_args["session_context"] = {"api_key": origin_api_key}
         result = await agent.call_agent(call_args)
 
-        # Note: We don't call agent.cleanup() anymore since the agent is reused
-        # Agent cleanup is now handled by the pool's TTL mechanism
+        # DEDUCT: Only after successful execution
+        await deduct_credits(user_id, api_key_part, request.agent_id, agent_credits)
 
         return result
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error processing request: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -275,11 +377,31 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
     # Ensure raw_data_only is present for consistency
     task_payload.setdefault("raw_data_only", False)
 
-    await validate_api_credits(request.agent_id, api_key)
+    if request.credits is not None:
+        agent_credits = request.credits
+    else:
+        agent = await agent_pool.get_agent(request.agent_id)
+        agent_credits = agent.metadata.get("credits", 1.0)
+    try:
+        user_id, api_key_part = parse_api_key(api_key)
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid API key format")
+    await pre_validate_credits(api_key, agent_credits)
 
     task_id = task_store.create_task(request.agent_id, task_payload, api_key)
 
-    asyncio.create_task(run_async_agent_task(task_id, request.agent_id, task_payload, api_key, request.heurist_api_key))
+    asyncio.create_task(
+        run_async_agent_task(
+            task_id,
+            request.agent_id,
+            task_payload,
+            api_key,
+            request.heurist_api_key,
+            agent_credits,
+            user_id,
+            api_key_part,
+        )
+    )
 
     return {"task_id": task_id, "msg": "Task created"}
 
