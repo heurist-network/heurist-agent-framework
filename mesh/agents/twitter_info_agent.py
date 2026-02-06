@@ -769,7 +769,7 @@ class TwitterInfoAgent(MeshAgent):
             return {"tweet_data": tweet_detail_result}
 
         elif tool_name == "get_general_search":
-            query = function_args.get("q")
+            query = (function_args.get("q") or "").strip()
             cursor = function_args.get("cursor")
             limit = function_args.get("limit", 20)
             sort_by = function_args.get("sort_by", "Latest")
