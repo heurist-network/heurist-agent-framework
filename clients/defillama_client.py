@@ -451,10 +451,15 @@ class DefiLlamaClient(BaseAPIClient):
         Returns:
             Dictionary containing chain TVL and fee metrics with trends
         """
-        tvl_data, fees_data = await asyncio.gather(
+        tvl_result, fees_result = await asyncio.gather(
             self._async_request("get", f"/v2/historicalChainTvl/{chain}"),
             self._async_request("get", f"/overview/fees/{chain}"),
+            return_exceptions=True,
         )
+        tvl_data = tvl_result if not isinstance(tvl_result, Exception) else []
+        fees_data = fees_result if not isinstance(fees_result, Exception) else {}
+        if not tvl_data and not fees_data:
+            raise ValueError(f"No data available for chain '{chain}'")
         return self._build_chain_enriched_result(chain, tvl_data, fees_data)
 
     def _build_chain_enriched_result(self, chain: str, tvl_data: list, fees_data: dict) -> Dict:
