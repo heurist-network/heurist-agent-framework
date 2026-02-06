@@ -611,6 +611,7 @@ class ProjectKnowledgeClient:
 
         return {
             "name": project.get("name"),
+            "rootdata_id": project.get("rootdata_id"),
             "token_symbol": token_symbol if token_symbol else None,
             "one_liner": project.get("one_liner"),
             "description": project.get("description"),
