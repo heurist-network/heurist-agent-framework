@@ -5,6 +5,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "aiohttp==3.11.15",
+    "asyncpg>=0.30.0", # project knowledge agent (PostgreSQL)
     "apify-client==1.9.2", # truth social agent
     "boto3>=1.38.13",
     "duckduckgo-search==7.4.3", # ddg agent
