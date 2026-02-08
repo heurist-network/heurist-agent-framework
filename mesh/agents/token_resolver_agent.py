@@ -985,7 +985,20 @@ class TokenResolverAgent(MeshAgent):
                 }
                 cex_data = cg.get("cex_data")
                 if cex_data:
-                    prof["cex_data"] = cex_data
+                    # Transform CEX data: volume is in native tokens, convert to USD
+                    current_price = mm.get("current_price_usd")
+                    transformed_cex_data = []
+                    for cex_entry in cex_data:
+                        volume_tokens = cex_entry.get("volume_24h")
+                        transformed_entry = {
+                            "name": cex_entry.get("cex_name"),
+                            "base_token": cex_entry.get("base_token"),
+                        }
+                        # Calculate USD volume if price and volume are available
+                        if current_price is not None and volume_tokens is not None:
+                            transformed_entry["volume_usd_24h"] = volume_tokens * current_price
+                        transformed_cex_data.append(transformed_entry)
+                    prof["cex_data"] = transformed_cex_data
                 if cg.get("supply_info") or cg.get("price_metrics"):
                     si = cg.get("supply_info") or {}
                     pm = cg.get("price_metrics") or {}
