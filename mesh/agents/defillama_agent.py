@@ -58,6 +58,13 @@ Present data clearly with appropriate context. Explain trends (WoW = week-over-w
                         },
                         "required": ["protocol"],
                     },
+                    "verified": True,
+                    "recommended": True,
+                    "credits": 1,
+                    "x402_config": {
+                        "enabled": True,
+                        "default_price_usd": "0.01",
+                    },
                 },
             },
             {
