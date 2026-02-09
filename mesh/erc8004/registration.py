@@ -13,7 +13,7 @@ BASE_URL = "https://mesh.heurist.xyz"
 
 
 def get_mcp_endpoint(agent_name: str) -> str:
-    return f"{BASE_URL}/mcp/agents/{agent_name}"
+    return f"{BASE_URL}/mcp/agents/{agent_name}/sse"
 
 
 def is_x402_enabled(metadata: dict[str, Any]) -> bool:
