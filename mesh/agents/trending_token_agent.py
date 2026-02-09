@@ -28,8 +28,8 @@ class TrendingTokenAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener, Zora and Twitter discussions.",
-                "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa", "Zora", "AIXBT", "Heurist Telegram"],
+                "description": "Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener, and Twitter discussions.",
+                "external_apis": ["GMGN", "CoinGecko", "Dexscreener", "Elfa", "AIXBT", "Telegram"],
                 "tags": ["Token Trends", "Market Data"],
                 "verified": True,
                 "recommended": True,
@@ -40,8 +40,6 @@ class TrendingTokenAgent(MeshAgent):
                     "What are the hottest tokens right now across all platforms?",
                     "Show me trending tokens from CoinGecko and Twitter only",
                     "What tokens have recently graduated from pump.fun?",
-                    "Show me trending tokens on Base including Zora",
-                    "What are the top Zora collections by volume?",
                 ],
                 "x402_config": {
                     "enabled": True,
@@ -80,10 +78,6 @@ class TrendingTokenAgent(MeshAgent):
                                 "type": "boolean",
                                 "description": "Include GMGN trending memecoins and Pump.fun recent graduated tokens. Keep it false by default. Include only if memecoins are specifically requested in the context.",
                             },
-                            "include_zora": {
-                                "type": "boolean",
-                                "description": "Include Zora trending tokens. Zora is an onchain creator economy protocol on Base. Zora Creator Coin is a token tied to a creator's identity and support for their work. Zora Post Coin is a token for a specific post that lets people collect and signal interest in content piece. Keep it false by default. Include only if Zora or creator tokens are specifically requested in the context.",
-                            },
                         },
                         "required": [],
                     },
@@ -104,9 +98,8 @@ class TrendingTokenAgent(MeshAgent):
     ) -> Dict[str, Any]:
         if tool_name == "get_trending_tokens":
             include_memes = function_args.get("include_memes", False)
-            include_zora = function_args.get("include_zora", False)
             chain = function_args.get("chain", "")
-            return await self.get_trending_tokens(include_memes=include_memes, include_zora=include_zora, chain=chain)
+            return await self.get_trending_tokens(include_memes=include_memes, chain=chain)
         if tool_name == "get_market_summary":
             return await self.get_market_summary()
         return {"status": "error", "error": f"Unsupported tool '{tool_name}'"}
@@ -276,76 +269,12 @@ class TrendingTokenAgent(MeshAgent):
             payload["error"] = "Failed to fetch AIXBT market summary and telegram topics"
         return payload
 
-    def _process_zora_collection(self, node: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Process a single Zora collection node and apply filtering.
-        Returns None if the collection doesn't meet criteria, otherwise returns processed data.
-        """
-        symbol = node.get("symbol", "Unknown")
-        address = node.get("address", "")
-        market_cap_str = node.get("marketCap", "0")
-        volume_24h_str = node.get("volume24h", "0")
-        holders = node.get("uniqueHolders", 0)
-
-        try:
-            market_cap = float(market_cap_str)
-            volume_24h = float(volume_24h_str)
-        except (ValueError, TypeError):
-            logger.warning(
-                f"Failed to parse numeric values for {symbol}: marketCap={market_cap_str}, volume24h={volume_24h_str}"
-            )
-            return None
-
-        if market_cap < 100000 or volume_24h < 1000:
-            return None
-
-        creator_profile = node.get("creatorProfile", {})
-        social_accounts = creator_profile.get("socialAccounts", {})
-        twitter_data = social_accounts.get("twitter")
-
-        twitter_info = None
-        if twitter_data:
-            twitter_info = {
-                "username": twitter_data.get("username"),
-                "follower_count": twitter_data.get("followerCount", 0),
-            }
-
-        return {
-            "symbol": symbol,
-            "address": address,
-            "market_cap": market_cap,
-            "volume_24h": volume_24h,
-            "holders": holders,
-            "twitter": twitter_info,
-        }
-
-    def _extract_zora_collections(self, zora_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract and filter collections from Zora API response.
-        Returns list of processed collections that meet filtering criteria.
-        """
-        if not isinstance(zora_result, dict):
-            return []
-
-        collections_data = zora_result.get("collections", {})
-        explore_list = collections_data.get("exploreList", {})
-        edges = explore_list.get("edges", [])
-
-        processed = []
-        for edge in edges:
-            node = edge.get("node", {})
-            processed_node = self._process_zora_collection(node)
-            if processed_node:
-                processed.append(processed_node)
-
-        return processed
-
     async def _fetch_chain_data(self, chain: str) -> Dict[str, Any]:
         """Fetch trending tokens from chain-specific API endpoint."""
         url = f"{TRENDING_CHAIN_DATA_BASE_URL}trending_tokens_{chain}.json"
         return await self._api_request(url, method="GET")
 
-    async def get_trending_tokens(
-        self, include_memes: bool = False, include_zora: bool = False, chain: str = ""
-    ) -> Dict[str, Any]:
+    async def get_trending_tokens(self, include_memes: bool = False, chain: str = "") -> Dict[str, Any]:
         # If chain is specified and it's not "base", only fetch chain-specific data
         if chain and chain != "base":
             chain_result = await self._fetch_chain_data(chain)
@@ -361,8 +290,6 @@ class TrendingTokenAgent(MeshAgent):
             return {"status": "success", "data": {f"{chain}_trending": chain_result, "notes": notes}}
 
         # For chain="base" or no chain specified, continue with full aggregation
-        should_fetch_zora = include_zora or chain == "base"
-
         task_map = {
             "coingecko": self._call_agent_tool_safe(
                 "mesh.agents.coingecko_token_info_agent",
@@ -384,22 +311,6 @@ class TrendingTokenAgent(MeshAgent):
 
         if chain == "base":
             task_map["base_chain"] = self._fetch_chain_data(chain)
-
-        zora_specs = [
-            ("top_gainers", "TOP_GAINERS", 3),
-            ("top_volume", "TOP_VOLUME_24H", 3),
-            ("valuable_creators", "MOST_VALUABLE_CREATORS", 10),
-        ]
-        if should_fetch_zora:
-            for key, list_type, count in zora_specs:
-                task_map[f"zora_{key}"] = self._call_agent_tool_safe(
-                    "mesh.agents.zora_agent",
-                    "ZoraAgent",
-                    "explore_collections",
-                    {"list_type": list_type, "count": count},
-                    log_instance=logger,
-                    context=f"ZoraAgent.explore_collections[{list_type}]",
-                )
 
         if include_memes:
             task_map["gmgn"] = self._call_agent_tool_safe(
@@ -447,26 +358,6 @@ class TrendingTokenAgent(MeshAgent):
                 warning = self._check_data_freshness(base_chain_result["last_updated"])
                 if warning:
                     notes_parts.append(f"Base chain data: {warning}.")
-
-        # Process Zora results if fetched
-        if should_fetch_zora:
-            zora_results = {}
-            for key, list_type, _count in zora_specs:
-                result = self._normalize_tool_result(
-                    result_map[f"zora_{key}"], f"ZoraAgent.explore_collections[{list_type}]"
-                )
-                zora_results[key] = self._extract_zora_collections(result)
-
-            aggregated["zora_trending"] = {
-                "top_gainers": zora_results["top_gainers"],
-                "top_volume": zora_results["top_volume"],
-                "valuable_creators": zora_results["valuable_creators"],
-            }
-
-            if any(zora_results.values()):
-                notes_parts.append(
-                    "Zora trending includes creator tokens and post tokens with minimum $100k market cap and $1k daily volume."
-                )
 
         if include_memes:
             gmgn_result = self._normalize_tool_result(result_map["gmgn"], "UnifaiTokenAnalysisAgent.get_gmgn_trend")
