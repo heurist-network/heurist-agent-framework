@@ -1,6 +1,6 @@
 """
 Project Knowledge Agent - provides access to project information database.
-Supports searching projects by name, symbol, x handle, and contract address.
+Supports searching projects by name, symbol, and x handle.
 Also supports semantic search for discovering projects using natural language.
 """
 
@@ -59,7 +59,6 @@ You can search for projects by:
 - Project name (e.g., "Ethereum", "Uniswap") - exact match with cascading fallback
 - Token symbol (e.g., "ETH", "UNI") - exact match
 - X (Twitter) handle (e.g., "@ethereum", "ethereum") - exact match
-- Contract address (e.g., "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984") - exact match
 
 When providing project information, be clear and concise. Include key details like:
 - Project name and token symbol
@@ -76,7 +75,7 @@ Format your response in clean text. Be objective and informative."""
                 "type": "function",
                 "function": {
                     "name": "get_project",
-                    "description": "Get crypto project details including description, twitter handle, defillama slug, token info (CA on multiple chains, coingecko id, symbol, WITHOUT market data), team, investors, chronological events, similar projects. Lookup parameter MUST be ONE OF name, symbol, x_handle, or contract_address. Not all result fields are available. New or small projects without VC backing might be missing. Data aggregated from multiple sources may have inconsistencies. Name lookups can be ambiguous - must verify the returned entity matches the user intent. In case of mismatch, ignore the tool response.",
+                    "description": "Get crypto project details including description, twitter handle, defillama slug, token info (CA on multiple chains, coingecko id, symbol, WITHOUT market data), team, investors, chronological events, similar projects. Lookup parameter MUST be ONE OF name, symbol, or x_handle. Not all result fields are available. New or small projects without VC backing might be missing. Data aggregated from multiple sources may have inconsistencies. Name lookups can be ambiguous - must verify the returned entity matches the user intent. In case of mismatch, ignore the tool response.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -91,10 +90,6 @@ Format your response in clean text. Be objective and informative."""
                             "x_handle": {
                                 "type": "string",
                                 "description": "X (Twitter) handle with or without @. Use for exact match.",
-                            },
-                            "contract_address": {
-                                "type": "string",
-                                "description": "Token contract address. Case-insensitive for 0x addresses.",
                             },
                         },
                         "required": [],
@@ -139,7 +134,6 @@ Format your response in clean text. Be objective and informative."""
                 name=function_args.get("name"),
                 symbol=function_args.get("symbol"),
                 x_handle=function_args.get("x_handle"),
-                contract_address=function_args.get("contract_address"),
             )
         elif tool_name == "semantic_search_projects":
             return await self._search_projects_semantic(
@@ -193,31 +187,20 @@ Format your response in clean text. Be objective and informative."""
         name: Optional[str] = None,
         symbol: Optional[str] = None,
         x_handle: Optional[str] = None,
-        contract_address: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Get project details from database and AIXBT in parallel."""
-        if not any([name, symbol, x_handle, contract_address]):
-            return {"error": "At least one of name, symbol, x_handle, or contract_address must be provided"}
-
-        contract_only = contract_address and not any([name, symbol, x_handle])
+        if not any([name, symbol, x_handle]):
+            return {"error": "At least one of name, symbol, or x_handle must be provided"}
 
         async def fetch_database():
             project = await self.client.get_project(
                 name=name,
                 symbol=symbol,
                 x_handle=x_handle,
-                contract_address=contract_address,
             )
             if not project:
                 return "not found"
             return {k: v for k, v in project.items() if k not in EXCLUDED_FIELDS}
-
-        if contract_only:
-            db_result = await fetch_database()
-            if isinstance(db_result, Exception):
-                logger.warning(f"Database lookup failed: {db_result}")
-                db_result = "error"
-            return {"database_project": db_result}
 
         db_result, aixbt_result = await asyncio.gather(
             fetch_database(),
