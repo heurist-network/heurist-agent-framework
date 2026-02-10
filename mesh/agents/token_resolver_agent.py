@@ -50,10 +50,10 @@ YF_DEFAULT_INTERVAL = "1d"
 YF_DEFAULT_PERIOD = "6mo"
 
 # Minimum 24h volume threshold for DEX pools (filters out low-activity/fake pools)
-MIN_POOL_VOLUME_24H = 3000
+MIN_POOL_VOLUME_24H = 2000
 
 # Minimum liquidity threshold for DEX pools (filters out scam/fake pools with wash trading)
-MIN_POOL_LIQUIDITY_USD = 5000
+MIN_POOL_LIQUIDITY_USD = 4000
 
 # Common suffixes in crypto project names to strip before fuzzy matching
 COMMON_CRYPTO_SUFFIXES = {

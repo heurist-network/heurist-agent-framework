@@ -315,7 +315,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
 
                 # Only filter if marketCap exists and either side matches the query
                 market_cap = pair.get("marketCap")
-                if market_cap is not None and market_cap < 50000 and match_info["matched_sides"]:
+                if market_cap is not None and market_cap < 40000 and match_info["matched_sides"]:
                     continue
 
                 cleaned_pair = await self._clean_pair_data(pair)
