@@ -39,7 +39,7 @@ class UnifaiMeteoraInfoAgent(MeshAgent):
                     "Find dynamic AMM pools with high TVL",
                     "Get DLMM pools for SOL token",
                 ],
-                "credits": 0,
+                "credits": {"default": 0},
             }
         )
 

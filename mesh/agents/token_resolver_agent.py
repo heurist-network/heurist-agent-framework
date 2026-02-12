@@ -344,6 +344,7 @@ class TokenResolverAgent(MeshAgent):
                     "token_profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['pairs']",
                     "token_profile symbol=BTC include=['funding_rates','technical_indicators']",
                 ],
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

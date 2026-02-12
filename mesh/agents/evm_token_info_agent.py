@@ -38,6 +38,7 @@ class EvmTokenInfoAgent(MeshAgent):
                     "Show recent whale sells for WETH on base with minimum $10,000",
                     "Large trades for 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 on ethereum above $50k",
                 ],
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

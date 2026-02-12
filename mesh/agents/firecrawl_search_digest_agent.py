@@ -44,7 +44,7 @@ class FirecrawlSearchDigestAgent(MeshAgent):
                     "The biggest scams in crypto history",
                     "Search for the weirdest NFT collections that sold for huge amounts",
                 ],
-                "credits": 2,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

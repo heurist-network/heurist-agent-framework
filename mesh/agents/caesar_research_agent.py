@@ -44,7 +44,7 @@ class CaesarResearchAgent(MeshAgent):
                     "How does Heurist decentralized AI infrastructure work?",
                     "Latest developments in AI safety research",
                 ],
-                "credits": 10,
+                "credits": {"default": 10, "caesar_research": 10, "get_research_result": 0.1},
                 "x402_config": {
                     "enabled": True,
                     "tool_prices": {"caesar_research": "0.1", "get_research_result": "0.001"},

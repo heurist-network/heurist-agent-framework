@@ -73,7 +73,7 @@ class AgentMetadata(AgentMetadataRequired, total=False):
     verified: bool
     recommended: bool
     hidden: bool
-    credits: float
+    credits: Dict[str, float]
     x402_config: X402Config
     erc8004: ERC8004
 

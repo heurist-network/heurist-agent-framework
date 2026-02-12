@@ -39,6 +39,7 @@ class ZerionWalletAnalysisAgent(ContextAgent):
                     "What's the total value of tokens in 0x7d9d1821d15B9e0b8Ab98A058361233E255E405D?",
                     "Which tokens held by 0x7d9d1821d15B9e0b8Ab98A058361233E255E405D have had the most price change in the last 24 hours?",
                 ],
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

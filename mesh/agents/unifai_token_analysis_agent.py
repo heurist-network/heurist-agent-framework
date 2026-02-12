@@ -41,7 +41,7 @@ class UnifaiTokenAnalysisAgent(MeshAgent):
                     "What are the top 10 trending tokens on GMGN in the last 24 hours?",
                     "Get token information for 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599 on Ethereum",
                 ],
-                "credits": 0,
+                "credits": {"default": 0},
             }
         )
 

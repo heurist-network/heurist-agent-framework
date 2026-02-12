@@ -44,7 +44,7 @@ class FirecrawlSearchAgent(MeshAgent):
                     "The biggest scams in crypto history",
                     "Search for the weirdest NFT collections that sold for huge amounts",
                 ],
-                "credits": 2,
+                "credits": {"default": 2},
             }
         )
 

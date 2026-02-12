@@ -89,7 +89,7 @@ class TwitterInfoAgent(MeshAgent):
                     "Search for 'bitcoin' (single word search)",
                     "Search for '#ETH' (hashtag search)",
                 ],
-                "credits": 5,
+                "credits": {"default": 5},
             }
         )
 

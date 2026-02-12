@@ -52,7 +52,7 @@ class EtherscanAgent(MeshAgent):
                     "Show token transfers for 0x55d398326f99059ff775485246999027b3197955 on BSC",
                     "Get top holders for 0xEF22cb48B8483dF6152e1423b19dF5553BbD818b on Base",
                 ],
-                "credits": 2,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

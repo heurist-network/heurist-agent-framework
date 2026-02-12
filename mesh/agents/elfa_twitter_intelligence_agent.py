@@ -71,7 +71,7 @@ class ElfaTwitterIntelligenceAgent(MeshAgent):
                     "Get trending tokens on Twitter in the last 24 hours",
                     "What are people talking about ETH and SOL this week?",
                 ],
-                "credits": 10,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

@@ -43,7 +43,7 @@ class L2BeatAgent(MeshAgent):
                     "Compare the costs of different L2 solutions",
                     "What are the top Validiums and Optimiums by TVL?",
                 ],
-                "credits": 1,
+                "credits": {"default": 1},
             }
         )
 

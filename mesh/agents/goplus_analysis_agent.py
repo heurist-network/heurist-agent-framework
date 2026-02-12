@@ -30,7 +30,7 @@ class GoplusAnalysisAgent(MeshAgent):
                     "Is 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599 safe on ETH mainnet?",
                     "Check the security details of token 0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb on Base chain",
                 ],
-                "credits": 0,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

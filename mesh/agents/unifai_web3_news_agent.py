@@ -38,7 +38,7 @@ class UnifaiWeb3NewsAgent(MeshAgent):
                     "Get me the most recent Web3 developments",
                     "Show the top blockchain news",
                 ],
-                "credits": 0,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

@@ -45,7 +45,7 @@ class AgentMetadata(AgentMetadataRequired, total=False):
     verified: bool                 # Verified/trusted flag (default: False)
     recommended: bool              # Recommended agent flag (default: False)
     hidden: bool                   # Hide from UI (default: False)
-    credits: float                 # Cost in credits (optional)
+    credits: Dict[str, float]      # Per-tool credit pricing (optional)
     x402_config: X402Config        # Payment configuration (optional)
 ```
 
@@ -74,7 +74,7 @@ Every agent **must** define these fields:
 | `verified` | `bool` | Agent is verified/trusted | `False` |
 | `recommended` | `bool` | Featured/recommended agent | `False` |
 | `hidden` | `bool` | Hide from UI listings | `False` |
-| `credits` | `float` | Cost in credits | - |
+| `credits` | `Dict[str, float]` | Per-tool credit pricing (`{"default": N, "tool_name": M}`) | `{"default": 1}` |
 | `x402_config` | `X402Config` | Payment integration config | - |
 
 ### Input/Output Field Structure

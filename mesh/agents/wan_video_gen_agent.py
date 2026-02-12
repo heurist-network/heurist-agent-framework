@@ -70,7 +70,15 @@ class WanVideoGenAgent(MeshAgent):
                     "Create a video from an image showing ocean waves",
                     "Check status of task: abc123",
                 ],
-                "credits": 10,
+                "credits": {
+                    "default": 15,
+                    "text_to_video_480p_5s": 15,
+                    "text_to_video_with_audio_480p_5s": 25,
+                    "image_to_video_plus_480p_5s": 15,
+                    "image_to_video_flash_480p_5s": 10,
+                    "image_to_video_with_audio_480p_5s": 25,
+                    "get_video_status": 0.1,
+                },
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.15",

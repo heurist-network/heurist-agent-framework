@@ -45,7 +45,7 @@ class AskHeuristAgent(MeshAgent):
                 ],
                 "verified": True,
                 "recommended": True,
-                "credits": 10,
+                "credits": {"default": 10, "ask_heurist": 10, "check_job_status": 0.1},
                 "x402_config": {
                     "enabled": True,
                     "tool_prices": {"ask_heurist": "0.1", "check_job_status": "0.001"},

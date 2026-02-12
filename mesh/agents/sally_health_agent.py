@@ -35,7 +35,7 @@ class SallyHealthAgent(MeshAgent):
                     "Tips for better sleep quality",
                     "How to manage stress naturally?",
                 ],
-                "credits": 0,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

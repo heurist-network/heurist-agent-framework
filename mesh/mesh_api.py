@@ -259,6 +259,13 @@ async def pre_validate_credits(origin_api_key: str, agent_credits: float = 1.0) 
     return user_id
 
 
+def resolve_agent_credits(agent_metadata: dict, tool_name: str | None = None) -> float:
+    credits_config = agent_metadata.get("credits", {"default": 1})
+    if tool_name and tool_name in credits_config:
+        return float(credits_config[tool_name])
+    return float(credits_config.get("default", 1))
+
+
 async def deduct_credits(
     user_id: str,
     api_key_part: str,
@@ -342,7 +349,7 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
     if request.credits is not None:
         agent_credits = request.credits
     else:
-        agent_credits = agent.metadata.get("credits", 1.0)
+        agent_credits = resolve_agent_credits(agent.metadata, request.input.get("tool"))
     try:
         user_id, api_key_part = parse_api_key(origin_api_key)
     except ValueError:
@@ -387,7 +394,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
         agent_credits = request.credits
     else:
         agent = await agent_pool.get_agent(request.agent_id)
-        agent_credits = agent.metadata.get("credits", 1.0)
+        agent_credits = resolve_agent_credits(agent.metadata, task_payload.get("tool"))
     try:
         user_id, api_key_part = parse_api_key(api_key)
     except ValueError:

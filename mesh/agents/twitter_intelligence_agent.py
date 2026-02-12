@@ -38,7 +38,7 @@ class TwitterIntelligenceAgent(MeshAgent):
                     "tweet_detail(tweet_id='1975788185671389308', show_thread=true)",
                     "twitter_search(queries=['#ETH','SOL'], limit=15)",
                 ],
-                "credits": 10,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

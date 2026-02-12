@@ -47,7 +47,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
                     "Trending projects in the crypto space",
                     "What's happening in the crypto market today?",
                 ],
-                "credits": 0,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",

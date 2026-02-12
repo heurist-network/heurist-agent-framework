@@ -60,7 +60,7 @@ class ExaSearchDigestAgent(MeshAgent):
                     "Find information about the newest crypto projects",
                     "Search for analysis on current market trends",
                 ],
-                "credits": 2,
+                "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.01",
