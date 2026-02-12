@@ -13,7 +13,7 @@ import boto3
 import botocore.exceptions
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
@@ -505,6 +505,47 @@ async def cache_debug():
         "active_agent_instances": len(agent_pool.instances),
         "timestamp": datetime.now().isoformat(),
     }
+
+
+@app.get("/mesh_schema")
+async def get_mesh_schema(
+    agent_id: list[str] = Query(..., description="One or more agent IDs"),
+    pricing: str = Query("credits", description="Pricing unit: 'credits' or 'usd'"),
+):
+    if pricing not in ("credits", "usd"):
+        raise HTTPException(status_code=400, detail="pricing must be 'credits' or 'usd'")
+
+    result = {}
+    not_found = []
+    for aid in agent_id:
+        if aid not in agents_dict:
+            not_found.append(aid)
+            continue
+
+        agent = await agent_pool.get_agent(aid)
+        tools = []
+        for schema in agent.get_tool_schemas():
+            func = schema["function"]
+
+            credit_cost = resolve_agent_credits(agent.metadata, func["name"])
+            price = credit_cost / 100 if pricing == "usd" else credit_cost
+
+            tools.append({
+                "name": func["name"],
+                "description": func.get("description", ""),
+                "parameters": func["parameters"],
+                "price": price,
+            })
+
+        result[aid] = {"tools": tools}
+
+    if not_found and not result:
+        raise HTTPException(status_code=404, detail=f"Agents not found: {', '.join(not_found)}")
+
+    response = {"agents": result, "pricing_unit": pricing}
+    if not_found:
+        response["not_found"] = not_found
+    return response
 
 
 @app.post("/claim_credits/initiate")

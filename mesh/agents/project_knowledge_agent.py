@@ -42,6 +42,7 @@ class ProjectKnowledgeAgent(MeshAgent):
                 "external_apis": ["PostgreSQL", "AIXBT", "PageIndex"],
                 "tags": ["Projects", "Research"],
                 "verified": True,
+                "recommended": True,
                 "examples": [
                     "Get information about Ethereum",
                     "Search for projects by symbol BTC",
