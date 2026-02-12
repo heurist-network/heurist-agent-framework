@@ -24,6 +24,7 @@ sys.path.append(str(project_root))
 
 from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
+from mesh.tweet_claim import ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
 from mesh.usage_tracker import record_usage  # noqa: E402
 
 
@@ -40,6 +41,8 @@ logger = logging.getLogger("MeshAPI")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Fail fast if claim credits tables/config are unavailable.
+    ensure_claim_store_ready_sync()
     yield
     logger.info("Application shutdown: cleaning up agent pool")
     await agent_pool.cleanup()
@@ -144,6 +147,11 @@ class MeshTaskCreateRequest(BaseModel):
 class MeshTaskQueryRequest(BaseModel):
     task_id: str
     api_key: str | None = None
+
+
+class TweetClaimVerifyRequest(BaseModel):
+    tweet_url: str
+    verification_code: str
 
 
 DYNAMODB_TABLE_NAME = os.getenv("DYNAMODB_TABLE_NAME")
@@ -497,6 +505,16 @@ async def cache_debug():
         "active_agent_instances": len(agent_pool.instances),
         "timestamp": datetime.now().isoformat(),
     }
+
+
+@app.post("/claim_credits/initiate")
+async def claim_credits_initiate():
+    return await initiate_claim()
+
+
+@app.post("/claim_credits/verify")
+async def claim_credits_verify(request: TweetClaimVerifyRequest):
+    return await verify_claim(request.tweet_url, request.verification_code)
 
 
 if __name__ == "__main__":
