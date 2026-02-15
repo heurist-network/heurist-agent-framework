@@ -220,7 +220,7 @@ class ExaSearchDigestAgent(MeshAgent):
             - Synthesize, Don't Segregate: Instead of summarizing each source individually, group related info from across all sources into thematic paragraphs.
             - Use Inline Numerical Citations: Cite sources using inline numerical markers (e.g., [1], [2]). At the end of the entire summary, provide a numbered list of the source URLs corresponding to the markers. Only cite the most relevant sources that contribute unique, non-redundant info. Disregard vague, duplicate, irrelevant info. Max 5 cited sources.
             - Briefly quote the original texts for the most important info.
-            - If the results contain time-varying info such as current asset price, market cap, current valuation, current supply, add a "[WARNING] {field name(s)} may be outdated" note (not applicable to back-in-time values e.g. launch price. Historical values don't need such warning)
+            - If the results contain time-varying info such as current asset price, market cap, current valuation, current supply, onchain records like transactions and token trades, add a "[WARNING] {field name(s)} may be outdated" note (not applicable to back-in-time values e.g. launch price. Historical values don't need such warning)
             - No bold formatting (**). No markdowns. Only basic bullet points and plain texts.
             - Focus on Key Details: Extract specific names, terms, numbers, and key concepts.
             - No opening or closing paragraphs. Just focus on representing the search results based on search query.

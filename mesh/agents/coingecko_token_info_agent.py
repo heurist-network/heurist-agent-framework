@@ -292,7 +292,7 @@ Format your response in clean text. Be objective and informative."""
                 "type": "function",
                 "function": {
                     "name": "get_token_holders_traders",
-                    "description": "Get token holder and trader data combining: 1) Top holders - ranked wallet addresses with ownership percentages 2) Daily holder trend 3) Large trades in past 24 hours showing buy/sell whale activity.",
+                    "description": "Get token holder and trader data combining: 1) Top holders - ranked wallet addresses with ownership percentages 2) Daily holder trend 3) Large trades in past 24 hours showing buy/sell whale activity. If you know that the token is deployed on multiple chains, you must make multiple calls to this tool in parallel to fetch data for every chain and address.",
                     "parameters": {
                         "type": "object",
                         "properties": {
