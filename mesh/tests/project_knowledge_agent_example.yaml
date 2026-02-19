@@ -1,0 +1,2335 @@
+metadata:
+  agent: ProjectKnowledgeAgent
+  test_file: project_knowledge_agent.py
+  timestamp: '2026-02-09T16:42:56.399270'
+  total_tests: 10
+  passed: 10
+  failed: 0
+results:
+  natural_language_uniswap:
+    input:
+      query: Tell me about Uniswap
+    output:
+      response: "Here's information about Uniswap:\n\n**Project Name:** Uniswap\n\
+        **Token Symbol:** UNI\n**One-liner description:** Decentralized trading protocol\n\
+        \n**Key Investors & Funding Rounds:**\nUniswap has raised a total of $177,000,000\
+        \ across multiple rounds.\n*   **Lead Investors:** Polychain, Paradigm, Andreessen\
+        \ Horowitz\n*   **Other Investors:** Variant Fund, ParaFi Capital, A.Capital,\
+        \ SV Angel, USV\n*   **Funding Rounds:**\n    *   Seed Round: $1M (2019-04-01)\n\
+        \    *   Series A Round: $11M (2020-08-06)\n    *   Series B Round: $165M\
+        \ (2022-10-13)\n\n**Recent Events:**\n*   **2026-02-07:** Recorded 1.8 million\
+        \ website visits in January 2026.\n*   **2026-02-06:** 20% of idOS token sale\
+        \ proceeds are automatically seeded into a Uniswap v4 liquidity pool on Arbitrum\
+        \ at TDE.\n*   **2026-02-05:** A whale (0x9671) bought 682,087 UNI tokens\
+        \ worth $2.58M after selling XAUT and ETH positions.\n*   **2026-02-04:**\
+        \ Uniswap Labs has a speaker participating in the EthCC[9] conference lineup\
+        \ in Cannes.\n*   **2026-02-03:** Web traffic reached a multiyear low, down\
+        \ 60% year-over-year.\n*   **2022-10-13:** Uniswap raised $165M in its Series\
+        \ B round.\n*   **2020-09-17:** UNI token went live for trading.\n\n**Contract\
+        \ Address (Ethereum):** 0x1f9840a85d5af5bf1d1762f925bdaddc4201f984\n\n**Official\
+        \ Links:**\n*   **Website:** https://uniswap.org/\n*   **X (Twitter):** @uniswap"
+      data:
+        database_project:
+          name: Uniswap
+          rootdata_id: 233
+          token_symbol: UNI
+          one_liner: Decentralized trading protocol
+          description: The Uniswap is a decentralized exchange protocol that provides
+            liquidity and facilitates the trading of tokens. It eliminates the need
+            for trusted intermediaries and unnecessary forms of rent extraction, enabling
+            safe, accessible, and efficient exchange activities.
+          establishment_date: '2018'
+          launch_date: '2020-09-17'
+          total_funding: 177000000
+          total_supply: 1000000000
+          contract_address: null
+          logo_url: https://images.heurist.xyz/rootdata/233.jpg
+          website: https://uniswap.org/
+          twitter_handle: uniswap
+          coingecko_id: uniswap
+          defillama_chain_name: null
+          defillama_slugs:
+          - uniswap
+          tags:
+          - DeFi
+          - DEX
+          team:
+          - 'Founder and CEO: Hayden Adams'
+          - 'Executive Director & Co-Founder: Devin Walsh'
+          - 'Head of Strategy: Alexander Nezlobin'
+          - 'Content Lead: Chase Chapman'
+          - 'VP Marketing & International Expansion: Renaud Besnard'
+          - 'Head of Growth: Sarina Siddhanti'
+          - 'Head of Finance: Justin Wong'
+          - 'Governance Lead: Erin Koen'
+          - 'Product Manager: Kothari Medha'
+          - 'Senior Data Analyst: Ryan Holloway'
+          - 'Staff Software Engineer: Mark Toda'
+          - 'Sr Protocol Engineer: Chris Cashwell'
+          investors:
+          - name: Polychain
+            logo_url: https://images.heurist.xyz/rootdata/investors/Polychain.png
+            is_lead: true
+          - name: Paradigm
+            logo_url: https://images.heurist.xyz/rootdata/investors/Paradigm.png
+            is_lead: true
+          - name: Andreessen Horowitz
+            logo_url: https://images.heurist.xyz/rootdata/investors/Andreessen_Horowitz.png
+            is_lead: true
+          - name: Variant Fund
+            logo_url: https://images.heurist.xyz/rootdata/investors/Variant_Fund.png
+          - name: ParaFi Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/ParaFi_Capital.png
+          - name: Paradigm
+            logo_url: https://images.heurist.xyz/rootdata/investors/Paradigm.png
+          - name: Andreessen Horowitz
+            logo_url: https://images.heurist.xyz/rootdata/investors/Andreessen_Horowitz.png
+          - name: A.Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/A.Capital.png
+          - name: SV Angel
+            logo_url: https://images.heurist.xyz/rootdata/investors/SV_Angel.png
+          - name: USV
+            logo_url: https://images.heurist.xyz/rootdata/investors/USV.png
+          - name: 1 more
+          fundraising:
+          - '2019-04-01: Seed $1M'
+          - '2020-08-06: Series A $11M'
+          - '2022-10-13: Series B $165M'
+          events:
+          - '2022-10-13: Uniswap raised $165M in Series B round'
+          - '2020-09-17: UNI is live for trading'
+          - '2020-08-06: Uniswap raised $11M in Series A round'
+          - '2020-05-18: Uniswap lost $900,000 in hack'
+          - '2020-04-18: Uniswap lost $25M in hack'
+          - '2019-04-01: Uniswap raised $1M in Seed round'
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          updated_at: '2026-02-09'
+          match_type: exact
+        aixbt_data:
+          name: uniswap
+          score: 0.055
+          xHandle: uniswap
+          rationale: Uniswap recorded 1.8M Jan website visits, saw idOS token integration,
+            whale buys, and conference presence.
+          ticker: uni
+          tokens:
+            ethereum: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
+            xdai: '0x4537e328bf7e4efa29d05caea260d7fe26af9d74'
+            near-protocol: 1f9840a85d5af5bf1d1762f925bdaddc4201f984.factory.bridge.near
+            huobi-token: '0x22c54ce8321a4015740ee1109d9cbc25815c46e6'
+            optimistic-ethereum: '0x6fd9d7ad17242c41f7131d257212c54a0e816691'
+            unichain: '0x8f187aa05619a017077f5308904739877ce9ea21'
+            harmony-shard-0: '0x90d81749da8867962c760414c1c25ec926e889b6'
+            energi: '0x665b3a802979ec24e076c80025bff33c18eb6007'
+            sora: '0x009be848df92a400da2f217256c88d1a9b1a0304f9b3e90991a67418e1d3b08c'
+            binance-smart-chain: '0xbf5140a22578168fd562dccf235e5d43a02ce9b1'
+            avalanche: '0x8ebaf22b6f053dffeaf46f4dd9efa95d89ba8580'
+            polygon-pos: '0xb33eaad8d922b1083446dc23f610c2567fb5180f'
+            arbitrum-one: '0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0'
+          summaries:
+          - date: '2026-02-07'
+            description: recorded 1.8 million website visits in January 2026
+          - date: '2026-02-06'
+            description: 20% of idOS token sale proceeds are automatically seeded
+              into a Uniswap v4 liquidity pool on Arbitrum at TDE.
+          - date: '2026-02-05'
+            description: Whale 0x9671 bought 682,087 UNI tokens worth $2.58M after
+              selling XAUT and ETH positions.
+          - date: '2026-02-04'
+            description: Uniswap Labs has a speaker participating in the EthCC[9]
+              conference lineup in Cannes.
+          - date: '2026-02-03'
+            description: Web traffic reached a multiyear low, down 60% year-over-year.
+    description: Natural language query for Uniswap - has 11 investors with logos
+    status: success
+    elapsed_time: 9.73671555519104
+  natural_language_arbitrum:
+    input:
+      query: What is Arbitrum and who invested in it?
+    output:
+      response: 'Arbitrum (token symbol: ARB) is an Ethereum Layer2 scaling solution.
+
+
+        It is an Ethereum Layer2 scaling solution based on Optimistic Rollup technology,
+        created by the Offchain Labs team. It enables trustless transfer of any Ethereum
+        asset between Layer 1 and Layer 2, significantly reducing gas fees by submitting
+        only raw transaction data to Ethereum while execution and contract storage
+        occur off-chain.
+
+
+        **Key Investors:**
+
+        *   Pantera Capital (Lead)
+
+        *   Lightspeed Venture (Lead)
+
+        *   Alameda Research
+
+        *   Polychain
+
+        *   Coinbase Ventures
+
+        *   Ribbit Capital
+
+        *   Redpoint Ventures
+
+        *   Compound VC
+
+        *   Mark Cuban
+
+
+        **Funding Rounds:**
+
+        *   Seed Round: $3.7 Million (2019-04-02)
+
+        *   Series A: $20 Million (2021-04-01)
+
+        *   Series B: $120 Million (2021-08-30)
+
+
+        **Total Funding:** $143.7 Million
+
+
+        **Official Website:** https://arbitrum.io/
+
+        **X (Twitter) Handle:** @arbitrum'
+      data:
+        database_project:
+          name: Arbitrum
+          rootdata_id: 2738
+          token_symbol: ARB
+          one_liner: Ethereum Layer2 scaling solution
+          description: Arbitrum, created by the Offchain Labs team, is an Ethereum
+            Layer2 scaling solution based on Optimistic Rollup technology. It leverages
+            the ability to communicate between L1 and L2, allowing any form of Ethereum
+            asset to be transferred between Layer 1 and Layer 2 without the need for
+            trust. Even though Arbitrum transactions are still settled on Ethereum,
+            only raw transaction data is submitted to Ethereum, with execution and
+            contract storage occurring off-chain. This makes the gas fee required
+            on Arbitrum much smaller than on the mainnet, and contracts are fully
+            compatible with no gas limit.
+          establishment_date: '2018'
+          launch_date: '2023-03-23'
+          total_funding: 143700000
+          total_supply: 10000000000
+          contract_address: null
+          logo_url: https://images.heurist.xyz/rootdata/2738.jpg
+          website: https://arbitrum.io/
+          twitter_handle: arbitrum
+          coingecko_id: arbitrum
+          defillama_chain_name: Arbitrum
+          defillama_slugs:
+          - arbitrum
+          tags:
+          - Infra
+          - Layer2
+          team:
+          - 'Co-Founder and CEO: Steven Goldfeder'
+          - 'Co-Founder and CTO: Harry Kalodner'
+          - 'Co-Founder & Chief Scientist: Edward Felten'
+          - 'Head of Finance: Sean S.'
+          - 'Head of Investment Strategy: Brendan Ma'
+          - 'Head of Gaming Partnerships Asia Pacific: kiet (kit) fong'
+          - 'Growth Lead: Marcin Pawel'
+          - 'Head of Tandem: Ira Auerbach'
+          - 'Researcher: Patrick McCorry'
+          - 'Core Developer: Preston Van Loon'
+          - 'Grants Manager: Mariam Kouanda'
+          investors:
+          - name: Pantera Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Pantera_Capital_150.png
+            is_lead: true
+          - name: Lightspeed Venture
+            logo_url: https://images.heurist.xyz/rootdata/investors/Lightspeed_Venture.png
+            is_lead: true
+          - name: Alameda Research
+            logo_url: https://images.heurist.xyz/rootdata/investors/Alameda_Research.png
+          - name: Polychain
+            logo_url: https://images.heurist.xyz/rootdata/investors/Polychain.png
+          - name: Pantera Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Pantera_Capital_150.png
+          - name: Coinbase Ventures
+            logo_url: https://images.heurist.xyz/rootdata/investors/Coinbase_Ventures.png
+          - name: Ribbit Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Ribbit_Capital.png
+          - name: Redpoint Ventures
+            logo_url: https://images.heurist.xyz/rootdata/investors/Redpoint_Ventures.png
+          - name: Compound VC
+            logo_url: https://images.heurist.xyz/rootdata/investors/Compound_VC.png
+          - name: Mark Cuban
+            logo_url: https://images.heurist.xyz/rootdata/investors/Mark_Cuban.png
+          fundraising:
+          - '2019-04-02: Seed $3.7 Million'
+          - '2021-04-01: Series A $20 Million'
+          - '2021-08-30: Series B $120 Million'
+          events:
+          - '2025-11-19: Arbitrum plans to hold its flagship event, ArbiVerse, in
+            Buenos Aires on November 19'
+          - '2025-11-16: ARB will unlock 123.53 million tokens, worth $30.26 million,
+            accounting for 2.244% of the circulation.'
+          - '2025-10-24: Arbitrum to Host Community Meetup in Jakarta on October 24th'
+          - '2025-10-17: Arbitrum Timeboost Has Generated $4.2 Million in Revenue
+            Since Its April Launch'
+          - '2025-10-16: ARB will unlock 123.53 million tokens, worth $40.77 million,
+            accounting for 2.286% of the circulation.'
+          - '2025-09-16: ARB will unlock 123.53 million tokens, worth $60.49 million,
+            accounting for 2.337% of the circulation.'
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          updated_at: '2026-02-09'
+          match_type: exact
+        aixbt_data:
+          name: arbitrum
+          score: 0.055
+          xHandle: arbitrum
+          rationale: YOverse expanded to Arbitrum, which also maintains low fees,
+            added Move support, and offers ARB rewards.
+          ticker: arb
+          tokens:
+            arbitrum-one: '0x912ce59144191c1204e64559fe8253a0e49e6548'
+            arbitrum-nova: '0xf823c3cd3cebe0a1fa952ba88dc9eef8e0bf46ad'
+            ethereum: '0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'
+          summaries:
+          - date: '2026-02-09'
+            description: Hiring for Director of Finance and Treasury role at Arbitrum
+              OpCo.
+          - date: '2026-02-09'
+            description: Hiring for Legal Counsel role at Arbitrum OpCo.
+          - date: '2026-02-08'
+            description: Orbit is being promoted as the path to launch custom L2s
+              and L3s on Arbitrum's stack according to developer discussions.
+          - date: '2026-02-06'
+            description: YOverse expanded to Arbitrum in January 2026.
+          - date: '2026-02-06'
+            description: Maintained median gas fee below $0.01 during a volatile period
+              on February 5, 2026, when Bitcoin dropped 3% from $70k to $67k, with
+              fees rising only 3x from $0.002 to $0.007.
+    description: Natural language query about Arbitrum investors - has 10 investors
+      with logos
+    status: success
+    elapsed_time: 4.198904275894165
+  get_project_by_name:
+    input:
+      tool: get_project
+      tool_arguments:
+        name: Aave
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        database_project:
+          name: Aave
+          rootdata_id: 106
+          token_symbol: AAVE
+          one_liner: 'Decentralized lending-borrowing protocol '
+          description: Aave is a decentralized finance protocol for borrowing and
+            lending, where users can participate as depositors or borrowers. Depositors
+            provide liquidity to the market to earn a passive income, while borrowers
+            are able to borrow in an overcollateralized (perpetually) or undercollateralized
+            (one-block liquidity) fashion. AAVE is used as the center of gravity of
+            Aave Protocol governance, allowing users to vote and decide on the outcome
+            of Aave Improvement Proposals (AIPs). Additionally, AAVE can be staked
+            within the protocol's Safety Module to provide security/insurance to the
+            protocol and depositors. Stakers earn staking rewards and fees from the
+            protocol.
+          establishment_date: '2017'
+          launch_date: 2017-12
+          total_funding: 48700000
+          total_supply: 16000000
+          contract_address: '0x7fc664d7ea895505f3afa2c72edd64bf02eedae9'
+          logo_url: https://images.heurist.xyz/rootdata/106.png
+          website: https://aave.com/
+          twitter_handle: aave
+          coingecko_id: aave
+          defillama_chain_name: null
+          defillama_slugs:
+          - aave
+          tags:
+          - DeFi
+          - Lending
+          - Stablecoin Protocol
+          team:
+          - 'Founder & CEO: Stani Kulechov'
+          - 'Chief Compliance Officer: Nicole Butler'
+          - 'Chief Financial Officer: Peter Kerr'
+          - 'VP of Engineering: Emilio Frangella'
+          - 'Chief of Communications & PR: Claudia Ceniceros'
+          investors:
+          - name: Blockchain.com
+            logo_url: https://images.heurist.xyz/rootdata/investors/Blockchain.com.png
+          - name: Three Arrows Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Three_Arrows_Capital.png
+          - name: ParaFi Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/ParaFi_Capital.png
+          - name: Framework Ventures
+            logo_url: https://images.heurist.xyz/rootdata/investors/Framework_Ventures.png
+          - name: Blockchain Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Blockchain_Capital.png
+          - name: Standard Crypto
+            logo_url: https://images.heurist.xyz/rootdata/investors/Standard_Crypto.png
+          fundraising:
+          - '2017-11-01: ICO 16.2M'
+          - '2020-07-09: OTC 4.5M'
+          - '2020-07-15: OTC 3.0M'
+          - '2020-10-05: OTC 25.0M'
+          events:
+          - '2025-10-14: Aave DAO Has Cumulatively Repurchased 100,000 AAVE Tokens,
+            Plans to Use Them as Collateral to Launch GHO Lending'
+          - '2025-10-11: Aave Founder: Protocol Liquidates Record-Breaking $180 Million
+            in Collateral Assets in One Hour'
+          - '2025-09-18: Aave V4 is scheduled to be released in Q4'
+          - '2020-10-05: Aave raised $ 25 M in OTC round'
+          - '2020-07-09: Aave raised $ 4.5 M in OTC round'
+          - '2017-11-01: Aave raised $ 16.2 M through ICO'
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          updated_at: '2026-02-09'
+          match_type: exact
+        aixbt_data:
+          name: aave
+          score: 0.043
+          xHandle: aave
+          rationale: Founder acquired AAVE tokens; protocol had $4.6B liquidations,
+            $4.73M revenue, RLUSD deposits grew.
+          ticker: aave
+          tokens:
+            ethereum: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'
+            hydration: asset_registry%2F1000624
+            optimistic-ethereum: '0x76fb31fb4af56892a25e32cfc43de717950c9278'
+            huobi-token: '0x202b4936fe1a82a4965220860ae46d7d3939bb25'
+            fantom: '0x6a07a792ab2965c72a5b8088d3a069a7ac3a993b'
+            near-protocol: 7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9.factory.bridge.near
+            harmony-shard-0: '0xcf323aad9e522b93f11c352caa519ad0e14eb40f'
+            energi: '0xa7f2f790355e0c32cab03f92f6eb7f488e6f049a'
+            sora: '0x0091bd8d8295b25cab5a7b8b0e44498e678cfc15d872ede3215f7d4c7635ba36'
+            base: '0x63706e401c06ac8513145b7687a14804d17f814b'
+            binance-smart-chain: '0xfb6115445bff7b52feb98650c87f44907e58f802'
+            avalanche: '0x63a72806098bd3d9520cc43356dd78afe5d386d9'
+            polygon-pos: '0xd6df932a45c0f255f85145f286ea0b292b21c90b'
+            arbitrum-one: '0xba5ddd1f9d7f570dc94a51479a000e3bce967196'
+          summaries:
+          - date: '2026-02-08'
+            description: Surpassed Klarna in AUM, reaching $18.6 billion.
+          - date: '2026-02-08'
+            description: Experienced a crash during the February 2026 market downturn,
+              with the project categorized among DeFi blue chips that were "hammered"
+              in the crash alongside UNI and MKR.
+          - date: '2026-02-08'
+            description: Reached peak TVL of over $74 billion in 2025.
+          - date: '2026-02-08'
+            description: Trend Research liquidated 651,757 ETH ($1.34 billion), moving
+              332,000 ETH ($700 million) to Binance, resulting in an estimated $747
+              million loss at an average exit price of $2,055 in early February 2026
+              during a market crash alongside UNI and MKR.
+          - date: '2026-02-08'
+            description: Received $588.3M in whale inflows over a 24-hour period ending
+              on 2026-02-08.
+    description: Get Aave by name - has 6 investors with logos, verify logo_url in
+      response
+    status: success
+    elapsed_time: 0.458998441696167
+  get_project_by_name_ripple:
+    input:
+      tool: get_project
+      tool_arguments:
+        name: Ripple
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        database_project:
+          name: Ripple
+          rootdata_id: 10
+          token_symbol: XRP
+          one_liner: International remittance solution
+          description: Ripple is a real-time gross settlement system, currency exchange,
+            and remittance network created by Ripple Labs Inc., a US-based technology
+            company. Released in 2012, Ripple is based on a distributed open source
+            protocol and supports tokens representing fiat currency, cryptocurrency,
+            commodities, or other units of value. It claims to enable "secure, instant,
+            and nearly free global financial transactions of any size with no chargebacks".
+          establishment_date: '2012'
+          launch_date: '2013-02-01'
+          total_funding: 783000000
+          total_supply: 99985744733
+          contract_address: '0xa0b2f55cd2557c0fc0929211d4919d42babf8f93'
+          logo_url: https://images.heurist.xyz/rootdata/10.jpg
+          website: https://ripple.com/
+          twitter_handle: ripple
+          coingecko_id: ripple
+          defillama_chain_name: null
+          defillama_slugs: null
+          tags:
+          - Enterprise Blockchain
+          - Payment
+          team:
+          - 'CEO: Brad Garlinghouse'
+          - 'Co-Founder and Executive Chairman: Chris Larsen'
+          - 'Chief Legal Officer: Stuart Alderoty'
+          - 'President: Monica Long'
+          - 'Board Member: David Schwartz'
+          - 'Web3 Partner Lead: Marc L.'
+          - 'Managing Director, Middle East and Africa: Reece Merrick'
+          - 'Managing Director, Asia Pacific: Fiona Murray'
+          - 'Vice President Global Services: Don Steul'
+          - 'SVP for Stablecoins: Jack McDonald'
+          - 'SVP Strategic Initiatives: Eric van Miltenburg'
+          - 'SVP, Corporate Marketing & Communications: Kiersten Hollars'
+          - 'Senior Global Events Marketing Manager: Heather Lobao'
+          investors:
+          - name: Tetragon
+            logo_url: https://images.heurist.xyz/rootdata/investors/Tetragon.png
+            is_lead: true
+          - name: Galaxy Digital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Galaxy_Digital.png
+          - name: Digital Currency Group
+            logo_url: https://images.heurist.xyz/rootdata/investors/Digital_Currency_Group.png
+          - name: CME Group
+            logo_url: https://images.heurist.xyz/rootdata/investors/CME_Group.png
+          - name: Pantera Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Pantera_Capital_150.png
+          - name: Lightspeed Venture
+            logo_url: https://images.heurist.xyz/rootdata/investors/Lightspeed_Venture.png
+          - name: IDG Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/IDG_Capital.png
+          - name: Blockchain Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Blockchain_Capital.png
+          - name: Andreessen Horowitz
+            logo_url: https://images.heurist.xyz/rootdata/investors/Andreessen_Horowitz.png
+          - name: BH Digital
+            logo_url: https://images.heurist.xyz/rootdata/investors/BH_Digital.png
+          - name: 19 more
+          fundraising:
+          - '2019-12-20: Series C $200M'
+          - '2016-09-15: Series B $55M'
+          - '2015-05-19: Series A $28M'
+          - '2013-04-10: Angel --'
+          - '2025-11-05: -- $500M'
+          events:
+          - '2025-12-12: Ripple Announces Official Completion of Acquisition of Stablecoin
+            Platform Rail.'
+          - '2025-11-24: The Franklin Templeton XRP ETF has been approved for listing
+            on NYSE Arca.'
+          - '2025-11-20: Ripple CTO Proposes New Model to Explore Native XRP Staking.'
+          - '2025-11-15: US''s First XRP Spot ETF Lists: No Net Inflows on Day One.'
+          - '2025-11-06: Ripple stablecoin RLUSD market value exceeds $1 billion.'
+          - '2025-11-05: Ripple raised $500M in funding round.'
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          updated_at: '2026-02-09'
+          match_type: exact
+        aixbt_data:
+          name: Ripple USD
+          score: 0
+          xHandle: ripple
+          rationale: Ripple USD listed on Binance for spot trading on Ethereum, with
+            XRPL support coming soon.
+          ticker: rlusd
+          tokens:
+            xrp: 524C555344000000000000000000000000000000.rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De
+            ethereum: '0x8292bb45bf1ee4d140127049757c2e0ff06317ed'
+          summaries:
+          - date: '2026-01-21'
+            description: Listed on Binance for spot trading on Ethereum, with XRPL
+              support coming soon.
+          - date: '2026-01-15'
+            description: Will be added as a funding option on Interactive Brokers
+              (IBKR) on 2026-01-22.
+          - date: '2026-01-15'
+            description: Ripple invested $150M in LMAX Group to roll out RLUSD for
+              institutional margin and settlement.
+          - date: '2026-01-08'
+            description: Integrated with EPIC Chain for settlements as part of EPIC's
+              migration to XRP Ledger in August 2025.
+          - date: '2025-12-28'
+            description: Expanded payments operations in Singapore following license
+              approval.
+    description: Get Ripple by name - has 29 investors with logos, verify structured
+      investor data
+    status: success
+    elapsed_time: 0.5242364406585693
+  get_project_by_symbol:
+    input:
+      tool: get_project
+      tool_arguments:
+        symbol: UNI
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        database_project:
+          name: Uniswap
+          rootdata_id: 233
+          token_symbol: UNI
+          one_liner: Decentralized trading protocol
+          description: The Uniswap is a decentralized exchange protocol that provides
+            liquidity and facilitates the trading of tokens. It eliminates the need
+            for trusted intermediaries and unnecessary forms of rent extraction, enabling
+            safe, accessible, and efficient exchange activities.
+          establishment_date: '2018'
+          launch_date: '2020-09-17'
+          total_funding: 177000000
+          total_supply: 1000000000
+          contract_address: null
+          logo_url: https://images.heurist.xyz/rootdata/233.jpg
+          website: https://uniswap.org/
+          twitter_handle: uniswap
+          coingecko_id: uniswap
+          defillama_chain_name: null
+          defillama_slugs:
+          - uniswap
+          tags:
+          - DeFi
+          - DEX
+          team:
+          - 'Founder and CEO: Hayden Adams'
+          - 'Executive Director & Co-Founder: Devin Walsh'
+          - 'Head of Strategy: Alexander Nezlobin'
+          - 'Content Lead: Chase Chapman'
+          - 'VP Marketing & International Expansion: Renaud Besnard'
+          - 'Head of Growth: Sarina Siddhanti'
+          - 'Head of Finance: Justin Wong'
+          - 'Governance Lead: Erin Koen'
+          - 'Product Manager: Kothari Medha'
+          - 'Senior Data Analyst: Ryan Holloway'
+          - 'Staff Software Engineer: Mark Toda'
+          - 'Sr Protocol Engineer: Chris Cashwell'
+          investors:
+          - name: Polychain
+            logo_url: https://images.heurist.xyz/rootdata/investors/Polychain.png
+            is_lead: true
+          - name: Paradigm
+            logo_url: https://images.heurist.xyz/rootdata/investors/Paradigm.png
+            is_lead: true
+          - name: Andreessen Horowitz
+            logo_url: https://images.heurist.xyz/rootdata/investors/Andreessen_Horowitz.png
+            is_lead: true
+          - name: Variant Fund
+            logo_url: https://images.heurist.xyz/rootdata/investors/Variant_Fund.png
+          - name: ParaFi Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/ParaFi_Capital.png
+          - name: Paradigm
+            logo_url: https://images.heurist.xyz/rootdata/investors/Paradigm.png
+          - name: Andreessen Horowitz
+            logo_url: https://images.heurist.xyz/rootdata/investors/Andreessen_Horowitz.png
+          - name: A.Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/A.Capital.png
+          - name: SV Angel
+            logo_url: https://images.heurist.xyz/rootdata/investors/SV_Angel.png
+          - name: USV
+            logo_url: https://images.heurist.xyz/rootdata/investors/USV.png
+          - name: 1 more
+          fundraising:
+          - '2019-04-01: Seed $1M'
+          - '2020-08-06: Series A $11M'
+          - '2022-10-13: Series B $165M'
+          events:
+          - '2022-10-13: Uniswap raised $165M in Series B round'
+          - '2020-09-17: UNI is live for trading'
+          - '2020-08-06: Uniswap raised $11M in Series A round'
+          - '2020-05-18: Uniswap lost $900,000 in hack'
+          - '2020-04-18: Uniswap lost $25M in hack'
+          - '2019-04-01: Uniswap raised $1M in Seed round'
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          updated_at: '2026-02-09'
+        aixbt_data:
+          name: uniswap
+          score: 0.055
+          xHandle: uniswap
+          rationale: Uniswap recorded 1.8M Jan website visits, saw idOS token integration,
+            whale buys, and conference presence.
+          ticker: uni
+          tokens:
+            ethereum: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
+            xdai: '0x4537e328bf7e4efa29d05caea260d7fe26af9d74'
+            near-protocol: 1f9840a85d5af5bf1d1762f925bdaddc4201f984.factory.bridge.near
+            huobi-token: '0x22c54ce8321a4015740ee1109d9cbc25815c46e6'
+            optimistic-ethereum: '0x6fd9d7ad17242c41f7131d257212c54a0e816691'
+            unichain: '0x8f187aa05619a017077f5308904739877ce9ea21'
+            harmony-shard-0: '0x90d81749da8867962c760414c1c25ec926e889b6'
+            energi: '0x665b3a802979ec24e076c80025bff33c18eb6007'
+            sora: '0x009be848df92a400da2f217256c88d1a9b1a0304f9b3e90991a67418e1d3b08c'
+            binance-smart-chain: '0xbf5140a22578168fd562dccf235e5d43a02ce9b1'
+            avalanche: '0x8ebaf22b6f053dffeaf46f4dd9efa95d89ba8580'
+            polygon-pos: '0xb33eaad8d922b1083446dc23f610c2567fb5180f'
+            arbitrum-one: '0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0'
+          summaries:
+          - date: '2026-02-07'
+            description: recorded 1.8 million website visits in January 2026
+          - date: '2026-02-06'
+            description: 20% of idOS token sale proceeds are automatically seeded
+              into a Uniswap v4 liquidity pool on Arbitrum at TDE.
+          - date: '2026-02-05'
+            description: Whale 0x9671 bought 682,087 UNI tokens worth $2.58M after
+              selling XAUT and ETH positions.
+          - date: '2026-02-04'
+            description: Uniswap Labs has a speaker participating in the EthCC[9]
+              conference lineup in Cannes.
+          - date: '2026-02-03'
+            description: Web traffic reached a multiyear low, down 60% year-over-year.
+    description: Get Uniswap by symbol - verify project logo_url and investor logo_urls
+    status: success
+    elapsed_time: 0.692211389541626
+  get_project_by_x_handle:
+    input:
+      tool: get_project
+      tool_arguments:
+        x_handle: '@ethereum'
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        database_project:
+          name: Ethereum
+          rootdata_id: 12
+          token_symbol: ETH
+          one_liner: The first blockchain with smart contract functionality
+          description: Ethereum is the first decentralized, open-source blockchain
+            with smart contract functionality. It was initially described in a white
+            paper by Vitalik Buterin in late 2013 and launched in 2015. This network
+            serves as the foundation for an ecosystem of interoperable, decentralized
+            applications (dApps) powered by token economies and automated smart contracts.
+            Assets and applications designed on Ethereum are built with self-executing
+            smart contracts that eliminate the need for a central authority or intermediary.
+            u2028The network is powered by its native cryptocurrency ether (ETH),
+            which is used to pay transaction fees. Ethereum has the characteristics
+            of being open-source, programmable, private, and censorship-resistant,
+            forming the backbone of a decentralized internet.
+          establishment_date: '2013'
+          launch_date: '2015-08-01'
+          total_funding: 18500000
+          total_supply: 120695086
+          contract_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          logo_url: https://images.heurist.xyz/rootdata/12.png
+          website: https://www.ethereum.org/
+          twitter_handle: ethereum
+          coingecko_id: ethereum
+          defillama_chain_name: Ethereum
+          defillama_slugs: null
+          tags:
+          - Infra
+          - Layer1
+          team:
+          - 'Founder: Vitalik Buterin'
+          - 'Co-Founder: Joseph Lubin'
+          - 'Co-Founder](https://www.rootdata.com/member/Amir%20Chetrit?k=MTMzNDA%3D):
+            Amir Chetrit'
+          - 'Co-Founder: Anthony Di Iorio'
+          - 'Co-Founder: Mihai Alisie'
+          - 'Co-Founder: Charles Hoskinson'
+          - 'Head of Enterprise: David Walsh'
+          - 'Builder: Alberto Cevallos'
+          investors:
+          - name: Fenbushi Capital
+            logo_url: https://images.heurist.xyz/rootdata/investors/Fenbushi_Capital.png
+          fundraising:
+          - '2014-07-01: ICO $18M'
+          - '2015-05-01: Seed $500K'
+          events:
+          - '2026-06-08: ETHConf will be held in New York.'
+          - '2026-03-30: EthCC 9 will be held in Cannes, France.'
+          - '2026-01-01: Ethereum will undergo Glamsterdam upgrade in 2026.'
+          - '2025-12-05: Ethereum completes Fusaka upgrade and enters the twice-yearly
+            hard fork rhythm.'
+          - '2025-12-03: Ethereum will release Fusaka upgrade.'
+          - '2025-11-17: Ethereum will host Devconnect event.'
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          updated_at: '2026-02-09'
+        aixbt_data:
+          name: ethereum
+          score: 0.015
+          xHandle: ethereum
+          rationale: Ethereum reclaimed $2,100, with a DAO Fund for security and a
+            new Hong Kong Community Hub.
+          ticker: eth
+          tokens: {}
+          summaries:
+          - date: '2026-02-09'
+            description: Spot ETH ETF products from BlackRock (ETHA), Fidelity (FETH),
+              Grayscale (ETHE and ETH Mini Trust), Bitwise (ETHW), VanEck (ETHV),
+              and ARK/21Shares (ARKE) have combined total AUM of approximately $18
+              billion as of February 2026.
+          - date: '2026-02-09'
+            description: USA holds 62,742 ETH in reported government holdings as of
+              February 2026.
+          - date: '2026-02-09'
+            description: Had total net outflows of $16.7455 million in spot ETFs on
+              February 6, 2026.
+          - date: '2026-02-09'
+            description: Bitwise Asset Management acquires Chorus One, an institutional
+              staking provider with $2.2 billion in onchain staking operations that
+              includes Ethereum staking services.
+          - date: '2026-02-09'
+            description: Introduced a new standard for coordinating agents on Ethereum.
+    description: Get Ethereum by X handle
+    status: success
+    elapsed_time: 0.6805417537689209
+  semantic_search_defi:
+    input:
+      tool: semantic_search_projects
+      tool_arguments:
+        query: DeFi projects funded by Paradigm
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        query: DeFi projects funded by Paradigm
+        extracted_params:
+          investor_names:
+          - Paradigm
+          tags:
+          - DeFi
+          description_keywords: null
+          funded_years: null
+          event_years: null
+          exchanges: null
+          event_keywords: null
+        results:
+        - node_id: '4431'
+          name: Aevo
+          one_liner: A next-generation options exchange
+          description: Aevo is a high-performance decentralized derivatives exchange
+            platform, focused on options and perpetual contracts. The exchange runs
+            on a custom EVM roll-up that rolls up to Ethereum. Aevo operates an off-chain
+            orderbook with on-chain settlements. This means that once orders are matched,
+            trades get executed and settled with smart contracts.
+          active: true
+          tags:
+          - DeFi
+          - Derivatives
+          - Options
+          - Perp
+          investors:
+          - name: Paradigm
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b11/1666594446821.jpg
+            rootdata_id: 149
+            twitter_url: https://x.com/paradigm
+          - name: Dragonfly
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b11/1666595401774.jpg
+            rootdata_id: 203
+            twitter_url: https://x.com/dragonfly_xyz
+          - name: Scalar Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666772123065.jpg
+            rootdata_id: 141
+            twitter_url: https://x.com/scalarcapital
+          - name: Pantera Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666595465698.jpg
+            rootdata_id: 150
+            twitter_url: https://x.com/PanteraCapital
+          - name: Alliance
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777414773.jpg
+            rootdata_id: 211
+            twitter_url: https://x.com/alliance
+          - name: Coinbase Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777683240.jpg
+            rootdata_id: 219
+            twitter_url: https://x.com/cbventures
+          - name: YZi Labs
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b13/1737642528832.jpg
+            rootdata_id: 229
+            twitter_url: https://x.com/YZiLabs
+          - name: Nascent
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1693216265785.png
+            rootdata_id: 475
+            twitter_url: https://x.com/nascentxyz
+          - name: Kain Warwick
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668676559849.jpg
+            rootdata_id: 8689
+            twitter_url: https://x.com/kaiynne
+          - name: Hart Lambur
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1671875970371.jpg
+            rootdata_id: 8723
+            twitter_url: https://x.com/hal2001
+          - name: Joseph Lubin
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1668871744282.jpg
+            rootdata_id: 9569
+            twitter_url: https://x.com/ethereumjoseph
+          - name: Tiantian Kullander
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1671433476508.jpg
+            rootdata_id: 10722
+            twitter_url: ''
+          fundraising:
+          - date: '2021-04-12'
+            amount: 1850000
+            round_name: Seed
+            amount_display: $1.85M
+          - date: '2022-03-21'
+            amount: 8750000
+            round_name: Series A1
+            amount_display: $8.75M
+          events:
+          - date: '2021-04-13'
+            event_detail: Aevo raised $1.85M in Seed round
+          - date: '2022-03-22'
+            event_detail: Aevo raised $8.75M in Series A1 round
+          - date: '2023-04-07'
+            event_detail: UniSwap V3 Goes Live on Mainnet
+          - date: '2024-03-13'
+            event_detail: AEVO is live for trading
+          - date: '2024-03-13'
+            event_detail: Binance listed AEVO
+          - date: '2024-03-14'
+            event_detail: Aevo completed a new funding round
+          - date: '2024-05-21'
+            event_detail: Aevo completed a new funding round
+          - date: '2025-06-16'
+            event_detail: Aevo Pre-Launch is now available on pump.fun (PUMP)
+          - date: '2025-07-08'
+            event_detail: Aevo launches Aevo Degen, a US stock trading platform that
+              supports 1000 times leverage trading
+          - date: '2025-10-01'
+            event_detail: Aevo Expands the Aevo Degen Platform, Adding More Tokenized
+              Stocks and Crypto Assets
+          - date: '2026-01-01'
+            event_detail: Aevo Upgrades Aevo Strategies Algorithmic Trading Suite
+          exchanges:
+          - Binance
+          - Bitget
+          - OKX
+          team:
+          - name: Gabriel Ravindran
+            role: COO
+          - name: Tze Hing Chan
+            role: Operations Lead
+          similar_projects:
+          - name: Flying Tulip
+            description: Intelligent trading protocol
+          - name: Kodachi
+            description: Katana's  SuperDapp
+          - name: Deriverse
+            description: Derivatives DEX on Solana
+          - name: Levana Protocol
+            description: Perps and Options on Cosmos
+          - name: Strike Finance
+            description: DeFi derivatives protocol
+          - name: vDEX
+            description: Decentralized Derivatives Platform
+          - name: BaseVol
+            description: Crypto options trading platform
+          - name: Opyn
+            description: DeFi Options Platform
+          establishment_date: '2022'
+          launch_date: '2024-03-13'
+          total_funding: '10600000'
+          total_supply: '1000000000'
+          contract_address: '0xb528188fa90054a167f16ded269981ca6fb7b997'
+          website: https://www.aevo.xyz/
+          twitter_handle: '@aevoxyz'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Aevo?k=MzAwOQ==
+          logo_url: https://images.heurist.xyz/rootdata/673752e7-bef1-493a-aea1-d8c4a26b90c6.jpg
+          defillama_slugs:
+          - aevo
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '73661'
+          name: dYdX
+          one_liner: Decentralized Exchange
+          description: dYdX is a decentralized exchange that provides users with key
+            financial instruments, such as perpetuals, margin trading, spot trading,
+            lending, and borrowing. It equips traders with off-chain order books and
+            on-chain settlement, allowing them to short-sell tokens, increase exposure
+            by leveraging long positions, and earn interest on deposited tokens for
+            faster transactions.
+          active: true
+          tags:
+          - DeFi
+          - Derivatives
+          - Appchain
+          - Perp
+          investors:
+          - name: Three Arrows Capital
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b11/1666593825387.jpg
+            rootdata_id: 119
+            twitter_url: ''
+          - name: Polychain
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b70/1756947987276.jpg
+            rootdata_id: 146
+            twitter_url: https://x.com/polychain
+          - name: Paradigm
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b11/1666594446821.jpg
+            rootdata_id: 149
+            twitter_url: https://x.com/paradigm
+          - name: DeFiance Capital
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b17/1666777393943.jpg
+            rootdata_id: 210
+            twitter_url: https://x.com/DeFianceCapital
+          - name: Andreessen Horowitz
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b30/1684378189698.jpg
+            rootdata_id: 237
+            twitter_url: https://x.com/a16zcrypto
+          - name: StarkWare
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1715276571307.jpg
+            rootdata_id: 2737
+            twitter_url: https://x.com/StarkWareLtd
+          - name: Kronos Research
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1666833134119.jpg
+            rootdata_id: 3519
+            twitter_url: https://x.com/KronosResearch
+          - name: QCP Capital
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1666878465139.jpg
+            rootdata_id: 3866
+            twitter_url: https://x.com/QCPgroup
+          - name: Wintermute
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b26/1668441273893.jpg
+            rootdata_id: 4076
+            twitter_url: https://x.com/wintermute_t
+          - name: GSR
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1666707645766.jpg
+            rootdata_id: 4079
+            twitter_url: https://x.com/GSR_io
+          - name: mgnr
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668006145730.jpg
+            rootdata_id: 4174
+            twitter_url: https://x.com/mgnr_io
+          - name: Three Arrows Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666593825387.jpg
+            rootdata_id: 119
+            twitter_url: ''
+          - name: The Spartan Group
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1711969353037.jpg
+            rootdata_id: 125
+            twitter_url: https://x.com/TheSpartanGroup
+          - name: Scalar Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666772123065.jpg
+            rootdata_id: 141
+            twitter_url: https://x.com/scalarcapital
+          - name: Polychain
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b70/1756947987276.jpg
+            rootdata_id: 146
+            twitter_url: https://x.com/polychain
+          - name: HashKey Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1716472257216.jpg
+            rootdata_id: 184
+            twitter_url: https://x.com/HashKey_Capital
+          - name: Hashed
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666773555941.jpg
+            rootdata_id: 185
+            twitter_url: https://x.com/hashed_official
+          - name: Electric Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777297440.jpg
+            rootdata_id: 201
+            twitter_url: https://x.com/electriccapital
+          - name: Dragonfly
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666595401774.jpg
+            rootdata_id: 203
+            twitter_url: https://x.com/dragonfly_xyz
+          - name: Delphi Digital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777200405.jpg
+            rootdata_id: 208
+            twitter_url: https://x.com/Delphi_Digital
+          - name: CMS Holdings
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777767934.jpg
+            rootdata_id: 221
+            twitter_url: https://x.com/cmsholdings
+          - name: Andreessen Horowitz
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b30/1684378189698.jpg
+            rootdata_id: 237
+            twitter_url: https://x.com/a16zcrypto
+          - name: 1confirmation
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666778378175.jpg
+            rootdata_id: 241
+            twitter_url: https://x.com/1confirmation
+          - name: CMT Digital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666869327871.jpg
+            rootdata_id: 528
+            twitter_url: https://x.com/CMT_Digital
+          - name: Kindred Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668835946860.jpg
+            rootdata_id: 10740
+            twitter_url: ''
+          - name: Menai Financial Group
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668878649097.jpg
+            rootdata_id: 10860
+            twitter_url: ''
+          - name: RockTree Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668879231655.jpg
+            rootdata_id: 10878
+            twitter_url: ''
+          - name: Aspect Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b27/1667476252511.jpg
+            rootdata_id: 10964
+            twitter_url: ''
+          - name: Abstract Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1738776729773.jpg
+            rootdata_id: 10965
+            twitter_url: https://x.com/abstractvc
+          - name: Craft Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b27/1667475786970.jpg
+            rootdata_id: 10966
+            twitter_url: https://x.com/craft_ventures
+          - name: VY Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b27/1667475603983.jpg
+            rootdata_id: 10967
+            twitter_url: ''
+          - name: Finlink Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668930097875.jpg
+            rootdata_id: 11237
+            twitter_url: ''
+          - name: Bain Capital Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b15/1669115721536.jpg
+            rootdata_id: 11498
+            twitter_url: ''
+          - name: Elad Gil
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668676395554.jpg
+            rootdata_id: 9424
+            twitter_url: https://x.com/eladgil
+          - name: Fred Ehrsam
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1669533410756.jpg
+            rootdata_id: 9566
+            twitter_url: https://x.com/fehrsam
+          - name: Avichal Garg
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b9/1678100115267.jpg
+            rootdata_id: 9589
+            twitter_url: https://x.com/avichal
+          - name: Brian Armstrong
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1671431052730.jpg
+            rootdata_id: 9637
+            twitter_url: https://x.com/brian_armstrong
+          - name: Naval Ravikant
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668694065735.jpg
+            rootdata_id: 12946
+            twitter_url: https://x.com/naval
+          - name: Scott Belsky
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668694208458.jpg
+            rootdata_id: 12995
+            twitter_url: ''
+          - name: Kevin Hartz
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1696835215530.jpg
+            rootdata_id: 16143
+            twitter_url: https://x.com/kevinhartz
+          fundraising:
+          - date: '2017-12-20'
+            amount: 0
+            round_name: Seed
+            amount_display: $0M
+          - date: '2018-10-20'
+            amount: 10
+            round_name: Series A
+            amount_display: $10M
+          - date: '2021-01-26'
+            amount: 10
+            round_name: Series B
+            amount_display: $10M
+          - date: '2021-06-15'
+            amount: 65
+            round_name: Series C
+            amount_display: $65M
+          events:
+          - date: '2017-12-20'
+            event_detail: dYdX completed a Seed round
+          - date: '2018-10-03'
+            event_detail: dYdX is live on mainnet
+          - date: '2018-10-20'
+            event_detail: dYdX raised $10M in Series A round
+          - date: '2021-01-26'
+            event_detail: dYdX raised $10M in Series B round
+          - date: '2021-06-15'
+            event_detail: dYdX raised $65M in Series C round
+          - date: 2021-08
+            event_detail: DYDX is live for trading
+          - date: 2023-10
+            event_detail: dYdX Chain is now live on the mainnet.
+          - date: '2025-06-23'
+            event_detail: Coinbase will list dYdX (COSMOSDYDX).
+          - date: '2025-08-11'
+            event_detail: dYdX Foundation Raises $8 Million to Fuel New Funding Round.
+          - date: '2025-08-26'
+            event_detail: dydx will launch a Telegram trading feature.
+          - date: '2025-09-01'
+            event_detail: The dYdX community has voted to approve the v9 software
+              upgrade.
+          - date: '2025-10-28'
+            event_detail: dYdX Community to Vote on Proposal to 'Compensate Traders
+              Affected by Service Disruption with $462,000 Total.'
+          - date: '2025-10-31'
+            event_detail: DYdX Plans to Enter the US Market by End of 2025, Offering
+              Spot Trading.
+          - date: '2025-11-14'
+            event_detail: dYdX Community Vote Passes to Raise Protocol Fee Buyback
+              Ratio to 75%.
+          - date: '2025-12-11'
+            event_detail: dYdX Launches Solana Spot Trading Product.
+          - date: '2026-01-01'
+            event_detail: DYDX will unlock 4.17 million tokens, worth $0.74 million,
+              accounting for 0.512% of the circulation.
+          exchanges:
+          - Binance
+          - OKX
+          - HTX
+          team:
+          - name: Charles d'Haussy
+            role: CEO
+          - name: Antonio Juliano
+            role: CEO & Founder
+          - name: Eddie Zhang
+            role: President
+          - name: Chris Grundy
+            role: CMO
+          - name: David Gogel
+            role: COO
+          - name: Jake Werrett
+            role: General Counsel
+          similar_projects:
+          - name: Soarchain
+            description: A decentralized  C-V2X network for mobility
+          - name: Noble
+            description: Generic asset issuance chain
+          - name: Tanssi Network
+            description: Appchain Infrastructure Protocol
+          - name: DFlow
+            description: Decentralized order flow marketplace
+          - name: Syndicate
+            description: Appchain infrastructure
+          - name: Galxe
+            description: Web3 credential data network
+          - name: AssetMantle
+            description: Multi-tenant NFT marketplace framework
+          - name: Duality
+            description: The DEX that gives LPs superpowers.
+          establishment_date: '2017'
+          launch_date: 2021-08
+          total_funding: '85000000'
+          total_supply: '958342751'
+          contract_address: '0x8ee48c74d3c5c821e2d9a448c5c4b5e71054da72'
+          website: https://dydx.xyz/
+          twitter_handle: '@dydx'
+          rootdata_url: https://www.rootdata.com/Projects/detail/dYdX?k=MTI2Mw==
+          logo_url: https://images.heurist.xyz/rootdata/962c2065-ae6d-409a-9d5d-4cda080f2a70.jpg
+          defillama_slugs:
+          - dydx
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '129142'
+          name: Lido
+          one_liner: Liquid staking solution
+          description: Lido is a liquid staking solution for blockchains. It enables
+            users to stake their ETH and other proof-of-stake assets without locking
+            their assets or maintaining infrastructure, while participating in on-chain
+            activities such as lending.
+          active: true
+          tags:
+          - DeFi
+          - LSD
+          investors:
+          - name: Paradigm
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b11/1666594446821.jpg
+            rootdata_id: 149
+            twitter_url: https://x.com/paradigm
+          - name: The LAO
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666703475878.jpg
+            rootdata_id: 3214
+            twitter_url: https://x.com/thelaoofficial
+          - name: Alameda Research
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1668583230756.jpg
+            rootdata_id: 4176
+            twitter_url: ''
+          - name: Terraform Labs
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1666178276114.jpg
+            rootdata_id: 4258
+            twitter_url: ''
+          - name: stakefish
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1666797613869.jpg
+            rootdata_id: 4406
+            twitter_url: https://x.com/stakefish
+          - name: Digital Currency Group
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1701754021449.jpg
+            rootdata_id: 4435
+            twitter_url: https://x.com/DCGco
+          - name: iFinex
+            type: 1
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1668680376078.jpg
+            rootdata_id: 5406
+            twitter_url: ''
+          - name: Three Arrows Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666593825387.jpg
+            rootdata_id: 119
+            twitter_url: ''
+          - name: ParaFi Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1711779405330.jpg
+            rootdata_id: 148
+            twitter_url: https://x.com/paraficapital
+          - name: KR1
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1666509157692.jpg
+            rootdata_id: 170
+            twitter_url: https://x.com/KR1plc
+          - name: Dragonfly
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666595401774.jpg
+            rootdata_id: 203
+            twitter_url: https://x.com/dragonfly_xyz
+          - name: Divergence Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1706203418903.jpg
+            rootdata_id: 204
+            twitter_url: ''
+          - name: Delphi Digital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777200405.jpg
+            rootdata_id: 208
+            twitter_url: https://x.com/Delphi_Digital
+          - name: Coinbase Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666777683240.jpg
+            rootdata_id: 219
+            twitter_url: https://x.com/cbventures
+          - name: Andreessen Horowitz
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b30/1684378189698.jpg
+            rootdata_id: 237
+            twitter_url: https://x.com/a16zcrypto
+          - name: Robot Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668765555432.jpg
+            rootdata_id: 345
+            twitter_url: https://x.com/robotventures
+          - name: Bitscale Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668766234911.jpg
+            rootdata_id: 548
+            twitter_url: https://x.com/BitscaleCapital
+          - name: Cherry Crypto
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666874622202.jpg
+            rootdata_id: 674
+            twitter_url: ''
+          - name: Semantic Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668919117295.jpg
+            rootdata_id: 11122
+            twitter_url: https://x.com/semanticvc
+          - name: Jump Trading
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b22/1668495942205.jpg
+            rootdata_id: 11295
+            twitter_url: https://x.com/jumptrading
+          - name: Staking Facilities
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1668586933457.jpg
+            rootdata_id: 11350
+            twitter_url: https://x.com/StakingFac
+          - name: 0xMaki
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668692440043.jpg
+            rootdata_id: 8647
+            twitter_url: https://x.com/0xmaki
+          - name: Kain Warwick
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b19/1668676559849.jpg
+            rootdata_id: 8689
+            twitter_url: https://x.com/kaiynne
+          - name: Rune Christensen
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1672303707743.jpg
+            rootdata_id: 8773
+            twitter_url: https://x.com/runekek
+          - name: Fernando Martinelli
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1671096188215.jpg
+            rootdata_id: 8888
+            twitter_url: https://x.com/fcmartinelli
+          - name: Derek Hsue
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1693481506175.jpg
+            rootdata_id: 8916
+            twitter_url: https://x.com/derek_hsue
+          - name: Jinglan Wang
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1668675027926.jpg
+            rootdata_id: 9033
+            twitter_url: https://x.com/jinglejamOP
+          - name: Zaki Manian
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1672292027136.jpg
+            rootdata_id: 9322
+            twitter_url: https://x.com/zmanian
+          - name: Ameen Soleimani
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1677058042111.jpg
+            rootdata_id: 11874
+            twitter_url: https://x.com/ameensol
+          - name: Stani Kulechov
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1669365542673.jpg
+            rootdata_id: 12920
+            twitter_url: https://x.com/StaniKulechov
+          - name: Tim Beiko
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1680314076326.jpg
+            rootdata_id: 12945
+            twitter_url: https://x.com/TimBeiko
+          - name: Elias Simos
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1695958846094.jpg
+            rootdata_id: 13134
+            twitter_url: https://x.com/eliasimos
+          - name: Eric Wall
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1696872295363.jpg
+            rootdata_id: 13135
+            twitter_url: https://x.com/ercwl
+          - name: Ivan Golovko
+            type: 3
+            is_lead: false
+            logo_url: ''
+            rootdata_id: 13136
+            twitter_url: ''
+          - name: Larry Sukernik
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1709867524799.jpg
+            rootdata_id: 13137
+            twitter_url: https://x.com/lsukernik
+          - name: Mariano Conti
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1671883484038.jpg
+            rootdata_id: 13138
+            twitter_url: https://x.com/nanexcool
+          - name: Viktor Bunin
+            type: 3
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1697302806865.jpg
+            rootdata_id: 13139
+            twitter_url: https://x.com/viktorbunin
+          fundraising:
+          - date: '2022-08-24'
+            amount: 25
+            round_name: OTC
+            amount_display: $25M
+          - date: '2020-12-14'
+            amount: 2
+            round_name: Seed
+            amount_display: $2M
+          - date: '2021-05-04'
+            amount: 73
+            round_name: Series A
+            amount_display: $73M
+          - date: '2022-03-02'
+            amount: 70
+            round_name: Series B
+            amount_display: $70M
+          events:
+          - date: 2020-12
+            event_detail: LDO is live for trading
+          - date: '2020-12-15'
+            event_detail: Lido raised $2M in funding round
+          - date: '2020-12-16'
+            event_detail: Lido is live on mainnet
+          - date: '2021-05-05'
+            event_detail: Lido raised $73M in funding round
+          - date: '2022-03-03'
+            event_detail: Lido raised $70M in funding round
+          - date: '2022-08-25'
+            event_detail: Lido raised $25M in OTC round
+          - date: '2022-11-18'
+            event_detail: Coinbase listed LDO
+          - date: '2023-05-15'
+            event_detail: Lido V2 was officially live on Ethereum mainnet
+          - date: '2025-09-04'
+            event_detail: Lido has partnered with Veda and Mellow to launch a simplified
+              version of the Earn strategy library
+          - date: '2025-09-26'
+            event_detail: Lido launches LDO repurchase proposal, expected to launch
+              in December 2025
+          - date: 2025-10
+            event_detail: Lido Finance confirmed Lido v.3.0 will be launched on mainnet
+          - date: '2025-10-20'
+            event_detail: VanEck submits application for Lido staking Ethereum ETF
+          - date: '2025-10-22'
+            event_detail: LDO holders vote on Node Operator (SNOP) standard for validator
+              exit mechanisms
+          - date: '2025-10-23'
+            event_detail: Voting deadline for Lido community proposal 'Updating the
+              Standard Node Operator Agreement (SNOP) Policy'
+          - date: '2025-10-23'
+            event_detail: Voting deadline for Lido community proposal 'Empowering
+              the Lido Ecosystem Foundation to Lead Cross-Chain Related Partnerships'
+          - date: '2025-11-06'
+            event_detail: Lido launches strategic vault Lido stRATEGY Vault
+          - date: '2025-11-11'
+            event_detail: Lido community proposed an 'automatic buyback mechanism'
+          - date: '2025-12-01'
+            event_detail: Lido Network Economy Support System (NEST) expected to be
+              delivered
+          - date: '2026-01-01'
+            event_detail: Lido will launch upgrade of Staking Router v3 in first half
+              of 2026
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          team:
+          - name: Vasiliy Shapovalov
+            role: Founder
+          - name: Kasper Rasmussen
+            role: CMO
+          - name: Dmitriy Gusakov
+            role: Tech lead
+          - name: Jakov Buratović
+            role: Contributor
+          similar_projects:
+          - name: XBANKING
+            description: Non-custodial staking provider
+          - name: Kelp DAO
+            description: Triple rewards for restaking  protocol
+          - name: Frax
+            description: Stablecoin Protocol
+          - name: Bifrost
+            description: The Staking Yield Layer
+          - name: StaFi
+            description: Liquid Staking for All PoS Chains
+          - name: Gravita Protocol
+            description: An $ETH-centric Borrowing Protocol for LSTs
+          - name: Solv Protocol
+            description: Decentralized Bitcoin Staking Protocol
+          - name: Lendara
+            description: Liquid Staking and Cross-Chain Lending Platform
+          establishment_date: '2020'
+          launch_date: 2020-12
+          total_funding: '170000000'
+          total_supply: '1000000000'
+          contract_address: '0x5a98b1b32c1eedd3c02f5e6b33836d725c1e9a3f'
+          website: https://lido.fi/
+          twitter_handle: '@lidofinance'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Lido?k=NTQx
+          logo_url: https://images.heurist.xyz/rootdata/334aae5b-288f-4fb9-ac94-cb73c3d8b35a.jpg
+          defillama_slugs:
+          - lido
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '206848'
+          name: Sky
+          one_liner: Decentralized lending platform
+          description: Sky is a decentralized financial system whose native currencies
+            USDS and SKY are upgraded versions of DAI and MKR. Other products include
+            Sky Savings Rate, Sky Token Rewards and Staking Engine, and SkyLink connects
+            the Ethereum mainnet and Layer 2 network.
+          active: true
+          tags:
+          - DeFi
+          - Lending
+          - RWA
+          - Stablecoin Protocol
+          investors:
+          - name: Polychain
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b70/1756947987276.jpg
+            rootdata_id: 146
+            twitter_url: https://x.com/polychain
+          - name: Andreessen Horowitz
+            type: 2
+            is_lead: true
+            logo_url: https://public.rootdata.com/images/b30/1684378189698.jpg
+            rootdata_id: 237
+            twitter_url: https://x.com/a16zcrypto
+          - name: ParaFi Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1711779405330.jpg
+            rootdata_id: 148
+            twitter_url: https://x.com/paraficapital
+          - name: Paradigm
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666594446821.jpg
+            rootdata_id: 149
+            twitter_url: https://x.com/paradigm
+          - name: Dragonfly
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666595401774.jpg
+            rootdata_id: 203
+            twitter_url: https://x.com/dragonfly_xyz
+          - name: Andreessen Horowitz
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b30/1684378189698.jpg
+            rootdata_id: 237
+            twitter_url: https://x.com/a16zcrypto
+          - name: 1confirmation
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666778378175.jpg
+            rootdata_id: 241
+            twitter_url: https://x.com/1confirmation
+          - name: FBG Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b16/1668766641042.jpg
+            rootdata_id: 10543
+            twitter_url: https://x.com/fbgcapital
+          - name: Uncorrelated
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1668913855663.jpg
+            rootdata_id: 11166
+            twitter_url: ''
+          - name: Distributed Capital Partners
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b15/1669113604780.jpg
+            rootdata_id: 11438
+            twitter_url: ''
+          - name: Bain Capital Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b15/1669115721536.jpg
+            rootdata_id: 11498
+            twitter_url: ''
+          - name: Walden Bridge Capital
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1697705596860.jpg
+            rootdata_id: 12180
+            twitter_url: ''
+          fundraising:
+          - date: '2020-03-12'
+            amount: 7
+            round_name: Funding Round
+            amount_display: $7 M
+          - date: '2019-12-19'
+            amount: 27.5
+            round_name: OTC Round
+            amount_display: $27.5 M
+          - date: '2018-09-24'
+            amount: 15
+            round_name: Funding Round
+            amount_display: $15 M
+          - date: '2017-12-16'
+            amount: 12
+            round_name: Funding Round
+            amount_display: $12 M
+          events:
+          - date: 2017-01
+            event_detail: MKR is live for trading
+          - date: '2017-12-16'
+            event_detail: Sky raised $12 M in funding round
+          - date: '2017-12-19'
+            event_detail: MakerDAO is live on mainnet
+          - date: '2018-09-24'
+            event_detail: Sky raised $15 M in funding round
+          - date: '2019-12-19'
+            event_detail: Sky raised $27.5 M in OTC round
+          - date: '2020-03-12'
+            event_detail: Sky raised $7 M in funding round
+          - date: '2020-03-12'
+            event_detail: Sky lost $7.90 M in hack
+          - date: 2023-05
+            event_detail: MakerDAO officially launches lending protocol Spark Protocol.
+          - date: '2024-08-27'
+            event_detail: MakerDAO rebranded to Sky
+          - date: '2025-06-30'
+            event_detail: Sky's new execution vote has been passed, allowing SKY stakeholders
+              to enable SPK mining
+          - date: '2025-10-28'
+            event_detail: Sky Protocol’s repurchase amount exceeded 80 million USDS,
+              and 1.25 billion SKY tokens have been repurchased
+          - date: '2025-11-03'
+            event_detail: The Sky community has voted to replace the staking reward
+              mechanism, which will be implemented at 22:37 Beijing time on November
+              3
+          - date: '2025-12-12'
+            event_detail: Sky Proposes Raising Delayed Upgrade Penalty for MKR to
+              SKY to 2%, Voting Now Open
+          exchanges:
+          - Binance
+          - Upbit
+          - Coinbase
+          team:
+          - name: Rune Christensen
+            role: Founder
+          - name: Kenny Rowe
+            role: Founder
+          - name: Doo Wan Nam
+            role: Asia Lead
+          - name: Jacek Czarnecki
+            role: Senior Advisor
+          - name: Ezequiel Mariano Gorbatik
+            role: Growth
+          similar_projects:
+          - name: KRWQ.cash
+            description: Korean Won Onchain Stablecoin
+          - name: Solomon
+            description: Stablecoin protocol on Solana
+          - name: usd.ai
+            description: The yield-bearing synthetic dollar
+          - name: Standard Money
+            description: Algorithmic Stablecoin Developer
+          - name: M0
+            description: Money middleware for the digital age
+          - name: Hylo
+            description: Decentralized stablecoin system
+          - name: Ethena
+            description: ETH based delta-neutral stablecoin
+          - name: Ebisu
+            description: Decentralized stablecoin protocol
+          establishment_date: '2014'
+          launch_date: 2017-01
+          total_funding: '61500000'
+          total_supply: '23462665147'
+          contract_address: ''
+          website: https://sky.money/
+          twitter_handle: '@skyecosystem'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Sky?k=MjQ=
+          logo_url: https://images.heurist.xyz/rootdata/4dd22c0b-e99c-4df5-ba7b-56458d436fa6.jpg
+          defillama_slugs:
+          - sky
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '194597'
+          name: Rift
+          one_liner: Peer-to-Peer Bitcoin Trading Protocol
+          description: Rift is a peer-to-peer Bitcoin trading protocol that leverages
+            Uniswap for liquidity support and employs Trusted Execution Environments
+            (TEEs) to ensure security, enabling intermediary-free peer-to-peer transactions.
+            The system supports self-custody of assets throughout the transaction
+            process.
+          active: true
+          tags:
+          - DeFi
+          - DEX
+          investors:
+          - name: Paradigm
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b11/1666594446821.jpg
+            rootdata_id: 149
+            twitter_url: https://x.com/paradigm
+          fundraising:
+          - date: '2025-11-08'
+            amount: 8
+            round_name: Seed
+            amount_display: $8 M
+          events:
+          - date: '2025-11-08'
+            event_detail: Rift raised $ 8 M in funding round
+          - date: '2025-11-08'
+            event_detail: Rift is live on mainnet
+          exchanges: []
+          team:
+          - name: basedcrypto
+            role: Chief Executive Officer
+          - name: alpinevm
+            role: Co-founder
+          similar_projects:
+          - name: Bridgers
+            description: Decentralized cross-chain swap service
+          - name: Chainflip
+            description: Cross-chain liquidity network
+          - name: Rubic
+            description: Multi-Chain Swaps protocol
+          - name: THORSwap
+            description: Multi-chain DEX aggregator
+          - name: Bancor
+            description: Decentralized on-chain AMM network
+          - name: 1DEX.AI
+            description: Multichain liquidity aggregator
+          - name: UXUY
+            description: One-Stop Decentralized Exchange
+          - name: C3
+            description: Next-generation self-custodial exchange
+          establishment_date: '2024'
+          launch_date: '2025-11-08'
+          total_funding: '8000000'
+          total_supply: '396'
+          contract_address: '0x3ede71b589dd64d5ada4e1126f1be1480581ba9f'
+          website: https://www.rift.trade/
+          twitter_handle: '@riftdex'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Rift?k=MjIzODU=
+          logo_url: https://images.heurist.xyz/rootdata/aa0eee56-7e64-4014-8bc8-48c20b2867d1.jpg
+          defillama_slugs: []
+          updated_at: '2026-02-03
+
+
+            ---'
+        total_matches: 19
+    description: Semantic search for DeFi projects funded by Paradigm
+    status: success
+    elapsed_time: 2.7318036556243896
+  semantic_search_ai:
+    input:
+      tool: semantic_search_projects
+      tool_arguments:
+        query: AI projects listed on Binance
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        query: AI projects listed on Binance
+        extracted_params:
+          investor_names: null
+          tags:
+          - AI
+          - CEX
+          description_keywords: null
+          funded_years: null
+          event_years: null
+          exchanges:
+          - Binance
+          event_keywords:
+          - listing
+        results:
+        - node_id: '29631'
+          name: Bittensor
+          one_liner: Blockchain-based machine learning network
+          description: Bittensor is an open-source protocol that powers a decentralized,
+            blockchain-based machine learning network. Machine learning models train
+            collaboratively and are rewarded in TAO based on the informational value
+            they provide to the collective. TAO also provides external access, allowing
+            users to extract information from the network while customizing its activities
+            to their needs. The ultimate goal is to create a pure market for artificial
+            intelligence, an incentivized environment in which buyers
+          active: true
+          tags:
+          - Infra
+          - Layer1
+          - AI
+          investors: []
+          fundraising: []
+          events:
+          - date: '2021-01-01'
+            event_detail: TAO is launched on the initial mainnet Kusangi
+          - date: '2023-03-03'
+            event_detail: TAO is live for trading
+          - date: '2024-04-11'
+            event_detail: Binance listed TAO
+          - date: '2024-07-02'
+            event_detail: Bittensor losed $8M in hack
+          - date: '2024-08-07'
+            event_detail: Grayscale Launches TAO’s Crypto Investment Trust
+          - date: '2025-07-09'
+            event_detail: Binance will remove the seed tag for TAO
+          - date: '2025-08-07'
+            event_detail: Nasdaq listed company Oblong staked $8 million Bittensor
+              tokens
+          - date: '2025-09-18'
+            event_detail: Bithumb will listing BitTensor (TAO) KRW trading pair
+          - date: '2025-10-01'
+            event_detail: Bittensor Conducts Subnet Expansion and dTAO Optimization
+          - date: '2025-10-19'
+            event_detail: Bittensor will hold its China Tour Meetup in Beijing
+          - date: '2025-10-25'
+            event_detail: Bittensor will hold its China Tour Meetup in Shenzhen
+          - date: '2025-10-26'
+            event_detail: Bittensor will hold its China Tour Meetup in Hong Kong
+          - date: '2025-12-13'
+            event_detail: TAO block token rewards halved
+          exchanges:
+          - Binance
+          - Coinbase
+          - Bitget
+          team:
+          - name: Jacob Robert Steeves
+            role: Founder
+          - name: Ala Shaabana
+            role: Founder
+          - name: Eugene  Hu
+            role: Machine Learning Software Engineer
+          similar_projects:
+          - name: aelf
+            description: AI-enhanced Layer 1 blockchain
+          - name: Fetch.ai
+            description: Blockchain platform based on artificial intelligence and
+              machine learning
+          - name: Oasis Network
+            description: Decentralized Layer1 network based on PoS consensus
+          - name: Cortex
+            description: Decentralized world computer capable of running AI
+          - name: Oraichain
+            description: AI Layer 1 for Data Economy & Oracle Service
+          - name: AIOZ Network
+            description: Layer-1 blockchain with Ethereum and Cosmos interoperability
+          - name: Gensyn
+            description: Decentralized AI compute network
+          - name: Openfabric AI
+            description: Layer 1 for Artificial Intelligence
+          establishment_date: '2021'
+          launch_date: '2023-03-01'
+          total_funding: ''
+          total_supply: '21000000'
+          contract_address: '0xcff1418a5b67af0462bd67410455b008ef7f7c09'
+          website: https://bittensor.com/
+          twitter_handle: '@opentensor'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Bittensor?k=NjUyOA==
+          logo_url: https://images.heurist.xyz/rootdata/ef19ac26-dfe6-4df1-bc4c-01461ee21f99.jpg
+          defillama_slugs: []
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '63750'
+          name: DeepNode AI
+          one_liner: Decentralized artificial intelligence infrastructure
+          description: DeepNode is a decentralized AI network where anyone can contribute
+            AI models, data, or computing power and be rewarded with $DEEP tokens
+            for their valuable contributions.
+          active: true
+          tags:
+          - AI
+          investors:
+          - name: Blockchain Founders Fund
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b17/1666783397258.jpg
+            rootdata_id: 395
+            twitter_url: https://x.com/blockchainff
+          - name: Side Door Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b12/1666841983154.jpg
+            rootdata_id: 10826
+            twitter_url: https://x.com/sidedoor_vc
+          - name: FOMO Ventures
+            type: 2
+            is_lead: false
+            logo_url: https://public.rootdata.com/images/b6/1716260670664.png
+            rootdata_id: 12429
+            twitter_url: https://x.com/FOMO_v
+          fundraising:
+          - date: '2025-12-02'
+            amount: 2000000
+            round_name: Seed
+            amount_display: $2M
+          - date: '2025-12-05'
+            amount: 3000000
+            round_name: Strategic
+            amount_display: $3M
+          events:
+          - date: '2025-01-10'
+            event_detail: Project Launch
+          - date: '2025-02-15'
+            event_detail: Partnership Announcement
+          - date: '2025-06-01'
+            event_detail: Token Listing
+          exchanges:
+          - Binance
+          - Coinbase
+          - Kraken
+          team:
+          - name: James Ruff
+            role: CEO
+          similar_projects:
+          - name: Sensay
+            description: Decentralized AI digital empowerment platform
+          - name: SVPower
+            description: Decentralized physical infrastructure networks (DePIN) for
+              energy
+          - name: Alphant
+            description: Investment Analysis Platform
+          - name: ai16zeliza
+            description: AI Agent Token
+          - name: sekoia by Virtuals
+            description: AI Fund to support the Virtuals ecosystem
+          - name: Shoggoth
+            description: AI Meme Coin
+          - name: StrawberryAI
+            description: Crypto-centric content interpretation and search engine
+          - name: JAIHOZ
+            description: Virtuals-powered AI agent on Ronin
+          establishment_date: '2025'
+          launch_date: '2025-01-10'
+          total_funding: '3000000'
+          total_supply: '1000000000'
+          contract_address: '0x6f29c53d27570cf205c69b98f34d22dab8abc8db'
+          website: https://www.dnode.ai/
+          twitter_handle: '@deepnodeai'
+          rootdata_url: https://www.rootdata.com/Projects/detail/DeepNodeAI?k=MjI3MDk=
+          logo_url: https://images.heurist.xyz/rootdata/71c01e68-6439-41ad-80be-880e05b9e1b8.jpg
+          defillama_slugs: []
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '156276'
+          name: Nexa
+          one_liner: Decentralized AI Platform NEXA
+          description: NEXA is a decentralized AI platform building an autonomous
+            self-enhancing ecosystem. It provides real-time insights and rewards through
+            community-driven efforts, offering a personal AI crypto assistant.
+          active: true
+          tags:
+          - AI Agent
+          - AI
+          investors: []
+          fundraising:
+          - date: '2024-01-15'
+            amount: 2
+            round_name: Seed
+            amount_display: $2M
+          - date: '2024-06-30'
+            amount: 10
+            round_name: Series A
+            amount_display: $10M
+          events:
+          - date: '2024-01-01'
+            event_detail: Project launch.
+          - date: '2024-04-15'
+            event_detail: Partnership with AI Tech Company.
+          - date: '2024-10-20'
+            event_detail: Token listing on major exchanges.
+          exchanges:
+          - XT.COM
+          - Binance
+          - Coinbase
+          team: []
+          similar_projects:
+          - name: Arvos AI
+            description: Decentralized AI Quantitative Trading Platform
+          - name: WORLD3
+            description: Build fully autonomous AI Agents
+          - name: GAME
+            description: AI agent engine
+          - name: Funl
+            description: Autonomous AI trading agent
+          - name: DeFAI
+            description: AI-powered DeFi platform
+          - name: iAgent
+            description: Gaming solution combining AI and DePIN
+          - name: nomAI
+            description: AI Agent
+          - name: ARCH AI
+            description: AI development platform
+          establishment_date: '2024'
+          launch_date: '2024-01-01'
+          total_funding: ''
+          total_supply: '1000000000'
+          contract_address: '0xbe15e54e593c08fb1f6bac1bbf61fa06b8f3b51d'
+          website: https://nexaagent.xyz
+          twitter_handle: '@nexaagent'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Nexa?k=MTg0Njc=
+          logo_url: https://images.heurist.xyz/rootdata/28d99ac2-b63f-40ef-ba36-6aa3244fd3ed.jpg
+          defillama_slugs: []
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '130588'
+          name: Liqfinity
+          one_liner: DeFAI Lending Protocol
+          description: Liqfinity is a crypto platform that allows you to borrow, provide
+            liquidity, and earn rewards—all with no liquidation risk, 100% Loan-to-Value
+            (LTV), unlimited loan duration, and generous rewards for liquidity providers.
+          active: true
+          tags:
+          - DeFi
+          - Lending
+          - AI
+          investors: []
+          fundraising:
+          - date: '2023-09-30'
+            amount: 1
+            round_name: Seed
+            amount_display: $1M
+          - date: '2024-01-15'
+            amount: 5
+            round_name: Series A
+            amount_display: $5M
+          events:
+          - date: '2024-01-15'
+            event_detail: Project launch successfully completed.
+          - date: '2024-03-01'
+            event_detail: Token listing on major exchanges.
+          - date: '2024-05-20'
+            event_detail: Partnership announcement with Tech Innovations.
+          exchanges:
+          - Binance
+          - Coinbase
+          - Kraken
+          team: []
+          similar_projects:
+          - name: Orchai
+            description: DeFi platform based on AI strategy
+          - name: PantherFi
+            description: DeFi platform connecting crypto and AI
+          - name: Tren Finance
+            description: Stablecoin borrowing protocol
+          - name: Lagent
+            description: AI-driven lending platform
+          - name: cSigma
+            description: Lending platform
+          - name: Ramda AI
+            description: Stablecoin Protocol
+          - name: SemiLiquid
+            description: 'Credit infrastructure '
+          - name: Credit Coop
+            description: Blockchain Credit Protocol
+          establishment_date: '2024'
+          launch_date: '2024-01-15'
+          total_funding: ''
+          total_supply: '1000000000'
+          contract_address: '0x1234567890abcdef1234567890abcdef12345678'
+          website: https://liqfinity.com/
+          twitter_handle: '@liqfinity'
+          rootdata_url: https://www.rootdata.com/Projects/detail/Liqfinity?k=MTYxMTQ=
+          logo_url: https://images.heurist.xyz/rootdata/afe42e53-b78b-40c0-aa94-194d87c5948b.jpg
+          defillama_slugs: []
+          updated_at: '2026-02-03
+
+
+            ---'
+        - node_id: '256501'
+          name: XRAIS
+          one_liner: Web3 AI Companion Platform
+          description: XRAIS is a Web3 AI companion platform, where users can explore
+            the endless romance and companionship with your virtual girlfriend & boyfriend.
+          active: true
+          tags:
+          - Social
+          - AI
+          investors: []
+          fundraising:
+          - date: '2022-12-01'
+            amount: 1.5
+            round_name: Seed
+            amount_display: 1.5M
+          - date: '2023-04-05'
+            amount: 5
+            round_name: Series A
+            amount_display: 5.0M
+          events:
+          - date: '2023-01-15'
+            event_detail: Project Launch
+          - date: '2023-06-01'
+            event_detail: Partnership with XYZ Corp
+          - date: '2023-09-10'
+            event_detail: Token Listing on Major Exchange
+          exchanges:
+          - Binance
+          - Coinbase
+          - Kraken
+          team: []
+          similar_projects:
+          - name: RSS3
+            description: Open Information Layer
+          - name: Native
+            description: Digital city and social network
+          - name: Kindred Labs
+            description: Decentralized AI companion platform
+          - name: StarryNift
+            description: Co-creation metaverse platform enhanced by AI
+          - name: PLAI Labs
+            description: Building the next generation of social platforms leveraging
+              AI and web3
+          - name: Sparkle
+            description: 'AI and Web3 interactive platform '
+          - name: Ohayo AI
+            description: Web3 multi-modal AI character creation platform
+          - name: CharacterX
+            description: Decentralized AI social network
+          establishment_date: '2024'
+          launch_date: '2023-01-01'
+          total_funding: ''
+          total_supply: '100000000'
+          contract_address: '0x1234567890abcdef1234567890abcdef12345678'
+          website: https://xrais.ai/
+          twitter_handle: '@xrais_official'
+          rootdata_url: https://www.rootdata.com/Projects/detail/XRAIS?k=MTM0MDY=
+          logo_url: https://images.heurist.xyz/rootdata/ae3f4f40-e3ea-4583-bbab-595880da33a8.png
+          defillama_slugs: []
+          updated_at: '2026-02-03
+
+
+            ---'
+        total_matches: 5
+    description: Semantic search for AI projects on Binance
+    status: success
+    elapsed_time: 2.1386797428131104
+  get_project_not_found:
+    input:
+      tool: get_project
+      tool_arguments:
+        name: ThisProjectDoesNotExist12345
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        database_project: not found
+        aixbt_data: not found
+    description: Get non-existent project - should return not found
+    status: success
+    elapsed_time: 1.370624303817749
+  get_project_empty_args:
+    input:
+      tool: get_project
+      tool_arguments: {}
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        error: At least one of name, symbol, x_handle, or contract_address must be
+          provided
+    description: Get project with empty arguments - should return error
+    status: success
+    elapsed_time: 0.00017690658569335938
