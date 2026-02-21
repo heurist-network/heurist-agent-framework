@@ -13,7 +13,7 @@ import boto3
 import botocore.exceptions
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
@@ -26,6 +26,17 @@ from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
 from mesh.tweet_claim import ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
 from mesh.usage_tracker import record_usage  # noqa: E402
+from mesh.inflow_payment import (  # noqa: E402
+    InflowPayment,
+    InflowSignupAttachRequest,
+    InflowSignupRequest,
+    attach_inflow_agentic_user,
+    enforce_signup_rate_limit,
+    get_client_ip_from_request,
+    is_inflow_payment_request,
+    process_inflow_mesh_request,
+    signup_inflow_agentic_user,
+)
 
 
 # exclude `mesh_health` logs as it's used for health checks
@@ -132,7 +143,7 @@ class MeshRequest(BaseModel):
     input: Dict[str, Any]
     api_key: str | None = None
     heurist_api_key: str | None = None
-    credits: float | None = None
+    payment: InflowPayment | None = None
 
 
 class MeshTaskCreateRequest(BaseModel):
@@ -141,7 +152,6 @@ class MeshTaskCreateRequest(BaseModel):
     api_key: str | None = None
     heurist_api_key: str | None = None
     agent_type: Optional[str] = None
-    credits: float | None = None
 
 
 class MeshTaskQueryRequest(BaseModel):
@@ -347,17 +357,38 @@ async def get_api_key(
 
 
 @app.post("/mesh_request")
-async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_api_key)):
+async def process_mesh_request(
+    request: MeshRequest,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
+):
     if request.agent_id not in agents_dict:
         raise HTTPException(status_code=404, detail=f"Agent {request.agent_id} not found")
 
     agent = await agent_pool.get_agent(request.agent_id)
-    origin_api_key = api_key
+    is_inflow_mode = is_inflow_payment_request(request.payment)
 
-    if request.credits is not None:
-        agent_credits = request.credits
-    else:
+    if request.payment and not is_inflow_mode:
+        raise HTTPException(status_code=400, detail="Unsupported payment provider")
+
+    if is_inflow_mode:
+        payment = request.payment
+        if not payment:
+            raise HTTPException(status_code=400, detail="Missing payment object")
+
         agent_credits = resolve_agent_credits(agent.metadata, request.input.get("tool"))
+
+        return await process_inflow_mesh_request(
+            payment=payment,
+            agent_id=request.agent_id,
+            input_payload=request.input,
+            heurist_api_key=request.heurist_api_key,
+            agent=agent,
+            agent_credits=float(agent_credits),
+        )
+
+    origin_api_key = await get_api_key(credentials, request)
+
+    agent_credits = resolve_agent_credits(agent.metadata, request.input.get("tool"))
     try:
         user_id, api_key_part = parse_api_key(origin_api_key)
     except ValueError:
@@ -383,6 +414,18 @@ async def process_mesh_request(request: MeshRequest, api_key: str = Depends(get_
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.post("/mesh_signup_inflow")
+async def mesh_signup_inflow(http_request: Request, request: InflowSignupRequest):
+    client_ip = get_client_ip_from_request(http_request)
+    enforce_signup_rate_limit(client_ip)
+    return await signup_inflow_agentic_user(request)
+
+
+@app.post("/mesh_signup_inflow_attach")
+async def mesh_signup_inflow_attach(request: InflowSignupAttachRequest):
+    return await attach_inflow_agentic_user(request)
+
+
 @app.post("/mesh_task_create")
 async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depends(get_api_key)):
     if request.agent_id not in agents_dict:
@@ -398,11 +441,8 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
     # Ensure raw_data_only is present for consistency
     task_payload.setdefault("raw_data_only", False)
 
-    if request.credits is not None:
-        agent_credits = request.credits
-    else:
-        agent = await agent_pool.get_agent(request.agent_id)
-        agent_credits = resolve_agent_credits(agent.metadata, task_payload.get("tool"))
+    agent = await agent_pool.get_agent(request.agent_id)
+    agent_credits = resolve_agent_credits(agent.metadata, task_payload.get("tool"))
     try:
         user_id, api_key_part = parse_api_key(api_key)
     except ValueError:
