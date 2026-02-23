@@ -10,6 +10,10 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - INFLOW_CONTEXT_DB_PATH=/data/mesh/inflow_contexts.db
+    volumes:
+      - /data/mesh:/data/mesh
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/mesh_health" ]
       interval: 30s
