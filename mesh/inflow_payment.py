@@ -14,6 +14,7 @@ from pydantic import BaseModel
 
 logger = logging.getLogger("InflowPayment")
 
+
 INFLOW_STATUS_APPROVED = "APPROVED"
 INFLOW_STATUS_PENDING = "PENDING"
 INFLOW_STATUS_DECLINED = "DECLINED"
