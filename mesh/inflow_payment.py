@@ -53,7 +53,7 @@ class InflowContextStore:
                 )
             """)
         row_count = self._connect().execute("SELECT COUNT(*) FROM inflow_contexts").fetchone()[0]
-        logger.info(f"InflowContextStore initialized | db={self.db_path} | existing_rows={row_count}")
+        print(f"[InflowContextStore] initialized | db={self.db_path} | existing_rows={row_count}", flush=True)
 
     def set(self, request_id: str, context: dict[str, Any]) -> None:
         with self._connect() as conn:
@@ -90,7 +90,7 @@ _INFLOW_CONTEXT_DB_PATH = Path(
     os.getenv("INFLOW_CONTEXT_DB_PATH", str(Path(__file__).parent.parent / "inflow_contexts.db"))
 )
 _context_store = InflowContextStore(_INFLOW_CONTEXT_DB_PATH)
-logger.info(f"Inflow payment module loaded | context_store=SQLite | pid={os.getpid()}")
+print(f"[InflowPayment] module loaded | context_store=SQLite | pid={os.getpid()}", flush=True)
 
 STATUS_REUSE_ALLOWLIST = {
     ("AskHeuristAgent", "check_job_status"),
@@ -222,7 +222,9 @@ def _inflow_api_key() -> str:
     return api_key
 
 
-async def _inflow_request(method: str, path: str, json_data: Optional[dict[str, Any]] = None) -> tuple[int, dict[str, Any]]:
+async def _inflow_request(
+    method: str, path: str, json_data: Optional[dict[str, Any]] = None
+) -> tuple[int, dict[str, Any]]:
     url = f"{_inflow_base_url()}{path}"
     headers = {"X-API-Key": _inflow_api_key(), "Content-Type": "application/json"}
     timeout = aiohttp.ClientTimeout(total=20)
@@ -332,19 +334,22 @@ async def create_inflow_payment_request(
 
     _cleanup_expired_context()
     now = time.time()
-    _context_store.set(request_id, {
-        "request_id": request_id,
-        "transaction_id": inflow_body.get("transactionId"),
-        "inflow_user_id": payment.user_id,
-        "agent_id": agent_id,
-        "tool_name": input_payload.get("tool"),
-        "tool_args_hash": _hash_request_payload(agent_id, input_payload, payment.user_id),
-        "status": inflow_body.get("status", INFLOW_STATUS_PENDING),
-        "approved": False,
-        "consumed": False,
-        "created_at": now,
-        "expires_at": now + _get_context_ttl_seconds(),
-    })
+    _context_store.set(
+        request_id,
+        {
+            "request_id": request_id,
+            "transaction_id": inflow_body.get("transactionId"),
+            "inflow_user_id": payment.user_id,
+            "agent_id": agent_id,
+            "tool_name": input_payload.get("tool"),
+            "tool_args_hash": _hash_request_payload(agent_id, input_payload, payment.user_id),
+            "status": inflow_body.get("status", INFLOW_STATUS_PENDING),
+            "approved": False,
+            "consumed": False,
+            "created_at": now,
+            "expires_at": now + _get_context_ttl_seconds(),
+        },
+    )
 
     return {"request_id": request_id, "inflow_request": inflow_body}
 
@@ -487,7 +492,9 @@ def _is_allowlisted_status_tool(agent_id: str, input_payload: Dict[str, Any]) ->
     return (agent_id, input_payload.get("tool")) in STATUS_REUSE_ALLOWLIST
 
 
-def _is_valid_status_reuse(payment: InflowPayment, agent_id: str, input_payload: Dict[str, Any], context: dict[str, Any]) -> bool:
+def _is_valid_status_reuse(
+    payment: InflowPayment, agent_id: str, input_payload: Dict[str, Any], context: dict[str, Any]
+) -> bool:
     if not _is_allowlisted_status_tool(agent_id, input_payload):
         return False
     if not context.get("approved"):
