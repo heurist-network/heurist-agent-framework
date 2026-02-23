@@ -2,8 +2,10 @@ import hashlib
 import json
 import logging
 import os
+import sqlite3
 import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Dict, Optional
 
 import aiohttp
@@ -28,9 +30,64 @@ DEFAULT_INFLOW_BASE_URL = "https://sandbox.inflowpay.ai"
 DEFAULT_CONTEXT_TTL_SECONDS = 1800
 DEFAULT_SIGNUP_RATE_LIMIT_SECONDS = 300
 
-# Single-process in-memory request context keyed by inflow requestId.
-INFLOW_REQUEST_CONTEXT: dict[str, dict[str, Any]] = {}
 INFLOW_SIGNUP_RATE_LIMIT: dict[str, float] = {}
+
+
+class InflowContextStore:
+    def __init__(self, db_path: Path):
+        self.db_path = str(db_path)
+        self._init_db()
+
+    def _connect(self) -> sqlite3.Connection:
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        return conn
+
+    def _init_db(self) -> None:
+        with self._connect() as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS inflow_contexts (
+                    request_id TEXT PRIMARY KEY,
+                    context    TEXT NOT NULL,
+                    expires_at REAL NOT NULL
+                )
+            """)
+
+    def set(self, request_id: str, context: dict[str, Any]) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                "INSERT OR REPLACE INTO inflow_contexts (request_id, context, expires_at) VALUES (?, ?, ?)",
+                (request_id, json.dumps(context), context["expires_at"]),
+            )
+
+    def get(self, request_id: str) -> dict[str, Any] | None:
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT context FROM inflow_contexts WHERE request_id = ? AND expires_at > ?",
+                (request_id, time.time()),
+            ).fetchone()
+        return json.loads(row["context"]) if row else None
+
+    def update(self, request_id: str, context: dict[str, Any]) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                "UPDATE inflow_contexts SET context = ? WHERE request_id = ?",
+                (json.dumps(context), request_id),
+            )
+
+    def delete(self, request_id: str) -> None:
+        with self._connect() as conn:
+            conn.execute("DELETE FROM inflow_contexts WHERE request_id = ?", (request_id,))
+
+    def cleanup_expired(self) -> None:
+        with self._connect() as conn:
+            conn.execute("DELETE FROM inflow_contexts WHERE expires_at <= ?", (time.time(),))
+
+
+_INFLOW_CONTEXT_DB_PATH = Path(
+    os.getenv("INFLOW_CONTEXT_DB_PATH", str(Path(__file__).parent.parent / "inflow_contexts.db"))
+)
+_context_store = InflowContextStore(_INFLOW_CONTEXT_DB_PATH)
 
 STATUS_REUSE_ALLOWLIST = {
     ("AskHeuristAgent", "check_job_status"),
@@ -102,11 +159,7 @@ def _get_signup_rate_limit_seconds() -> int:
 
 
 def _cleanup_expired_context() -> None:
-    now = time.time()
-    for request_id in list(INFLOW_REQUEST_CONTEXT.keys()):
-        expires_at = INFLOW_REQUEST_CONTEXT[request_id].get("expires_at", 0)
-        if expires_at <= now:
-            INFLOW_REQUEST_CONTEXT.pop(request_id, None)
+    _context_store.cleanup_expired()
 
 
 def _cleanup_signup_rate_limit(now: float, window_seconds: int) -> None:
@@ -276,7 +329,7 @@ async def create_inflow_payment_request(
 
     _cleanup_expired_context()
     now = time.time()
-    INFLOW_REQUEST_CONTEXT[request_id] = {
+    _context_store.set(request_id, {
         "request_id": request_id,
         "transaction_id": inflow_body.get("transactionId"),
         "inflow_user_id": payment.user_id,
@@ -288,7 +341,7 @@ async def create_inflow_payment_request(
         "consumed": False,
         "created_at": now,
         "expires_at": now + _get_context_ttl_seconds(),
-    }
+    })
 
     return {"request_id": request_id, "inflow_request": inflow_body}
 
@@ -459,7 +512,7 @@ async def verify_inflow_request(
     if not request_id:
         raise HTTPException(status_code=400, detail="payment.request_id is required for verification")
 
-    context = INFLOW_REQUEST_CONTEXT.get(request_id)
+    context = _context_store.get(request_id)
     if not context:
         raise HTTPException(status_code=400, detail="Invalid or expired payment.request_id")
 
@@ -476,7 +529,7 @@ async def verify_inflow_request(
         raise HTTPException(status_code=400, detail="payment.request_id was already consumed")
 
     if context.get("expires_at", 0) <= time.time():
-        INFLOW_REQUEST_CONTEXT.pop(request_id, None)
+        _context_store.delete(request_id)
         raise HTTPException(status_code=400, detail="payment.request_id expired")
 
     if context.get("inflow_user_id") != payment.user_id or context.get("agent_id") != agent_id:
@@ -495,6 +548,9 @@ async def verify_inflow_request(
     context["last_checked_at"] = time.time()
     if inflow_status == INFLOW_STATUS_APPROVED:
         context["approved"] = True
+    _context_store.update(request_id, context)
+
+    if inflow_status == INFLOW_STATUS_APPROVED:
         return InflowVerificationResult(
             approved=True,
             inflow_status=inflow_status,
@@ -567,7 +623,7 @@ async def process_inflow_mesh_request(
 
 
 def finalize_inflow_execution(request_id: str, tool_name: str, result: Dict[str, Any]) -> None:
-    context = INFLOW_REQUEST_CONTEXT.get(request_id)
+    context = _context_store.get(request_id)
     if not context:
         return
 
@@ -578,6 +634,7 @@ def finalize_inflow_execution(request_id: str, tool_name: str, result: Dict[str,
 
     data = result.get("data", {}) if isinstance(result, dict) else {}
     if not isinstance(data, dict):
+        _context_store.update(request_id, context)
         return
 
     if tool_name == "ask_heurist":
@@ -590,3 +647,5 @@ def finalize_inflow_execution(request_id: str, tool_name: str, result: Dict[str,
             research_id = nested.get("research_id")
             if research_id:
                 context["linked_research_id"] = research_id
+
+    _context_store.update(request_id, context)
