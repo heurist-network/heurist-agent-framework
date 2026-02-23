@@ -52,6 +52,8 @@ class InflowContextStore:
                     expires_at REAL NOT NULL
                 )
             """)
+        row_count = self._connect().execute("SELECT COUNT(*) FROM inflow_contexts").fetchone()[0]
+        logger.info(f"InflowContextStore initialized | db={self.db_path} | existing_rows={row_count}")
 
     def set(self, request_id: str, context: dict[str, Any]) -> None:
         with self._connect() as conn:
@@ -88,6 +90,7 @@ _INFLOW_CONTEXT_DB_PATH = Path(
     os.getenv("INFLOW_CONTEXT_DB_PATH", str(Path(__file__).parent.parent / "inflow_contexts.db"))
 )
 _context_store = InflowContextStore(_INFLOW_CONTEXT_DB_PATH)
+logger.info(f"Inflow payment module loaded | context_store=SQLite | pid={os.getpid()}")
 
 STATUS_REUSE_ALLOWLIST = {
     ("AskHeuristAgent", "check_job_status"),
