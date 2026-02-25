@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Any, Dict, List, Optional
 
 from eth_defi.aave_v3.reserve import AaveContractsNotConfigured, fetch_reserve_data, get_helper_contracts
@@ -81,33 +82,64 @@ class AaveAgent(MeshAgent):
             raise ValueError(f"Invalid chain ID format: {chain_id}")
 
         rpc_urls = {
-            1: "https://rpc.ankr.com/eth",
-            137: "https://polygon-rpc.com",
-            43114: "https://api.avax.network/ext/bc/C/rpc",
-            42161: "https://arb1.arbitrum.io/rpc",
+            1: [
+                "https://rpc.ankr.com/eth",
+                "https://eth.llamarpc.com",
+                "https://ethereum.publicnode.com",
+            ],
+            137: [
+                "https://polygon-rpc.com",
+                "https://rpc.ankr.com/polygon",
+                "https://polygon.llamarpc.com",
+                "https://polygon-bor-rpc.publicnode.com",
+            ],
+            43114: [
+                "https://api.avax.network/ext/bc/C/rpc",
+                "https://rpc.ankr.com/avalanche",
+                "https://avalanche.public-rpc.com",
+            ],
+            42161: [
+                "https://arb1.arbitrum.io/rpc",
+                "https://rpc.ankr.com/arbitrum",
+                "https://arbitrum.llamarpc.com",
+            ],
         }
 
-        rpc_url = rpc_urls.get(chain_id)
-        if not rpc_url:
+        urls = rpc_urls.get(chain_id)
+        if not urls:
             raise ValueError(f"Unsupported chain ID: {chain_id}")
 
-        w3 = Web3(
-            Web3.HTTPProvider(
-                rpc_url,
-                request_kwargs={
-                    "timeout": 60,
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "User-Agent": "AaveReserveAgent/1.0.0",
-                    },
-                },
-            )
+        last_error = None
+        for rpc_url in urls:
+            for attempt in range(3):
+                try:
+                    w3 = Web3(
+                        Web3.HTTPProvider(
+                            rpc_url,
+                            request_kwargs={
+                                "timeout": 30,
+                                "headers": {
+                                    "Content-Type": "application/json",
+                                    "User-Agent": "AaveReserveAgent/1.0.0",
+                                },
+                            },
+                        )
+                    )
+                    if w3.is_connected():
+                        logger.info(f"Connected to chain {chain_id} via {rpc_url}")
+                        return w3
+                except Exception as e:
+                    last_error = e
+                    logger.warning(f"Attempt {attempt + 1} failed for {rpc_url}: {e}")
+
+                if attempt < 2:
+                    time.sleep(1.5 ** (attempt + 1))
+
+            logger.warning(f"All retries failed for {rpc_url}, trying next endpoint...")
+
+        raise ConnectionError(
+            f"Web3 failed to connect for chain ID {chain_id} after trying {len(urls)} endpoints. Last error: {last_error}"
         )
-
-        if not w3.is_connected():
-            raise ConnectionError(f"Web3 failed to connect for chain ID {chain_id}")
-
-        return w3
 
     def _initialize_aave_contracts(self, web3: Web3):
         """Initialize Aave contracts for a given Web3 instance."""
@@ -131,7 +163,6 @@ class AaveAgent(MeshAgent):
         self, chain_id: int = 137, block_identifier: str = None, asset_filter: str = None
     ) -> Dict:
         """Fetch and process Aave reserve data."""
-        # Could use self._api_request() from base class instead of implementing web3 calls
         try:
             block_id = int(block_identifier) if block_identifier and block_identifier.isdigit() else block_identifier
             web3 = self._initialize_web3(chain_id)
