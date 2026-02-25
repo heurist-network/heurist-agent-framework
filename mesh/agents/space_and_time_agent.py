@@ -26,8 +26,8 @@ class SpaceTimeAgent(MeshAgent):
         self.auth_url = "https://proxy.api.makeinfinite.dev/auth/apikey"
 
         # API endpoints
-        self.sql_generate_url = "https://api.spaceandtime.dev/v1/ai/sql/generate"
-        self.sql_execute_url = "https://proxy.api.spaceandtime.dev/v1/sql"
+        self.sql_generate_url = "https://api.makeinfinite.dev/v1/ai/sql/generate"
+        self.sql_execute_url = "https://api.makeinfinite.dev/v1/sql"
 
         self.metadata.update(
             {
