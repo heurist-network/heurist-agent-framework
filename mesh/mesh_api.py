@@ -364,6 +364,9 @@ async def process_mesh_request(
     if request.agent_id not in agents_dict:
         raise HTTPException(status_code=404, detail=f"Agent {request.agent_id} not found")
 
+    input_payload = dict(request.input)
+    input_payload.setdefault("raw_data_only", True)
+
     agent = await agent_pool.get_agent(request.agent_id)
     is_inflow_mode = is_inflow_payment_request(request.payment)
 
@@ -375,12 +378,12 @@ async def process_mesh_request(
         if not payment:
             raise HTTPException(status_code=400, detail="Missing payment object")
 
-        agent_credits = resolve_agent_credits(agent.metadata, request.input.get("tool"))
+        agent_credits = resolve_agent_credits(agent.metadata, input_payload.get("tool"))
 
         return await process_inflow_mesh_request(
             payment=payment,
             agent_id=request.agent_id,
-            input_payload=request.input,
+            input_payload=input_payload,
             heurist_api_key=request.heurist_api_key,
             agent=agent,
             agent_credits=float(agent_credits),
@@ -388,7 +391,7 @@ async def process_mesh_request(
 
     origin_api_key = await get_api_key(credentials, request)
 
-    agent_credits = resolve_agent_credits(agent.metadata, request.input.get("tool"))
+    agent_credits = resolve_agent_credits(agent.metadata, input_payload.get("tool"))
     try:
         user_id, api_key_part = parse_api_key(origin_api_key)
     except ValueError:
@@ -399,7 +402,7 @@ async def process_mesh_request(
         if request.heurist_api_key:
             agent.set_heurist_api_key(request.heurist_api_key)
 
-        call_args = dict(request.input)
+        call_args = dict(input_payload)
         call_args["session_context"] = {"api_key": origin_api_key}
         result = await agent.call_agent(call_args)
 
