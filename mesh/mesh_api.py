@@ -26,6 +26,8 @@ from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
 from mesh.tweet_claim import ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
 from mesh.usage_tracker import record_usage  # noqa: E402
+from mesh.skill_marketplace.routes import router as skill_marketplace_router  # noqa: E402
+from mesh.skill_marketplace.db import init_db as init_skill_marketplace_db, close_pool as close_skill_marketplace_pool  # noqa: E402
 from mesh.inflow_payment import (  # noqa: E402
     InflowPayment,
     InflowSignupAttachRequest,
@@ -54,12 +56,27 @@ logger = logging.getLogger("MeshAPI")
 async def lifespan(app: FastAPI):
     # Fail fast if claim credits tables/config are unavailable.
     ensure_claim_store_ready_sync()
+    # Initialize skill marketplace DB tables
+    await init_skill_marketplace_db()
     yield
     logger.info("Application shutdown: cleaning up agent pool")
     await agent_pool.cleanup()
+    await close_skill_marketplace_pool()
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    title="Heurist Mesh API",
+    description="Unified API for Heurist Mesh agent execution, async tasks, skill marketplace, and credit management.",
+    version="1.0.0",
+    lifespan=lifespan,
+    openapi_tags=[
+        {"name": "Agent Execution", "description": "Synchronous and asynchronous agent task execution."},
+        {"name": "Skill Marketplace", "description": "Browse, search, and check updates for curated Web3 agent skills."},
+        {"name": "Credits", "description": "Claim and verify free credits via Twitter/X."},
+        {"name": "Payments", "description": "Inflow payment signup and wallet attachment."},
+        {"name": "System", "description": "Health checks, cache debug, and agent schema introspection."},
+    ],
+)
 security = HTTPBearer(auto_error=False)
 
 app.add_middleware(
@@ -72,6 +89,9 @@ app.add_middleware(
     max_age=600,
     allow_credentials=False,
 )
+
+# Skill marketplace routes
+app.include_router(skill_marketplace_router)
 
 
 class AgentPool:
@@ -356,7 +376,7 @@ async def get_api_key(
     raise HTTPException(status_code=401, detail="API key is required from either bearer token or request body")
 
 
-@app.post("/mesh_request")
+@app.post("/mesh_request", tags=["Agent Execution"], summary="Execute an agent synchronously")
 async def process_mesh_request(
     request: MeshRequest,
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
@@ -417,19 +437,19 @@ async def process_mesh_request(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/mesh_signup_inflow")
+@app.post("/mesh_signup_inflow", tags=["Payments"], summary="Sign up for Inflow agentic payments")
 async def mesh_signup_inflow(http_request: Request, request: InflowSignupRequest):
     client_ip = get_client_ip_from_request(http_request)
     enforce_signup_rate_limit(client_ip)
     return await signup_inflow_agentic_user(request)
 
 
-@app.post("/mesh_signup_inflow_attach")
+@app.post("/mesh_signup_inflow_attach", tags=["Payments"], summary="Attach wallet to Inflow account")
 async def mesh_signup_inflow_attach(request: InflowSignupAttachRequest):
     return await attach_inflow_agentic_user(request)
 
 
-@app.post("/mesh_task_create")
+@app.post("/mesh_task_create", tags=["Agent Execution"], summary="Create an async agent task")
 async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depends(get_api_key)):
     if request.agent_id not in agents_dict:
         raise HTTPException(status_code=404, detail=f"Agent {request.agent_id} not found")
@@ -470,7 +490,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
     return {"task_id": task_id, "msg": "Task created"}
 
 
-@app.post("/mesh_task_query")
+@app.post("/mesh_task_query", tags=["Agent Execution"], summary="Query async task status and result")
 async def query_mesh_task(request: MeshTaskQueryRequest, api_key: str = Depends(get_api_key)):
     record = task_store.get_task(request.task_id)
     if not record:
@@ -490,7 +510,7 @@ async def query_mesh_task(request: MeshTaskQueryRequest, api_key: str = Depends(
     return response
 
 
-@app.get("/mesh_health")
+@app.get("/mesh_health", tags=["System"], summary="Health check")
 async def health_check():
     return {
         "status": "ok",
@@ -500,7 +520,7 @@ async def health_check():
     }
 
 
-@app.get("/mesh_debug/cache")
+@app.get("/mesh_debug/cache", tags=["System"], summary="View agent cache statistics")
 async def cache_debug():
     """Debug endpoint to view cache statistics for all agents"""
     stats = {}
@@ -550,7 +570,7 @@ async def cache_debug():
     }
 
 
-@app.get("/mesh_schema")
+@app.get("/mesh_schema", tags=["System"], summary="Get agent tool schemas and pricing")
 async def get_mesh_schema(
     agent_id: list[str] = Query(..., description="One or more agent IDs"),
     pricing: str = Query("credits", description="Pricing unit: 'credits' or 'usd'"),
@@ -573,12 +593,14 @@ async def get_mesh_schema(
             credit_cost = resolve_agent_credits(agent.metadata, func["name"])
             price = credit_cost / 100 if pricing == "usd" else credit_cost
 
-            tools.append({
-                "name": func["name"],
-                "description": func.get("description", ""),
-                "parameters": func["parameters"],
-                "price": price,
-            })
+            tools.append(
+                {
+                    "name": func["name"],
+                    "description": func.get("description", ""),
+                    "parameters": func["parameters"],
+                    "price": price,
+                }
+            )
 
         result[aid] = {"tools": tools}
 
@@ -591,12 +613,12 @@ async def get_mesh_schema(
     return response
 
 
-@app.post("/claim_credits/initiate")
+@app.post("/claim_credits/initiate", tags=["Credits"], summary="Initiate a credit claim via Twitter/X")
 async def claim_credits_initiate():
     return await initiate_claim()
 
 
-@app.post("/claim_credits/verify")
+@app.post("/claim_credits/verify", tags=["Credits"], summary="Verify tweet and award credits")
 async def claim_credits_verify(request: TweetClaimVerifyRequest):
     return await verify_claim(request.tweet_url, request.verification_code)
 
