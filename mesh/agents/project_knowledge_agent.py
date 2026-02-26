@@ -249,7 +249,44 @@ Format your response in clean text. Be objective and informative."""
             return {"error": "PageIndex API returned an unexpected response format"}
         if result.get("error"):
             return {"error": f"PageIndex API error: {result['error']}"}
-        return result
+        return self._format_semantic_search_response(result)
+
+    def _format_semantic_project(self, project: Dict[str, Any]) -> Dict[str, Any]:
+        """Format semantic search project rows with the same compacting rules used by get_project."""
+        tags = self.client._parse_json_field(project.get("tags"))
+        exchanges = self.client._parse_json_field(project.get("exchanges"))
+
+        formatted = {
+            "name": project.get("name"),
+            "one_liner": project.get("one_liner"),
+            "description": project.get("description"),
+            "launch_date": project.get("launch_date"),
+            "tags": tags if tags else None,
+            "team": self.client._format_team(project.get("team")),
+            "investors": self.client._format_investors(project.get("investors")),
+            "fundraising": self.client._format_fundraising(project.get("fundraising")),
+            "events": self.client._format_events(project.get("events")),
+            "exchanges": exchanges if exchanges else None,
+            }
+
+        return {k: v for k, v in formatted.items() if v not in (None, [], "")}
+
+    def _format_semantic_search_response(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        """Format semantic search response while preserving original top-level shape."""
+        formatted_result = dict(result)
+
+        for key in ("results", "projects", "matches", "items"):
+            if key in formatted_result and isinstance(formatted_result[key], list):
+                formatted_result[key] = [self._format_semantic_project(project) for project in formatted_result[key]]
+
+        if isinstance(formatted_result.get("data"), dict):
+            formatted_data = dict(formatted_result["data"])
+            for key in ("results", "projects", "matches", "items"):
+                if key in formatted_data and isinstance(formatted_data[key], list):
+                    formatted_data[key] = [self._format_semantic_project(project) for project in formatted_data[key]]
+            formatted_result["data"] = formatted_data
+
+        return formatted_result
 
     async def cleanup(self):
         """Cleanup resources including database connection pool."""
