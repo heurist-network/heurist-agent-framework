@@ -190,12 +190,13 @@ async def reject_skill(skill_id: str, body: ApproveRejectRequest):
 
         await conn.execute(
             """UPDATE skills SET review_state = 'rejected',
+               verification_status = 'draft',
                review_notes = $1, reviewed_at = $2, updated_at = $2
                WHERE id = $3""",
             body.notes, now, skill_id,
         )
 
-    return {"id": skill_id, "slug": row["slug"], "review_state": "rejected"}
+    return {"id": skill_id, "slug": row["slug"], "review_state": "rejected", "verification_status": "draft"}
 
 
 @admin_router.post("/check-upstream", summary="Check for upstream changes",

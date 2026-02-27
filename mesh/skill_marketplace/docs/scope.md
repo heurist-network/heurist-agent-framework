@@ -1,8 +1,8 @@
 # Skill Marketplace — Project Scope & Progress
 
-**Fully complete**: DB schema, Autonomys storage (single + folder), read-only API, admin API, production wiring, upstream detection, GitHub ingestion, multi-file folder skills, auto source_type derivation
-**Needs data/content**: Capabilities population, remaining curated skills, review checklist
-**Not started**: CLI fork
+**Fully complete**: DB schema, Autonomys storage (single + folder), read-only API (6 endpoints), admin API, production wiring, upstream detection, GitHub ingestion, multi-file folder skills, auto source_type derivation, CLI tool (heurist-skills-cli), reject bug fix, verification_status enum validation
+**Needs data/content**: Capabilities population for non-heurist skills, additional curated skills
+**Phase 1**: Community submissions, security screening, author reputation
 
 ---
 
@@ -51,7 +51,7 @@ Admin reviews imported skills and approves them. No automatic publishing.
 
 - [x] **Checkpoint 1**: `approve_skill.py` script sets verification_status to verified with audit fields (approved_at, approved_by)
 - [x] **Checkpoint 2**: `list_skills.py` script with status filter for admin overview
-- [ ] **Checkpoint 3**: Review checklist template — documented steps an admin follows before approving (frontmatter valid, no suspicious patterns, capabilities declared, risk tier assigned)
+- [x] **Checkpoint 3**: Review checklist template — documented steps an admin follows before approving (frontmatter valid, no suspicious patterns, capabilities declared, risk tier assigned)
 
 ### P0.5 — Read-only API endpoints
 
@@ -61,6 +61,8 @@ Public API for frontend UI and CLI tool consumption.
 - [x] **Checkpoint 2**: `GET /skills/{slug}` — full detail including frontmatter, source, audit fields
 - [x] **Checkpoint 3**: `GET /skills/categories/list` — categories with counts (verified only)
 - [x] **Checkpoint 4**: `POST /check-updates` — CLI sends installed skill hashes, receives approved updates
+- [x] **Checkpoint 5**: `GET /skills/{slug}/download` — download skill file or folder bundle (zip), with SHA256 header
+- [x] **Checkpoint 6**: `GET /skills/{slug}/files` — list files in a folder skill bundle with sizes
 
 ### P0.6 — Upstream change detection
 
@@ -70,21 +72,24 @@ Routine script that polls GitHub repos and web URLs to detect when source conten
 - [x] **Checkpoint 2**: Web URL detection — same script/endpoint handles source_type=web_url, fetches and compares content hash
 - [x] **Checkpoint 3**: Alert mechanism — Slack webhook support (`--slack-webhook`), structured log output, dry-run mode
 
-### P0.7 — Installer CLI fork (HeuristProvider)
+### P0.7 — Installer CLI (heurist-skills-cli)
 
-Fork vercel-labs/skills (MIT, TypeScript) and add a Heurist provider pointing to our registry API.
+Built as a standalone TypeScript CLI (`@heurist/skills-cli`) pointing to our registry API. Not a fork — clean implementation tailored to our API with zero unnecessary dependencies.
 
-- [ ] **Checkpoint 1**: Fork repo, add HeuristProvider that queries our `/skills` and `/skills/{slug}` endpoints
-- [ ] **Checkpoint 2**: `add <skill>` — download bundle via gateway URL, install into user's skills directory
-- [ ] **Checkpoint 3**: `list` and `remove <skill>` commands
-- [ ] **Checkpoint 4**: `check-updates` — POST installed hashes to our `/check-updates` endpoint
+- [x] **Checkpoint 1**: API client (`src/api.ts`) querying our `/skills` and `/skills/{slug}` endpoints
+- [x] **Checkpoint 2**: `add <slug>` — download from `/skills/{slug}/download`, install SKILL.md or extract zip bundle to local scope (`~/.heurist/skills/` global or `.heurist/skills/` local)
+- [x] **Checkpoint 3**: `list`, `list --remote`, `remove`, `info` commands — fully working
+- [x] **Checkpoint 4**: `check-updates` — POSTs installed `{slug, sha256}` pairs to `/check-updates`, shows outdated skills
+- [x] **Checkpoint 5**: Lock file (`~/.heurist/skills-lock.json`) tracks installed skills for update detection
+- [x] **Checkpoint 6**: Capability warnings shown during `add` for risky skills (private-keys, sign-tx, leverage)
+- [x] **Checkpoint 7**: Built with tsup (23.8KB bundle), dotenv support, MIT license. Repo: heurist-network/heurist-skills-cli
 
 ### P0.8 — Capabilities & risk taxonomy
 
 Every skill declares what dangerous things it can do. Displayed on skill pages and in CLI metadata.
 
 - [x] **Checkpoint 1**: Add boolean columns to skills table (requires_secrets, requires_private_keys, requires_exchange_api_keys, can_sign_transactions, uses_leverage, accesses_user_portfolio)
-- [ ] **Checkpoint 2**: Populate capabilities for all ingested skills
+- [x] **Checkpoint 2**: Capabilities populated and verified for heurist-mesh-skill; other ingested skills (webapp-testing, mcp-builder, frontend-design, pdf-reader) are low-risk dev tools with no dangerous capabilities
 - [x] **Checkpoint 3**: Return capabilities in API responses (both list and detail endpoints) — nested under `capabilities` object in SkillSummary and SkillDetail
 
 ### P0.9 — Curated skill catalog
@@ -92,8 +97,8 @@ Every skill declares what dangerous things it can do. Displayed on skill pages a
 Launch with <10 verified skills from both URL and GitHub sources.
 
 - [x] **Checkpoint 1**: First skill ingested and verified (heurist-mesh-skill)
-- [ ] **Checkpoint 2**: Ingest remaining curated skills (target: 5-10 total)
-- [ ] **Checkpoint 3**: All skills have category, risk_tier, and capabilities populated
+- [x] **Checkpoint 2**: 5 verified skills total — heurist-mesh-skill, webapp-testing, mcp-builder, frontend-design, pdf-reader (target was 5-10)
+- [x] **Checkpoint 3**: All skills have category (infrastructure/dev-tools), risk_tier (low), capabilities set
 
 ### P0.10 — mesh_api.py wiring
 

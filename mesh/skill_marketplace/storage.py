@@ -152,3 +152,39 @@ async def download_file(cid: str) -> bytes:
         ) as resp:
             resp.raise_for_status()
             return await resp.read()
+
+
+def extract_zip(zip_bytes: bytes) -> dict[str, bytes]:
+    """Extract a zip archive into a dict mapping relative paths to file contents.
+
+    Args:
+        zip_bytes: raw bytes of the zip file
+
+    Returns:
+        dict mapping paths to contents, e.g. {"SKILL.md": b"...", "tools/helper.py": b"..."}
+    """
+    files = {}
+    with zipfile.ZipFile(io.BytesIO(zip_bytes), "r") as zf:
+        for info in zf.infolist():
+            if info.is_dir():
+                continue
+            files[info.filename] = zf.read(info.filename)
+    return files
+
+
+async def download_folder(cid: str) -> dict[str, bytes]:
+    """Download a folder bundle from Autonomys and extract it.
+
+    Returns:
+        dict mapping relative paths to file contents
+    """
+    zip_bytes = await download_file(cid)
+    return extract_zip(zip_bytes)
+
+
+def cid_from_gateway_url(gateway_url: str) -> str | None:
+    """Extract CID from a gateway URL like https://gateway.autonomys.xyz/file/<cid>."""
+    if not gateway_url:
+        return None
+    parts = gateway_url.rstrip("/").split("/")
+    return parts[-1] if parts else None

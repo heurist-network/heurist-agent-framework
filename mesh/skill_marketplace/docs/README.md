@@ -7,18 +7,19 @@ Backend module for the Heurist Mesh Skill Marketplace. Makes Web3 agent skills d
 ```
 mesh/skill_marketplace/
 ├── db.py              # PostgreSQL schema + asyncpg connection pool
-├── parser.py          # SKILL.md YAML frontmatter parser
-├── storage.py         # Autonomys Auto Drive upload/download
+├── parser.py          # SKILL.md YAML frontmatter parser + shared URL utilities
+├── storage.py         # Autonomys Auto Drive upload/download (single file + folder zip)
 ├── routes.py          # Read-only FastAPI routes (mounted by mesh_api.py)
 ├── admin_routes.py    # Admin API routes (import, approve, reject, check-upstream)
 ├── docs/
-│   ├── README.md      # This file
-│   └── scope.md       # Full project scope and checkpoint tracker
+│   ├── README.md          # This file
+│   ├── scope.md           # Full project scope and checkpoint tracker
+│   └── review_checklist.md  # Admin review checklist before approving a skill
 └── scripts/
-    ├── ingest_skill.py    # Ingest a skill from URL or local file
+    ├── ingest_skill.py    # Ingest a skill from URL, local file, or local folder
     ├── ingest_github.py   # Ingest skill(s) from a GitHub repo (single or scan mode)
     ├── approve_skill.py   # Approve a draft skill
-    ├── list_skills.py     # List all skills
+    ├── list_skills.py     # List all skills (admin view)
     ├── check_upstream.py  # Detect upstream changes in skill sources
     └── run_standalone.py  # Standalone dev server (no mesh_api dependency)
 ```
@@ -51,16 +52,28 @@ cd /root/heurist-agent-framework
 ### API endpoints
 
 **Public (read-only):**
-- `GET /skills` — list skills (verified only by default, supports category/search/pagination)
-- `GET /skills/{slug}` — skill detail with frontmatter, capabilities, source attribution
-- `GET /skills/categories/list` — categories with counts
-- `POST /check-updates` — CLI sends installed skill hashes, receives approved updates
+- `GET /skills` — list skills (verified only by default, supports `verification_status`, `category`, `search`, `limit`, `offset`)
+- `GET /skills/{slug}` — full skill detail with frontmatter, capabilities, source attribution, audit fields
+- `GET /skills/categories/list` — all categories with verified skill counts
+- `GET /skills/{slug}/download` — download the skill file (SKILL.md) or folder bundle (.zip); includes `X-Skill-SHA256` header
+- `GET /skills/{slug}/files` — list files inside a folder skill bundle with sizes
+- `POST /check-updates` — CLI sends list of `{slug, sha256}` pairs, receives slugs with newer approved versions
 
 **Admin:**
-- `POST /admin/skills/import` — import a skill from URL (fetch, parse, upload to Autonomys, insert as draft)
-- `POST /admin/skills/{id}/approve` — approve a draft skill
-- `POST /admin/skills/{id}/reject` — reject a skill
-- `POST /admin/skills/check-upstream` — poll all verified skills for upstream source changes
+- `POST /admin/skills/import` — import a skill from URL or GitHub (fetch, parse, upload to Autonomys, insert as draft)
+- `POST /admin/skills/{id}/approve` — set `verification_status=verified` with audit fields
+- `POST /admin/skills/{id}/reject` — set `review_state=rejected` and `verification_status=draft` (hides from public API)
+- `POST /admin/skills/check-upstream` — poll all verified skills for upstream source changes (compares SHA256)
+
+**Query parameters for `GET /skills`:**
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `verification_status` | `draft\|verified\|archived` | `verified` | Filter by status |
+| `category` | string | — | Filter by category |
+| `search` | string | — | Search name and description (case-insensitive) |
+| `limit` | int (1–100) | 20 | Results per page |
+| `offset` | int | 0 | Pagination offset |
 
 ## Environment variables
 
@@ -70,31 +83,44 @@ Set in `.env` at the repo root:
 |----------|----------|-------------|
 | `SKILLS_DATABASE_URL` | Yes | PostgreSQL connection string |
 | `AI3_API_KEY` | Yes | Autonomys Auto Drive API key |
+| `AUTONOMYS_API_URL` | No | Auto Drive API base URL (default: `https://mainnet.auto-drive.autonomys.xyz`) |
+| `AUTONOMYS_GATEWAY_URL` | No | Auto Drive gateway URL (default: `https://gateway.autonomys.xyz`) |
 | `GITHUB_TOKEN` | No | GitHub personal access token (raises API rate limits for upstream checks) |
 
 ## CLI Scripts
 
-### Ingest a skill from URL/file
+### Ingest a skill from URL/file/folder
 
 ```bash
+# From a raw URL (source_type auto-derived from URL)
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_skill \
     --url https://raw.githubusercontent.com/heurist-network/heurist-mesh-skill/main/SKILL.md \
     --slug heurist-mesh-skill \
     --category infrastructure \
     --risk-tier low \
-    --source-type github \
     --source-url https://github.com/heurist-network/heurist-mesh-skill \
     --author '{"display_name": "Heurist Network", "github_username": "heurist-network"}' \
-    --requires-secrets \
-    --requires-private-keys
+    --requires-secrets
+
+# From a local file
+.venv/bin/python -m mesh.skill_marketplace.scripts.ingest_skill \
+    --file ./SKILL.md \
+    --slug my-skill \
+    --category defi
+
+# From a local folder (multi-file skill — uploads as zip bundle)
+.venv/bin/python -m mesh.skill_marketplace.scripts.ingest_skill \
+    --dir ./my-skill-folder \
+    --slug my-folder-skill \
+    --category defi
 ```
 
 Options:
-- `--url` or `--file` — source of the SKILL.md file
+- `--url`, `--file`, or `--dir` — source of the skill (mutually exclusive)
 - `--slug` — unique identifier (required)
-- `--category` — defi, infrastructure, analytics, etc.
+- `--category` — defi, infrastructure, analytics, dev-tools, etc.
 - `--risk-tier` — low, medium, high
-- `--source-type` — github or web_url
+- `--source-type` — github or web_url (optional, auto-derived from URL if omitted)
 - `--source-url` — source repository URL
 - `--author` — JSON string with author metadata (display_name, github_username, github_profile_url, website_url)
 - Capability flags: `--requires-secrets`, `--requires-private-keys`, `--requires-exchange-api-keys`, `--can-sign-transactions`, `--uses-leverage`, `--accesses-user-portfolio`
@@ -102,7 +128,7 @@ Options:
 ### Ingest from GitHub repo
 
 ```bash
-# Single skill
+# Single skill (SKILL.md at repo root)
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_github \
     --repo heurist-network/heurist-mesh-skill \
     --slug heurist-mesh-skill \
@@ -110,10 +136,10 @@ Options:
 
 # Single skill from a subfolder
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_github \
-    --repo heurist-network/heurist-mesh-skill \
-    --path skills/defi/SKILL.md \
-    --slug defi-skill \
-    --category defi
+    --repo anthropics/skills \
+    --path skills/webapp-testing/SKILL.md \
+    --slug webapp-testing \
+    --category dev-tools
 
 # Scan mode — auto-discover all SKILL.md files in a repo
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_github \
@@ -129,11 +155,15 @@ Options:
 .venv/bin/python -m mesh.skill_marketplace.scripts.approve_skill --slug heurist-mesh-skill --by admin
 ```
 
-### List all skills
+### List all skills (admin view)
 
 ```bash
+# All skills
 .venv/bin/python -m mesh.skill_marketplace.scripts.list_skills
+
+# Filter by status
 .venv/bin/python -m mesh.skill_marketplace.scripts.list_skills --status draft
+.venv/bin/python -m mesh.skill_marketplace.scripts.list_skills --status verified
 ```
 
 ### Check for upstream changes
@@ -146,3 +176,26 @@ Options:
 .venv/bin/python -m mesh.skill_marketplace.scripts.check_upstream \
     --slack-webhook https://hooks.slack.com/services/...
 ```
+
+## CLI Tool (heurist-skills-cli)
+
+Users install and manage skills using the `@heurist/skills-cli` package:
+
+```bash
+# Browse available skills
+heurist-skills list --remote
+
+# Install a skill
+heurist-skills add webapp-testing
+
+# Show skill details
+heurist-skills info heurist-mesh-skill
+
+# Check for updates
+heurist-skills check-updates
+
+# Uninstall a skill
+heurist-skills remove webapp-testing
+```
+
+Repo: [heurist-network/heurist-skills-cli](https://github.com/heurist-network/heurist-skills-cli)

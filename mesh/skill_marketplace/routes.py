@@ -6,16 +6,25 @@ Endpoints for frontend UI and the forked skills CLI tool.
 import json
 import logging
 import os
+from enum import Enum
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import Response
 from pydantic import BaseModel
 
 from mesh.skill_marketplace.db import get_pool
+from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file, extract_zip
 
 logger = logging.getLogger("SkillMarketplace")
 
 router = APIRouter(tags=["Skill Marketplace"])
+
+
+class VerificationStatus(str, Enum):
+    draft = "draft"
+    verified = "verified"
+    archived = "archived"
 
 
 class SkillCapabilities(BaseModel):
@@ -42,7 +51,7 @@ class SkillSummary(BaseModel):
     description: str
     category: Optional[str] = None
     risk_tier: Optional[str] = None
-    verification_status: str
+    verification_status: VerificationStatus
     author: SkillAuthor = SkillAuthor()
     file_url: Optional[str] = None
     capabilities: SkillCapabilities = SkillCapabilities()
@@ -115,7 +124,7 @@ def _row_to_detail(row) -> dict:
              description="Browse and search the skill catalog. Returns only verified skills by default. Supports filtering by category, search by name/description, and pagination.")
 async def list_skills(
     category: Optional[str] = Query(None, description="Filter by category (e.g. infrastructure, defi, analytics)"),
-    verification_status: Optional[str] = Query(None, description="Filter by status: draft | verified | archived"),
+    verification_status: Optional[VerificationStatus] = Query(None, description="Filter by status: draft | verified | archived"),
     search: Optional[str] = Query(None, description="Search by skill name or description"),
     offset: int = Query(0, ge=0, description="Pagination offset"),
     limit: int = Query(20, ge=1, le=100, description="Results per page (max 100)"),
@@ -185,6 +194,75 @@ async def get_skill(slug: str):
         raise HTTPException(status_code=404, detail="Skill not found")
 
     return SkillDetail(**_row_to_detail(row))
+
+
+@router.get("/skills/{slug}/download", summary="Download skill bundle",
+             description="Download the skill file or folder bundle. Returns the raw SKILL.md for single-file skills, or a zip archive for folder skills. Includes SHA256 and content-type headers.")
+async def download_skill(slug: str):
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """SELECT slug, file_url, approved_sha256 FROM skills
+               WHERE slug = $1 AND verification_status = 'verified'""",
+            slug,
+        )
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Skill not found or not verified")
+
+    cid = cid_from_gateway_url(row["file_url"])
+    if not cid:
+        raise HTTPException(status_code=500, detail="No file CID available")
+
+    content = await download_file(cid)
+    is_zip = row["file_url"].endswith(".zip") or (len(content) > 2 and content[:2] == b"PK")
+
+    if is_zip:
+        media_type = "application/zip"
+        filename = f"{slug}.zip"
+    else:
+        media_type = "text/markdown"
+        filename = f"{slug}-SKILL.md"
+
+    return Response(
+        content=content,
+        media_type=media_type,
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "X-Skill-SHA256": row["approved_sha256"] or "",
+            "X-Skill-Slug": slug,
+        },
+    )
+
+
+@router.get("/skills/{slug}/files", summary="List files in a folder skill",
+             description="For folder skills (zip bundles), returns a list of files contained in the bundle with their sizes. For single-file skills, returns just the SKILL.md entry.")
+async def list_skill_files(slug: str):
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """SELECT slug, file_url, approved_sha256 FROM skills
+               WHERE slug = $1 AND verification_status = 'verified'""",
+            slug,
+        )
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Skill not found or not verified")
+
+    cid = cid_from_gateway_url(row["file_url"])
+    if not cid:
+        raise HTTPException(status_code=500, detail="No file CID available")
+
+    content = await download_file(cid)
+    is_zip = row["file_url"].endswith(".zip") or (len(content) > 2 and content[:2] == b"PK")
+
+    if is_zip:
+        files = extract_zip(content)
+        file_list = [{"path": path, "size": len(data)} for path, data in sorted(files.items())]
+    else:
+        file_list = [{"path": "SKILL.md", "size": len(content)}]
+
+    return {"slug": slug, "file_count": len(file_list), "files": file_list}
 
 
 @router.post("/check-updates", response_model=CheckUpdatesResponse, summary="Check for skill updates",
