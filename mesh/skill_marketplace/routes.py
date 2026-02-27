@@ -28,8 +28,11 @@ class SkillCapabilities(BaseModel):
 
 
 class SkillAuthor(BaseModel):
-    name: Optional[str] = None
-    github_url: Optional[str] = None
+    display_name: Optional[str] = None
+    author_type: Optional[str] = None
+    github_username: Optional[str] = None
+    github_profile_url: Optional[str] = None
+    website_url: Optional[str] = None
 
 
 class SkillSummary(BaseModel):
@@ -79,10 +82,7 @@ def _row_to_summary(row) -> dict:
         "category": row["category"],
         "risk_tier": row["risk_tier"],
         "verification_status": row["verification_status"],
-        "author": {
-            "name": row["author_display_name"],
-            "github_url": row["author_github_url"],
-        },
+        "author": json.loads(row["author_json"]) if row["author_json"] else {},
         "file_url": row["file_url"],
         "capabilities": {
             "requires_secrets": row["requires_secrets"],

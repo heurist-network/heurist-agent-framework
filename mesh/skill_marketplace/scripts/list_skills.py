@@ -8,6 +8,7 @@ Usage:
 
 import argparse
 import asyncio
+import json
 import logging
 import sys
 from pathlib import Path
@@ -24,7 +25,7 @@ async def list_skills(args):
     await init_db()
     pool = await get_pool()
 
-    query = "SELECT id, slug, name, category, risk_tier, verification_status, author_display_name FROM skills"
+    query = "SELECT id, slug, name, category, risk_tier, verification_status, author_json FROM skills"
     params = []
 
     if args.status:
@@ -43,7 +44,8 @@ async def list_skills(args):
     print(f"\n{'ID':<10} {'Slug':<25} {'Name':<25} {'Category':<15} {'Risk':<10} {'Status':<12} {'Author'}")
     print("-" * 120)
     for r in rows:
-        author = r["author_display_name"] or "—"
+        author_data = json.loads(r["author_json"]) if r["author_json"] else {}
+        author = author_data.get("display_name", "—")
         print(f"{r['id']:<10} {r['slug']:<25} {r['name']:<25} {r['category'] or '—':<15} {r['risk_tier'] or '—':<10} {r['verification_status']:<12} {author}")
 
     print(f"\nTotal: {len(rows)} skills")

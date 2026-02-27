@@ -27,6 +27,7 @@ from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
 from mesh.tweet_claim import ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
 from mesh.usage_tracker import record_usage  # noqa: E402
 from mesh.skill_marketplace.routes import router as skill_marketplace_router  # noqa: E402
+from mesh.skill_marketplace.admin_routes import admin_router as skill_marketplace_admin_router  # noqa: E402
 from mesh.skill_marketplace.db import init_db as init_skill_marketplace_db, close_pool as close_skill_marketplace_pool  # noqa: E402
 from mesh.inflow_payment import (  # noqa: E402
     InflowPayment,
@@ -92,6 +93,7 @@ app.add_middleware(
 
 # Skill marketplace routes
 app.include_router(skill_marketplace_router)
+app.include_router(skill_marketplace_admin_router)
 
 
 class AgentPool:

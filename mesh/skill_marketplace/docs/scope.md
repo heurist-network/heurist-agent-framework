@@ -1,8 +1,8 @@
 # Skill Marketplace — Project Scope & Progress
 
-**Fully complete**: DB schema, Autonomys storage, read-only API, production wiring
-**Needs data/content**: Capabilities population, remaining curated skills
-**Not started**: Upstream detection script, CLI fork
+**Fully complete**: DB schema, Autonomys storage, read-only API, admin API, production wiring, upstream detection, GitHub ingestion
+**Needs data/content**: Capabilities population, remaining curated skills, review checklist
+**Not started**: CLI fork
 
 ---
 
@@ -10,8 +10,8 @@
 
 - **PostgreSQL** for queryable metadata (single `skills` table)
 - **Autonomys Auto Drive (ai3.storage)** for immutable skill file blobs
-- **Admin scripts** (no admin API) for ingestion, approval, listing
-- **Read-only API** mounted on mesh_api.py for frontend/CLI consumption
+- **Admin API** (import, approve, reject, check-upstream) + CLI scripts for ingestion, approval, listing
+- **Read-only API** + **Admin API** mounted on mesh_api.py for frontend/CLI consumption
 - **Forked CLI** (@heurist/skills) from vercel-labs/skills with HeuristProvider
 
 ---
@@ -22,9 +22,9 @@
 
 Set up PostgreSQL with a single `skills` table holding identity, source attribution, approved artifact pointers, review helpers, and timestamps. No separate skill_sources or skill_snapshots tables.
 
-- [x] **Checkpoint 1**: `skills` table created with all spec columns (slug, name, description, skill_md_frontmatter_json, category, risk_tier, verification_status, source_type, source_url, source_path, author_json, approved_cid, approved_sha256, approved_at, approved_by, submitted_by, submitted_at, review_state, review_notes, reviewed_at, created_at, updated_at)
+- [x] **Checkpoint 1**: `skills` table created with all spec columns (slug, name, description, skill_md_frontmatter_json, category, risk_tier, verification_status, source_type, source_url, source_path, author_json JSONB, file_url, approved_sha256, approved_at, approved_by, submitted_by, submitted_at, review_state, review_notes, reviewed_at, created_at, updated_at)
 - [x] **Checkpoint 2**: Indexes on slug, category, verification_status
-- [x] **Checkpoint 3**: Add capabilities taxonomy columns — requires_secrets, requires_private_keys, requires_exchange_api_keys, can_sign_transactions, uses_leverage, accesses_user_portfolio (all boolean, default false). Also includes ALTER migration for existing production tables.
+- [x] **Checkpoint 3**: Capabilities taxonomy columns — requires_secrets, requires_private_keys, requires_exchange_api_keys, can_sign_transactions, uses_leverage, accesses_user_portfolio (all boolean, default false)
 
 ### P0.2 — Ingestion scripts (two source types)
 
@@ -32,7 +32,7 @@ Support ingesting skills from web URLs (single SKILL.md) and GitHub repos (multi
 
 - [x] **Checkpoint 1**: Web URL ingestion — fetch SKILL.md from any URL, parse frontmatter, upload to Autonomys, insert into DB
 - [x] **Checkpoint 2**: Local file ingestion — read SKILL.md from disk, same flow as URL
-- [ ] **Checkpoint 3**: GitHub multi-skill repo ingestion — point at a repo + folder path, ingest only that folder's SKILL.md
+- [x] **Checkpoint 3**: GitHub multi-skill repo ingestion — `ingest_github.py` supports single path mode and `--scan` mode (auto-discovers all SKILL.md files via Git tree API)
 
 ### P0.3 — Autonomys storage (ai3.storage)
 
@@ -63,9 +63,9 @@ Public API for frontend UI and CLI tool consumption.
 
 Routine script that polls GitHub repos and web URLs to detect when source content changes, then alerts the team.
 
-- [ ] **Checkpoint 1**: GitHub detection — for each skill with source_type=github, check latest commit SHA for the relevant path
-- [ ] **Checkpoint 2**: Web URL detection — for each skill with source_type=web_url, fetch and compare content hash (+ ETag/Last-Modified)
-- [ ] **Checkpoint 3**: Alert mechanism — log changes and send notification (Slack webhook or email)
+- [x] **Checkpoint 1**: GitHub detection — `check_upstream.py` + `POST /admin/skills/check-upstream` fetch SKILL.md via GitHub API, compare SHA256 against approved_sha256
+- [x] **Checkpoint 2**: Web URL detection — same script/endpoint handles source_type=web_url, fetches and compares content hash
+- [x] **Checkpoint 3**: Alert mechanism — Slack webhook support (`--slack-webhook`), structured log output, dry-run mode
 
 ### P0.7 — Installer CLI fork (HeuristProvider)
 

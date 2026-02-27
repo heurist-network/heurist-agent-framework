@@ -19,6 +19,7 @@ from fastapi import FastAPI
 
 from mesh.skill_marketplace.db import init_db, close_pool
 from mesh.skill_marketplace.routes import router
+from mesh.skill_marketplace.admin_routes import admin_router
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s - %(message)s")
 
@@ -36,6 +37,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 app.include_router(router)
+app.include_router(admin_router)
 
 
 @app.get("/health")
@@ -47,5 +49,13 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8001)
+    parser.add_argument("--reload", action="store_true", default=False)
     args = parser.parse_args()
-    uvicorn.run(app, host="0.0.0.0", port=args.port)
+    if args.reload:
+        uvicorn.run(
+            "mesh.skill_marketplace.scripts.run_standalone:app",
+            host="0.0.0.0", port=args.port, reload=True,
+            reload_dirs=[str(Path(__file__).resolve().parent.parent)],
+        )
+    else:
+        uvicorn.run(app, host="0.0.0.0", port=args.port)

@@ -2,15 +2,14 @@
 
 Usage:
     python -m mesh.skill_marketplace.scripts.ingest_skill \
-        --url https://xapi.to/skill.md --slug xapi --category infrastructure --source-type web_url
+        --url https://raw.githubusercontent.com/heurist-network/heurist-mesh-skill/main/SKILL.md \
+        --slug heurist-mesh-skill --category infrastructure --source-type github \
+        --source-url https://github.com/heurist-network/heurist-mesh-skill \
+        --author '{"display_name": "Heurist Network", "github_username": "heurist-network"}'
 
     python -m mesh.skill_marketplace.scripts.ingest_skill \
-        --file ./SKILL.md --slug my-skill --category defi --source-type github \
-        --source-url https://github.com/org/repo --source-path skills/my-skill
-
-    python -m mesh.skill_marketplace.scripts.ingest_skill \
-        --url https://xapi.to/skill.md --slug xapi --category infrastructure --source-type web_url \
-        --author-name "xapi" --author-github "https://github.com/xapi-to"
+        --file ./SKILL.md --slug heurist-mesh-skill --category infrastructure --source-type github \
+        --source-url https://github.com/heurist-network/heurist-mesh-skill
 """
 
 import argparse
@@ -80,12 +79,12 @@ async def ingest(args):
                 id, slug, name, description, skill_md_frontmatter_json,
                 category, risk_tier, verification_status,
                 source_type, source_url, source_path,
-                author_display_name, author_github_url,
+                author_json,
                 file_url, approved_sha256, approved_at, approved_by,
                 requires_secrets, requires_private_keys, requires_exchange_api_keys,
                 can_sign_transactions, uses_leverage, accesses_user_portfolio,
                 created_at, updated_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)""",
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)""",
             skill_id,
             args.slug,
             parsed["name"],
@@ -97,8 +96,7 @@ async def ingest(args):
             args.source_type,
             source_url,
             args.source_path,
-            args.author_name,
-            args.author_github,
+            json.dumps(json.loads(args.author)) if args.author else None,
             result["gateway_url"],
             result["sha256"],
             now,
@@ -127,8 +125,8 @@ def main():
     parser.add_argument("--source-type", dest="source_type", choices=["github", "web_url"])
     parser.add_argument("--source-url", dest="source_url", help="source repo URL or file URL")
     parser.add_argument("--source-path", dest="source_path", help="path within repo for multi-skill repos")
-    parser.add_argument("--author-name", dest="author_name", help="author display name")
-    parser.add_argument("--author-github", dest="author_github", help="author GitHub URL")
+    parser.add_argument("--author", help='author JSON string, e.g. \'{"display_name": "x", "github_username": "y"}\'')
+
     parser.add_argument("--requires-secrets", dest="requires_secrets", action="store_true", default=False)
     parser.add_argument("--requires-private-keys", dest="requires_private_keys", action="store_true", default=False)
     parser.add_argument("--requires-exchange-api-keys", dest="requires_exchange_api_keys", action="store_true", default=False)
