@@ -1,15 +1,21 @@
-"""Ingest a skill from a URL or local file into the marketplace.
+"""Ingest a skill from a URL, local file, or local directory into the marketplace.
+
+source_type is auto-derived from the URL: github.com and raw.githubusercontent.com
+URLs are treated as 'github', everything else as 'web_url'.
+
+Supports folder skills: use --dir to ingest a directory containing SKILL.md and
+other files. All files are bundled into a zip and uploaded preserving hierarchy.
 
 Usage:
     python -m mesh.skill_marketplace.scripts.ingest_skill \
         --url https://raw.githubusercontent.com/heurist-network/heurist-mesh-skill/main/SKILL.md \
-        --slug heurist-mesh-skill --category infrastructure --source-type github \
+        --slug heurist-mesh-skill --category infrastructure \
         --source-url https://github.com/heurist-network/heurist-mesh-skill \
         --author '{"display_name": "Heurist Network", "github_username": "heurist-network"}'
 
     python -m mesh.skill_marketplace.scripts.ingest_skill \
-        --file ./SKILL.md --slug heurist-mesh-skill --category infrastructure --source-type github \
-        --source-url https://github.com/heurist-network/heurist-mesh-skill
+        --dir ./my-skill-folder --slug my-skill --category defi \
+        --source-url https://github.com/org/repo
 """
 
 import argparse
@@ -26,8 +32,8 @@ import aiohttp
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db
-from mesh.skill_marketplace.parser import parse_skill_md
-from mesh.skill_marketplace.storage import upload_file
+from mesh.skill_marketplace.parser import derive_source_type, parse_skill_md
+from mesh.skill_marketplace.storage import upload_file, upload_folder
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestSkill")
@@ -43,25 +49,54 @@ async def fetch_url(url: str) -> bytes:
 async def ingest(args):
     await init_db()
 
+    is_folder = False
     if args.url:
         logger.info(f"fetching {args.url}")
         raw = await fetch_url(args.url)
         source_url = args.url
+    elif args.dir:
+        dir_path = Path(args.dir)
+        if not dir_path.is_dir():
+            logger.error(f"not a directory: {args.dir}")
+            sys.exit(1)
+        skill_md = dir_path / "SKILL.md"
+        if not skill_md.exists():
+            logger.error(f"no SKILL.md found in {args.dir}")
+            sys.exit(1)
+        raw = skill_md.read_bytes()
+        source_url = args.source_url
+        is_folder = True
     elif args.file:
         logger.info(f"reading {args.file}")
         raw = Path(args.file).read_bytes()
         source_url = args.source_url
     else:
-        logger.error("provide --url or --file")
+        logger.error("provide --url, --file, or --dir")
         sys.exit(1)
 
     parsed = parse_skill_md(raw)
     logger.info(f"parsed skill: name={parsed['name']}, description={parsed['description'][:80]}...")
 
     logger.info("uploading to Autonomys...")
-    result = await upload_file(raw, f"{args.slug}-SKILL.md")
+    if is_folder:
+        dir_path = Path(args.dir)
+        files = {}
+        for file_path in sorted(dir_path.rglob("*")):
+            if file_path.is_file():
+                relative = file_path.relative_to(dir_path).as_posix()
+                files[relative] = file_path.read_bytes()
+        logger.info(f"folder skill: {len(files)} files")
+        for fp in sorted(files.keys()):
+            logger.info(f"  {fp} ({len(files[fp])} bytes)")
+        result = await upload_folder(files, args.slug)
+    else:
+        result = await upload_file(raw, f"{args.slug}-SKILL.md")
     logger.info(f"file_url: {result['gateway_url']}")
     logger.info(f"SHA256: {result['sha256']}")
+
+    resolved_source_url = args.source_url or source_url
+    source_type = args.source_type or derive_source_type(resolved_source_url)
+    logger.info(f"source_type: {source_type} (derived from URL)")
 
     skill_id = uuid.uuid4().hex[:8]
 
@@ -93,8 +128,8 @@ async def ingest(args):
             args.category,
             args.risk_tier,
             "draft",
-            args.source_type,
-            source_url,
+            source_type,
+            resolved_source_url,
             args.source_path,
             json.dumps(json.loads(args.author)) if args.author else None,
             result["gateway_url"],
@@ -119,10 +154,12 @@ def main():
     parser = argparse.ArgumentParser(description="Ingest a skill into the marketplace")
     parser.add_argument("--url", help="URL to a SKILL.md file")
     parser.add_argument("--file", help="local path to a SKILL.md file")
+    parser.add_argument("--dir", help="local directory containing SKILL.md and other files (folder skill)")
     parser.add_argument("--slug", required=True, help="unique slug for this skill")
     parser.add_argument("--category", help="category (defi, infrastructure, analytics, etc.)")
     parser.add_argument("--risk-tier", dest="risk_tier", help="risk tier (low, medium, high)")
-    parser.add_argument("--source-type", dest="source_type", choices=["github", "web_url"])
+    parser.add_argument("--source-type", dest="source_type", choices=["github", "web_url"],
+                        help="override auto-derived source type (auto: github.com/raw.githubusercontent.com → github, else web_url)")
     parser.add_argument("--source-url", dest="source_url", help="source repo URL or file URL")
     parser.add_argument("--source-path", dest="source_path", help="path within repo for multi-skill repos")
     parser.add_argument("--author", help='author JSON string, e.g. \'{"display_name": "x", "github_username": "y"}\'')

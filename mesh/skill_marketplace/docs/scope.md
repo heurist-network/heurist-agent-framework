@@ -1,6 +1,6 @@
 # Skill Marketplace — Project Scope & Progress
 
-**Fully complete**: DB schema, Autonomys storage, read-only API, admin API, production wiring, upstream detection, GitHub ingestion
+**Fully complete**: DB schema, Autonomys storage (single + folder), read-only API, admin API, production wiring, upstream detection, GitHub ingestion, multi-file folder skills, auto source_type derivation
 **Needs data/content**: Capabilities population, remaining curated skills, review checklist
 **Not started**: CLI fork
 
@@ -33,6 +33,8 @@ Support ingesting skills from web URLs (single SKILL.md) and GitHub repos (multi
 - [x] **Checkpoint 1**: Web URL ingestion — fetch SKILL.md from any URL, parse frontmatter, upload to Autonomys, insert into DB
 - [x] **Checkpoint 2**: Local file ingestion — read SKILL.md from disk, same flow as URL
 - [x] **Checkpoint 3**: GitHub multi-skill repo ingestion — `ingest_github.py` supports single path mode and `--scan` mode (auto-discovers all SKILL.md files via Git tree API)
+- [x] **Checkpoint 4**: Auto-derive `source_type` from URL — github.com/raw.githubusercontent.com → github, else web_url. `--source-type` is now optional override
+- [x] **Checkpoint 5**: Multi-file folder skill support — `--dir` flag for local folders, GitHub folder detection with hierarchy preservation, zip bundle upload to Autonomys
 
 ### P0.3 — Autonomys storage (ai3.storage)
 
@@ -41,6 +43,7 @@ Upload approved skill bundles to Autonomys and store CID + SHA256. Frontend/CLI 
 - [x] **Checkpoint 1**: 3-step chunked upload working (create session → send chunks → complete)
 - [x] **Checkpoint 2**: Download via public gateway with authenticated API fallback
 - [x] **Checkpoint 3**: CID and SHA256 stored in DB, gateway URL returned in API responses
+- [x] **Checkpoint 4**: Multi-file folder upload — `upload_folder()` bundles files into zip preserving hierarchy, uploads to Autonomys as single archive
 
 ### P0.4 — Manual verification workflow
 

@@ -18,29 +18,18 @@ import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlparse
 
 import aiohttp
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db
+from mesh.skill_marketplace.parser import parse_github_owner_repo
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("CheckUpstream")
 
 GITHUB_API = "https://api.github.com"
-
-
-def _parse_github_url(source_url: str) -> tuple[str, str] | None:
-    """Extract owner/repo from a GitHub URL. Returns (owner, repo) or None."""
-    parsed = urlparse(source_url)
-    if parsed.hostname not in ("github.com", "www.github.com"):
-        return None
-    parts = parsed.path.strip("/").split("/")
-    if len(parts) < 2:
-        return None
-    return parts[0], parts[1]
 
 
 async def check_github_skill(session: aiohttp.ClientSession, skill: dict, github_token: str | None) -> dict | None:
@@ -49,7 +38,7 @@ async def check_github_skill(session: aiohttp.ClientSession, skill: dict, github
     Fetches the SKILL.md content from the repo's default branch and compares
     its SHA256 against the approved_sha256 in our DB.
     """
-    owner_repo = _parse_github_url(skill["source_url"])
+    owner_repo = parse_github_owner_repo(skill["source_url"])
     if not owner_repo:
         logger.warning(f"[{skill['slug']}] cannot parse GitHub URL: {skill['source_url']}")
         return None

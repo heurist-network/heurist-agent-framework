@@ -11,15 +11,14 @@ import os
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
-from urllib.parse import urlparse
 
 import aiohttp
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from mesh.skill_marketplace.db import get_pool
-from mesh.skill_marketplace.parser import parse_skill_md
-from mesh.skill_marketplace.storage import upload_file
+from mesh.skill_marketplace.parser import derive_source_type, parse_github_owner_repo, parse_skill_md
+from mesh.skill_marketplace.storage import upload_file, upload_folder
 
 logger = logging.getLogger("SkillMarketplace")
 
@@ -69,10 +68,49 @@ async def import_skill(body: ImportSkillRequest):
 
     parsed = parse_skill_md(raw)
 
-    result = await upload_file(raw, f"{body.slug}-SKILL.md")
+    folder_files = None
+    owner_repo = parse_github_owner_repo(body.url)
+    if owner_repo and body.source_path:
+        github_token = os.getenv("GITHUB_TOKEN")
+        gh_headers = {"Accept": "application/vnd.github.v3+json"}
+        if github_token:
+            gh_headers["Authorization"] = f"token {github_token}"
+        owner, repo = owner_repo
+        folder_prefix = body.source_path.rstrip("/") + "/"
+        async with aiohttp.ClientSession() as gh_session:
+            async with gh_session.get(
+                f"https://api.github.com/repos/{owner}/{repo}/git/trees/HEAD?recursive=1",
+                headers=gh_headers,
+            ) as tree_resp:
+                if tree_resp.status == 200:
+                    tree_data = await tree_resp.json()
+                    file_paths = [
+                        item["path"] for item in tree_data.get("tree", [])
+                        if item["type"] == "blob" and item["path"].startswith(folder_prefix)
+                    ]
+                    if len(file_paths) > 1:
+                        folder_files = {}
+                        raw_headers = {"Accept": "application/vnd.github.v3.raw"}
+                        if github_token:
+                            raw_headers["Authorization"] = f"token {github_token}"
+                        for fp in file_paths:
+                            async with gh_session.get(
+                                f"https://api.github.com/repos/{owner}/{repo}/contents/{fp}",
+                                headers=raw_headers,
+                            ) as file_resp:
+                                if file_resp.status == 200:
+                                    folder_files[fp[len(folder_prefix):]] = await file_resp.read()
+
+    if folder_files and len(folder_files) > 1:
+        result = await upload_folder(folder_files, body.slug)
+    else:
+        result = await upload_file(raw, f"{body.slug}-SKILL.md")
 
     skill_id = uuid.uuid4().hex[:8]
     now = datetime.now(timezone.utc)
+
+    resolved_source_url = body.source_url or body.url
+    source_type = body.source_type or derive_source_type(resolved_source_url)
 
     async with pool.acquire() as conn:
         await conn.execute(
@@ -93,8 +131,8 @@ async def import_skill(body: ImportSkillRequest):
             body.category,
             body.risk_tier,
             "draft",
-            body.source_type,
-            body.source_url or body.url,
+            source_type,
+            resolved_source_url,
             body.source_path,
             json.dumps(body.author_json) if body.author_json else None,
             result["gateway_url"],
@@ -160,16 +198,6 @@ async def reject_skill(skill_id: str, body: ApproveRejectRequest):
     return {"id": skill_id, "slug": row["slug"], "review_state": "rejected"}
 
 
-def _parse_github_url(source_url: str) -> tuple[str, str] | None:
-    parsed = urlparse(source_url)
-    if parsed.hostname not in ("github.com", "www.github.com"):
-        return None
-    parts = parsed.path.strip("/").split("/")
-    if len(parts) < 2:
-        return None
-    return parts[0], parts[1]
-
-
 @admin_router.post("/check-upstream", summary="Check for upstream changes",
                    description="Poll GitHub repos and web URLs for all verified skills. Returns list of skills whose source content has changed since last approval.")
 async def check_upstream():
@@ -196,7 +224,7 @@ async def check_upstream():
             upstream_sha256 = None
 
             if skill["source_type"] == "github":
-                owner_repo = _parse_github_url(skill["source_url"])
+                owner_repo = parse_github_owner_repo(skill["source_url"])
                 if not owner_repo:
                     continue
                 owner, repo = owner_repo

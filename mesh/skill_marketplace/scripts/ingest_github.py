@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db
 from mesh.skill_marketplace.parser import parse_skill_md
-from mesh.skill_marketplace.storage import upload_file
+from mesh.skill_marketplace.storage import upload_file, upload_folder
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestGitHub")
@@ -71,8 +71,43 @@ async def scan_for_skill_files(session: aiohttp.ClientSession, owner: str, repo:
     return [item["path"] for item in data.get("tree", []) if item["path"].endswith("SKILL.md")]
 
 
+async def fetch_folder_files(session: aiohttp.ClientSession, owner: str, repo: str, folder_path: str, token: str | None) -> dict[str, bytes]:
+    """Fetch all files in a GitHub folder, preserving hierarchy relative to folder_path.
+
+    Returns dict mapping relative paths to file contents.
+    """
+    headers = {"Accept": "application/vnd.github.v3+json"}
+    if token:
+        headers["Authorization"] = f"token {token}"
+
+    url = f"{GITHUB_API}/repos/{owner}/{repo}/git/trees/HEAD?recursive=1"
+    async with session.get(url, headers=headers) as resp:
+        if resp.status != 200:
+            logger.error(f"GitHub tree API returned {resp.status}")
+            return {}
+        data = await resp.json()
+
+    prefix = folder_path.rstrip("/") + "/"
+    file_paths = [
+        item["path"] for item in data.get("tree", [])
+        if item["type"] == "blob" and item["path"].startswith(prefix)
+    ]
+
+    if not file_paths:
+        return {}
+
+    files = {}
+    for file_path in file_paths:
+        content = await fetch_github_file(session, owner, repo, file_path, token)
+        if content is not None:
+            relative_path = file_path[len(prefix):]
+            files[relative_path] = content
+
+    return files
+
+
 async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str, path: str, slug: str, args, token: str | None):
-    """Ingest a single SKILL.md from GitHub."""
+    """Ingest a skill from GitHub. If the SKILL.md is inside a folder with other files, uploads the entire folder as a zip bundle."""
     raw = await fetch_github_file(session, owner, repo, path, token)
     if not raw:
         return False
@@ -80,8 +115,21 @@ async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str
     parsed = parse_skill_md(raw)
     logger.info(f"[{slug}] parsed: name={parsed['name']}, description={parsed['description'][:60]}...")
 
-    result = await upload_file(raw, f"{slug}-SKILL.md")
-    logger.info(f"[{slug}] uploaded: {result['gateway_url']}")
+    folder_path = str(Path(path).parent)
+    if folder_path != ".":
+        folder_files = await fetch_folder_files(session, owner, repo, folder_path, token)
+        if len(folder_files) > 1:
+            logger.info(f"[{slug}] folder skill detected: {len(folder_files)} files in {folder_path}/")
+            for fp in sorted(folder_files.keys()):
+                logger.info(f"  {fp} ({len(folder_files[fp])} bytes)")
+            result = await upload_folder(folder_files, slug)
+            logger.info(f"[{slug}] uploaded folder bundle: {result['gateway_url']}")
+        else:
+            result = await upload_file(raw, f"{slug}-SKILL.md")
+            logger.info(f"[{slug}] uploaded: {result['gateway_url']}")
+    else:
+        result = await upload_file(raw, f"{slug}-SKILL.md")
+        logger.info(f"[{slug}] uploaded: {result['gateway_url']}")
 
     skill_id = uuid.uuid4().hex[:8]
     now = datetime.now(timezone.utc)
