@@ -43,7 +43,7 @@ Upload approved skill bundles to Autonomys and store CID + SHA256. Frontend/CLI 
 - [x] **Checkpoint 1**: 3-step chunked upload working (create session → send chunks → complete)
 - [x] **Checkpoint 2**: Download via public gateway with authenticated API fallback
 - [x] **Checkpoint 3**: CID and SHA256 stored in DB, gateway URL returned in API responses
-- [x] **Checkpoint 4**: Multi-file folder upload — `upload_folder()` bundles files into zip preserving hierarchy, uploads to Autonomys as single archive
+- [x] **Checkpoint 4**: Multi-file folder upload — `upload_files_individually()` uploads each file to Autonomys separately; each file gets its own CID stored in `folder_manifest_json` JSONB column; no zip bundles
 
 ### P0.4 — Manual verification workflow
 

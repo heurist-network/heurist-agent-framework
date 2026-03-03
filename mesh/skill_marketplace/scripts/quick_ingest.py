@@ -53,12 +53,13 @@ async def main():
             id, slug, name, description, skill_md_frontmatter_json,
             category, risk_tier, verification_status,
             source_type, source_url, source_path,
-            author_display_name, author_github_url,
+            author_json,
             file_url, approved_sha256, approved_at, approved_by,
+            is_folder, folder_manifest_json,
             requires_secrets, requires_private_keys, requires_exchange_api_keys,
             can_sign_transactions, uses_leverage, accesses_user_portfolio,
             created_at, updated_at
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)""",
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
         skill_id,
         "heurist-mesh-skill",
         parsed["name"],
@@ -70,18 +71,19 @@ async def main():
         "github",
         "https://github.com/heurist-network/heurist-mesh-skill",
         None,
-        "Heurist Network",
-        "https://github.com/heurist-network",
+        json.dumps({"display_name": "Heurist Network", "github_username": "heurist-network"}),
         result["gateway_url"],
         result["sha256"],
         now,
         "admin",
-        True,   # requires_secrets
-        True,   # requires_private_keys
-        False,  # requires_exchange_api_keys
-        False,  # can_sign_transactions
-        False,  # uses_leverage
-        True,   # accesses_user_portfolio
+        False,   # is_folder
+        None,    # folder_manifest_json
+        True,    # requires_secrets
+        False,   # requires_private_keys
+        False,   # requires_exchange_api_keys
+        False,   # can_sign_transactions
+        False,   # uses_leverage
+        False,   # accesses_user_portfolio
         now,
         now,
     )
@@ -97,12 +99,12 @@ async def main():
 
     # Verify
     row = await conn.fetchrow(
-        "SELECT id, slug, name, verification_status, file_url, requires_secrets, accesses_user_portfolio FROM skills WHERE slug = $1",
+        "SELECT id, slug, name, verification_status, file_url, is_folder, requires_secrets FROM skills WHERE slug = $1",
         "heurist-mesh-skill",
     )
-    print(f"done: id={row['id']}, status={row['verification_status']}")
+    print(f"done: id={row['id']}, status={row['verification_status']}, is_folder={row['is_folder']}")
     print(f"  file_url={row['file_url']}")
-    print(f"  requires_secrets={row['requires_secrets']}, accesses_user_portfolio={row['accesses_user_portfolio']}")
+    print(f"  requires_secrets={row['requires_secrets']}")
 
     await conn.close()
 

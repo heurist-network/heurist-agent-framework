@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS skills (
     source_path     VARCHAR(512),
     author_json     JSONB,
     file_url        VARCHAR(512),
+    is_folder       BOOLEAN NOT NULL DEFAULT FALSE,
+    folder_manifest_json JSONB,
     approved_sha256 VARCHAR(64),
     approved_at     TIMESTAMPTZ,
     approved_by     VARCHAR(128),
@@ -76,9 +78,17 @@ CREATE INDEX IF NOT EXISTS idx_skills_verification ON skills (verification_statu
 """
 
 
+MIGRATIONS = [
+    "ALTER TABLE skills ADD COLUMN IF NOT EXISTS is_folder BOOLEAN NOT NULL DEFAULT FALSE",
+    "ALTER TABLE skills ADD COLUMN IF NOT EXISTS folder_manifest_json JSONB",
+]
+
+
 async def init_db():
-    """Create the skills table and indexes if they don't exist."""
+    """Create the skills table and indexes if they don't exist. Run migrations."""
     pool = await get_pool()
     async with pool.acquire() as conn:
         await conn.execute(CREATE_SKILLS_TABLE)
+        for migration in MIGRATIONS:
+            await conn.execute(migration)
     logger.info("skills table ready")

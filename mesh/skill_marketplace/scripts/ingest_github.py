@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db
 from mesh.skill_marketplace.parser import parse_skill_md
-from mesh.skill_marketplace.storage import upload_file, upload_folder
+from mesh.skill_marketplace.storage import upload_file, upload_files_individually
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestGitHub")
@@ -107,13 +107,18 @@ async def fetch_folder_files(session: aiohttp.ClientSession, owner: str, repo: s
 
 
 async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str, path: str, slug: str, args, token: str | None):
-    """Ingest a skill from GitHub. If the SKILL.md is inside a folder with other files, uploads the entire folder as a zip bundle."""
+    """Ingest a skill from GitHub. If the SKILL.md is inside a folder with other files, uploads each file individually to Autonomys."""
     raw = await fetch_github_file(session, owner, repo, path, token)
     if not raw:
         return False
 
     parsed = parse_skill_md(raw)
     logger.info(f"[{slug}] parsed: name={parsed['name']}, description={parsed['description'][:60]}...")
+
+    is_folder = False
+    folder_manifest = None
+    file_url = None
+    sha256 = None
 
     folder_path = str(Path(path).parent)
     if folder_path != ".":
@@ -122,14 +127,23 @@ async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str
             logger.info(f"[{slug}] folder skill detected: {len(folder_files)} files in {folder_path}/")
             for fp in sorted(folder_files.keys()):
                 logger.info(f"  {fp} ({len(folder_files[fp])} bytes)")
-            result = await upload_folder(folder_files, slug)
-            logger.info(f"[{slug}] uploaded folder bundle: {result['gateway_url']}")
+            manifest = await upload_files_individually(folder_files, slug)
+            folder_manifest = {p: info["cid"] for p, info in manifest.items()}
+            skill_md_info = manifest.get("SKILL.md", next(iter(manifest.values())))
+            file_url = skill_md_info["gateway_url"]
+            sha256 = skill_md_info["sha256"]
+            is_folder = True
+            logger.info(f"[{slug}] uploaded {len(manifest)} files individually")
         else:
             result = await upload_file(raw, f"{slug}-SKILL.md")
-            logger.info(f"[{slug}] uploaded: {result['gateway_url']}")
+            file_url = result["gateway_url"]
+            sha256 = result["sha256"]
+            logger.info(f"[{slug}] uploaded: {file_url}")
     else:
         result = await upload_file(raw, f"{slug}-SKILL.md")
-        logger.info(f"[{slug}] uploaded: {result['gateway_url']}")
+        file_url = result["gateway_url"]
+        sha256 = result["sha256"]
+        logger.info(f"[{slug}] uploaded: {file_url}")
 
     skill_id = uuid.uuid4().hex[:8]
     now = datetime.now(timezone.utc)
@@ -150,10 +164,11 @@ async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str
                 category, risk_tier, verification_status,
                 source_type, source_url, source_path, author_json,
                 file_url, approved_sha256, approved_at, approved_by,
+                is_folder, folder_manifest_json,
                 requires_secrets, requires_private_keys, requires_exchange_api_keys,
                 can_sign_transactions, uses_leverage, accesses_user_portfolio,
                 created_at, updated_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)""",
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
             skill_id,
             slug,
             parsed["name"],
@@ -166,10 +181,12 @@ async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str
             source_url,
             source_path,
             author_json,
-            result["gateway_url"],
-            result["sha256"],
+            file_url,
+            sha256,
             now,
             "admin",
+            is_folder,
+            json.dumps(folder_manifest) if folder_manifest else None,
             args.requires_secrets,
             args.requires_private_keys,
             args.requires_exchange_api_keys,

@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db
 from mesh.skill_marketplace.parser import derive_source_type, parse_skill_md
-from mesh.skill_marketplace.storage import upload_file, upload_folder
+from mesh.skill_marketplace.storage import upload_file, upload_files_individually
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestSkill")
@@ -78,6 +78,7 @@ async def ingest(args):
     logger.info(f"parsed skill: name={parsed['name']}, description={parsed['description'][:80]}...")
 
     logger.info("uploading to Autonomys...")
+    folder_manifest = None
     if is_folder:
         dir_path = Path(args.dir)
         files = {}
@@ -88,11 +89,17 @@ async def ingest(args):
         logger.info(f"folder skill: {len(files)} files")
         for fp in sorted(files.keys()):
             logger.info(f"  {fp} ({len(files[fp])} bytes)")
-        result = await upload_folder(files, args.slug)
+        manifest = await upload_files_individually(files, args.slug)
+        folder_manifest = {path: info["cid"] for path, info in manifest.items()}
+        skill_md_info = manifest.get("SKILL.md", next(iter(manifest.values())))
+        file_url = skill_md_info["gateway_url"]
+        sha256 = skill_md_info["sha256"]
     else:
         result = await upload_file(raw, f"{args.slug}-SKILL.md")
-    logger.info(f"file_url: {result['gateway_url']}")
-    logger.info(f"SHA256: {result['sha256']}")
+        file_url = result["gateway_url"]
+        sha256 = result["sha256"]
+    logger.info(f"file_url: {file_url}")
+    logger.info(f"SHA256: {sha256}")
 
     resolved_source_url = args.source_url or source_url
     source_type = args.source_type or derive_source_type(resolved_source_url)
@@ -116,10 +123,11 @@ async def ingest(args):
                 source_type, source_url, source_path,
                 author_json,
                 file_url, approved_sha256, approved_at, approved_by,
+                is_folder, folder_manifest_json,
                 requires_secrets, requires_private_keys, requires_exchange_api_keys,
                 can_sign_transactions, uses_leverage, accesses_user_portfolio,
                 created_at, updated_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)""",
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
             skill_id,
             args.slug,
             parsed["name"],
@@ -132,10 +140,12 @@ async def ingest(args):
             resolved_source_url,
             args.source_path,
             json.dumps(json.loads(args.author)) if args.author else None,
-            result["gateway_url"],
-            result["sha256"],
+            file_url,
+            sha256,
             now,
             "admin",
+            is_folder,
+            json.dumps(folder_manifest) if folder_manifest else None,
             args.requires_secrets,
             args.requires_private_keys,
             args.requires_exchange_api_keys,

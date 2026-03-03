@@ -14,7 +14,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel
 
 from mesh.skill_marketplace.db import get_pool
-from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file, extract_zip
+from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file
 
 logger = logging.getLogger("SkillMarketplace")
 
@@ -65,6 +65,8 @@ class SkillDetail(SkillSummary):
     approved_sha256: Optional[str] = None
     approved_at: Optional[str] = None
     approved_by: Optional[str] = None
+    is_folder: bool = False
+    folder_manifest: Optional[dict] = None
     created_at: Optional[str] = None
     updated_at: Optional[str] = None
 
@@ -114,6 +116,8 @@ def _row_to_detail(row) -> dict:
         "approved_sha256": row["approved_sha256"],
         "approved_at": row["approved_at"].isoformat() if row["approved_at"] else None,
         "approved_by": row["approved_by"],
+        "is_folder": row["is_folder"] if "is_folder" in row.keys() else False,
+        "folder_manifest": json.loads(row["folder_manifest_json"]) if row.get("folder_manifest_json") else None,
         "created_at": row["created_at"].isoformat() if row["created_at"] else None,
         "updated_at": row["updated_at"].isoformat() if row["updated_at"] else None,
     })
@@ -196,8 +200,8 @@ async def get_skill(slug: str):
     return SkillDetail(**_row_to_detail(row))
 
 
-@router.get("/skills/{slug}/download", summary="Download skill bundle",
-             description="Download the skill file or folder bundle. Returns the raw SKILL.md for single-file skills, or a zip archive for folder skills. Includes SHA256 and content-type headers.")
+@router.get("/skills/{slug}/download", summary="Download SKILL.md",
+             description="Download the SKILL.md file for a skill. Returns the raw markdown content with SHA256 header.")
 async def download_skill(slug: str):
     pool = await get_pool()
     async with pool.acquire() as conn:
@@ -215,20 +219,12 @@ async def download_skill(slug: str):
         raise HTTPException(status_code=500, detail="No file CID available")
 
     content = await download_file(cid)
-    is_zip = row["file_url"].endswith(".zip") or (len(content) > 2 and content[:2] == b"PK")
-
-    if is_zip:
-        media_type = "application/zip"
-        filename = f"{slug}.zip"
-    else:
-        media_type = "text/markdown"
-        filename = f"{slug}-SKILL.md"
 
     return Response(
         content=content,
-        media_type=media_type,
+        media_type="text/markdown",
         headers={
-            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Content-Disposition": f'attachment; filename="{slug}-SKILL.md"',
             "X-Skill-SHA256": row["approved_sha256"] or "",
             "X-Skill-Slug": slug,
         },
@@ -236,12 +232,12 @@ async def download_skill(slug: str):
 
 
 @router.get("/skills/{slug}/files", summary="List files in a folder skill",
-             description="For folder skills (zip bundles), returns a list of files contained in the bundle with their sizes. For single-file skills, returns just the SKILL.md entry.")
+             description="Returns the file manifest for folder skills (path → CID mapping). For single-file skills, returns just the SKILL.md entry.")
 async def list_skill_files(slug: str):
     pool = await get_pool()
     async with pool.acquire() as conn:
         row = await conn.fetchrow(
-            """SELECT slug, file_url, approved_sha256 FROM skills
+            """SELECT slug, file_url, approved_sha256, is_folder, folder_manifest_json FROM skills
                WHERE slug = $1 AND verification_status = 'verified'""",
             slug,
         )
@@ -249,20 +245,52 @@ async def list_skill_files(slug: str):
     if not row:
         raise HTTPException(status_code=404, detail="Skill not found or not verified")
 
-    cid = cid_from_gateway_url(row["file_url"])
-    if not cid:
-        raise HTTPException(status_code=500, detail="No file CID available")
+    if row["is_folder"] and row["folder_manifest_json"]:
+        manifest = json.loads(row["folder_manifest_json"])
+        file_list = [
+            {"path": path, "cid": cid, "gateway_url": f"https://gateway.autonomys.xyz/file/{cid}"}
+            for path, cid in sorted(manifest.items())
+        ]
+    else:
+        cid = cid_from_gateway_url(row["file_url"])
+        file_list = [{"path": "SKILL.md", "cid": cid, "gateway_url": row["file_url"]}]
+
+    return {"slug": slug, "is_folder": row["is_folder"], "file_count": len(file_list), "files": file_list}
+
+
+@router.get("/skills/{slug}/files/{file_path:path}", summary="Download individual file from folder skill",
+             description="Download a specific file from a folder skill by its relative path (e.g. SKILL.md, tools/helper.py).")
+async def download_skill_file(slug: str, file_path: str):
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """SELECT slug, file_url, is_folder, folder_manifest_json FROM skills
+               WHERE slug = $1 AND verification_status = 'verified'""",
+            slug,
+        )
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Skill not found or not verified")
+
+    if row["is_folder"] and row["folder_manifest_json"]:
+        manifest = json.loads(row["folder_manifest_json"])
+        cid = manifest.get(file_path)
+        if not cid:
+            raise HTTPException(status_code=404, detail=f"File '{file_path}' not found in skill")
+    elif file_path == "SKILL.md":
+        cid = cid_from_gateway_url(row["file_url"])
+    else:
+        raise HTTPException(status_code=404, detail=f"File '{file_path}' not found in skill")
 
     content = await download_file(cid)
-    is_zip = row["file_url"].endswith(".zip") or (len(content) > 2 and content[:2] == b"PK")
+    media_type = "text/markdown" if file_path.endswith(".md") else "application/octet-stream"
+    filename = file_path.split("/")[-1]
 
-    if is_zip:
-        files = extract_zip(content)
-        file_list = [{"path": path, "size": len(data)} for path, data in sorted(files.items())]
-    else:
-        file_list = [{"path": "SKILL.md", "size": len(content)}]
-
-    return {"slug": slug, "file_count": len(file_list), "files": file_list}
+    return Response(
+        content=content,
+        media_type=media_type,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 
 @router.post("/check-updates", response_model=CheckUpdatesResponse, summary="Check for skill updates",

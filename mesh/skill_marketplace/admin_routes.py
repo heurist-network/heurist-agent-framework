@@ -1,7 +1,7 @@
 """Admin API routes for skill marketplace.
 
 Endpoints: import (URL/GitHub), approve, reject, check-upstream.
-These mirror the CLI scripts but are callable via HTTP for admin UI integration.
+All endpoints require X-API-Key header matching INTERNAL_API_KEY env var.
 """
 
 import hashlib
@@ -13,17 +13,31 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import aiohttp
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Security
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
 from mesh.skill_marketplace.db import get_pool
 from mesh.skill_marketplace.parser import derive_source_type, parse_github_owner_repo, parse_skill_md
-from mesh.skill_marketplace.storage import upload_file, upload_folder
+from mesh.skill_marketplace.storage import upload_file, upload_files_individually
 
 logger = logging.getLogger("SkillMarketplace")
 
 admin_router = APIRouter(prefix="/admin/skills", tags=["Skill Marketplace Admin"])
 
+# ---- Auth ----
+
+_api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+
+def _require_api_key(api_key: str = Security(_api_key_header)):
+    expected = os.getenv("INTERNAL_API_KEY", "")
+    if not expected or api_key != expected:
+        raise HTTPException(status_code=401, detail="Invalid or missing API key")
+    return api_key
+
+
+# ---- Request models ----
 
 class ImportSkillRequest(BaseModel):
     url: Optional[str] = None
@@ -47,8 +61,11 @@ class ApproveRejectRequest(BaseModel):
     notes: Optional[str] = None
 
 
+# ---- Endpoints ----
+
 @admin_router.post("/import", summary="Import a skill from URL",
-                   description="Fetch a SKILL.md from a URL, parse frontmatter, upload to Autonomys, and insert as draft.")
+                   description="Fetch a SKILL.md from a URL, parse frontmatter, upload each file individually to Autonomys, and insert as draft.",
+                   dependencies=[Depends(_require_api_key)])
 async def import_skill(body: ImportSkillRequest):
     if not body.url:
         raise HTTPException(status_code=400, detail="url is required")
@@ -68,6 +85,7 @@ async def import_skill(body: ImportSkillRequest):
 
     parsed = parse_skill_md(raw)
 
+    # Try to fetch full folder if it's a GitHub folder skill
     folder_files = None
     owner_repo = parse_github_owner_repo(body.url)
     if owner_repo and body.source_path:
@@ -99,18 +117,27 @@ async def import_skill(body: ImportSkillRequest):
                                 headers=raw_headers,
                             ) as file_resp:
                                 if file_resp.status == 200:
-                                    folder_files[fp[len(folder_prefix):]] = await file_resp.read()
-
-    if folder_files and len(folder_files) > 1:
-        result = await upload_folder(folder_files, body.slug)
-    else:
-        result = await upload_file(raw, f"{body.slug}-SKILL.md")
+                                    rel_path = fp[len(folder_prefix):]
+                                    folder_files[rel_path] = await file_resp.read()
 
     skill_id = uuid.uuid4().hex[:8]
     now = datetime.now(timezone.utc)
-
     resolved_source_url = body.source_url or body.url
     source_type = body.source_type or derive_source_type(resolved_source_url)
+
+    if folder_files and len(folder_files) > 1:
+        manifest = await upload_files_individually(folder_files, body.slug)
+        skill_md_cid = manifest.get("SKILL.md", {}).get("cid", "")
+        file_url = f"https://gateway.autonomys.xyz/file/{skill_md_cid}" if skill_md_cid else None
+        sha256 = manifest.get("SKILL.md", {}).get("sha256", hashlib.sha256(raw).hexdigest())
+        is_folder = True
+        folder_manifest = {path: info["cid"] for path, info in manifest.items()}
+    else:
+        result = await upload_file(raw, f"{body.slug}-SKILL.md")
+        file_url = result["gateway_url"]
+        sha256 = result["sha256"]
+        is_folder = False
+        folder_manifest = None
 
     async with pool.acquire() as conn:
         await conn.execute(
@@ -119,41 +146,28 @@ async def import_skill(body: ImportSkillRequest):
                 category, risk_tier, verification_status,
                 source_type, source_url, source_path, author_json,
                 file_url, approved_sha256, approved_at, approved_by,
+                is_folder, folder_manifest_json,
                 requires_secrets, requires_private_keys, requires_exchange_api_keys,
                 can_sign_transactions, uses_leverage, accesses_user_portfolio,
                 created_at, updated_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)""",
-            skill_id,
-            body.slug,
-            parsed["name"],
-            parsed["description"],
-            json.dumps(parsed["frontmatter"]),
-            body.category,
-            body.risk_tier,
-            "draft",
-            source_type,
-            resolved_source_url,
-            body.source_path,
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
+            skill_id, body.slug, parsed["name"], parsed["description"],
+            json.dumps(parsed["frontmatter"]), body.category, body.risk_tier, "draft",
+            source_type, resolved_source_url, body.source_path,
             json.dumps(body.author_json) if body.author_json else None,
-            result["gateway_url"],
-            result["sha256"],
-            now,
-            "admin",
-            body.requires_secrets,
-            body.requires_private_keys,
-            body.requires_exchange_api_keys,
-            body.can_sign_transactions,
-            body.uses_leverage,
-            body.accesses_user_portfolio,
-            now,
-            now,
+            file_url, sha256, now, "admin",
+            is_folder, json.dumps(folder_manifest) if folder_manifest else None,
+            body.requires_secrets, body.requires_private_keys, body.requires_exchange_api_keys,
+            body.can_sign_transactions, body.uses_leverage, body.accesses_user_portfolio,
+            now, now,
         )
 
-    return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": result["gateway_url"]}
+    return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": file_url, "is_folder": is_folder}
 
 
 @admin_router.post("/{skill_id}/approve", summary="Approve a skill",
-                   description="Set verification_status to verified with audit fields.")
+                   description="Set verification_status to verified with audit fields.",
+                   dependencies=[Depends(_require_api_key)])
 async def approve_skill(skill_id: str, body: ApproveRejectRequest):
     pool = await get_pool()
     now = datetime.now(timezone.utc)
@@ -178,7 +192,8 @@ async def approve_skill(skill_id: str, body: ApproveRejectRequest):
 
 
 @admin_router.post("/{skill_id}/reject", summary="Reject a skill",
-                   description="Set review_state to rejected. Skill stays as draft but is flagged.")
+                   description="Set review_state=rejected and verification_status=draft. Skill is hidden from public API.",
+                   dependencies=[Depends(_require_api_key)])
 async def reject_skill(skill_id: str, body: ApproveRejectRequest):
     pool = await get_pool()
     now = datetime.now(timezone.utc)
@@ -200,7 +215,8 @@ async def reject_skill(skill_id: str, body: ApproveRejectRequest):
 
 
 @admin_router.post("/check-upstream", summary="Check for upstream changes",
-                   description="Poll GitHub repos and web URLs for all verified skills. Returns list of skills whose source content has changed since last approval.")
+                   description="Poll GitHub repos and web URLs for all verified skills. Returns skills whose source content has changed since last approval.",
+                   dependencies=[Depends(_require_api_key)])
 async def check_upstream():
     pool = await get_pool()
 
@@ -234,7 +250,10 @@ async def check_upstream():
                 if github_token:
                     headers["Authorization"] = f"token {github_token}"
                 try:
-                    async with session.get(f"https://api.github.com/repos/{owner}/{repo}/contents/{path}", headers=headers) as resp:
+                    async with session.get(
+                        f"https://api.github.com/repos/{owner}/{repo}/contents/{path}",
+                        headers=headers,
+                    ) as resp:
                         if resp.status != 200:
                             continue
                         content = await resp.read()
