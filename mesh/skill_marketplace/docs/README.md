@@ -55,8 +55,9 @@ cd /root/heurist-agent-framework
 - `GET /skills` — list skills (verified only by default, supports `verification_status`, `category`, `search`, `limit`, `offset`)
 - `GET /skills/{slug}` — full skill detail with frontmatter, capabilities, source attribution, audit fields
 - `GET /skills/categories/list` — all categories with verified skill counts
-- `GET /skills/{slug}/download` — download the skill file (SKILL.md) or folder bundle (.zip); includes `X-Skill-SHA256` header
-- `GET /skills/{slug}/files` — list files inside a folder skill bundle with sizes
+- `GET /skills/{slug}/download` — download skill: returns `SKILL.md` (text/markdown) for single-file skills, or a `.zip` bundle assembled from per-file CIDs for folder skills; includes `X-Skill-SHA256` header
+- `GET /skills/{slug}/files` — file manifest for folder skills: returns `{path, cid, gateway_url}` per file; single-file skills return a one-entry list with `SKILL.md`
+- `GET /skills/{slug}/files/{path}` — download a specific file from a folder skill by relative path (e.g. `SKILL.md`, `tools/helper.py`)
 - `POST /check-updates` — CLI sends list of `{slug, sha256}` pairs, receives slugs with newer approved versions
 
 **Admin:**

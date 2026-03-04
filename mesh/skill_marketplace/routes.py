@@ -3,9 +3,11 @@
 Endpoints for frontend UI and the forked skills CLI tool.
 """
 
+import io
 import json
 import logging
 import os
+import zipfile
 from enum import Enum
 from typing import Optional
 
@@ -200,13 +202,13 @@ async def get_skill(slug: str):
     return SkillDetail(**_row_to_detail(row))
 
 
-@router.get("/skills/{slug}/download", summary="Download SKILL.md",
-             description="Download the SKILL.md file for a skill. Returns the raw markdown content with SHA256 header.")
+@router.get("/skills/{slug}/download", summary="Download skill",
+             description="For single-file skills: returns SKILL.md as text/markdown. For folder skills: returns a zip bundle of all files assembled on-the-fly from per-file CIDs. Includes X-Skill-SHA256 header.")
 async def download_skill(slug: str):
     pool = await get_pool()
     async with pool.acquire() as conn:
         row = await conn.fetchrow(
-            """SELECT slug, file_url, approved_sha256 FROM skills
+            """SELECT slug, file_url, approved_sha256, is_folder, folder_manifest_json FROM skills
                WHERE slug = $1 AND verification_status = 'verified'""",
             slug,
         )
@@ -214,12 +216,28 @@ async def download_skill(slug: str):
     if not row:
         raise HTTPException(status_code=404, detail="Skill not found or not verified")
 
+    if row["is_folder"] and row["folder_manifest_json"]:
+        manifest = json.loads(row["folder_manifest_json"])
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+            for rel_path, cid in sorted(manifest.items()):
+                content = await download_file(cid)
+                zf.writestr(rel_path, content)
+        return Response(
+            content=buf.getvalue(),
+            media_type="application/zip",
+            headers={
+                "Content-Disposition": f'attachment; filename="{slug}.zip"',
+                "X-Skill-SHA256": row["approved_sha256"] or "",
+                "X-Skill-Slug": slug,
+            },
+        )
+
     cid = cid_from_gateway_url(row["file_url"])
     if not cid:
         raise HTTPException(status_code=500, detail="No file CID available")
 
     content = await download_file(cid)
-
     return Response(
         content=content,
         media_type="text/markdown",
@@ -306,6 +324,9 @@ async def check_updates(body: CheckUpdatesRequest):
             if not slug or not sha256:
                 continue
 
+            # TODO: for folder skills, approved_sha256 tracks only SKILL.md, not auxiliary files.
+            # If a secondary file changes without a SKILL.md change, this check will miss it.
+            # Fix: compute a composite hash over all files in folder_manifest_json at approve time.
             row = await conn.fetchrow(
                 """SELECT slug, approved_sha256, file_url FROM skills
                    WHERE slug = $1 AND verification_status = 'verified'

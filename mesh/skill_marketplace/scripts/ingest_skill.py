@@ -93,6 +93,8 @@ async def ingest(args):
         folder_manifest = {path: info["cid"] for path, info in manifest.items()}
         skill_md_info = manifest.get("SKILL.md", next(iter(manifest.values())))
         file_url = skill_md_info["gateway_url"]
+        # TODO: sha256 tracks only SKILL.md for folder skills. Changes to auxiliary files
+        # will not be detected by check-updates. Fix: store a composite hash of all files.
         sha256 = skill_md_info["sha256"]
     else:
         result = await upload_file(raw, f"{args.slug}-SKILL.md")

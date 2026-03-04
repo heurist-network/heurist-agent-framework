@@ -129,6 +129,9 @@ async def import_skill(body: ImportSkillRequest):
         manifest = await upload_files_individually(folder_files, body.slug)
         skill_md_cid = manifest.get("SKILL.md", {}).get("cid", "")
         file_url = f"https://gateway.autonomys.xyz/file/{skill_md_cid}" if skill_md_cid else None
+        # TODO: approved_sha256 tracks only SKILL.md for folder skills. Auxiliary file changes
+        # will not be detected by check-updates or check-upstream. Fix: compute a composite hash
+        # over all CIDs in the manifest at approve time and store that instead.
         sha256 = manifest.get("SKILL.md", {}).get("sha256", hashlib.sha256(raw).hexdigest())
         is_folder = True
         folder_manifest = {path: info["cid"] for path, info in manifest.items()}
@@ -257,6 +260,9 @@ async def check_upstream():
                         if resp.status != 200:
                             continue
                         content = await resp.read()
+                        # TODO: for folder skills, this only hashes SKILL.md. Changes to auxiliary
+                        # files in the folder will not be detected. Fix: fetch and hash all files
+                        # in the folder, then compare against a composite hash stored at approve time.
                         upstream_sha256 = hashlib.sha256(content).hexdigest()
                 except aiohttp.ClientError:
                     continue

@@ -77,7 +77,7 @@ Routine script that polls GitHub repos and web URLs to detect when source conten
 Built as a standalone TypeScript CLI (`@heurist/skills-cli`) pointing to our registry API. Not a fork — clean implementation tailored to our API with zero unnecessary dependencies.
 
 - [x] **Checkpoint 1**: API client (`src/api.ts`) querying our `/skills` and `/skills/{slug}` endpoints
-- [x] **Checkpoint 2**: `add <slug>` — download from `/skills/{slug}/download`, install SKILL.md or extract zip bundle to local scope (`~/.heurist/skills/` global or `.heurist/skills/` local)
+- [x] **Checkpoint 2**: `add <slug>` — download from `/skills/{slug}/download`, install SKILL.md (single-file) or extract zip bundle (folder skills, assembled server-side from per-file CIDs) to local scope (`~/.heurist/skills/` global or `.heurist/skills/` local)
 - [x] **Checkpoint 3**: `list`, `list --remote`, `remove`, `info` commands — fully working
 - [x] **Checkpoint 4**: `check-updates` — POSTs installed `{slug, sha256}` pairs to `/check-updates`, shows outdated skills
 - [x] **Checkpoint 5**: Lock file (`~/.heurist/skills-lock.json`) tracks installed skills for update detection
