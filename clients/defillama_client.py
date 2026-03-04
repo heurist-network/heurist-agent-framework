@@ -1,10 +1,16 @@
 import asyncio
 import logging
-from typing import Dict, List
+from typing import Any, Dict, List, Optional
 
+from decorators import with_cache, with_retry
 from .base_client import BaseAPIClient
 
 logger = logging.getLogger(__name__)
+
+YIELDS_MIN_TVL_USD = 500_000
+YIELDS_DEFAULT_LIMIT = 10
+YIELDS_MAX_LIMIT = 50
+YIELDS_CHART_CONCURRENCY = 4
 
 
 def _format_usd(value: float) -> str:
@@ -79,6 +85,7 @@ class DefiLlamaClient(BaseAPIClient):
 
     def __init__(self):
         super().__init__("https://api.llama.fi")
+        self.yields_client = BaseAPIClient("https://yields.llama.fi")
 
     # sync methods
     def get_protocol_tvl(self, protocol: str) -> Dict:
@@ -170,6 +177,216 @@ class DefiLlamaClient(BaseAPIClient):
     async def get_chains_async(self) -> List[Dict]:
         """Fetch all chains from DeFiLlama /v2/chains endpoint."""
         return await self._async_request("get", "/v2/chains")
+
+    @with_cache(ttl_seconds=300)
+    @with_retry(max_retries=2, delay=0.5)
+    async def get_yield_pools_async(self) -> List[Dict[str, Any]]:
+        payload = await self.yields_client._async_request("get", "/pools")
+        return payload["data"]
+
+    @with_cache(ttl_seconds=300)
+    async def get_yield_chart_async(self, pool_id: str) -> List[Dict[str, Any]]:
+        payload = await self.yields_client._async_request("get", f"/chart/{pool_id}")
+        return payload["data"]
+
+    def _avg_last(self, values: List[float], window: int) -> Optional[float]:
+        if len(values) < window:
+            return None
+        return sum(values[-window:]) / window
+
+    def _avg_prev(self, values: List[float], window: int) -> Optional[float]:
+        if len(values) < window * 2:
+            return None
+        return sum(values[-window * 2 : -window]) / window
+
+    def _pct(self, current: Optional[float], previous: Optional[float]) -> Optional[float]:
+        if current is None or previous is None or previous == 0:
+            return None
+        return ((current - previous) / abs(previous)) * 100
+
+    def _round(self, value: Optional[float], digits: int = 4) -> Optional[float]:
+        if value is None:
+            return None
+        return round(value, digits)
+
+    def _drop_null_fields(self, value: Any) -> tuple[Any, int]:
+        if value is None:
+            return None, 1
+        if type(value) is dict:
+            cleaned = {}
+            removed = 0
+            for key, item in value.items():
+                if item is None:
+                    removed += 1
+                    continue
+                nested, nested_removed = self._drop_null_fields(item)
+                removed += nested_removed
+                if nested is None:
+                    removed += 1
+                    continue
+                cleaned[key] = nested
+            return cleaned, removed
+        if type(value) is list:
+            cleaned = []
+            removed = 0
+            for item in value:
+                if item is None:
+                    removed += 1
+                    continue
+                nested, nested_removed = self._drop_null_fields(item)
+                removed += nested_removed
+                if nested is None:
+                    removed += 1
+                    continue
+                cleaned.append(nested)
+            return cleaned, removed
+        return value, 0
+
+    def _build_history_metrics(self, history: List[Dict[str, Any]], fallback_apy: Optional[float]) -> Dict[str, Any]:
+        if not history:
+            return {
+                "apy_latest": self._round(fallback_apy),
+                "apy_avg_7d": None,
+                "apy_avg_30d": None,
+                "apy_change_7d_pct": None,
+                "apy_change_30d_pct": None,
+                "tvl_trend_7d_pct": None,
+                "tvl_trend_30d_pct": None,
+            }
+
+        latest_point = history[-1]
+        apy_latest = latest_point.get("apy")
+        if apy_latest is None:
+            apy_latest = fallback_apy
+
+        apy_series = [point["apy"] for point in history if point.get("apy") is not None]
+        tvl_series = [point["tvlUsd"] for point in history if point.get("tvlUsd") is not None]
+
+        apy_avg_7d = self._avg_last(apy_series, 7)
+        apy_avg_30d = self._avg_last(apy_series, 30)
+
+        tvl_avg_7d = self._avg_last(tvl_series, 7)
+        tvl_prev_7d = self._avg_prev(tvl_series, 7)
+        tvl_avg_30d = self._avg_last(tvl_series, 30)
+        tvl_prev_30d = self._avg_prev(tvl_series, 30)
+
+        return {
+            "apy_latest": self._round(apy_latest),
+            "apy_avg_7d": self._round(apy_avg_7d),
+            "apy_avg_30d": self._round(apy_avg_30d),
+            "apy_change_7d_pct": self._round(self._pct(apy_latest, apy_avg_7d), 2),
+            "apy_change_30d_pct": self._round(self._pct(apy_latest, apy_avg_30d), 2),
+            "tvl_trend_7d_pct": self._round(self._pct(tvl_avg_7d, tvl_prev_7d), 2),
+            "tvl_trend_30d_pct": self._round(self._pct(tvl_avg_30d, tvl_prev_30d), 2),
+        }
+
+    def _build_base_yield_row(self, pool_data: Dict[str, Any]) -> Dict[str, Any]:
+        return {
+            "project": pool_data["project"],
+            "chain": pool_data["chain"],
+            "symbol": pool_data["symbol"],
+            "stablecoin": pool_data["stablecoin"],
+            "tvl_usd": int(pool_data["tvlUsd"]),
+            "apy": self._round(pool_data.get("apy")),
+            "apy_base": self._round(pool_data.get("apyBase")),
+            "apy_reward": self._round(pool_data.get("apyReward")),
+        }
+
+    async def _attach_history_metrics(
+        self, pool_data: Dict[str, Any], row: Dict[str, Any], semaphore: asyncio.Semaphore
+    ) -> Dict[str, Any]:
+        history = []
+        try:
+            async with semaphore:
+                history = await self.get_yield_chart_async(pool_data["pool"])
+        except Exception as error:
+            logger.warning(f"Yield chart fetch failed for {pool_data['pool']}: {error}")
+
+        result = dict(row)
+        result["history"] = self._build_history_metrics(history, row["apy"])
+        return result
+
+    async def search_yield_pools_async(
+        self,
+        projects: Optional[List[str]] = None,
+        chains: Optional[List[str]] = None,
+        symbols: Optional[List[str]] = None,
+        stablecoin: Optional[bool] = None,
+        sort_by: str = "apy",
+        limit: int = YIELDS_DEFAULT_LIMIT,
+    ) -> Dict[str, Any]:
+        if sort_by not in {"apy", "tvl"}:
+            raise ValueError("sort_by must be either 'apy' or 'tvl'")
+
+        if limit < 1:
+            limit = 1
+        elif limit > YIELDS_MAX_LIMIT:
+            limit = YIELDS_MAX_LIMIT
+
+        project_set = {project.lower().strip() for project in projects} if projects else set()
+        chain_set = {chain.lower().strip() for chain in chains} if chains else set()
+        symbol_set = {symbol.upper().strip() for symbol in symbols} if symbols else set()
+
+        pools = await self.get_yield_pools_async()
+        filtered = []
+        skipped_tvl_lt_min = 0
+        for pool in pools:
+            if pool["tvlUsd"] < YIELDS_MIN_TVL_USD:
+                skipped_tvl_lt_min += 1
+                continue
+            if project_set and pool["project"].lower() not in project_set:
+                continue
+            if chain_set and pool["chain"].lower() not in chain_set:
+                continue
+            if symbol_set and pool["symbol"].upper() not in symbol_set:
+                continue
+            if stablecoin is not None and pool["stablecoin"] != stablecoin:
+                continue
+            filtered.append(pool)
+
+        sort_key = "apy" if sort_by == "apy" else "tvlUsd"
+        ranked = sorted(filtered, key=lambda pool: pool[sort_key] if pool[sort_key] is not None else -1, reverse=True)
+        selected_pools = ranked[:limit]
+        selected_rows = [self._build_base_yield_row(pool) for pool in selected_pools]
+
+        semaphore = asyncio.Semaphore(YIELDS_CHART_CONCURRENCY)
+        enriched_rows = await asyncio.gather(
+            *[
+                self._attach_history_metrics(pool_data=pool, row=row, semaphore=semaphore)
+                for pool, row in zip(selected_pools, selected_rows)
+            ]
+        )
+
+        rows = []
+        null_fields_removed = 0
+        for row in enriched_rows:
+            cleaned_row, removed = self._drop_null_fields(row)
+            null_fields_removed += removed
+            rows.append(cleaned_row)
+
+        applied_filters = {"min_tvl_usd": YIELDS_MIN_TVL_USD}
+        if projects:
+            applied_filters["projects"] = projects
+        if chains:
+            applied_filters["chains"] = chains
+        if symbols:
+            applied_filters["symbols"] = symbols
+        if stablecoin is not None:
+            applied_filters["stablecoin"] = stablecoin
+
+        return {
+            "sort_by": sort_by,
+            "limit": limit,
+            "matched": len(filtered),
+            "returned": len(rows),
+            "filters": applied_filters,
+            "skipped": {
+                "tvl_lt_min": skipped_tvl_lt_min,
+                "null_fields_removed": null_fields_removed,
+            },
+            "note": f"Pools with tvlUsd < {YIELDS_MIN_TVL_USD} are skipped.",
+            "results": rows,
+        }
 
     def _calculate_tvl_trends(self, tvl_data: list) -> dict:
         """Calculate WoW and MoM trends from TVL time series."""
@@ -512,3 +729,7 @@ class DefiLlamaClient(BaseAPIClient):
             "top_protocols_by_fees": top_protocols,
             "protocol_count": len(protocols),
         }
+
+    async def close(self):
+        await super().close()
+        await self.yields_client.close()

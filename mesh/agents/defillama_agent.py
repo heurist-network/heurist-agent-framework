@@ -19,7 +19,7 @@ class DefiLlamaAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Provides DeFi protocol and blockchain metrics including TVL, fees, volume, and trend analysis from DefiLlama.",
+                "description": "Provides DeFi protocol, chain, and yield metrics including TVL, fees, volume, and yield trend analysis from DefiLlama.",
                 "external_apis": ["DefiLlama"],
                 "tags": ["DeFi", "Analytics"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/DefiLlama.png",
@@ -34,7 +34,7 @@ class DefiLlamaAgent(MeshAgent):
         )
 
     def get_system_prompt(self) -> str:
-        return """You are a DeFi analytics assistant powered by DefiLlama data. You provide accurate metrics about DeFi protocols and blockchains including TVL (Total Value Locked), fees, trading volume, and trends.
+        return """You are a DeFi analytics assistant powered by DefiLlama data. You provide accurate metrics about DeFi protocols, blockchains, and yield pools including TVL (Total Value Locked), fees, trading volume, APY, and trends.
 
 When asked about protocols, use lowercase slugs with hyphens (e.g., 'aave-v3', 'uniswap-v3', 'curve-dex').
 When asked about chains, use proper case names (e.g., 'Ethereum', 'Solana', 'Base').
@@ -84,6 +84,51 @@ Present data clearly with appropriate context. Explain trends (WoW = week-over-w
                     },
                 },
             },
+            {
+                "type": "function",
+                "function": {
+                    "name": "search_yield_pools",
+                    "description": "Search DefiLlama yield pools with optional filters for projects, chains, symbols, and stablecoin flag. Returns compact results with APY and TVL trend metrics. List filters (projects/chains/symbols) use OR matching, while different filter types are combined with AND.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "projects": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "Optional project slugs (e.g., ['aave-v3', 'curve-dex'])",
+                            },
+                            "chains": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "Optional chain names (e.g., ['Ethereum', 'Arbitrum'])",
+                            },
+                            "symbols": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "Optional token symbols (e.g., ['USDC', 'USDT'])",
+                            },
+                            "stablecoin": {
+                                "type": "boolean",
+                                "description": "Optional stablecoin-only filter",
+                            },
+                            "sort_by": {
+                                "type": "string",
+                                "description": "Sort field: APY or TVL",
+                                "enum": ["apy", "tvl"],
+                                "default": "apy",
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Number of pools to return (1-50)",
+                                "default": 10,
+                                "minimum": 1,
+                                "maximum": 50,
+                            },
+                        },
+                        "required": [],
+                    },
+                },
+            },
         ]
 
     @with_cache(ttl_seconds=3600)
@@ -94,6 +139,25 @@ Present data clearly with appropriate context. Explain trends (WoW = week-over-w
     async def _get_chain_metrics(self, chain: str) -> Dict[str, Any]:
         return await self.client.get_chain_enriched_async(chain.strip())
 
+    @with_cache(ttl_seconds=120)
+    async def _search_yield_pools(
+        self,
+        projects: Optional[List[str]] = None,
+        chains: Optional[List[str]] = None,
+        symbols: Optional[List[str]] = None,
+        stablecoin: Optional[bool] = None,
+        sort_by: str = "apy",
+        limit: int = 10,
+    ) -> Dict[str, Any]:
+        return await self.client.search_yield_pools_async(
+            projects=projects,
+            chains=chains,
+            symbols=symbols,
+            stablecoin=stablecoin,
+            sort_by=sort_by,
+            limit=limit,
+        )
+
     async def _handle_tool_logic(
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
@@ -101,6 +165,15 @@ Present data clearly with appropriate context. Explain trends (WoW = week-over-w
             return await self._get_protocol_metrics(function_args["protocol"])
         elif tool_name == "get_chain_metrics":
             return await self._get_chain_metrics(function_args["chain"])
+        elif tool_name == "search_yield_pools":
+            return await self._search_yield_pools(
+                projects=function_args.get("projects"),
+                chains=function_args.get("chains"),
+                symbols=function_args.get("symbols"),
+                stablecoin=function_args.get("stablecoin"),
+                sort_by=function_args.get("sort_by", "apy"),
+                limit=function_args.get("limit", 10),
+            )
         return {"error": f"Unknown tool: {tool_name}"}
 
     async def cleanup(self):
