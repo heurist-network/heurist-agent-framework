@@ -110,6 +110,38 @@ async def upload_files_individually(files: dict[str, bytes], folder_name: str) -
     return manifest
 
 
+async def prepare_skill_artifact(raw: bytes, slug: str, folder_files: dict[str, bytes] | None = None) -> dict:
+    """Upload skill files to Autonomys and return a normalized artifact record.
+
+    For folder skills (folder_files with >1 file): uploads each file individually,
+    each gets its own CID.
+    For single-file skills: uploads raw as SKILL.md.
+
+    Returns:
+        {file_url, sha256, is_folder, folder_manifest}
+        folder_manifest is {path: cid} for folder skills, None otherwise.
+    """
+    if folder_files and len(folder_files) > 1:
+        manifest = await upload_files_individually(folder_files, slug)
+        skill_md_info = manifest.get("SKILL.md", next(iter(manifest.values())))
+        return {
+            "file_url": skill_md_info["gateway_url"],
+            # TODO: sha256 tracks only SKILL.md for folder skills. Changes to auxiliary files
+            # will not be detected by check-updates. Fix: store a composite hash of all files.
+            "sha256": skill_md_info["sha256"],
+            "is_folder": True,
+            "folder_manifest": {path: info["cid"] for path, info in manifest.items()},
+        }
+    else:
+        result = await upload_file(raw, f"{slug}-SKILL.md")
+        return {
+            "file_url": result["gateway_url"],
+            "sha256": result["sha256"],
+            "is_folder": False,
+            "folder_manifest": None,
+        }
+
+
 async def download_file(cid: str) -> bytes:
     """Download a file from Autonomys by CID. Tries public gateway first."""
     async with aiohttp.ClientSession() as session:

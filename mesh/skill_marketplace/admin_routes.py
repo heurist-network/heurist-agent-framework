@@ -17,9 +17,9 @@ from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
-from mesh.skill_marketplace.db import get_pool
+from mesh.skill_marketplace.db import get_pool, insert_skill_draft
 from mesh.skill_marketplace.parser import derive_source_type, parse_github_owner_repo, parse_skill_md
-from mesh.skill_marketplace.storage import upload_file, upload_files_individually
+from mesh.skill_marketplace.storage import prepare_skill_artifact
 
 logger = logging.getLogger("SkillMarketplace")
 
@@ -125,47 +125,33 @@ async def import_skill(body: ImportSkillRequest):
     resolved_source_url = body.source_url or body.url
     source_type = body.source_type or derive_source_type(resolved_source_url)
 
-    if folder_files and len(folder_files) > 1:
-        manifest = await upload_files_individually(folder_files, body.slug)
-        skill_md_cid = manifest.get("SKILL.md", {}).get("cid", "")
-        file_url = f"https://gateway.autonomys.xyz/file/{skill_md_cid}" if skill_md_cid else None
-        # TODO: approved_sha256 tracks only SKILL.md for folder skills. Auxiliary file changes
-        # will not be detected by check-updates or check-upstream. Fix: compute a composite hash
-        # over all CIDs in the manifest at approve time and store that instead.
-        sha256 = manifest.get("SKILL.md", {}).get("sha256", hashlib.sha256(raw).hexdigest())
-        is_folder = True
-        folder_manifest = {path: info["cid"] for path, info in manifest.items()}
-    else:
-        result = await upload_file(raw, f"{body.slug}-SKILL.md")
-        file_url = result["gateway_url"]
-        sha256 = result["sha256"]
-        is_folder = False
-        folder_manifest = None
+    artifact = await prepare_skill_artifact(raw, body.slug, folder_files if folder_files and len(folder_files) > 1 else None)
 
     async with pool.acquire() as conn:
-        await conn.execute(
-            """INSERT INTO skills (
-                id, slug, name, description, skill_md_frontmatter_json,
-                category, risk_tier, verification_status,
-                source_type, source_url, source_path, author_json,
-                file_url, approved_sha256, approved_at, approved_by,
-                is_folder, folder_manifest_json,
-                requires_secrets, requires_private_keys, requires_exchange_api_keys,
-                can_sign_transactions, uses_leverage, accesses_user_portfolio,
-                created_at, updated_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
-            skill_id, body.slug, parsed["name"], parsed["description"],
-            json.dumps(parsed["frontmatter"]), body.category, body.risk_tier, "draft",
-            source_type, resolved_source_url, body.source_path,
-            json.dumps(body.author_json) if body.author_json else None,
-            file_url, sha256, now, "admin",
-            is_folder, json.dumps(folder_manifest) if folder_manifest else None,
-            body.requires_secrets, body.requires_private_keys, body.requires_exchange_api_keys,
-            body.can_sign_transactions, body.uses_leverage, body.accesses_user_portfolio,
-            now, now,
-        )
+        await insert_skill_draft(conn, {
+            "id": skill_id,
+            "slug": body.slug,
+            "name": parsed["name"],
+            "description": parsed["description"],
+            "skill_md_frontmatter_json": parsed["frontmatter"],
+            "category": body.category,
+            "risk_tier": body.risk_tier,
+            "source_type": source_type,
+            "source_url": resolved_source_url,
+            "source_path": body.source_path,
+            "author_json": body.author_json,
+            **artifact,
+            "approved_by": "admin",
+            "requires_secrets": body.requires_secrets,
+            "requires_private_keys": body.requires_private_keys,
+            "requires_exchange_api_keys": body.requires_exchange_api_keys,
+            "can_sign_transactions": body.can_sign_transactions,
+            "uses_leverage": body.uses_leverage,
+            "accesses_user_portfolio": body.accesses_user_portfolio,
+            "created_at": now,
+        })
 
-    return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": file_url, "is_folder": is_folder}
+    return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": artifact["file_url"], "is_folder": artifact["is_folder"]}
 
 
 @admin_router.post("/{skill_id}/approve", summary="Approve a skill",

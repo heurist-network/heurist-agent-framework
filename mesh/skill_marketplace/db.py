@@ -1,5 +1,6 @@
 """Skill marketplace database setup and connection pool using asyncpg."""
 
+import json
 import logging
 import os
 
@@ -82,6 +83,52 @@ MIGRATIONS = [
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS is_folder BOOLEAN NOT NULL DEFAULT FALSE",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS folder_manifest_json JSONB",
 ]
+
+
+async def insert_skill_draft(conn, draft: dict) -> None:
+    """Insert a new skill row as draft. Single source of truth for the INSERT schema.
+
+    draft keys:
+        id, slug, name, description, skill_md_frontmatter_json (JSON string or dict),
+        category, risk_tier, source_type, source_url, source_path, author_json (JSON string or dict),
+        file_url, sha256, approved_by, is_folder, folder_manifest ({path:cid} dict or None),
+        requires_secrets, requires_private_keys, requires_exchange_api_keys,
+        can_sign_transactions, uses_leverage, accesses_user_portfolio, created_at
+    """
+    frontmatter = draft["skill_md_frontmatter_json"]
+    if isinstance(frontmatter, dict):
+        frontmatter = json.dumps(frontmatter)
+
+    author = draft.get("author_json")
+    if isinstance(author, dict):
+        author = json.dumps(author)
+
+    folder_manifest = draft.get("folder_manifest")
+    folder_manifest_json = json.dumps(folder_manifest) if folder_manifest else None
+
+    now = draft["created_at"]
+    await conn.execute(
+        """INSERT INTO skills (
+            id, slug, name, description, skill_md_frontmatter_json,
+            category, risk_tier, verification_status,
+            source_type, source_url, source_path, author_json,
+            file_url, approved_sha256, approved_at, approved_by,
+            is_folder, folder_manifest_json,
+            requires_secrets, requires_private_keys, requires_exchange_api_keys,
+            can_sign_transactions, uses_leverage, accesses_user_portfolio,
+            created_at, updated_at
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
+        draft["id"], draft["slug"], draft["name"], draft["description"],
+        frontmatter, draft.get("category"), draft.get("risk_tier"), "draft",
+        draft.get("source_type"), draft.get("source_url"), draft.get("source_path"),
+        author,
+        draft["file_url"], draft["sha256"], now, draft.get("approved_by", "admin"),
+        draft.get("is_folder", False), folder_manifest_json,
+        draft.get("requires_secrets", False), draft.get("requires_private_keys", False),
+        draft.get("requires_exchange_api_keys", False), draft.get("can_sign_transactions", False),
+        draft.get("uses_leverage", False), draft.get("accesses_user_portfolio", False),
+        now, now,
+    )
 
 
 async def init_db():

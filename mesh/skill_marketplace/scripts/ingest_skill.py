@@ -31,9 +31,9 @@ import aiohttp
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
-from mesh.skill_marketplace.db import get_pool, init_db
+from mesh.skill_marketplace.db import get_pool, init_db, insert_skill_draft
 from mesh.skill_marketplace.parser import derive_source_type, parse_skill_md
-from mesh.skill_marketplace.storage import upload_file, upload_files_individually
+from mesh.skill_marketplace.storage import prepare_skill_artifact
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestSkill")
@@ -78,37 +78,27 @@ async def ingest(args):
     logger.info(f"parsed skill: name={parsed['name']}, description={parsed['description'][:80]}...")
 
     logger.info("uploading to Autonomys...")
-    folder_manifest = None
+    folder_files = None
     if is_folder:
         dir_path = Path(args.dir)
-        files = {}
+        folder_files = {}
         for file_path in sorted(dir_path.rglob("*")):
             if file_path.is_file():
                 relative = file_path.relative_to(dir_path).as_posix()
-                files[relative] = file_path.read_bytes()
-        logger.info(f"folder skill: {len(files)} files")
-        for fp in sorted(files.keys()):
-            logger.info(f"  {fp} ({len(files[fp])} bytes)")
-        manifest = await upload_files_individually(files, args.slug)
-        folder_manifest = {path: info["cid"] for path, info in manifest.items()}
-        skill_md_info = manifest.get("SKILL.md", next(iter(manifest.values())))
-        file_url = skill_md_info["gateway_url"]
-        # TODO: sha256 tracks only SKILL.md for folder skills. Changes to auxiliary files
-        # will not be detected by check-updates. Fix: store a composite hash of all files.
-        sha256 = skill_md_info["sha256"]
-    else:
-        result = await upload_file(raw, f"{args.slug}-SKILL.md")
-        file_url = result["gateway_url"]
-        sha256 = result["sha256"]
-    logger.info(f"file_url: {file_url}")
-    logger.info(f"SHA256: {sha256}")
+                folder_files[relative] = file_path.read_bytes()
+        logger.info(f"folder skill: {len(folder_files)} files")
+        for fp in sorted(folder_files.keys()):
+            logger.info(f"  {fp} ({len(folder_files[fp])} bytes)")
+
+    artifact = await prepare_skill_artifact(raw, args.slug, folder_files)
+    logger.info(f"file_url: {artifact['file_url']}")
+    logger.info(f"SHA256: {artifact['sha256']}, is_folder: {artifact['is_folder']}")
 
     resolved_source_url = args.source_url or source_url
     source_type = args.source_type or derive_source_type(resolved_source_url)
     logger.info(f"source_type: {source_type} (derived from URL)")
 
     skill_id = uuid.uuid4().hex[:8]
-
     pool = await get_pool()
     now = datetime.now(timezone.utc)
 
@@ -118,45 +108,28 @@ async def ingest(args):
             logger.error(f"slug '{args.slug}' already exists (id={existing})")
             sys.exit(1)
 
-        await conn.execute(
-            """INSERT INTO skills (
-                id, slug, name, description, skill_md_frontmatter_json,
-                category, risk_tier, verification_status,
-                source_type, source_url, source_path,
-                author_json,
-                file_url, approved_sha256, approved_at, approved_by,
-                is_folder, folder_manifest_json,
-                requires_secrets, requires_private_keys, requires_exchange_api_keys,
-                can_sign_transactions, uses_leverage, accesses_user_portfolio,
-                created_at, updated_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
-            skill_id,
-            args.slug,
-            parsed["name"],
-            parsed["description"],
-            json.dumps(parsed["frontmatter"]),
-            args.category,
-            args.risk_tier,
-            "draft",
-            source_type,
-            resolved_source_url,
-            args.source_path,
-            json.dumps(json.loads(args.author)) if args.author else None,
-            file_url,
-            sha256,
-            now,
-            "admin",
-            is_folder,
-            json.dumps(folder_manifest) if folder_manifest else None,
-            args.requires_secrets,
-            args.requires_private_keys,
-            args.requires_exchange_api_keys,
-            args.can_sign_transactions,
-            args.uses_leverage,
-            args.accesses_user_portfolio,
-            now,
-            now,
-        )
+        await insert_skill_draft(conn, {
+            "id": skill_id,
+            "slug": args.slug,
+            "name": parsed["name"],
+            "description": parsed["description"],
+            "skill_md_frontmatter_json": parsed["frontmatter"],
+            "category": args.category,
+            "risk_tier": args.risk_tier,
+            "source_type": source_type,
+            "source_url": resolved_source_url,
+            "source_path": args.source_path,
+            "author_json": json.loads(args.author) if args.author else None,
+            **artifact,
+            "approved_by": "admin",
+            "requires_secrets": args.requires_secrets,
+            "requires_private_keys": args.requires_private_keys,
+            "requires_exchange_api_keys": args.requires_exchange_api_keys,
+            "can_sign_transactions": args.can_sign_transactions,
+            "uses_leverage": args.uses_leverage,
+            "accesses_user_portfolio": args.accesses_user_portfolio,
+            "created_at": now,
+        })
 
     logger.info(f"skill '{args.slug}' ingested as draft (id={skill_id})")
     logger.info(f"approve with: python -m mesh.skill_marketplace.scripts.approve_skill --slug {args.slug}")

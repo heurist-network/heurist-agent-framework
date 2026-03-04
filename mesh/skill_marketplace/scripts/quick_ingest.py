@@ -1,7 +1,6 @@
 """Quick one-shot ingest script that uses direct connection instead of pool."""
 
 import asyncio
-import json
 import os
 import sys
 import uuid
@@ -15,8 +14,9 @@ from dotenv import load_dotenv
 load_dotenv()
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
+from mesh.skill_marketplace.db import insert_skill_draft
 from mesh.skill_marketplace.parser import parse_skill_md
-from mesh.skill_marketplace.storage import upload_file
+from mesh.skill_marketplace.storage import prepare_skill_artifact
 
 DB_URL = os.getenv("SKILLS_DATABASE_URL")
 
@@ -34,9 +34,9 @@ async def main():
 
     # Upload to Autonomys
     print("uploading to Autonomys...")
-    result = await upload_file(raw, "heurist-mesh-skill-SKILL.md")
-    print(f"file_url: {result['gateway_url']}")
-    print(f"sha256: {result['sha256']}")
+    artifact = await prepare_skill_artifact(raw, "heurist-mesh-skill")
+    print(f"file_url: {artifact['file_url']}")
+    print(f"sha256: {artifact['sha256']}")
 
     # Direct connection (no pool)
     print("connecting to DB...")
@@ -48,52 +48,34 @@ async def main():
     skill_id = uuid.uuid4().hex[:8]
     now = datetime.now(timezone.utc)
 
-    await conn.execute(
-        """INSERT INTO skills (
-            id, slug, name, description, skill_md_frontmatter_json,
-            category, risk_tier, verification_status,
-            source_type, source_url, source_path,
-            author_json,
-            file_url, approved_sha256, approved_at, approved_by,
-            is_folder, folder_manifest_json,
-            requires_secrets, requires_private_keys, requires_exchange_api_keys,
-            can_sign_transactions, uses_leverage, accesses_user_portfolio,
-            created_at, updated_at
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)""",
-        skill_id,
-        "heurist-mesh-skill",
-        parsed["name"],
-        parsed["description"],
-        json.dumps(parsed["frontmatter"]),
-        "infrastructure",
-        "low",
-        "draft",
-        "github",
-        "https://github.com/heurist-network/heurist-mesh-skill",
-        None,
-        json.dumps({"display_name": "Heurist Network", "github_username": "heurist-network"}),
-        result["gateway_url"],
-        result["sha256"],
-        now,
-        "admin",
-        False,   # is_folder
-        None,    # folder_manifest_json
-        True,    # requires_secrets
-        False,   # requires_private_keys
-        False,   # requires_exchange_api_keys
-        False,   # can_sign_transactions
-        False,   # uses_leverage
-        False,   # accesses_user_portfolio
-        now,
-        now,
-    )
+    await insert_skill_draft(conn, {
+        "id": skill_id,
+        "slug": "heurist-mesh-skill",
+        "name": parsed["name"],
+        "description": parsed["description"],
+        "skill_md_frontmatter_json": parsed["frontmatter"],
+        "category": "infrastructure",
+        "risk_tier": "low",
+        "source_type": "github",
+        "source_url": "https://github.com/heurist-network/heurist-mesh-skill",
+        "source_path": None,
+        "author_json": {"display_name": "Heurist Network", "github_username": "heurist-network"},
+        **artifact,
+        "approved_by": "admin",
+        "requires_secrets": True,
+        "requires_private_keys": False,
+        "requires_exchange_api_keys": False,
+        "can_sign_transactions": False,
+        "uses_leverage": False,
+        "accesses_user_portfolio": False,
+        "created_at": now,
+    })
     print(f"ingested as draft (id={skill_id})")
 
     # Approve
     await conn.execute(
         "UPDATE skills SET verification_status = 'verified', approved_by = 'admin', approved_at = $1, updated_at = $1 WHERE slug = $2",
-        now,
-        "heurist-mesh-skill",
+        now, "heurist-mesh-skill",
     )
     print("approved -> verified")
 
