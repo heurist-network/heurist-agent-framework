@@ -62,7 +62,7 @@ Public API for frontend UI and CLI tool consumption.
 - [x] **Checkpoint 3**: `GET /skills/categories/list` — categories with counts (verified only)
 - [x] **Checkpoint 4**: `POST /check-updates` — CLI sends installed skill hashes, receives approved updates
 - [x] **Checkpoint 5**: `GET /skills/{slug}/download` — download skill file or folder bundle (zip), with SHA256 header
-- [x] **Checkpoint 6**: `GET /skills/{slug}/files` — list files in a folder skill bundle with sizes
+- [x] **Checkpoint 6**: `GET /skills/{slug}/files` — list files in a folder skill bundle
 
 ### P0.6 — Upstream change detection
 

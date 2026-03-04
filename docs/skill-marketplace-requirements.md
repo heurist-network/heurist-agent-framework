@@ -53,7 +53,7 @@ This marketplace complements existing Heurist Mesh MCP infra by providing a **di
 1. **Registry API** (Heurist)
 
    * List skills, fetch skill metadata
-   * Provide download pointers (ai3.storage gateway URLs)
+   * Provide metadata plus a canonical download endpoint for approved artifacts
    * Update-check endpoint for CLI
    * Admin endpoints for ingestion/review/publish
 
@@ -106,10 +106,16 @@ P0 keeps only publish-time fields, with author attribution inlined.
 
 **Approved artifact pointers**
 
-* `approved_cid` (string) — ai3.storage CID for the approved bundle
+* `file_url` (string) — gateway URL for the approved `SKILL.md` file
+* `is_folder` (boolean) — whether this skill is a multi-file folder skill
+* `folder_manifest_json` (jsonb, nullable) — for folder skills, maps relative file paths to ai3.storage CIDs
 * `approved_sha256` (string) — content hash for integrity
 * `approved_at` (timestamp)
 * `approved_by` (string/user id)
+
+> Canonical install/download artifact: `GET /skills/:slug/download`.
+> For single-file skills it returns raw `SKILL.md`; for folder skills it returns a zip assembled server-side from `folder_manifest_json`.
+> `file_url` is useful metadata and a direct gateway pointer for `SKILL.md`, but it is not the canonical install artifact for folder skills.
 
 **P1 submission/review helpers (optional fields; same table)**
 
@@ -144,7 +150,7 @@ We already have:
 
 > **P0 must be minimal**: curated verified skills + basic storage.
 
-## P0.1 Marketplace catalog (curated-only)
+## P0.1 Marketplace catalog (curated-first)
 
 * Launch with **<10 curated, verified skills**.
 * Public catalog + detail pages:
@@ -154,6 +160,12 @@ We already have:
   * Risk tier + capabilities
   * Author attribution (GitHub author or source website)
   * Install instructions via CLI and manual download
+* Visibility policy:
+
+  * `GET /skills` defaults to **verified** skills for the main catalog experience
+  * `GET /skills` may also return `draft` or `archived` skills when a `verification_status` filter is explicitly requested
+  * `GET /skills/:slug` may return a skill regardless of verification status
+  * Frontend marketplace pages should treat **verified** as the default public browsing surface; unverified visibility is acceptable for internal tooling, direct-link previews, or future reviewer workflows
 
 ## P0.2 Ingestion supports two source types
 
@@ -171,9 +183,11 @@ We already have:
 
 * On publish:
 
-  * Upload the approved bundle to **ai3.storage**
-  * Store `approved_cid` + `approved_sha256` in Postgres
-* UI uses **gateway URL** to fetch skill artifacts directly.
+  * Upload approved skill files to **ai3.storage**
+  * Store `file_url` + `approved_sha256` in Postgres
+  * For folder skills, also store `folder_manifest_json` so the backend can assemble a zip on download
+* UI/CLI should use `GET /skills/:slug/download` as the canonical install/download endpoint.
+* Gateway URLs remain useful for direct file access and inspection (`file_url` and `/skills/:slug/files`), but should not be treated as the sole install contract across all skill types.
 
 ## P0.4 Manual verification workflow (required)
 
@@ -181,13 +195,13 @@ We already have:
 
   1. Import from source
   2. Manual review checklist
-  3. Approve and publish `approved_cid` + `approved_sha256` + audit fields (`approved_at`, `approved_by`)
+  3. Approve and publish `file_url` / folder manifest metadata + `approved_sha256` + audit fields (`approved_at`, `approved_by`)
 
 ## P0.5 Controlled updates (no automatic updates)
 
 * Rules:
 
-  * Never auto-update approved CID when upstream changes.
+  * Never auto-update the approved artifact metadata when upstream changes.
   * CLI updates must only pull **approved** versions from our registry.
 
 ## P0.6 Routine script for upstream change detection
@@ -204,7 +218,7 @@ We already have:
 * Add provider: `HeuristProvider`
 
   * Query our registry API for metadata
-  * Download bundle via ai3.storage gateway URL
+  * Download installable artifact via `GET /skills/:slug/download`
   * Install into the user’s target skills directory
 * CLI commands (P0):
 
@@ -215,8 +229,9 @@ We already have:
 
 ## P0.8 Registry API endpoints (minimum)
 
-* `GET /skills` — list skills
-* `GET /skills/:slug` — skill detail incl. capabilities, risk tier, approved CID URL
+* `GET /skills` — list skills (defaults to verified; may include other statuses when explicitly filtered)
+* `GET /skills/:slug` — skill detail incl. capabilities, risk tier, `file_url`, and folder metadata when applicable; may return unverified skills
+* `GET /skills/:slug/download` — canonical approved artifact download endpoint (raw `SKILL.md` for single-file skills, zip bundle for folder skills)
 * `POST /check-updates` — accept installed skill hashes; respond with available **approved** update(s)
 * Admin-only:
 
@@ -285,7 +300,7 @@ We already have:
 ### P0 is complete when:
 
 * We can publish a curated set of verified skills (<10) from both URL and GitHub sources.
-* Each published skill is stored in ai3.storage and served via gateway URL.
+* Each published skill is stored in ai3.storage and is installable through the registry download endpoint, with gateway-backed file access available for direct inspection.
 * The CLI installs skills from our registry and can check for approved updates.
 * Upstream changes do not affect users until Heurist team approves a new version.
 * Routine script detects upstream changes and alerts the team.
