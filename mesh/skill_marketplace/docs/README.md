@@ -72,7 +72,7 @@ cd /root/heurist-agent-framework
 |-------|------|---------|-------------|
 | `verification_status` | `draft\|verified\|archived` | `verified` | Filter by status |
 | `category` | string | — | Filter by category |
-| `search` | string | — | Search name and description (case-insensitive) |
+| `search` | string | — | Search slug, name, and description (case-insensitive) |
 | `limit` | int (1–100) | 20 | Results per page |
 | `offset` | int | 0 | Pagination offset |
 

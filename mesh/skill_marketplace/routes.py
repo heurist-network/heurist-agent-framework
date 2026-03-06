@@ -127,11 +127,11 @@ def _row_to_detail(row) -> dict:
 
 
 @router.get("/skills", response_model=SkillListResponse, summary="List skills",
-             description="Browse and search the skill catalog. Returns only verified skills by default. Supports filtering by category, search by name/description, and pagination.")
+             description="Browse and search the skill catalog. Returns only verified skills by default. Supports filtering by category, search by slug/name/description, and pagination.")
 async def list_skills(
     category: Optional[str] = Query(None, description="Filter by category (e.g. infrastructure, defi, analytics)"),
     verification_status: Optional[VerificationStatus] = Query(None, description="Filter by status: draft | verified | archived"),
-    search: Optional[str] = Query(None, description="Search by skill name or description"),
+    search: Optional[str] = Query(None, description="Search by skill slug, name, or description"),
     offset: int = Query(0, ge=0, description="Pagination offset"),
     limit: int = Query(20, ge=1, le=100, description="Results per page (max 100)"),
 ):
@@ -156,7 +156,7 @@ async def list_skills(
         idx += 1
 
     if search:
-        conditions.append(f"(name ILIKE ${idx} OR description ILIKE ${idx})")
+        conditions.append(f"(slug ILIKE ${idx} OR name ILIKE ${idx} OR description ILIKE ${idx})")
         params.append(f"%{search}%")
         idx += 1
 
