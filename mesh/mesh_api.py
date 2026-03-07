@@ -24,7 +24,7 @@ sys.path.append(str(project_root))
 
 from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
 from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
-from mesh.tweet_claim import ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
+from mesh.tweet_claim import ClaimStoreUnavailableError, ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
 from mesh.usage_tracker import record_usage  # noqa: E402
 from mesh.skill_marketplace.routes import router as skill_marketplace_router  # noqa: E402
 from mesh.skill_marketplace.admin_routes import admin_router as skill_marketplace_admin_router  # noqa: E402
@@ -55,8 +55,10 @@ logger = logging.getLogger("MeshAPI")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Fail fast if claim credits tables/config are unavailable.
-    ensure_claim_store_ready_sync()
+    try:
+        ensure_claim_store_ready_sync()
+    except ClaimStoreUnavailableError as exc:
+        logger.warning(f"Claim store unavailable at startup: {exc}. Tweet claim endpoints will return 503.")
     # Initialize skill marketplace DB tables
     await init_skill_marketplace_db()
     yield
