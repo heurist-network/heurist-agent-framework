@@ -32,7 +32,7 @@ import aiohttp
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db, insert_skill_draft
-from mesh.skill_marketplace.parser import derive_source_type, parse_skill_md
+from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -50,10 +50,15 @@ async def ingest(args):
     await init_db()
 
     is_folder = False
+    gh_folder = None
     if args.url:
         logger.info(f"fetching {args.url}")
         raw = await fetch_url(args.url)
         source_url = args.url
+        gh_folder = await fetch_github_folder_files(args.url, args.source_path)
+        if gh_folder:
+            is_folder = True
+            logger.info(f"detected GitHub folder skill: {len(gh_folder)} files")
     elif args.dir:
         dir_path = Path(args.dir)
         if not dir_path.is_dir():
@@ -79,7 +84,7 @@ async def ingest(args):
 
     logger.info("uploading to Autonomys...")
     folder_files = None
-    if is_folder:
+    if is_folder and args.dir:
         dir_path = Path(args.dir)
         folder_files = {}
         for file_path in sorted(dir_path.rglob("*")):
@@ -87,6 +92,11 @@ async def ingest(args):
                 relative = file_path.relative_to(dir_path).as_posix()
                 folder_files[relative] = file_path.read_bytes()
         logger.info(f"folder skill: {len(folder_files)} files")
+        for fp in sorted(folder_files.keys()):
+            logger.info(f"  {fp} ({len(folder_files[fp])} bytes)")
+    elif is_folder and gh_folder:
+        folder_files = gh_folder
+        logger.info(f"folder skill (GitHub): {len(folder_files)} files")
         for fp in sorted(folder_files.keys()):
             logger.info(f"  {fp} ({len(folder_files[fp])} bytes)")
 

@@ -18,7 +18,7 @@ from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 
 from mesh.skill_marketplace.db import get_pool, insert_skill_draft
-from mesh.skill_marketplace.parser import derive_source_type, parse_github_owner_repo, parse_skill_md
+from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_github_owner_repo, parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
 
 logger = logging.getLogger("SkillMarketplace")
@@ -86,39 +86,7 @@ async def import_skill(body: ImportSkillRequest):
     parsed = parse_skill_md(raw)
 
     # Try to fetch full folder if it's a GitHub folder skill
-    folder_files = None
-    owner_repo = parse_github_owner_repo(body.url)
-    if owner_repo and body.source_path:
-        github_token = os.getenv("GITHUB_TOKEN")
-        gh_headers = {"Accept": "application/vnd.github.v3+json"}
-        if github_token:
-            gh_headers["Authorization"] = f"token {github_token}"
-        owner, repo = owner_repo
-        folder_prefix = body.source_path.rstrip("/") + "/"
-        async with aiohttp.ClientSession() as gh_session:
-            async with gh_session.get(
-                f"https://api.github.com/repos/{owner}/{repo}/git/trees/HEAD?recursive=1",
-                headers=gh_headers,
-            ) as tree_resp:
-                if tree_resp.status == 200:
-                    tree_data = await tree_resp.json()
-                    file_paths = [
-                        item["path"] for item in tree_data.get("tree", [])
-                        if item["type"] == "blob" and item["path"].startswith(folder_prefix)
-                    ]
-                    if len(file_paths) > 1:
-                        folder_files = {}
-                        raw_headers = {"Accept": "application/vnd.github.v3.raw"}
-                        if github_token:
-                            raw_headers["Authorization"] = f"token {github_token}"
-                        for fp in file_paths:
-                            async with gh_session.get(
-                                f"https://api.github.com/repos/{owner}/{repo}/contents/{fp}",
-                                headers=raw_headers,
-                            ) as file_resp:
-                                if file_resp.status == 200:
-                                    rel_path = fp[len(folder_prefix):]
-                                    folder_files[rel_path] = await file_resp.read()
+    folder_files = await fetch_github_folder_files(body.url, body.source_path)
 
     skill_id = uuid.uuid4().hex[:8]
     now = datetime.now(timezone.utc)

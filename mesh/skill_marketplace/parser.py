@@ -2,11 +2,17 @@
 
 Extracts YAML frontmatter and markdown body from SKILL.md files.
 Stores the full raw frontmatter for skill_md_frontmatter_json column.
+Provides shared GitHub folder detection used by admin_routes and ingest_skill.
 """
 
+import logging
+import os
 from urllib.parse import urlparse
 
+import aiohttp
 import yaml
+
+logger = logging.getLogger("SkillMarketplace")
 
 GITHUB_HOSTS = {"github.com", "www.github.com", "raw.githubusercontent.com"}
 
@@ -26,6 +32,106 @@ def parse_github_owner_repo(url: str) -> tuple[str, str] | None:
     if len(parts) < 2:
         return None
     return parts[0], parts[1]
+
+
+def derive_github_folder_prefix(url: str, source_path: str | None = None) -> str | None:
+    """Derive the folder prefix within a GitHub repo from a URL.
+
+    If source_path is provided, use it directly. Otherwise, parse from the URL path.
+    Returns the folder prefix (e.g. "skills/my-skill/") or "" for repo root.
+    Returns None if the URL is not a GitHub URL.
+    """
+    parsed = urlparse(url)
+    if parsed.hostname not in GITHUB_HOSTS:
+        return None
+
+    if source_path:
+        return source_path.rstrip("/") + "/"
+
+    parts = parsed.path.strip("/").split("/")
+
+    if parsed.hostname == "raw.githubusercontent.com":
+        # Format: /owner/repo/branch/path/to/SKILL.md
+        if len(parts) < 4:
+            return None
+        file_parts = parts[3:]  # everything after branch
+    else:
+        # Format: /owner/repo/blob/branch/path/to/SKILL.md
+        if len(parts) < 5:
+            return None
+        file_parts = parts[4:]  # everything after branch
+
+    # Remove the filename (SKILL.md) to get the directory
+    if len(file_parts) <= 1:
+        return ""  # file is at repo root
+    return "/".join(file_parts[:-1]) + "/"
+
+
+async def fetch_github_folder_files(
+    url: str,
+    source_path: str | None = None,
+) -> dict[str, bytes] | None:
+    """Fetch all files in a GitHub folder skill via the GitHub tree API.
+
+    Works for both root-level repos (source_path=None) and subfolder skills.
+    Returns dict of {relative_path: content} if folder has >1 file, None otherwise.
+    """
+    owner_repo = parse_github_owner_repo(url)
+    if not owner_repo:
+        return None
+
+    folder_prefix = derive_github_folder_prefix(url, source_path)
+    if folder_prefix is None:
+        return None
+
+    owner, repo = owner_repo
+    github_token = os.getenv("GITHUB_TOKEN")
+    gh_headers = {"Accept": "application/vnd.github.v3+json"}
+    if github_token:
+        gh_headers["Authorization"] = f"token {github_token}"
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+            f"https://api.github.com/repos/{owner}/{repo}/git/trees/HEAD?recursive=1",
+            headers=gh_headers,
+        ) as tree_resp:
+            if tree_resp.status != 200:
+                logger.warning(f"GitHub tree API returned {tree_resp.status} for {owner}/{repo}")
+                return None
+            tree_data = await tree_resp.json()
+
+        if folder_prefix == "":
+            # Repo root — all blobs are candidates
+            file_paths = [
+                item["path"] for item in tree_data.get("tree", [])
+                if item["type"] == "blob"
+            ]
+        else:
+            file_paths = [
+                item["path"] for item in tree_data.get("tree", [])
+                if item["type"] == "blob" and item["path"].startswith(folder_prefix)
+            ]
+
+        if len(file_paths) <= 1:
+            return None  # single file, not a folder skill
+
+        logger.info(f"detected folder skill: {len(file_paths)} files in {owner}/{repo}/{folder_prefix or '(root)'}")
+
+        folder_files = {}
+        raw_headers = {"Accept": "application/vnd.github.v3.raw"}
+        if github_token:
+            raw_headers["Authorization"] = f"token {github_token}"
+
+        for fp in file_paths:
+            async with session.get(
+                f"https://api.github.com/repos/{owner}/{repo}/contents/{fp}",
+                headers=raw_headers,
+            ) as file_resp:
+                if file_resp.status == 200:
+                    rel_path = fp[len(folder_prefix):] if folder_prefix else fp
+                    folder_files[rel_path] = await file_resp.read()
+
+    return folder_files if len(folder_files) > 1 else None
 
 
 def parse_skill_md(content: str | bytes) -> dict:
