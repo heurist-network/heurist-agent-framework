@@ -25,7 +25,9 @@ async def list_skills(args):
     await init_db()
     pool = await get_pool()
 
-    query = "SELECT id, slug, name, category, risk_tier, verification_status, author_json FROM skills"
+    query = """SELECT id, slug, name, category, risk_tier, verification_status, author_json,
+                      download_count, star_count
+               FROM skills"""
     params = []
 
     if args.status:
@@ -41,12 +43,19 @@ async def list_skills(args):
         print("No skills found.")
         return
 
-    print(f"\n{'ID':<10} {'Slug':<25} {'Name':<25} {'Category':<15} {'Risk':<10} {'Status':<12} {'Author'}")
-    print("-" * 120)
+    print(
+        f"\n{'ID':<10} {'Slug':<25} {'Name':<25} {'Category':<15} {'Risk':<10} "
+        f"{'Status':<12} {'Downloads':<10} {'Stars':<8} {'Author'}"
+    )
+    print("-" * 150)
     for r in rows:
         author_data = json.loads(r["author_json"]) if r["author_json"] else {}
         author = author_data.get("display_name", "—")
-        print(f"{r['id']:<10} {r['slug']:<25} {r['name']:<25} {r['category'] or '—':<15} {r['risk_tier'] or '—':<10} {r['verification_status']:<12} {author}")
+        print(
+            f"{r['id']:<10} {r['slug']:<25} {r['name']:<25} {r['category'] or '—':<15} "
+            f"{r['risk_tier'] or '—':<10} {r['verification_status']:<12} "
+            f"{r['download_count']:<10} {r['star_count']:<8} {author}"
+        )
 
     print(f"\nTotal: {len(rows)} skills")
 

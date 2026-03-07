@@ -65,6 +65,11 @@ class UpdateExternalApiDependenciesRequest(BaseModel):
     external_api_dependencies: list[str] = Field(default_factory=list)
 
 
+class UpdateSkillMetricsRequest(BaseModel):
+    download_count: Optional[int] = Field(default=None, ge=0)
+    star_count: Optional[int] = Field(default=None, ge=0)
+
+
 def _normalize_external_api_dependencies(values: list[str]) -> list[str]:
     normalized: list[str] = []
     seen: set[str] = set()
@@ -168,6 +173,45 @@ async def update_external_api_dependencies(skill_id: str, body: UpdateExternalAp
         "id": skill_id,
         "slug": row["slug"],
         "external_api_dependencies": dependencies,
+        "updated_at": now.isoformat(),
+    }
+
+
+@admin_router.patch("/{skill_id}/metrics", summary="Update skill metrics",
+                    description="Set admin-managed metric counters for a skill, such as star_count or a backfilled download_count.",
+                    dependencies=[Depends(_require_api_key)])
+async def update_skill_metrics(skill_id: str, body: UpdateSkillMetricsRequest):
+    if body.download_count is None and body.star_count is None:
+        raise HTTPException(status_code=400, detail="At least one metric must be provided")
+
+    pool = await get_pool()
+    now = datetime.now(timezone.utc)
+
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            "SELECT id, slug, download_count, star_count FROM skills WHERE id = $1",
+            skill_id,
+        )
+        if not row:
+            raise HTTPException(status_code=404, detail="Skill not found")
+
+        await conn.execute(
+            """UPDATE skills
+               SET download_count = COALESCE($1, download_count),
+                   star_count = COALESCE($2, star_count),
+                   updated_at = $3
+               WHERE id = $4""",
+            body.download_count,
+            body.star_count,
+            now,
+            skill_id,
+        )
+
+    return {
+        "id": skill_id,
+        "slug": row["slug"],
+        "download_count": body.download_count if body.download_count is not None else row["download_count"],
+        "star_count": body.star_count if body.star_count is not None else row["star_count"],
         "updated_at": now.isoformat(),
     }
 

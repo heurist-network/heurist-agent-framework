@@ -56,6 +56,8 @@ CREATE TABLE IF NOT EXISTS skills (
     is_folder       BOOLEAN NOT NULL DEFAULT FALSE,
     folder_manifest_json JSONB,
     external_api_dependencies TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+    download_count  BIGINT NOT NULL DEFAULT 0,
+    star_count      BIGINT NOT NULL DEFAULT 0,
     approved_sha256 VARCHAR(64),
     approved_at     TIMESTAMPTZ,
     approved_by     VARCHAR(128),
@@ -84,6 +86,8 @@ MIGRATIONS = [
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS is_folder BOOLEAN NOT NULL DEFAULT FALSE",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS folder_manifest_json JSONB",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS external_api_dependencies TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]",
+    "ALTER TABLE skills ADD COLUMN IF NOT EXISTS download_count BIGINT NOT NULL DEFAULT 0",
+    "ALTER TABLE skills ADD COLUMN IF NOT EXISTS star_count BIGINT NOT NULL DEFAULT 0",
 ]
 
 

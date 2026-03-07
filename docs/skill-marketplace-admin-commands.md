@@ -4,7 +4,7 @@ Reference for operating admin commands via Claude Code or terminal.
 
 ## Setup
 
-**Working directory:** `D:/Github/heurist-agent-framework`
+**Working directory:** `heurist-agent-framework`
 
 **Required env vars** (in `.env`):
 - `SKILLS_DATABASE_URL` — PostgreSQL connection string
@@ -85,7 +85,8 @@ curl -X POST https://mesh.heurist.xyz/admin/skills/import \
     "category": "defi",
     "risk_tier": "low",
     "source_url": "https://github.com/OWNER/REPO",
-    "author_json": {"display_name": "Name", "github_username": "user"}
+    "author_json": {"display_name": "Name", "github_username": "user"},
+    "external_api_dependencies": ["CoinGecko", "OKX"]
   }'
 ```
 
@@ -99,7 +100,46 @@ Add any of these to ingest commands:
 - `--uses-leverage`
 - `--accesses-user-portfolio`
 
+Add external API dependency names with:
+- `--external-api-dependency CoinGecko`
+- `--external-api-dependency OKX`
+
 **Note:** Ingested skills start as `draft` status. They must be approved to appear in public listings.
+
+**Note on slug vs name — what users see:**
+
+| Field | Role | Where it appears |
+|---|---|---|
+| `slug` | Unique system identifier, set by admin at ingest time | URL path (`/skills/{slug}`), metadata panel on detail page, CLI install command |
+| `name` | Human-readable display name, parsed from SKILL.md frontmatter | Skill card title (list page), detail page header, search index |
+
+The `name` field is what users read first when browsing the marketplace. It can come out of the SKILL.md as something generic like `tools`, `gas`, or `contracts` — which is meaningless without context. **Before approving, check the parsed name** (visible in the ingest log output) and fix it if it is ambiguous.
+
+To update a name after ingestion:
+
+```python
+import asyncio, asyncpg, ssl, os
+from dotenv import load_dotenv
+load_dotenv()
+
+async def main():
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    conn = await asyncpg.connect(os.getenv('SKILLS_DATABASE_URL'), ssl=ctx)
+    await conn.execute("UPDATE skills SET name = $1 WHERE slug = $2", "Ethereum Tools", "eth-tools")
+    await conn.close()
+
+asyncio.run(main())
+```
+
+Use a name that includes the project/platform context:
+- `gas` → `Ethereum Gas Tracker`
+- `tools` → `Ethereum Developer Tools`
+- `opensea` → `OpenSea NFT API`
+- `contracts` → `OpenZeppelin Contracts`
+
+The `slug` is already set by the admin and is typically specific enough (e.g., `eth-tools`, `opensea-skill`). It does not need to match `name` exactly.
 
 ---
 
@@ -120,6 +160,34 @@ curl -X POST https://mesh.heurist.xyz/admin/skills/SKILL_ID/approve \
   -H "X-API-Key: $INTERNAL_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"by": "admin", "notes": "Reviewed and approved"}'
+```
+
+## 2.5 Update External API Dependencies
+
+Use the admin-managed field when a skill depends on outside APIs, even if `SKILL.md` frontmatter does not declare them.
+
+```bash
+curl -X PATCH https://mesh.heurist.xyz/admin/skills/SKILL_ID/external-api-dependencies \
+  -H "X-API-Key: $INTERNAL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"external_api_dependencies": ["CoinGecko", "OKX"]}'
+```
+
+## 2.6 Update Metrics
+
+`download_count` and `star_count` are stored directly in the `skills` table and returned by the public read API. `download_count` now increments automatically on successful `GET /skills/{slug}/download`; use the admin endpoint below for `star_count` updates or one-time count backfills.
+
+```bash
+curl -X PATCH https://mesh.heurist.xyz/admin/skills/SKILL_ID/metrics \
+  -H "X-API-Key: $INTERNAL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"star_count": 12, "download_count": 340}'
+```
+
+The admin list script now shows both counters:
+
+```bash
+python -m mesh.skill_marketplace.scripts.list_skills --status verified
 ```
 
 ---
@@ -328,3 +396,4 @@ python -m mesh.skill_marketplace.scripts.approve_skill --slug my-skill
 | file_url | VARCHAR(512) | Autonomys gateway URL for SKILL.md |
 | approved_sha256 | VARCHAR(64) | SHA256 of SKILL.md at approval time |
 | author_json | JSONB | {display_name, github_username} |
+| external_api_dependencies | TEXT[] | Admin-managed list of external API dependency names |

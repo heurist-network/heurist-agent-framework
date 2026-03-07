@@ -57,6 +57,8 @@ class SkillSummary(BaseModel):
     author: SkillAuthor = SkillAuthor()
     file_url: Optional[str] = None
     external_api_dependencies: list[str] = Field(default_factory=list)
+    download_count: int = 0
+    star_count: int = 0
     capabilities: SkillCapabilities = SkillCapabilities()
 
 
@@ -99,6 +101,8 @@ def _row_to_summary(row) -> dict:
         "author": json.loads(row["author_json"]) if row["author_json"] else {},
         "file_url": row["file_url"],
         "external_api_dependencies": row["external_api_dependencies"] or [],
+        "download_count": row["download_count"] or 0,
+        "star_count": row["star_count"] or 0,
         "capabilities": {
             "requires_secrets": row["requires_secrets"],
             "requires_private_keys": row["requires_private_keys"],
@@ -210,7 +214,7 @@ async def download_skill(slug: str):
     pool = await get_pool()
     async with pool.acquire() as conn:
         row = await conn.fetchrow(
-            """SELECT slug, file_url, approved_sha256, is_folder, folder_manifest_json FROM skills
+            """SELECT id, slug, file_url, approved_sha256, is_folder, folder_manifest_json FROM skills
                WHERE slug = $1 AND verification_status = 'verified'""",
             slug,
         )
@@ -225,6 +229,11 @@ async def download_skill(slug: str):
             for rel_path, cid in sorted(manifest.items()):
                 content = await download_file(cid)
                 zf.writestr(rel_path, content)
+        async with pool.acquire() as conn:
+            await conn.execute(
+                "UPDATE skills SET download_count = download_count + 1 WHERE id = $1",
+                row["id"],
+            )
         return Response(
             content=buf.getvalue(),
             media_type="application/zip",
@@ -240,6 +249,11 @@ async def download_skill(slug: str):
         raise HTTPException(status_code=500, detail="No file CID available")
 
     content = await download_file(cid)
+    async with pool.acquire() as conn:
+        await conn.execute(
+            "UPDATE skills SET download_count = download_count + 1 WHERE id = $1",
+            row["id"],
+        )
     return Response(
         content=content,
         media_type="text/markdown",

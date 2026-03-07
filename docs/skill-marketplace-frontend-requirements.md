@@ -56,6 +56,8 @@ Each skill card should display:
 - `description`
 - `category`
 - `risk_tier`
+- `download_count`
+- `star_count`
 - `verification_status`
 - author display name if available
 - capability/risk badges when useful
@@ -115,6 +117,8 @@ Display at minimum:
 - `approved_by`
 - capability flags
 - `external_api_dependencies`
+- `download_count`
+- `star_count`
 
 ### Download behavior
 
@@ -189,6 +193,8 @@ Each skill summary includes:
 - `file_url`
 - `capabilities`
 - `external_api_dependencies`
+- `download_count`
+- `star_count`
 
 ### Detail response
 
