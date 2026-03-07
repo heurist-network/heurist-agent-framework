@@ -59,8 +59,10 @@ async def lifespan(app: FastAPI):
         ensure_claim_store_ready_sync()
     except ClaimStoreUnavailableError as exc:
         logger.warning(f"Claim store unavailable at startup: {exc}. Tweet claim endpoints will return 503.")
-    # Initialize skill marketplace DB tables
-    await init_skill_marketplace_db()
+    try:
+        await init_skill_marketplace_db()
+    except Exception as exc:
+        logger.warning(f"Skill marketplace DB unavailable at startup: {exc}. Skill marketplace endpoints will fail.")
     yield
     logger.info("Application shutdown: cleaning up agent pool")
     await agent_pool.cleanup()
