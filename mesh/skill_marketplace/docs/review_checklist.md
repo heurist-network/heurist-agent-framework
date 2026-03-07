@@ -15,6 +15,7 @@ Steps an admin must follow before approving a skill via `approve_skill.py` or `P
 ## 2. Capabilities Declaration
 
 - [ ] `requires_secrets` set correctly (does it need API keys at runtime?)
+- [ ] `external_api_dependencies` set correctly (e.g. `["OKX", "CoinGecko"]`), even if upstream `SKILL.md` does not declare them
 - [ ] `requires_private_keys` set correctly (does it access wallet private keys?)
 - [ ] `requires_exchange_api_keys` set correctly (does it use CEX API keys?)
 - [ ] `can_sign_transactions` set correctly (does it sign on-chain transactions?)

@@ -60,6 +60,7 @@ async def main():
         "source_url": "https://github.com/heurist-network/heurist-mesh-skill",
         "source_path": None,
         "author_json": {"display_name": "Heurist Network", "github_username": "heurist-network"},
+        "external_api_dependencies": [],
         **artifact,
         "approved_by": "admin",
         "requires_secrets": True,

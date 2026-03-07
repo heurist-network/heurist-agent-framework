@@ -5,7 +5,6 @@ All endpoints require X-API-Key header matching INTERNAL_API_KEY env var.
 """
 
 import hashlib
-import json
 import logging
 import os
 import uuid
@@ -15,7 +14,7 @@ from typing import Optional
 import aiohttp
 from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.security import APIKeyHeader
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from mesh.skill_marketplace.db import get_pool, insert_skill_draft
 from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_github_owner_repo, parse_skill_md
@@ -48,6 +47,7 @@ class ImportSkillRequest(BaseModel):
     source_url: Optional[str] = None
     source_path: Optional[str] = None
     author_json: Optional[dict] = None
+    external_api_dependencies: list[str] = Field(default_factory=list)
     requires_secrets: bool = False
     requires_private_keys: bool = False
     requires_exchange_api_keys: bool = False
@@ -59,6 +59,27 @@ class ImportSkillRequest(BaseModel):
 class ApproveRejectRequest(BaseModel):
     by: str = "admin"
     notes: Optional[str] = None
+
+
+class UpdateExternalApiDependenciesRequest(BaseModel):
+    external_api_dependencies: list[str] = Field(default_factory=list)
+
+
+def _normalize_external_api_dependencies(values: list[str]) -> list[str]:
+    normalized: list[str] = []
+    seen: set[str] = set()
+
+    for value in values:
+        cleaned = value.strip()
+        if not cleaned:
+            continue
+        dedupe_key = cleaned.casefold()
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        normalized.append(cleaned)
+
+    return normalized
 
 
 # ---- Endpoints ----
@@ -108,6 +129,7 @@ async def import_skill(body: ImportSkillRequest):
             "source_url": resolved_source_url,
             "source_path": body.source_path,
             "author_json": body.author_json,
+            "external_api_dependencies": _normalize_external_api_dependencies(body.external_api_dependencies),
             **artifact,
             "approved_by": "admin",
             "requires_secrets": body.requires_secrets,
@@ -120,6 +142,34 @@ async def import_skill(body: ImportSkillRequest):
         })
 
     return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": artifact["file_url"], "is_folder": artifact["is_folder"]}
+
+
+@admin_router.patch("/{skill_id}/external-api-dependencies", summary="Update external API dependencies",
+                    description="Set the admin-managed list of external API dependencies for a skill.",
+                    dependencies=[Depends(_require_api_key)])
+async def update_external_api_dependencies(skill_id: str, body: UpdateExternalApiDependenciesRequest):
+    pool = await get_pool()
+    now = datetime.now(timezone.utc)
+    dependencies = _normalize_external_api_dependencies(body.external_api_dependencies)
+
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow("SELECT id, slug FROM skills WHERE id = $1", skill_id)
+        if not row:
+            raise HTTPException(status_code=404, detail="Skill not found")
+
+        await conn.execute(
+            """UPDATE skills
+               SET external_api_dependencies = $1, updated_at = $2
+               WHERE id = $3""",
+            dependencies, now, skill_id,
+        )
+
+    return {
+        "id": skill_id,
+        "slug": row["slug"],
+        "external_api_dependencies": dependencies,
+        "updated_at": now.isoformat(),
+    }
 
 
 @admin_router.post("/{skill_id}/approve", summary="Approve a skill",

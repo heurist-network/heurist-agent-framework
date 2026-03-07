@@ -130,6 +130,7 @@ async def ingest(args):
             "source_url": resolved_source_url,
             "source_path": args.source_path,
             "author_json": json.loads(args.author) if args.author else None,
+            "external_api_dependencies": args.external_api_dependency,
             **artifact,
             "approved_by": "admin",
             "requires_secrets": args.requires_secrets,
@@ -158,6 +159,8 @@ def main():
     parser.add_argument("--source-url", dest="source_url", help="source repo URL or file URL")
     parser.add_argument("--source-path", dest="source_path", help="path within repo for multi-skill repos")
     parser.add_argument("--author", help='author JSON string, e.g. \'{"display_name": "x", "github_username": "y"}\'')
+    parser.add_argument("--external-api-dependency", dest="external_api_dependency", action="append", default=[],
+                        help="repeatable external API dependency name, e.g. --external-api-dependency CoinGecko")
 
     parser.add_argument("--requires-secrets", dest="requires_secrets", action="store_true", default=False)
     parser.add_argument("--requires-private-keys", dest="requires_private_keys", action="store_true", default=False)

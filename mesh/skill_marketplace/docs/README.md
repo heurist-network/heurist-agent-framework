@@ -53,7 +53,7 @@ cd /root/heurist-agent-framework
 
 **Public (read-only):**
 - `GET /skills` — list skills (verified only by default, supports `verification_status`, `category`, `search`, `limit`, `offset`)
-- `GET /skills/{slug}` — full skill detail with frontmatter, capabilities, source attribution, audit fields
+- `GET /skills/{slug}` — full skill detail with frontmatter, capabilities, source attribution, audit fields, and `external_api_dependencies`
 - `GET /skills/categories/list` — all categories with verified skill counts
 - `GET /skills/{slug}/download` — download skill: returns `SKILL.md` (text/markdown) for single-file skills, or a `.zip` bundle assembled from per-file CIDs for folder skills; includes `X-Skill-SHA256` header
 - `GET /skills/{slug}/files` — file manifest for folder skills: returns `{path, cid, gateway_url}` per file; single-file skills return a one-entry list with `SKILL.md`
@@ -62,6 +62,7 @@ cd /root/heurist-agent-framework
 
 **Admin:**
 - `POST /admin/skills/import` — import a skill from URL or GitHub (fetch, parse, upload to Autonomys, insert as draft)
+- `PATCH /admin/skills/{id}/external-api-dependencies` — set the admin-managed list of external API dependency names
 - `POST /admin/skills/{id}/approve` — set `verification_status=verified` with audit fields
 - `POST /admin/skills/{id}/reject` — set `review_state=rejected` and `verification_status=draft` (hides from public API)
 - `POST /admin/skills/check-upstream` — poll all verified skills for upstream source changes (compares SHA256)

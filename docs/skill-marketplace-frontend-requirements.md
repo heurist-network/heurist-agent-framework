@@ -114,6 +114,7 @@ Display at minimum:
 - `approved_at`
 - `approved_by`
 - capability flags
+- `external_api_dependencies`
 
 ### Download behavior
 
@@ -187,6 +188,7 @@ Each skill summary includes:
 - `author`
 - `file_url`
 - `capabilities`
+- `external_api_dependencies`
 
 ### Detail response
 
@@ -269,4 +271,3 @@ Each file entry currently includes:
 - Treat `GET /skills/{slug}/download` as the only canonical download/install endpoint.
 - Do not assume `file_url` is the correct direct download artifact for folder skills.
 - Do not assume non-Markdown preview responses will have a text MIME type.
-

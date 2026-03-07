@@ -13,7 +13,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import Response
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from mesh.skill_marketplace.db import get_pool
 from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file
@@ -56,6 +56,7 @@ class SkillSummary(BaseModel):
     verification_status: VerificationStatus
     author: SkillAuthor = SkillAuthor()
     file_url: Optional[str] = None
+    external_api_dependencies: list[str] = Field(default_factory=list)
     capabilities: SkillCapabilities = SkillCapabilities()
 
 
@@ -97,6 +98,7 @@ def _row_to_summary(row) -> dict:
         "verification_status": row["verification_status"],
         "author": json.loads(row["author_json"]) if row["author_json"] else {},
         "file_url": row["file_url"],
+        "external_api_dependencies": row["external_api_dependencies"] or [],
         "capabilities": {
             "requires_secrets": row["requires_secrets"],
             "requires_private_keys": row["requires_private_keys"],
