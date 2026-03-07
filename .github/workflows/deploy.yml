@@ -52,7 +52,7 @@ jobs:
             cd ${{ secrets.REPO_PATH }}
             git fetch origin main && git reset --hard origin/main
             docker pull heuristdotai/mesh:${{ github.sha }}
-            docker stack deploy -c docker-compose.yml mesh
+            COMMIT_SHA=${{ github.sha }} docker stack deploy -c docker-compose.yml mesh --with-registry-auth
             docker image prune -af --filter "until=96h"
             if pm2 pid x402-gateway > /dev/null; then
               pm2 restart x402-gateway > /dev/null || echo "WARNING: pm2 restart failed"
