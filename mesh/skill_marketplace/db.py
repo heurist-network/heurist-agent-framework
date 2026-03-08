@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS skills (
     description     VARCHAR(1024) NOT NULL,
     skill_md_frontmatter_json JSONB,
     category        VARCHAR(64),
+    labels          TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
     risk_tier       VARCHAR(32),
     verification_status VARCHAR(16) NOT NULL DEFAULT 'draft',
     source_type     VARCHAR(16),
@@ -79,15 +80,27 @@ CREATE TABLE IF NOT EXISTS skills (
 CREATE INDEX IF NOT EXISTS idx_skills_slug ON skills (slug);
 CREATE INDEX IF NOT EXISTS idx_skills_category ON skills (category);
 CREATE INDEX IF NOT EXISTS idx_skills_verification ON skills (verification_status);
+CREATE INDEX IF NOT EXISTS idx_skills_created_at ON skills (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_skills_updated_at ON skills (updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_skills_download_count ON skills (download_count DESC);
+CREATE INDEX IF NOT EXISTS idx_skills_star_count ON skills (star_count DESC);
+CREATE INDEX IF NOT EXISTS idx_skills_name ON skills (name);
 """
 
 
 MIGRATIONS = [
+    "ALTER TABLE skills ADD COLUMN IF NOT EXISTS labels TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS is_folder BOOLEAN NOT NULL DEFAULT FALSE",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS folder_manifest_json JSONB",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS external_api_dependencies TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS download_count BIGINT NOT NULL DEFAULT 0",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS star_count BIGINT NOT NULL DEFAULT 0",
+    "CREATE INDEX IF NOT EXISTS idx_skills_labels ON skills USING GIN (labels)",
+    "CREATE INDEX IF NOT EXISTS idx_skills_created_at ON skills (created_at DESC)",
+    "CREATE INDEX IF NOT EXISTS idx_skills_updated_at ON skills (updated_at DESC)",
+    "CREATE INDEX IF NOT EXISTS idx_skills_download_count ON skills (download_count DESC)",
+    "CREATE INDEX IF NOT EXISTS idx_skills_star_count ON skills (star_count DESC)",
+    "CREATE INDEX IF NOT EXISTS idx_skills_name ON skills (name)",
 ]
 
 
@@ -96,7 +109,7 @@ async def insert_skill_draft(conn, draft: dict) -> None:
 
     draft keys:
         id, slug, name, description, skill_md_frontmatter_json (JSON string or dict),
-        category, risk_tier, source_type, source_url, source_path, author_json (JSON string or dict),
+        category, labels, risk_tier, source_type, source_url, source_path, author_json (JSON string or dict),
         file_url, sha256, approved_by, is_folder, folder_manifest ({path:cid} dict or None),
         external_api_dependencies (list[str] or None),
         requires_secrets, requires_private_keys, requires_exchange_api_keys,
@@ -112,22 +125,23 @@ async def insert_skill_draft(conn, draft: dict) -> None:
 
     folder_manifest = draft.get("folder_manifest")
     folder_manifest_json = json.dumps(folder_manifest) if folder_manifest else None
+    labels = draft.get("labels") or []
     external_api_dependencies = draft.get("external_api_dependencies") or []
 
     now = draft["created_at"]
     await conn.execute(
         """INSERT INTO skills (
             id, slug, name, description, skill_md_frontmatter_json,
-            category, risk_tier, verification_status,
+            category, labels, risk_tier, verification_status,
             source_type, source_url, source_path, author_json,
             file_url, approved_sha256, approved_at, approved_by,
             is_folder, folder_manifest_json, external_api_dependencies,
             requires_secrets, requires_private_keys, requires_exchange_api_keys,
             can_sign_transactions, uses_leverage, accesses_user_portfolio,
             created_at, updated_at
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)""",
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28)""",
         draft["id"], draft["slug"], draft["name"], draft["description"],
-        frontmatter, draft.get("category"), draft.get("risk_tier"), "draft",
+        frontmatter, draft.get("category"), labels, draft.get("risk_tier"), "draft",
         draft.get("source_type"), draft.get("source_url"), draft.get("source_path"),
         author,
         draft["file_url"], draft["sha256"], now, draft.get("approved_by", "admin"),

@@ -1,8 +1,13 @@
-# Skill Marketplace
+# Skill Marketplace Backend
 
-Backend module for the Heurist Mesh Skill Marketplace. Makes Web3 agent skills discoverable, verifiable, and installable.
+Backend module for the Heurist Mesh Skill Marketplace. Makes agent skills discoverable, verifiable, and installable.
 
-## Directory structure
+This document is the backend/API guide for the marketplace. Module-local operational docs still live under:
+
+- `mesh/skill_marketplace/docs/scope.md`
+- `mesh/skill_marketplace/docs/review_checklist.md`
+
+## Directory Structure
 
 ```
 mesh/skill_marketplace/
@@ -12,7 +17,6 @@ mesh/skill_marketplace/
 ├── routes.py          # Read-only FastAPI routes (mounted by mesh_api.py)
 ├── admin_routes.py    # Admin API routes (import, approve, reject, check-upstream)
 ├── docs/
-│   ├── README.md          # This file
 │   ├── scope.md           # Full project scope and checkpoint tracker
 │   └── review_checklist.md  # Admin review checklist before approving a skill
 └── scripts/
@@ -26,9 +30,9 @@ mesh/skill_marketplace/
 
 ## Running
 
-### Via mesh_api.py (production)
+### Via `mesh_api.py` (production)
 
-The skill marketplace routes are automatically mounted when mesh_api.py starts. No extra setup needed.
+The skill marketplace routes are automatically mounted when `mesh_api.py` starts. No extra setup needed.
 
 ```bash
 cd /root/heurist-agent-framework
@@ -49,12 +53,13 @@ cd /root/heurist-agent-framework
 .venv/bin/python -m mesh.skill_marketplace.scripts.run_standalone --port 8008 --reload
 ```
 
-### API endpoints
+## API Endpoints
 
 **Public (read-only):**
-- `GET /skills` — list skills (verified only by default, supports `verification_status`, `category`, `search`, `limit`, `offset`)
+- `GET /skills` — list skills (verified only by default, supports `verification_status`, `category`, `labels`, `search`, `order_by`, `limit`, `offset`; defaults to `order_by=created_at`)
 - `GET /skills/{slug}` — full skill detail with frontmatter, capabilities, source attribution, audit fields, `external_api_dependencies`, `download_count`, and `star_count`
 - `GET /skills/categories/list` — all categories with verified skill counts
+- `GET /skills/labels/list` — all labels with verified skill counts
 - `GET /skills/{slug}/download` — download skill: returns `SKILL.md` (text/markdown) for single-file skills, or a `.zip` bundle assembled from per-file CIDs for folder skills; includes `X-Skill-SHA256` header and increments `download_count` on success
 - `GET /skills/{slug}/files` — file manifest for folder skills: returns `{path, cid, gateway_url}` per file; single-file skills return a one-entry list with `SKILL.md`
 - `GET /skills/{slug}/files/{path}` — download a specific file from a folder skill by relative path (e.g. `SKILL.md`, `tools/helper.py`)
@@ -62,23 +67,26 @@ cd /root/heurist-agent-framework
 
 **Admin:**
 - `POST /admin/skills/import` — import a skill from URL or GitHub (fetch, parse, upload to Autonomys, insert as draft)
+- `PATCH /admin/skills/{id}/taxonomy` — set the category plus overlapping labels
 - `PATCH /admin/skills/{id}/external-api-dependencies` — set the admin-managed list of external API dependency names
 - `PATCH /admin/skills/{id}/metrics` — set `star_count` or backfill `download_count`
 - `POST /admin/skills/{id}/approve` — set `verification_status=verified` with audit fields
 - `POST /admin/skills/{id}/reject` — set `review_state=rejected` and `verification_status=draft` (hides from public API)
 - `POST /admin/skills/check-upstream` — poll all verified skills for upstream source changes (compares SHA256)
 
-**Query parameters for `GET /skills`:**
+## Query Parameters For `GET /skills`
 
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
 | `verification_status` | `draft\|verified\|archived` | `verified` | Filter by status |
-| `category` | string | — | Filter by category |
+| `category` | string | — | Filter by exact category value |
+| `labels` | string[] | — | Filter by one or more labels (matches any) |
 | `search` | string | — | Search slug, name, and description (case-insensitive) |
+| `order_by` | string | `created_at` | Sort results by `created_at`, `updated_at`, `download_count`, `star_count`, `name_asc`, or `name_desc` |
 | `limit` | int (1–100) | 20 | Results per page |
 | `offset` | int | 0 | Pagination offset |
 
-## Environment variables
+## Environment Variables
 
 Set in `.env` at the repo root:
 
@@ -99,7 +107,9 @@ Set in `.env` at the repo root:
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_skill \
     --url https://raw.githubusercontent.com/heurist-network/heurist-mesh-skill/main/SKILL.md \
     --slug heurist-mesh-skill \
-    --category infrastructure \
+    --category Crypto \
+    --label defi \
+    --label research \
     --risk-tier low \
     --source-url https://github.com/heurist-network/heurist-mesh-skill \
     --author '{"display_name": "Heurist Network", "github_username": "heurist-network"}' \
@@ -109,19 +119,22 @@ Set in `.env` at the repo root:
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_skill \
     --file ./SKILL.md \
     --slug my-skill \
-    --category defi
+    --category Developer \
+    --label ethereum
 
-# From a local folder (multi-file skill — uploads as zip bundle)
+# From a local folder (multi-file skill)
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_skill \
     --dir ./my-skill-folder \
     --slug my-folder-skill \
-    --category defi
+    --category Stocks \
+    --label analytics
 ```
 
 Options:
 - `--url`, `--file`, or `--dir` — source of the skill (mutually exclusive)
 - `--slug` — unique identifier (required)
-- `--category` — defi, infrastructure, analytics, dev-tools, etc.
+- `--category` — category name stored with the skill
+- `--label` — repeatable secondary label (for example `analytics`, `signals`, `defi`, `mcp`, `options`)
 - `--risk-tier` — low, medium, high
 - `--source-type` — github or web_url (optional, auto-derived from URL if omitted)
 - `--source-url` — source repository URL
@@ -135,21 +148,23 @@ Options:
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_github \
     --repo heurist-network/heurist-mesh-skill \
     --slug heurist-mesh-skill \
-    --category infrastructure
+    --category Crypto \
+    --label defi
 
 # Single skill from a subfolder
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_github \
     --repo anthropics/skills \
     --path skills/webapp-testing/SKILL.md \
     --slug webapp-testing \
-    --category dev-tools
+    --category Developer \
+    --label testing
 
 # Scan mode — auto-discover all SKILL.md files in a repo
 .venv/bin/python -m mesh.skill_marketplace.scripts.ingest_github \
     --repo heurist-network/heurist-mesh-skill \
     --scan \
     --slug-prefix heurist \
-    --category infrastructure
+    --category Crypto
 ```
 
 ### Approve a skill
@@ -180,7 +195,7 @@ Options:
     --slack-webhook https://hooks.slack.com/services/...
 ```
 
-## CLI Tool (heurist-skills-cli)
+## CLI Tool (`heurist-skills-cli`)
 
 Users install and manage skills using the `@heurist/skills-cli` package:
 

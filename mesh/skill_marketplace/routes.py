@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field
 
 from mesh.skill_marketplace.db import get_pool
 from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file
+from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
 logger = logging.getLogger("SkillMarketplace")
 
@@ -27,6 +28,15 @@ class VerificationStatus(str, Enum):
     draft = "draft"
     verified = "verified"
     archived = "archived"
+
+
+class SkillOrderBy(str, Enum):
+    created_at = "created_at"
+    updated_at = "updated_at"
+    download_count = "download_count"
+    star_count = "star_count"
+    name_asc = "name_asc"
+    name_desc = "name_desc"
 
 
 class SkillCapabilities(BaseModel):
@@ -52,6 +62,7 @@ class SkillSummary(BaseModel):
     name: str
     description: str
     category: Optional[str] = None
+    labels: list[str] = Field(default_factory=list)
     risk_tier: Optional[str] = None
     verification_status: VerificationStatus
     author: SkillAuthor = SkillAuthor()
@@ -89,6 +100,16 @@ class CheckUpdatesResponse(BaseModel):
     updates: list[dict]
 
 
+SKILL_ORDER_SQL = {
+    SkillOrderBy.created_at: "created_at DESC, name ASC",
+    SkillOrderBy.updated_at: "updated_at DESC, name ASC",
+    SkillOrderBy.download_count: "download_count DESC, name ASC",
+    SkillOrderBy.star_count: "star_count DESC, name ASC",
+    SkillOrderBy.name_asc: "name ASC",
+    SkillOrderBy.name_desc: "name DESC",
+}
+
+
 def _row_to_summary(row) -> dict:
     return {
         "id": row["id"],
@@ -96,6 +117,7 @@ def _row_to_summary(row) -> dict:
         "name": row["name"],
         "description": row["description"],
         "category": row["category"],
+        "labels": row["labels"] or [],
         "risk_tier": row["risk_tier"],
         "verification_status": row["verification_status"],
         "author": json.loads(row["author_json"]) if row["author_json"] else {},
@@ -133,11 +155,16 @@ def _row_to_detail(row) -> dict:
 
 
 @router.get("/skills", response_model=SkillListResponse, summary="List skills",
-             description="Browse and search the skill catalog. Returns only verified skills by default. Supports filtering by category, search by slug/name/description, and pagination.")
+             description="Browse and search the skill catalog. Returns only verified skills by default. Supports filtering by category, search by slug/name/description, sorting, and pagination.")
 async def list_skills(
-    category: Optional[str] = Query(None, description="Filter by category (e.g. infrastructure, defi, analytics)"),
+    category: Optional[str] = Query(None, description="Filter by category"),
+    labels: Optional[list[str]] = Query(None, description="Filter by one or more labels (matches any label)"),
     verification_status: Optional[VerificationStatus] = Query(None, description="Filter by status: draft | verified | archived"),
     search: Optional[str] = Query(None, description="Search by skill slug, name, or description"),
+    order_by: SkillOrderBy = Query(
+        SkillOrderBy.created_at,
+        description="Sort order: created_at | updated_at | download_count | star_count | name_asc | name_desc",
+    ),
     offset: int = Query(0, ge=0, description="Pagination offset"),
     limit: int = Query(20, ge=1, le=100, description="Results per page (max 100)"),
 ):
@@ -156,9 +183,16 @@ async def list_skills(
         params.append("verified")
         idx += 1
 
-    if category:
+    normalized_category = normalize_category(category)
+    if normalized_category:
         conditions.append(f"category = ${idx}")
-        params.append(category)
+        params.append(normalized_category)
+        idx += 1
+
+    normalized_labels = normalize_labels(labels)
+    if normalized_labels:
+        conditions.append(f"labels && ${idx}::text[]")
+        params.append(normalized_labels)
         idx += 1
 
     if search:
@@ -167,12 +201,13 @@ async def list_skills(
         idx += 1
 
     where = "WHERE " + " AND ".join(conditions) if conditions else ""
+    order_clause = SKILL_ORDER_SQL[order_by]
 
     async with pool.acquire() as conn:
         total = await conn.fetchval(f"SELECT COUNT(*) FROM skills {where}", *params)
 
         rows = await conn.fetch(
-            f"SELECT * FROM skills {where} ORDER BY created_at DESC LIMIT ${idx} OFFSET ${idx + 1}",
+            f"SELECT * FROM skills {where} ORDER BY {order_clause} LIMIT ${idx} OFFSET ${idx + 1}",
             *params, limit, offset,
         )
 
@@ -193,6 +228,20 @@ async def list_categories():
                GROUP BY category ORDER BY count DESC"""
         )
     return [{"category": r["category"], "count": r["count"]} for r in rows]
+
+
+@router.get("/skills/labels/list", summary="List skill labels",
+             description="Returns all labels with their verified skill counts. Useful for building secondary filters in the UI.")
+async def list_labels():
+    pool = await get_pool()
+    async with pool.acquire() as conn:
+        rows = await conn.fetch(
+            """SELECT label, COUNT(*) as count
+               FROM skills, unnest(labels) AS label
+               WHERE verification_status = 'verified'
+               GROUP BY label ORDER BY count DESC, label ASC"""
+        )
+    return [{"label": r["label"], "count": r["count"]} for r in rows]
 
 
 @router.get("/skills/{slug}", response_model=SkillDetail, summary="Get skill detail",

@@ -34,6 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 from mesh.skill_marketplace.db import get_pool, init_db, insert_skill_draft
 from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
+from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestSkill")
@@ -124,7 +125,8 @@ async def ingest(args):
             "name": parsed["name"],
             "description": parsed["description"],
             "skill_md_frontmatter_json": parsed["frontmatter"],
-            "category": args.category,
+            "category": normalize_category(args.category),
+            "labels": normalize_labels(args.label),
             "risk_tier": args.risk_tier,
             "source_type": source_type,
             "source_url": resolved_source_url,
@@ -152,7 +154,10 @@ def main():
     parser.add_argument("--file", help="local path to a SKILL.md file")
     parser.add_argument("--dir", help="local directory containing SKILL.md and other files (folder skill)")
     parser.add_argument("--slug", required=True, help="unique slug for this skill")
-    parser.add_argument("--category", help="category (defi, infrastructure, analytics, etc.)")
+    parser.add_argument("--category", required=True,
+                        help="category name, e.g. Stocks, Macro, Crypto, Developer, Social")
+    parser.add_argument("--label", action="append", default=[],
+                        help="repeatable secondary label, e.g. --label analytics --label options")
     parser.add_argument("--risk-tier", dest="risk_tier", help="risk tier (low, medium, high)")
     parser.add_argument("--source-type", dest="source_type", choices=["github", "web_url"],
                         help="override auto-derived source type (auto: github.com/raw.githubusercontent.com → github, else web_url)")

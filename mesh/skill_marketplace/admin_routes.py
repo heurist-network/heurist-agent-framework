@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 from mesh.skill_marketplace.db import get_pool, insert_skill_draft
 from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_github_owner_repo, parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
+from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
 logger = logging.getLogger("SkillMarketplace")
 
@@ -41,7 +42,8 @@ def _require_api_key(api_key: str = Security(_api_key_header)):
 class ImportSkillRequest(BaseModel):
     url: Optional[str] = None
     slug: str
-    category: Optional[str] = None
+    category: str
+    labels: list[str] = Field(default_factory=list)
     risk_tier: Optional[str] = None
     source_type: Optional[str] = None
     source_url: Optional[str] = None
@@ -63,6 +65,11 @@ class ApproveRejectRequest(BaseModel):
 
 class UpdateExternalApiDependenciesRequest(BaseModel):
     external_api_dependencies: list[str] = Field(default_factory=list)
+
+
+class UpdateSkillTaxonomyRequest(BaseModel):
+    category: Optional[str] = None
+    labels: list[str] = Field(default_factory=list)
 
 
 class UpdateSkillMetricsRequest(BaseModel):
@@ -120,6 +127,7 @@ async def import_skill(body: ImportSkillRequest):
     source_type = body.source_type or derive_source_type(resolved_source_url)
 
     artifact = await prepare_skill_artifact(raw, body.slug, folder_files if folder_files and len(folder_files) > 1 else None)
+    labels = normalize_labels(body.labels)
 
     async with pool.acquire() as conn:
         await insert_skill_draft(conn, {
@@ -128,7 +136,8 @@ async def import_skill(body: ImportSkillRequest):
             "name": parsed["name"],
             "description": parsed["description"],
             "skill_md_frontmatter_json": parsed["frontmatter"],
-            "category": body.category,
+            "category": normalize_category(body.category),
+            "labels": labels,
             "risk_tier": body.risk_tier,
             "source_type": source_type,
             "source_url": resolved_source_url,
@@ -147,6 +156,49 @@ async def import_skill(body: ImportSkillRequest):
         })
 
     return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": artifact["file_url"], "is_folder": artifact["is_folder"]}
+
+
+@admin_router.patch("/{skill_id}/taxonomy", summary="Update skill category and labels",
+                    description="Set the category and overlapping labels for a skill.",
+                    dependencies=[Depends(_require_api_key)])
+async def update_skill_taxonomy(skill_id: str, body: UpdateSkillTaxonomyRequest):
+    field_set = getattr(body, "model_fields_set", getattr(body, "__fields_set__", set()))
+    provided_category = "category" in field_set
+    provided_labels = "labels" in field_set
+
+    if not provided_category and not provided_labels:
+        raise HTTPException(status_code=400, detail="Provide category, labels, or both")
+
+    pool = await get_pool()
+    now = datetime.now(timezone.utc)
+    labels = normalize_labels(body.labels)
+
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow("SELECT id, slug, category, labels FROM skills WHERE id = $1", skill_id)
+        if not row:
+            raise HTTPException(status_code=404, detail="Skill not found")
+
+        category = normalize_category(body.category) if provided_category else row["category"]
+        next_labels = labels if provided_labels else (row["labels"] or [])
+        await conn.execute(
+            """UPDATE skills
+               SET category = $1,
+                   labels = $2,
+                   updated_at = $3
+               WHERE id = $4""",
+            category,
+            next_labels,
+            now,
+            skill_id,
+        )
+
+    return {
+        "id": skill_id,
+        "slug": row["slug"],
+        "category": category,
+        "labels": next_labels,
+        "updated_at": now.isoformat(),
+    }
 
 
 @admin_router.patch("/{skill_id}/external-api-dependencies", summary="Update external API dependencies",

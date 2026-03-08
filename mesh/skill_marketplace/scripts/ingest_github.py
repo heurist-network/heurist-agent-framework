@@ -34,6 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 from mesh.skill_marketplace.db import get_pool, init_db, insert_skill_draft
 from mesh.skill_marketplace.parser import parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
+from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("IngestGitHub")
@@ -147,7 +148,8 @@ async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str
             "name": parsed["name"],
             "description": parsed["description"],
             "skill_md_frontmatter_json": parsed["frontmatter"],
-            "category": args.category,
+            "category": normalize_category(args.category),
+            "labels": normalize_labels(args.label),
             "risk_tier": args.risk_tier,
             "source_type": "github",
             "source_url": source_url,
@@ -215,7 +217,10 @@ def main():
     parser.add_argument("--scan", action="store_true", default=False,
                         help="scan repo for all SKILL.md files and ingest each one")
     parser.add_argument("--slug-prefix", dest="slug_prefix", help="prefix for auto-generated slugs in scan mode")
-    parser.add_argument("--category", help="category for ingested skills")
+    parser.add_argument("--category", required=True,
+                        help="category name for ingested skills")
+    parser.add_argument("--label", action="append", default=[],
+                        help="repeatable secondary label, e.g. --label analytics --label defi")
     parser.add_argument("--risk-tier", dest="risk_tier", help="risk tier (low, medium, high)")
     parser.add_argument("--author", help='author JSON string')
     parser.add_argument("--external-api-dependency", dest="external_api_dependency", action="append", default=[],
