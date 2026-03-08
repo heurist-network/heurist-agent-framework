@@ -32,7 +32,7 @@ import aiohttp
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db, insert_skill_draft
-from mesh.skill_marketplace.parser import parse_skill_md
+from mesh.skill_marketplace.parser import is_ignored_skill_path, parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
 from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
@@ -91,7 +91,9 @@ async def fetch_folder_files(session: aiohttp.ClientSession, owner: str, repo: s
     prefix = folder_path.rstrip("/") + "/"
     file_paths = [
         item["path"] for item in data.get("tree", [])
-        if item["type"] == "blob" and item["path"].startswith(prefix)
+        if item["type"] == "blob"
+        and item["path"].startswith(prefix)
+        and not is_ignored_skill_path(item["path"])
     ]
 
     if not file_paths:

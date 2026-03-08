@@ -7,6 +7,7 @@ Provides shared GitHub folder detection used by admin_routes and ingest_skill.
 
 import logging
 import os
+from pathlib import PurePosixPath
 from urllib.parse import urlparse
 
 import aiohttp
@@ -15,6 +16,34 @@ import yaml
 logger = logging.getLogger("SkillMarketplace")
 
 GITHUB_HOSTS = {"github.com", "www.github.com", "raw.githubusercontent.com"}
+IGNORED_SKILL_DIR_NAMES = {
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    "venv",
+    "node_modules",
+}
+IGNORED_SKILL_FILE_NAMES = {
+    ".DS_Store",
+}
+IGNORED_SKILL_SUFFIXES = {
+    ".pyc",
+    ".pyo",
+    ".log",
+    ".tmp",
+}
+
+
+def is_ignored_skill_path(path: str) -> bool:
+    """Return True for generated files/directories that should not be ingested."""
+    pure_path = PurePosixPath(path)
+    if any(part in IGNORED_SKILL_DIR_NAMES for part in pure_path.parts):
+        return True
+    if pure_path.name in IGNORED_SKILL_FILE_NAMES:
+        return True
+    return pure_path.suffix in IGNORED_SKILL_SUFFIXES
 
 
 def derive_source_type(url: str) -> str:
@@ -46,7 +75,12 @@ def derive_github_folder_prefix(url: str, source_path: str | None = None) -> str
         return None
 
     if source_path:
-        return source_path.rstrip("/") + "/"
+        normalized = source_path.rstrip("/")
+        if normalized.endswith("/SKILL.md"):
+            normalized = normalized[:-len("/SKILL.md")]
+        elif normalized == "SKILL.md":
+            normalized = ""
+        return normalized + "/" if normalized else ""
 
     parts = parsed.path.strip("/").split("/")
 
@@ -104,12 +138,14 @@ async def fetch_github_folder_files(
             # Repo root — all blobs are candidates
             file_paths = [
                 item["path"] for item in tree_data.get("tree", [])
-                if item["type"] == "blob"
+                if item["type"] == "blob" and not is_ignored_skill_path(item["path"])
             ]
         else:
             file_paths = [
                 item["path"] for item in tree_data.get("tree", [])
-                if item["type"] == "blob" and item["path"].startswith(folder_prefix)
+                if item["type"] == "blob"
+                and item["path"].startswith(folder_prefix)
+                and not is_ignored_skill_path(item["path"])
             ]
 
         if len(file_paths) <= 1:

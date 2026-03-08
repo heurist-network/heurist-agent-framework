@@ -32,7 +32,12 @@ import aiohttp
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent))
 
 from mesh.skill_marketplace.db import get_pool, init_db, insert_skill_draft
-from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_skill_md
+from mesh.skill_marketplace.parser import (
+    derive_source_type,
+    fetch_github_folder_files,
+    is_ignored_skill_path,
+    parse_skill_md,
+)
 from mesh.skill_marketplace.storage import prepare_skill_artifact
 from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
@@ -91,6 +96,8 @@ async def ingest(args):
         for file_path in sorted(dir_path.rglob("*")):
             if file_path.is_file():
                 relative = file_path.relative_to(dir_path).as_posix()
+                if is_ignored_skill_path(relative):
+                    continue
                 folder_files[relative] = file_path.read_bytes()
         logger.info(f"folder skill: {len(folder_files)} files")
         for fp in sorted(folder_files.keys()):

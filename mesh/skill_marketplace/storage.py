@@ -8,6 +8,7 @@ Upload protocol: create session → send chunks → complete → returns CID.
 Download: tries public gateway first, falls back to authenticated API.
 """
 
+import asyncio
 import hashlib
 import logging
 import math
@@ -23,6 +24,8 @@ AUTONOMYS_API_URL = os.getenv("AUTONOMYS_API_URL", "https://mainnet.auto-drive.a
 AUTONOMYS_GATEWAY_URL = os.getenv("AUTONOMYS_GATEWAY_URL", "https://gateway.autonomys.xyz")
 
 CHUNK_SIZE = 1024 * 1024
+DOWNLOAD_TIMEOUT_SECONDS = 15
+DOWNLOAD_CONCURRENCY = 8
 
 
 def _headers():
@@ -142,20 +145,47 @@ async def prepare_skill_artifact(raw: bytes, slug: str, folder_files: dict[str, 
         }
 
 
+async def _download_file_with_session(session: aiohttp.ClientSession, cid: str) -> bytes:
+    async with session.get(f"{AUTONOMYS_GATEWAY_URL}/file/{cid}") as resp:
+        if resp.status == 200:
+            return await resp.read()
+
+    # gateway miss — fall back to authenticated API
+    async with session.get(
+        f"{AUTONOMYS_API_URL}/api/downloads/{cid}",
+        headers=_headers(),
+    ) as resp:
+        resp.raise_for_status()
+        return await resp.read()
+
+
 async def download_file(cid: str) -> bytes:
     """Download a file from Autonomys by CID. Tries public gateway first."""
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f"{AUTONOMYS_GATEWAY_URL}/file/{cid}") as resp:
-            if resp.status == 200:
-                return await resp.read()
+    timeout = aiohttp.ClientTimeout(total=DOWNLOAD_TIMEOUT_SECONDS)
+    connector = aiohttp.TCPConnector(limit=DOWNLOAD_CONCURRENCY)
+    async with aiohttp.ClientSession(timeout=timeout, connector=connector) as session:
+        return await _download_file_with_session(session, cid)
 
-        # gateway miss — fall back to authenticated API
-        async with session.get(
-            f"{AUTONOMYS_API_URL}/api/downloads/{cid}",
-            headers=_headers(),
-        ) as resp:
-            resp.raise_for_status()
-            return await resp.read()
+
+async def download_files(cids_by_path: dict[str, str]) -> dict[str, bytes]:
+    """Download multiple files concurrently from Autonomys.
+
+    Uses a shared session plus bounded concurrency so folder skill downloads do
+    not serialize dozens of network round trips.
+    """
+    timeout = aiohttp.ClientTimeout(total=DOWNLOAD_TIMEOUT_SECONDS)
+    connector = aiohttp.TCPConnector(limit=DOWNLOAD_CONCURRENCY)
+    semaphore = asyncio.Semaphore(DOWNLOAD_CONCURRENCY)
+
+    async def fetch_one(path: str, cid: str) -> tuple[str, bytes]:
+        async with semaphore:
+            return path, await _download_file_with_session(session, cid)
+
+    async with aiohttp.ClientSession(timeout=timeout, connector=connector) as session:
+        results = await asyncio.gather(
+            *(fetch_one(path, cid) for path, cid in cids_by_path.items())
+        )
+    return dict(results)
 
 
 def cid_from_gateway_url(gateway_url: str) -> str | None:

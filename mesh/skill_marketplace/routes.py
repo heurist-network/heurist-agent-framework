@@ -16,7 +16,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from mesh.skill_marketplace.db import get_pool
-from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file
+from mesh.skill_marketplace.storage import cid_from_gateway_url, download_file, download_files
 from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
 
 logger = logging.getLogger("SkillMarketplace")
@@ -273,11 +273,13 @@ async def download_skill(slug: str):
 
     if row["is_folder"] and row["folder_manifest_json"]:
         manifest = json.loads(row["folder_manifest_json"])
+        contents_by_path = await download_files(
+            {rel_path: cid for rel_path, cid in sorted(manifest.items())}
+        )
         buf = io.BytesIO()
         with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
             for rel_path, cid in sorted(manifest.items()):
-                content = await download_file(cid)
-                zf.writestr(rel_path, content)
+                zf.writestr(rel_path, contents_by_path[rel_path])
         async with pool.acquire() as conn:
             await conn.execute(
                 "UPDATE skills SET download_count = download_count + 1 WHERE id = $1",
