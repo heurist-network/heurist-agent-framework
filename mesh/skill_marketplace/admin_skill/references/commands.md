@@ -10,7 +10,9 @@ uv run python -m mesh.skill_marketplace.scripts.ingest_skill \
   --label defi \
   --risk-tier low \
   --source-url https://github.com/OWNER/REPO \
-  --author '{"display_name": "Author Name", "github_username": "username"}'
+  --author '{"display_name": "Author Name", "github_username": "username"}' \
+  --reference-url https://x.com/example/status/123 \
+  --reference-url https://example.com
 ```
 
 **Multi-skill repo (skill in subfolder):**
@@ -21,7 +23,8 @@ uv run python -m mesh.skill_marketplace.scripts.ingest_skill \
   --category Developer \
   --label tooling \
   --source-url https://github.com/OWNER/REPO \
-  --source-path skills/my-skill
+  --source-path skills/my-skill \
+  --reference-url https://x.com/example/status/123
 ```
 
 ## Ingest: From Local Directory or File
@@ -33,7 +36,8 @@ uv run python -m mesh.skill_marketplace.scripts.ingest_skill \
   --slug my-skill \
   --category Stocks \
   --label analytics \
-  --source-url https://github.com/OWNER/REPO
+  --source-url https://github.com/OWNER/REPO \
+  --reference-url https://example.com
 
 # From local file
 uv run python -m mesh.skill_marketplace.scripts.ingest_skill \
@@ -41,7 +45,8 @@ uv run python -m mesh.skill_marketplace.scripts.ingest_skill \
   --slug my-skill \
   --category Social \
   --label news \
-  --source-url https://github.com/OWNER/REPO
+  --source-url https://github.com/OWNER/REPO \
+  --reference-url https://example.com
 ```
 
 ## Ingest: From GitHub Repo (Alternative)
@@ -50,7 +55,8 @@ uv run python -m mesh.skill_marketplace.scripts.ingest_skill \
 uv run python -m mesh.skill_marketplace.scripts.ingest_github \
   --repo OWNER/REPO \
   --slug my-skill \
-  --category Crypto
+  --category Crypto \
+  --reference-url https://example.com
 
 # Scan repo for all SKILL.md files
 uv run python -m mesh.skill_marketplace.scripts.ingest_github \
@@ -158,6 +164,17 @@ curl -X PATCH https://mesh.heurist.xyz/admin/skills/SKILL_ID/external-api-depend
   -d '{"external_api_dependencies": ["CoinGecko", "OKX"]}'
 ```
 
+## Update Reference URLs
+
+Admin-only recordkeeping links such as announcement posts, websites, or docs:
+
+```bash
+curl -X PATCH https://mesh.heurist.xyz/admin/skills/SKILL_ID/reference-urls \
+  -H "X-API-Key: $INTERNAL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"reference_urls": ["https://x.com/unusual_whales/status/2030312769489416403", "https://ethskills.com/"]}'
+```
+
 ## Update Metrics (Stars / Downloads)
 
 `download_count` increments automatically on `GET /skills/{slug}/download`. Use this endpoint for `star_count` updates or one-time backfills:
@@ -223,7 +240,8 @@ curl -X POST https://mesh.heurist.xyz/admin/skills/import \
     "risk_tier": "low",
     "source_url": "https://github.com/OWNER/REPO",
     "author_json": {"display_name": "Name", "github_username": "user"},
-    "external_api_dependencies": ["CoinGecko", "OKX"]
+    "external_api_dependencies": ["CoinGecko", "OKX"],
+    "reference_urls": ["https://x.com/example/status/123", "https://example.com"]
   }'
 ```
 
@@ -254,5 +272,6 @@ uv run python -m mesh.skill_marketplace.scripts.run_standalone --port 8001 --rel
 | approved_sha256 | VARCHAR(64) | SHA256 of SKILL.md at approval time |
 | author_json | JSONB | {display_name, github_username} |
 | external_api_dependencies | TEXT[] | Admin-managed list of external API names |
+| reference_urls | TEXT[] | Admin-only recordkeeping links such as announcement posts or websites |
 | download_count | INTEGER | Auto-incremented on download |
 | star_count | INTEGER | Admin-managed star count |

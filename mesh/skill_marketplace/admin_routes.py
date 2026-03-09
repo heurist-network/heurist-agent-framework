@@ -50,6 +50,7 @@ class ImportSkillRequest(BaseModel):
     source_path: Optional[str] = None
     author_json: Optional[dict] = None
     external_api_dependencies: list[str] = Field(default_factory=list)
+    reference_urls: list[str] = Field(default_factory=list)
     requires_secrets: bool = False
     requires_private_keys: bool = False
     requires_exchange_api_keys: bool = False
@@ -67,6 +68,10 @@ class UpdateExternalApiDependenciesRequest(BaseModel):
     external_api_dependencies: list[str] = Field(default_factory=list)
 
 
+class UpdateReferenceUrlsRequest(BaseModel):
+    reference_urls: list[str] = Field(default_factory=list)
+
+
 class UpdateSkillTaxonomyRequest(BaseModel):
     category: Optional[str] = None
     labels: list[str] = Field(default_factory=list)
@@ -78,6 +83,23 @@ class UpdateSkillMetricsRequest(BaseModel):
 
 
 def _normalize_external_api_dependencies(values: list[str]) -> list[str]:
+    normalized: list[str] = []
+    seen: set[str] = set()
+
+    for value in values:
+        cleaned = value.strip()
+        if not cleaned:
+            continue
+        dedupe_key = cleaned.casefold()
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        normalized.append(cleaned)
+
+    return normalized
+
+
+def _normalize_reference_urls(values: list[str]) -> list[str]:
     normalized: list[str] = []
     seen: set[str] = set()
 
@@ -144,6 +166,7 @@ async def import_skill(body: ImportSkillRequest):
             "source_path": body.source_path,
             "author_json": body.author_json,
             "external_api_dependencies": _normalize_external_api_dependencies(body.external_api_dependencies),
+            "reference_urls": _normalize_reference_urls(body.reference_urls),
             **artifact,
             "approved_by": "admin",
             "requires_secrets": body.requires_secrets,
@@ -225,6 +248,34 @@ async def update_external_api_dependencies(skill_id: str, body: UpdateExternalAp
         "id": skill_id,
         "slug": row["slug"],
         "external_api_dependencies": dependencies,
+        "updated_at": now.isoformat(),
+    }
+
+
+@admin_router.patch("/{skill_id}/reference-urls", summary="Update skill reference URLs",
+                    description="Set the admin-only recordkeeping URLs for a skill, such as announcement posts or project websites.",
+                    dependencies=[Depends(_require_api_key)])
+async def update_reference_urls(skill_id: str, body: UpdateReferenceUrlsRequest):
+    pool = await get_pool()
+    now = datetime.now(timezone.utc)
+    reference_urls = _normalize_reference_urls(body.reference_urls)
+
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow("SELECT id, slug FROM skills WHERE id = $1", skill_id)
+        if not row:
+            raise HTTPException(status_code=404, detail="Skill not found")
+
+        await conn.execute(
+            """UPDATE skills
+               SET reference_urls = $1, updated_at = $2
+               WHERE id = $3""",
+            reference_urls, now, skill_id,
+        )
+
+    return {
+        "id": skill_id,
+        "slug": row["slug"],
+        "reference_urls": reference_urls,
         "updated_at": now.isoformat(),
     }
 

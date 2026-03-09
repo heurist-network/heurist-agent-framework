@@ -61,6 +61,7 @@ async def main():
         "source_path": None,
         "author_json": {"display_name": "Heurist Network", "github_username": "heurist-network"},
         "external_api_dependencies": [],
+        "reference_urls": [],
         **artifact,
         "approved_by": "admin",
         "requires_secrets": True,

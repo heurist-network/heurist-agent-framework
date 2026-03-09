@@ -43,6 +43,7 @@ uv run python -m mesh.skill_marketplace.scripts.list_skills --status verified
 | `--label analytics` | Repeatable secondary label; use for overlapping capability/domain metadata |
 | `--source-path skills/my-skill` | Subfolder in multi-skill repos |
 | `--external-api-dependency Name` | Repeat for each external API (e.g. `CoinGecko`) |
+| `--reference-url URL` | Repeat for admin-only recordkeeping links (announcement tweet, project site, docs) |
 | `--requires-secrets` | Skill needs API tokens/env vars |
 | `--requires-private-keys` | Skill accesses private keys |
 | `--requires-exchange-api-keys` | Needs exchange credentials |
@@ -112,4 +113,4 @@ uv run python -m mesh.skill_marketplace.scripts.approve_skill --slug my-skill
 
 ## Other Operations
 
-For reject, remove, update metrics, update external API dependencies, local file/dir ingest, and Admin HTTP API calls — see `references/commands.md`.
+For reject, remove, update metrics, update external API dependencies, update reference URLs, local file/dir ingest, and Admin HTTP API calls — see `references/commands.md`.

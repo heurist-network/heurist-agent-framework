@@ -139,16 +139,16 @@ async def ingest(args):
                     category = $4, labels = $5, risk_tier = $6,
                     source_type = $7, source_url = $8, source_path = $9, author_json = $10,
                     file_url = $11, approved_sha256 = $12, is_folder = $13, folder_manifest_json = $14,
-                    external_api_dependencies = $15,
-                    requires_secrets = $16, requires_private_keys = $17, requires_exchange_api_keys = $18,
-                    can_sign_transactions = $19, uses_leverage = $20, accesses_user_portfolio = $21,
-                    verification_status = 'draft', updated_at = $22
-                WHERE slug = $23""",
+                    external_api_dependencies = $15, reference_urls = $16,
+                    requires_secrets = $17, requires_private_keys = $18, requires_exchange_api_keys = $19,
+                    can_sign_transactions = $20, uses_leverage = $21, accesses_user_portfolio = $22,
+                    verification_status = 'draft', updated_at = $23
+                WHERE slug = $24""",
                 parsed["name"], parsed["description"], frontmatter,
                 category, labels, args.risk_tier,
                 source_type, resolved_source_url, args.source_path, author_json,
                 artifact["file_url"], artifact["sha256"], artifact.get("is_folder", False), folder_manifest_json,
-                args.external_api_dependency or [],
+                args.external_api_dependency or [], args.reference_url or [],
                 args.requires_secrets, args.requires_private_keys, args.requires_exchange_api_keys,
                 args.can_sign_transactions, args.uses_leverage, args.accesses_user_portfolio,
                 now, args.slug,
@@ -175,6 +175,7 @@ async def ingest(args):
             "source_path": args.source_path,
             "author_json": json.loads(args.author) if args.author else None,
             "external_api_dependencies": args.external_api_dependency,
+            "reference_urls": args.reference_url,
             **artifact,
             "approved_by": "admin",
             "requires_secrets": args.requires_secrets,
@@ -208,6 +209,8 @@ def main():
     parser.add_argument("--author", help='author JSON string, e.g. \'{"display_name": "x", "github_username": "y"}\'')
     parser.add_argument("--external-api-dependency", dest="external_api_dependency", action="append", default=[],
                         help="repeatable external API dependency name, e.g. --external-api-dependency CoinGecko")
+    parser.add_argument("--reference-url", dest="reference_url", action="append", default=[],
+                        help="repeatable admin-only reference URL, e.g. announcement tweet or project website")
 
     parser.add_argument("--update", action="store_true", default=False,
                         help="update existing skill in place instead of failing on duplicate slug (preserves id, download_count, star_count, created_at)")

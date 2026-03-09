@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS skills (
     is_folder       BOOLEAN NOT NULL DEFAULT FALSE,
     folder_manifest_json JSONB,
     external_api_dependencies TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+    reference_urls  TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
     download_count  BIGINT NOT NULL DEFAULT 0,
     star_count      BIGINT NOT NULL DEFAULT 0,
     approved_sha256 VARCHAR(64),
@@ -93,6 +94,7 @@ MIGRATIONS = [
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS is_folder BOOLEAN NOT NULL DEFAULT FALSE",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS folder_manifest_json JSONB",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS external_api_dependencies TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]",
+    "ALTER TABLE skills ADD COLUMN IF NOT EXISTS reference_urls TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[]",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS download_count BIGINT NOT NULL DEFAULT 0",
     "ALTER TABLE skills ADD COLUMN IF NOT EXISTS star_count BIGINT NOT NULL DEFAULT 0",
     "CREATE INDEX IF NOT EXISTS idx_skills_labels ON skills USING GIN (labels)",
@@ -112,6 +114,7 @@ async def insert_skill_draft(conn, draft: dict) -> None:
         category, labels, risk_tier, source_type, source_url, source_path, author_json (JSON string or dict),
         file_url, sha256, approved_by, is_folder, folder_manifest ({path:cid} dict or None),
         external_api_dependencies (list[str] or None),
+        reference_urls (list[str] or None),
         requires_secrets, requires_private_keys, requires_exchange_api_keys,
         can_sign_transactions, uses_leverage, accesses_user_portfolio, created_at
     """
@@ -127,6 +130,7 @@ async def insert_skill_draft(conn, draft: dict) -> None:
     folder_manifest_json = json.dumps(folder_manifest) if folder_manifest else None
     labels = draft.get("labels") or []
     external_api_dependencies = draft.get("external_api_dependencies") or []
+    reference_urls = draft.get("reference_urls") or []
 
     now = draft["created_at"]
     await conn.execute(
@@ -136,16 +140,17 @@ async def insert_skill_draft(conn, draft: dict) -> None:
             source_type, source_url, source_path, author_json,
             file_url, approved_sha256, approved_at, approved_by,
             is_folder, folder_manifest_json, external_api_dependencies,
+            reference_urls,
             requires_secrets, requires_private_keys, requires_exchange_api_keys,
             can_sign_transactions, uses_leverage, accesses_user_portfolio,
             created_at, updated_at
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28)""",
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29)""",
         draft["id"], draft["slug"], draft["name"], draft["description"],
         frontmatter, draft.get("category"), labels, draft.get("risk_tier"), "draft",
         draft.get("source_type"), draft.get("source_url"), draft.get("source_path"),
         author,
         draft["file_url"], draft["sha256"], now, draft.get("approved_by", "admin"),
-        draft.get("is_folder", False), folder_manifest_json, external_api_dependencies,
+        draft.get("is_folder", False), folder_manifest_json, external_api_dependencies, reference_urls,
         draft.get("requires_secrets", False), draft.get("requires_private_keys", False),
         draft.get("requires_exchange_api_keys", False), draft.get("can_sign_transactions", False),
         draft.get("uses_leverage", False), draft.get("accesses_user_portfolio", False),

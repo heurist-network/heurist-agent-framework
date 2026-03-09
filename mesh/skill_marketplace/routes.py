@@ -68,6 +68,7 @@ class SkillSummary(BaseModel):
     author: SkillAuthor = SkillAuthor()
     file_url: Optional[str] = None
     external_api_dependencies: list[str] = Field(default_factory=list)
+    reference_urls: list[str] = Field(default_factory=list)
     download_count: int = 0
     star_count: int = 0
     capabilities: SkillCapabilities = SkillCapabilities()
@@ -123,6 +124,7 @@ def _row_to_summary(row) -> dict:
         "author": json.loads(row["author_json"]) if row["author_json"] else {},
         "file_url": row["file_url"],
         "external_api_dependencies": row["external_api_dependencies"] or [],
+        "reference_urls": row["reference_urls"] or [],
         "download_count": row["download_count"] or 0,
         "star_count": row["star_count"] or 0,
         "capabilities": {

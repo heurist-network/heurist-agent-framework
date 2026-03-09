@@ -158,6 +158,7 @@ async def ingest_one(session: aiohttp.ClientSession, pool, owner: str, repo: str
             "source_path": source_path,
             "author_json": json.loads(author_json) if author_json else None,
             "external_api_dependencies": args.external_api_dependency,
+            "reference_urls": args.reference_url,
             **artifact,
             "approved_by": "admin",
             "requires_secrets": args.requires_secrets,
@@ -227,6 +228,8 @@ def main():
     parser.add_argument("--author", help='author JSON string')
     parser.add_argument("--external-api-dependency", dest="external_api_dependency", action="append", default=[],
                         help="repeatable external API dependency name, e.g. --external-api-dependency CoinGecko")
+    parser.add_argument("--reference-url", dest="reference_url", action="append", default=[],
+                        help="repeatable admin-only reference URL, e.g. announcement tweet or project website")
 
     parser.add_argument("--requires-secrets", dest="requires_secrets", action="store_true", default=False)
     parser.add_argument("--requires-private-keys", dest="requires_private_keys", action="store_true", default=False)
