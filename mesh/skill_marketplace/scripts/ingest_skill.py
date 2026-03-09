@@ -144,7 +144,7 @@ async def ingest(args):
                     can_sign_transactions = $20, uses_leverage = $21, accesses_user_portfolio = $22,
                     verification_status = 'draft', updated_at = $23
                 WHERE slug = $24""",
-                parsed["name"], parsed["description"], frontmatter,
+                parsed["name"], parsed["description"][:1024], frontmatter,
                 category, labels, args.risk_tier,
                 source_type, resolved_source_url, args.source_path, author_json,
                 artifact["file_url"], artifact["sha256"], artifact.get("is_folder", False), folder_manifest_json,
@@ -165,7 +165,7 @@ async def ingest(args):
             "id": skill_id,
             "slug": args.slug,
             "name": parsed["name"],
-            "description": parsed["description"],
+            "description": parsed["description"][:1024],
             "skill_md_frontmatter_json": parsed["frontmatter"],
             "category": category,
             "labels": labels,

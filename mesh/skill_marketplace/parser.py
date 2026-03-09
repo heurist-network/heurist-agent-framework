@@ -24,6 +24,7 @@ IGNORED_SKILL_DIR_NAMES = {
     ".venv",
     "venv",
     "node_modules",
+    ".git",
 }
 IGNORED_SKILL_FILE_NAMES = {
     ".DS_Store",
