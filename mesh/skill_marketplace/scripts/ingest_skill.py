@@ -120,10 +120,45 @@ async def ingest(args):
     pool = await get_pool()
     now = datetime.now(timezone.utc)
 
+    folder_manifest = artifact.get("folder_manifest")
+    folder_manifest_json = json.dumps(folder_manifest) if folder_manifest else None
+    labels = normalize_labels(args.label)
+    category = normalize_category(args.category)
+    author_json = json.dumps(json.loads(args.author)) if args.author else None
+    frontmatter = parsed["frontmatter"]
+    if isinstance(frontmatter, dict):
+        frontmatter = json.dumps(frontmatter)
+
     async with pool.acquire() as conn:
         existing = await conn.fetchval("SELECT id FROM skills WHERE slug = $1", args.slug)
+
+        if existing and args.update:
+            await conn.execute(
+                """UPDATE skills SET
+                    name = $1, description = $2, skill_md_frontmatter_json = $3,
+                    category = $4, labels = $5, risk_tier = $6,
+                    source_type = $7, source_url = $8, source_path = $9, author_json = $10,
+                    file_url = $11, approved_sha256 = $12, is_folder = $13, folder_manifest_json = $14,
+                    external_api_dependencies = $15,
+                    requires_secrets = $16, requires_private_keys = $17, requires_exchange_api_keys = $18,
+                    can_sign_transactions = $19, uses_leverage = $20, accesses_user_portfolio = $21,
+                    verification_status = 'draft', updated_at = $22
+                WHERE slug = $23""",
+                parsed["name"], parsed["description"], frontmatter,
+                category, labels, args.risk_tier,
+                source_type, resolved_source_url, args.source_path, author_json,
+                artifact["file_url"], artifact["sha256"], artifact.get("is_folder", False), folder_manifest_json,
+                args.external_api_dependency or [],
+                args.requires_secrets, args.requires_private_keys, args.requires_exchange_api_keys,
+                args.can_sign_transactions, args.uses_leverage, args.accesses_user_portfolio,
+                now, args.slug,
+            )
+            logger.info(f"skill '{args.slug}' updated in place (id={existing}), reset to draft")
+            logger.info(f"approve with: python -m mesh.skill_marketplace.scripts.approve_skill --slug {args.slug}")
+            return
+
         if existing:
-            logger.error(f"slug '{args.slug}' already exists (id={existing})")
+            logger.error(f"slug '{args.slug}' already exists (id={existing}). Use --update to update in place.")
             sys.exit(1)
 
         await insert_skill_draft(conn, {
@@ -132,8 +167,8 @@ async def ingest(args):
             "name": parsed["name"],
             "description": parsed["description"],
             "skill_md_frontmatter_json": parsed["frontmatter"],
-            "category": normalize_category(args.category),
-            "labels": normalize_labels(args.label),
+            "category": category,
+            "labels": labels,
             "risk_tier": args.risk_tier,
             "source_type": source_type,
             "source_url": resolved_source_url,
@@ -174,6 +209,8 @@ def main():
     parser.add_argument("--external-api-dependency", dest="external_api_dependency", action="append", default=[],
                         help="repeatable external API dependency name, e.g. --external-api-dependency CoinGecko")
 
+    parser.add_argument("--update", action="store_true", default=False,
+                        help="update existing skill in place instead of failing on duplicate slug (preserves id, download_count, star_count, created_at)")
     parser.add_argument("--requires-secrets", dest="requires_secrets", action="store_true", default=False)
     parser.add_argument("--requires-private-keys", dest="requires_private_keys", action="store_true", default=False)
     parser.add_argument("--requires-exchange-api-keys", dest="requires_exchange_api_keys", action="store_true", default=False)
