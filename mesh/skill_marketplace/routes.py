@@ -72,6 +72,7 @@ class SkillSummary(BaseModel):
     download_count: int = 0
     star_count: int = 0
     capabilities: SkillCapabilities = SkillCapabilities()
+    homepage: Optional[str] = None
 
 
 class SkillDetail(SkillSummary):
@@ -111,6 +112,15 @@ SKILL_ORDER_SQL = {
 }
 
 
+def _extract_homepage(row) -> Optional[str]:
+    raw = row.get("skill_md_frontmatter_json")
+    if not raw:
+        return None
+    fm = json.loads(raw) if isinstance(raw, str) else raw
+    hp = fm.get("homepage") if isinstance(fm, dict) else None
+    return hp if isinstance(hp, str) else None
+
+
 def _row_to_summary(row) -> dict:
     return {
         "id": row["id"],
@@ -135,6 +145,7 @@ def _row_to_summary(row) -> dict:
             "uses_leverage": row["uses_leverage"],
             "accesses_user_portfolio": row["accesses_user_portfolio"],
         },
+        "homepage": _extract_homepage(row),
     }
 
 
