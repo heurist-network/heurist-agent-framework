@@ -703,8 +703,7 @@ class TokenResolverAgent(MeshAgent):
             contract_to_cgid_map = {}
 
             if qtype in {"symbol", "name", "coingecko_id"}:
-                # CoinGecko IDs are lowercase, so convert query for lookup
-                cg_query = query.lower() if qtype in {"symbol", "coingecko_id"} else query
+                cg_query = query.lower() if qtype == "coingecko_id" else query
                 cg = await self._cg_get_token_info(cg_query)
                 if cg and cg.get("status") != "error":
                     ti = cg.get("token_info") or {}
@@ -960,7 +959,7 @@ class TokenResolverAgent(MeshAgent):
         # Always get CoinGecko data when available
         cg_query = coingecko_id
         if not cg_query and symbol:
-            cg_query = symbol.lower()
+            cg_query = symbol
 
         if cg_query:
             cg = await self._cg_get_token_info(cg_query)

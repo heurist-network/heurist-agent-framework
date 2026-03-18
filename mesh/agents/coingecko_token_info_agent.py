@@ -525,6 +525,14 @@ Format your response in clean text. Be objective and informative."""
             logger.error(f"Error searching for token: {e}")
             return None
 
+    @staticmethod
+    def _map_coingecko_id(query: str) -> str | None:
+        if not query:
+            return None
+        return COINGECKO_ID_MAP.get(query) or COINGECKO_ID_MAP.get(query.upper()) or COINGECKO_ID_MAP.get(
+            query.title()
+        )
+
     # ------------------------------------------------------------------------
     #                      COINGECKO API-SPECIFIC METHODS
     # ------------------------------------------------------------------------
@@ -564,18 +572,25 @@ Format your response in clean text. Be objective and informative."""
     @with_retry(max_retries=1)
     async def _get_token_info(self, coingecko_id_like: str) -> dict:
         try:
-            if coingecko_id_like.islower():
-                # All lowercase - treat as coingecko_id directly
-                coingecko_id = coingecko_id_like
-            else:
-                # Has uppercase - check quick lookup map first
-                # Try exact match (for names like "Ethereum"), then uppercase (for symbols like "ETH")
-                coingecko_id = COINGECKO_ID_MAP.get(coingecko_id_like) or COINGECKO_ID_MAP.get(
-                    coingecko_id_like.upper()
-                )
-                if not coingecko_id:
-                    # Not in map - search for it
-                    coingecko_id = await self._search_token(coingecko_id_like)
+            query = coingecko_id_like.strip()
+            if not query:
+                return {"error": "Failed to fetch token info"}
+
+            searched_before_fetch = False
+            coingecko_id = self._map_coingecko_id(query)
+            if not coingecko_id:
+                if query.islower() and " " not in query and "-" not in query:
+                    # Lowercase short alphabetic strings are often symbols like btc/eth, not canonical IDs.
+                    # Search first to avoid a wasted /coins/{id} 404.
+                    coingecko_id = await self._search_token(query)
+                    searched_before_fetch = bool(coingecko_id)
+                    if not coingecko_id:
+                        coingecko_id = query
+                elif query.islower():
+                    coingecko_id = query
+                else:
+                    coingecko_id = await self._search_token(query)
+                    searched_before_fetch = bool(coingecko_id)
                     if not coingecko_id:
                         return {"error": "Failed to fetch token info"}
 
@@ -589,17 +604,18 @@ Format your response in clean text. Be objective and informative."""
                     await self.r2_uploader.upload_token_images(coingecko_id, image_urls)
                 return self.preprocess_api_response(response)
 
-            # Coins API failed for lowercase input - try search as last resort
-            if coingecko_id_like.islower():
-                searched_id = await self._search_token(coingecko_id_like)
-                if searched_id:
-                    url = f"{self.pro_api_url}/coins/{searched_id}"
-                    response = await super()._api_request(url=url, headers=self.pro_headers)
-                    if "error" not in response:
-                        image_urls = response.get("image", {})
-                        if image_urls:
-                            await self.r2_uploader.upload_token_images(searched_id, image_urls)
-                        return self.preprocess_api_response(response)
+            if searched_before_fetch:
+                return {"error": "Failed to fetch token info"}
+
+            searched_id = await self._search_token(query)
+            if searched_id and searched_id != coingecko_id:
+                url = f"{self.pro_api_url}/coins/{searched_id}"
+                response = await super()._api_request(url=url, headers=self.pro_headers)
+                if "error" not in response:
+                    image_urls = response.get("image", {})
+                    if image_urls:
+                        await self.r2_uploader.upload_token_images(searched_id, image_urls)
+                    return self.preprocess_api_response(response)
 
             return {"error": "Failed to fetch token info"}
         except Exception as e:
