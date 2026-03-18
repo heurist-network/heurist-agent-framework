@@ -8,217 +8,278 @@ from mesh.agents.yahoo_finance_agent import YahooFinanceAgent
 from mesh.tests._test_agents import test_agent
 
 TEST_CASES = {
-    "aapl_price_history": {
+    "resolve_apple": {
         "input": {
-            "query": "Get 1d OHLCV for AAPL for the last 6 months",
-            "raw_data_only": False,
-        },
-        "description": "Natural language query for AAPL 1d OHLCV data for 6 months",
-    },
-    "btc_indicators": {
-        "input": {
-            "query": "Give me a 1h indicator snapshot for BTC-USD",
-            "raw_data_only": False,
-        },
-        "description": "Natural language query for BTC-USD 1h indicator snapshot",
-    },
-    "tsla_technical_direct": {
-        "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "TSLA", "interval": "1d", "period": "3mo"},
+            "tool": "resolve_symbol",
+            "tool_arguments": {"query": "Apple", "asset_type": "stock", "limit": 3},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for TSLA technical analysis with raw data",
+        "description": "Resolve Apple into a compact list of stock candidates.",
+        "expected_status": "success",
     },
-    "eth_price_history_direct": {
+    "resolve_invalid_asset_type": {
         "input": {
-            "tool": "fetch_price_history",
-            "tool_arguments": {"symbol": "ETH-USD", "interval": "1h", "period": "5d"},
+            "tool": "resolve_symbol",
+            "tool_arguments": {"query": "Apple", "asset_type": "bond", "limit": 3},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for ETH-USD price history with 1h interval",
+        "description": "Direct error for unsupported asset-type filter.",
+        "expected_status": "error",
     },
-    "tsla_signal_analysis": {
+    "resolve_no_matches": {
         "input": {
-            "query": "Signal summary for TSLA on 1d timeframe",
-            "raw_data_only": False,
+            "tool": "resolve_symbol",
+            "tool_arguments": {"query": "zxqwvut nonexistent corp 123456789", "limit": 3},
+            "raw_data_only": True,
         },
-        "description": "Natural language query for TSLA trading signal summary",
+        "description": "Honest no-data response when symbol search finds nothing.",
+        "expected_status": "error",
     },
-    "googl_date_range": {
+    "quote_snapshot_aapl": {
         "input": {
-            "tool": "fetch_price_history",
+            "tool": "quote_snapshot",
+            "tool_arguments": {"symbol": "AAPL"},
+            "raw_data_only": True,
+        },
+        "description": "Compact quote snapshot for AAPL.",
+        "expected_status": "success",
+    },
+    "quote_snapshot_btc": {
+        "input": {
+            "tool": "quote_snapshot",
+            "tool_arguments": {"symbol": "BTC-USD"},
+            "raw_data_only": True,
+        },
+        "description": "Compact quote snapshot for BTC-USD.",
+        "expected_status": "success",
+    },
+    "quote_snapshot_invalid_symbol": {
+        "input": {
+            "tool": "quote_snapshot",
+            "tool_arguments": {"symbol": "NOTAREALSYMBOL123"},
+            "raw_data_only": True,
+        },
+        "description": "Invalid symbol returns a structured no-data response instead of an exception.",
+        "expected_status": "error",
+    },
+    "price_history_aapl": {
+        "input": {
+            "tool": "price_history",
+            "tool_arguments": {"symbol": "AAPL", "interval": "1d", "period": "6mo", "limit_bars": 10},
+            "raw_data_only": True,
+        },
+        "description": "Normalized daily price history for AAPL.",
+        "expected_status": "success",
+    },
+    "price_history_btc_intraday": {
+        "input": {
+            "tool": "price_history",
+            "tool_arguments": {"symbol": "BTC-USD", "interval": "1h", "period": "1mo", "limit_bars": 12},
+            "raw_data_only": True,
+        },
+        "description": "Normalized intraday price history for BTC-USD.",
+        "expected_status": "success",
+    },
+    "price_history_explicit_range": {
+        "input": {
+            "tool": "price_history",
             "tool_arguments": {
-                "symbol": "GOOGL",
+                "symbol": "AAPL",
                 "interval": "1d",
-                "start_date": "2024-01-01",
-                "end_date": "2024-06-30",
+                "start_date": "2026-01-01",
+                "end_date": "2026-02-01",
+                "limit_bars": 5,
             },
-            "raw_data_only": False,
-        },
-        "description": "Direct tool call for GOOGL with specific date range",
-    },
-    # Crypto test cases
-    "sol_technical_analysis": {
-        "input": {"query": "Show me technical analysis for SOL-USD"},
-        "description": "Natural language query for SOL-USD technical analysis",
-    },
-    "doge_price_data": {
-        "input": {"query": "Get recent price data for DOGE-USD"},
-        "description": "Natural language query for DOGE-USD recent price data",
-    },
-    "ada_trading_signal": {
-        "input": {"query": "What's the trading signal for ADA-USD?"},
-        "description": "Natural language query for ADA-USD trading signal",
-    },
-    # Error handling test
-    "invalid_interval": {
-        "input": {
-            "tool": "fetch_price_history",
-            "tool_arguments": {"symbol": "AAPL", "interval": "5m"},  # Invalid interval
             "raw_data_only": True,
         },
-        "description": "Error handling test with invalid interval (5m not supported)",
+        "description": "Explicit start/end range is respected and reported cleanly.",
+        "expected_status": "success",
     },
-    # Stock symbols tests
-    "msft_indicators": {
+    "price_history_unsupported_interval": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "MSFT", "interval": "1d"},
-            "raw_data_only": False,
-        },
-        "description": "Direct tool call for MSFT indicator snapshot",
-    },
-    "amzn_indicators": {
-        "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "AMZN", "interval": "1d"},
-            "raw_data_only": False,
-        },
-        "description": "Direct tool call for AMZN indicator snapshot",
-    },
-    "nvda_indicators": {
-        "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "NVDA", "interval": "1d"},
-            "raw_data_only": False,
-        },
-        "description": "Direct tool call for NVDA indicator snapshot",
-    },
-    # Major crypto technical analysis
-    "btc_technical": {
-        "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "BTC-USD", "interval": "1d", "period": "1mo"},
+            "tool": "price_history",
+            "tool_arguments": {"symbol": "AAPL", "interval": "4h"},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for BTC-USD technical indicators",
+        "description": "Unsupported interval fails directly.",
+        "expected_status": "error",
     },
-    "eth_technical": {
+    "price_history_invalid_symbol": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "ETH-USD", "interval": "1d", "period": "1mo"},
+            "tool": "price_history",
+            "tool_arguments": {"symbol": "NOTAREALSYMBOL123", "interval": "1d", "period": "1mo"},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for ETH-USD technical indicators",
+        "description": "Invalid symbol returns structured no-data for history requests.",
+        "expected_status": "error",
     },
-    "bnb_technical": {
+    "technical_snapshot_tsla": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "BNB-USD", "interval": "1d", "period": "1mo"},
+            "tool": "technical_snapshot",
+            "tool_arguments": {"symbol": "TSLA", "interval": "1d", "period": "1y"},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for BNB-USD technical indicators",
+        "description": "Agent-ergonomic technical snapshot for TSLA.",
+        "expected_status": "success",
     },
-    "sol_technical": {
+    "technical_snapshot_eth": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "SOL-USD", "interval": "1d", "period": "1mo"},
+            "tool": "technical_snapshot",
+            "tool_arguments": {"symbol": "ETH-USD", "interval": "1h", "period": "3mo"},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for SOL-USD technical indicators",
+        "description": "Agent-ergonomic technical snapshot for ETH-USD.",
+        "expected_status": "success",
     },
-    "xrp_technical": {
+    "technical_snapshot_short_window": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "XRP-USD", "interval": "1d", "period": "1mo"},
+            "tool": "technical_snapshot",
+            "tool_arguments": {"symbol": "AAPL", "interval": "1h", "period": "3d"},
             "raw_data_only": True,
         },
-        "description": "Direct tool call for XRP-USD technical indicators",
+        "description": "Short history window returns no-data when there are not enough completed bars.",
+        "expected_status": "error",
     },
-    # Natural language test cases
-    "apple_trend": {
-        "input": {"query": "What's the current trend for Apple stock?"},
-        "description": "Natural language query for Apple stock trend",
-    },
-    "bitcoin_monthly": {
-        "input": {"query": "Show me Bitcoin price movements over the last month"},
-        "description": "Natural language query for Bitcoin monthly price movements",
-    },
-    "ethereum_signals": {
-        "input": {"query": "Give me trading signals for Ethereum"},
-        "description": "Natural language query for Ethereum trading signals",
-    },
-    "tesla_performance": {
-        "input": {"query": "How is Tesla performing technically?"},
-        "description": "Natural language query for Tesla technical performance",
-    },
-    "microsoft_ohlcv": {
-        "input": {"query": "Get me OHLCV data for Microsoft"},
-        "description": "Natural language query for Microsoft OHLCV data",
-    },
-    # Symbol validation test cases
-    "invalid_symbol_fakecoin": {
+    "news_search_nvidia": {
         "input": {
-            "tool": "fetch_price_history",
-            "tool_arguments": {"symbol": "FAKECOIN-USD", "interval": "1d"},
+            "tool": "news_search",
+            "tool_arguments": {"query": "Nvidia", "limit": 5},
             "raw_data_only": True,
         },
-        "description": "Test invalid symbol rejection (FAKECOIN-USD)",
+        "description": "Recent news search for Nvidia.",
+        "expected_status": "success",
     },
-    "invalid_symbol_random": {
+    "news_search_no_results": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "ABR", "interval": "1d"},
+            "tool": "news_search",
+            "tool_arguments": {"query": "zxqwvut nonexistent corp 123456789", "limit": 3},
             "raw_data_only": True,
         },
-        "description": "",
+        "description": "No-results news query returns structured no-data.",
+        "expected_status": "error",
     },
-    "invalid_symbol_memecoin": {
+    "market_overview_us": {
         "input": {
-            "tool": "fetch_price_history",
-            "tool_arguments": {"symbol": "NEWMEME-USD", "interval": "1h"},
+            "tool": "market_overview",
+            "tool_arguments": {"market": "US"},
             "raw_data_only": True,
         },
-        "description": "Test invalid symbol rejection (NEWMEME-USD)",
+        "description": "US market overview.",
+        "expected_status": "success",
     },
-    "invalid_symbol_numeric": {
+    "market_overview_invalid": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "12345", "interval": "1d"},
+            "tool": "market_overview",
+            "tool_arguments": {"market": "MARS"},
             "raw_data_only": True,
         },
-        "description": "Test invalid symbol rejection (12345)",
+        "description": "Honest failure for unsupported market name.",
+        "expected_status": "error",
     },
-    # Valid symbols that should work
-    "valid_symbol_spy": {
+    "company_fundamentals_aapl": {
         "input": {
-            "tool": "fetch_price_history",
-            "tool_arguments": {"symbol": "SPY", "interval": "1d", "period": "5d"},
+            "tool": "company_fundamentals",
+            "tool_arguments": {"symbol": "AAPL"},
             "raw_data_only": True,
         },
-        "description": "Test valid ETF symbol (SPY)",
+        "description": "Compact company fundamentals for AAPL.",
+        "expected_status": "success",
     },
-    "valid_symbol_qqq": {
+    "company_fundamentals_invalid_asset": {
         "input": {
-            "tool": "indicator_snapshot",
-            "tool_arguments": {"symbol": "QQQ", "interval": "1d"},
+            "tool": "company_fundamentals",
+            "tool_arguments": {"symbol": "SPY"},
             "raw_data_only": True,
         },
-        "description": "Test valid ETF symbol (QQQ)",
+        "description": "Company fundamentals rejects ETF symbols directly.",
+        "expected_status": "error",
+    },
+    "analyst_snapshot_msft": {
+        "input": {
+            "tool": "analyst_snapshot",
+            "tool_arguments": {"symbol": "MSFT"},
+            "raw_data_only": True,
+        },
+        "description": "Compact analyst snapshot for MSFT.",
+        "expected_status": "success",
+    },
+    "analyst_snapshot_invalid_asset": {
+        "input": {
+            "tool": "analyst_snapshot",
+            "tool_arguments": {"symbol": "BTC-USD"},
+            "raw_data_only": True,
+        },
+        "description": "Analyst snapshot rejects non-equity symbols directly.",
+        "expected_status": "error",
+    },
+    "fund_snapshot_spy": {
+        "input": {
+            "tool": "fund_snapshot",
+            "tool_arguments": {"symbol": "SPY"},
+            "raw_data_only": True,
+        },
+        "description": "Compact ETF snapshot for SPY.",
+        "expected_status": "success",
+    },
+    "fund_snapshot_invalid_asset": {
+        "input": {
+            "tool": "fund_snapshot",
+            "tool_arguments": {"symbol": "AAPL"},
+            "raw_data_only": True,
+        },
+        "description": "Fund snapshot rejects equity symbols directly.",
+        "expected_status": "error",
+    },
+    "equity_screen_day_gainers": {
+        "input": {
+            "tool": "equity_screen",
+            "tool_arguments": {"screen_name": "day_gainers", "limit": 5},
+            "raw_data_only": True,
+        },
+        "description": "Curated Yahoo day gainers screen.",
+        "expected_status": "success",
+    },
+    "equity_screen_invalid": {
+        "input": {
+            "tool": "equity_screen",
+            "tool_arguments": {"screen_name": "moonshots", "limit": 5},
+            "raw_data_only": True,
+        },
+        "description": "Unsupported equity screen fails directly.",
+        "expected_status": "error",
     },
 }
 
 
+def _result_status(result):
+    output = result.get("output") or {}
+    data = output.get("data") or {}
+    if data.get("status") == "no_data":
+        return "error"
+    if data.get("status"):
+        return data.get("status")
+    error = (data.get("error") or "").lower()
+    if "rate limited" in error:
+        return "rate_limited"
+    if "error" in data:
+        return "error"
+    return None
+
+
 if __name__ == "__main__":
-    asyncio.run(test_agent(YahooFinanceAgent, TEST_CASES))
+    results = asyncio.run(test_agent(YahooFinanceAgent, TEST_CASES, delay_seconds=1.0))
+    failures = []
+    rate_limited = []
+    for name, case in TEST_CASES.items():
+        actual_status = _result_status(results.get(name, {}))
+        if actual_status == "rate_limited":
+            rate_limited.append(name)
+            continue
+        if actual_status != case["expected_status"]:
+            failures.append(f"{name}: expected {case['expected_status']}, got {actual_status}")
+
+    if rate_limited:
+        print("Yahoo Finance rate limited live success-path checks:", ", ".join(rate_limited))
+
+    if failures:
+        raise SystemExit("\n".join(failures))

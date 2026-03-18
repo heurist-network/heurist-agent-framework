@@ -1942,7 +1942,7 @@ requires-dist = [
     { name = "tiktoken", specifier = "==0.9.0" },
     { name = "uvicorn", specifier = "==0.34.0" },
     { name = "web3-ethereum-defi", specifier = "==0.28.1" },
-    { name = "yfinance", specifier = ">=0.2.65" },
+    { name = "yfinance", specifier = "==1.2.0" },
 ]
 
 [[package]]
@@ -3757,7 +3757,7 @@ wheels = [
 
 [[package]]
 name = "yfinance"
-version = "0.2.65"
+version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -3773,7 +3773,7 @@ dependencies = [
     { name = "requests" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a3/c1/2ef5acda45a71297f4be22e205359e0f93b0171f2b6ebdd681362e725686/yfinance-0.2.65.tar.gz", hash = "sha256:3d465e58c49be9d61f9862829de3e00bef6b623809f32f4efb5197b62fc60485", size = 128666, upload-time = "2025-07-06T16:20:12.769Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c9/1b/431d0ebd6a1e9deaffc8627cc4d26fd869841f31a1429cab7443eced0766/yfinance-1.2.0.tar.gz", hash = "sha256:80cec643eb983330ca63debab1b5492334fa1e6338d82cb17dd4e7b95079cfab", size = 140501, upload-time = "2026-02-16T19:52:34.368Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/1e/631c80e0f97aef46eb73549b9b0f60d94057294e040740f4cad0cb1f48e4/yfinance-0.2.65-py2.py3-none-any.whl", hash = "sha256:7be13abb0d80a17230bf798e9c6a324fa2bef0846684a6d4f7fa2abd21938963", size = 119438, upload-time = "2025-07-06T16:20:11.251Z" },
+    { url = "https://files.pythonhosted.org/packages/1e/60/462859de757ac56830824da7e8cf314b8b0321af5853df867c84cd6c2128/yfinance-1.2.0-py2.py3-none-any.whl", hash = "sha256:1c27d1ebfc6275f476721cc6dba035a49d0cf9a806d6aa1785c9e10cf8a610d8", size = 130247, upload-time = "2026-02-16T19:52:33.109Z" },
 ]
