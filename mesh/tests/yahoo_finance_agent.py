@@ -239,6 +239,42 @@ TEST_CASES = {
         "description": "Curated Yahoo day gainers screen.",
         "expected_status": "success",
     },
+    "equity_screen_aggressive_small_caps": {
+        "input": {
+            "tool": "equity_screen",
+            "tool_arguments": {"screen_name": "aggressive_small_caps", "limit": 5},
+            "raw_data_only": True,
+        },
+        "description": "Curated Yahoo aggressive small caps screen.",
+        "expected_status": "success",
+    },
+    "equity_screen_most_shorted_stocks": {
+        "input": {
+            "tool": "equity_screen",
+            "tool_arguments": {"screen_name": "most_shorted_stocks", "limit": 5},
+            "raw_data_only": True,
+        },
+        "description": "Curated Yahoo most shorted stocks screen.",
+        "expected_status": "success",
+    },
+    "equity_screen_small_cap_gainers": {
+        "input": {
+            "tool": "equity_screen",
+            "tool_arguments": {"screen_name": "small_cap_gainers", "limit": 5},
+            "raw_data_only": True,
+        },
+        "description": "Curated Yahoo small cap gainers screen.",
+        "expected_status": "success",
+    },
+    "equity_screen_undervalued_growth_stocks": {
+        "input": {
+            "tool": "equity_screen",
+            "tool_arguments": {"screen_name": "undervalued_growth_stocks", "limit": 5},
+            "raw_data_only": True,
+        },
+        "description": "Curated Yahoo undervalued growth stocks screen.",
+        "expected_status": "success",
+    },
     "equity_screen_invalid": {
         "input": {
             "tool": "equity_screen",

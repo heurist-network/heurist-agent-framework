@@ -1,9 +1,9 @@
 metadata:
   agent: YahooFinanceAgent
   test_file: yahoo_finance_agent.py
-  timestamp: '2026-03-18T20:49:44.728914'
-  total_tests: 26
-  passed: 26
+  timestamp: '2026-03-18T21:01:13.319703'
+  total_tests: 30
+  passed: 30
   failed: 0
 results:
   resolve_apple:
@@ -42,7 +42,7 @@ results:
             score: 20014.0
     description: Resolve Apple into a compact list of stock candidates.
     status: success
-    elapsed_time: 0.34116315841674805
+    elapsed_time: 0.3443317413330078
   resolve_invalid_asset_type:
     input:
       tool: resolve_symbol
@@ -57,7 +57,7 @@ results:
         error: Unsupported asset_type 'bond'.
     description: Direct error for unsupported asset-type filter.
     status: success
-    elapsed_time: 0.0002484321594238281
+    elapsed_time: 0.00034427642822265625
   resolve_no_matches:
     input:
       tool: resolve_symbol
@@ -71,7 +71,7 @@ results:
         error: No symbol matches found for 'zxqwvut nonexistent corp 123456789'.
     description: Honest no-data response when symbol search finds nothing.
     status: success
-    elapsed_time: 0.09649920463562012
+    elapsed_time: 0.14936470985412598
   quote_snapshot_aapl:
     input:
       tool: quote_snapshot
@@ -95,7 +95,7 @@ results:
             previous_close: 254.15
             day_high: 254.94000244140625
             day_low: 249.0
-            volume: 31181658
+            volume: 34652568
           stats:
             market_cap: 3673599660323.6084
             fifty_day_average: 261.99119873046874
@@ -113,7 +113,7 @@ results:
           as_of: '2026-03-18T00:00:00-04:00'
     description: Compact quote snapshot for AAPL.
     status: success
-    elapsed_time: 0.6761741638183594
+    elapsed_time: 0.7835006713867188
   quote_snapshot_btc:
     input:
       tool: quote_snapshot
@@ -132,14 +132,14 @@ results:
           currency: USD
           exchange: CCC
           price:
-            last_price: 71210.5625
+            last_price: 71240.7265625
             open: 73933.515625
             previous_close: 73940.0703125
             day_high: 74597.015625
             day_low: 70639.78125
-            volume: 46186070016
+            volume: 45301211136
           stats:
-            market_cap: 1424427974656.0
+            market_cap: 1425031299072.0
             fifty_day_average: 70863.213515625
             two_hundred_day_average: 93578.50568359374
             year_high: 126198.0703125
@@ -152,7 +152,7 @@ results:
           as_of: '2026-03-18T00:00:00+00:00'
     description: Compact quote snapshot for BTC-USD.
     status: success
-    elapsed_time: 0.6798484325408936
+    elapsed_time: 0.5114386081695557
   quote_snapshot_invalid_symbol:
     input:
       tool: quote_snapshot
@@ -166,7 +166,7 @@ results:
     description: Invalid symbol returns a structured no-data response instead of an
       exception.
     status: success
-    elapsed_time: 0.7832434177398682
+    elapsed_time: 0.6851167678833008
   price_history_aapl:
     input:
       tool: price_history
@@ -271,7 +271,7 @@ results:
           - *id002
     description: Normalized daily price history for AAPL.
     status: success
-    elapsed_time: 0.1338205337524414
+    elapsed_time: 0.20196533203125
   price_history_btc_intraday:
     input:
       tool: price_history
@@ -296,40 +296,34 @@ results:
             repair: false
             limit_bars: 12
           resolved:
-            start: '2026-02-18T20:00:00+00:00'
-            end: '2026-03-18T19:00:00+00:00'
+            start: '2026-02-18T21:00:00+00:00'
+            end: '2026-03-18T20:00:00+00:00'
             currency: USD
             exchange_timezone: UTC
             instrument_type: CRYPTOCURRENCY
             total_bars: 672
           latest_completed_bar: &id004
+            timestamp: '2026-03-18T20:00:00+00:00'
+            open: 71058.625
+            high: 71273.40625
+            low: 70605.0234375
+            close: 71240.7265625
+            volume: 1385066496
+          previous_completed_bar: &id003
             timestamp: '2026-03-18T19:00:00+00:00'
             open: 71184.4765625
             high: 71453.0234375
             low: 71001.71875
             close: 71111.2421875
             volume: 3270275072
-          previous_completed_bar: &id003
-            timestamp: '2026-03-18T18:00:00+00:00'
-            open: 71775.625
-            high: 71948.5546875
-            low: 70992.875
-            close: 70992.875
-            volume: 974417920
           window_summary:
-            open_close_change: 4855.1484375
-            open_close_change_pct: 7.32785191928101
+            open_close_change: 4914.921875
+            open_close_change_pct: 7.410271007124749
             window_high: 75954.96875
             window_low: 62646.765625
-            volume_total: 304860199936
+            volume_total: 305673835520
             repaired_rows: null
           bars:
-          - timestamp: '2026-03-18T08:00:00+00:00'
-            open: 73889.796875
-            high: 74118.8984375
-            low: 73889.796875
-            close: 74030.09375
-            volume: 60719104
           - timestamp: '2026-03-18T09:00:00+00:00'
             open: 74039.984375
             high: 74264.984375
@@ -384,11 +378,17 @@ results:
             low: 71219.640625
             close: 71616.7109375
             volume: 385953792
+          - timestamp: '2026-03-18T18:00:00+00:00'
+            open: 71775.625
+            high: 71948.5546875
+            low: 70992.875
+            close: 70992.875
+            volume: 974417920
           - *id003
           - *id004
     description: Normalized intraday price history for BTC-USD.
     status: success
-    elapsed_time: 0.11012744903564453
+    elapsed_time: 0.13694548606872559
   price_history_explicit_range:
     input:
       tool: price_history
@@ -464,7 +464,7 @@ results:
           - *id006
     description: Explicit start/end range is respected and reported cleanly.
     status: success
-    elapsed_time: 0.29192018508911133
+    elapsed_time: 0.16085124015808105
   price_history_unsupported_interval:
     input:
       tool: price_history
@@ -478,7 +478,7 @@ results:
         error: Unsupported interval '4h'.
     description: Unsupported interval fails directly.
     status: success
-    elapsed_time: 0.00022864341735839844
+    elapsed_time: 0.00026297569274902344
   price_history_invalid_symbol:
     input:
       tool: price_history
@@ -493,7 +493,7 @@ results:
         error: No historical data returned for NOTAREALSYMBOL123 at 1d interval.
     description: Invalid symbol returns structured no-data for history requests.
     status: success
-    elapsed_time: 0.4186439514160156
+    elapsed_time: 0.48604345321655273
   technical_snapshot_tsla:
     input:
       tool: technical_snapshot
@@ -551,7 +551,7 @@ results:
             - MACD is above signal.
     description: Agent-ergonomic technical snapshot for TSLA.
     status: success
-    elapsed_time: 0.600609302520752
+    elapsed_time: 0.29514479637145996
   technical_snapshot_eth:
     input:
       tool: technical_snapshot
@@ -572,30 +572,30 @@ results:
             start_date: null
             end_date: null
           resolved:
-            start: '2025-12-18T20:00:00+00:00'
-            end: '2026-03-18T19:00:00+00:00'
+            start: '2025-12-18T21:00:00+00:00'
+            end: '2026-03-18T20:00:00+00:00'
             currency: USD
             instrument_type: CRYPTOCURRENCY
             bar_count_used: 2160
-          as_of: '2026-03-18T19:00:00+00:00'
+          as_of: '2026-03-18T20:00:00+00:00'
           price:
-            close: 2184.00732421875
-            support: 2170.0732421875
+            close: 2188.954833984375
+            support: 2155.1220703125
             resistance: 2348.254638671875
           indicators:
-            rsi_14: 28.496858203745106
-            macd: -36.36862638063167
-            macd_signal: -24.09749369087008
-            macd_histogram: -12.271132689761586
-            ema_10: 2217.373383727661
-            sma_50: 2307.6014794921875
-            sma_200: 2151.927600097656
-            bollinger_middle: 2272.297082519531
-            bollinger_upper: 2399.384610084651
-            bollinger_lower: 2145.2095549544115
+            rsi_14: 30.354460781303032
+            macd: -36.634542907116156
+            macd_signal: -26.6049035341193
+            macd_histogram: -10.029639372996858
+            ema_10: 2212.206374683427
+            sma_50: 2304.900205078125
+            sma_200: 2152.6213330078126
+            bollinger_middle: 2265.54755859375
+            bollinger_upper: 2395.394154450236
+            bollinger_lower: 2135.7009627372645
           states:
             trend: bearish
-            momentum: oversold
+            momentum: bearish
             volatility: medium
             macd_state: bearish
             bollinger_position: within_bands
@@ -610,7 +610,7 @@ results:
             - RSI shows bearish momentum.
     description: Agent-ergonomic technical snapshot for ETH-USD.
     status: success
-    elapsed_time: 0.1739501953125
+    elapsed_time: 0.13797426223754883
   technical_snapshot_short_window:
     input:
       tool: technical_snapshot
@@ -626,7 +626,7 @@ results:
     description: Short history window returns no-data when there are not enough completed
       bars.
     status: success
-    elapsed_time: 0.0646369457244873
+    elapsed_time: 0.06146240234375
   news_search_nvidia:
     input:
       tool: news_search
@@ -690,7 +690,7 @@ results:
             - NVDA
     description: Recent news search for Nvidia.
     status: success
-    elapsed_time: 0.24866175651550293
+    elapsed_time: 0.16895723342895508
   news_search_no_results:
     input:
       tool: news_search
@@ -704,7 +704,7 @@ results:
         error: No recent news found for 'zxqwvut nonexistent corp 123456789'.
     description: No-results news query returns structured no-data.
     status: success
-    elapsed_time: 0.09695982933044434
+    elapsed_time: 0.09961462020874023
   market_overview_us:
     input:
       tool: market_overview
@@ -770,12 +770,12 @@ results:
             name: Gold
             quote_type: FUTURE
             exchange: CMX
-            price: 4817.8
+            price: 4828.1
             previous_close: 5008.2
-            change_pct: -3.8017728
+            change_pct: -3.5961041
     description: US market overview.
     status: success
-    elapsed_time: 0.12453746795654297
+    elapsed_time: 0.13443231582641602
   market_overview_invalid:
     input:
       tool: market_overview
@@ -789,7 +789,7 @@ results:
           ''EUROPE'', ''RATES'', ''COMMODITIES'', ''CURRENCIES'', ''CRYPTOCURRENCIES''].'
     description: Honest failure for unsupported market name.
     status: success
-    elapsed_time: 0.0002808570861816406
+    elapsed_time: 0.0002295970916748047
   company_fundamentals_aapl:
     input:
       tool: company_fundamentals
@@ -921,7 +921,7 @@ results:
                 dividends_paid: -3921000000.0
     description: Compact company fundamentals for AAPL.
     status: success
-    elapsed_time: 1.6824793815612793
+    elapsed_time: 1.6470041275024414
   company_fundamentals_invalid_asset:
     input:
       tool: company_fundamentals
@@ -935,7 +935,7 @@ results:
           'etf'.
     description: Company fundamentals rejects ETF symbols directly.
     status: success
-    elapsed_time: 0.19687795639038086
+    elapsed_time: 0.20344328880310059
   analyst_snapshot_msft:
     input:
       tool: analyst_snapshot
@@ -1105,7 +1105,7 @@ results:
             downLast7Days: 0.0
     description: Compact analyst snapshot for MSFT.
     status: success
-    elapsed_time: 0.6317415237426758
+    elapsed_time: 0.44351768493652344
   analyst_snapshot_invalid_asset:
     input:
       tool: analyst_snapshot
@@ -1119,7 +1119,7 @@ results:
           'crypto'.
     description: Analyst snapshot rejects non-equity symbols directly.
     status: success
-    elapsed_time: 0.15934252738952637
+    elapsed_time: 0.1260366439819336
   fund_snapshot_spy:
     input:
       tool: fund_snapshot
@@ -1228,7 +1228,7 @@ results:
           - metric: 3 Year Earnings Growth
     description: Compact ETF snapshot for SPY.
     status: success
-    elapsed_time: 0.1948556900024414
+    elapsed_time: 0.20592784881591797
   fund_snapshot_invalid_asset:
     input:
       tool: fund_snapshot
@@ -1241,7 +1241,7 @@ results:
         error: 'Yahoo Finance request failed: AAPL: No Fund data found.'
     description: Fund snapshot rejects equity symbols directly.
     status: success
-    elapsed_time: 0.20276594161987305
+    elapsed_time: 0.23442339897155762
   equity_screen_day_gainers:
     input:
       tool: equity_screen
@@ -1300,11 +1300,264 @@ results:
             exchange: NMS
             price: 14.78
             change_pct: 12.652437
-            volume: 4745635
+            volume: 4746662
             market_cap: 4372198400.0
     description: Curated Yahoo day gainers screen.
     status: success
-    elapsed_time: 0.09423398971557617
+    elapsed_time: 0.16138577461242676
+  equity_screen_aggressive_small_caps:
+    input:
+      tool: equity_screen
+      tool_arguments:
+        screen_name: aggressive_small_caps
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          screen: aggressive_small_caps
+          title: Aggresive small cap stocks
+          description: Small cap stocks with high earnings growth rates
+          total_candidates: 400
+          returned_candidates: 5
+          candidates:
+          - symbol: ALIT
+            name: Alight, Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 0.6829
+            change_pct: -7.72869
+            volume: 26147183
+            market_cap: 371927840.0
+          - symbol: AMC
+            name: AMC Entertainment Holdings, Inc
+            asset_type: stock
+            exchange: NYQ
+            price: 1.02
+            change_pct: -5.55556
+            volume: 16908646
+            market_cap: 540138368.0
+          - symbol: IRWD
+            name: Ironwood Pharmaceuticals, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 3.17
+            change_pct: -2.461536
+            volume: 3193575
+            market_cap: 516894880.0
+            pe_ratio: 21.133333
+          - symbol: KNDI
+            name: Kandi Technologies Group, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 0.966
+            change_pct: -7.999994
+            volume: 241318
+            market_cap: 83062152.0
+          - symbol: TE
+            name: T1 Energy Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 7.33
+            change_pct: -5.90501
+            volume: 12079626
+            market_cap: 1556641408.0
+    description: Curated Yahoo aggressive small caps screen.
+    status: success
+    elapsed_time: 0.1096949577331543
+  equity_screen_most_shorted_stocks:
+    input:
+      tool: equity_screen
+      tool_arguments:
+        screen_name: most_shorted_stocks
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          screen: most_shorted_stocks
+          title: Most Shorted Stocks
+          description: Stocks with the highest short interest positions from Nasdaq
+            and NYSE reports released every two weeks.
+          total_candidates: 3888
+          returned_candidates: 5
+          candidates:
+          - symbol: HCTI
+            name: Healthcare Triangle, Inc.
+            asset_type: stock
+            exchange: NCM
+            price: 2.84
+            change_pct: -4.69799
+            volume: 126149
+            market_cap: 3281253.0
+          - symbol: XWEL
+            name: XWELL, Inc.
+            asset_type: stock
+            exchange: NCM
+            price: 1.32
+            change_pct: -6.3829727
+            volume: 203075
+            market_cap: 7612048.0
+          - symbol: SNSE
+            name: Sensei Biotherapeutics, Inc.
+            asset_type: stock
+            exchange: NCM
+            price: 30.53
+            change_pct: 1.7327573
+            volume: 119528
+            market_cap: 38519244.0
+          - symbol: KALV
+            name: KalVista Pharmaceuticals, Inc.
+            asset_type: stock
+            exchange: NGM
+            price: 15.49
+            change_pct: -6.4613514
+            volume: 786584
+            market_cap: 782962048.0
+          - symbol: NTLA
+            name: Intellia Therapeutics, Inc.
+            asset_type: stock
+            exchange: NGM
+            price: 13.21
+            change_pct: -2.0029638
+            volume: 2690255
+            market_cap: 1560544128.0
+    description: Curated Yahoo most shorted stocks screen.
+    status: success
+    elapsed_time: 0.16905498504638672
+  equity_screen_small_cap_gainers:
+    input:
+      tool: equity_screen
+      tool_arguments:
+        screen_name: small_cap_gainers
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          screen: small_cap_gainers
+          title: Small caps with momentum
+          description: Small cap stocks with percentchange greater than 5%
+          total_candidates: 21
+          returned_candidates: 5
+          candidates:
+          - symbol: KOS
+            name: Kosmos Energy Ltd.
+            asset_type: stock
+            exchange: NYQ
+            price: 2.66
+            change_pct: 10.8333
+            volume: 29848018
+            market_cap: 1577778816.0
+          - symbol: HUYA
+            name: HUYA Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 3.46
+            change_pct: 9.84127
+            volume: 4804583
+            market_cap: 772983360.0
+          - symbol: AGRO
+            name: Adecoagro S.A.
+            asset_type: stock
+            exchange: NYQ
+            price: 13.63
+            change_pct: 9.47791
+            volume: 5780372
+            market_cap: 1928178048.0
+            pe_ratio: 59.260868
+          - symbol: ADTN
+            name: ADTRAN Holdings, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 11.71
+            change_pct: 8.526414
+            volume: 2668219
+            market_cap: 944524480.0
+          - symbol: ARAY
+            name: Accuray Incorporated
+            asset_type: stock
+            exchange: NMS
+            price: 0.4118
+            change_pct: 5.2389483
+            volume: 2112732
+            market_cap: 48914688.0
+    description: Curated Yahoo small cap gainers screen.
+    status: success
+    elapsed_time: 0.08554983139038086
+  equity_screen_undervalued_growth_stocks:
+    input:
+      tool: equity_screen
+      tool_arguments:
+        screen_name: undervalued_growth_stocks
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          screen: undervalued_growth_stocks
+          title: Undervalued Growth Stocks
+          description: Stocks with earnings growth rates better than 25% and relatively
+            low PE and PEG ratios.
+          total_candidates: 192
+          returned_candidates: 5
+          candidates:
+          - symbol: BBD
+            name: Banco Bradesco Sa
+            asset_type: stock
+            exchange: NYQ
+            price: 3.53
+            change_pct: -1.94444
+            volume: 31997639
+            market_cap: 37314613248.0
+            pe_ratio: 8.609756
+          - symbol: T
+            name: AT&T Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 27.41
+            change_pct: -1.57989
+            volume: 26467346
+            market_cap: 194321809408.0
+            pe_ratio: 9.016447
+          - symbol: PBR
+            name: Petroleo Brasileiro S.A. Petrob
+            asset_type: stock
+            exchange: NYQ
+            price: 19.77
+            change_pct: 1.33265
+            volume: 27070707
+            market_cap: 127405121536.0
+            pe_ratio: 6.336539
+          - symbol: CCL
+            name: Carnival Corporation
+            asset_type: stock
+            exchange: NYQ
+            price: 24.16
+            change_pct: -3.70666
+            volume: 26233523
+            market_cap: 33464971264.0
+            pe_ratio: 11.960396
+          - symbol: AGNC
+            name: AGNC Investment Corp.
+            asset_type: stock
+            exchange: NMS
+            price: 10.3
+            change_pct: -1.8112448
+            volume: 17061947
+            market_cap: 11569364992.0
+            pe_ratio: 7.0068026
+    description: Curated Yahoo undervalued growth stocks screen.
+    status: success
+    elapsed_time: 0.14371275901794434
   equity_screen_invalid:
     input:
       tool: equity_screen
@@ -1315,8 +1568,10 @@ results:
     output:
       response: ''
       data:
-        error: 'Unsupported screen_name ''moonshots''. Supported screens: [''day_gainers'',
-          ''day_losers'', ''most_actives'', ''growth_technology_stocks'', ''undervalued_large_caps''].'
+        error: 'Unsupported screen_name ''moonshots''. Supported screens: [''aggressive_small_caps'',
+          ''day_gainers'', ''day_losers'', ''most_actives'', ''most_shorted_stocks'',
+          ''small_cap_gainers'', ''growth_technology_stocks'', ''undervalued_growth_stocks'',
+          ''undervalued_large_caps''].'
     description: Unsupported equity screen fails directly.
     status: success
-    elapsed_time: 0.0002353191375732422
+    elapsed_time: 0.000244140625

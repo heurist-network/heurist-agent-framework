@@ -28,10 +28,14 @@ ASSET_TYPES = ["stock", "etf", "crypto", "currency", "index", "future", "fund"]
 EQUITY_ONLY_ASSET_TYPES = {"stock"}
 FUND_ONLY_ASSET_TYPES = {"etf", "fund"}
 SUPPORTED_EQUITY_SCREENS = [
+    "aggressive_small_caps",
     "day_gainers",
     "day_losers",
     "most_actives",
+    "most_shorted_stocks",
+    "small_cap_gainers",
     "growth_technology_stocks",
+    "undervalued_growth_stocks",
     "undervalued_large_caps",
 ]
 ASSET_TYPE_MAP = {
