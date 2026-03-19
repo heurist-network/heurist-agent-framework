@@ -38,25 +38,34 @@ TEST_CASES = {
     "quote_snapshot_aapl": {
         "input": {
             "tool": "quote_snapshot",
-            "tool_arguments": {"symbol": "AAPL"},
+            "tool_arguments": {"symbols": ["AAPL"]},
             "raw_data_only": True,
         },
-        "description": "Compact quote snapshot for AAPL.",
+        "description": "Compact quote snapshot for AAPL using a one-item list.",
         "expected_status": "success",
     },
     "quote_snapshot_btc": {
         "input": {
             "tool": "quote_snapshot",
-            "tool_arguments": {"symbol": "BTC-USD"},
+            "tool_arguments": {"symbols": ["BTC-USD"]},
             "raw_data_only": True,
         },
-        "description": "Compact quote snapshot for BTC-USD.",
+        "description": "Compact quote snapshot for BTC-USD using a one-item list.",
+        "expected_status": "success",
+    },
+    "quote_snapshot_batch_mixed": {
+        "input": {
+            "tool": "quote_snapshot",
+            "tool_arguments": {"symbols": ["AAPL", "MSFT", "NOTAREALSYMBOL123"]},
+            "raw_data_only": True,
+        },
+        "description": "Batch quote snapshot returns per-symbol success and no-data rows in one response.",
         "expected_status": "success",
     },
     "quote_snapshot_invalid_symbol": {
         "input": {
             "tool": "quote_snapshot",
-            "tool_arguments": {"symbol": "NOTAREALSYMBOL123"},
+            "tool_arguments": {"symbols": ["NOTAREALSYMBOL123"]},
             "raw_data_only": True,
         },
         "description": "Invalid symbol returns a structured no-data response instead of an exception.",
@@ -65,26 +74,35 @@ TEST_CASES = {
     "price_history_aapl": {
         "input": {
             "tool": "price_history",
-            "tool_arguments": {"symbol": "AAPL", "interval": "1d", "period": "6mo", "limit_bars": 10},
+            "tool_arguments": {"symbols": ["AAPL"], "interval": "1d", "period": "6mo", "limit_bars": 10},
             "raw_data_only": True,
         },
-        "description": "Normalized daily price history for AAPL.",
+        "description": "Normalized daily price history for AAPL using a one-item list.",
         "expected_status": "success",
     },
     "price_history_btc_intraday": {
         "input": {
             "tool": "price_history",
-            "tool_arguments": {"symbol": "BTC-USD", "interval": "1h", "period": "1mo", "limit_bars": 12},
+            "tool_arguments": {"symbols": ["BTC-USD"], "interval": "1h", "period": "1mo", "limit_bars": 12},
             "raw_data_only": True,
         },
-        "description": "Normalized intraday price history for BTC-USD.",
+        "description": "Normalized intraday price history for BTC-USD using a one-item list.",
+        "expected_status": "success",
+    },
+    "price_history_batch_equities": {
+        "input": {
+            "tool": "price_history",
+            "tool_arguments": {"symbols": ["AAPL", "MSFT"], "interval": "1d", "period": "1mo", "limit_bars": 5},
+            "raw_data_only": True,
+        },
+        "description": "Batch daily price history returns bounded bars for multiple equities.",
         "expected_status": "success",
     },
     "price_history_explicit_range": {
         "input": {
             "tool": "price_history",
             "tool_arguments": {
-                "symbol": "AAPL",
+                "symbols": ["AAPL"],
                 "interval": "1d",
                 "start_date": "2026-01-01",
                 "end_date": "2026-02-01",
@@ -98,7 +116,7 @@ TEST_CASES = {
     "price_history_unsupported_interval": {
         "input": {
             "tool": "price_history",
-            "tool_arguments": {"symbol": "AAPL", "interval": "4h"},
+            "tool_arguments": {"symbols": ["AAPL"], "interval": "4h"},
             "raw_data_only": True,
         },
         "description": "Unsupported interval fails directly.",
@@ -107,7 +125,7 @@ TEST_CASES = {
     "price_history_invalid_symbol": {
         "input": {
             "tool": "price_history",
-            "tool_arguments": {"symbol": "NOTAREALSYMBOL123", "interval": "1d", "period": "1mo"},
+            "tool_arguments": {"symbols": ["NOTAREALSYMBOL123"], "interval": "1d", "period": "1mo"},
             "raw_data_only": True,
         },
         "description": "Invalid symbol returns structured no-data for history requests.",
@@ -116,25 +134,34 @@ TEST_CASES = {
     "technical_snapshot_tsla": {
         "input": {
             "tool": "technical_snapshot",
-            "tool_arguments": {"symbol": "TSLA", "interval": "1d", "period": "1y"},
+            "tool_arguments": {"symbols": ["TSLA"], "interval": "1d", "period": "1y"},
             "raw_data_only": True,
         },
-        "description": "Agent-ergonomic technical snapshot for TSLA.",
+        "description": "Agent-ergonomic technical snapshot for TSLA using a one-item list.",
         "expected_status": "success",
     },
     "technical_snapshot_eth": {
         "input": {
             "tool": "technical_snapshot",
-            "tool_arguments": {"symbol": "ETH-USD", "interval": "1h", "period": "3mo"},
+            "tool_arguments": {"symbols": ["ETH-USD"], "interval": "1h", "period": "3mo"},
             "raw_data_only": True,
         },
-        "description": "Agent-ergonomic technical snapshot for ETH-USD.",
+        "description": "Agent-ergonomic technical snapshot for ETH-USD using a one-item list.",
+        "expected_status": "success",
+    },
+    "technical_snapshot_batch_equities": {
+        "input": {
+            "tool": "technical_snapshot",
+            "tool_arguments": {"symbols": ["TSLA", "NVDA"], "interval": "1d", "period": "1y"},
+            "raw_data_only": True,
+        },
+        "description": "Batch technical snapshots return compact per-symbol signals.",
         "expected_status": "success",
     },
     "technical_snapshot_short_window": {
         "input": {
             "tool": "technical_snapshot",
-            "tool_arguments": {"symbol": "AAPL", "interval": "1h", "period": "3d"},
+            "tool_arguments": {"symbols": ["AAPL"], "interval": "1h", "period": "3d"},
             "raw_data_only": True,
         },
         "description": "Short history window returns no-data when there are not enough completed bars.",
@@ -179,16 +206,25 @@ TEST_CASES = {
     "company_fundamentals_aapl": {
         "input": {
             "tool": "company_fundamentals",
-            "tool_arguments": {"symbol": "AAPL"},
+            "tool_arguments": {"symbols": ["AAPL"]},
             "raw_data_only": True,
         },
-        "description": "Compact company fundamentals for AAPL.",
+        "description": "Compact company fundamentals for AAPL using a one-item list.",
+        "expected_status": "success",
+    },
+    "company_fundamentals_batch_mixed": {
+        "input": {
+            "tool": "company_fundamentals",
+            "tool_arguments": {"symbols": ["AAPL", "MSFT", "SPY"]},
+            "raw_data_only": True,
+        },
+        "description": "Batch company fundamentals keeps per-symbol asset mismatch errors scoped to the offending symbol.",
         "expected_status": "success",
     },
     "company_fundamentals_invalid_asset": {
         "input": {
             "tool": "company_fundamentals",
-            "tool_arguments": {"symbol": "SPY"},
+            "tool_arguments": {"symbols": ["SPY"]},
             "raw_data_only": True,
         },
         "description": "Company fundamentals rejects ETF symbols directly.",
@@ -197,16 +233,25 @@ TEST_CASES = {
     "analyst_snapshot_msft": {
         "input": {
             "tool": "analyst_snapshot",
-            "tool_arguments": {"symbol": "MSFT"},
+            "tool_arguments": {"symbols": ["MSFT"]},
             "raw_data_only": True,
         },
-        "description": "Compact analyst snapshot for MSFT.",
+        "description": "Compact analyst snapshot for MSFT using a one-item list.",
+        "expected_status": "success",
+    },
+    "analyst_snapshot_batch_mixed": {
+        "input": {
+            "tool": "analyst_snapshot",
+            "tool_arguments": {"symbols": ["MSFT", "AMZN", "BTC-USD"]},
+            "raw_data_only": True,
+        },
+        "description": "Batch analyst snapshot returns per-symbol equity-only validation.",
         "expected_status": "success",
     },
     "analyst_snapshot_invalid_asset": {
         "input": {
             "tool": "analyst_snapshot",
-            "tool_arguments": {"symbol": "BTC-USD"},
+            "tool_arguments": {"symbols": ["BTC-USD"]},
             "raw_data_only": True,
         },
         "description": "Analyst snapshot rejects non-equity symbols directly.",
@@ -215,16 +260,25 @@ TEST_CASES = {
     "fund_snapshot_spy": {
         "input": {
             "tool": "fund_snapshot",
-            "tool_arguments": {"symbol": "SPY"},
+            "tool_arguments": {"symbols": ["SPY"]},
             "raw_data_only": True,
         },
-        "description": "Compact ETF snapshot for SPY.",
+        "description": "Compact ETF snapshot for SPY using a one-item list.",
+        "expected_status": "success",
+    },
+    "fund_snapshot_batch_mixed": {
+        "input": {
+            "tool": "fund_snapshot",
+            "tool_arguments": {"symbols": ["SPY", "QQQ", "AAPL"]},
+            "raw_data_only": True,
+        },
+        "description": "Batch fund snapshots return per-symbol fund-only validation.",
         "expected_status": "success",
     },
     "fund_snapshot_invalid_asset": {
         "input": {
             "tool": "fund_snapshot",
-            "tool_arguments": {"symbol": "AAPL"},
+            "tool_arguments": {"symbols": ["AAPL"]},
             "raw_data_only": True,
         },
         "description": "Fund snapshot rejects equity symbols directly.",

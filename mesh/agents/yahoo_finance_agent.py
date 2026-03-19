@@ -93,6 +93,7 @@ CASH_FLOW_FIELDS = {
     "financing_cash_flow": ["Financing Cash Flow", "Cash Flow From Continuing Financing Activities"],
     "dividends_paid": ["Cash Dividends Paid", "Common Stock Dividend Paid"],
 }
+MAX_BATCH_SYMBOLS = 10
 
 
 class YahooFinanceAgent(MeshAgent):
@@ -124,7 +125,7 @@ class YahooFinanceAgent(MeshAgent):
                 "credits": {"default": 1},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.002",
                 },
             }
         )
@@ -149,10 +150,11 @@ Use the tools with clear scope:
 
 Rules:
 - Use exact symbols when the user already provides them
+- For symbol-based tools, always pass `symbols` as a list, even for one symbol like `["NVDA"]`
 - Prefer compact, structured outputs over raw dumps
 - Be honest about unsupported asset/tool combinations
 - Use the latest completed candle for technical analysis and price-history summaries
-- Mention the exact symbol, interval, and resolved date window in your response
+- Mention the exact symbols, interval, and resolved date window in your response
 """
 
     def get_tool_schemas(self) -> List[Dict]:
@@ -188,16 +190,16 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "quote_snapshot",
-                    "description": "Return a compact current snapshot for one Yahoo Finance symbol. Works best for stocks, ETFs, major crypto, indices, currencies, and futures.",
+                    "description": "Return compact current snapshots for one or more exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {
-                                "type": "string",
-                                "description": "Exact Yahoo Finance symbol such as AAPL, SPY, BTC-USD, EURUSD=X, or GC=F.",
+                            "symbols": {
+                                "type": "array",
+                                "description": "1 to 10 exact Yahoo Finance symbols such as AAPL, SPY, BTC-USD, EURUSD=X, or GC=F. Use a one-item list for a single symbol.",
                             }
                         },
-                        "required": ["symbol"],
+                        "required": ["symbols"],
                     },
                 },
             },
@@ -205,11 +207,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "price_history",
-                    "description": "Return normalized OHLCV history with compact metadata, latest completed bar, and a limited number of bars. Use this instead of raw Yahoo Finance history dumps.",
+                    "description": "Return normalized OHLCV history for one or more exact Yahoo Finance symbols with compact metadata, latest completed bar, and a limited number of bars. Use a one-item list for a single symbol.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Exact Yahoo Finance symbol."},
+                            "symbols": {
+                                "type": "array",
+                                "description": "1 to 10 exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
+                            },
                             "interval": {
                                 "type": "string",
                                 "enum": HISTORY_INTERVALS,
@@ -241,7 +246,7 @@ Rules:
                                 "default": 50,
                             },
                         },
-                        "required": ["symbol"],
+                        "required": ["symbols"],
                     },
                 },
             },
@@ -249,11 +254,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "technical_snapshot",
-                    "description": "Return a quick technical analysis snapshot with trend, momentum, volatility, key levels, and a compact buy/sell/neutral signal.",
+                    "description": "Return quick technical analysis snapshots for one or more exact Yahoo Finance symbols with trend, momentum, volatility, key levels, and a compact buy/sell/neutral signal. Use a one-item list for a single symbol.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Exact Yahoo Finance symbol."},
+                            "symbols": {
+                                "type": "array",
+                                "description": "1 to 10 exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
+                            },
                             "interval": {
                                 "type": "string",
                                 "enum": HISTORY_INTERVALS,
@@ -270,7 +278,7 @@ Rules:
                             },
                             "end_date": {"type": "string", "description": "Exclusive end date in YYYY-MM-DD format."},
                         },
-                        "required": ["symbol"],
+                        "required": ["symbols"],
                     },
                 },
             },
@@ -278,11 +286,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "news_search",
-                    "description": "Return compact recent news items for a symbol, company, asset, or market topic.",
+                    "description": "Return compact recent news items for a symbol, company, asset, or market topic. Best with short ticker-style queries, company names, or compact topic phrases. Avoid long natural-language questions.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "query": {"type": "string", "description": "Symbol, company name, or news topic."},
+                            "query": {
+                                "type": "string",
+                                "description": "Short Yahoo-style search input such as a symbol, company name, or compact topic phrase like 'AAPL', 'Nvidia', 'oil prices', or 'energy sector'. Avoid long sentence-like queries.",
+                            },
                             "limit": {
                                 "type": "integer",
                                 "description": "Maximum number of news items to return.",
@@ -316,13 +327,16 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "company_fundamentals",
-                    "description": "Return compact company fundamentals for one equity, including profile, earnings calendar, recent SEC filings, and summarized financial statements.",
+                    "description": "Return compact company fundamentals for one or more equity symbols, including profile, earnings calendar, recent SEC filings, and summarized financial statements. Use a one-item list for a single symbol.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Exact Yahoo Finance equity symbol."}
+                            "symbols": {
+                                "type": "array",
+                                "description": "1 to 10 exact Yahoo Finance equity symbols. Use a one-item list for a single symbol.",
+                            }
                         },
-                        "required": ["symbol"],
+                        "required": ["symbols"],
                     },
                 },
             },
@@ -330,13 +344,16 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "analyst_snapshot",
-                    "description": "Return a compact analyst view for one equity, including recommendations, price targets, estimates, EPS trend, and revisions.",
+                    "description": "Return compact analyst views for one or more equity symbols, including recommendations, price targets, estimates, EPS trend, and revisions. Use a one-item list for a single symbol.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Exact Yahoo Finance equity symbol."}
+                            "symbols": {
+                                "type": "array",
+                                "description": "1 to 10 exact Yahoo Finance equity symbols. Use a one-item list for a single symbol.",
+                            }
                         },
-                        "required": ["symbol"],
+                        "required": ["symbols"],
                     },
                 },
             },
@@ -344,13 +361,16 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "fund_snapshot",
-                    "description": "Return a compact ETF or mutual-fund snapshot including description, expense ratio, asset allocation, top holdings, and exposures when available.",
+                    "description": "Return compact ETF or mutual-fund snapshots including description, expense ratio, asset allocation, top holdings, and exposures when available. Use a one-item list for a single symbol.",
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "symbol": {"type": "string", "description": "Exact Yahoo Finance ETF or mutual-fund symbol."}
+                            "symbols": {
+                                "type": "array",
+                                "description": "1 to 10 exact Yahoo Finance ETF or mutual-fund symbols. Use a one-item list for a single symbol.",
+                            }
                         },
-                        "required": ["symbol"],
+                        "required": ["symbols"],
                     },
                 },
             },
@@ -383,6 +403,77 @@ Rules:
         if not symbol or not isinstance(symbol, str):
             return None
         return symbol.strip().upper()
+
+    def _normalize_symbols(self, symbols: Any) -> tuple[Optional[List[str]], Optional[str]]:
+        if not isinstance(symbols, list) or not symbols:
+            return None, "symbols must be a non-empty list of exact Yahoo Finance symbols."
+
+        normalized = []
+        seen = set()
+        for raw_symbol in symbols:
+            symbol = self._normalize_symbol(raw_symbol)
+            if symbol is None:
+                return None, "Each entry in symbols must be a non-empty string."
+            if symbol in seen:
+                continue
+            normalized.append(symbol)
+            seen.add(symbol)
+
+        if not normalized:
+            return None, "symbols must contain at least one non-empty symbol."
+        if len(normalized) > MAX_BATCH_SYMBOLS:
+            return None, f"symbols supports at most {MAX_BATCH_SYMBOLS} tickers per request."
+        return normalized, None
+
+    def _batch_response(self, symbols: List[str], results: List[Dict[str, Any]]) -> Dict[str, Any]:
+        succeeded = sum(1 for item in results if item.get("status") == "success")
+        no_data = sum(1 for item in results if item.get("status") == "no_data")
+        errors = sum(1 for item in results if item.get("status") == "error")
+
+        overall_status = "success"
+        if succeeded == 0:
+            if no_data and not errors:
+                overall_status = "no_data"
+            else:
+                overall_status = "error"
+
+        return {
+            "status": overall_status,
+            "data": {
+                "symbols": symbols,
+                "summary": {
+                    "requested": len(symbols),
+                    "succeeded": succeeded,
+                    "no_data": no_data,
+                    "errors": errors,
+                },
+                "results": results,
+            },
+        }
+
+    def _batch_result_item(self, symbol: str, result: Dict[str, Any]) -> Dict[str, Any]:
+        item = {"symbol": symbol, "status": result.get("status", "error")}
+        if "data" in result:
+            item["data"] = result["data"]
+        if "error" in result:
+            item["error"] = result["error"]
+        return item
+
+    async def _run_symbol_tool_batch(self, symbols: List[str], fetch_one) -> Dict[str, Any]:
+        gathered = await asyncio.gather(*(fetch_one(symbol) for symbol in symbols), return_exceptions=True)
+        results = []
+        for symbol, result in zip(symbols, gathered):
+            if isinstance(result, Exception):
+                results.append(
+                    {
+                        "symbol": symbol,
+                        "status": "error",
+                        "error": f"Unhandled exception while processing {symbol}: {result}",
+                    }
+                )
+                continue
+            results.append(self._batch_result_item(symbol, result))
+        return self._batch_response(symbols, results)
 
     def _normalize_asset_type(self, quote_type: Optional[str], type_disp: Optional[str] = None) -> Optional[str]:
         if quote_type and quote_type.upper() in ASSET_TYPE_MAP:
@@ -488,7 +579,7 @@ Rules:
             return df
 
         last_ts = pd.Timestamp(df.index[-1])
-        now = pd.Timestamp.now(tz=last_ts.tz) if last_ts.tz else pd.Timestamp.utcnow()
+        now = pd.Timestamp.now(tz=last_ts.tz) if last_ts.tz is not None else pd.Timestamp.now()
 
         if interval in INTRADAY_DELTAS:
             if now < last_ts + INTRADAY_DELTAS[interval]:
@@ -585,6 +676,79 @@ Rules:
         df.columns = [c.lower() for c in df.columns]
         return stockstats_wrap(df)
 
+    def _download_kwargs(
+        self,
+        interval: str,
+        period: Optional[str],
+        start_date: Optional[str],
+        end_date: Optional[str],
+        include_prepost: bool,
+        repair: bool,
+    ) -> Dict[str, Any]:
+        kwargs = {
+            "interval": interval,
+            "auto_adjust": True,
+            "prepost": include_prepost,
+            "repair": repair,
+            "actions": False,
+            "progress": False,
+            "threads": False,
+            "timeout": 10,
+            "group_by": "ticker",
+            "multi_level_index": True,
+        }
+        if start_date or end_date:
+            kwargs["start"] = start_date
+            kwargs["end"] = end_date
+        else:
+            kwargs["period"] = period or self._default_period(interval)
+        return kwargs
+
+    def _extract_download_frame(self, df: pd.DataFrame, symbol: str) -> pd.DataFrame:
+        if df is None or df.empty:
+            return pd.DataFrame()
+        try:
+            if isinstance(df.columns, pd.MultiIndex):
+                symbol_df = df[symbol].copy()
+            else:
+                symbol_df = df.copy()
+        except Exception:
+            return pd.DataFrame()
+        if symbol_df is None or symbol_df.empty:
+            return pd.DataFrame()
+        return symbol_df.dropna(how="all")
+
+    async def _fetch_history_batch(
+        self,
+        symbols: List[str],
+        interval: str,
+        period: Optional[str] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        include_prepost: bool = False,
+        repair: bool = False,
+    ) -> Dict[str, pd.DataFrame]:
+        if interval not in HISTORY_INTERVALS:
+            return {symbol: pd.DataFrame() for symbol in symbols}
+
+        def _do_download() -> Dict[str, pd.DataFrame]:
+            downloaded = yf.download(
+                symbols,
+                **self._download_kwargs(interval, period, start_date, end_date, include_prepost, repair),
+            )
+            return {symbol: self._extract_download_frame(downloaded, symbol) for symbol in symbols}
+
+        return await asyncio.to_thread(_do_download)
+
+    async def _fetch_history_metadata(self, symbol: str) -> Dict[str, Any]:
+        def _do_metadata() -> Dict[str, Any]:
+            return yf.Ticker(symbol).get_history_metadata() or {}
+
+        try:
+            return await asyncio.to_thread(_do_metadata)
+        except Exception:
+            return {}
+
     async def _fetch_history(
         self,
         symbol: str,
@@ -652,7 +816,9 @@ Rules:
             )
         return items[:8]
 
-    def _asset_support_error(self, symbol: str, asset_type: Optional[str], supported_types: set[str], tool_name: str) -> Dict[str, Any]:
+    def _asset_support_error(
+        self, symbol: str, asset_type: Optional[str], supported_types: set[str], tool_name: str
+    ) -> Dict[str, Any]:
         supported = ", ".join(sorted(supported_types))
         actual = asset_type or "unknown"
         return {
@@ -781,7 +947,9 @@ Rules:
             )
         return items
 
-    def _normalize_comparison_table(self, df: pd.DataFrame, metric_column: str, value_column: str, limit: int) -> List[Dict[str, Any]]:
+    def _normalize_comparison_table(
+        self, df: pd.DataFrame, metric_column: str, value_column: str, limit: int
+    ) -> List[Dict[str, Any]]:
         if df is None or df.empty:
             return []
 
@@ -862,19 +1030,32 @@ Rules:
 
     @with_cache(ttl_seconds=120)
     @with_retry(max_retries=1)
-    async def quote_snapshot(self, symbol: str) -> Dict[str, Any]:
-        symbol = self._normalize_symbol(symbol)
-        if symbol is None:
-            return {"status": "error", "error": "Symbol must be a non-empty string."}
+    async def quote_snapshot(self, symbols: List[str]) -> Dict[str, Any]:
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
 
+        try:
+            recent_frames = await self._fetch_history_batch(normalized_symbols, interval="1d", period="5d")
+        except Exception:
+            recent_frames = {}
+
+        return await self._run_symbol_tool_batch(
+            normalized_symbols,
+            lambda symbol: self._quote_snapshot_one(symbol, recent_frames.get(symbol)),
+        )
+
+    async def _quote_snapshot_one(self, symbol: str, recent: Optional[pd.DataFrame] = None) -> Dict[str, Any]:
         def _do_quote() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
-            recent = ticker.history(period="5d", interval="1d", auto_adjust=True, actions=False, raise_errors=True)
-            if recent is None or recent.empty:
+            recent_df = recent.copy() if isinstance(recent, pd.DataFrame) else pd.DataFrame()
+            if recent_df.empty:
+                recent_df = ticker.history(period="5d", interval="1d", auto_adjust=True, actions=False, raise_errors=True)
+            if recent_df is None or recent_df.empty:
                 return {}
             fast_info = dict(ticker.fast_info)
             info = ticker.info or {}
-            last_row = recent.iloc[-1]
+            last_row = recent_df.iloc[-1]
             quote_type = info.get("quoteType") or fast_info.get("quoteType")
             asset_type = self._normalize_asset_type(quote_type, info.get("typeDisp"))
             name = info.get("shortName") or info.get("longName") or info.get("name") or symbol
@@ -889,7 +1070,7 @@ Rules:
                     "last_price": self._safe_float(fast_info.get("lastPrice") or last_row.get("Close")),
                     "open": self._safe_float(fast_info.get("open") or last_row.get("Open")),
                     "previous_close": self._safe_float(
-                        fast_info.get("previousClose") or fast_info.get("regularMarketPreviousClose")
+                        fast_info.get("previousClose") or info.get("regularMarketPreviousClose")
                     ),
                     "day_high": self._safe_float(fast_info.get("dayHigh") or last_row.get("High")),
                     "day_low": self._safe_float(fast_info.get("dayLow") or last_row.get("Low")),
@@ -906,7 +1087,7 @@ Rules:
                     else None,
                 },
                 "profile": self._compact_profile(info, asset_type),
-                "as_of": self._iso(recent.index[-1]),
+                "as_of": self._iso(recent_df.index[-1]),
             }
 
         try:
@@ -921,7 +1102,7 @@ Rules:
     @with_retry(max_retries=1)
     async def price_history(
         self,
-        symbol: str,
+        symbols: List[str],
         interval: str = "1d",
         period: Optional[str] = None,
         start_date: Optional[str] = None,
@@ -930,16 +1111,16 @@ Rules:
         repair: bool = False,
         limit_bars: int = 50,
     ) -> Dict[str, Any]:
-        symbol = self._normalize_symbol(symbol)
-        if symbol is None:
-            return {"status": "error", "error": "Symbol must be a non-empty string."}
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
         if interval not in HISTORY_INTERVALS:
             return {"status": "error", "error": f"Unsupported interval '{interval}'."}
 
         limit_bars = max(1, min(limit_bars or 50, 250))
         try:
-            df, metadata = await self._fetch_history(
-                symbol=symbol,
+            history_frames = await self._fetch_history_batch(
+                symbols=normalized_symbols,
                 interval=interval,
                 period=period,
                 start_date=start_date,
@@ -947,6 +1128,60 @@ Rules:
                 include_prepost=include_prepost,
                 repair=repair,
             )
+        except Exception:
+            history_frames = {}
+
+        metadata_results = await asyncio.gather(
+            *(self._fetch_history_metadata(symbol) for symbol in normalized_symbols),
+            return_exceptions=True,
+        )
+        metadata_by_symbol = {
+            symbol: metadata if isinstance(metadata, dict) else {}
+            for symbol, metadata in zip(normalized_symbols, metadata_results)
+        }
+
+        return await self._run_symbol_tool_batch(
+            normalized_symbols,
+            lambda symbol: self._price_history_one(
+                symbol=symbol,
+                interval=interval,
+                period=period,
+                start_date=start_date,
+                end_date=end_date,
+                include_prepost=include_prepost,
+                repair=repair,
+                limit_bars=limit_bars,
+                prefetched_df=history_frames.get(symbol),
+                metadata=metadata_by_symbol.get(symbol, {}),
+            ),
+        )
+
+    async def _price_history_one(
+        self,
+        symbol: str,
+        interval: str,
+        period: Optional[str] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        include_prepost: bool = False,
+        repair: bool = False,
+        limit_bars: int = 50,
+        prefetched_df: Optional[pd.DataFrame] = None,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        try:
+            df = prefetched_df.copy() if isinstance(prefetched_df, pd.DataFrame) else pd.DataFrame()
+            current_metadata = metadata or {}
+            if df.empty:
+                df, current_metadata = await self._fetch_history(
+                    symbol=symbol,
+                    interval=interval,
+                    period=period,
+                    start_date=start_date,
+                    end_date=end_date,
+                    include_prepost=include_prepost,
+                    repair=repair,
+                )
         except Exception as exc:
             return self._yfinance_error(exc, f"No historical data returned for {symbol} at {interval} interval.")
 
@@ -975,9 +1210,9 @@ Rules:
                 "resolved": {
                     "start": self._iso(completed.index.min()),
                     "end": self._iso(completed.index.max()),
-                    "currency": metadata.get("currency"),
-                    "exchange_timezone": metadata.get("exchangeTimezoneName"),
-                    "instrument_type": metadata.get("instrumentType"),
+                    "currency": current_metadata.get("currency"),
+                    "exchange_timezone": current_metadata.get("exchangeTimezoneName"),
+                    "instrument_type": current_metadata.get("instrumentType"),
                     "total_bars": len(completed),
                 },
                 "latest_completed_bar": latest_bar,
@@ -991,21 +1226,21 @@ Rules:
     @with_retry(max_retries=1)
     async def technical_snapshot(
         self,
-        symbol: str,
+        symbols: List[str],
         interval: str = "1d",
         period: Optional[str] = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> Dict[str, Any]:
-        symbol = self._normalize_symbol(symbol)
-        if symbol is None:
-            return {"status": "error", "error": "Symbol must be a non-empty string."}
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
         if interval not in HISTORY_INTERVALS:
             return {"status": "error", "error": f"Unsupported interval '{interval}'."}
 
         try:
-            df, metadata = await self._fetch_history(
-                symbol=symbol,
+            history_frames = await self._fetch_history_batch(
+                symbols=normalized_symbols,
                 interval=interval,
                 period=period,
                 start_date=start_date,
@@ -1013,6 +1248,54 @@ Rules:
                 include_prepost=False,
                 repair=False,
             )
+        except Exception:
+            history_frames = {}
+
+        metadata_results = await asyncio.gather(
+            *(self._fetch_history_metadata(symbol) for symbol in normalized_symbols),
+            return_exceptions=True,
+        )
+        metadata_by_symbol = {
+            symbol: metadata if isinstance(metadata, dict) else {}
+            for symbol, metadata in zip(normalized_symbols, metadata_results)
+        }
+
+        return await self._run_symbol_tool_batch(
+            normalized_symbols,
+            lambda symbol: self._technical_snapshot_one(
+                symbol=symbol,
+                interval=interval,
+                period=period,
+                start_date=start_date,
+                end_date=end_date,
+                prefetched_df=history_frames.get(symbol),
+                metadata=metadata_by_symbol.get(symbol, {}),
+            ),
+        )
+
+    async def _technical_snapshot_one(
+        self,
+        symbol: str,
+        interval: str = "1d",
+        period: Optional[str] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        prefetched_df: Optional[pd.DataFrame] = None,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        try:
+            df = prefetched_df.copy() if isinstance(prefetched_df, pd.DataFrame) else pd.DataFrame()
+            current_metadata = metadata or {}
+            if df.empty:
+                df, current_metadata = await self._fetch_history(
+                    symbol=symbol,
+                    interval=interval,
+                    period=period,
+                    start_date=start_date,
+                    end_date=end_date,
+                    include_prepost=False,
+                    repair=False,
+                )
         except Exception as exc:
             return self._yfinance_error(exc, f"No historical data returned for {symbol} at {interval} interval.")
         df = self._drop_incomplete_bar(df, interval)
@@ -1032,8 +1315,6 @@ Rules:
                 return None
 
         close = df["Close"].astype(float)
-        high = df["High"].astype(float)
-        low = df["Low"].astype(float)
         rsi = _series("rsi")
         macd = _series("macd")
         macds = _series("macds")
@@ -1141,8 +1422,8 @@ Rules:
                 "resolved": {
                     "start": self._iso(df.index.min()),
                     "end": self._iso(df.index.max()),
-                    "currency": metadata.get("currency"),
-                    "instrument_type": metadata.get("instrumentType"),
+                    "currency": current_metadata.get("currency"),
+                    "instrument_type": current_metadata.get("instrumentType"),
                     "bar_count_used": len(df),
                 },
                 "as_of": self._iso(df.index[-1]),
@@ -1243,11 +1524,13 @@ Rules:
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=1)
-    async def company_fundamentals(self, symbol: str) -> Dict[str, Any]:
-        symbol = self._normalize_symbol(symbol)
-        if symbol is None:
-            return {"status": "error", "error": "Symbol must be a non-empty string."}
+    async def company_fundamentals(self, symbols: List[str]) -> Dict[str, Any]:
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
+        return await self._run_symbol_tool_batch(normalized_symbols, self._company_fundamentals_one)
 
+    async def _company_fundamentals_one(self, symbol: str) -> Dict[str, Any]:
         def _do_company() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
             info = ticker.info or {}
@@ -1285,16 +1568,20 @@ Rules:
         if not fundamentals:
             return {"status": "no_data", "error": f"No company fundamentals returned for {symbol}."}
         if "asset_type" in fundamentals:
-            return self._asset_support_error(symbol, fundamentals.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "company_fundamentals")
+            return self._asset_support_error(
+                symbol, fundamentals.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "company_fundamentals"
+            )
         return {"status": "success", "data": self._prune_empty(fundamentals)}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=1)
-    async def analyst_snapshot(self, symbol: str) -> Dict[str, Any]:
-        symbol = self._normalize_symbol(symbol)
-        if symbol is None:
-            return {"status": "error", "error": "Symbol must be a non-empty string."}
+    async def analyst_snapshot(self, symbols: List[str]) -> Dict[str, Any]:
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
+        return await self._run_symbol_tool_batch(normalized_symbols, self._analyst_snapshot_one)
 
+    async def _analyst_snapshot_one(self, symbol: str) -> Dict[str, Any]:
         def _do_analyst() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
             info = ticker.info or {}
@@ -1330,16 +1617,20 @@ Rules:
         if not snapshot:
             return {"status": "no_data", "error": f"No analyst data returned for {symbol}."}
         if "asset_type" in snapshot:
-            return self._asset_support_error(symbol, snapshot.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "analyst_snapshot")
+            return self._asset_support_error(
+                symbol, snapshot.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "analyst_snapshot"
+            )
         return {"status": "success", "data": self._prune_empty(snapshot)}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=1)
-    async def fund_snapshot(self, symbol: str) -> Dict[str, Any]:
-        symbol = self._normalize_symbol(symbol)
-        if symbol is None:
-            return {"status": "error", "error": "Symbol must be a non-empty string."}
+    async def fund_snapshot(self, symbols: List[str]) -> Dict[str, Any]:
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
+        return await self._run_symbol_tool_batch(normalized_symbols, self._fund_snapshot_one)
 
+    async def _fund_snapshot_one(self, symbol: str) -> Dict[str, Any]:
         def _do_fund() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
             info = ticker.info or {}
@@ -1428,14 +1719,14 @@ Rules:
 
     async def fetch_price_history(
         self,
-        symbol: str,
+        symbols: List[str],
         interval: str = "1d",
         period: Optional[str] = "6mo",
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> Dict[str, Any]:
         return await self.price_history(
-            symbol=symbol,
+            symbols=symbols,
             interval=interval,
             period=period,
             start_date=start_date,
@@ -1447,14 +1738,14 @@ Rules:
 
     async def indicator_snapshot(
         self,
-        symbol: str,
+        symbols: List[str],
         interval: str = "1d",
         period: str = "6mo",
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
     ) -> Dict[str, Any]:
         return await self.technical_snapshot(
-            symbol=symbol,
+            symbols=symbols,
             interval=interval,
             period=period,
             start_date=start_date,
@@ -1474,10 +1765,10 @@ Rules:
                     limit=function_args.get("limit", 5),
                 )
             elif tool_name == "quote_snapshot":
-                result = await self.quote_snapshot(symbol=function_args.get("symbol"))
+                result = await self.quote_snapshot(symbols=function_args.get("symbols"))
             elif tool_name in {"price_history", "fetch_price_history"}:
                 result = await self.price_history(
-                    symbol=function_args.get("symbol"),
+                    symbols=function_args.get("symbols"),
                     interval=function_args.get("interval", "1d"),
                     period=function_args.get("period"),
                     start_date=function_args.get("start_date"),
@@ -1488,7 +1779,7 @@ Rules:
                 )
             elif tool_name in {"technical_snapshot", "indicator_snapshot"}:
                 result = await self.technical_snapshot(
-                    symbol=function_args.get("symbol"),
+                    symbols=function_args.get("symbols"),
                     interval=function_args.get("interval", "1d"),
                     period=function_args.get("period"),
                     start_date=function_args.get("start_date"),
@@ -1502,11 +1793,11 @@ Rules:
             elif tool_name == "market_overview":
                 result = await self.market_overview(market=function_args.get("market", "US"))
             elif tool_name == "company_fundamentals":
-                result = await self.company_fundamentals(symbol=function_args.get("symbol"))
+                result = await self.company_fundamentals(symbols=function_args.get("symbols"))
             elif tool_name == "analyst_snapshot":
-                result = await self.analyst_snapshot(symbol=function_args.get("symbol"))
+                result = await self.analyst_snapshot(symbols=function_args.get("symbols"))
             elif tool_name == "fund_snapshot":
-                result = await self.fund_snapshot(symbol=function_args.get("symbol"))
+                result = await self.fund_snapshot(symbols=function_args.get("symbols"))
             elif tool_name == "equity_screen":
                 result = await self.equity_screen(
                     screen_name=function_args.get("screen_name"),
