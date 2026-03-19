@@ -1,0 +1,607 @@
+metadata:
+  agent: SecEdgarAgent
+  test_file: sec_edgar_agent.py
+  timestamp: '2026-03-19T17:57:09.550486'
+  total_tests: 9
+  passed: 9
+  failed: 0
+results:
+  resolve_company_apple:
+    input:
+      tool: resolve_company
+      tool_arguments:
+        query: AAPL
+        limit: 3
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          query: AAPL
+          best_match: &id001
+            cik: 0000320193
+            ticker: AAPL
+            title: Apple Inc.
+            score: 95.0
+          candidates:
+          - *id001
+          - cik: 0001785424
+            ticker: KPLT
+            title: Katapult Holdings, Inc.
+            score: 46.67
+          - cik: 0001785424
+            ticker: KPLTW
+            title: Katapult Holdings, Inc.
+            score: 46.67
+    description: Resolve a stock ticker into the canonical SEC issuer record.
+    status: success
+    elapsed_time: 0.5033440589904785
+  resolve_company_missing:
+    input:
+      tool: resolve_company
+      tool_arguments:
+        query: zxqwvut nonexistent corp 123456789
+        limit: 3
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: error
+        error: No SEC issuer matched 'zxqwvut nonexistent corp 123456789'
+    description: Unknown issuer returns a direct SEC resolution error.
+    status: success
+    elapsed_time: 0.5625431537628174
+  filing_timeline_tesla:
+    input:
+      tool: filing_timeline
+      tool_arguments:
+        query: TSLA
+        forms: &id002
+        - 8-K
+        - 10-Q
+        - 10-K
+        limit: 6
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          company:
+            cik: 0001318605
+            ticker: TSLA
+            title: Tesla, Inc.
+            score: 95.0
+          forms: *id002
+          counts_by_form:
+            10-K: 1
+            8-K: 7
+            10-Q: 2
+          filings:
+          - cik: 0001318605
+            accession_number: 0001628280-26-003952
+            filing_date: '2026-01-29'
+            report_date: '2025-12-31'
+            acceptance_datetime: '2026-01-29T01:55:03.000Z'
+            form: 10-K
+            file_number: 001-34756
+            items: []
+            primary_document: tsla-20251231.htm
+            primary_doc_description: 10-K
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm
+          - cik: 0001318605
+            accession_number: 0001628280-26-003837
+            filing_date: '2026-01-28'
+            report_date: '2026-01-28'
+            acceptance_datetime: '2026-01-28T21:11:04.000Z'
+            form: 8-K
+            file_number: 001-34756
+            items:
+            - '2.02'
+            - '9.01'
+            primary_document: tsla-20260128.htm
+            primary_doc_description: 8-K
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000162828026003837/tsla-20260128.htm
+          - cik: 0001318605
+            accession_number: 0001628280-26-000016
+            filing_date: '2026-01-02'
+            report_date: '2026-01-02'
+            acceptance_datetime: '2026-01-02T14:20:13.000Z'
+            form: 8-K
+            file_number: 001-34756
+            items:
+            - '2.02'
+            - '9.01'
+            primary_document: tsla-20260102.htm
+            primary_doc_description: 8-K
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000162828026000016/tsla-20260102.htm
+          - cik: 0001318605
+            accession_number: 0001104659-25-108507
+            filing_date: '2025-11-07'
+            report_date: '2025-11-06'
+            acceptance_datetime: '2025-11-07T21:27:23.000Z'
+            form: 8-K
+            file_number: 001-34756
+            items:
+            - '5.02'
+            - '5.07'
+            - '9.01'
+            primary_document: tm2530590d1_8k.htm
+            primary_doc_description: FORM 8-K
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000110465925108507/tm2530590d1_8k.htm
+          - cik: 0001318605
+            accession_number: 0001628280-25-045968
+            filing_date: '2025-10-23'
+            report_date: '2025-09-30'
+            acceptance_datetime: '2025-10-23T01:08:43.000Z'
+            form: 10-Q
+            file_number: 001-34756
+            items: []
+            primary_document: tsla-20250930.htm
+            primary_doc_description: 10-Q
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000162828025045968/tsla-20250930.htm
+          - cik: 0001318605
+            accession_number: 0001628280-25-045861
+            filing_date: '2025-10-22'
+            report_date: '2025-10-22'
+            acceptance_datetime: '2025-10-22T20:06:36.000Z'
+            form: 8-K
+            file_number: 001-34756
+            items:
+            - '2.02'
+            - '9.01'
+            primary_document: tsla-20251022.htm
+            primary_doc_description: 8-K
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000162828025045861/tsla-20251022.htm
+    description: Compact timeline of major Tesla filings.
+    status: success
+    elapsed_time: 0.6014149188995361
+  filing_diff_apple_10q:
+    input:
+      tool: filing_diff
+      tool_arguments:
+        query: AAPL
+        form: 10-Q
+        paragraph_limit: 3
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          company:
+            cik: 0000320193
+            ticker: AAPL
+            title: Apple Inc.
+            score: 95.0
+          form: 10-Q
+          comparison_method: paragraph-level text comparison of the latest filing
+            body versus the previous same-form filing body
+          current_filing:
+            cik: 0000320193
+            accession_number: 0000320193-26-000006
+            filing_date: '2026-01-30'
+            report_date: '2025-12-27'
+            acceptance_datetime: '2026-01-30T11:01:32.000Z'
+            form: 10-Q
+            file_number: 001-36743
+            items: &id003 []
+            primary_document: aapl-20251227.htm
+            primary_doc_description: 10-Q
+            filing_url: https://www.sec.gov/Archives/edgar/data/320193/000032019326000006/aapl-20251227.htm
+          previous_filing:
+            cik: 0000320193
+            accession_number: 0000320193-25-000073
+            filing_date: '2025-08-01'
+            report_date: '2025-06-28'
+            acceptance_datetime: '2025-08-01T10:00:42.000Z'
+            form: 10-Q
+            file_number: 001-36743
+            items: &id004 []
+            primary_document: aapl-20250628.htm
+            primary_doc_description: 10-Q
+            filing_url: https://www.sec.gov/Archives/edgar/data/320193/000032019325000073/aapl-20250628.htm
+          similarity_ratio: 0.744
+          current_paragraph_count: 104
+          previous_paragraph_count: 106
+          current_items: *id003
+          previous_items: *id004
+          new_8k_items: []
+          notable_additions:
+          - 14,681,140,000shares of common stock were issued and outstanding as of
+            January 16, 2026.
+          - Common stock and additional paid-in capital, $0.00001par value:50,400,000shares
+            authorized;14,702,703and14,773,260shares issued and outstanding, respectively
+          - Increase in cash, cash equivalents, and restricted cash and cash equivalents
+            9,383
+          notable_removals:
+          - 14,840,390,000shares of common stock were issued and outstanding as of
+            July 18, 2025.
+          - Common stock and additional paid-in capital, $0.00001par value:50,400,000shares
+            authorized;14,856,722and15,116,786shares issued and outstanding, respectively
+          - Increase/(Decrease) in cash, cash equivalents, and restricted cash and
+            cash equivalents 6,326
+    description: Paragraph-level comparison between Apple's latest and previous 10-Q.
+    status: success
+    elapsed_time: 1.9798927307128906
+  xbrl_fact_trends_apple_revenue:
+    input:
+      tool: xbrl_fact_trends
+      tool_arguments:
+        query: AAPL
+        metric: revenue
+        frequency: quarterly
+        limit: 6
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          company:
+            cik: 0000320193
+            ticker: AAPL
+            title: Apple Inc.
+            score: 95.0
+          metric_query: revenue
+          metric: &id005
+            taxonomy: us-gaap
+            concept: RevenueFromContractWithCustomerExcludingAssessedTax
+            label: Revenue from Contract with Customer, Excluding Assessed Tax
+            description: Amount, excluding tax collected from customer, of revenue
+              from satisfaction of performance obligation by transferring promised
+              good or service to customer. Tax collected from customer is tax assessed
+              by governmental authority that is both imposed on and concurrent with
+              specific revenue-producing transaction, including, but not limited to,
+              sales, use, value added and excise.
+            units:
+            - USD
+            score: 100.0
+          candidate_metrics:
+          - *id005
+          - taxonomy: us-gaap
+            concept: Revenues
+            label: Revenues
+            description: Amount of revenue recognized from goods sold, services rendered,
+              insurance premiums, or other activities that constitute an earning process.
+              Includes, but is not limited to, investment and interest income before
+              deduction of interest expense when recognized as a component of revenue,
+              and sales and trading gain (loss).
+            units:
+            - USD
+            score: 100.0
+          - taxonomy: us-gaap
+            concept: SalesRevenueNet
+            label: Revenue, Net (Deprecated 2018-01-31)
+            description: Total revenue from sale of goods and services rendered during
+              the reporting period, in the normal course of business, reduced by sales
+              returns and allowances, and sales discounts.
+            units:
+            - USD
+            score: 100.0
+          - taxonomy: us-gaap
+            concept: ContractWithCustomerLiabilityRevenueRecognized
+            label: Contract with Customer, Liability, Revenue Recognized
+            description: Amount of revenue recognized that was previously included
+              in balance of obligation to transfer good or service to customer for
+              which consideration from customer has been received or is due.
+            units:
+            - USD
+            score: 82.0
+          - taxonomy: us-gaap
+            concept: DeferredRevenueCurrent
+            label: Deferred Revenue, Current
+            description: Amount of deferred income and obligation to transfer product
+              and service to customer for which consideration has been received or
+              is receivable, classified as current.
+            units:
+            - USD
+            score: 82.0
+          frequency: quarterly
+          unit: USD
+          summary:
+            latest_period: 2025-09-28 to 2025-12-27
+            latest_value: 143756000000
+            latest_filed: '2026-01-30'
+            previous_period: 2025-03-30 to 2025-06-28
+            previous_value: 94036000000
+            absolute_change: 49720000000
+            percent_change: 52.87
+          observations:
+          - start: '2024-03-31'
+            end: '2024-06-29'
+            filed: '2025-08-01'
+            form: 10-Q
+            fy: 2025
+            fp: Q3
+            frame: CY2024Q2
+            value: 85777000000
+            accession_number: 0000320193-25-000073
+          - start: '2024-09-29'
+            end: '2024-12-28'
+            filed: '2025-01-31'
+            form: 10-Q
+            fy: 2025
+            fp: Q1
+            frame: null
+            value: 124300000000
+            accession_number: 0000320193-25-000008
+          - start: '2024-09-29'
+            end: '2024-12-28'
+            filed: '2026-01-30'
+            form: 10-Q
+            fy: 2026
+            fp: Q1
+            frame: CY2024Q4
+            value: 124300000000
+            accession_number: 0000320193-26-000006
+          - start: '2024-12-29'
+            end: '2025-03-29'
+            filed: '2025-05-02'
+            form: 10-Q
+            fy: 2025
+            fp: Q2
+            frame: CY2025Q1
+            value: 95359000000
+            accession_number: 0000320193-25-000057
+          - start: '2025-03-30'
+            end: '2025-06-28'
+            filed: '2025-08-01'
+            form: 10-Q
+            fy: 2025
+            fp: Q3
+            frame: CY2025Q2
+            value: 94036000000
+            accession_number: 0000320193-25-000073
+          - start: '2025-09-28'
+            end: '2025-12-27'
+            filed: '2026-01-30'
+            form: 10-Q
+            fy: 2026
+            fp: Q1
+            frame: CY2025Q4
+            value: 143756000000
+            accession_number: 0000320193-26-000006
+    description: Direct SEC-reported quarterly revenue trend for Apple.
+    status: success
+    elapsed_time: 0.6848421096801758
+  xbrl_fact_trends_invalid_metric:
+    input:
+      tool: xbrl_fact_trends
+      tool_arguments:
+        query: AAPL
+        metric: totally invented sec metric
+        frequency: quarterly
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: error
+        error: No SEC XBRL metric matched 'totally invented sec metric'
+    description: Invalid XBRL metric query fails directly instead of returning junk.
+    status: success
+    elapsed_time: 0.3141136169433594
+  insider_activity_tesla:
+    input:
+      tool: insider_activity
+      tool_arguments:
+        query: Tesla
+        limit: 3
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          company:
+            cik: 0001318605
+            ticker: TSLA
+            title: Tesla, Inc.
+            score: 92.0
+          filings:
+          - form: '4'
+            filing_date: '2026-03-09'
+            report_date: '2026-03-05'
+            reporting_person: Taneja Vaibhav
+            relationship: Chief Financial Officer
+            transactions:
+            - security_title: Common Stock
+              transaction_date: 03/05/2026
+              transaction_code: M
+              transaction_label: option exercise
+              shares: 6,538
+              direction: A
+              price_per_share: $ 0.0
+              shares_owned_after: 20,371 (2)
+              ownership_form: D
+            - security_title: Common Stock
+              transaction_date: 03/06/2026
+              transaction_code: S
+              transaction_label: open market sale
+              shares: 2,264.5
+              direction: D
+              price_per_share: $ 397.031
+              shares_owned_after: 18,106.5
+              ownership_form: D
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000110465926025379/xslF345X05/tm268346-1_4seq1.xml
+          - form: '4'
+            filing_date: '2026-02-27'
+            report_date: '2026-02-25'
+            reporting_person: Wilson-Thompson Kathleen
+            relationship: ''
+            transactions:
+            - security_title: Common Stock
+              transaction_date: 02/25/2026
+              transaction_code: M
+              transaction_label: option exercise
+              shares: 40,000
+              direction: A
+              price_per_share: $ 14.99
+              shares_owned_after: 45,400
+              ownership_form: D
+            - security_title: Common Stock
+              transaction_date: 02/25/2026
+              transaction_code: S
+              transaction_label: open market sale
+              shares: '80'
+              direction: D
+              price_per_share: $ 412.46 (2)
+              shares_owned_after: 45,320
+              ownership_form: D
+            - security_title: Common Stock
+              transaction_date: 02/25/2026
+              transaction_code: S
+              transaction_label: open market sale
+              shares: 4,777
+              direction: D
+              price_per_share: $ 413.952 (3)
+              shares_owned_after: 40,543
+              ownership_form: D
+            - security_title: Common Stock
+              transaction_date: 02/25/2026
+              transaction_code: S
+              transaction_label: open market sale
+              shares: 7,501
+              direction: D
+              price_per_share: $ 414.85 (4)
+              shares_owned_after: 33,042
+              ownership_form: D
+            - security_title: Common Stock
+              transaction_date: 02/25/2026
+              transaction_code: S
+              transaction_label: open market sale
+              shares: 6,825
+              direction: D
+              price_per_share: $ 415.862 (5)
+              shares_owned_after: 26,217
+              ownership_form: D
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000110465926021746/xslF345X05/tm267481-1_4seq1.xml
+          - form: '4'
+            filing_date: '2026-01-12'
+            report_date: '2026-01-08'
+            reporting_person: Zhu Xiaotong
+            relationship: SVP
+            transactions:
+            - security_title: Non-Qualified Stock Option (right to buy)
+              transaction_date: $ 435.8
+              transaction_code: ''
+              transaction_label: ''
+              shares: ''
+              direction: 520,021
+              price_per_share: ''
+              shares_owned_after: (1)
+              ownership_form: 01/08/2036
+            filing_url: https://www.sec.gov/Archives/edgar/data/1318605/000197292826000001/xslF345X05/edgardoc.xml
+    description: Recent Tesla Forms 3/4/5 with parsed transaction rows.
+    status: success
+    elapsed_time: 0.827101469039917
+  activist_watch_apple:
+    input:
+      tool: activist_watch
+      tool_arguments:
+        query: Apple
+        limit: 2
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          company:
+            cik: 0000320193
+            ticker: AAPL
+            title: Apple Inc.
+            score: 92.0
+          filings:
+          - form: SC 13G/A
+            filing_date: '2024-02-14'
+            reporting_person: Warren E. Buffett
+            beneficial_ownership: 905,560,000 shares of Common Stock
+            percent_of_class: 5.8%
+            item_summary: ''
+            filing_url: https://www.sec.gov/Archives/edgar/data/320193/000119312524036431/d751537dsc13ga.htm
+          - form: SC 13G/A
+            filing_date: '2024-02-13'
+            reporting_person: ''
+            beneficial_ownership: 1,317,966,471 10.
+            percent_of_class: 8.47%
+            item_summary: ''
+            filing_url: https://www.sec.gov/Archives/edgar/data/320193/000110465924020009/tv0017-appleinc.htm
+    description: Recent Apple 13D/13G activity with filer and ownership fields.
+    status: success
+    elapsed_time: 0.5975265502929688
+  institutional_holders_apple:
+    input:
+      tool: institutional_holders
+      tool_arguments:
+        query: Apple
+        limit: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          company:
+            cik: 0000320193
+            ticker: AAPL
+            title: Apple Inc.
+            score: 92.0
+          match_method: latest SEC 13F flattened dataset issuer-name normalization
+          dataset_zip: /tmp/01dec2025-28feb2026_form13f.zip
+          holder_count: 5930
+          top_holders:
+          - filing_manager_name: VANGUARD GROUP INC
+            accession_number: 0000102909-26-000031
+            filing_date: 29-JAN-2026
+            period_of_report: 31-DEC-2025
+            report_type: 13F COMBINATION REPORT
+            issuer_name_matched: APPLE INC
+            reported_value_usd: 387749544852
+            reported_shares: 1426283914
+            table_entry_total: 17686
+            table_value_total: 6897676080637
+          - filing_manager_name: BlackRock, Inc.
+            accession_number: 0002012383-26-000920
+            filing_date: 12-FEB-2026
+            period_of_report: 31-DEC-2025
+            report_type: 13F COMBINATION REPORT
+            issuer_name_matched: APPLE INC
+            reported_value_usd: 313907425492
+            reported_shares: 1154665731
+            table_entry_total: 50216
+            table_value_total: 5916347916984
+          - filing_manager_name: STATE STREET CORP
+            accession_number: 0000093751-26-000100
+            filing_date: 13-FEB-2026
+            period_of_report: 31-DEC-2025
+            report_type: 13F HOLDINGS REPORT
+            issuer_name_matched: APPLE INC
+            reported_value_usd: 164218801449
+            reported_shares: 604056505
+            table_entry_total: 4288
+            table_value_total: 2980911055209
+          - filing_manager_name: GEODE CAPITAL MANAGEMENT, LLC
+            accession_number: 0001214717-26-000003
+            filing_date: 09-FEB-2026
+            period_of_report: 31-DEC-2025
+            report_type: 13F HOLDINGS REPORT
+            issuer_name_matched: APPLE INC
+            reported_value_usd: 97031587078
+            reported_shares: 358032517
+            table_entry_total: 8528
+            table_value_total: 1620441726706
+          - filing_manager_name: FMR LLC
+            accession_number: 0000315066-26-000611
+            filing_date: 17-FEB-2026
+            period_of_report: 31-DEC-2025
+            report_type: 13F HOLDINGS REPORT
+            issuer_name_matched: APPLE INC
+            reported_value_usd: 83569020218
+            reported_shares: 307397264
+            table_entry_total: 13225
+            table_value_total: 1961271425547
+    description: Issuer-level latest-quarter 13F holder snapshot for Apple.
+    status: success
+    elapsed_time: 34.71454930305481
