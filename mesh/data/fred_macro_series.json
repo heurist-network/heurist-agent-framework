@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "validated_at": "2026-03-19",
+  "source": "FRED / ALFRED API",
+  "notes": [
+    "This registry is intentionally small and curated for phase-one Mesh integration.",
+    "Series IDs and release mappings were validated with live API calls on 2026-03-19.",
+    "The registry is meant to reduce open-ended search and keep tool routing explicit."
+  ],
+  "pillars": {
+    "inflation": [
+      {
+        "key": "headline_cpi",
+        "series_id": "CPIAUCSL",
+        "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+        "frequency": "Monthly",
+        "units": "Index 1982-1984=100",
+        "release_id": 10,
+        "release_name": "Consumer Price Index",
+        "default_views": ["level", "yoy", "mom_annualized"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays", "release_impact_context"],
+        "priority": "high"
+      },
+      {
+        "key": "core_cpi",
+        "series_id": "CPILFESL",
+        "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+        "frequency": "Monthly",
+        "units": "Index 1982-1984=100",
+        "release_id": 10,
+        "release_name": "Consumer Price Index",
+        "default_views": ["level", "yoy", "mom_annualized"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays", "release_impact_context"],
+        "priority": "high"
+      },
+      {
+        "key": "headline_pce",
+        "series_id": "PCEPI",
+        "title": "Personal Consumption Expenditures: Chain-type Price Index",
+        "frequency": "Monthly",
+        "units": "Index 2017=100",
+        "release_id": 54,
+        "release_name": "Personal Income and Outlays",
+        "default_views": ["level", "yoy", "mom_annualized"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays", "release_impact_context"],
+        "priority": "medium"
+      },
+      {
+        "key": "core_pce",
+        "series_id": "PCEPILFE",
+        "title": "Personal Consumption Expenditures Excluding Food and Energy (Chain-Type Price Index)",
+        "frequency": "Monthly",
+        "units": "Index 2017=100",
+        "release_id": 54,
+        "release_name": "Personal Income and Outlays",
+        "default_views": ["level", "yoy", "mom_annualized"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays", "release_impact_context"],
+        "priority": "high"
+      }
+    ],
+    "rates": [
+      {
+        "key": "fed_funds",
+        "series_id": "FEDFUNDS",
+        "title": "Federal Funds Effective Rate",
+        "frequency": "Monthly",
+        "units": "Percent",
+        "release_id": 18,
+        "release_name": "H.15 Selected Interest Rates",
+        "default_views": ["level", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays"],
+        "priority": "high"
+      },
+      {
+        "key": "ust_2y",
+        "series_id": "DGS2",
+        "title": "Market Yield on U.S. Treasury Securities at 2-Year Constant Maturity, Quoted on an Investment Basis",
+        "frequency": "Daily",
+        "units": "Percent",
+        "release_id": 18,
+        "release_name": "H.15 Selected Interest Rates",
+        "default_views": ["level", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays"],
+        "priority": "high"
+      },
+      {
+        "key": "ust_10y",
+        "series_id": "DGS10",
+        "title": "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity, Quoted on an Investment Basis",
+        "frequency": "Daily",
+        "units": "Percent",
+        "release_id": 18,
+        "release_name": "H.15 Selected Interest Rates",
+        "default_views": ["level", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays"],
+        "priority": "high"
+      },
+      {
+        "key": "curve_10y_minus_2y",
+        "series_id": "T10Y2Y",
+        "title": "10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity",
+        "frequency": "Daily",
+        "units": "Percent",
+        "release_id": 304,
+        "release_name": "Interest Rate Spreads",
+        "default_views": ["level", "sign", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays"],
+        "priority": "high"
+      }
+    ],
+    "labor": [
+      {
+        "key": "unemployment_rate",
+        "series_id": "UNRATE",
+        "title": "Unemployment Rate",
+        "frequency": "Monthly",
+        "units": "Percent",
+        "release_id": 50,
+        "release_name": "Employment Situation",
+        "default_views": ["level", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays", "release_impact_context"],
+        "priority": "high"
+      },
+      {
+        "key": "nonfarm_payrolls",
+        "series_id": "PAYEMS",
+        "title": "All Employees, Total Nonfarm",
+        "frequency": "Monthly",
+        "units": "Thousands of Persons",
+        "release_id": 50,
+        "release_name": "Employment Situation",
+        "default_views": ["level", "mom_change", "yoy_change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays", "release_impact_context"],
+        "priority": "high"
+      },
+      {
+        "key": "initial_claims",
+        "series_id": "ICSA",
+        "title": "Initial Claims",
+        "frequency": "Weekly, Ending Saturday",
+        "units": "Number",
+        "release_id": 180,
+        "release_name": "Unemployment Insurance Weekly Claims Report",
+        "default_views": ["level", "wow_change"],
+        "use_cases": ["macro_regime", "release_impact_context"],
+        "priority": "medium"
+      }
+    ],
+    "credit_conditions": [
+      {
+        "key": "nfci",
+        "series_id": "NFCI",
+        "title": "Chicago Fed National Financial Conditions Index",
+        "frequency": "Weekly, Ending Friday",
+        "units": "Index",
+        "release_id": 221,
+        "release_name": "Chicago Fed National Financial Conditions Index",
+        "default_views": ["level", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays"],
+        "priority": "high"
+      },
+      {
+        "key": "baa_treasury_spread",
+        "series_id": "BAA10YM",
+        "title": "Moody's Seasoned Baa Corporate Bond Yield Relative to Yield on 10-Year Treasury Constant Maturity",
+        "frequency": "Monthly",
+        "units": "Percent",
+        "release_id": 304,
+        "release_name": "Interest Rate Spreads",
+        "default_views": ["level", "change"],
+        "use_cases": ["macro_regime", "symbol_vs_macro_overlays"],
+        "priority": "high"
+      }
+    ],
+    "growth": [
+      {
+        "key": "real_gdp",
+        "series_id": "GDPC1",
+        "title": "Real Gross Domestic Product",
+        "frequency": "Quarterly",
+        "units": "Billions of Chained 2017 Dollars",
+        "release_id": 53,
+        "release_name": "Gross Domestic Product",
+        "default_views": ["level", "qoq_annualized", "yoy"],
+        "use_cases": ["macro_regime", "release_impact_context", "backtest_context"],
+        "priority": "high"
+      }
+    ]
+  },
+  "release_keys": {
+    "cpi": {
+      "release_id": 10,
+      "release_name": "Consumer Price Index",
+      "series_keys": ["headline_cpi", "core_cpi"]
+    },
+    "pce": {
+      "release_id": 54,
+      "release_name": "Personal Income and Outlays",
+      "series_keys": ["headline_pce", "core_pce"]
+    },
+    "employment_situation": {
+      "release_id": 50,
+      "release_name": "Employment Situation",
+      "series_keys": ["unemployment_rate", "nonfarm_payrolls"]
+    },
+    "gdp": {
+      "release_id": 53,
+      "release_name": "Gross Domestic Product",
+      "series_keys": ["real_gdp"]
+    },
+    "weekly_claims": {
+      "release_id": 180,
+      "release_name": "Unemployment Insurance Weekly Claims Report",
+      "series_keys": ["initial_claims"]
+    }
+  }
+}
