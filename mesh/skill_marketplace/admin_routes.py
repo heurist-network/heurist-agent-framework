@@ -1,15 +1,17 @@
 """Admin API routes for skill marketplace.
 
-Endpoints: import (URL/GitHub), approve, reject, check-upstream.
+Endpoints: import (URL/GitHub), update-from-origin, approve, reject, check-upstream.
 All endpoints require X-API-Key header matching INTERNAL_API_KEY env var.
 """
 
+import json
 import hashlib
 import logging
 import os
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
+from urllib.parse import urlparse
 
 import aiohttp
 from fastapi import APIRouter, Depends, HTTPException, Security
@@ -82,6 +84,25 @@ class UpdateSkillMetricsRequest(BaseModel):
     star_count: Optional[int] = Field(default=None, ge=0)
 
 
+class UpdateSkillFromOriginRequest(BaseModel):
+    url: Optional[str] = None
+    category: Optional[str] = None
+    labels: Optional[list[str]] = None
+    risk_tier: Optional[str] = None
+    source_type: Optional[str] = None
+    source_url: Optional[str] = None
+    source_path: Optional[str] = None
+    author_json: Optional[dict] = None
+    external_api_dependencies: Optional[list[str]] = None
+    reference_urls: Optional[list[str]] = None
+    requires_secrets: Optional[bool] = None
+    requires_private_keys: Optional[bool] = None
+    requires_exchange_api_keys: Optional[bool] = None
+    can_sign_transactions: Optional[bool] = None
+    uses_leverage: Optional[bool] = None
+    accesses_user_portfolio: Optional[bool] = None
+
+
 def _normalize_external_api_dependencies(values: list[str]) -> list[str]:
     normalized: list[str] = []
     seen: set[str] = set()
@@ -114,6 +135,63 @@ def _normalize_reference_urls(values: list[str]) -> list[str]:
         normalized.append(cleaned)
 
     return normalized
+
+
+def _get_field_set(body: BaseModel) -> set[str]:
+    return getattr(body, "model_fields_set", getattr(body, "__fields_set__", set()))
+
+
+def _derive_github_skill_path(url: str, source_path: str | None) -> str:
+    if source_path:
+        return source_path
+
+    parsed = urlparse(url)
+    parts = parsed.path.strip("/").split("/")
+
+    if parsed.hostname == "raw.githubusercontent.com" and len(parts) >= 4:
+        return "/".join(parts[3:])
+
+    if parsed.hostname in {"github.com", "www.github.com"} and len(parts) >= 5 and parts[2] == "blob":
+        return "/".join(parts[4:])
+
+    return "SKILL.md"
+
+
+def _build_github_skill_lookup_url(source_url: str, source_path: str | None) -> str:
+    owner_repo = parse_github_owner_repo(source_url)
+    if not owner_repo:
+        return source_url
+
+    owner, repo = owner_repo
+    path = _derive_github_skill_path(source_url, source_path)
+    return f"https://github.com/{owner}/{repo}/blob/HEAD/{path}"
+
+
+async def _fetch_skill_raw(session: aiohttp.ClientSession, source_type: str, source_url: str, source_path: str | None) -> bytes:
+    if source_type == "github":
+        owner_repo = parse_github_owner_repo(source_url)
+        if not owner_repo:
+            raise HTTPException(status_code=400, detail=f"invalid GitHub source_url: {source_url}")
+
+        owner, repo = owner_repo
+        path = _derive_github_skill_path(source_url, source_path)
+        headers = {"Accept": "application/vnd.github.v3.raw"}
+        github_token = os.getenv("GITHUB_TOKEN")
+        if github_token:
+            headers["Authorization"] = f"token {github_token}"
+
+        async with session.get(
+            f"https://api.github.com/repos/{owner}/{repo}/contents/{path}",
+            headers=headers,
+        ) as resp:
+            if resp.status != 200:
+                raise HTTPException(status_code=400, detail=f"failed to fetch GitHub source: {resp.status}")
+            return await resp.read()
+
+    async with session.get(source_url) as resp:
+        if resp.status != 200:
+            raise HTTPException(status_code=400, detail=f"failed to fetch source URL: {resp.status}")
+        return await resp.read()
 
 
 # ---- Endpoints ----
@@ -181,11 +259,118 @@ async def import_skill(body: ImportSkillRequest):
     return {"id": skill_id, "slug": body.slug, "status": "draft", "file_url": artifact["file_url"], "is_folder": artifact["is_folder"]}
 
 
+@admin_router.post("/{skill_id}/update", summary="Update a skill from origin",
+                   description="Re-fetch a skill from its stored origin, update the existing row in place, refresh artifact metadata, and preserve its current verification status.",
+                   dependencies=[Depends(_require_api_key)])
+async def update_skill_from_origin(skill_id: str, body: UpdateSkillFromOriginRequest | None = None):
+    body = body or UpdateSkillFromOriginRequest()
+    field_set = _get_field_set(body)
+    pool = await get_pool()
+
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """SELECT id, slug, verification_status, category, labels, risk_tier, source_type, source_url, source_path, author_json,
+                      external_api_dependencies, reference_urls,
+                      requires_secrets, requires_private_keys, requires_exchange_api_keys,
+                      can_sign_transactions, uses_leverage, accesses_user_portfolio
+               FROM skills
+               WHERE id = $1""",
+            skill_id,
+        )
+        if not row:
+            raise HTTPException(status_code=404, detail="Skill not found")
+
+    source_url = body.source_url if "source_url" in field_set else row["source_url"]
+    if not source_url:
+        source_url = body.url
+    if not source_url:
+        raise HTTPException(status_code=400, detail="Skill has no source_url. Provide url or source_url.")
+
+    source_path = body.source_path if "source_path" in field_set else row["source_path"]
+    source_type = body.source_type if "source_type" in field_set and body.source_type else (row["source_type"] or derive_source_type(source_url))
+    fetch_url = body.url or source_url
+
+    async with aiohttp.ClientSession() as session:
+        raw = await _fetch_skill_raw(session, source_type, fetch_url, source_path)
+        folder_files = None
+        if source_type == "github":
+            lookup_url = body.url or _build_github_skill_lookup_url(source_url, source_path)
+            fetched_folder = await fetch_github_folder_files(lookup_url, source_path)
+            if fetched_folder and len(fetched_folder) > 1:
+                folder_files = fetched_folder
+
+    parsed = parse_skill_md(raw)
+    artifact = await prepare_skill_artifact(raw, row["slug"], folder_files)
+    now = datetime.now(timezone.utc)
+
+    category = normalize_category(body.category) if "category" in field_set else row["category"]
+    labels = normalize_labels(body.labels or []) if "labels" in field_set else (row["labels"] or [])
+    risk_tier = body.risk_tier if "risk_tier" in field_set else row["risk_tier"]
+    author_json = json.dumps(body.author_json) if "author_json" in field_set and body.author_json is not None else (
+        None if "author_json" in field_set else row["author_json"]
+    )
+    external_api_dependencies = (
+        _normalize_external_api_dependencies(body.external_api_dependencies or [])
+        if "external_api_dependencies" in field_set
+        else (row["external_api_dependencies"] or [])
+    )
+    reference_urls = (
+        _normalize_reference_urls(body.reference_urls or [])
+        if "reference_urls" in field_set
+        else (row["reference_urls"] or [])
+    )
+    requires_secrets = body.requires_secrets if "requires_secrets" in field_set else row["requires_secrets"]
+    requires_private_keys = body.requires_private_keys if "requires_private_keys" in field_set else row["requires_private_keys"]
+    requires_exchange_api_keys = (
+        body.requires_exchange_api_keys if "requires_exchange_api_keys" in field_set else row["requires_exchange_api_keys"]
+    )
+    can_sign_transactions = body.can_sign_transactions if "can_sign_transactions" in field_set else row["can_sign_transactions"]
+    uses_leverage = body.uses_leverage if "uses_leverage" in field_set else row["uses_leverage"]
+    accesses_user_portfolio = (
+        body.accesses_user_portfolio if "accesses_user_portfolio" in field_set else row["accesses_user_portfolio"]
+    )
+    frontmatter = json.dumps(parsed["frontmatter"])
+    folder_manifest = artifact.get("folder_manifest")
+    folder_manifest_json = json.dumps(folder_manifest) if folder_manifest else None
+
+    async with pool.acquire() as conn:
+        await conn.execute(
+            """UPDATE skills SET
+                name = $1, description = $2, skill_md_frontmatter_json = $3,
+                category = $4, labels = $5, risk_tier = $6,
+                source_type = $7, source_url = $8, source_path = $9, author_json = $10,
+                file_url = $11, approved_sha256 = $12, is_folder = $13, folder_manifest_json = $14,
+                external_api_dependencies = $15, reference_urls = $16,
+                requires_secrets = $17, requires_private_keys = $18, requires_exchange_api_keys = $19,
+                can_sign_transactions = $20, uses_leverage = $21, accesses_user_portfolio = $22,
+                updated_at = $23
+               WHERE id = $24""",
+            parsed["name"], parsed["description"][:1024], frontmatter,
+            category, labels, risk_tier,
+            source_type, source_url, source_path, author_json,
+            artifact["file_url"], artifact["sha256"], artifact.get("is_folder", False), folder_manifest_json,
+            external_api_dependencies, reference_urls,
+            requires_secrets, requires_private_keys, requires_exchange_api_keys,
+            can_sign_transactions, uses_leverage, accesses_user_portfolio,
+            now, skill_id,
+        )
+
+    return {
+        "id": skill_id,
+        "slug": row["slug"],
+        "status": row["verification_status"],
+        "file_url": artifact["file_url"],
+        "approved_sha256": artifact["sha256"],
+        "is_folder": artifact["is_folder"],
+        "updated_at": now.isoformat(),
+    }
+
+
 @admin_router.patch("/{skill_id}/taxonomy", summary="Update skill category and labels",
                     description="Set the category and overlapping labels for a skill.",
                     dependencies=[Depends(_require_api_key)])
 async def update_skill_taxonomy(skill_id: str, body: UpdateSkillTaxonomyRequest):
-    field_set = getattr(body, "model_fields_set", getattr(body, "__fields_set__", set()))
+    field_set = _get_field_set(body)
     provided_category = "category" in field_set
     provided_labels = "labels" in field_set
 

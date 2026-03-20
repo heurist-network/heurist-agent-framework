@@ -67,6 +67,7 @@ cd /root/heurist-agent-framework
 
 **Admin:**
 - `POST /admin/skills/import` — import a skill from URL or GitHub (fetch, parse, upload to Autonomys, insert as draft)
+- `POST /admin/skills/{id}/update` — re-fetch a skill from its stored origin, update the existing row in place, refresh artifact/hash fields, and preserve its current verification status
 - `PATCH /admin/skills/{id}/taxonomy` — set the category plus overlapping labels
 - `PATCH /admin/skills/{id}/external-api-dependencies` — set the admin-managed list of external API dependency names
 - `PATCH /admin/skills/{id}/metrics` — set `star_count` or backfill `download_count`
