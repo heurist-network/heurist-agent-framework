@@ -47,10 +47,10 @@ class AIXBTProjectInfoAgent(MeshAgent):
                     "Trending projects in the crypto space",
                     "What's happening in the crypto market today?",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.1},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.001",
                 },
             }
         )
@@ -280,7 +280,7 @@ class AIXBTProjectInfoAgent(MeshAgent):
             html = result.stdout
 
             # Extract list items from the HTML
-            li_items = re.findall(r'<li>(.*?)</li>', html, re.DOTALL)
+            li_items = re.findall(r"<li>(.*?)</li>", html, re.DOTALL)
 
             if not li_items:
                 return None
@@ -289,9 +289,9 @@ class AIXBTProjectInfoAgent(MeshAgent):
             news_items = []
             for item in li_items:
                 # Remove HTML tags
-                clean_item = re.sub(r'<[^>]+>', '', item).strip()
+                clean_item = re.sub(r"<[^>]+>", "", item).strip()
                 # Remove extra whitespace
-                clean_item = re.sub(r'\s+', ' ', clean_item)
+                clean_item = re.sub(r"\s+", " ", clean_item)
 
                 if clean_item and len(clean_item) > 50:  # Filter out short/empty items
                     news_items.append(clean_item)

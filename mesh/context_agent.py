@@ -5,7 +5,6 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import aiohttp
 import boto3
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
@@ -108,77 +107,8 @@ class S3ContextStorage(ContextStorage):
             logger.error(f"Error writing context to S3: {e}")
 
 
-class NillionContextStorage(ContextStorage):
-    def __init__(self):
-        self.api_key = os.getenv("CONTEXT_API_KEY")
-        self.base_url = "https://yhxy0iuhih.execute-api.us-east-1.amazonaws.com/staging/nillion-context"
-        if not self.api_key:
-            raise ValueError("CONTEXT_API_KEY environment variable is required for Nillion storage")
-        logger.info("Nillion context storage initialized")
-
-    async def get_context(self, user_id: str) -> Dict[str, Any]:
-        """Get context from Nillion API"""
-        try:
-            async with aiohttp.ClientSession() as session:
-                url = f"{self.base_url}/{user_id}"
-                headers = {"Content-Type": "application/json", "x-api-key": self.api_key}
-                async with session.get(url, headers=headers) as response:
-                    if response.status == 200:
-                        data = await response.json()
-
-                        if isinstance(data, dict) and "credentials" in data:
-                            credentials = data["credentials"]
-                            if isinstance(credentials, list) and len(credentials) > 0:
-                                latest_credential = max(credentials, key=lambda x: x.get("_updated", ""))
-                                return latest_credential.get("content", {})
-                            else:
-                                return {}
-                        else:
-                            if isinstance(data, list) and len(data) > 0:
-                                return data[0].get("content", {})
-                            elif isinstance(data, dict):
-                                return data.get("content", {})
-                            else:
-                                return {}
-                    elif response.status == 404:
-                        return {}
-                    else:
-                        logger.error(
-                            f"Error fetching context from Nillion: {response.status} - {await response.text()}"
-                        )
-                        return {}
-        except Exception as e:
-            logger.error(f"Error fetching context from Nillion: {e}")
-            return {}
-
-    async def set_context(self, user_id: str, context: Dict[str, Any]) -> None:
-        """Set context in Nillion API"""
-        try:
-            # Use the exact Nillion schema format
-            payload = [
-                {
-                    "user_id": user_id,
-                    "content": context,
-                }
-            ]
-
-            async with aiohttp.ClientSession() as session:
-                url = f"{self.base_url}/{user_id}"
-                headers = {"Content-Type": "application/json", "x-api-key": self.api_key}
-                async with session.put(url, headers=headers, json=payload) as response:
-                    if response.status not in [200, 201]:
-                        logger.error(f"Error writing context to Nillion: {response.status} - {await response.text()}")
-        except Exception as e:
-            logger.error(f"Error writing context to Nillion: {e}")
-
-
 def _has_s3_env():
     return all(os.getenv(k) for k in ["R2_ACCESS_KEY", "R2_SECRET_KEY", "R2_ENDPOINT"])
-
-
-def _has_nillion_env():
-    """Check if Nillion environment variables are present"""
-    return os.getenv("CONTEXT_API_KEY") is not None
 
 
 class ContextAgent(MeshAgent, ABC):
@@ -192,8 +122,6 @@ class ContextAgent(MeshAgent, ABC):
         super().__init__()
         if storage:
             self.storage = storage
-        elif _has_nillion_env():
-            self.storage = NillionContextStorage()
         elif _has_s3_env():
             self.storage = S3ContextStorage()
         else:

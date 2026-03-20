@@ -38,10 +38,10 @@ class PondWalletAnalysisAgent(MeshAgent):
                     "What's the trading volume for Ethereum wallet 0x2B25B37c683F042E9Ae1877bc59A1Bb642Eb1073?",
                     "Check the transaction activity for Base wallet 0x97224Dd2aFB28F6f442E773853F229B3d8A0999a",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.2},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.002",
                 },
             }
         )

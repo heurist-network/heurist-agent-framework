@@ -41,10 +41,10 @@ class TrendingTokenAgent(MeshAgent):
                     "Show me trending tokens from CoinGecko and Twitter only",
                     "What tokens have recently graduated from pump.fun?",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.2},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.02",
                 },
                 "erc8004": {
                     "enabled": True,

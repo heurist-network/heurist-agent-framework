@@ -241,8 +241,8 @@ def _filter_pairs(pairs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     if not valid:
         return valid
 
-    # If only 1 pair, don't apply volume/liquidity filter                                                                                     
-    if len(valid) == 1:                                                                                                                       
+    # If only 1 pair, don't apply volume/liquidity filter
+    if len(valid) == 1:
         return valid
 
     # Apply volume threshold only if at least one pair meets it
@@ -344,10 +344,10 @@ class TokenResolverAgent(MeshAgent):
                     "token_profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['pairs']",
                     "token_profile symbol=BTC include=['funding_rates','technical_indicators']",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.2},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.002",
                 },
                 "erc8004": {
                     "enabled": True,
@@ -1031,9 +1031,7 @@ class TokenResolverAgent(MeshAgent):
                     # merge pair websites/socials into links
                     ds_links = _extract_links_from_preview(prev)
                     prof["links"] = self._merge_links(prof["links"], ds_links)
-                pairs_out = sorted(cand_previews, key=lambda x: (x.get("liquidity_usd") or 0), reverse=True)[
-                    :top_n_pairs
-                ]
+                pairs_out = sorted(cand_previews, key=lambda x: x.get("liquidity_usd") or 0, reverse=True)[:top_n_pairs]
             elif is_contract and chain and address:
                 ds = await self._ds_token_pairs(chain or "all", address)
                 ps = ((ds or {}).get("data") or {}).get("pairs") or []
@@ -1043,7 +1041,7 @@ class TokenResolverAgent(MeshAgent):
 
                 pairs_out = sorted(
                     [self._pair_to_preview(p) for p in valid_pairs],
-                    key=lambda x: (x.get("liquidity_usd") or 0),
+                    key=lambda x: x.get("liquidity_usd") or 0,
                     reverse=True,
                 )[:top_n_pairs]
                 if valid_pairs:

@@ -30,6 +30,13 @@ class DefiLlamaAgent(MeshAgent):
                     "What are the top protocols on Solana by fees?",
                     "Get chain metrics for Base",
                 ],
+                "verified": True,
+                "recommended": True,
+                "credits": {"default": 0.3},
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.003",
+                },
             }
         )
 

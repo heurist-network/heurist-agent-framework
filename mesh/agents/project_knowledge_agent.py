@@ -50,6 +50,11 @@ class ProjectKnowledgeAgent(MeshAgent):
                     "Find DeFi projects funded by Paradigm in 2024",
                     "AI projects listed on Binance with recent airdrops",
                 ],
+                "credits": {"default": 0.3},
+                "x402_config": {
+                    "enabled": True,
+                    "default_price_usd": "0.003",
+                },
             }
         )
 
@@ -267,7 +272,7 @@ Format your response in clean text. Be objective and informative."""
             "fundraising": self.client._format_fundraising(project.get("fundraising")),
             "events": self.client._format_events(project.get("events")),
             "exchanges": exchanges if exchanges else None,
-            }
+        }
 
         return {k: v for k, v in formatted.items() if v not in (None, [], "")}
 

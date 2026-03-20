@@ -26,6 +26,7 @@ class DuckDuckGoSearchAgent(MeshAgent):
                 ),
                 "external_apis": ["DuckDuckGo"],
                 "tags": ["Search"],
+                "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/DuckDuckGo.png",
                 "examples": [
                     "What happens if you put a mirror in front of a black hole?",

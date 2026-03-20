@@ -60,10 +60,10 @@ class ExaSearchDigestAgent(MeshAgent):
                     "Find information about the newest crypto projects",
                     "Search for analysis on current market trends",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.5},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.005",
                 },
                 "erc8004": {
                     "enabled": True,
@@ -109,7 +109,9 @@ class ExaSearchDigestAgent(MeshAgent):
 
         while len(attempted_keys) < len(self.api_keys):
             attempted_keys.add(self.current_key_index)
-            logger.info(f"Exa API request with key index {self.current_key_index} (key: {self._mask_key(self.current_api_key)})")
+            logger.info(
+                f"Exa API request with key index {self.current_key_index} (key: {self._mask_key(self.current_api_key)})"
+            )
 
             try:
                 result = await super()._api_request(
@@ -163,7 +165,7 @@ class ExaSearchDigestAgent(MeshAgent):
                             },
                             "disambiguation": {
                                 "type": "string",
-                                "description": "If the search query contains ambiguous entity names, new projects, new technology, or niche acronyms AND when you have contexts pointing to what it is exactly, describe the entity with one sentence to help clarify, for example 'Heurist is a Web3 AI project'. If you don't have confident clarifications or when searching common-sense info, leave this field blank."
+                                "description": "If the search query contains ambiguous entity names, new projects, new technology, or niche acronyms AND when you have contexts pointing to what it is exactly, describe the entity with one sentence to help clarify, for example 'Heurist is a Web3 AI project'. If you don't have confident clarifications or when searching common-sense info, leave this field blank.",
                             },
                             "time_filter": {
                                 "type": "string",
@@ -203,8 +205,8 @@ class ExaSearchDigestAgent(MeshAgent):
                             },
                             "extract_prompt": {
                                 "type": "string",
-                                "description": "Instruction to LLM to process the scraped contents. Max 3 sentences. Use this when you want to extract specific information from the page. If this field is empty, a summary will be returned."
-                            }
+                                "description": "Instruction to LLM to process the scraped contents. Max 3 sentences. Use this when you want to extract specific information from the page. If this field is empty, a summary will be returned.",
+                            },
                         },
                         "required": ["urls"],
                     },
@@ -318,7 +320,11 @@ class ExaSearchDigestAgent(MeshAgent):
         start_time = time.time()
 
         try:
-            content_to_process = scraped_content[:SCRAPE_TEXT_MAX_CHARS] if len(scraped_content) > SCRAPE_TEXT_MAX_CHARS else scraped_content
+            content_to_process = (
+                scraped_content[:SCRAPE_TEXT_MAX_CHARS]
+                if len(scraped_content) > SCRAPE_TEXT_MAX_CHARS
+                else scraped_content
+            )
 
             system_prompt = self.get_system_prompt()
             if extract_prompt:
@@ -363,7 +369,11 @@ class ExaSearchDigestAgent(MeshAgent):
 
         try:
             url = f"{self.base_url}/search"
-            payload = {"query": search_term, "numResults": limit, "contents": {"text": {"maxCharacters": SEARCH_TEXT_MAX_CHARS}}}
+            payload = {
+                "query": search_term,
+                "numResults": limit,
+                "contents": {"text": {"maxCharacters": SEARCH_TEXT_MAX_CHARS}},
+            }
 
             if include_domains:
                 payload["includeDomains"] = include_domains
@@ -415,7 +425,9 @@ class ExaSearchDigestAgent(MeshAgent):
 
             logger.info(f"Search completed successfully with {len(formatted_results)} results")
 
-            processed_summary = await self._process_search_results_with_llm(formatted_results, search_term, disambiguation)
+            processed_summary = await self._process_search_results_with_llm(
+                formatted_results, search_term, disambiguation
+            )
 
             return {"status": "success", "data": {"processed_summary": processed_summary}}
 

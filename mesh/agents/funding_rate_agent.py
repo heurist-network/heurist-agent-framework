@@ -61,10 +61,10 @@ class FundingRateAgent(MeshAgent):
                     "List current Binance funding rates (interval-aware)",
                     "Spot-perp carry candidates on Binance with funding > 0.02% per interval",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.1},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.001",
                 },
             }
         )

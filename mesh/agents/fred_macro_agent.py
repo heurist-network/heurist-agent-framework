@@ -105,6 +105,7 @@ class FredMacroAgent(MeshAgent):
                 "external_apis": ["FRED", "ALFRED"],
                 "tags": ["Finance", "Macroeconomics"],
                 "verified": True,
+                "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
                 "examples": [
                     "Give me the latest headline CPI snapshot",
@@ -114,10 +115,10 @@ class FredMacroAgent(MeshAgent):
                     "Give me CPI release context",
                     "Show real GDP as known on 2020-07-01",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.3},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.003",
                 },
             }
         )
@@ -483,7 +484,9 @@ Rules:
             card["last_updated"] = live_meta.get("last_updated")
         return card
 
-    def _metric_point(self, spec: Dict[str, Any], observations: List[Dict[str, Any]], idx: int, view: str) -> Optional[Dict[str, Any]]:
+    def _metric_point(
+        self, spec: Dict[str, Any], observations: List[Dict[str, Any]], idx: int, view: str
+    ) -> Optional[Dict[str, Any]]:
         current = observations[idx]
         unit = self._view_unit(spec, view)
 
@@ -569,7 +572,9 @@ Rules:
 
         return None
 
-    def _transform_observations(self, spec: Dict[str, Any], observations: List[Dict[str, Any]], view: str) -> List[Dict[str, Any]]:
+    def _transform_observations(
+        self, spec: Dict[str, Any], observations: List[Dict[str, Any]], view: str
+    ) -> List[Dict[str, Any]]:
         transformed = []
         for idx in range(len(observations)):
             point = self._metric_point(spec, observations, idx, view)
@@ -618,9 +623,13 @@ Rules:
         ]
 
     def _summarize_inflation(self, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        yoy_values = [value for value in [self._numeric_evidence(snapshot, "yoy") for snapshot in snapshots] if value is not None]
+        yoy_values = [
+            value for value in [self._numeric_evidence(snapshot, "yoy") for snapshot in snapshots] if value is not None
+        ]
         momentum_values = [
-            value for value in [self._numeric_evidence(snapshot, "mom_annualized") for snapshot in snapshots] if value is not None
+            value
+            for value in [self._numeric_evidence(snapshot, "mom_annualized") for snapshot in snapshots]
+            if value is not None
         ]
         avg_yoy = sum(yoy_values) / len(yoy_values) if yoy_values else None
         avg_momentum = sum(momentum_values) / len(momentum_values) if momentum_values else None
@@ -680,7 +689,9 @@ Rules:
             if unemployment <= 4.2 and (claims_wow is None or claims_wow <= 0):
                 state = "tight"
                 summary = "Labor conditions still look tight with low unemployment and no obvious claims deterioration."
-            elif (unemployment_change is not None and unemployment_change > 0.1) or (claims_wow is not None and claims_wow > 0):
+            elif (unemployment_change is not None and unemployment_change > 0.1) or (
+                claims_wow is not None and claims_wow > 0
+            ):
                 state = "softening"
                 summary = "Labor data is softening through unemployment or claims deterioration."
             elif payrolls_mom is not None and payrolls_mom > 0:

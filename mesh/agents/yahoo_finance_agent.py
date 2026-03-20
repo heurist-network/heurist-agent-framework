@@ -122,7 +122,7 @@ class YahooFinanceAgent(MeshAgent):
                     "Summarize the ETF SPY",
                     "Show me today's Yahoo day gainers",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.2},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.002",

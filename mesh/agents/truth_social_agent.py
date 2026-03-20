@@ -39,7 +39,7 @@ class TruthSocialAgent(MeshAgent):
                     "Get the latest posts from Donald Trump",
                     "Analyze recent Truth Social content from Trump",
                 ],
-                "credits": {"default": 2},
+                "credits": {"default": 1},
             }
         )
 

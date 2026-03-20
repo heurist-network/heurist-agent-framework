@@ -201,6 +201,7 @@ class SecEdgarAgent(MeshAgent):
                 "external_apis": ["SEC EDGAR", "SEC XBRL", "SEC Form 13F Data Sets"],
                 "tags": ["Finance", "Regulatory Filings"],
                 "verified": True,
+                "recommended": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Heurist.png",
                 "examples": [
                     "Resolve the SEC CIK for Apple",
@@ -211,7 +212,7 @@ class SecEdgarAgent(MeshAgent):
                     "Watch activist filings for Apple",
                     "Show institutional holders for Apple from the latest 13F dataset",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.2},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.002",

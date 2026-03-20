@@ -89,7 +89,7 @@ class TwitterInfoAgent(MeshAgent):
                     "Search for 'bitcoin' (single word search)",
                     "Search for '#ETH' (hashtag search)",
                 ],
-                "credits": {"default": 5},
+                "credits": {"default": 1},
             }
         )
 
@@ -735,6 +735,7 @@ class TwitterInfoAgent(MeshAgent):
             # Check if main tweet or quoted tweet contains an article and fetch its content
             main_tweet = tweet_detail_result.get("main_tweet", {})
             if main_tweet:
+
                 def _get_username_from_source(source: str) -> str:
                     if source and "/" in source:
                         parts = source.split("/")
@@ -762,7 +763,9 @@ class TwitterInfoAgent(MeshAgent):
                         quoted_article_result = await self._read_article(quoted_username, quoted_id)
                         if "error" not in quoted_article_result and quoted_article_result.get("article"):
                             logger.info("Article found in quoted tweet, attaching to quoted_tweet")
-                            tweet_detail_result["main_tweet"]["quoted_tweet"]["article"] = quoted_article_result["article"]
+                            tweet_detail_result["main_tweet"]["quoted_tweet"]["article"] = quoted_article_result[
+                                "article"
+                            ]
                             if "next_step" in tweet_detail_result["main_tweet"]["quoted_tweet"]:
                                 del tweet_detail_result["main_tweet"]["quoted_tweet"]["next_step"]
 
