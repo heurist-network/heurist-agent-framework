@@ -286,13 +286,13 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "news_search",
-                    "description": "Return compact recent news items for a symbol, company, asset, or market topic. Best with short ticker-style queries, company names, or compact topic phrases. Avoid long natural-language questions.",
+                    "description": "Return news headlines and source URLs for a symbol, company, asset, or market topic. You should use other tools to read the full article.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "Short Yahoo-style search input such as a symbol, company name, or compact topic phrase like 'AAPL', 'Nvidia', 'oil prices', or 'energy sector'. Avoid long sentence-like queries.",
+                                "description": "Short Yahoo-style search input such as a symbol, company name, or compact topic phrase like 'AAPL', 'Nvidia', 'tariffs impact', or 'energy sector'. Must be within 2 words. Avoid sentence-like queries or questions.",
                             },
                             "limit": {
                                 "type": "integer",
@@ -1050,7 +1050,9 @@ Rules:
             ticker = yf.Ticker(symbol)
             recent_df = recent.copy() if isinstance(recent, pd.DataFrame) else pd.DataFrame()
             if recent_df.empty:
-                recent_df = ticker.history(period="5d", interval="1d", auto_adjust=True, actions=False, raise_errors=True)
+                recent_df = ticker.history(
+                    period="5d", interval="1d", auto_adjust=True, actions=False, raise_errors=True
+                )
             if recent_df is None or recent_df.empty:
                 return {}
             fast_info = dict(ticker.fast_info)
