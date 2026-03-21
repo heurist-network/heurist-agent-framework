@@ -54,10 +54,10 @@ class BaseUSDCForensicsAgent(MeshAgent):
                     "Where does this wallet send its USDC?",
                     "Show daily USDC activity for this address",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.5},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.005",
                 },
             }
         )

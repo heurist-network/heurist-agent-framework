@@ -44,7 +44,7 @@ class TrendingTokenAgent(MeshAgent):
                 "credits": {"default": 0.2},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.02",
+                    "default_price_usd": "0.002",
                 },
                 "erc8004": {
                     "enabled": True,

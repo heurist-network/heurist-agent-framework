@@ -45,10 +45,10 @@ class ChainbaseAddressLabelAgent(MeshAgent):
                     "What is the owner of 0x2211d1D0020DAEA8039E46Cf1367962070d77DA9?",
                     "Get information about vitalik.eth address",
                 ],
-                "credits": {"default": 1},
+                "credits": {"default": 0.5},
                 "x402_config": {
                     "enabled": True,
-                    "default_price_usd": "0.01",
+                    "default_price_usd": "0.005",
                 },
                 "erc8004": {
                     "enabled": True,
