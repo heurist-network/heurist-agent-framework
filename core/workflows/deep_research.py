@@ -1,11 +1,17 @@
 import asyncio
 import json
 import logging
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple, TypedDict
 
 from ..utils.text_splitter import trim_prompt
+
+try:
+    from ..clients.search.tavily_client import TavilySearchClient
+except ImportError:
+    TavilySearchClient = None
 
 logger = logging.getLogger(__name__)
 
@@ -62,6 +68,14 @@ class ResearchWorkflow:
                 # Configure rate limit for each client
                 if hasattr(client, "update_rate_limit"):
                     client.update_rate_limit(0)
+
+        # Auto-include Tavily when TAVILY_API_KEY is set and not already provided
+        if "tavily" not in self.search_clients and TavilySearchClient is not None:
+            tavily_api_key = os.environ.get("TAVILY_API_KEY")
+            if tavily_api_key:
+                tavily_client = TavilySearchClient(api_key=tavily_api_key, rate_limit=0)
+                self.search_clients["tavily"] = tavily_client
+                logger.info("Auto-included Tavily search client (TAVILY_API_KEY detected)")
 
         # Make sure we have at least one search client
         if not self.search_clients:
