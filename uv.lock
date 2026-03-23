@@ -1578,6 +1578,7 @@ dependencies = [
     { name = "smolagents" },
     { name = "spaceandtime" },
     { name = "stockstats" },
+    { name = "tavily-python" },
     { name = "tenacity" },
     { name = "tiktoken" },
     { name = "tweepy" },
@@ -1622,6 +1623,7 @@ requires-dist = [
     { name = "smolagents", specifier = "==1.9.2" },
     { name = "spaceandtime", specifier = "==1.1.70" },
     { name = "stockstats", specifier = ">=0.6.5" },
+    { name = "tavily-python", specifier = ">=0.5.0" },
     { name = "tenacity", specifier = "==8.5.0" },
     { name = "tiktoken", specifier = "==0.9.0" },
     { name = "tweepy", specifier = "==4.15.0" },
@@ -3604,6 +3606,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/2a/371a47cf6c34de1254da28536f5b242bb1e2651f4e406899b3f3fe6976c3/stockstats-0.6.5.tar.gz", hash = "sha256:2bc81bff187ab9ab5a4c17cec0bbec46a5b108d21878d2fbc8921eb3afc48606", size = 55788, upload-time = "2025-05-18T08:18:52.755Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bd/09/15a60adddee87fb0c9d1a2ed2ba0362a80451b107a77cfc87fbe72b9aac7/stockstats-0.6.5-py2.py3-none-any.whl", hash = "sha256:89a42808a8b0f94f7fa537cee8a097ae61790b3773051a889586d51a1e8c9392", size = 31727, upload-time = "2025-05-18T08:18:51.172Z" },
+]
+
+[[package]]
+name = "tavily-python"
+version = "0.7.23"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "httpx" },
+    { name = "requests" },
+    { name = "tiktoken" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/89/d1/197419d6133643848514e5e84e8f41886e825b73bf91ae235a1595c964f5/tavily_python-0.7.23.tar.gz", hash = "sha256:3b92232e0e29ab68898b765f281bb4f2c650b02210b64affbc48e15292e96161", size = 25968, upload-time = "2026-03-09T19:17:32.333Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/64/27/f9c6e9249367be0772fb754849e03cbbc6ad8d80a479bf30ea8811828b2e/tavily_python-0.7.23-py3-none-any.whl", hash = "sha256:52ef85c44b926bce3f257570cd32bc1bd4db54666acf3105617f27411a59e188", size = 19079, upload-time = "2026-03-09T19:17:29.593Z" },
 ]
 
 [[package]]
