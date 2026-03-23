@@ -1,11 +1,11 @@
 {
   "AIXBTProjectInfoAgent": {
+    "get_market_summary": {
+      "lookback_days": 1
+    },
     "search_projects": {
       "limit": 1,
       "name": "heurist"
-    },
-    "get_market_summary": {
-      "lookback_days": 1
     }
   },
   "AaveAgent": {
@@ -21,14 +21,14 @@
   },
   "ArbusAgent": {
     "ask_ai_assistant": {
-      "query": "What's happening with DeFi markets?",
-      "days": 7
+      "days": 7,
+      "query": "What's happening with DeFi markets?"
     },
     "generate_report": {
-      "twitter_handle": "solana",
       "category": "projects",
       "date_from": "2024-01-01",
-      "date_to": "2024-12-31"
+      "date_to": "2024-12-31",
+      "twitter_handle": "solana"
     }
   },
   "ArkhamIntelligenceAgent": {
@@ -163,10 +163,10 @@
   "EvmTokenInfoAgent": {
     "get_recent_large_trades": {
       "chain": "bsc",
-      "tokenAddress": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-      "minUsdAmount": 5000,
       "filter": "all",
-      "limit": 10
+      "limit": 10,
+      "minUsdAmount": 5000,
+      "tokenAddress": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     }
   },
   "ExaSearchAgent": {
@@ -190,8 +190,8 @@
   },
   "FirecrawlSearchDigestAgent": {
     "firecrawl_web_search": {
-      "search_term": "What are the most recent developments in decentralized AI and blockchain integration?",
-      "limit": 5
+      "limit": 5,
+      "search_term": "What are the most recent developments in decentralized AI and blockchain integration?"
     }
   },
   "FundingRateAgent": {
@@ -208,10 +208,10 @@
     }
   },
   "L2BeatAgent": {
-    "get_l2_summary": {
+    "get_l2_costs": {
       "category": "rollups"
     },
-    "get_l2_costs": {
+    "get_l2_summary": {
       "category": "rollups"
     }
   },
@@ -219,48 +219,48 @@
     "query_about_to_graduate_tokens": {
       "limit": 5
     },
-    "query_latest_trades": {
-      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "limit": 5
-    },
     "query_latest_price": {
       "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     },
-    "query_top_buyers": {
-      "token_address": "F9WhPkcmLCVfgKucysxUWbqjrZfUYFsyQkxYnam9bonk",
-      "limit": 5
-    },
-    "query_top_sellers": {
-      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "limit": 5
-    },
-    "query_ohlcv_data": {
-      "token_address": "E8XPu39wNY4HfRgCRMmp2vee75N9gCAd9PnPsoesbonk",
-      "limit": 55
-    },
-    "query_pair_address": {
+    "query_latest_trades": {
+      "limit": 5,
       "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     },
     "query_liquidity": {
       "pool_address": "Hv1i8WrxEhL8djBuxhFGJxXTt4qEupywWKFSgGB5A7w6"
+    },
+    "query_ohlcv_data": {
+      "limit": 55,
+      "token_address": "E8XPu39wNY4HfRgCRMmp2vee75N9gCAd9PnPsoesbonk"
+    },
+    "query_pair_address": {
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     },
     "query_recently_created_tokens": {
       "limit": 5
     },
     "query_tokens_above_95_percent": {
       "limit": 5
+    },
+    "query_top_buyers": {
+      "limit": 5,
+      "token_address": "F9WhPkcmLCVfgKucysxUWbqjrZfUYFsyQkxYnam9bonk"
+    },
+    "query_top_sellers": {
+      "limit": 5,
+      "token_address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
     }
   },
   "MoniTwitterInsightAgent": {
-    "get_smarts_categories": {
-      "username": "heurist_ai"
-    },
     "get_smart_followers_history": {
       "timeframe": "D7",
       "username": "heurist_ai"
     },
     "get_smart_mentions_feed": {
       "limit": 100,
+      "username": "heurist_ai"
+    },
+    "get_smarts_categories": {
       "username": "heurist_ai"
     }
   },
@@ -277,6 +277,11 @@
       "timeframe": 48
     },
     "query_recent_token_creation": {}
+  },
+  "SallyHealthAgent": {
+    "ask_health_advice": {
+      "message": "Tips for better sleep quality"
+    }
   },
   "SolWalletAgent": {
     "analyze_common_holdings_of_top_holders": {
@@ -327,21 +332,38 @@
       "username": "realdonaldtrump"
     }
   },
+  "TwitterIntelligenceAgent": {
+    "tweet_detail": {
+      "show_thread": true,
+      "tweet_id": "1975788185671389308"
+    },
+    "twitter_search": {
+      "limit": 10,
+      "queries": [
+        "bitcoin",
+        "ETH"
+      ]
+    },
+    "user_timeline": {
+      "identifier": "@heurist_ai",
+      "limit": 10
+    }
+  },
   "UnifaiMeteoraInfoAgent": {
     "get_trending_dlmm_pools": {
       "limit": 5
     },
     "search_dlmm_pools": {
-      "limit": 5,
       "include_pool_token_pairs": [
         "So11111111111111111111111111111111111111112-EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
-      ]
+      ],
+      "limit": 5
     },
     "search_dynamic_amm_pools": {
-      "limit": 5,
       "include_token_mints": [
         "So11111111111111111111111111111111111111112"
-      ]
+      ],
+      "limit": 5
     }
   },
   "UnifaiTokenAnalysisAgent": {
@@ -362,6 +384,22 @@
       "limit": 1
     }
   },
+  "YahooFinanceAgent": {
+    "price_history": {
+      "interval": "1d",
+      "period": "6mo",
+      "symbols": [
+        "AAPL"
+      ]
+    },
+    "technical_snapshot": {
+      "interval": "1d",
+      "period": "3mo",
+      "symbols": [
+        "BTC-USD"
+      ]
+    }
+  },
   "ZerionWalletAnalysisAgent": {
     "fetch_wallet_nfts": {
       "wallet_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D"
@@ -372,7 +410,12 @@
   },
   "ZoraAgent": {
     "explore_collections": {
-      "list_type": "TOP_GAINERS",
+      "count": 10,
+      "list_type": "TOP_GAINERS"
+    },
+    "get_coin_comments": {
+      "address": "0xd769d56f479e9e72a77bb1523e866a33098feec5",
+      "chain": 8453,
       "count": 10
     },
     "get_coin_holders": {
@@ -381,47 +424,8 @@
       "count": 10
     },
     "get_coin_info": {
-      "collection_address": "0xd769d56f479e9e72a77bb1523e866a33098feec5",
-      "chain_id": 8453
-    },
-    "get_coin_comments": {
-      "address": "0xd769d56f479e9e72a77bb1523e866a33098feec5",
-      "chain": 8453,
-      "count": 10
-    }
-  },
-  "YahooFinanceAgent": {
-    "fetch_price_history": {
-      "symbol": "AAPL",
-      "interval": "1d",
-      "period": "6mo"
-    },
-    "indicator_snapshot": {
-      "symbol": "BTC-USD",
-      "interval": "1d",
-      "period": "6mo"
-    },
-    "SallyHealthAgent": {
-      "ask_health_advice": {
-        "message": "Tips for better sleep quality"
-      }
-    },
-    "TwitterIntelligenceAgent": {
-      "user_timeline": {
-        "identifier": "@heurist_ai",
-        "limit": 10
-      },
-      "tweet_detail": {
-        "tweet_id": "1975788185671389308",
-        "show_thread": true
-      },
-      "twitter_search": {
-        "queries": [
-          "bitcoin",
-          "ETH"
-        ],
-        "limit": 10
-      }
+      "chain_id": 8453,
+      "collection_address": "0xd769d56f479e9e72a77bb1523e866a33098feec5"
     }
   }
 }
