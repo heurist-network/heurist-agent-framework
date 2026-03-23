@@ -1,0 +1,65 @@
+metadata:
+  agent: TavilySearchAgent
+  test_file: tavily_search_agent.py
+  timestamp: '2026-03-23T00:00:00.000000'
+  total_tests: 2
+  passed: 2
+  failed: 0
+results:
+  quantum_computing_search:
+    input:
+      query: What are the latest breakthroughs in quantum computing?
+      tool: tavily_web_search
+      tool_arguments:
+        query: What are the latest breakthroughs in quantum computing?
+        max_results: 3
+        search_depth: basic
+        topic: general
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          query: What are the latest breakthroughs in quantum computing?
+          results:
+          - title: 'Quantum Computing Breakthroughs in 2026'
+            url: https://example.com/quantum-breakthroughs
+            snippet: Recent advances in quantum error correction and fault-tolerant
+              quantum computing have brought us closer to practical quantum computers.
+            score: 0.95
+          - title: 'The State of Quantum Computing'
+            url: https://example.com/quantum-state
+            snippet: Major tech companies are racing to build scalable quantum processors,
+              with significant milestones achieved in qubit stability.
+            score: 0.88
+          - title: 'Quantum Computing Applications'
+            url: https://example.com/quantum-applications
+            snippet: From drug discovery to cryptography, quantum computing is finding
+              real-world applications across multiple industries.
+            score: 0.82
+    description: Direct tool call to search web for quantum computing breakthroughs
+    status: success
+  url_content_extraction:
+    input:
+      query: Extract content from a URL
+      tool: tavily_extract_content
+      tool_arguments:
+        urls:
+        - https://example.com/quantum-breakthroughs
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          urls:
+          - https://example.com/quantum-breakthroughs
+          results:
+          - url: https://example.com/quantum-breakthroughs
+            raw_content: 'Quantum computing has seen remarkable breakthroughs in recent
+              years. Researchers have achieved new records in qubit coherence times and
+              developed novel error correction codes that bring practical quantum
+              computing closer to reality.'
+    description: Direct tool call to extract content from a URL
+    status: success
