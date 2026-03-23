@@ -16,6 +16,8 @@ class TavilySearchAgent(MeshAgent):
     def __init__(self):
         super().__init__()
         self.api_key = os.getenv("TAVILY_API_KEY")
+        if not self.api_key:
+            raise ValueError("TAVILY_API_KEY environment variable is required")
         self.client = AsyncTavilyClient(api_key=self.api_key)
         self.metadata.update(
             {
@@ -70,7 +72,7 @@ class TavilySearchAgent(MeshAgent):
                             "search_depth": {
                                 "type": "string",
                                 "description": "Search depth: 'basic' for fast results or 'advanced' for higher relevance (default: basic)",
-                                "enum": ["basic", "advanced"],
+                                "enum": ["ultra-fast", "fast", "basic", "advanced"],
                             },
                             "topic": {
                                 "type": "string",
