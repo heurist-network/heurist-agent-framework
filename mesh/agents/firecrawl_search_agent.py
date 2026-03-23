@@ -10,6 +10,7 @@ from firecrawl.firecrawl import ScrapeOptions
 
 from decorators import with_cache, with_retry
 from mesh.agents.exa_search_agent import build_firecrawl_to_exa_fallback
+from mesh.agents.tavily_search_agent import build_firecrawl_to_tavily_fallback
 from mesh.firecrawl_logger import FirecrawlLogger
 from mesh.gemini import call_gemini_async
 from mesh.mesh_agent import MeshAgent
@@ -54,6 +55,9 @@ class FirecrawlSearchAgent(MeshAgent):
     async def get_fallback_for_tool(
         self, tool_name: Optional[str], function_args: Dict[str, Any], original_params: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
+        fallback_provider = os.getenv("SEARCH_FALLBACK_PROVIDER", "exa").lower()
+        if fallback_provider == "tavily":
+            return build_firecrawl_to_tavily_fallback(tool_name, function_args, original_params)
         return build_firecrawl_to_exa_fallback(tool_name, function_args, original_params)
 
     def get_system_prompt(self) -> str:

@@ -33,6 +33,7 @@ dependencies = [
     "scikit-learn==1.6.1", # for core embeddings
     "smolagents==1.9.2", # for coingecko, zkignite
     "spaceandtime==1.1.70", # for spaceandtime agent
+    "tavily-python>=0.5.0", # tavily search fallback
     "tenacity==8.5.0", # sol wallet agent
     "tiktoken==0.9.0", # core embeddings
     "tweepy==4.15.0", # clients/twitter_api.py
