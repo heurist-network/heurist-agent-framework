@@ -16,6 +16,7 @@ class TavilySearchAgent(MeshAgent):
     def __init__(self):
         super().__init__()
         self.api_key = os.getenv("TAVILY_API_KEY")
+        self.client = AsyncTavilyClient(api_key=self.api_key)
         self.metadata.update(
             {
                 "name": "Tavily Search Agent",
@@ -29,6 +30,7 @@ class TavilySearchAgent(MeshAgent):
                 "external_apis": ["Tavily"],
                 "tags": ["Search"],
                 "verified": True,
+                "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Tavily.png",
                 "examples": [
                     "What are the latest breakthroughs in quantum computing?",
                     "Search for recent news about renewable energy",
@@ -114,8 +116,7 @@ class TavilySearchAgent(MeshAgent):
     ) -> Dict:
         logger.info(f"Tavily searching for: {query}, depth: {search_depth}, topic: {topic}")
         try:
-            client = AsyncTavilyClient(api_key=self.api_key)
-            response = await client.search(
+            response = await self.client.search(
                 query=query,
                 max_results=max_results,
                 search_depth=search_depth,
@@ -143,8 +144,7 @@ class TavilySearchAgent(MeshAgent):
     async def tavily_extract_content(self, urls: list) -> Dict:
         logger.info(f"Tavily extracting content from {len(urls)} URLs")
         try:
-            client = AsyncTavilyClient(api_key=self.api_key)
-            response = await client.extract(urls=urls[:20])
+            response = await self.client.extract(urls=urls[:20])
 
             results = []
             for r in response.get("results", []):
