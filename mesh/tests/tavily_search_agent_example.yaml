@@ -1,0 +1,41 @@
+metadata:
+  agent: TavilySearchAgent
+  test_file: tavily_search_agent.py
+  timestamp: '2026-03-23T00:00:00.000000'
+  total_tests: 2
+  passed: 0
+  failed: 0
+  note: Placeholder data — requires TAVILY_API_KEY to generate real output. Run mesh/test_scripts/test_tavily_search.py to populate.
+results:
+  quantum_computing_search:
+    input:
+      query: What are the latest breakthroughs in quantum computing?
+      tool: tavily_web_search
+      tool_arguments:
+        query: What are the latest breakthroughs in quantum computing?
+        max_results: 3
+        search_depth: basic
+        topic: general
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        status: pending
+        data: null
+    description: Direct tool call to search web for quantum computing breakthroughs
+    status: pending
+  url_content_extraction:
+    input:
+      query: Extract content from a URL
+      tool: tavily_extract_content
+      tool_arguments:
+        urls:
+        - https://en.wikipedia.org/wiki/Quantum_computing
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: pending
+        data: null
+    description: Direct tool call to extract content from a URL
+    status: pending
