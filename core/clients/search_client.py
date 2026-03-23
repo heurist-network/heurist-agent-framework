@@ -4,6 +4,7 @@ from .search.base_search_client import BaseSearchClient, SearchResponse
 from .search.duckduckgo_client import DuckDuckGoClient
 from .search.exa_client import ExaClient
 from .search.firecrawl_client import FirecrawlClient
+from .search.tavily_client import TavilySearchClient
 
 
 class SearchClient(BaseSearchClient):
@@ -32,6 +33,8 @@ class SearchClient(BaseSearchClient):
         elif client_type.lower() == "duckduckgo":
             # DuckDuckGo doesn't require API key or custom URL
             self._implementation = DuckDuckGoClient(rate_limit=rate_limit)
+        elif client_type.lower() == "tavily":
+            self._implementation = TavilySearchClient(api_key=api_key, api_url=api_url, rate_limit=rate_limit)
         else:
             raise ValueError(f"Unsupported search client type: {client_type}")
 
