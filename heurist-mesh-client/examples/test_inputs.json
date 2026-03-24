@@ -194,6 +194,33 @@
       "search_term": "What are the most recent developments in decentralized AI and blockchain integration?"
     }
   },
+  "FredMacroAgent": {
+    "macro_series_snapshot": {
+      "series_key": "headline_cpi"
+    },
+    "macro_series_history": {
+      "series_key": "core_pce",
+      "period": "5y",
+      "view": "yoy",
+      "limit": 12
+    },
+    "macro_regime_context": {},
+    "macro_release_calendar": {
+      "from_date": "2026-03-01",
+      "to_date": "2026-04-30",
+      "release_keys": ["cpi", "gdp"]
+    },
+    "macro_release_context": {
+      "release_key": "cpi",
+      "lookback_releases": 4
+    },
+    "macro_vintage_history": {
+      "series_key": "real_gdp",
+      "realtime_date": "2020-07-01",
+      "period": "10y",
+      "limit": 8
+    }
+  },
   "FundingRateAgent": {
     "find_cross_exchange_opportunities": {},
     "find_spot_futures_opportunities": {},
@@ -281,6 +308,40 @@
   "SallyHealthAgent": {
     "ask_health_advice": {
       "message": "Tips for better sleep quality"
+    }
+  },
+  "SecEdgarAgent": {
+    "resolve_company": {
+      "query": "AAPL",
+      "limit": 3
+    },
+    "filing_timeline": {
+      "query": "TSLA",
+      "forms": ["8-K", "10-Q", "10-K"],
+      "limit": 6
+    },
+    "filing_diff": {
+      "query": "AAPL",
+      "form": "10-Q",
+      "paragraph_limit": 3
+    },
+    "xbrl_fact_trends": {
+      "query": "AAPL",
+      "metric": "revenue",
+      "frequency": "quarterly",
+      "limit": 6
+    },
+    "insider_activity": {
+      "query": "Tesla",
+      "limit": 3
+    },
+    "activist_watch": {
+      "query": "Apple",
+      "limit": 2
+    },
+    "institutional_holders": {
+      "query": "Apple",
+      "limit": 5
     }
   },
   "SolWalletAgent": {
