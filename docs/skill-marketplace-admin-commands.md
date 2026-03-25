@@ -234,9 +234,28 @@ asyncio.run(main())
 
 To update a skill with new content from upstream:
 
-1. **Delete** the existing skill from DB (see Remove above)
-2. **Re-ingest** using the same slug (see Add above)
-3. **Re-approve** (see Approve above)
+1. `POST /admin/skills/{id}/update` to re-fetch from origin and refresh the stored artifact/hash
+
+### Via Admin API
+
+```bash
+curl -X POST https://mesh.heurist.xyz/admin/skills/SKILL_ID/update \
+  -H "X-API-Key: $INTERNAL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+Optional fields in the JSON body override the stored metadata during the update, for example:
+
+```json
+{
+  "category": "Crypto",
+  "labels": ["defi", "analytics"],
+  "source_path": "skills/my-skill/SKILL.md"
+}
+```
+
+The update route refreshes `file_url`, `approved_sha256`, `is_folder`, `folder_manifest_json`, metadata fields, and `updated_at`, and preserves the current `verification_status`.
 
 Alternatively, update specific fields directly:
 
