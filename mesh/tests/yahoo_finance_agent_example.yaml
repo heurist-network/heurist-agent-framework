@@ -1,9 +1,9 @@
 metadata:
   agent: YahooFinanceAgent
   test_file: yahoo_finance_agent.py
-  timestamp: '2026-03-18T21:01:13.319703'
-  total_tests: 30
-  passed: 30
+  timestamp: '2026-03-26T01:45:00.720584'
+  total_tests: 36
+  passed: 36
   failed: 0
 results:
   resolve_apple:
@@ -27,22 +27,22 @@ results:
             asset_type: stock
             exchange: NMS
             quote_type: EQUITY
-            score: 31121.0
+            score: 31972.0
           - symbol: APLE
             name: Apple Hospitality REIT, Inc.
             asset_type: stock
             exchange: NYQ
             quote_type: EQUITY
-            score: 20052.0
-          - symbol: APC.DE
-            name: Apple Inc.
+            score: 20056.0
+          - symbol: AAPY.DE
+            name: IncomeShares Apple (AAPL) Options ETP
             asset_type: stock
             exchange: GER
             quote_type: EQUITY
-            score: 20014.0
+            score: 20012.0
     description: Resolve Apple into a compact list of stock candidates.
     status: success
-    elapsed_time: 0.3443317413330078
+    elapsed_time: 1.5674505233764648
   resolve_invalid_asset_type:
     input:
       tool: resolve_symbol
@@ -57,7 +57,7 @@ results:
         error: Unsupported asset_type 'bond'.
     description: Direct error for unsupported asset-type filter.
     status: success
-    elapsed_time: 0.00034427642822265625
+    elapsed_time: 0.0004749298095703125
   resolve_no_matches:
     input:
       tool: resolve_symbol
@@ -71,107 +71,238 @@ results:
         error: No symbol matches found for 'zxqwvut nonexistent corp 123456789'.
     description: Honest no-data response when symbol search finds nothing.
     status: success
-    elapsed_time: 0.14936470985412598
+    elapsed_time: 0.44710755348205566
   quote_snapshot_aapl:
     input:
       tool: quote_snapshot
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - AAPL
       raw_data_only: true
     output:
       response: ''
       data:
         status: success
         data:
-          symbol: AAPL
-          name: Apple Inc.
-          asset_type: stock
-          quote_type: EQUITY
-          currency: USD
-          exchange: NMS
-          price:
-            last_price: 249.94000244140625
-            open: 252.625
-            previous_close: 254.15
-            day_high: 254.94000244140625
-            day_low: 249.0
-            volume: 34652568
-          stats:
-            market_cap: 3673599660323.6084
-            fifty_day_average: 261.99119873046874
-            two_hundred_day_average: 246.1176993560791
-            year_high: 288.6199951171875
-            year_low: 169.2100067138672
-            year_change_pct: 18.114657702707273
-          profile:
-            sector: Technology
-            industry: Consumer Electronics
-            website: https://www.apple.com
-            country: United States
-            exchange: NMS
-            market: us_market
-          as_of: '2026-03-18T00:00:00-04:00'
-    description: Compact quote snapshot for AAPL.
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              symbol: AAPL
+              name: Apple Inc.
+              asset_type: stock
+              quote_type: EQUITY
+              currency: USD
+              exchange: NMS
+              price:
+                last_price: 254.39999389648438
+                open: 254.02000427246094
+                previous_close: 253.2955
+                day_high: 254.97999572753906
+                day_low: 251.60000610351562
+                volume: 13563325
+              stats:
+                market_cap: 3739152284690.979
+                fifty_day_average: 260.8243994140625
+                two_hundred_day_average: 247.3214493560791
+                year_high: 288.6199951171875
+                year_low: 169.2100067138672
+                year_change_pct: 13.591838927579817
+              profile:
+                sector: Technology
+                industry: Consumer Electronics
+                website: https://www.apple.com
+                country: United States
+                exchange: NMS
+                market: us_market
+              as_of: '2026-03-25T00:00:00'
+    description: Compact quote snapshot for AAPL using a one-item list.
     status: success
-    elapsed_time: 0.7835006713867188
+    elapsed_time: 4.3524487018585205
   quote_snapshot_btc:
     input:
       tool: quote_snapshot
       tool_arguments:
-        symbol: BTC-USD
+        symbols:
+        - BTC-USD
       raw_data_only: true
     output:
       response: ''
       data:
         status: success
         data:
-          symbol: BTC-USD
-          name: Bitcoin USD
-          asset_type: crypto
-          quote_type: CRYPTOCURRENCY
-          currency: USD
-          exchange: CCC
-          price:
-            last_price: 71240.7265625
-            open: 73933.515625
-            previous_close: 73940.0703125
-            day_high: 74597.015625
-            day_low: 70639.78125
-            volume: 45301211136
-          stats:
-            market_cap: 1425031299072.0
-            fifty_day_average: 70863.213515625
-            two_hundred_day_average: 93578.50568359374
-            year_high: 126198.0703125
-            year_low: 60074.203125
-            year_change_pct: -14.889027870963028
-          profile:
-            website: https://bitcoin.org/
-            name: Bitcoin
-            exchange: CCC
-          as_of: '2026-03-18T00:00:00+00:00'
-    description: Compact quote snapshot for BTC-USD.
+          symbols:
+          - BTC-USD
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: BTC-USD
+            status: success
+            data:
+              symbol: BTC-USD
+              name: Bitcoin USD
+              asset_type: crypto
+              quote_type: CRYPTOCURRENCY
+              currency: USD
+              exchange: CCC
+              price:
+                last_price: 70893.1640625
+                open: 70525.5625
+                previous_close: 70531.625
+                day_high: 71925.1328125
+                day_low: 70422.796875
+                volume: 39157284864
+              stats:
+                market_cap: 1418079109120.0
+                fifty_day_average: 69031.387421875
+                two_hundred_day_average: 92173.88892578126
+                year_high: 126198.0703125
+                year_low: 60074.203125
+                year_change_pct: -18.852539706470544
+              profile:
+                website: https://bitcoin.org/
+                name: Bitcoin
+                exchange: CCC
+              as_of: '2026-03-25T00:00:00'
+    description: Compact quote snapshot for BTC-USD using a one-item list.
     status: success
-    elapsed_time: 0.5114386081695557
-  quote_snapshot_invalid_symbol:
+    elapsed_time: 4.521966934204102
+  quote_snapshot_batch_mixed:
     input:
       tool: quote_snapshot
       tool_arguments:
-        symbol: NOTAREALSYMBOL123
+        symbols:
+        - AAPL
+        - MSFT
+        - NOTAREALSYMBOL123
       raw_data_only: true
     output:
       response: ''
       data:
-        error: No quote data returned for NOTAREALSYMBOL123.
+        status: success
+        data:
+          symbols:
+          - AAPL
+          - MSFT
+          - NOTAREALSYMBOL123
+          summary:
+            requested: 3
+            succeeded: 2
+            no_data: 1
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              symbol: AAPL
+              name: Apple Inc.
+              asset_type: stock
+              quote_type: EQUITY
+              currency: USD
+              exchange: NMS
+              price:
+                last_price: 254.39500427246094
+                open: 254.02000427246094
+                previous_close: 253.02
+                day_high: 254.97999572753906
+                day_low: 251.60000610351562
+                volume: 13569828
+              stats:
+                market_cap: 3739078947566.3145
+                fifty_day_average: 260.8243994140625
+                two_hundred_day_average: 247.3214493560791
+                year_high: 288.6199951171875
+                year_low: 169.2100067138672
+                year_change_pct: 13.591838927579817
+              profile:
+                sector: Technology
+                industry: Consumer Electronics
+                website: https://www.apple.com
+                country: United States
+                exchange: NMS
+                market: us_market
+              as_of: '2026-03-25T00:00:00'
+          - symbol: MSFT
+            status: success
+            data:
+              symbol: MSFT
+              name: Microsoft Corporation
+              asset_type: stock
+              quote_type: EQUITY
+              currency: USD
+              exchange: NMS
+              price:
+                last_price: 371.2099914550781
+                open: 376.9200134277344
+                previous_close: 374.75
+                day_high: 377.05999755859375
+                day_low: 369.739990234375
+                volume: 18441942
+              stats:
+                market_cap: 2758972846174.674
+                fifty_day_average: 416.7393994140625
+                two_hundred_day_average: 480.68454971313474
+                year_high: 555.4500122070312
+                year_low: 344.7900085449219
+                year_change_pct: -4.418291389695081
+              profile:
+                sector: Technology
+                industry: Software - Infrastructure
+                website: https://www.microsoft.com
+                country: United States
+                exchange: NMS
+                market: us_market
+              as_of: '2026-03-25T00:00:00'
+          - symbol: NOTAREALSYMBOL123
+            status: no_data
+            error: No quote data returned for NOTAREALSYMBOL123.
+    description: Batch quote snapshot returns per-symbol success and no-data rows
+      in one response.
+    status: success
+    elapsed_time: 6.629024505615234
+  quote_snapshot_invalid_symbol:
+    input:
+      tool: quote_snapshot
+      tool_arguments:
+        symbols:
+        - NOTAREALSYMBOL123
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: no_data
+        data:
+          symbols:
+          - NOTAREALSYMBOL123
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 1
+            errors: 0
+          results:
+          - symbol: NOTAREALSYMBOL123
+            status: no_data
+            error: No quote data returned for NOTAREALSYMBOL123.
     description: Invalid symbol returns a structured no-data response instead of an
       exception.
     status: success
-    elapsed_time: 0.6851167678833008
+    elapsed_time: 2.6429598331451416
   price_history_aapl:
     input:
       tool: price_history
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - AAPL
         interval: 1d
         period: 6mo
         limit_bars: 10
@@ -181,102 +312,114 @@ results:
       data:
         status: success
         data:
-          symbol: AAPL
-          interval: 1d
-          requested:
-            period: 6mo
-            start_date: null
-            end_date: null
-            include_prepost: false
-            repair: false
-            limit_bars: 10
-          resolved:
-            start: '2025-09-19T00:00:00-04:00'
-            end: '2026-03-17T00:00:00-04:00'
-            currency: USD
-            exchange_timezone: America/New_York
-            instrument_type: EQUITY
-            total_bars: 123
-          latest_completed_bar: &id002
-            timestamp: '2026-03-17T00:00:00-04:00'
-            open: 252.9600067138672
-            high: 255.1300048828125
-            low: 252.17999267578125
-            close: 254.22999572753906
-            volume: 32361600
-          previous_completed_bar: &id001
-            timestamp: '2026-03-16T00:00:00-04:00'
-            open: 252.11000061035156
-            high: 253.88999938964844
-            low: 249.8800048828125
-            close: 252.82000732421875
-            volume: 32074200
-          window_summary:
-            open_close_change: 9.197036743164062
-            open_close_change_pct: 3.7533876182552772
-            window_high: 288.35019153510143
-            window_low: 239.7530294205925
-            volume_total: 5927302000
-            repaired_rows: null
-          bars:
-          - timestamp: '2026-03-04T00:00:00-05:00'
-            open: 264.6499938964844
-            high: 266.1499938964844
-            low: 261.4200134277344
-            close: 262.5199890136719
-            volume: 39803100
-          - timestamp: '2026-03-05T00:00:00-05:00'
-            open: 260.7900085449219
-            high: 261.55999755859375
-            low: 257.25
-            close: 260.2900085449219
-            volume: 49658600
-          - timestamp: '2026-03-06T00:00:00-05:00'
-            open: 258.6300048828125
-            high: 258.7699890136719
-            low: 254.3699951171875
-            close: 257.4599914550781
-            volume: 41120000
-          - timestamp: '2026-03-09T00:00:00-04:00'
-            open: 255.69000244140625
-            high: 261.1499938964844
-            low: 253.67999267578125
-            close: 259.8800048828125
-            volume: 38218500
-          - timestamp: '2026-03-10T00:00:00-04:00'
-            open: 257.6499938964844
-            high: 262.4800109863281
-            low: 256.95001220703125
-            close: 260.8299865722656
-            volume: 30590800
-          - timestamp: '2026-03-11T00:00:00-04:00'
-            open: 261.0899963378906
-            high: 262.1300048828125
-            low: 259.54998779296875
-            close: 260.80999755859375
-            volume: 26218900
-          - timestamp: '2026-03-12T00:00:00-04:00'
-            open: 258.6600036621094
-            high: 258.95001220703125
-            low: 254.17999267578125
-            close: 255.75999450683594
-            volume: 40794000
-          - timestamp: '2026-03-13T00:00:00-04:00'
-            open: 255.47999572753906
-            high: 256.3299865722656
-            low: 249.52000427246094
-            close: 250.1199951171875
-            volume: 36930000
-          - *id001
-          - *id002
-    description: Normalized daily price history for AAPL.
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              symbol: AAPL
+              interval: 1d
+              requested:
+                period: 6mo
+                start_date: null
+                end_date: null
+                include_prepost: false
+                repair: false
+                limit_bars: 10
+              resolved:
+                start: '2025-09-25T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                exchange_timezone: America/New_York
+                instrument_type: EQUITY
+                total_bars: 125
+              latest_completed_bar: &id002
+                timestamp: '2026-03-25T00:00:00'
+                open: 254.02000427246094
+                high: 254.97999572753906
+                low: 251.60000610351562
+                close: 254.3800048828125
+                volume: 13575081
+              previous_completed_bar: &id001
+                timestamp: '2026-03-24T00:00:00'
+                open: 250.35000610351562
+                high: 254.8300018310547
+                low: 249.5500030517578
+                close: 251.63999938964844
+                volume: 45111500
+              window_summary:
+                open_close_change: -2.001312255859375
+                open_close_change_pct: -0.7805998807537534
+                window_high: 288.35019153510143
+                window_low: 243.19244305608962
+                volume_total: 5813650181
+                repaired_rows: null
+              bars:
+              - timestamp: '2026-03-12T00:00:00'
+                open: 258.6600036621094
+                high: 258.95001220703125
+                low: 254.17999267578125
+                close: 255.75999450683594
+                volume: 40794000
+              - timestamp: '2026-03-13T00:00:00'
+                open: 255.47999572753906
+                high: 256.3299865722656
+                low: 249.52000427246094
+                close: 250.1199951171875
+                volume: 36930000
+              - timestamp: '2026-03-16T00:00:00'
+                open: 252.11000061035156
+                high: 253.88999938964844
+                low: 249.8800048828125
+                close: 252.82000732421875
+                volume: 32074200
+              - timestamp: '2026-03-17T00:00:00'
+                open: 252.9600067138672
+                high: 255.1300048828125
+                low: 252.17999267578125
+                close: 254.22999572753906
+                volume: 32361600
+              - timestamp: '2026-03-18T00:00:00'
+                open: 252.6300048828125
+                high: 254.94000244140625
+                low: 249.0
+                close: 249.94000244140625
+                volume: 35757900
+              - timestamp: '2026-03-19T00:00:00'
+                open: 249.39999389648438
+                high: 251.8300018310547
+                low: 247.3000030517578
+                close: 248.9600067138672
+                volume: 34864100
+              - timestamp: '2026-03-20T00:00:00'
+                open: 247.97999572753906
+                high: 249.1999969482422
+                low: 246.0
+                close: 247.99000549316406
+                volume: 88331100
+              - timestamp: '2026-03-23T00:00:00'
+                open: 253.97000122070312
+                high: 254.60000610351562
+                low: 250.27999877929688
+                close: 251.49000549316406
+                volume: 40546100
+              - *id001
+              - *id002
+    description: Normalized daily price history for AAPL using a one-item list.
     status: success
-    elapsed_time: 0.20196533203125
+    elapsed_time: 1.2898316383361816
   price_history_btc_intraday:
     input:
       tool: price_history
       tool_arguments:
-        symbol: BTC-USD
+        symbols:
+        - BTC-USD
         interval: 1h
         period: 1mo
         limit_bars: 12
@@ -286,114 +429,276 @@ results:
       data:
         status: success
         data:
-          symbol: BTC-USD
-          interval: 1h
-          requested:
-            period: 1mo
-            start_date: null
-            end_date: null
-            include_prepost: false
-            repair: false
-            limit_bars: 12
-          resolved:
-            start: '2026-02-18T21:00:00+00:00'
-            end: '2026-03-18T20:00:00+00:00'
-            currency: USD
-            exchange_timezone: UTC
-            instrument_type: CRYPTOCURRENCY
-            total_bars: 672
-          latest_completed_bar: &id004
-            timestamp: '2026-03-18T20:00:00+00:00'
-            open: 71058.625
-            high: 71273.40625
-            low: 70605.0234375
-            close: 71240.7265625
-            volume: 1385066496
-          previous_completed_bar: &id003
-            timestamp: '2026-03-18T19:00:00+00:00'
-            open: 71184.4765625
-            high: 71453.0234375
-            low: 71001.71875
-            close: 71111.2421875
-            volume: 3270275072
-          window_summary:
-            open_close_change: 4914.921875
-            open_close_change_pct: 7.410271007124749
-            window_high: 75954.96875
-            window_low: 62646.765625
-            volume_total: 305673835520
-            repaired_rows: null
-          bars:
-          - timestamp: '2026-03-18T09:00:00+00:00'
-            open: 74039.984375
-            high: 74264.984375
-            low: 74039.984375
-            close: 74154.8046875
-            volume: 0
-          - timestamp: '2026-03-18T10:00:00+00:00'
-            open: 74203.2890625
-            high: 74264.2578125
-            low: 73854.3828125
-            close: 73936.0546875
-            volume: 0
-          - timestamp: '2026-03-18T11:00:00+00:00'
-            open: 73928.75
-            high: 73993.3125
-            low: 72884.6171875
-            close: 72931.2109375
-            volume: 1629986816
-          - timestamp: '2026-03-18T12:00:00+00:00'
-            open: 72969.7421875
-            high: 72969.7421875
-            low: 72352.828125
-            close: 72383.359375
-            volume: 1847402496
-          - timestamp: '2026-03-18T13:00:00+00:00'
-            open: 72272.1953125
-            high: 72537.0703125
-            low: 72002.1015625
-            close: 72050.671875
-            volume: 166236160
-          - timestamp: '2026-03-18T14:00:00+00:00'
-            open: 72167.140625
-            high: 72196.3359375
-            low: 71315.328125
-            close: 71315.328125
-            volume: 1607847936
-          - timestamp: '2026-03-18T15:00:00+00:00'
-            open: 71077.0
-            high: 71515.359375
-            low: 70978.140625
-            close: 71515.359375
-            volume: 1513684992
-          - timestamp: '2026-03-18T16:00:00+00:00'
-            open: 71452.140625
-            high: 71551.2890625
-            low: 71133.4765625
-            close: 71329.96875
-            volume: 529702912
-          - timestamp: '2026-03-18T17:00:00+00:00'
-            open: 71316.6328125
-            high: 71710.953125
-            low: 71219.640625
-            close: 71616.7109375
-            volume: 385953792
-          - timestamp: '2026-03-18T18:00:00+00:00'
-            open: 71775.625
-            high: 71948.5546875
-            low: 70992.875
-            close: 70992.875
-            volume: 974417920
-          - *id003
-          - *id004
-    description: Normalized intraday price history for BTC-USD.
+          symbols:
+          - BTC-USD
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: BTC-USD
+            status: success
+            data:
+              symbol: BTC-USD
+              interval: 1h
+              requested:
+                period: 1mo
+                start_date: null
+                end_date: null
+                include_prepost: false
+                repair: false
+                limit_bars: 12
+              resolved:
+                start: '2026-02-25T17:00:00+00:00'
+                end: '2026-03-25T16:00:00+00:00'
+                currency: USD
+                exchange_timezone: UTC
+                instrument_type: CRYPTOCURRENCY
+                total_bars: 672
+              latest_completed_bar: &id004
+                timestamp: '2026-03-25T16:00:00+00:00'
+                open: 70838.890625
+                high: 71706.296875
+                low: 70797.7578125
+                close: 71291.734375
+                volume: 1520832512
+              previous_completed_bar: &id003
+                timestamp: '2026-03-25T15:00:00+00:00'
+                open: 71223.5
+                high: 71256.4375
+                low: 70584.640625
+                close: 70834.3203125
+                volume: 1217056768
+              window_summary:
+                open_close_change: 2665.3203125
+                open_close_change_pct: 3.8838111373160453
+                window_high: 75954.96875
+                window_low: 63106.07421875
+                volume_total: 298364811264
+                repaired_rows: null
+              bars:
+              - timestamp: '2026-03-25T05:00:00+00:00'
+                open: 70932.953125
+                high: 71295.6171875
+                low: 70932.828125
+                close: 71089.2734375
+                volume: 510869504
+              - timestamp: '2026-03-25T06:00:00+00:00'
+                open: 71092.890625
+                high: 71227.1484375
+                low: 71000.7421875
+                close: 71014.7578125
+                volume: 239230976
+              - timestamp: '2026-03-25T07:00:00+00:00'
+                open: 70982.921875
+                high: 71235.7109375
+                low: 70886.9609375
+                close: 70908.28125
+                volume: 0
+              - timestamp: '2026-03-25T08:00:00+00:00'
+                open: 70903.484375
+                high: 71468.2265625
+                low: 70790.1015625
+                close: 71229.4296875
+                volume: 345554944
+              - timestamp: '2026-03-25T09:00:00+00:00'
+                open: 71226.1640625
+                high: 71350.203125
+                low: 71112.1015625
+                close: 71327.7734375
+                volume: 0
+              - timestamp: '2026-03-25T10:00:00+00:00'
+                open: 71365.6796875
+                high: 71554.5703125
+                low: 71299.5703125
+                close: 71490.6015625
+                volume: 0
+              - timestamp: '2026-03-25T11:00:00+00:00'
+                open: 71486.8984375
+                high: 71946.390625
+                low: 71467.0078125
+                close: 71661.7578125
+                volume: 780009472
+              - timestamp: '2026-03-25T12:00:00+00:00'
+                open: 71705.8359375
+                high: 71817.859375
+                low: 71198.8984375
+                close: 71682.5703125
+                volume: 364318720
+              - timestamp: '2026-03-25T13:00:00+00:00'
+                open: 71701.3828125
+                high: 71907.1953125
+                low: 71555.296875
+                close: 71645.2109375
+                volume: 481665024
+              - timestamp: '2026-03-25T14:00:00+00:00'
+                open: 71564.5859375
+                high: 71626.0703125
+                low: 71258.9609375
+                close: 71296.828125
+                volume: 522682368
+              - *id003
+              - *id004
+    description: Normalized intraday price history for BTC-USD using a one-item list.
     status: success
-    elapsed_time: 0.13694548606872559
+    elapsed_time: 1.1104953289031982
+  price_history_batch_equities:
+    input:
+      tool: price_history
+      tool_arguments:
+        symbols:
+        - AAPL
+        - MSFT
+        interval: 1d
+        period: 1mo
+        limit_bars: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbols:
+          - AAPL
+          - MSFT
+          summary:
+            requested: 2
+            succeeded: 2
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              symbol: AAPL
+              interval: 1d
+              requested:
+                period: 1mo
+                start_date: null
+                end_date: null
+                include_prepost: false
+                repair: false
+                limit_bars: 5
+              resolved:
+                start: '2026-02-25T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                exchange_timezone: America/New_York
+                instrument_type: EQUITY
+                total_bars: 21
+              latest_completed_bar: &id006
+                timestamp: '2026-03-25T00:00:00'
+                open: 254.02000427246094
+                high: 254.97999572753906
+                low: 251.60000610351562
+                close: 254.42999267578125
+                volume: 13578713
+              previous_completed_bar: &id005
+                timestamp: '2026-03-24T00:00:00'
+                open: 250.35000610351562
+                high: 254.8300018310547
+                low: 249.5500030517578
+                close: 251.63999938964844
+                volume: 45111500
+              window_summary:
+                open_close_change: -19.800018310546875
+                open_close_change_pct: -7.2202229943148035
+                window_high: 276.1099853515625
+                window_low: 246.0
+                volume_total: 844781813
+                repaired_rows: null
+              bars:
+              - timestamp: '2026-03-19T00:00:00'
+                open: 249.39999389648438
+                high: 251.8300018310547
+                low: 247.3000030517578
+                close: 248.9600067138672
+                volume: 34864100
+              - timestamp: '2026-03-20T00:00:00'
+                open: 247.97999572753906
+                high: 249.1999969482422
+                low: 246.0
+                close: 247.99000549316406
+                volume: 88331100
+              - timestamp: '2026-03-23T00:00:00'
+                open: 253.97000122070312
+                high: 254.60000610351562
+                low: 250.27999877929688
+                close: 251.49000549316406
+                volume: 40546100
+              - *id005
+              - *id006
+          - symbol: MSFT
+            status: success
+            data:
+              symbol: MSFT
+              interval: 1d
+              requested:
+                period: 1mo
+                start_date: null
+                end_date: null
+                include_prepost: false
+                repair: false
+                limit_bars: 5
+              resolved:
+                start: '2026-02-25T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                exchange_timezone: America/New_York
+                instrument_type: EQUITY
+                total_bars: 21
+              latest_completed_bar: &id008
+                timestamp: '2026-03-25T00:00:00'
+                open: 376.9200134277344
+                high: 377.05999755859375
+                low: 369.739990234375
+                close: 371.2076110839844
+                volume: 18452043
+              previous_completed_bar: &id007
+                timestamp: '2026-03-24T00:00:00'
+                open: 382.3599853515625
+                high: 382.4700012207031
+                low: 371.8500061035156
+                close: 372.739990234375
+                volume: 42636600
+              window_summary:
+                open_close_change: -29.39239501953125
+                open_close_change_pct: -7.337093003422525
+                window_high: 413.04998779296875
+                window_low: 369.739990234375
+                volume_total: 697099443
+                repaired_rows: null
+              bars:
+              - timestamp: '2026-03-19T00:00:00'
+                open: 390.1000061035156
+                high: 392.489990234375
+                low: 387.05999755859375
+                close: 389.0199890136719
+                volume: 25138800
+              - timestamp: '2026-03-20T00:00:00'
+                open: 386.7900085449219
+                high: 387.0
+                low: 380.1199951171875
+                close: 381.8699951171875
+                volume: 50853200
+              - timestamp: '2026-03-23T00:00:00'
+                open: 383.8999938964844
+                high: 387.2099914550781
+                low: 381.67999267578125
+                close: 383.0
+                volume: 29680100
+              - *id007
+              - *id008
+    description: Batch daily price history returns bounded bars for multiple equities.
+    status: success
+    elapsed_time: 1.5720727443695068
   price_history_explicit_range:
     input:
       tool: price_history
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - AAPL
         interval: 1d
         start_date: '2026-01-01'
         end_date: '2026-02-01'
@@ -404,72 +709,84 @@ results:
       data:
         status: success
         data:
-          symbol: AAPL
-          interval: 1d
-          requested:
-            period: null
-            start_date: '2026-01-01'
-            end_date: '2026-02-01'
-            include_prepost: false
-            repair: false
-            limit_bars: 5
-          resolved:
-            start: '2026-01-02T00:00:00-05:00'
-            end: '2026-01-30T00:00:00-05:00'
-            currency: USD
-            exchange_timezone: America/New_York
-            instrument_type: EQUITY
-            total_bars: 20
-          latest_completed_bar: &id006
-            timestamp: '2026-01-30T00:00:00-05:00'
-            open: 254.93144331105526
-            high: 261.6551472598355
-            low: 251.94423313215475
-            close: 259.2374267578125
-            volume: 92443400
-          previous_completed_bar: &id005
-            timestamp: '2026-01-29T00:00:00-05:00'
-            open: 257.75880668092503
-            high: 259.4072580677027
-            low: 254.17216647920577
-            close: 258.0385437011719
-            volume: 67253000
-          window_summary:
-            open_close_change: -11.51922607421875
-            open_close_change_pct: -4.254457260322578
-            window_high: 277.58025431004916
-            window_low: 243.19244305608962
-            volume_total: 1040017300
-            repaired_rows: null
-          bars:
-          - timestamp: '2026-01-26T00:00:00-05:00'
-            open: 251.24490015634893
-            high: 256.32015295784896
-            low: 249.5664780183616
-            close: 255.17123413085938
-            volume: 55969200
-          - timestamp: '2026-01-27T00:00:00-05:00'
-            open: 258.92771692213245
-            high: 261.70511669708895
-            low: 257.96859246831417
-            close: 258.0285339355469
-            volume: 49648300
-          - timestamp: '2026-01-28T00:00:00-05:00'
-            open: 257.409147241713
-            high: 258.61800761819165
-            low: 254.27208306792676
-            close: 256.2002868652344
-            volume: 41288000
-          - *id005
-          - *id006
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              symbol: AAPL
+              interval: 1d
+              requested:
+                period: null
+                start_date: '2026-01-01'
+                end_date: '2026-02-01'
+                include_prepost: false
+                repair: false
+                limit_bars: 5
+              resolved:
+                start: '2026-01-02T00:00:00'
+                end: '2026-01-30T00:00:00'
+                currency: USD
+                exchange_timezone: America/New_York
+                instrument_type: EQUITY
+                total_bars: 20
+              latest_completed_bar: &id010
+                timestamp: '2026-01-30T00:00:00'
+                open: 254.93144331105526
+                high: 261.6551472598355
+                low: 251.94423313215475
+                close: 259.2374267578125
+                volume: 92443400
+              previous_completed_bar: &id009
+                timestamp: '2026-01-29T00:00:00'
+                open: 257.75880668092503
+                high: 259.4072580677027
+                low: 254.17216647920577
+                close: 258.0385437011719
+                volume: 67253000
+              window_summary:
+                open_close_change: -11.51922607421875
+                open_close_change_pct: -4.254457260322578
+                window_high: 277.58025431004916
+                window_low: 243.19244305608962
+                volume_total: 1040017300
+                repaired_rows: null
+              bars:
+              - timestamp: '2026-01-26T00:00:00'
+                open: 251.24490015634893
+                high: 256.32015295784896
+                low: 249.5664780183616
+                close: 255.17123413085938
+                volume: 55969200
+              - timestamp: '2026-01-27T00:00:00'
+                open: 258.92771692213245
+                high: 261.70511669708895
+                low: 257.96859246831417
+                close: 258.0285339355469
+                volume: 49648300
+              - timestamp: '2026-01-28T00:00:00'
+                open: 257.409147241713
+                high: 258.61800761819165
+                low: 254.27208306792676
+                close: 256.2002868652344
+                volume: 41288000
+              - *id009
+              - *id010
     description: Explicit start/end range is respected and reported cleanly.
     status: success
-    elapsed_time: 0.16085124015808105
+    elapsed_time: 1.279444694519043
   price_history_unsupported_interval:
     input:
       tool: price_history
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - AAPL
         interval: 4h
       raw_data_only: true
     output:
@@ -478,27 +795,41 @@ results:
         error: Unsupported interval '4h'.
     description: Unsupported interval fails directly.
     status: success
-    elapsed_time: 0.00026297569274902344
+    elapsed_time: 0.0004799365997314453
   price_history_invalid_symbol:
     input:
       tool: price_history
       tool_arguments:
-        symbol: NOTAREALSYMBOL123
+        symbols:
+        - NOTAREALSYMBOL123
         interval: 1d
         period: 1mo
       raw_data_only: true
     output:
       response: ''
       data:
-        error: No historical data returned for NOTAREALSYMBOL123 at 1d interval.
+        status: no_data
+        data:
+          symbols:
+          - NOTAREALSYMBOL123
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 1
+            errors: 0
+          results:
+          - symbol: NOTAREALSYMBOL123
+            status: no_data
+            error: No historical data returned for NOTAREALSYMBOL123 at 1d interval.
     description: Invalid symbol returns structured no-data for history requests.
     status: success
-    elapsed_time: 0.48604345321655273
+    elapsed_time: 2.8910152912139893
   technical_snapshot_tsla:
     input:
       tool: technical_snapshot
       tool_arguments:
-        symbol: TSLA
+        symbols:
+        - TSLA
         interval: 1d
         period: 1y
       raw_data_only: true
@@ -507,56 +838,68 @@ results:
       data:
         status: success
         data:
-          symbol: TSLA
-          interval: 1d
-          requested:
-            period: 1y
-            start_date: null
-            end_date: null
-          resolved:
-            start: '2025-03-19T00:00:00-04:00'
-            end: '2026-03-17T00:00:00-04:00'
-            currency: USD
-            instrument_type: EQUITY
-            bar_count_used: 250
-          as_of: '2026-03-17T00:00:00-04:00'
-          price:
-            close: 399.2699890136719
-            support: 381.3999938964844
-            resistance: 420.3399963378906
-          indicators:
-            rsi_14: 45.28923733864482
-            macd: -6.503153842247798
-            macd_signal: -6.900917295159907
-            macd_histogram: 0.397763452912109
-            ema_10: 399.1998393082422
-            sma_50: 418.78519958496094
-            sma_200: 393.84704971313477
-            bollinger_middle: 403.1649993896484
-            bollinger_upper: 417.7215264031921
-            bollinger_lower: 388.6084723761047
-          states:
-            trend: mixed
-            momentum: neutral
-            volatility: medium
-            macd_state: bullish
-            bollinger_position: within_bands
-          signal:
-            action: neutral
-            confidence: 0.61
-            rationale:
-            - Price is above 10 EMA.
-            - Price is below 50 SMA.
-            - Price is above 200 SMA.
-            - MACD is above signal.
-    description: Agent-ergonomic technical snapshot for TSLA.
+          symbols:
+          - TSLA
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: TSLA
+            status: success
+            data:
+              symbol: TSLA
+              interval: 1d
+              requested:
+                period: 1y
+                start_date: null
+                end_date: null
+              resolved:
+                start: '2025-03-25T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                instrument_type: EQUITY
+                bar_count_used: 252
+              as_of: '2026-03-25T00:00:00'
+              price:
+                close: 389.06500244140625
+                support: 364.4599914550781
+                resistance: 416.80999755859375
+              indicators:
+                rsi_14: 45.072036673878024
+                macd: -8.615749570015396
+                macd_signal: -8.236446440409562
+                macd_histogram: -0.3793031296058338
+                ema_10: 387.63945241451796
+                sma_50: 411.74869934082034
+                sma_200: 395.5904246520996
+                bollinger_middle: 394.79124908447267
+                bollinger_upper: 415.86514502155364
+                bollinger_lower: 373.7173531473917
+              states:
+                trend: mixed
+                momentum: neutral
+                volatility: medium
+                macd_state: bearish
+                bollinger_position: within_bands
+              signal:
+                action: neutral
+                confidence: 0.61
+                rationale:
+                - Price is above 10 EMA.
+                - Price is below 50 SMA.
+                - Price is below 200 SMA.
+                - MACD is below signal.
+    description: Agent-ergonomic technical snapshot for TSLA using a one-item list.
     status: success
-    elapsed_time: 0.29514479637145996
+    elapsed_time: 1.4488401412963867
   technical_snapshot_eth:
     input:
       tool: technical_snapshot
       tool_arguments:
-        symbol: ETH-USD
+        symbols:
+        - ETH-USD
         interval: 1h
         period: 3mo
       raw_data_only: true
@@ -565,68 +908,210 @@ results:
       data:
         status: success
         data:
-          symbol: ETH-USD
-          interval: 1h
-          requested:
-            period: 3mo
-            start_date: null
-            end_date: null
-          resolved:
-            start: '2025-12-18T21:00:00+00:00'
-            end: '2026-03-18T20:00:00+00:00'
-            currency: USD
-            instrument_type: CRYPTOCURRENCY
-            bar_count_used: 2160
-          as_of: '2026-03-18T20:00:00+00:00'
-          price:
-            close: 2188.954833984375
-            support: 2155.1220703125
-            resistance: 2348.254638671875
-          indicators:
-            rsi_14: 30.354460781303032
-            macd: -36.634542907116156
-            macd_signal: -26.6049035341193
-            macd_histogram: -10.029639372996858
-            ema_10: 2212.206374683427
-            sma_50: 2304.900205078125
-            sma_200: 2152.6213330078126
-            bollinger_middle: 2265.54755859375
-            bollinger_upper: 2395.394154450236
-            bollinger_lower: 2135.7009627372645
-          states:
-            trend: bearish
-            momentum: bearish
-            volatility: medium
-            macd_state: bearish
-            bollinger_position: within_bands
-          signal:
-            action: sell
-            confidence: 0.69
-            rationale:
-            - Price is below 10 EMA.
-            - Price is below 50 SMA.
-            - Price is above 200 SMA.
-            - MACD is below signal.
-            - RSI shows bearish momentum.
-    description: Agent-ergonomic technical snapshot for ETH-USD.
+          symbols:
+          - ETH-USD
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: ETH-USD
+            status: success
+            data:
+              symbol: ETH-USD
+              interval: 1h
+              requested:
+                period: 3mo
+                start_date: null
+                end_date: null
+              resolved:
+                start: '2025-12-25T17:00:00+00:00'
+                end: '2026-03-25T16:00:00+00:00'
+                currency: USD
+                instrument_type: CRYPTOCURRENCY
+                bar_count_used: 2160
+              as_of: '2026-03-25T16:00:00+00:00'
+              price:
+                close: 2173.65478515625
+                support: 2140.333251953125
+                resistance: 2197.837890625
+              indicators:
+                rsi_14: 55.5113188742265
+                macd: 8.95006308026268
+                macd_signal: 9.932361973220578
+                macd_histogram: -0.982298892957898
+                ema_10: 2173.9538741164347
+                sma_50: 2153.891220703125
+                sma_200: 2164.2129846191406
+                bollinger_middle: 2168.1171020507813
+                bollinger_upper: 2193.8067518506423
+                bollinger_lower: 2142.4274522509204
+              states:
+                trend: mixed
+                momentum: bullish
+                volatility: low
+                macd_state: bearish
+                bollinger_position: within_bands
+              signal:
+                action: neutral
+                confidence: 0.53
+                rationale:
+                - Price is below 10 EMA.
+                - Price is above 50 SMA.
+                - Price is above 200 SMA.
+                - MACD is below signal.
+                - RSI shows bullish momentum.
+    description: Agent-ergonomic technical snapshot for ETH-USD using a one-item list.
     status: success
-    elapsed_time: 0.13797426223754883
+    elapsed_time: 1.0123066902160645
+  technical_snapshot_batch_equities:
+    input:
+      tool: technical_snapshot
+      tool_arguments:
+        symbols:
+        - TSLA
+        - NVDA
+        interval: 1d
+        period: 1y
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbols:
+          - TSLA
+          - NVDA
+          summary:
+            requested: 2
+            succeeded: 2
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: TSLA
+            status: success
+            data:
+              symbol: TSLA
+              interval: 1d
+              requested:
+                period: 1y
+                start_date: null
+                end_date: null
+              resolved:
+                start: '2025-03-25T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                instrument_type: EQUITY
+                bar_count_used: 252
+              as_of: '2026-03-25T00:00:00'
+              price:
+                close: 389.2099914550781
+                support: 364.4599914550781
+                resistance: 416.80999755859375
+              indicators:
+                rsi_14: 45.152045888805375
+                macd: -8.604183494891231
+                macd_signal: -8.23413322538473
+                macd_histogram: -0.37005026950650155
+                ema_10: 387.66581405336734
+                sma_50: 411.75159912109376
+                sma_200: 395.59114959716794
+                bollinger_middle: 394.7984985351562
+                bollinger_upper: 415.86419858029376
+                bollinger_lower: 373.7327984900187
+              states:
+                trend: mixed
+                momentum: neutral
+                volatility: medium
+                macd_state: bearish
+                bollinger_position: within_bands
+              signal:
+                action: neutral
+                confidence: 0.61
+                rationale:
+                - Price is above 10 EMA.
+                - Price is below 50 SMA.
+                - Price is below 200 SMA.
+                - MACD is below signal.
+          - symbol: NVDA
+            status: success
+            data:
+              symbol: NVDA
+              interval: 1d
+              requested:
+                period: 1y
+                start_date: null
+                end_date: null
+              resolved:
+                start: '2025-03-25T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                instrument_type: EQUITY
+                bar_count_used: 252
+              as_of: '2026-03-25T00:00:00'
+              price:
+                close: 179.39999389648438
+                support: 171.72000122070312
+                resistance: 194.27947461393586
+              indicators:
+                rsi_14: 47.29594745128811
+                macd: -2.25980375393965
+                macd_signal: -1.7343941002445291
+                macd_histogram: -0.5254096536951209
+                ema_10: 178.7001397579131
+                sma_50: 184.1005746459961
+                sma_200: 178.95096351623536
+                bollinger_middle: 180.6305709838867
+                bollinger_upper: 187.78183551289257
+                bollinger_lower: 173.47930645488086
+              states:
+                trend: mixed
+                momentum: neutral
+                volatility: medium
+                macd_state: bearish
+                bollinger_position: within_bands
+              signal:
+                action: neutral
+                confidence: 0.45
+                rationale:
+                - Price is above 10 EMA.
+                - Price is below 50 SMA.
+                - Price is above 200 SMA.
+                - MACD is below signal.
+    description: Batch technical snapshots return compact per-symbol signals.
+    status: success
+    elapsed_time: 1.4679179191589355
   technical_snapshot_short_window:
     input:
       tool: technical_snapshot
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - AAPL
         interval: 1h
         period: 3d
       raw_data_only: true
     output:
       response: ''
       data:
-        error: Insufficient historical data for AAPL. Need at least 30 completed bars.
+        status: no_data
+        data:
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 1
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: no_data
+            error: Insufficient historical data for AAPL. Need at least 30 completed
+              bars.
     description: Short history window returns no-data when there are not enough completed
       bars.
     status: success
-    elapsed_time: 0.06146240234375
+    elapsed_time: 0.9223654270172119
   news_search_nvidia:
     input:
       tool: news_search
@@ -642,55 +1127,57 @@ results:
           query: Nvidia
           total_items: 5
           items:
-          - id: 5a30fa4f-3480-35b8-a2da-27eae6bfc69b
-            title: Nvidia (NVDA), Nebius (NBIS) Partner to Scale Full-Stack AI Cloud
-              with $2B Investment
-            publisher: Insider Monkey
-            published_at: '2026-03-18T20:26:14+00:00'
-            url: https://finance.yahoo.com/news/nvidia-nvda-nebius-nbis-partner-202614968.html
+          - id: 689e0d2a-6957-354b-b27b-661b76cbafc7
+            title: Nvidia Stock Is Rising. Why Arm’s New AI Chip Is Not a Threat.
+            publisher: Barrons.com
+            published_at: '2026-03-25T14:02:00+00:00'
+            url: https://finance.yahoo.com/m/689e0d2a-6957-354b-b27b-661b76cbafc7/nvidia-stock-is-rising.-why.html
+            content_type: STORY
+            related_tickers:
+            - ARM
+            - NVDA
+            - META
+          - id: 536755b0-39b0-3152-9a03-4f78afcc32f1
+            title: Nvidia CEO Jensen Huang Drops A Bombshell— 'I Think We've Achieved
+              AGI'
+            publisher: Benzinga
+            published_at: '2026-03-25T12:31:19+00:00'
+            url: https://finance.yahoo.com/m/536755b0-39b0-3152-9a03-4f78afcc32f1/nvidia-ceo-jensen-huang-drops.html
+            content_type: STORY
+            related_tickers: []
+          - id: cd3426e2-1f1f-3164-be63-8081f39397a4
+            title: Nvidia CEO delivers curt 10-word message to investors
+            publisher: TheStreet
+            published_at: '2026-03-25T17:17:00+00:00'
+            url: https://finance.yahoo.com/m/cd3426e2-1f1f-3164-be63-8081f39397a4/nvidia-ceo-delivers-curt.html
             content_type: STORY
             related_tickers:
             - NVDA
-            - NBIS
-          - id: 8c5136cb-b27b-4c59-943a-5bede437da02
-            title: Nvidia's changing its strategic approach to AI, going all in on
-              inferencing and agents
-            publisher: Yahoo Finance
-            published_at: '2026-03-18T18:55:57+00:00'
-            url: https://finance.yahoo.com/news/nvidias-changing-its-strategic-approach-to-ai-going-all-in-on-inferencing-and-agents-185557754.html
+          - id: c2ac1c7b-a8ca-3751-ba20-3f7a3ec06597
+            title: Nvidia Projects $1 Trillion in Artificial Intelligence (AI) Chip
+              Sales Through 2027. Here's 1 Stock to Buy Hand Over Fist Before That
+              Happens.
+            publisher: Motley Fool
+            published_at: '2026-03-25T16:05:00+00:00'
+            url: https://finance.yahoo.com/m/c2ac1c7b-a8ca-3751-ba20-3f7a3ec06597/nvidia-projects-%241-trillion.html
             content_type: STORY
             related_tickers:
             - NVDA
-          - id: 1503f7f3-84c3-3b14-b870-93e060633630
-            title: Nvidia is quietly building a multibillion-dollar behemoth to rival
-              its chips business
-            publisher: TechCrunch
-            published_at: '2026-03-18T20:01:19+00:00'
-            url: https://finance.yahoo.com/news/nvidia-quietly-building-multibillion-dollar-200119698.html
+            - INTC
+          - id: 4f23dbc3-0712-3430-a10d-dce2a4537843
+            title: 'Prediction: This Artificial Intelligence (AI) Stock Could Be the
+              Biggest Winner of Nvidia''s $1 Trillion Chip Boom'
+            publisher: Motley Fool
+            published_at: '2026-03-25T16:25:00+00:00'
+            url: https://finance.yahoo.com/m/4f23dbc3-0712-3430-a10d-dce2a4537843/prediction%3A-this-artificial.html
             content_type: STORY
             related_tickers:
             - NVDA
-          - id: 39386463-353f-3831-a0ef-6ebf1e535dec
-            title: NVIDIA GTC keeps analysts bullish amid continued strong AI compute
-              demand
-            publisher: Proactive
-            published_at: '2026-03-18T17:47:00+00:00'
-            url: https://finance.yahoo.com/m/39386463-353f-3831-a0ef-6ebf1e535dec/nvidia-gtc-keeps-analysts.html
-            content_type: STORY
-            related_tickers:
-            - NVDA
-            - NVD
-          - id: 7a4ceb8e-09b4-34d5-be84-a8a83e90f40c
-            title: Nvidia Stock Rises on Analyst Upgrade and China Breakthrough
-            publisher: GuruFocus.com
-            published_at: '2026-03-18T17:17:57+00:00'
-            url: https://finance.yahoo.com/news/nvidia-stock-rises-analyst-upgrade-171757890.html
-            content_type: STORY
-            related_tickers:
-            - NVDA
+            - MU
+            - INTC
     description: Recent news search for Nvidia.
     status: success
-    elapsed_time: 0.16895723342895508
+    elapsed_time: 0.3267636299133301
   news_search_no_results:
     input:
       tool: news_search
@@ -704,7 +1191,7 @@ results:
         error: No recent news found for 'zxqwvut nonexistent corp 123456789'.
     description: No-results news query returns structured no-data.
     status: success
-    elapsed_time: 0.09961462020874023
+    elapsed_time: 0.09635448455810547
   market_overview_us:
     input:
       tool: market_overview
@@ -719,10 +1206,10 @@ results:
           market: US
           status:
             name: U.S. markets
-            status: closed
-            message: U.S. markets closed
-            open: 2026-03-18 13:30:00+00:00
-            close: 2026-03-18 20:00:00+00:00
+            status: open
+            message: U.S. markets close in 2 hours 16 minutes
+            open: 2026-03-25 13:30:00+00:00
+            close: 2026-03-25 20:00:00+00:00
             timezone: America/New_York
           benchmarks:
           - key: SNP
@@ -730,52 +1217,52 @@ results:
             name: S&P 500
             quote_type: INDEX
             exchange: SNP
-            price: 6624.7
-            previous_close: 6716.09
-            change_pct: -1.3607568
+            price: 6614.65
+            previous_close: 6556.37
+            change_pct: 0.8889032
           - key: DJI
             symbol: ^DJI
             name: Dow 30
             quote_type: INDEX
             exchange: DJI
-            price: 46225.15
-            previous_close: 46993.26
-            change_pct: -1.6345179
+            price: 46552.69
+            previous_close: 46124.06
+            change_pct: 0.92931026
           - key: NIM
             symbol: ^IXIC
             name: Nasdaq
             quote_type: INDEX
             exchange: NIM
-            price: 22152.42
-            previous_close: 22479.527
-            change_pct: -1.4551347
+            price: 22016.744
+            previous_close: 21761.895
+            change_pct: 1.1710819
           - key: WCB
             symbol: ^RUT
             name: Russell 2000
             quote_type: INDEX
             exchange: WCB
-            price: 2478.642
-            previous_close: 2519.9944
-            change_pct: -1.6409677
+            price: 2537.3975
+            previous_close: 2505.4426
+            change_pct: 1.2753884
           - key: CXI
             symbol: ^VIX
             name: VIX
             quote_type: INDEX
             exchange: CXI
-            price: 25.09
-            previous_close: 22.37
-            change_pct: 12.159139
+            price: 25.27
+            previous_close: 26.95
+            change_pct: -6.2407146
           - key: CMX
             symbol: GC=F
             name: Gold
             quote_type: FUTURE
             exchange: CMX
-            price: 4828.1
-            previous_close: 5008.2
-            change_pct: -3.5961041
+            price: 4559.6
+            previous_close: 4402.0
+            change_pct: 3.580193
     description: US market overview.
     status: success
-    elapsed_time: 0.13443231582641602
+    elapsed_time: 0.7547810077667236
   market_overview_invalid:
     input:
       tool: market_overview
@@ -789,459 +1276,1387 @@ results:
           ''EUROPE'', ''RATES'', ''COMMODITIES'', ''CURRENCIES'', ''CRYPTOCURRENCIES''].'
     description: Honest failure for unsupported market name.
     status: success
-    elapsed_time: 0.0002295970916748047
+    elapsed_time: 0.0004684925079345703
   company_fundamentals_aapl:
     input:
       tool: company_fundamentals
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - AAPL
       raw_data_only: true
     output:
       response: ''
       data:
         status: success
         data:
-          company:
-            symbol: AAPL
-            name: Apple Inc.
-            asset_type: stock
-            quote_type: EQUITY
-            exchange: NMS
-            currency: USD
-            sector: Technology
-            industry: Consumer Electronics
-            country: United States
-            website: https://www.apple.com
-            market_cap: 3673599508480.0
-            business_summary: Apple Inc. designs, manufactures, and markets smartphones,
-              personal computers, tablets, wearables, and accessories worldwide. The
-              company offers iPhone, a line of smartphones; Mac, a line of personal
-              computers; iPad, a line of multi-purpose tablets; and wearables, home,
-              and accessories comprising AirPods, Apple Visi...
-          calendar:
-            earnings_date:
-            - '2026-04-30'
-            earnings_estimate:
-              low: 1.85
-              average: 1.95539
-              high: 2.16
-            revenue_estimate:
-              low: 105000000000.0
-              average: 109084922300.0
-              high: 112596000000.0
-            dividend_date: '2026-02-12'
-            ex_dividend_date: '2026-02-09'
-          recent_filings:
-          - date: '2026-01-30'
-            type: 10-Q
-            title: Periodic Financial Reports
-            url: https://finance.yahoo.com/sec-filing/AAPL/0000320193-26-000006_320193
-            exhibits:
-              10-Q: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/aapl-20251227.htm
-              EX-31.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit31112272025.htm
-              EX-31.2: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit31212272025.htm
-              EX-32.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit32112272025.htm
-          - date: '2026-01-29'
-            type: 8-K
-            title: Corporate Changes & Voting Matters
-            url: https://finance.yahoo.com/sec-filing/AAPL/0000320193-26-000005_320193
-            exhibits:
-              8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000005/aapl-20260129.htm
-              EX-99.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000005/a8-kex991q1202612272025.htm
-          - date: '2026-01-08'
-            type: DEF 14A
-            title: Proxy Statements
-            url: https://finance.yahoo.com/sec-filing/AAPL/0001308179-26-000008_320193
-            exhibits:
-              DEF 14A: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000130817926000008/aapl_courtesy-pdf.pdf
-          - date: '2026-01-02'
-            type: 8-K
-            title: Corporate Changes & Voting Matters
-            url: https://finance.yahoo.com/sec-filing/AAPL/0001140361-26-000199_320193
-            exhibits:
-              8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000114036126000199/ef20060722_8k.htm
-          - date: '2025-12-05'
-            type: 8-K
-            title: Corporate Changes & Voting Matters
-            url: https://finance.yahoo.com/sec-filing/AAPL/0001140361-25-044561_320193
-            exhibits:
-              8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000114036125044561/ef20060722_8k.htm
-          financial_summary:
-            currency: USD
-            income_statement:
-              latest_annual:
-                as_of: '2025-09-30T00:00:00'
-                total_revenue: 416161000000.0
-                gross_profit: 195201000000.0
-                operating_income: 133050000000.0
-                net_income: 112010000000.0
-                diluted_eps: 7.46
-                ebitda: 144748000000.0
-              latest_quarterly:
-                as_of: '2025-12-31T00:00:00'
-                total_revenue: 143756000000.0
-                gross_profit: 69231000000.0
-                operating_income: 50852000000.0
-                net_income: 42097000000.0
-                diluted_eps: 2.84
-                ebitda: 54066000000.0
-            balance_sheet:
-              latest_annual:
-                as_of: '2025-09-30T00:00:00'
-                cash_and_equivalents: 35934000000.0
-                total_assets: 359241000000.0
-                total_liabilities: 285508000000.0
-                total_debt: 98657000000.0
-                shareholders_equity: 73733000000.0
-                working_capital: -17674000000.0
-              latest_quarterly:
-                as_of: '2025-12-31T00:00:00'
-                cash_and_equivalents: 45317000000.0
-                total_assets: 379297000000.0
-                total_liabilities: 291107000000.0
-                total_debt: 90509000000.0
-                shareholders_equity: 88190000000.0
-                working_capital: -4263000000.0
-            cash_flow:
-              latest_annual:
-                as_of: '2025-09-30T00:00:00'
-                operating_cash_flow: 111482000000.0
-                capital_expenditure: -12715000000.0
-                free_cash_flow: 98767000000.0
-                investing_cash_flow: 15195000000.0
-                financing_cash_flow: -120686000000.0
-                dividends_paid: -15421000000.0
-              latest_quarterly:
-                as_of: '2025-12-31T00:00:00'
-                operating_cash_flow: 53925000000.0
-                capital_expenditure: -2373000000.0
-                free_cash_flow: 51552000000.0
-                investing_cash_flow: -4886000000.0
-                financing_cash_flow: -39656000000.0
-                dividends_paid: -3921000000.0
-    description: Compact company fundamentals for AAPL.
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              company:
+                symbol: AAPL
+                name: Apple Inc.
+                asset_type: stock
+                quote_type: EQUITY
+                exchange: NMS
+                currency: USD
+                sector: Technology
+                industry: Consumer Electronics
+                country: United States
+                website: https://www.apple.com
+                market_cap: 3739372748800.0
+                business_summary: Apple Inc. designs, manufactures, and markets smartphones,
+                  personal computers, tablets, wearables, and accessories worldwide.
+                  The company offers iPhone, a line of smartphones; Mac, a line of
+                  personal computers; iPad, a line of multi-purpose tablets; and wearables,
+                  home, and accessories comprising AirPods, Apple Visi...
+              calendar:
+                earnings_date:
+                - '2026-05-01'
+                earnings_estimate:
+                  low: 1.85
+                  average: 1.95606
+                  high: 2.16
+                revenue_estimate:
+                  low: 105000000000.0
+                  average: 109116811940.0
+                  high: 112596000000.0
+                dividend_date: '2026-02-12'
+                ex_dividend_date: '2026-02-09'
+              recent_filings:
+              - date: '2026-01-30'
+                type: 10-Q
+                title: Periodic Financial Reports
+                url: https://finance.yahoo.com/sec-filing/AAPL/0000320193-26-000006_320193
+                exhibits:
+                  10-Q: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/aapl-20251227.htm
+                  EX-31.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit31112272025.htm
+                  EX-31.2: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit31212272025.htm
+                  EX-32.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit32112272025.htm
+              - date: '2026-01-29'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/AAPL/0000320193-26-000005_320193
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000005/aapl-20260129.htm
+                  EX-99.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000005/a8-kex991q1202612272025.htm
+              - date: '2026-01-08'
+                type: DEF 14A
+                title: Proxy Statements
+                url: https://finance.yahoo.com/sec-filing/AAPL/0001308179-26-000008_320193
+                exhibits:
+                  DEF 14A: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000130817926000008/aapl_courtesy-pdf.pdf
+              - date: '2026-01-02'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/AAPL/0001140361-26-000199_320193
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000114036126000199/ef20060722_8k.htm
+              - date: '2025-12-05'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/AAPL/0001140361-25-044561_320193
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000114036125044561/ef20060722_8k.htm
+              financial_summary:
+                currency: USD
+                income_statement:
+                  latest_annual:
+                    as_of: '2025-09-30T00:00:00'
+                    total_revenue: 416161000000.0
+                    gross_profit: 195201000000.0
+                    operating_income: 133050000000.0
+                    net_income: 112010000000.0
+                    diluted_eps: 7.46
+                    ebitda: 144748000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    total_revenue: 143756000000.0
+                    gross_profit: 69231000000.0
+                    operating_income: 50852000000.0
+                    net_income: 42097000000.0
+                    diluted_eps: 2.84
+                    ebitda: 54066000000.0
+                balance_sheet:
+                  latest_annual:
+                    as_of: '2025-09-30T00:00:00'
+                    cash_and_equivalents: 35934000000.0
+                    total_assets: 359241000000.0
+                    total_liabilities: 285508000000.0
+                    total_debt: 98657000000.0
+                    shareholders_equity: 73733000000.0
+                    working_capital: -17674000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    cash_and_equivalents: 45317000000.0
+                    total_assets: 379297000000.0
+                    total_liabilities: 291107000000.0
+                    total_debt: 90509000000.0
+                    shareholders_equity: 88190000000.0
+                    working_capital: -4263000000.0
+                cash_flow:
+                  latest_annual:
+                    as_of: '2025-09-30T00:00:00'
+                    operating_cash_flow: 111482000000.0
+                    capital_expenditure: -12715000000.0
+                    free_cash_flow: 98767000000.0
+                    investing_cash_flow: 15195000000.0
+                    financing_cash_flow: -120686000000.0
+                    dividends_paid: -15421000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    operating_cash_flow: 53925000000.0
+                    capital_expenditure: -2373000000.0
+                    free_cash_flow: 51552000000.0
+                    investing_cash_flow: -4886000000.0
+                    financing_cash_flow: -39656000000.0
+                    dividends_paid: -3921000000.0
+    description: Compact company fundamentals for AAPL using a one-item list.
     status: success
-    elapsed_time: 1.6470041275024414
+    elapsed_time: 1.8779892921447754
+  company_fundamentals_batch_mixed:
+    input:
+      tool: company_fundamentals
+      tool_arguments:
+        symbols:
+        - AAPL
+        - MSFT
+        - SPY
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbols:
+          - AAPL
+          - MSFT
+          - SPY
+          summary:
+            requested: 3
+            succeeded: 2
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: AAPL
+            status: success
+            data:
+              company:
+                symbol: AAPL
+                name: Apple Inc.
+                asset_type: stock
+                quote_type: EQUITY
+                exchange: NMS
+                currency: USD
+                sector: Technology
+                industry: Consumer Electronics
+                country: United States
+                website: https://www.apple.com
+                market_cap: 3739372748800.0
+                business_summary: Apple Inc. designs, manufactures, and markets smartphones,
+                  personal computers, tablets, wearables, and accessories worldwide.
+                  The company offers iPhone, a line of smartphones; Mac, a line of
+                  personal computers; iPad, a line of multi-purpose tablets; and wearables,
+                  home, and accessories comprising AirPods, Apple Visi...
+              calendar:
+                earnings_date:
+                - '2026-05-01'
+                earnings_estimate:
+                  low: 1.85
+                  average: 1.95606
+                  high: 2.16
+                revenue_estimate:
+                  low: 105000000000.0
+                  average: 109116811940.0
+                  high: 112596000000.0
+                dividend_date: '2026-02-12'
+                ex_dividend_date: '2026-02-09'
+              recent_filings:
+              - date: '2026-01-30'
+                type: 10-Q
+                title: Periodic Financial Reports
+                url: https://finance.yahoo.com/sec-filing/AAPL/0000320193-26-000006_320193
+                exhibits:
+                  10-Q: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/aapl-20251227.htm
+                  EX-31.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit31112272025.htm
+                  EX-31.2: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit31212272025.htm
+                  EX-32.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000006/a10-qexhibit32112272025.htm
+              - date: '2026-01-29'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/AAPL/0000320193-26-000005_320193
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000005/aapl-20260129.htm
+                  EX-99.1: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000032019326000005/a8-kex991q1202612272025.htm
+              - date: '2026-01-08'
+                type: DEF 14A
+                title: Proxy Statements
+                url: https://finance.yahoo.com/sec-filing/AAPL/0001308179-26-000008_320193
+                exhibits:
+                  DEF 14A: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000130817926000008/aapl_courtesy-pdf.pdf
+              - date: '2026-01-02'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/AAPL/0001140361-26-000199_320193
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000114036126000199/ef20060722_8k.htm
+              - date: '2025-12-05'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/AAPL/0001140361-25-044561_320193
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000320193/000114036125044561/ef20060722_8k.htm
+              financial_summary:
+                currency: USD
+                income_statement:
+                  latest_annual:
+                    as_of: '2025-09-30T00:00:00'
+                    total_revenue: 416161000000.0
+                    gross_profit: 195201000000.0
+                    operating_income: 133050000000.0
+                    net_income: 112010000000.0
+                    diluted_eps: 7.46
+                    ebitda: 144748000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    total_revenue: 143756000000.0
+                    gross_profit: 69231000000.0
+                    operating_income: 50852000000.0
+                    net_income: 42097000000.0
+                    diluted_eps: 2.84
+                    ebitda: 54066000000.0
+                balance_sheet:
+                  latest_annual:
+                    as_of: '2025-09-30T00:00:00'
+                    cash_and_equivalents: 35934000000.0
+                    total_assets: 359241000000.0
+                    total_liabilities: 285508000000.0
+                    total_debt: 98657000000.0
+                    shareholders_equity: 73733000000.0
+                    working_capital: -17674000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    cash_and_equivalents: 45317000000.0
+                    total_assets: 379297000000.0
+                    total_liabilities: 291107000000.0
+                    total_debt: 90509000000.0
+                    shareholders_equity: 88190000000.0
+                    working_capital: -4263000000.0
+                cash_flow:
+                  latest_annual:
+                    as_of: '2025-09-30T00:00:00'
+                    operating_cash_flow: 111482000000.0
+                    capital_expenditure: -12715000000.0
+                    free_cash_flow: 98767000000.0
+                    investing_cash_flow: 15195000000.0
+                    financing_cash_flow: -120686000000.0
+                    dividends_paid: -15421000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    operating_cash_flow: 53925000000.0
+                    capital_expenditure: -2373000000.0
+                    free_cash_flow: 51552000000.0
+                    investing_cash_flow: -4886000000.0
+                    financing_cash_flow: -39656000000.0
+                    dividends_paid: -3921000000.0
+          - symbol: MSFT
+            status: success
+            data:
+              company:
+                symbol: MSFT
+                name: Microsoft Corporation
+                asset_type: stock
+                quote_type: EQUITY
+                exchange: NMS
+                currency: USD
+                sector: Technology
+                industry: Software - Infrastructure
+                country: United States
+                website: https://www.microsoft.com
+                market_cap: 2758471319552.0
+                business_summary: Microsoft Corporation develops and supports software,
+                  services, devices, and solutions worldwide. The Productivity and
+                  Business Processes segment offers Microsoft 365 commercial, enterprise
+                  mobility + security, windows commercial, power BI, exchange, sharepoint,
+                  Microsoft teams, security and compliance, and copilot;...
+              calendar:
+                earnings_date:
+                - '2026-04-30'
+                earnings_estimate:
+                  low: 3.943
+                  average: 4.06401
+                  high: 4.22957
+                revenue_estimate:
+                  low: 80683000000.0
+                  average: 81374355370.0
+                  high: 82234492290.0
+                dividend_date: '2026-06-11'
+                ex_dividend_date: '2026-05-21'
+              recent_filings:
+              - date: '2026-01-28'
+                type: IRANNOTICE
+                title: Notice of disclosure filed in Exchange Act quarterly and annual
+                  reports pursuant to Section 219 of the Iran Threat Reduction and
+                  Syria Human Rights Act of 2012 and Section 13(r) of the Exchange
+                  Act
+                url: https://finance.yahoo.com/sec-filing/MSFT/0001193125-26-027232_789019
+                exhibits:
+                  IRANNOTICE: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312526027232/msft_fy26_q2_irannotice.htm
+              - date: '2025-12-30'
+                type: S-8
+                title: Offering Registrations
+                url: https://finance.yahoo.com/sec-filing/MSFT/0001193125-25-337096_789019
+                exhibits:
+                  S-8: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525337096/d98304ds8.htm
+                  EX-15: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525337096/d98304dex15.htm
+                  EX-23.1: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525337096/d98304dex231.htm
+                  EX-5.1: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525337096/d98304dex51.htm
+                  EX-FILING FEES: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525337096/d98304dexfilingfees.htm
+              - date: '2025-12-08'
+                type: 8-K
+                title: Corporate Changes & Voting Matters
+                url: https://finance.yahoo.com/sec-filing/MSFT/0001193125-25-311196_789019
+                exhibits:
+                  8-K: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525311196/d34077d8k.htm
+              - date: '2025-11-05'
+                type: DEFA14A
+                title: Proxy Statements
+                url: https://finance.yahoo.com/sec-filing/MSFT/0001193125-25-267270_789019
+                exhibits:
+                  DEFA14A: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525267270/d87183ddefa14a.htm
+              - date: '2025-10-31'
+                type: DEFA14A
+                title: Proxy Statements
+                url: https://finance.yahoo.com/sec-filing/MSFT/0001193125-25-260521_789019
+                exhibits:
+                  DEFA14A: https://cdn.yahoofinance.com/prod/sec-filings/0000789019/000119312525260521/d939503ddefa14a.htm
+              financial_summary:
+                currency: USD
+                income_statement:
+                  latest_annual:
+                    as_of: '2025-06-30T00:00:00'
+                    total_revenue: 281724000000.0
+                    gross_profit: 193893000000.0
+                    operating_income: 128528000000.0
+                    net_income: 101832000000.0
+                    diluted_eps: 13.64
+                    ebitda: 160165000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    total_revenue: 81273000000.0
+                    gross_profit: 55295000000.0
+                    operating_income: 38275000000.0
+                    net_income: 38458000000.0
+                    diluted_eps: 5.16
+                    ebitda: 58180000000.0
+                balance_sheet:
+                  latest_annual:
+                    as_of: '2025-06-30T00:00:00'
+                    cash_and_equivalents: 30242000000.0
+                    total_assets: 619003000000.0
+                    total_liabilities: 275524000000.0
+                    total_debt: 60588000000.0
+                    shareholders_equity: 343479000000.0
+                    working_capital: 49913000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    cash_and_equivalents: 24296000000.0
+                    total_assets: 665302000000.0
+                    total_liabilities: 274427000000.0
+                    total_debt: 57607000000.0
+                    shareholders_equity: 390875000000.0
+                    working_capital: 50185000000.0
+                cash_flow:
+                  latest_annual:
+                    as_of: '2025-06-30T00:00:00'
+                    operating_cash_flow: 136162000000.0
+                    capital_expenditure: -64551000000.0
+                    free_cash_flow: 71611000000.0
+                    investing_cash_flow: -72599000000.0
+                    financing_cash_flow: -51699000000.0
+                    dividends_paid: -24082000000.0
+                  latest_quarterly:
+                    as_of: '2025-12-31T00:00:00'
+                    operating_cash_flow: 35758000000.0
+                    capital_expenditure: -29876000000.0
+                    free_cash_flow: 5882000000.0
+                    investing_cash_flow: -22705000000.0
+                    financing_cash_flow: -17617000000.0
+                    dividends_paid: -6762000000.0
+          - symbol: SPY
+            status: error
+            error: company_fundamentals supports only stock. SPY resolved to asset_type
+              'etf'.
+    description: Batch company fundamentals keeps per-symbol asset mismatch errors
+      scoped to the offending symbol.
+    status: success
+    elapsed_time: 3.756868600845337
   company_fundamentals_invalid_asset:
     input:
       tool: company_fundamentals
       tool_arguments:
-        symbol: SPY
+        symbols:
+        - SPY
       raw_data_only: true
     output:
       response: ''
       data:
-        error: company_fundamentals supports only stock. SPY resolved to asset_type
-          'etf'.
+        status: error
+        data:
+          symbols:
+          - SPY
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: SPY
+            status: error
+            error: company_fundamentals supports only stock. SPY resolved to asset_type
+              'etf'.
     description: Company fundamentals rejects ETF symbols directly.
     status: success
-    elapsed_time: 0.20344328880310059
+    elapsed_time: 0.21830129623413086
   analyst_snapshot_msft:
     input:
       tool: analyst_snapshot
       tool_arguments:
-        symbol: MSFT
+        symbols:
+        - MSFT
       raw_data_only: true
     output:
       response: ''
       data:
         status: success
         data:
-          company:
-            symbol: MSFT
-            name: Microsoft Corporation
-            asset_type: stock
-            quote_type: EQUITY
-            exchange: NMS
-            currency: USD
-            sector: Technology
-            industry: Software - Infrastructure
-            country: United States
-            website: https://www.microsoft.com
-            market_cap: 2911931465728.0
-            business_summary: Microsoft Corporation develops and supports software,
-              services, devices, and solutions worldwide. The Productivity and Business
-              Processes segment offers Microsoft 365 commercial, enterprise mobility
-              + security, windows commercial, power BI, exchange, sharepoint, Microsoft
-              teams, security and compliance, and copilot;...
-          recommendations_summary:
-          - index: 0.0
-            period: 0m
-            strongBuy: 10.0
-            buy: 44.0
-            hold: 3.0
-            sell: 0.0
-            strongSell: 0.0
-          - index: 1.0
-            period: -1m
-            strongBuy: 10.0
-            buy: 44.0
-            hold: 3.0
-            sell: 0.0
-            strongSell: 0.0
-          - index: 2.0
-            period: -2m
-            strongBuy: 12.0
-            buy: 45.0
-            hold: 1.0
-            sell: 0.0
-            strongSell: 0.0
-          - index: 3.0
-            period: -3m
-            strongBuy: 12.0
-            buy: 44.0
-            hold: 1.0
-            sell: 0.0
-            strongSell: 0.0
-          price_targets:
-            current: 391.79
-            low: 392.0
-            mean: 594.6217
-            median: 600.0
-            high: 730.0
-          earnings_estimate:
-          - period: 0q
-            avg: 4.08551
-            low: 3.7
-            high: 5.3
-            yearAgoEps: 3.46
-            numberOfAnalysts: 29.0
-            growth: 0.1808
-          - period: +1q
-            avg: 4.25591
-            low: 3.74
-            high: 5.54
-            yearAgoEps: 3.65
-            numberOfAnalysts: 29.0
-            growth: 0.16600001
-          - period: 0y
-            avg: 17.20473
-            low: 16.47
-            high: 19.71
-            yearAgoEps: 13.64
-            numberOfAnalysts: 30.0
-            growth: 0.2613
-          - period: +1y
-            avg: 19.0009
-            low: 16.61
-            high: 24.31
-            yearAgoEps: 17.20473
-            numberOfAnalysts: 36.0
-            growth: 0.104399994
-          revenue_estimate:
-          - period: 0q
-            avg: 81357600870.0
-            low: 80683000000.0
-            high: 82234492290.0
-            numberOfAnalysts: 39.0
-            yearAgoRevenue: 70066000000.0
-            growth: 0.1612
-          - period: +1q
-            avg: 87613920410.0
-            low: 84857000000.0
-            high: 89542000000.0
-            numberOfAnalysts: 38.0
-            yearAgoRevenue: 76441000000.0
-            growth: 0.1462
-          - period: 0y
-            avg: 327780621120.0
-            low: 320447000000.0
-            high: 331512052020.0
-            numberOfAnalysts: 48.0
-            yearAgoRevenue: 281724000000.0
-            growth: 0.16350001
-          - period: +1y
-            avg: 378206792850.0
-            low: 356510000000.0
-            high: 397525255600.0
-            numberOfAnalysts: 52.0
-            yearAgoRevenue: 327780621120.0
-            growth: 0.1538
-          eps_trend:
-          - period: 0q
-            current: 4.08551
-            7daysAgo: 4.08551
-            30daysAgo: 4.07866
-            60daysAgo: 3.91087
-            90daysAgo: 3.90027
-          - period: +1q
-            current: 4.25591
-            7daysAgo: 4.25591
-            30daysAgo: 4.25938
-            60daysAgo: 4.17679
-            90daysAgo: 4.17073
-          - period: 0y
-            current: 17.20473
-            7daysAgo: 17.1934
-            30daysAgo: 17.20179
-            60daysAgo: 15.6784
-            90daysAgo: 15.63308
-          - period: +1y
-            current: 19.0009
-            7daysAgo: 18.99006
-            30daysAgo: 19.02493
-            60daysAgo: 18.54474
-            90daysAgo: 18.53081
-          eps_revisions:
-          - period: 0q
-            upLast7days: 1.0
-            upLast30days: 22.0
-            downLast30days: 6.0
-            downLast7Days: 0.0
-          - period: +1q
-            upLast7days: 1.0
-            upLast30days: 17.0
-            downLast30days: 11.0
-            downLast7Days: 0.0
-          - period: 0y
-            upLast7days: 1.0
-            upLast30days: 2.0
-            downLast30days: 0.0
-            downLast7Days: 0.0
-          - period: +1y
-            upLast7days: 1.0
-            upLast30days: 2.0
-            downLast30days: 2.0
-            downLast7Days: 0.0
-    description: Compact analyst snapshot for MSFT.
+          symbols:
+          - MSFT
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: MSFT
+            status: success
+            data:
+              company:
+                symbol: MSFT
+                name: Microsoft Corporation
+                asset_type: stock
+                quote_type: EQUITY
+                exchange: NMS
+                currency: USD
+                sector: Technology
+                industry: Software - Infrastructure
+                country: United States
+                website: https://www.microsoft.com
+                market_cap: 2758378520576.0
+                business_summary: Microsoft Corporation develops and supports software,
+                  services, devices, and solutions worldwide. The Productivity and
+                  Business Processes segment offers Microsoft 365 commercial, enterprise
+                  mobility + security, windows commercial, power BI, exchange, sharepoint,
+                  Microsoft teams, security and compliance, and copilot;...
+              recommendations_summary:
+              - index: 0.0
+                period: 0m
+                strongBuy: 10.0
+                buy: 44.0
+                hold: 3.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 1.0
+                period: -1m
+                strongBuy: 10.0
+                buy: 44.0
+                hold: 3.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 2.0
+                period: -2m
+                strongBuy: 12.0
+                buy: 45.0
+                hold: 1.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 3.0
+                period: -3m
+                strongBuy: 12.0
+                buy: 44.0
+                hold: 1.0
+                sell: 0.0
+                strongSell: 0.0
+              price_targets:
+                current: 371.11
+                low: 392.0
+                mean: 591.60284
+                median: 600.0
+                high: 730.0
+              earnings_estimate:
+              - period: 0q
+                avg: 4.08862
+                low: 3.7
+                high: 5.3
+                yearAgoEps: 3.46
+                numberOfAnalysts: 29.0
+                growth: 0.1817
+              - period: +1q
+                avg: 4.25798
+                low: 3.74
+                high: 5.54
+                yearAgoEps: 3.65
+                numberOfAnalysts: 29.0
+                growth: 0.1666
+              - period: 0y
+                avg: 17.20426
+                low: 16.47
+                high: 19.71
+                yearAgoEps: 13.64
+                numberOfAnalysts: 31.0
+                growth: 0.2613
+              - period: +1y
+                avg: 19.01395
+                low: 16.61
+                high: 24.31
+                yearAgoEps: 17.20426
+                numberOfAnalysts: 36.0
+                growth: 0.10520001
+              revenue_estimate:
+              - period: 0q
+                avg: 81374355370.0
+                low: 80683000000.0
+                high: 82234492290.0
+                numberOfAnalysts: 39.0
+                yearAgoRevenue: 70066000000.0
+                growth: 0.16139999
+              - period: +1q
+                avg: 87634526740.0
+                low: 84857000000.0
+                high: 89542000000.0
+                numberOfAnalysts: 38.0
+                yearAgoRevenue: 76441000000.0
+                growth: 0.1464
+              - period: 0y
+                avg: 327836751980.0
+                low: 320447000000.0
+                high: 331512052020.0
+                numberOfAnalysts: 48.0
+                yearAgoRevenue: 281724000000.0
+                growth: 0.16370001
+              - period: +1y
+                avg: 378361020460.0
+                low: 356510000000.0
+                high: 397525255600.0
+                numberOfAnalysts: 52.0
+                yearAgoRevenue: 327836751980.0
+                growth: 0.1541
+              eps_trend:
+              - period: 0q
+                current: 4.08862
+                7daysAgo: 4.08551
+                30daysAgo: 4.088
+                60daysAgo: 3.91232
+                90daysAgo: 3.91087
+              - period: +1q
+                current: 4.25798
+                7daysAgo: 4.25591
+                30daysAgo: 4.26171
+                60daysAgo: 4.18071
+                90daysAgo: 4.17679
+              - period: 0y
+                current: 17.20426
+                7daysAgo: 17.20473
+                30daysAgo: 17.20232
+                60daysAgo: 15.67253
+                90daysAgo: 15.6784
+              - period: +1y
+                current: 19.01395
+                7daysAgo: 19.0009
+                30daysAgo: 19.01087
+                60daysAgo: 18.54552
+                90daysAgo: 18.54474
+              eps_revisions:
+              - period: 0q
+                upLast7days: 1.0
+                upLast30days: 22.0
+                downLast30days: 6.0
+                downLast7Days: 0.0
+              - period: +1q
+                upLast7days: 1.0
+                upLast30days: 17.0
+                downLast30days: 11.0
+                downLast7Days: 0.0
+              - period: 0y
+                upLast7days: 1.0
+                upLast30days: 2.0
+                downLast30days: 0.0
+                downLast7Days: 0.0
+              - period: +1y
+                upLast7days: 1.0
+                upLast30days: 2.0
+                downLast30days: 2.0
+                downLast7Days: 0.0
+    description: Compact analyst snapshot for MSFT using a one-item list.
     status: success
-    elapsed_time: 0.44351768493652344
+    elapsed_time: 1.436413049697876
+  analyst_snapshot_batch_mixed:
+    input:
+      tool: analyst_snapshot
+      tool_arguments:
+        symbols:
+        - MSFT
+        - AMZN
+        - BTC-USD
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbols:
+          - MSFT
+          - AMZN
+          - BTC-USD
+          summary:
+            requested: 3
+            succeeded: 2
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: MSFT
+            status: success
+            data:
+              company:
+                symbol: MSFT
+                name: Microsoft Corporation
+                asset_type: stock
+                quote_type: EQUITY
+                exchange: NMS
+                currency: USD
+                sector: Technology
+                industry: Software - Infrastructure
+                country: United States
+                website: https://www.microsoft.com
+                market_cap: 2758415745024.0
+                business_summary: Microsoft Corporation develops and supports software,
+                  services, devices, and solutions worldwide. The Productivity and
+                  Business Processes segment offers Microsoft 365 commercial, enterprise
+                  mobility + security, windows commercial, power BI, exchange, sharepoint,
+                  Microsoft teams, security and compliance, and copilot;...
+              recommendations_summary:
+              - index: 0.0
+                period: 0m
+                strongBuy: 10.0
+                buy: 44.0
+                hold: 3.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 1.0
+                period: -1m
+                strongBuy: 10.0
+                buy: 44.0
+                hold: 3.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 2.0
+                period: -2m
+                strongBuy: 12.0
+                buy: 45.0
+                hold: 1.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 3.0
+                period: -3m
+                strongBuy: 12.0
+                buy: 44.0
+                hold: 1.0
+                sell: 0.0
+                strongSell: 0.0
+              price_targets:
+                current: 371.135
+                low: 392.0
+                mean: 591.60284
+                median: 600.0
+                high: 730.0
+              earnings_estimate:
+              - period: 0q
+                avg: 4.08862
+                low: 3.7
+                high: 5.3
+                yearAgoEps: 3.46
+                numberOfAnalysts: 29.0
+                growth: 0.1817
+              - period: +1q
+                avg: 4.25798
+                low: 3.74
+                high: 5.54
+                yearAgoEps: 3.65
+                numberOfAnalysts: 29.0
+                growth: 0.1666
+              - period: 0y
+                avg: 17.20426
+                low: 16.47
+                high: 19.71
+                yearAgoEps: 13.64
+                numberOfAnalysts: 31.0
+                growth: 0.2613
+              - period: +1y
+                avg: 19.01395
+                low: 16.61
+                high: 24.31
+                yearAgoEps: 17.20426
+                numberOfAnalysts: 36.0
+                growth: 0.10520001
+              revenue_estimate:
+              - period: 0q
+                avg: 81374355370.0
+                low: 80683000000.0
+                high: 82234492290.0
+                numberOfAnalysts: 39.0
+                yearAgoRevenue: 70066000000.0
+                growth: 0.16139999
+              - period: +1q
+                avg: 87634526740.0
+                low: 84857000000.0
+                high: 89542000000.0
+                numberOfAnalysts: 38.0
+                yearAgoRevenue: 76441000000.0
+                growth: 0.1464
+              - period: 0y
+                avg: 327836751980.0
+                low: 320447000000.0
+                high: 331512052020.0
+                numberOfAnalysts: 48.0
+                yearAgoRevenue: 281724000000.0
+                growth: 0.16370001
+              - period: +1y
+                avg: 378361020460.0
+                low: 356510000000.0
+                high: 397525255600.0
+                numberOfAnalysts: 52.0
+                yearAgoRevenue: 327836751980.0
+                growth: 0.1541
+              eps_trend:
+              - period: 0q
+                current: 4.08862
+                7daysAgo: 4.08551
+                30daysAgo: 4.088
+                60daysAgo: 3.91232
+                90daysAgo: 3.91087
+              - period: +1q
+                current: 4.25798
+                7daysAgo: 4.25591
+                30daysAgo: 4.26171
+                60daysAgo: 4.18071
+                90daysAgo: 4.17679
+              - period: 0y
+                current: 17.20426
+                7daysAgo: 17.20473
+                30daysAgo: 17.20232
+                60daysAgo: 15.67253
+                90daysAgo: 15.6784
+              - period: +1y
+                current: 19.01395
+                7daysAgo: 19.0009
+                30daysAgo: 19.01087
+                60daysAgo: 18.54552
+                90daysAgo: 18.54474
+              eps_revisions:
+              - period: 0q
+                upLast7days: 1.0
+                upLast30days: 22.0
+                downLast30days: 6.0
+                downLast7Days: 0.0
+              - period: +1q
+                upLast7days: 1.0
+                upLast30days: 17.0
+                downLast30days: 11.0
+                downLast7Days: 0.0
+              - period: 0y
+                upLast7days: 1.0
+                upLast30days: 2.0
+                downLast30days: 0.0
+                downLast7Days: 0.0
+              - period: +1y
+                upLast7days: 1.0
+                upLast30days: 2.0
+                downLast30days: 2.0
+                downLast7Days: 0.0
+          - symbol: AMZN
+            status: success
+            data:
+              company:
+                symbol: AMZN
+                name: Amazon.com, Inc.
+                asset_type: stock
+                quote_type: EQUITY
+                exchange: NMS
+                currency: USD
+                sector: Consumer Cyclical
+                industry: Internet Retail
+                country: United States
+                website: https://www.amazon.com
+                market_cap: 2284552192000.0
+                business_summary: 'Amazon.com, Inc. engages in the retail sale of
+                  consumer products, advertising, and subscriptions service through
+                  online and physical stores in North America and internationally.
+                  The company operates through three segments: North America, International,
+                  and Amazon Web Services (AWS). It also manufactures and sells el...'
+              recommendations_summary:
+              - index: 0.0
+                period: 0m
+                strongBuy: 15.0
+                buy: 48.0
+                hold: 4.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 1.0
+                period: -1m
+                strongBuy: 15.0
+                buy: 48.0
+                hold: 4.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 2.0
+                period: -2m
+                strongBuy: 15.0
+                buy: 51.0
+                hold: 4.0
+                sell: 0.0
+                strongSell: 0.0
+              - index: 3.0
+                period: -3m
+                strongBuy: 16.0
+                buy: 51.0
+                hold: 3.0
+                sell: 0.0
+                strongSell: 0.0
+              price_targets:
+                current: 212.815
+                low: 175.0
+                mean: 280.46774
+                median: 285.0
+                high: 360.0
+              earnings_estimate:
+              - period: 0q
+                avg: 1.64449
+                low: 1.38
+                high: 2.72851
+                yearAgoEps: 1.59
+                numberOfAnalysts: 44.0
+                growth: 0.0343
+              - period: +1q
+                avg: 1.78736
+                low: 1.5
+                high: 2.18068
+                yearAgoEps: 1.68
+                numberOfAnalysts: 42.0
+                growth: 0.0639
+              - period: 0y
+                avg: 7.75015
+                low: 6.47
+                high: 9.64931
+                yearAgoEps: 7.17
+                numberOfAnalysts: 58.0
+                growth: 0.0809
+              - period: +1y
+                avg: 9.44121
+                low: 7.68
+                high: 14.21048
+                yearAgoEps: 7.75015
+                numberOfAnalysts: 53.0
+                growth: 0.2182
+              revenue_estimate:
+              - period: 0q
+                avg: 176965923450.0
+                low: 172876000000.0
+                high: 179285000000.0
+                numberOfAnalysts: 45.0
+                yearAgoRevenue: 155667000000.0
+                growth: 0.1368
+              - period: +1q
+                avg: 188197884730.0
+                low: 183014000000.0
+                high: 192000000000.0
+                numberOfAnalysts: 42.0
+                yearAgoRevenue: 167702000000.0
+                growth: 0.122200005
+              - period: 0y
+                avg: 807439139630.0
+                low: 788353000000.0
+                high: 890000000000.0
+                numberOfAnalysts: 57.0
+                yearAgoRevenue: 716924000000.0
+                growth: 0.1263
+              - period: +1y
+                avg: 900340238840.0
+                low: 839797000000.0
+                high: 954530000000.0
+                numberOfAnalysts: 57.0
+                yearAgoRevenue: 807439139630.0
+                growth: 0.115100004
+              eps_trend:
+              - period: 0q
+                current: 1.64449
+                7daysAgo: 1.64494
+                30daysAgo: 1.64562
+                60daysAgo: 1.71757
+                90daysAgo: 1.71584
+              - period: +1q
+                current: 1.78736
+                7daysAgo: 1.78855
+                30daysAgo: 1.78831
+                60daysAgo: 1.84386
+                90daysAgo: 1.84314
+              - period: 0y
+                current: 7.75015
+                7daysAgo: 7.74998
+                30daysAgo: 7.75214
+                60daysAgo: 7.84025
+                90daysAgo: 7.82147
+              - period: +1y
+                current: 9.44121
+                7daysAgo: 9.43574
+                30daysAgo: 9.37866
+                60daysAgo: 9.53432
+                90daysAgo: 9.50569
+              eps_revisions:
+              - period: 0q
+                upLast7days: 0.0
+                upLast30days: 3.0
+                downLast30days: 23.0
+                downLast7Days: 2.0
+              - period: +1q
+                upLast7days: 0.0
+                upLast30days: 2.0
+                downLast30days: 4.0
+                downLast7Days: 1.0
+              - period: 0y
+                upLast7days: 0.0
+                upLast30days: 2.0
+                downLast30days: 6.0
+                downLast7Days: 1.0
+              - period: +1y
+                upLast7days: 1.0
+                upLast30days: 4.0
+                downLast30days: 5.0
+                downLast7Days: 0.0
+          - symbol: BTC-USD
+            status: error
+            error: analyst_snapshot supports only stock. BTC-USD resolved to asset_type
+              'crypto'.
+    description: Batch analyst snapshot returns per-symbol equity-only validation.
+    status: success
+    elapsed_time: 1.6353814601898193
   analyst_snapshot_invalid_asset:
     input:
       tool: analyst_snapshot
       tool_arguments:
-        symbol: BTC-USD
+        symbols:
+        - BTC-USD
       raw_data_only: true
     output:
       response: ''
       data:
-        error: analyst_snapshot supports only stock. BTC-USD resolved to asset_type
-          'crypto'.
+        status: error
+        data:
+          symbols:
+          - BTC-USD
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: BTC-USD
+            status: error
+            error: analyst_snapshot supports only stock. BTC-USD resolved to asset_type
+              'crypto'.
     description: Analyst snapshot rejects non-equity symbols directly.
     status: success
-    elapsed_time: 0.1260366439819336
+    elapsed_time: 0.39136695861816406
   fund_snapshot_spy:
     input:
       tool: fund_snapshot
       tool_arguments:
-        symbol: SPY
+        symbols:
+        - SPY
       raw_data_only: true
     output:
       response: ''
       data:
         status: success
         data:
-          fund:
-            symbol: SPY
-            name: State Street SPDR S&P 500 ETF T
-            asset_type: etf
-            quote_type: ETF
-            exchange: PCX
-            currency: USD
-            category: Large Blend
-            family: State Street Investment Management
-            legal_type: Exchange Traded Fund
-            description: The trust seeks to achieve its investment objective by holding
-              a portfolio of the common stocks that are included in the index (the
-              “Portfolio”), with the weight of each stock in the Portfolio substantially
-              corresponding to the weight of such stock in the index.
-            expense_ratio: 0.000945
-            annual_holdings_turnover: 0.03
-            total_net_assets: 422312.12
-          asset_allocation:
-          - name: cashPosition
-            weight: 0.0011999999
-          - name: stockPosition
-            weight: 0.9987
-          - name: bondPosition
-            weight: 0.0
-          - name: preferredPosition
-            weight: 0.0
-          - name: convertiblePosition
-            weight: 0.0
-          - name: otherPosition
-            weight: 0.0
-          top_holdings:
-          - symbol: NVDA
-            name: NVIDIA Corp
-            weight: 0.0731524
-          - symbol: AAPL
-            name: Apple Inc
-            weight: 0.0663206
-          - symbol: MSFT
-            name: Microsoft Corp
-            weight: 0.049592
-          - symbol: AMZN
-            name: Amazon.com Inc
-            weight: 0.0347069
-          - symbol: GOOGL
-            name: Alphabet Inc Class A
-            weight: 0.0308148
-          - symbol: AVGO
-            name: Broadcom Inc
-            weight: 0.025636699
-          - symbol: GOOG
-            name: Alphabet Inc Class C
-            weight: 0.0246022
-          - symbol: META
-            name: Meta Platforms Inc Class A
-            weight: 0.023982301
-          - symbol: TSLA
-            name: Tesla Inc
-            weight: 0.0192143
-          - symbol: BRK-B
-            name: Berkshire Hathaway Inc Class B
-            weight: 0.015729701
-          sector_exposure:
-          - name: realestate
-            weight: 0.0198
-          - name: consumer_cyclical
-            weight: 0.1011
-          - name: basic_materials
-            weight: 0.019299999
-          - name: consumer_defensive
-            weight: 0.0543
-          - name: technology
-            weight: 0.33080003
-          - name: communication_services
-            weight: 0.1073
-          - name: financial_services
-            weight: 0.122600004
-          - name: utilities
-            weight: 0.0249
-          - name: industrials
-            weight: 0.0866
-          - name: energy
-            weight: 0.0348
-          - name: healthcare
-            weight: 0.098400004
-          style_metrics:
-          - metric: Price/Earnings
-            fund: 0.03673
-          - metric: Price/Book
-            fund: 0.19908
-          - metric: Price/Sales
-            fund: 0.28781
-          - metric: Price/Cashflow
-            fund: 0.05154
-          - metric: Median Market Cap
-          - metric: 3 Year Earnings Growth
-    description: Compact ETF snapshot for SPY.
+          symbols:
+          - SPY
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: SPY
+            status: success
+            data:
+              fund:
+                symbol: SPY
+                name: State Street SPDR S&P 500 ETF T
+                asset_type: etf
+                quote_type: ETF
+                exchange: PCX
+                currency: USD
+                category: Large Blend
+                family: State Street Investment Management
+                legal_type: Exchange Traded Fund
+                description: The trust seeks to achieve its investment objective by
+                  holding a portfolio of the common stocks that are included in the
+                  index (the “Portfolio”), with the weight of each stock in the Portfolio
+                  substantially corresponding to the weight of such stock in the index.
+                expense_ratio: 0.000945
+                annual_holdings_turnover: 0.03
+                total_net_assets: 422312.12
+              asset_allocation:
+              - name: cashPosition
+                weight: 0.0011999999
+              - name: stockPosition
+                weight: 0.9987
+              - name: bondPosition
+                weight: 0.0
+              - name: preferredPosition
+                weight: 0.0
+              - name: convertiblePosition
+                weight: 0.0
+              - name: otherPosition
+                weight: 0.0
+              top_holdings:
+              - symbol: NVDA
+                name: NVIDIA Corp
+                weight: 0.0731524
+              - symbol: AAPL
+                name: Apple Inc
+                weight: 0.0663206
+              - symbol: MSFT
+                name: Microsoft Corp
+                weight: 0.049592
+              - symbol: AMZN
+                name: Amazon.com Inc
+                weight: 0.0347069
+              - symbol: GOOGL
+                name: Alphabet Inc Class A
+                weight: 0.0308148
+              - symbol: AVGO
+                name: Broadcom Inc
+                weight: 0.025636699
+              - symbol: GOOG
+                name: Alphabet Inc Class C
+                weight: 0.0246022
+              - symbol: META
+                name: Meta Platforms Inc Class A
+                weight: 0.023982301
+              - symbol: TSLA
+                name: Tesla Inc
+                weight: 0.0192143
+              - symbol: BRK-B
+                name: Berkshire Hathaway Inc Class B
+                weight: 0.015729701
+              sector_exposure:
+              - name: realestate
+                weight: 0.0198
+              - name: consumer_cyclical
+                weight: 0.1011
+              - name: basic_materials
+                weight: 0.019299999
+              - name: consumer_defensive
+                weight: 0.0543
+              - name: technology
+                weight: 0.33080003
+              - name: communication_services
+                weight: 0.1073
+              - name: financial_services
+                weight: 0.122600004
+              - name: utilities
+                weight: 0.0249
+              - name: industrials
+                weight: 0.0866
+              - name: energy
+                weight: 0.0348
+              - name: healthcare
+                weight: 0.098400004
+              style_metrics:
+              - metric: Price/Earnings
+                fund: 0.03673
+              - metric: Price/Book
+                fund: 0.19908
+              - metric: Price/Sales
+                fund: 0.28781
+              - metric: Price/Cashflow
+                fund: 0.05154
+              - metric: Median Market Cap
+              - metric: 3 Year Earnings Growth
+    description: Compact ETF snapshot for SPY using a one-item list.
     status: success
-    elapsed_time: 0.20592784881591797
-  fund_snapshot_invalid_asset:
+    elapsed_time: 0.6024653911590576
+  fund_snapshot_batch_mixed:
     input:
       tool: fund_snapshot
       tool_arguments:
-        symbol: AAPL
+        symbols:
+        - SPY
+        - QQQ
+        - AAPL
       raw_data_only: true
     output:
       response: ''
       data:
-        error: 'Yahoo Finance request failed: AAPL: No Fund data found.'
+        status: success
+        data:
+          symbols:
+          - SPY
+          - QQQ
+          - AAPL
+          summary:
+            requested: 3
+            succeeded: 2
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: SPY
+            status: success
+            data:
+              fund:
+                symbol: SPY
+                name: State Street SPDR S&P 500 ETF T
+                asset_type: etf
+                quote_type: ETF
+                exchange: PCX
+                currency: USD
+                category: Large Blend
+                family: State Street Investment Management
+                legal_type: Exchange Traded Fund
+                description: The trust seeks to achieve its investment objective by
+                  holding a portfolio of the common stocks that are included in the
+                  index (the “Portfolio”), with the weight of each stock in the Portfolio
+                  substantially corresponding to the weight of such stock in the index.
+                expense_ratio: 0.000945
+                annual_holdings_turnover: 0.03
+                total_net_assets: 422312.12
+              asset_allocation:
+              - name: cashPosition
+                weight: 0.0011999999
+              - name: stockPosition
+                weight: 0.9987
+              - name: bondPosition
+                weight: 0.0
+              - name: preferredPosition
+                weight: 0.0
+              - name: convertiblePosition
+                weight: 0.0
+              - name: otherPosition
+                weight: 0.0
+              top_holdings:
+              - symbol: NVDA
+                name: NVIDIA Corp
+                weight: 0.0731524
+              - symbol: AAPL
+                name: Apple Inc
+                weight: 0.0663206
+              - symbol: MSFT
+                name: Microsoft Corp
+                weight: 0.049592
+              - symbol: AMZN
+                name: Amazon.com Inc
+                weight: 0.0347069
+              - symbol: GOOGL
+                name: Alphabet Inc Class A
+                weight: 0.0308148
+              - symbol: AVGO
+                name: Broadcom Inc
+                weight: 0.025636699
+              - symbol: GOOG
+                name: Alphabet Inc Class C
+                weight: 0.0246022
+              - symbol: META
+                name: Meta Platforms Inc Class A
+                weight: 0.023982301
+              - symbol: TSLA
+                name: Tesla Inc
+                weight: 0.0192143
+              - symbol: BRK-B
+                name: Berkshire Hathaway Inc Class B
+                weight: 0.015729701
+              sector_exposure:
+              - name: realestate
+                weight: 0.0198
+              - name: consumer_cyclical
+                weight: 0.1011
+              - name: basic_materials
+                weight: 0.019299999
+              - name: consumer_defensive
+                weight: 0.0543
+              - name: technology
+                weight: 0.33080003
+              - name: communication_services
+                weight: 0.1073
+              - name: financial_services
+                weight: 0.122600004
+              - name: utilities
+                weight: 0.0249
+              - name: industrials
+                weight: 0.0866
+              - name: energy
+                weight: 0.0348
+              - name: healthcare
+                weight: 0.098400004
+              style_metrics:
+              - metric: Price/Earnings
+                fund: 0.03673
+              - metric: Price/Book
+                fund: 0.19908
+              - metric: Price/Sales
+                fund: 0.28781
+              - metric: Price/Cashflow
+                fund: 0.05154
+              - metric: Median Market Cap
+              - metric: 3 Year Earnings Growth
+          - symbol: QQQ
+            status: success
+            data:
+              fund:
+                symbol: QQQ
+                name: Invesco QQQ Trust, Series 1
+                asset_type: etf
+                quote_type: ETF
+                exchange: NGM
+                currency: USD
+                category: Large Growth
+                family: Invesco
+                legal_type: Exchange Traded Fund
+                description: To maintain the correspondence between the composition
+                  and weights of the securities in the trust (the "securities") and
+                  the stocks in the NASDAQ-100 Index®, the adviser adjusts the securities
+                  from time to time to conform to periodic changes in the identity
+                  and/or relative weights of index securities. The compositio...
+                expense_ratio: 0.0018000001
+                annual_holdings_turnover: 0.0
+                total_net_assets: 592457.5
+              asset_allocation:
+              - name: cashPosition
+                weight: 0.0
+              - name: stockPosition
+                weight: 1.0
+              - name: bondPosition
+                weight: 0.0
+              - name: preferredPosition
+                weight: 0.0
+              - name: convertiblePosition
+                weight: 0.0
+              - name: otherPosition
+                weight: 0.0
+              top_holdings:
+              - symbol: NVDA
+                name: NVIDIA Corp
+                weight: 0.083994195
+              - symbol: AAPL
+                name: Apple Inc
+                weight: 0.0761501
+              - symbol: MSFT
+                name: Microsoft Corp
+                weight: 0.0569425
+              - symbol: AMZN
+                name: Amazon.com Inc
+                weight: 0.043793503
+              - symbol: TSLA
+                name: Tesla Inc
+                weight: 0.0391901
+              - symbol: META
+                name: Meta Platforms Inc Class A
+                weight: 0.0371346
+              - symbol: GOOGL
+                name: Alphabet Inc Class A
+                weight: 0.0353833
+              - symbol: WMT
+                name: Walmart Inc
+                weight: 0.0336763
+              - symbol: GOOG
+                name: Alphabet Inc Class C
+                weight: 0.032848798
+              - symbol: AVGO
+                name: Broadcom Inc
+                weight: 0.0294376
+              sector_exposure:
+              - name: realestate
+                weight: 0.001
+              - name: consumer_cyclical
+                weight: 0.1251
+              - name: basic_materials
+                weight: 0.0128
+              - name: consumer_defensive
+                weight: 0.0859
+              - name: technology
+                weight: 0.5
+              - name: communication_services
+                weight: 0.16440001
+              - name: financial_services
+                weight: 0.0023
+              - name: utilities
+                weight: 0.015700001
+              - name: industrials
+                weight: 0.0339
+              - name: energy
+                weight: 0.0062
+              - name: healthcare
+                weight: 0.052600004
+              style_metrics:
+              - metric: Price/Earnings
+                fund: 0.03058
+              - metric: Price/Book
+                fund: 0.1263
+              - metric: Price/Sales
+                fund: 0.18333
+              - metric: Price/Cashflow
+                fund: 0.04525
+              - metric: Median Market Cap
+              - metric: 3 Year Earnings Growth
+          - symbol: AAPL
+            status: error
+            error: 'Yahoo Finance request failed: No Fund data found.'
+    description: Batch fund snapshots return per-symbol fund-only validation.
+    status: success
+    elapsed_time: 0.604663610458374
+  fund_snapshot_invalid_asset:
+    input:
+      tool: fund_snapshot
+      tool_arguments:
+        symbols:
+        - AAPL
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: error
+        data:
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: AAPL
+            status: error
+            error: 'Yahoo Finance request failed: No Fund data found.'
     description: Fund snapshot rejects equity symbols directly.
     status: success
-    elapsed_time: 0.23442339897155762
+    elapsed_time: 0.2405235767364502
   equity_screen_day_gainers:
     input:
       tool: equity_screen
@@ -1258,53 +2673,54 @@ results:
           title: Day Gainers
           description: Discover the equities with the greatest gains in the trading
             day.
-          total_candidates: 60
+          total_candidates: 269
           returned_candidates: 5
           candidates:
-          - symbol: VG
-            name: Venture Global, Inc.
+          - symbol: SRPT
+            name: Sarepta Therapeutics, Inc.
             asset_type: stock
-            exchange: NYQ
-            price: 14.85
-            change_pct: 14.495
-            volume: 52992111
-            market_cap: 36486008832.0
-            pe_ratio: 16.141304
-          - symbol: RGC
-            name: Regencell Bioscience Holdings L
+            exchange: NMS
+            price: 22.63
+            change_pct: 28.53893
+            volume: 12081378
+            market_cap: 2375918592.0
+          - symbol: CORT
+            name: Corcept Therapeutics Incorporat
             asset_type: stock
             exchange: NCM
-            price: 26.38
-            change_pct: 14.84545
-            volume: 582915
-            market_cap: 13044616192.0
-          - symbol: ANDG
-            name: Andersen Group Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 28.27
-            change_pct: 13.5798
-            volume: 1244159
-            market_cap: 3136627200.0
-          - symbol: HTFL
-            name: Heartflow, Inc.
+            price: 41.19
+            change_pct: 21.791836
+            volume: 9063754
+            market_cap: 4381545472.0
+            pe_ratio: 50.231705
+          - symbol: BRZE
+            name: Braze, Inc.
             asset_type: stock
             exchange: NMS
-            price: 25.47
-            change_pct: 13.099462
-            volume: 3033301
-            market_cap: 2168992512.0
-          - symbol: KC
-            name: Kingsoft Cloud Holdings Limited
+            price: 21.665
+            change_pct: 20.227528
+            volume: 7456100
+            market_cap: 2656952320.0
+          - symbol: ARM
+            name: Arm Holdings plc
             asset_type: stock
             exchange: NMS
-            price: 14.78
-            change_pct: 12.652437
-            volume: 4746662
-            market_cap: 4372198400.0
+            price: 160.6375
+            change_pct: 19.026
+            volume: 23766119
+            market_cap: 170596794368.0
+            pe_ratio: 211.36513
+          - symbol: FLY
+            name: Firefly Aerospace Inc.
+            asset_type: stock
+            exchange: NGM
+            price: 27.5103
+            change_pct: 15.9304695
+            volume: 7215168
+            market_cap: 4400337920.0
     description: Curated Yahoo day gainers screen.
     status: success
-    elapsed_time: 0.16138577461242676
+    elapsed_time: 0.2285776138305664
   equity_screen_aggressive_small_caps:
     input:
       tool: equity_screen
@@ -1320,53 +2736,52 @@ results:
           screen: aggressive_small_caps
           title: Aggresive small cap stocks
           description: Small cap stocks with high earnings growth rates
-          total_candidates: 400
+          total_candidates: 397
           returned_candidates: 5
           candidates:
-          - symbol: ALIT
-            name: Alight, Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 0.6829
-            change_pct: -7.72869
-            volume: 26147183
-            market_cap: 371927840.0
           - symbol: AMC
             name: AMC Entertainment Holdings, Inc
             asset_type: stock
             exchange: NYQ
-            price: 1.02
-            change_pct: -5.55556
-            volume: 16908646
-            market_cap: 540138368.0
-          - symbol: IRWD
-            name: Ironwood Pharmaceuticals, Inc.
-            asset_type: stock
-            exchange: NMS
-            price: 3.17
-            change_pct: -2.461536
-            volume: 3193575
-            market_cap: 516894880.0
-            pe_ratio: 21.133333
-          - symbol: KNDI
-            name: Kandi Technologies Group, Inc.
-            asset_type: stock
-            exchange: NMS
-            price: 0.966
-            change_pct: -7.999994
-            volume: 241318
-            market_cap: 83062152.0
-          - symbol: TE
-            name: T1 Energy Inc.
+            price: 0.9999
+            change_pct: 0.40164757
+            volume: 14387006
+            market_cap: 582738944.0
+          - symbol: ALIT
+            name: Alight, Inc.
             asset_type: stock
             exchange: NYQ
-            price: 7.33
-            change_pct: -5.90501
-            volume: 12079626
-            market_cap: 1556641408.0
+            price: 0.5458
+            change_pct: -15.12317
+            volume: 71767849
+            market_cap: 297259040.0
+          - symbol: GOSS
+            name: Gossamer Bio, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 0.362
+            change_pct: 4.957952
+            volume: 8996660
+            market_cap: 84960056.0
+          - symbol: KPTI
+            name: Karyopharm Therapeutics Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 5.2191
+            change_pct: -4.0606627
+            volume: 1099725
+            market_cap: 102388472.0
+          - symbol: UAMY
+            name: United States Antimony Corporat
+            asset_type: stock
+            exchange: NYQ
+            price: 10.015
+            change_pct: 7.920265
+            volume: 10514456
+            market_cap: 1435869952.0
     description: Curated Yahoo aggressive small caps screen.
     status: success
-    elapsed_time: 0.1096949577331543
+    elapsed_time: 0.23192834854125977
   equity_screen_most_shorted_stocks:
     input:
       tool: equity_screen
@@ -1383,52 +2798,52 @@ results:
           title: Most Shorted Stocks
           description: Stocks with the highest short interest positions from Nasdaq
             and NYSE reports released every two weeks.
-          total_candidates: 3888
+          total_candidates: 3900
           returned_candidates: 5
           candidates:
-          - symbol: HCTI
-            name: Healthcare Triangle, Inc.
+          - symbol: IBG
+            name: Innovation Beverage Group Limit
             asset_type: stock
             exchange: NCM
-            price: 2.84
-            change_pct: -4.69799
-            volume: 126149
-            market_cap: 3281253.0
-          - symbol: XWEL
-            name: XWELL, Inc.
-            asset_type: stock
-            exchange: NCM
-            price: 1.32
-            change_pct: -6.3829727
-            volume: 203075
-            market_cap: 7612048.0
+            price: 1.12
+            change_pct: -7.4380193
+            volume: 910951
+            market_cap: 2033786.0
           - symbol: SNSE
             name: Sensei Biotherapeutics, Inc.
             asset_type: stock
             exchange: NCM
-            price: 30.53
-            change_pct: 1.7327573
-            volume: 119528
-            market_cap: 38519244.0
+            price: 29.93
+            change_pct: -0.13346349
+            volume: 43013
+            market_cap: 37762232.0
+          - symbol: ATPC
+            name: Agape ATP Corporation
+            asset_type: stock
+            exchange: NCM
+            price: 2.3502
+            change_pct: 4.9196396
+            volume: 186086
+            market_cap: 2351471.0
           - symbol: KALV
             name: KalVista Pharmaceuticals, Inc.
             asset_type: stock
             exchange: NGM
-            price: 15.49
-            change_pct: -6.4613514
-            volume: 786584
-            market_cap: 782962048.0
-          - symbol: NTLA
-            name: Intellia Therapeutics, Inc.
+            price: 17.05
+            change_pct: 3.5844483
+            volume: 749117
+            market_cap: 861814272.0
+          - symbol: ACXP
+            name: Acurx Pharmaceuticals, Inc.
             asset_type: stock
-            exchange: NGM
-            price: 13.21
-            change_pct: -2.0029638
-            volume: 2690255
-            market_cap: 1560544128.0
+            exchange: NCM
+            price: 4.34
+            change_pct: 1.4018677
+            volume: 201004
+            market_cap: 12390809.0
     description: Curated Yahoo most shorted stocks screen.
     status: success
-    elapsed_time: 0.16905498504638672
+    elapsed_time: 0.2370893955230713
   equity_screen_small_cap_gainers:
     input:
       tool: equity_screen
@@ -1444,53 +2859,53 @@ results:
           screen: small_cap_gainers
           title: Small caps with momentum
           description: Small cap stocks with percentchange greater than 5%
-          total_candidates: 21
+          total_candidates: 106
           returned_candidates: 5
           candidates:
-          - symbol: KOS
-            name: Kosmos Energy Ltd.
-            asset_type: stock
-            exchange: NYQ
-            price: 2.66
-            change_pct: 10.8333
-            volume: 29848018
-            market_cap: 1577778816.0
-          - symbol: HUYA
-            name: HUYA Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 3.46
-            change_pct: 9.84127
-            volume: 4804583
-            market_cap: 772983360.0
-          - symbol: AGRO
-            name: Adecoagro S.A.
-            asset_type: stock
-            exchange: NYQ
-            price: 13.63
-            change_pct: 9.47791
-            volume: 5780372
-            market_cap: 1928178048.0
-            pe_ratio: 59.260868
-          - symbol: ADTN
-            name: ADTRAN Holdings, Inc.
+          - symbol: JBLU
+            name: JetBlue Airways Corporation
             asset_type: stock
             exchange: NMS
-            price: 11.71
-            change_pct: 8.526414
-            volume: 2668219
-            market_cap: 944524480.0
-          - symbol: ARAY
-            name: Accuray Incorporated
+            price: 4.825
+            change_pct: 15.155126
+            volume: 61112072
+            market_cap: 1785827328.0
+          - symbol: WOLF
+            name: Wolfspeed, Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 18.15
+            change_pct: 8.8782215
+            volume: 735889
+            market_cap: 818358272.0
+          - symbol: GOSS
+            name: Gossamer Bio, Inc.
             asset_type: stock
             exchange: NMS
-            price: 0.4118
-            change_pct: 5.2389483
-            volume: 2112732
-            market_cap: 48914688.0
+            price: 0.362
+            change_pct: 4.957952
+            volume: 8996661
+            market_cap: 84960056.0
+          - symbol: UAMY
+            name: United States Antimony Corporat
+            asset_type: stock
+            exchange: NYQ
+            price: 10.01
+            change_pct: 7.8663845
+            volume: 10514803
+            market_cap: 1435153152.0
+          - symbol: BORR
+            name: Borr Drilling Limited
+            asset_type: stock
+            exchange: NYQ
+            price: 5.55
+            change_pct: 6.5259147
+            volume: 4239883
+            market_cap: 1703144064.0
+            pe_ratio: 32.64706
     description: Curated Yahoo small cap gainers screen.
     status: success
-    elapsed_time: 0.08554983139038086
+    elapsed_time: 0.22365188598632812
   equity_screen_undervalued_growth_stocks:
     input:
       tool: equity_screen
@@ -1507,57 +2922,57 @@ results:
           title: Undervalued Growth Stocks
           description: Stocks with earnings growth rates better than 25% and relatively
             low PE and PEG ratios.
-          total_candidates: 192
+          total_candidates: 200
           returned_candidates: 5
           candidates:
-          - symbol: BBD
-            name: Banco Bradesco Sa
+          - symbol: CDE
+            name: Coeur Mining, Inc.
             asset_type: stock
             exchange: NYQ
-            price: 3.53
-            change_pct: -1.94444
-            volume: 31997639
-            market_cap: 37314613248.0
-            pe_ratio: 8.609756
+            price: 18.5798
+            change_pct: 1.4735128
+            volume: 24793632
+            market_cap: 19231905792.0
+            pe_ratio: 19.557684
+          - symbol: VG
+            name: Venture Global, Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 17.0399
+            change_pct: 2.650779
+            volume: 20294512
+            market_cap: 41866526720.0
+            pe_ratio: 18.52163
+          - symbol: MU
+            name: Micron Technology, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 383.56
+            change_pct: -3.0263195
+            volume: 42803515
+            market_cap: 432553656320.0
+            pe_ratio: 18.092453
           - symbol: T
             name: AT&T Inc.
             asset_type: stock
             exchange: NYQ
-            price: 27.41
-            change_pct: -1.57989
-            volume: 26467346
-            market_cap: 194321809408.0
-            pe_ratio: 9.016447
+            price: 29.05
+            change_pct: 0.623479
+            volume: 17605977
+            market_cap: 205948502016.0
+            pe_ratio: 9.555921
           - symbol: PBR
             name: Petroleo Brasileiro S.A. Petrob
             asset_type: stock
             exchange: NYQ
-            price: 19.77
-            change_pct: 1.33265
-            volume: 27070707
-            market_cap: 127405121536.0
-            pe_ratio: 6.336539
-          - symbol: CCL
-            name: Carnival Corporation
-            asset_type: stock
-            exchange: NYQ
-            price: 24.16
-            change_pct: -3.70666
-            volume: 26233523
-            market_cap: 33464971264.0
-            pe_ratio: 11.960396
-          - symbol: AGNC
-            name: AGNC Investment Corp.
-            asset_type: stock
-            exchange: NMS
-            price: 10.3
-            change_pct: -1.8112448
-            volume: 17061947
-            market_cap: 11569364992.0
-            pe_ratio: 7.0068026
+            price: 19.95
+            change_pct: 1.012662
+            volume: 12420621
+            market_cap: 128565116928.0
+            pe_ratio: 6.3942313
     description: Curated Yahoo undervalued growth stocks screen.
     status: success
-    elapsed_time: 0.14371275901794434
+    elapsed_time: 0.23212790489196777
   equity_screen_invalid:
     input:
       tool: equity_screen
@@ -1574,4 +2989,4 @@ results:
           ''undervalued_large_caps''].'
     description: Unsupported equity screen fails directly.
     status: success
-    elapsed_time: 0.000244140625
+    elapsed_time: 0.0005588531494140625

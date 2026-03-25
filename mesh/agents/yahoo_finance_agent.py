@@ -196,6 +196,7 @@ Rules:
                         "properties": {
                             "symbols": {
                                 "type": "array",
+                                "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance symbols such as AAPL, SPY, BTC-USD, EURUSD=X, or GC=F. Use a one-item list for a single symbol.",
                             }
                         },
@@ -213,6 +214,7 @@ Rules:
                         "properties": {
                             "symbols": {
                                 "type": "array",
+                                "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
                             },
                             "interval": {
@@ -260,6 +262,7 @@ Rules:
                         "properties": {
                             "symbols": {
                                 "type": "array",
+                                "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
                             },
                             "interval": {
@@ -333,6 +336,7 @@ Rules:
                         "properties": {
                             "symbols": {
                                 "type": "array",
+                                "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance equity symbols. Use a one-item list for a single symbol.",
                             }
                         },
@@ -350,6 +354,7 @@ Rules:
                         "properties": {
                             "symbols": {
                                 "type": "array",
+                                "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance equity symbols. Use a one-item list for a single symbol.",
                             }
                         },
@@ -367,6 +372,7 @@ Rules:
                         "properties": {
                             "symbols": {
                                 "type": "array",
+                                "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance ETF or mutual-fund symbols. Use a one-item list for a single symbol.",
                             }
                         },
