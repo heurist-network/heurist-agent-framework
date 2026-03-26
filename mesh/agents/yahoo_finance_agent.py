@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
@@ -27,6 +27,7 @@ MARKETS = ["US", "GB", "ASIA", "EUROPE", "RATES", "COMMODITIES", "CURRENCIES", "
 ASSET_TYPES = ["stock", "etf", "crypto", "currency", "index", "future", "fund"]
 EQUITY_ONLY_ASSET_TYPES = {"stock"}
 FUND_ONLY_ASSET_TYPES = {"etf", "fund"}
+FUTURE_ONLY_ASSET_TYPES = {"future"}
 SUPPORTED_EQUITY_SCREENS = [
     "aggressive_small_caps",
     "day_gainers",
@@ -94,6 +95,11 @@ CASH_FLOW_FIELDS = {
     "dividends_paid": ["Cash Dividends Paid", "Common Stock Dividend Paid"],
 }
 MAX_BATCH_SYMBOLS = 10
+OPTIONS_SIDES = ["calls", "puts", "both"]
+OPTIONS_MONEYNESS = ["all", "itm", "otm", "atm"]
+SHARED_HISTORY_TTL_SECONDS = 300
+SHARED_METADATA_TTL_SECONDS = 300
+SHARED_OPTIONS_TTL_SECONDS = 180
 
 
 class YahooFinanceAgent(MeshAgent):
@@ -121,6 +127,8 @@ class YahooFinanceAgent(MeshAgent):
                     "Give me an analyst snapshot for Amazon",
                     "Summarize the ETF SPY",
                     "Show me today's Yahoo day gainers",
+                    "Show me the nearest AAPL options chain",
+                    "Give me a futures snapshot for GC=F",
                 ],
                 "credits": {"default": 0.2},
                 "x402_config": {
@@ -141,6 +149,9 @@ Use the tools with clear scope:
 - `quote_snapshot` for the latest compact market snapshot of one symbol
 - `price_history` for normalized OHLCV history
 - `technical_snapshot` for technical analysis and signal summary
+- `options_expirations` to discover which expirations exist before picking one options chain
+- `options_chain` for compact options chain snapshots on one underlying symbol
+- `futures_snapshot` for compact futures snapshots and optional recent trend context
 - `news_search` for recent news about a symbol, company, or market topic
 - `market_overview` for high-level market status and benchmark summary
 - `company_fundamentals` for compact equity fundamentals
@@ -154,6 +165,9 @@ Rules:
 - Prefer compact, structured outputs over raw dumps
 - Be honest about unsupported asset/tool combinations
 - Use the latest completed candle for technical analysis and price-history summaries
+- MUST use `options_expirations` before `options_chain`
+- Use `options_chain` only for exact underlyings with an exact expiration returned by `options_expirations`, not raw chain dumps
+- Use `futures_snapshot` for exact futures symbols like `GC=F`, `CL=F`, or `NG=F`
 - Mention the exact symbols, interval, and resolved date window in your response
 """
 
@@ -280,6 +294,121 @@ Rules:
                                 "description": "Inclusive start date in YYYY-MM-DD format.",
                             },
                             "end_date": {"type": "string", "description": "Exclusive end date in YYYY-MM-DD format."},
+                        },
+                        "required": ["symbols"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "options_expirations",
+                    "description": "Return a compact expiration discovery view for one exact Yahoo Finance underlying symbol, including nearest expirations, monthly or weekly hints, and days-to-expiration. Agents MUST call this before `options_chain` to choose an exact expiration.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "symbol": {
+                                "type": "string",
+                                "description": "One exact Yahoo Finance underlying symbol such as AAPL, MSFT, or SPY.",
+                            },
+                            "limit": {
+                                "type": "integer",
+                                "description": "Maximum number of expirations to return in the expirations list.",
+                                "default": 12,
+                            },
+                            "min_days_to_expiration": {
+                                "type": "integer",
+                                "description": "Optional minimum days-to-expiration filter.",
+                            },
+                            "max_days_to_expiration": {
+                                "type": "integer",
+                                "description": "Optional maximum days-to-expiration filter.",
+                            },
+                        },
+                        "required": ["symbol"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "options_chain",
+                    "description": "Return a compact options chain snapshot for one exact Yahoo Finance underlying symbol and one exact expiration returned by `options_expirations`, with bounded contract rows and high-signal open-interest and volume summaries.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "symbol": {
+                                "type": "string",
+                                "description": "One exact Yahoo Finance underlying symbol such as AAPL, MSFT, or SPY.",
+                            },
+                            "expiration": {
+                                "type": "string",
+                                "description": "Required expiration date in YYYY-MM-DD format. Call `options_expirations` first and pass one exact returned value.",
+                            },
+                            "side": {
+                                "type": "string",
+                                "enum": OPTIONS_SIDES,
+                                "description": "Which side of the chain to return.",
+                                "default": "both",
+                            },
+                            "moneyness": {
+                                "type": "string",
+                                "enum": OPTIONS_MONEYNESS,
+                                "description": "Filter contracts by moneyness relative to the underlying spot price.",
+                                "default": "all",
+                            },
+                            "limit_contracts": {
+                                "type": "integer",
+                                "description": "Maximum number of contracts to return per side after filtering.",
+                                "default": 12,
+                            },
+                            "min_strike": {
+                                "type": "number",
+                                "description": "Optional minimum strike filter.",
+                            },
+                            "max_strike": {
+                                "type": "number",
+                                "description": "Optional maximum strike filter.",
+                            },
+                        },
+                        "required": ["symbol", "expiration"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "futures_snapshot",
+                    "description": "Return compact current snapshots for one or more exact Yahoo Finance futures symbols like GC=F, CL=F, or NG=F, with optional recent history context.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "symbols": {
+                                "type": "array",
+                                "items": {"type": "string"},
+                                "description": "1 to 10 exact Yahoo Finance futures symbols. Use a one-item list for a single symbol.",
+                            },
+                            "include_history": {
+                                "type": "boolean",
+                                "description": "Include a compact recent history window and summary.",
+                                "default": True,
+                            },
+                            "interval": {
+                                "type": "string",
+                                "enum": HISTORY_INTERVALS,
+                                "description": "History interval used when include_history is true.",
+                                "default": "1d",
+                            },
+                            "period": {
+                                "type": "string",
+                                "description": "History window used when include_history is true.",
+                                "default": "1mo",
+                            },
+                            "limit_bars": {
+                                "type": "integer",
+                                "description": "Maximum number of recent bars to return when include_history is true.",
+                                "default": 10,
+                            },
                         },
                         "required": ["symbols"],
                     },
@@ -430,6 +559,263 @@ Rules:
         if len(normalized) > MAX_BATCH_SYMBOLS:
             return None, f"symbols supports at most {MAX_BATCH_SYMBOLS} tickers per request."
         return normalized, None
+
+    # Yahoo history and options calls are reused across multiple top-level tools, so this
+    # agent keeps a small shared cache layer in addition to the generic method cache.
+    def _shared_history_store(self) -> tuple[Dict[str, Any], Dict[str, Any]]:
+        if not hasattr(self.__class__, "_shared_history_cache"):
+            setattr(self.__class__, "_shared_history_cache", {})
+            setattr(self.__class__, "_shared_history_cache_ttl", {})
+        return getattr(self.__class__, "_shared_history_cache"), getattr(self.__class__, "_shared_history_cache_ttl")
+
+    def _shared_metadata_store(self) -> tuple[Dict[str, Any], Dict[str, Any]]:
+        if not hasattr(self.__class__, "_shared_metadata_cache"):
+            setattr(self.__class__, "_shared_metadata_cache", {})
+            setattr(self.__class__, "_shared_metadata_cache_ttl", {})
+        return getattr(self.__class__, "_shared_metadata_cache"), getattr(self.__class__, "_shared_metadata_cache_ttl")
+
+    def _shared_options_symbol_store(self) -> tuple[Dict[str, Any], Dict[str, Any]]:
+        if not hasattr(self.__class__, "_shared_options_symbol_cache"):
+            setattr(self.__class__, "_shared_options_symbol_cache", {})
+            setattr(self.__class__, "_shared_options_symbol_cache_ttl", {})
+        return getattr(self.__class__, "_shared_options_symbol_cache"), getattr(self.__class__, "_shared_options_symbol_cache_ttl")
+
+    def _shared_options_chain_store(self) -> tuple[Dict[str, Any], Dict[str, Any]]:
+        if not hasattr(self.__class__, "_shared_options_chain_cache"):
+            setattr(self.__class__, "_shared_options_chain_cache", {})
+            setattr(self.__class__, "_shared_options_chain_cache_ttl", {})
+        return getattr(self.__class__, "_shared_options_chain_cache"), getattr(self.__class__, "_shared_options_chain_cache_ttl")
+
+    def _shared_history_key(self, symbol: str, interval: str, include_prepost: bool, repair: bool) -> str:
+        return f"{symbol}|{interval}|prepost={int(include_prepost)}|repair={int(repair)}"
+
+    def _shared_options_chain_key(self, symbol: str, expiration: str) -> str:
+        return f"{symbol}|{expiration}"
+
+    def _history_request_key(
+        self,
+        symbol: str,
+        interval: str,
+        period: Optional[str],
+        start_date: Optional[str],
+        end_date: Optional[str],
+        include_prepost: bool,
+        repair: bool,
+    ) -> str:
+        return (
+            f"{self._shared_history_key(symbol, interval, include_prepost, repair)}"
+            f"|period={period or ''}|start={start_date or ''}|end={end_date or ''}"
+        )
+
+    def _history_range_bounds(self, start_date: Optional[str], end_date: Optional[str]) -> tuple[Optional[str], Optional[str]]:
+        return (start_date or None, end_date or None)
+
+    def _is_cache_valid(self, ttl_map: Dict[str, datetime], key: str) -> bool:
+        return key in ttl_map and datetime.now() < ttl_map[key]
+
+    def _filter_history_frame(
+        self, df: pd.DataFrame, start_date: Optional[str] = None, end_date: Optional[str] = None
+    ) -> pd.DataFrame:
+        if df is None or df.empty:
+            return pd.DataFrame()
+
+        filtered = self._normalize_history_frame(df)
+        if start_date:
+            start_ts = pd.Timestamp(start_date)
+            if getattr(filtered.index, "tz", None) is not None and start_ts.tzinfo is None:
+                start_ts = start_ts.tz_localize(filtered.index.tz)
+            filtered = filtered[filtered.index >= start_ts]
+        if end_date:
+            end_ts = pd.Timestamp(end_date)
+            if getattr(filtered.index, "tz", None) is not None and end_ts.tzinfo is None:
+                end_ts = end_ts.tz_localize(filtered.index.tz)
+            filtered = filtered[filtered.index < end_ts]
+        return filtered
+
+    def _normalize_history_frame(self, df: pd.DataFrame) -> pd.DataFrame:
+        if df is None or df.empty:
+            return pd.DataFrame()
+        normalized = df.copy()
+        if isinstance(normalized.index, pd.DatetimeIndex) and normalized.index.tz is not None:
+            normalized.index = normalized.index.tz_localize(None)
+        return normalized
+
+    def _merge_history_frames(self, current: pd.DataFrame, incoming: pd.DataFrame) -> pd.DataFrame:
+        if current is None or current.empty:
+            return self._normalize_history_frame(incoming) if isinstance(incoming, pd.DataFrame) else pd.DataFrame()
+        if incoming is None or incoming.empty:
+            return self._normalize_history_frame(current)
+        merged = pd.concat([self._normalize_history_frame(current), self._normalize_history_frame(incoming)]).sort_index()
+        return merged[~merged.index.duplicated(keep="last")]
+
+    def _get_cached_history(
+        self,
+        symbol: str,
+        interval: str,
+        period: Optional[str],
+        start_date: Optional[str],
+        end_date: Optional[str],
+        include_prepost: bool,
+        repair: bool,
+    ) -> Optional[pd.DataFrame]:
+        cache, cache_ttl = self._shared_history_store()
+        request_key = self._history_request_key(symbol, interval, period, start_date, end_date, include_prepost, repair)
+        if self._is_cache_valid(cache_ttl, request_key):
+            cached = cache.get(request_key)
+            if isinstance(cached, pd.DataFrame):
+                return cached.copy()
+
+        if start_date or end_date:
+            range_key = self._shared_history_key(symbol, interval, include_prepost, repair)
+            if self._is_cache_valid(cache_ttl, range_key):
+                entry = cache.get(range_key) or {}
+                cached_start = entry.get("requested_start")
+                cached_end = entry.get("requested_end")
+                covered = True
+                if start_date and cached_start and start_date < cached_start:
+                    covered = False
+                if end_date and cached_end and end_date > cached_end:
+                    covered = False
+                if covered and isinstance(entry.get("df"), pd.DataFrame):
+                    return self._filter_history_frame(entry["df"], start_date=start_date, end_date=end_date)
+        return None
+
+    def _get_cached_history_range_entry(
+        self, symbol: str, interval: str, include_prepost: bool, repair: bool
+    ) -> Optional[Dict[str, Any]]:
+        cache, cache_ttl = self._shared_history_store()
+        range_key = self._shared_history_key(symbol, interval, include_prepost, repair)
+        if not self._is_cache_valid(cache_ttl, range_key):
+            return None
+        entry = cache.get(range_key)
+        if isinstance(entry, dict) and isinstance(entry.get("df"), pd.DataFrame):
+            return {
+                "df": entry["df"].copy(),
+                "requested_start": entry.get("requested_start"),
+                "requested_end": entry.get("requested_end"),
+            }
+        return None
+
+    def _history_missing_segments(
+        self,
+        cached_start: Optional[str],
+        cached_end: Optional[str],
+        start_date: Optional[str],
+        end_date: Optional[str],
+    ) -> List[tuple[str, str]]:
+        if not start_date or not end_date or not cached_start or not cached_end:
+            return []
+
+        segments = []
+        if start_date < cached_start:
+            segments.append((start_date, cached_start))
+        if end_date > cached_end:
+            segments.append((cached_end, end_date))
+        return segments
+
+    def _store_cached_history(
+        self,
+        symbol: str,
+        interval: str,
+        period: Optional[str],
+        start_date: Optional[str],
+        end_date: Optional[str],
+        include_prepost: bool,
+        repair: bool,
+        df: pd.DataFrame,
+    ) -> None:
+        if df is None or df.empty:
+            return
+
+        cache, cache_ttl = self._shared_history_store()
+        expires_at = datetime.now() + timedelta(seconds=SHARED_HISTORY_TTL_SECONDS)
+        request_key = self._history_request_key(symbol, interval, period, start_date, end_date, include_prepost, repair)
+        cache[request_key] = df.copy()
+        cache_ttl[request_key] = expires_at
+
+        if start_date or end_date:
+            range_key = self._shared_history_key(symbol, interval, include_prepost, repair)
+            existing_entry = cache.get(range_key) if self._is_cache_valid(cache_ttl, range_key) else None
+            merged_df = df.copy()
+            requested_start, requested_end = self._history_range_bounds(start_date, end_date)
+            if isinstance(existing_entry, dict) and isinstance(existing_entry.get("df"), pd.DataFrame):
+                merged_df = self._merge_history_frames(existing_entry["df"], df)
+                existing_start = existing_entry.get("requested_start")
+                existing_end = existing_entry.get("requested_end")
+                requested_start = min(v for v in [existing_start, requested_start] if v is not None) if (
+                    existing_start or requested_start
+                ) else None
+                requested_end = max(v for v in [existing_end, requested_end] if v is not None) if (
+                    existing_end or requested_end
+                ) else None
+
+            cache[range_key] = {
+                "df": merged_df,
+                "requested_start": requested_start,
+                "requested_end": requested_end,
+            }
+            cache_ttl[range_key] = expires_at
+
+    def _get_cached_history_metadata(self, symbol: str) -> Optional[Dict[str, Any]]:
+        cache, cache_ttl = self._shared_metadata_store()
+        if self._is_cache_valid(cache_ttl, symbol):
+            cached = cache.get(symbol)
+            if isinstance(cached, dict):
+                return cached.copy()
+        return None
+
+    def _store_cached_history_metadata(self, symbol: str, metadata: Dict[str, Any]) -> None:
+        if not metadata:
+            return
+        cache, cache_ttl = self._shared_metadata_store()
+        cache[symbol] = metadata.copy()
+        cache_ttl[symbol] = datetime.now() + timedelta(seconds=SHARED_METADATA_TTL_SECONDS)
+
+    def _get_cached_option_symbol_context(self, symbol: str) -> Optional[Dict[str, Any]]:
+        cache, cache_ttl = self._shared_options_symbol_store()
+        if self._is_cache_valid(cache_ttl, symbol):
+            cached = cache.get(symbol)
+            if isinstance(cached, dict):
+                return {
+                    "expirations": list(cached.get("expirations") or []),
+                    "info": dict(cached.get("info") or {}),
+                    "fast_info": dict(cached.get("fast_info") or {}),
+                }
+        return None
+
+    def _store_cached_option_symbol_context(
+        self, symbol: str, expirations: List[str], info: Dict[str, Any], fast_info: Dict[str, Any]
+    ) -> None:
+        cache, cache_ttl = self._shared_options_symbol_store()
+        cache[symbol] = {
+            "expirations": list(expirations),
+            "info": dict(info or {}),
+            "fast_info": dict(fast_info or {}),
+        }
+        cache_ttl[symbol] = datetime.now() + timedelta(seconds=SHARED_OPTIONS_TTL_SECONDS)
+
+    def _get_cached_option_chain(self, symbol: str, expiration: str) -> Optional[Dict[str, pd.DataFrame]]:
+        cache, cache_ttl = self._shared_options_chain_store()
+        key = self._shared_options_chain_key(symbol, expiration)
+        if self._is_cache_valid(cache_ttl, key):
+            cached = cache.get(key)
+            if isinstance(cached, dict):
+                return {
+                    "calls": cached.get("calls", pd.DataFrame()).copy(),
+                    "puts": cached.get("puts", pd.DataFrame()).copy(),
+                }
+        return None
+
+    def _store_cached_option_chain(
+        self, symbol: str, expiration: str, calls: pd.DataFrame, puts: pd.DataFrame
+    ) -> None:
+        cache, cache_ttl = self._shared_options_chain_store()
+        key = self._shared_options_chain_key(symbol, expiration)
+        cache[key] = {
+            "calls": calls.copy() if isinstance(calls, pd.DataFrame) else pd.DataFrame(),
+            "puts": puts.copy() if isinstance(puts, pd.DataFrame) else pd.DataFrame(),
+        }
+        cache_ttl[key] = datetime.now() + timedelta(seconds=SHARED_OPTIONS_TTL_SECONDS)
 
     def _batch_response(self, symbols: List[str], results: List[Dict[str, Any]]) -> Dict[str, Any]:
         succeeded = sum(1 for item in results if item.get("status") == "success")
@@ -663,6 +1049,26 @@ Rules:
             "score": self._safe_float(item.get("score")),
         }
 
+    def _normalize_lookup_result(self, item: Dict[str, Any], asset_type: str) -> Optional[Dict[str, Any]]:
+        name = item.get("shortName") or item.get("longName") or item.get("name")
+        if not name:
+            return None
+        symbol = item.get("symbol") or item.get("contractSymbol")
+        if not symbol:
+            short_name = item.get("shortName")
+            if isinstance(short_name, str) and short_name.endswith("=F"):
+                symbol = short_name
+        return self._prune_empty(
+            {
+                "symbol": symbol,
+                "name": name,
+                "asset_type": asset_type,
+                "exchange": item.get("exchange"),
+                "quote_type": item.get("quoteType"),
+                "score": self._safe_float(item.get("rank")),
+            }
+        )
+
     def _normalize_news_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
         return {
             "id": item.get("uuid"),
@@ -675,6 +1081,195 @@ Rules:
             "content_type": item.get("type"),
             "related_tickers": item.get("relatedTickers") or [],
         }
+
+    def _extract_option_contracts(
+        self,
+        df: pd.DataFrame,
+        side: str,
+        spot_price: Optional[float],
+        moneyness: str,
+        limit_contracts: int,
+        min_strike: Optional[float] = None,
+        max_strike: Optional[float] = None,
+    ) -> List[Dict[str, Any]]:
+        if df is None or df.empty:
+            return []
+
+        working = df.copy()
+        if min_strike is not None:
+            working = working[working["strike"].astype(float) >= min_strike]
+        if max_strike is not None:
+            working = working[working["strike"].astype(float) <= max_strike]
+        if working.empty:
+            return []
+        if spot_price is not None and "strike" in working.columns:
+            working["distance_to_spot"] = (working["strike"].astype(float) - spot_price).abs()
+            if moneyness == "itm":
+                if side == "calls":
+                    working = working[working["strike"].astype(float) <= spot_price]
+                else:
+                    working = working[working["strike"].astype(float) >= spot_price]
+            elif moneyness == "otm":
+                if side == "calls":
+                    working = working[working["strike"].astype(float) > spot_price]
+                else:
+                    working = working[working["strike"].astype(float) < spot_price]
+            elif moneyness == "atm":
+                working = working.sort_values(["distance_to_spot", "openInterest", "volume"], ascending=[True, False, False])
+            if moneyness != "atm":
+                working = working.sort_values(["openInterest", "volume", "distance_to_spot"], ascending=[False, False, True])
+        else:
+            working = working.sort_values(["openInterest", "volume"], ascending=[False, False])
+
+        contracts = []
+        for row in working.head(limit_contracts).to_dict(orient="records"):
+            bid = self._safe_float(row.get("bid"))
+            ask = self._safe_float(row.get("ask"))
+            mid = None
+            if bid is not None and ask is not None:
+                mid = round((bid + ask) / 2, 4)
+
+            contracts.append(
+                self._prune_empty(
+                    {
+                        "contract_symbol": row.get("contractSymbol"),
+                        "side": side,
+                        "last_trade_at": self._iso(row.get("lastTradeDate")),
+                        "strike": self._safe_float(row.get("strike")),
+                        "last_price": self._safe_float(row.get("lastPrice")),
+                        "bid": bid,
+                        "ask": ask,
+                        "mid": mid,
+                        "change_pct": self._safe_float(row.get("percentChange")),
+                        "volume": self._safe_int(row.get("volume")),
+                        "open_interest": self._safe_int(row.get("openInterest")),
+                        "implied_volatility": self._safe_float(row.get("impliedVolatility")),
+                        "in_the_money": bool(row.get("inTheMoney")) if row.get("inTheMoney") is not None else None,
+                        "currency": row.get("currency"),
+                    }
+                )
+            )
+        return contracts
+
+    def _filter_option_expiration_items(
+        self,
+        expirations: List[Dict[str, Any]],
+        min_days_to_expiration: Optional[int] = None,
+        max_days_to_expiration: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
+        items = expirations
+        if min_days_to_expiration is not None:
+            items = [item for item in items if (item.get("days_to_expiration") or 0) >= min_days_to_expiration]
+        if max_days_to_expiration is not None:
+            items = [item for item in items if (item.get("days_to_expiration") or 0) <= max_days_to_expiration]
+        return items
+
+    def _option_side_summary(self, contracts: List[Dict[str, Any]]) -> Dict[str, Any]:
+        if not contracts:
+            return {}
+
+        total_open_interest = sum(item.get("open_interest") or 0 for item in contracts)
+        total_volume = sum(item.get("volume") or 0 for item in contracts)
+        top_open_interest = max(contracts, key=lambda item: item.get("open_interest") or 0)
+        top_volume = max(contracts, key=lambda item: item.get("volume") or 0)
+
+        return self._prune_empty(
+            {
+                "contract_count": len(contracts),
+                "total_open_interest": total_open_interest,
+                "total_volume": total_volume,
+                "top_open_interest": {
+                    "contract_symbol": top_open_interest.get("contract_symbol"),
+                    "strike": top_open_interest.get("strike"),
+                    "open_interest": top_open_interest.get("open_interest"),
+                },
+                "top_volume": {
+                    "contract_symbol": top_volume.get("contract_symbol"),
+                    "strike": top_volume.get("strike"),
+                    "volume": top_volume.get("volume"),
+                },
+            }
+        )
+
+    def _option_expiration_item(self, expiration: str) -> Dict[str, Any]:
+        ts = pd.Timestamp(expiration)
+        expiration_date = ts.date()
+        days_to_expiration = (expiration_date - datetime.utcnow().date()).days
+        is_friday = ts.weekday() == 4
+        is_monthly = is_friday and 15 <= ts.day <= 21
+        cycle = "monthly" if is_monthly else "weekly" if is_friday else "other"
+        tenor = "leap" if days_to_expiration >= 365 else "long_dated" if days_to_expiration >= 90 else "near_term"
+        return {
+            "expiration": expiration,
+            "days_to_expiration": days_to_expiration,
+            "weekday": ts.day_name(),
+            "cycle": cycle,
+            "is_monthly": is_monthly,
+            "is_leap": days_to_expiration >= 365,
+            "tenor": tenor,
+        }
+
+    def _options_expiration_summary(self, expirations: List[Dict[str, Any]]) -> Dict[str, Any]:
+        if not expirations:
+            return {}
+
+        monthly = [item for item in expirations if item.get("is_monthly")]
+        weekly = [item for item in expirations if item.get("cycle") == "weekly"]
+        leaps = [item for item in expirations if item.get("is_leap")]
+        nearest = expirations[0]
+        nearest_monthly = monthly[0] if monthly else None
+        furthest = expirations[-1]
+
+        return self._prune_empty(
+            {
+                "total_expirations": len(expirations),
+                "nearest_expiration": nearest.get("expiration"),
+                "nearest_monthly_expiration": nearest_monthly.get("expiration") if nearest_monthly else None,
+                "furthest_expiration": furthest.get("expiration"),
+                "monthly_count": len(monthly),
+                "weekly_count": len(weekly),
+                "leap_count": len(leaps),
+            }
+        )
+
+    async def _fetch_option_symbol_context(self, symbol: str) -> Dict[str, Any]:
+        cached = self._get_cached_option_symbol_context(symbol)
+        if cached is not None:
+            return cached
+
+        def _do_context() -> Dict[str, Any]:
+            ticker = yf.Ticker(symbol)
+            return {
+                "expirations": list(ticker.options or []),
+                "info": ticker.info or {},
+                "fast_info": dict(ticker.fast_info),
+            }
+
+        context = await asyncio.to_thread(_do_context)
+        self._store_cached_option_symbol_context(
+            symbol,
+            expirations=context.get("expirations") or [],
+            info=context.get("info") or {},
+            fast_info=context.get("fast_info") or {},
+        )
+        return context
+
+    async def _fetch_option_chain_data(self, symbol: str, expiration: str) -> Dict[str, pd.DataFrame]:
+        cached = self._get_cached_option_chain(symbol, expiration)
+        if cached is not None:
+            return cached
+
+        def _do_chain() -> Dict[str, pd.DataFrame]:
+            ticker = yf.Ticker(symbol)
+            chain = ticker.option_chain(expiration)
+            return {
+                "calls": chain.calls.copy() if isinstance(chain.calls, pd.DataFrame) else pd.DataFrame(),
+                "puts": chain.puts.copy() if isinstance(chain.puts, pd.DataFrame) else pd.DataFrame(),
+            }
+
+        chain_data = await asyncio.to_thread(_do_chain)
+        self._store_cached_option_chain(symbol, expiration, chain_data.get("calls", pd.DataFrame()), chain_data.get("puts", pd.DataFrame()))
+        return chain_data
 
     def _wrap_stockstats(self, ohlcv_df: pd.DataFrame) -> pd.DataFrame:
         cols = [c for c in ["Open", "High", "Low", "Close", "Volume"] if c in ohlcv_df.columns]
@@ -722,7 +1317,7 @@ Rules:
             return pd.DataFrame()
         if symbol_df is None or symbol_df.empty:
             return pd.DataFrame()
-        return symbol_df.dropna(how="all")
+        return self._normalize_history_frame(symbol_df.dropna(how="all"))
 
     async def _fetch_history_batch(
         self,
@@ -737,21 +1332,141 @@ Rules:
         if interval not in HISTORY_INTERVALS:
             return {symbol: pd.DataFrame() for symbol in symbols}
 
+        results: Dict[str, pd.DataFrame] = {}
+        missing_symbols = []
+        segment_jobs = []
+        for symbol in symbols:
+            cached = self._get_cached_history(
+                symbol=symbol,
+                interval=interval,
+                period=period,
+                start_date=start_date,
+                end_date=end_date,
+                include_prepost=include_prepost,
+                repair=repair,
+            )
+            if isinstance(cached, pd.DataFrame):
+                results[symbol] = cached
+            elif start_date and end_date:
+                range_entry = self._get_cached_history_range_entry(symbol, interval, include_prepost, repair)
+                segments = self._history_missing_segments(
+                    range_entry.get("requested_start") if range_entry else None,
+                    range_entry.get("requested_end") if range_entry else None,
+                    start_date,
+                    end_date,
+                )
+                if range_entry and segments:
+                    segment_jobs.append((symbol, range_entry["df"], segments))
+                else:
+                    missing_symbols.append(symbol)
+            else:
+                missing_symbols.append(symbol)
+
+        if segment_jobs:
+            fetched_segments = await asyncio.gather(
+                *(
+                    self._fetch_history_missing_segments(
+                        symbol=symbol,
+                        interval=interval,
+                        segments=segments,
+                        include_prepost=include_prepost,
+                        repair=repair,
+                    )
+                    for symbol, _, segments in segment_jobs
+                ),
+                return_exceptions=True,
+            )
+            for (symbol, cached_df, _), fetched in zip(segment_jobs, fetched_segments):
+                if isinstance(fetched, Exception):
+                    missing_symbols.append(symbol)
+                    continue
+                merged = self._merge_history_frames(cached_df, fetched)
+                filtered = self._filter_history_frame(merged, start_date=start_date, end_date=end_date)
+                if not merged.empty:
+                    self._store_cached_history(
+                        symbol=symbol,
+                        interval=interval,
+                        period=period,
+                        start_date=start_date,
+                        end_date=end_date,
+                        include_prepost=include_prepost,
+                        repair=repair,
+                        df=filtered if not filtered.empty else merged,
+                    )
+                results[symbol] = filtered
+
+        if not missing_symbols:
+            return {symbol: results.get(symbol, pd.DataFrame()) for symbol in symbols}
+
         def _do_download() -> Dict[str, pd.DataFrame]:
             downloaded = yf.download(
-                symbols,
+                missing_symbols,
                 **self._download_kwargs(interval, period, start_date, end_date, include_prepost, repair),
             )
-            return {symbol: self._extract_download_frame(downloaded, symbol) for symbol in symbols}
+            return {symbol: self._extract_download_frame(downloaded, symbol) for symbol in missing_symbols}
 
-        return await asyncio.to_thread(_do_download)
+        fetched = await asyncio.to_thread(_do_download)
+        for symbol in missing_symbols:
+            frame = fetched.get(symbol, pd.DataFrame())
+            if isinstance(frame, pd.DataFrame) and not frame.empty:
+                self._store_cached_history(
+                    symbol=symbol,
+                    interval=interval,
+                    period=period,
+                    start_date=start_date,
+                    end_date=end_date,
+                    include_prepost=include_prepost,
+                    repair=repair,
+                    df=frame,
+                )
+            results[symbol] = frame
+
+        return {symbol: results.get(symbol, pd.DataFrame()) for symbol in symbols}
+
+    async def _fetch_history_missing_segments(
+        self,
+        symbol: str,
+        interval: str,
+        segments: List[tuple[str, str]],
+        include_prepost: bool,
+        repair: bool,
+    ) -> pd.DataFrame:
+        if not segments:
+            return pd.DataFrame()
+
+        def _do_fetch() -> pd.DataFrame:
+            ticker = yf.Ticker(symbol)
+            combined = pd.DataFrame()
+            for segment_start, segment_end in segments:
+                segment = ticker.history(
+                    start=segment_start,
+                    end=segment_end,
+                    interval=interval,
+                    auto_adjust=True,
+                    prepost=include_prepost,
+                    repair=repair,
+                    actions=False,
+                    timeout=10,
+                    raise_errors=True,
+                )
+                if segment is not None and not segment.empty:
+                    combined = self._merge_history_frames(combined, self._normalize_history_frame(segment.dropna(how="all")))
+            return combined
+
+        return await asyncio.to_thread(_do_fetch)
 
     async def _fetch_history_metadata(self, symbol: str) -> Dict[str, Any]:
+        cached = self._get_cached_history_metadata(symbol)
+        if cached is not None:
+            return cached
+
         def _do_metadata() -> Dict[str, Any]:
             return yf.Ticker(symbol).get_history_metadata() or {}
 
         try:
-            return await asyncio.to_thread(_do_metadata)
+            metadata = await asyncio.to_thread(_do_metadata)
+            self._store_cached_history_metadata(symbol, metadata)
+            return metadata
         except Exception:
             return {}
 
@@ -767,6 +1482,18 @@ Rules:
     ) -> tuple[pd.DataFrame, Dict[str, Any]]:
         if interval not in HISTORY_INTERVALS:
             return pd.DataFrame(), {}
+
+        cached = self._get_cached_history(
+            symbol=symbol,
+            interval=interval,
+            period=period,
+            start_date=start_date,
+            end_date=end_date,
+            include_prepost=include_prepost,
+            repair=repair,
+        )
+        if isinstance(cached, pd.DataFrame):
+            return cached, await self._fetch_history_metadata(symbol)
 
         def _do_history() -> tuple[pd.DataFrame, Dict[str, Any]]:
             ticker = yf.Ticker(symbol)
@@ -789,9 +1516,22 @@ Rules:
             metadata = ticker.get_history_metadata() or {}
             if df is None or df.empty:
                 return pd.DataFrame(), metadata
-            return df.dropna(how="all"), metadata
+            return self._normalize_history_frame(df.dropna(how="all")), metadata
 
-        return await asyncio.to_thread(_do_history)
+        df, metadata = await asyncio.to_thread(_do_history)
+        if not df.empty:
+            self._store_cached_history(
+                symbol=symbol,
+                interval=interval,
+                period=period,
+                start_date=start_date,
+                end_date=end_date,
+                include_prepost=include_prepost,
+                repair=repair,
+                df=df,
+            )
+        self._store_cached_history_metadata(symbol, metadata)
+        return df, metadata
 
     def _compact_profile(self, info: Dict[str, Any], asset_type: Optional[str]) -> Dict[str, Any]:
         keys = ["sector", "industry", "category", "fundFamily", "website", "country", "exchange", "market"]
@@ -1007,6 +1747,18 @@ Rules:
             return {"status": "error", "error": f"Unsupported asset_type '{asset_type}'."}
 
         def _do_search() -> List[Dict[str, Any]]:
+            if asset_type == "future" and hasattr(yf, "Lookup"):
+                lookup = yf.Lookup(query)
+                frame = lookup.get_future(count=max(limit * 3, 10))
+                candidates = []
+                if frame is not None and not frame.empty:
+                    for item in frame.reset_index().to_dict(orient="records"):
+                        normalized = self._normalize_lookup_result(item, "future")
+                        if normalized:
+                            candidates.append(normalized)
+                if candidates:
+                    return candidates[:limit]
+
             search = yf.Search(query, max_results=max(limit * 3, 10), news_count=0, lists_count=0, include_cb=False)
             candidates = []
             for item in search.quotes or []:
@@ -1032,6 +1784,194 @@ Rules:
                 "asset_type_filter": asset_type,
                 "matches": matches,
             },
+        }
+
+    @with_cache(ttl_seconds=180)
+    @with_retry(max_retries=1)
+    async def options_expirations(
+        self,
+        symbol: str,
+        limit: int = 12,
+        min_days_to_expiration: Optional[int] = None,
+        max_days_to_expiration: Optional[int] = None,
+    ) -> Dict[str, Any]:
+        normalized_symbol = self._normalize_symbol(symbol)
+        if normalized_symbol is None:
+            return {"status": "error", "error": "symbol must be a non-empty Yahoo Finance symbol."}
+        if min_days_to_expiration is not None and min_days_to_expiration < 0:
+            return {"status": "error", "error": "min_days_to_expiration must be >= 0."}
+        if max_days_to_expiration is not None and max_days_to_expiration < 0:
+            return {"status": "error", "error": "max_days_to_expiration must be >= 0."}
+        if (
+            min_days_to_expiration is not None
+            and max_days_to_expiration is not None
+            and min_days_to_expiration > max_days_to_expiration
+        ):
+            return {"status": "error", "error": "min_days_to_expiration cannot be greater than max_days_to_expiration."}
+
+        limit = max(1, min(limit or 12, 24))
+
+        try:
+            context = await self._fetch_option_symbol_context(normalized_symbol)
+        except Exception as exc:
+            return self._yfinance_error(exc, f"No option expirations returned for {normalized_symbol}.")
+        expirations = [self._option_expiration_item(item) for item in context.get("expirations") or []]
+        if not expirations:
+            return {"status": "no_data", "error": f"No option expirations returned for {normalized_symbol}."}
+        filtered_expirations = self._filter_option_expiration_items(
+            expirations,
+            min_days_to_expiration=min_days_to_expiration,
+            max_days_to_expiration=max_days_to_expiration,
+        )
+        if not filtered_expirations:
+            return {"status": "no_data", "error": f"No option expirations matched the requested time range for {normalized_symbol}."}
+
+        info = context.get("info") or {}
+        fast_info = context.get("fast_info") or {}
+        return {
+            "status": "success",
+            "data": self._prune_empty(
+                {
+                    "symbol": normalized_symbol,
+                    "name": info.get("shortName") or info.get("longName") or normalized_symbol,
+                    "quote_type": info.get("quoteType"),
+                    "currency": fast_info.get("currency") or info.get("currency"),
+                    "spot_price": self._safe_float(
+                        fast_info.get("lastPrice") or info.get("regularMarketPrice") or info.get("previousClose")
+                    ),
+                    "filters": {
+                        "limit": limit,
+                        "min_days_to_expiration": min_days_to_expiration,
+                        "max_days_to_expiration": max_days_to_expiration,
+                    },
+                    "summary": self._options_expiration_summary(filtered_expirations),
+                    "expirations": filtered_expirations[:limit],
+                }
+            ),
+        }
+
+    @with_cache(ttl_seconds=180)
+    @with_retry(max_retries=1)
+    async def options_chain(
+        self,
+        symbol: str,
+        expiration: Optional[str] = None,
+        side: str = "both",
+        moneyness: str = "all",
+        limit_contracts: int = 12,
+        min_strike: Optional[float] = None,
+        max_strike: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        normalized_symbol = self._normalize_symbol(symbol)
+        if normalized_symbol is None:
+            return {"status": "error", "error": "symbol must be a non-empty Yahoo Finance symbol."}
+        if side not in OPTIONS_SIDES:
+            return {"status": "error", "error": f"Unsupported side '{side}'."}
+        if moneyness not in OPTIONS_MONEYNESS:
+            return {"status": "error", "error": f"Unsupported moneyness '{moneyness}'."}
+        if not expiration:
+            return {
+                "status": "error",
+                "error": f"expiration is required for options_chain on {normalized_symbol}. Call options_expirations first.",
+            }
+        if min_strike is not None and max_strike is not None and min_strike > max_strike:
+            return {"status": "error", "error": "min_strike cannot be greater than max_strike."}
+
+        limit_contracts = max(1, min(limit_contracts or 12, 25))
+
+        try:
+            context = await self._fetch_option_symbol_context(normalized_symbol)
+        except Exception as exc:
+            return self._yfinance_error(exc, f"No options chain returned for {normalized_symbol}.")
+        expirations = list(context.get("expirations") or [])
+        if not expirations:
+            return {"status": "no_data", "error": f"No options chain returned for {normalized_symbol}."}
+        selected_expiration = expiration
+        if selected_expiration not in expirations:
+            return {
+                "status": "error",
+                "error": f"Unsupported expiration '{selected_expiration}' for {normalized_symbol}. Use one of: {expirations[:12]}",
+            }
+
+        try:
+            chain_data = await self._fetch_option_chain_data(normalized_symbol, selected_expiration)
+        except Exception as exc:
+            return self._yfinance_error(exc, f"No options chain returned for {normalized_symbol}.")
+
+        info = context.get("info") or {}
+        fast_info = context.get("fast_info") or {}
+        spot_price = self._safe_float(
+            fast_info.get("lastPrice") or info.get("regularMarketPrice") or info.get("previousClose")
+        )
+        if moneyness != "all" and spot_price is None:
+            return {
+                "status": "error",
+                "error": f"Spot price is unavailable for {normalized_symbol}, so moneyness='{moneyness}' cannot be applied.",
+            }
+        calls = self._extract_option_contracts(
+            chain_data.get("calls", pd.DataFrame()),
+            "calls",
+            spot_price,
+            moneyness,
+            limit_contracts,
+            min_strike=min_strike,
+            max_strike=max_strike,
+        )
+        puts = self._extract_option_contracts(
+            chain_data.get("puts", pd.DataFrame()),
+            "puts",
+            spot_price,
+            moneyness,
+            limit_contracts,
+            min_strike=min_strike,
+            max_strike=max_strike,
+        )
+        if side == "calls":
+            puts = []
+        elif side == "puts":
+            calls = []
+        if not calls and not puts:
+            return {
+                "status": "no_data",
+                "error": f"No option contracts matched the requested filters for {normalized_symbol} {selected_expiration}.",
+            }
+
+        call_summary = self._option_side_summary(calls)
+        put_summary = self._option_side_summary(puts)
+        put_call_open_interest_ratio = None
+        if call_summary.get("total_open_interest"):
+            put_call_open_interest_ratio = round(
+                (put_summary.get("total_open_interest", 0) / call_summary["total_open_interest"]),
+                4,
+            )
+
+        return {
+            "status": "success",
+            "data": self._prune_empty(
+                {
+                    "symbol": normalized_symbol,
+                    "name": info.get("shortName") or info.get("longName") or normalized_symbol,
+                    "quote_type": info.get("quoteType"),
+                    "currency": fast_info.get("currency") or info.get("currency"),
+                    "spot_price": spot_price,
+                    "selected_expiration": selected_expiration,
+                    "available_expirations": expirations[:12],
+                    "filters": {
+                        "side": side,
+                        "moneyness": moneyness,
+                        "limit_contracts": limit_contracts,
+                        "min_strike": min_strike,
+                        "max_strike": max_strike,
+                    },
+                    "summary": {
+                        "calls": call_summary,
+                        "puts": put_summary,
+                        "put_call_open_interest_ratio": put_call_open_interest_ratio,
+                    },
+                    "calls": calls,
+                    "puts": puts,
+                }
+            ),
         }
 
     @with_cache(ttl_seconds=120)
@@ -1104,6 +2044,131 @@ Rules:
             return self._yfinance_error(exc, f"No quote data returned for {symbol}.")
         if not snapshot:
             return {"status": "no_data", "error": f"No quote data returned for {symbol}."}
+        return {"status": "success", "data": snapshot}
+
+    @with_cache(ttl_seconds=120)
+    @with_retry(max_retries=1)
+    async def futures_snapshot(
+        self,
+        symbols: List[str],
+        include_history: bool = True,
+        interval: str = "1d",
+        period: Optional[str] = "1mo",
+        limit_bars: int = 10,
+    ) -> Dict[str, Any]:
+        normalized_symbols, error = self._normalize_symbols(symbols)
+        if error:
+            return {"status": "error", "error": error}
+        if interval not in HISTORY_INTERVALS:
+            return {"status": "error", "error": f"Unsupported interval '{interval}'."}
+
+        limit_bars = max(1, min(limit_bars or 10, 30))
+        history_frames: Dict[str, pd.DataFrame] = {}
+        if include_history:
+            try:
+                history_frames = await self._fetch_history_batch(
+                    normalized_symbols,
+                    interval=interval,
+                    period=period,
+                    include_prepost=False,
+                    repair=False,
+                )
+            except Exception:
+                history_frames = {}
+
+        return await self._run_symbol_tool_batch(
+            normalized_symbols,
+            lambda symbol: self._futures_snapshot_one(
+                symbol=symbol,
+                include_history=include_history,
+                interval=interval,
+                period=period,
+                limit_bars=limit_bars,
+                prefetched_df=history_frames.get(symbol),
+            ),
+        )
+
+    async def _futures_snapshot_one(
+        self,
+        symbol: str,
+        include_history: bool,
+        interval: str,
+        period: Optional[str],
+        limit_bars: int,
+        prefetched_df: Optional[pd.DataFrame] = None,
+    ) -> Dict[str, Any]:
+        def _do_snapshot() -> Dict[str, Any]:
+            ticker = yf.Ticker(symbol)
+            info = ticker.info or {}
+            quote_type = info.get("quoteType")
+            asset_type = self._normalize_asset_type(quote_type, info.get("typeDisp"))
+            if not info and asset_type is None:
+                return {}
+            if asset_type not in FUTURE_ONLY_ASSET_TYPES:
+                return {"unsupported_asset_type": asset_type}
+
+            fast_info = dict(ticker.fast_info)
+            frame = prefetched_df.copy() if isinstance(prefetched_df, pd.DataFrame) else pd.DataFrame()
+            if include_history and frame.empty:
+                frame = ticker.history(period=period or "1mo", interval=interval, auto_adjust=True, actions=False)
+            frame = self._drop_incomplete_bar(frame, interval) if include_history and not frame.empty else frame
+            latest_bar = None
+            previous_bar = None
+            history_summary = None
+            bars = []
+            if include_history and not frame.empty:
+                bars = self._serialize_bars(frame.tail(limit_bars))
+                latest_bar = bars[-1] if bars else None
+                previous_bar = bars[-2] if len(bars) > 1 else None
+                history_summary = self._window_summary(frame)
+
+            return self._prune_empty(
+                {
+                    "symbol": symbol,
+                    "name": info.get("shortName") or info.get("longName") or symbol,
+                    "asset_type": asset_type,
+                    "quote_type": quote_type,
+                    "exchange": fast_info.get("exchange") or info.get("exchange"),
+                    "currency": fast_info.get("currency") or info.get("currency"),
+                    "price": {
+                        "last_price": self._safe_float(fast_info.get("lastPrice") or info.get("regularMarketPrice")),
+                        "previous_close": self._safe_float(
+                            fast_info.get("previousClose") or info.get("regularMarketPreviousClose")
+                        ),
+                        "day_high": self._safe_float(fast_info.get("dayHigh") or info.get("dayHigh")),
+                        "day_low": self._safe_float(fast_info.get("dayLow") or info.get("dayLow")),
+                        "open": self._safe_float(fast_info.get("open") or info.get("open")),
+                        "volume": self._safe_int(fast_info.get("lastVolume") or info.get("volume")),
+                    },
+                    "stats": {
+                        "fifty_day_average": self._safe_float(fast_info.get("fiftyDayAverage")),
+                        "two_hundred_day_average": self._safe_float(fast_info.get("twoHundredDayAverage")),
+                        "year_high": self._safe_float(fast_info.get("yearHigh")),
+                        "year_low": self._safe_float(fast_info.get("yearLow")),
+                    },
+                    "history": {
+                        "interval": interval,
+                        "period": period or self._default_period(interval),
+                        "latest_completed_bar": latest_bar,
+                        "previous_completed_bar": previous_bar,
+                        "window_summary": history_summary,
+                        "bars": bars,
+                    }
+                    if include_history
+                    else None,
+                }
+            )
+
+        try:
+            snapshot = await asyncio.to_thread(_do_snapshot)
+        except Exception as exc:
+            return self._yfinance_error(exc, f"No futures data returned for {symbol}.")
+        if not snapshot:
+            return {"status": "no_data", "error": f"No futures data returned for {symbol}."}
+        if "unsupported_asset_type" in snapshot:
+            return self._asset_support_error(
+                symbol, snapshot.get("unsupported_asset_type"), FUTURE_ONLY_ASSET_TYPES, "futures_snapshot"
+            )
         return {"status": "success", "data": snapshot}
 
     @with_cache(ttl_seconds=300)
@@ -1792,6 +2857,31 @@ Rules:
                     period=function_args.get("period"),
                     start_date=function_args.get("start_date"),
                     end_date=function_args.get("end_date"),
+                )
+            elif tool_name == "options_expirations":
+                result = await self.options_expirations(
+                    symbol=function_args.get("symbol"),
+                    limit=function_args.get("limit", 12),
+                    min_days_to_expiration=function_args.get("min_days_to_expiration"),
+                    max_days_to_expiration=function_args.get("max_days_to_expiration"),
+                )
+            elif tool_name == "options_chain":
+                result = await self.options_chain(
+                    symbol=function_args.get("symbol"),
+                    expiration=function_args.get("expiration"),
+                    side=function_args.get("side", "both"),
+                    moneyness=function_args.get("moneyness", "all"),
+                    limit_contracts=function_args.get("limit_contracts", 12),
+                    min_strike=function_args.get("min_strike"),
+                    max_strike=function_args.get("max_strike"),
+                )
+            elif tool_name == "futures_snapshot":
+                result = await self.futures_snapshot(
+                    symbols=function_args.get("symbols"),
+                    include_history=function_args.get("include_history", True),
+                    interval=function_args.get("interval", "1d"),
+                    period=function_args.get("period", "1mo"),
+                    limit_bars=function_args.get("limit_bars", 10),
                 )
             elif tool_name == "news_search":
                 result = await self.news_search(

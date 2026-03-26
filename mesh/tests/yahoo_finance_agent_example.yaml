@@ -1,9 +1,9 @@
 metadata:
   agent: YahooFinanceAgent
   test_file: yahoo_finance_agent.py
-  timestamp: '2026-03-26T01:45:00.720584'
-  total_tests: 36
-  passed: 36
+  timestamp: '2026-03-26T14:21:51.334909'
+  total_tests: 46
+  passed: 46
   failed: 0
 results:
   resolve_apple:
@@ -27,22 +27,22 @@ results:
             asset_type: stock
             exchange: NMS
             quote_type: EQUITY
-            score: 31972.0
+            score: 32612.0
           - symbol: APLE
             name: Apple Hospitality REIT, Inc.
             asset_type: stock
             exchange: NYQ
             quote_type: EQUITY
-            score: 20056.0
-          - symbol: AAPY.DE
-            name: IncomeShares Apple (AAPL) Options ETP
+            score: 20059.0
+          - symbol: APC.DE
+            name: Apple Inc.
             asset_type: stock
             exchange: GER
             quote_type: EQUITY
-            score: 20012.0
+            score: 20009.0
     description: Resolve Apple into a compact list of stock candidates.
     status: success
-    elapsed_time: 1.5674505233764648
+    elapsed_time: 0.3669397830963135
   resolve_invalid_asset_type:
     input:
       tool: resolve_symbol
@@ -57,7 +57,7 @@ results:
         error: Unsupported asset_type 'bond'.
     description: Direct error for unsupported asset-type filter.
     status: success
-    elapsed_time: 0.0004749298095703125
+    elapsed_time: 0.0006937980651855469
   resolve_no_matches:
     input:
       tool: resolve_symbol
@@ -71,7 +71,44 @@ results:
         error: No symbol matches found for 'zxqwvut nonexistent corp 123456789'.
     description: Honest no-data response when symbol search finds nothing.
     status: success
-    elapsed_time: 0.44710755348205566
+    elapsed_time: 0.19435691833496094
+  resolve_future_gold:
+    input:
+      tool: resolve_symbol
+      tool_arguments:
+        query: gold
+        asset_type: future
+        limit: 3
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          query: gold
+          asset_type_filter: future
+          matches:
+          - symbol: GC=F
+            name: Gold Apr 26
+            asset_type: future
+            exchange: CMX
+            quote_type: future
+            score: 32461.0
+          - symbol: MGC=F
+            name: Micro Gold Futures,Apr-2026
+            asset_type: future
+            exchange: CMX
+            quote_type: future
+            score: 30012.0
+          - symbol: SGU=F
+            name: Shanghai Gold (USD) Futures,Apr
+            asset_type: future
+            exchange: CMX
+            quote_type: future
+            score: 30001.0
+    description: Resolve a commodity intent into compact futures candidates via Lookup.
+    status: success
+    elapsed_time: 0.23261213302612305
   quote_snapshot_aapl:
     input:
       tool: quote_snapshot
@@ -102,19 +139,19 @@ results:
               currency: USD
               exchange: NMS
               price:
-                last_price: 254.39999389648438
-                open: 254.02000427246094
-                previous_close: 253.2955
-                day_high: 254.97999572753906
-                day_low: 251.60000610351562
-                volume: 13563325
+                last_price: 255.44500732421875
+                open: 251.9949951171875
+                previous_close: 252.57
+                day_high: 255.55999755859375
+                day_low: 250.77499389648438
+                volume: 6213585
               stats:
-                market_cap: 3739152284690.979
-                fifty_day_average: 260.8243994140625
-                two_hundred_day_average: 247.3214493560791
+                market_cap: 3754511814720.825
+                fifty_day_average: 260.67179931640624
+                two_hundred_day_average: 247.5649493408203
                 year_high: 288.6199951171875
                 year_low: 169.2100067138672
-                year_change_pct: 13.591838927579817
+                year_change_pct: 12.852351230389372
               profile:
                 sector: Technology
                 industry: Consumer Electronics
@@ -122,10 +159,10 @@ results:
                 country: United States
                 exchange: NMS
                 market: us_market
-              as_of: '2026-03-25T00:00:00'
+              as_of: '2026-03-26T00:00:00'
     description: Compact quote snapshot for AAPL using a one-item list.
     status: success
-    elapsed_time: 4.3524487018585205
+    elapsed_time: 1.0143280029296875
   quote_snapshot_btc:
     input:
       tool: quote_snapshot
@@ -156,27 +193,27 @@ results:
               currency: USD
               exchange: CCC
               price:
-                last_price: 70893.1640625
-                open: 70525.5625
-                previous_close: 70531.625
-                day_high: 71925.1328125
-                day_low: 70422.796875
-                volume: 39157284864
+                last_price: 69600.3125
+                open: 71311.6640625
+                previous_close: 71317.3515625
+                day_high: 71350.84375
+                day_low: 69240.890625
+                volume: 34530197504
               stats:
-                market_cap: 1418079109120.0
-                fifty_day_average: 69031.387421875
-                two_hundred_day_average: 92173.88892578126
+                market_cap: 1392218079232.0
+                fifty_day_average: 68944.914140625
+                two_hundred_day_average: 91979.31486328125
                 year_high: 126198.0703125
                 year_low: 60074.203125
-                year_change_pct: -18.852539706470544
+                year_change_pct: -18.201131335645858
               profile:
                 website: https://bitcoin.org/
                 name: Bitcoin
                 exchange: CCC
-              as_of: '2026-03-25T00:00:00'
+              as_of: '2026-03-26T00:00:00'
     description: Compact quote snapshot for BTC-USD using a one-item list.
     status: success
-    elapsed_time: 4.521966934204102
+    elapsed_time: 1.0251970291137695
   quote_snapshot_batch_mixed:
     input:
       tool: quote_snapshot
@@ -211,19 +248,19 @@ results:
               currency: USD
               exchange: NMS
               price:
-                last_price: 254.39500427246094
-                open: 254.02000427246094
-                previous_close: 253.02
-                day_high: 254.97999572753906
-                day_low: 251.60000610351562
-                volume: 13569828
+                last_price: 255.39999389648438
+                open: 251.9949951171875
+                previous_close: 252.57
+                day_high: 255.55999755859375
+                day_low: 250.77499389648438
+                volume: 6226841
               stats:
-                market_cap: 3739078947566.3145
-                fifty_day_average: 260.8243994140625
-                two_hundred_day_average: 247.3214493560791
+                market_cap: 3753850210690.979
+                fifty_day_average: 260.67179931640624
+                two_hundred_day_average: 247.5649493408203
                 year_high: 288.6199951171875
                 year_low: 169.2100067138672
-                year_change_pct: 13.591838927579817
+                year_change_pct: 12.852351230389372
               profile:
                 sector: Technology
                 industry: Consumer Electronics
@@ -231,7 +268,7 @@ results:
                 country: United States
                 exchange: NMS
                 market: us_market
-              as_of: '2026-03-25T00:00:00'
+              as_of: '2026-03-26T00:00:00'
           - symbol: MSFT
             status: success
             data:
@@ -242,19 +279,19 @@ results:
               currency: USD
               exchange: NMS
               price:
-                last_price: 371.2099914550781
-                open: 376.9200134277344
-                previous_close: 374.75
-                day_high: 377.05999755859375
-                day_low: 369.739990234375
-                volume: 18441942
+                last_price: 372.135009765625
+                open: 370.81500244140625
+                previous_close: 370.5576
+                day_high: 374.71990966796875
+                day_low: 369.2900085449219
+                volume: 7213939
               stats:
-                market_cap: 2758972846174.674
-                fifty_day_average: 416.7393994140625
-                two_hundred_day_average: 480.68454971313474
+                market_cap: 2765847931597.373
+                fifty_day_average: 414.6165997314453
+                two_hundred_day_average: 480.18784973144534
                 year_high: 555.4500122070312
                 year_low: 344.7900085449219
-                year_change_pct: -4.418291389695081
+                year_change_pct: -5.002810870783938
               profile:
                 sector: Technology
                 industry: Software - Infrastructure
@@ -262,14 +299,14 @@ results:
                 country: United States
                 exchange: NMS
                 market: us_market
-              as_of: '2026-03-25T00:00:00'
+              as_of: '2026-03-26T00:00:00'
           - symbol: NOTAREALSYMBOL123
             status: no_data
             error: No quote data returned for NOTAREALSYMBOL123.
     description: Batch quote snapshot returns per-symbol success and no-data rows
       in one response.
     status: success
-    elapsed_time: 6.629024505615234
+    elapsed_time: 2.237631320953369
   quote_snapshot_invalid_symbol:
     input:
       tool: quote_snapshot
@@ -296,7 +333,7 @@ results:
     description: Invalid symbol returns a structured no-data response instead of an
       exception.
     status: success
-    elapsed_time: 2.6429598331451416
+    elapsed_time: 0.565671443939209
   price_history_aapl:
     input:
       tool: price_history
@@ -333,32 +370,32 @@ results:
                 repair: false
                 limit_bars: 10
               resolved:
-                start: '2025-09-25T00:00:00'
+                start: '2025-09-26T00:00:00'
                 end: '2026-03-25T00:00:00'
                 currency: USD
                 exchange_timezone: America/New_York
                 instrument_type: EQUITY
-                total_bars: 125
+                total_bars: 124
               latest_completed_bar: &id002
                 timestamp: '2026-03-25T00:00:00'
-                open: 254.02000427246094
-                high: 254.97999572753906
+                open: 254.10000610351562
+                high: 255.0
                 low: 251.60000610351562
-                close: 254.3800048828125
-                volume: 13575081
+                close: 252.6199951171875
+                volume: 28436700
               previous_completed_bar: &id001
                 timestamp: '2026-03-24T00:00:00'
                 open: 250.35000610351562
                 high: 254.8300018310547
                 low: 249.5500030517578
                 close: 251.63999938964844
-                volume: 45111500
+                volume: 45152300
               window_summary:
-                open_close_change: -2.001312255859375
-                open_close_change_pct: -0.7805998807537534
+                open_close_change: -2.3540191650390625
+                open_close_change_pct: -0.9232388530516827
                 window_high: 288.35019153510143
                 window_low: 243.19244305608962
-                volume_total: 5813650181
+                volume_total: 5773350500
                 repaired_rows: null
               bars:
               - timestamp: '2026-03-12T00:00:00'
@@ -413,7 +450,7 @@ results:
               - *id002
     description: Normalized daily price history for AAPL using a one-item list.
     status: success
-    elapsed_time: 1.2898316383361816
+    elapsed_time: 0.3829996585845947
   price_history_btc_intraday:
     input:
       tool: price_history
@@ -450,99 +487,99 @@ results:
                 repair: false
                 limit_bars: 12
               resolved:
-                start: '2026-02-25T17:00:00+00:00'
-                end: '2026-03-25T16:00:00+00:00'
+                start: '2026-02-26T14:00:00'
+                end: '2026-03-26T13:00:00'
                 currency: USD
                 exchange_timezone: UTC
                 instrument_type: CRYPTOCURRENCY
                 total_bars: 672
               latest_completed_bar: &id004
-                timestamp: '2026-03-25T16:00:00+00:00'
-                open: 70838.890625
-                high: 71706.296875
-                low: 70797.7578125
-                close: 71291.734375
-                volume: 1520832512
+                timestamp: '2026-03-26T13:00:00'
+                open: 69414.984375
+                high: 69826.125
+                low: 69245.7734375
+                close: 69518.5390625
+                volume: 1043533824
               previous_completed_bar: &id003
-                timestamp: '2026-03-25T15:00:00+00:00'
-                open: 71223.5
-                high: 71256.4375
-                low: 70584.640625
-                close: 70834.3203125
-                volume: 1217056768
+                timestamp: '2026-03-26T12:00:00'
+                open: 69255.953125
+                high: 69421.5703125
+                low: 69222.3359375
+                close: 69421.5703125
+                volume: 239546368
               window_summary:
-                open_close_change: 2665.3203125
-                open_close_change_pct: 3.8838111373160453
+                open_close_change: 1837.8515625
+                open_close_change_pct: 2.715474133592393
                 window_high: 75954.96875
                 window_low: 63106.07421875
-                volume_total: 298364811264
+                volume_total: 283572566016
                 repaired_rows: null
               bars:
-              - timestamp: '2026-03-25T05:00:00+00:00'
-                open: 70932.953125
-                high: 71295.6171875
-                low: 70932.828125
-                close: 71089.2734375
-                volume: 510869504
-              - timestamp: '2026-03-25T06:00:00+00:00'
-                open: 71092.890625
-                high: 71227.1484375
-                low: 71000.7421875
-                close: 71014.7578125
-                volume: 239230976
-              - timestamp: '2026-03-25T07:00:00+00:00'
-                open: 70982.921875
-                high: 71235.7109375
-                low: 70886.9609375
-                close: 70908.28125
+              - timestamp: '2026-03-26T02:00:00'
+                open: 71247.9609375
+                high: 71255.8828125
+                low: 70717.8671875
+                close: 70867.078125
+                volume: 225431552
+              - timestamp: '2026-03-26T03:00:00'
+                open: 70880.796875
+                high: 70945.40625
+                low: 70675.46875
+                close: 70864.46875
                 volume: 0
-              - timestamp: '2026-03-25T08:00:00+00:00'
-                open: 70903.484375
-                high: 71468.2265625
-                low: 70790.1015625
-                close: 71229.4296875
-                volume: 345554944
-              - timestamp: '2026-03-25T09:00:00+00:00'
-                open: 71226.1640625
-                high: 71350.203125
-                low: 71112.1015625
-                close: 71327.7734375
+              - timestamp: '2026-03-26T04:00:00'
+                open: 70860.96875
+                high: 70874.7890625
+                low: 70697.3125
+                close: 70754.3984375
                 volume: 0
-              - timestamp: '2026-03-25T10:00:00+00:00'
-                open: 71365.6796875
-                high: 71554.5703125
-                low: 71299.5703125
-                close: 71490.6015625
+              - timestamp: '2026-03-26T05:00:00'
+                open: 70750.1015625
+                high: 70750.1015625
+                low: 69956.7734375
+                close: 69983.71875
+                volume: 182083584
+              - timestamp: '2026-03-26T06:00:00'
+                open: 69976.6640625
+                high: 70114.34375
+                low: 69845.5703125
+                close: 70077.34375
+                volume: 488939520
+              - timestamp: '2026-03-26T07:00:00'
+                open: 70060.6171875
+                high: 70109.34375
+                low: 69805.421875
+                close: 70076.09375
+                volume: 176820224
+              - timestamp: '2026-03-26T08:00:00'
+                open: 70063.6953125
+                high: 70077.6953125
+                low: 69794.609375
+                close: 69978.7265625
                 volume: 0
-              - timestamp: '2026-03-25T11:00:00+00:00'
-                open: 71486.8984375
-                high: 71946.390625
-                low: 71467.0078125
-                close: 71661.7578125
-                volume: 780009472
-              - timestamp: '2026-03-25T12:00:00+00:00'
-                open: 71705.8359375
-                high: 71817.859375
-                low: 71198.8984375
-                close: 71682.5703125
-                volume: 364318720
-              - timestamp: '2026-03-25T13:00:00+00:00'
-                open: 71701.3828125
-                high: 71907.1953125
-                low: 71555.296875
-                close: 71645.2109375
-                volume: 481665024
-              - timestamp: '2026-03-25T14:00:00+00:00'
-                open: 71564.5859375
-                high: 71626.0703125
-                low: 71258.9609375
-                close: 71296.828125
-                volume: 522682368
+              - timestamp: '2026-03-26T09:00:00'
+                open: 69989.6875
+                high: 70075.0546875
+                low: 69383.3671875
+                close: 69565.8046875
+                volume: 918487040
+              - timestamp: '2026-03-26T10:00:00'
+                open: 69563.9609375
+                high: 69658.328125
+                low: 69451.046875
+                close: 69460.2890625
+                volume: 901517312
+              - timestamp: '2026-03-26T11:00:00'
+                open: 69479.796875
+                high: 69605.1875
+                low: 69242.5625
+                close: 69264.1328125
+                volume: 719822848
               - *id003
               - *id004
     description: Normalized intraday price history for BTC-USD using a one-item list.
     status: success
-    elapsed_time: 1.1104953289031982
+    elapsed_time: 0.3967733383178711
   price_history_batch_equities:
     input:
       tool: price_history
@@ -581,32 +618,32 @@ results:
                 repair: false
                 limit_bars: 5
               resolved:
-                start: '2026-02-25T00:00:00'
+                start: '2026-02-26T00:00:00'
                 end: '2026-03-25T00:00:00'
                 currency: USD
                 exchange_timezone: America/New_York
                 instrument_type: EQUITY
-                total_bars: 21
+                total_bars: 20
               latest_completed_bar: &id006
                 timestamp: '2026-03-25T00:00:00'
-                open: 254.02000427246094
-                high: 254.97999572753906
+                open: 254.10000610351562
+                high: 255.0
                 low: 251.60000610351562
-                close: 254.42999267578125
-                volume: 13578713
+                close: 252.6199951171875
+                volume: 28436700
               previous_completed_bar: &id005
                 timestamp: '2026-03-24T00:00:00'
                 open: 250.35000610351562
                 high: 254.8300018310547
                 low: 249.5500030517578
                 close: 251.63999938964844
-                volume: 45111500
+                volume: 45152300
               window_summary:
-                open_close_change: -19.800018310546875
-                open_close_change_pct: -7.2202229943148035
+                open_close_change: -20.33001708984375
+                open_close_change_pct: -7.44825652340456
                 window_high: 276.1099853515625
                 window_low: 246.0
-                volume_total: 844781813
+                volume_total: 825966300
                 repaired_rows: null
               bars:
               - timestamp: '2026-03-19T00:00:00'
@@ -642,32 +679,32 @@ results:
                 repair: false
                 limit_bars: 5
               resolved:
-                start: '2026-02-25T00:00:00'
+                start: '2026-02-26T00:00:00'
                 end: '2026-03-25T00:00:00'
                 currency: USD
                 exchange_timezone: America/New_York
                 instrument_type: EQUITY
-                total_bars: 21
+                total_bars: 20
               latest_completed_bar: &id008
                 timestamp: '2026-03-25T00:00:00'
                 open: 376.9200134277344
                 high: 377.05999755859375
-                low: 369.739990234375
-                close: 371.2076110839844
-                volume: 18452043
+                low: 369.6300048828125
+                close: 371.0400085449219
+                volume: 31077200
               previous_completed_bar: &id007
                 timestamp: '2026-03-24T00:00:00'
                 open: 382.3599853515625
                 high: 382.4700012207031
                 low: 371.8500061035156
                 close: 372.739990234375
-                volume: 42636600
+                volume: 42733600
               window_summary:
-                open_close_change: -29.39239501953125
-                open_close_change_pct: -7.337093003422525
+                open_close_change: -30.67999267578125
+                open_close_change_pct: -7.637158364670473
                 window_high: 413.04998779296875
-                window_low: 369.739990234375
-                volume_total: 697099443
+                window_low: 369.6300048828125
+                volume_total: 666196100
                 repaired_rows: null
               bars:
               - timestamp: '2026-03-19T00:00:00'
@@ -692,7 +729,7 @@ results:
               - *id008
     description: Batch daily price history returns bounded bars for multiple equities.
     status: success
-    elapsed_time: 1.5720727443695068
+    elapsed_time: 0.5041558742523193
   price_history_explicit_range:
     input:
       tool: price_history
@@ -780,7 +817,7 @@ results:
               - *id010
     description: Explicit start/end range is respected and reported cleanly.
     status: success
-    elapsed_time: 1.279444694519043
+    elapsed_time: 0.20901823043823242
   price_history_unsupported_interval:
     input:
       tool: price_history
@@ -795,7 +832,7 @@ results:
         error: Unsupported interval '4h'.
     description: Unsupported interval fails directly.
     status: success
-    elapsed_time: 0.0004799365997314453
+    elapsed_time: 0.0003864765167236328
   price_history_invalid_symbol:
     input:
       tool: price_history
@@ -823,7 +860,7 @@ results:
             error: No historical data returned for NOTAREALSYMBOL123 at 1d interval.
     description: Invalid symbol returns structured no-data for history requests.
     status: success
-    elapsed_time: 2.8910152912139893
+    elapsed_time: 1.0068509578704834
   technical_snapshot_tsla:
     input:
       tool: technical_snapshot
@@ -856,44 +893,45 @@ results:
                 start_date: null
                 end_date: null
               resolved:
-                start: '2025-03-25T00:00:00'
+                start: '2025-03-26T00:00:00'
                 end: '2026-03-25T00:00:00'
                 currency: USD
                 instrument_type: EQUITY
-                bar_count_used: 252
+                bar_count_used: 251
               as_of: '2026-03-25T00:00:00'
               price:
-                close: 389.06500244140625
+                close: 385.95001220703125
                 support: 364.4599914550781
                 resistance: 416.80999755859375
               indicators:
-                rsi_14: 45.072036673878024
-                macd: -8.615749570015396
-                macd_signal: -8.236446440409562
-                macd_histogram: -0.3793031296058338
-                ema_10: 387.63945241451796
-                sma_50: 411.74869934082034
-                sma_200: 395.5904246520996
-                bollinger_middle: 394.79124908447267
-                bollinger_upper: 415.86514502155364
-                bollinger_lower: 373.7173531473917
+                rsi_14: 43.29488966517472
+                macd: -8.864238851619632
+                macd_signal: -8.286144342200137
+                macd_histogram: -0.5780945094194951
+                ema_10: 387.07309055372247
+                sma_50: 411.6863995361328
+                sma_200: 395.57484970092776
+                bollinger_middle: 394.63549957275393
+                bollinger_upper: 415.93245061739975
+                bollinger_lower: 373.3385485281081
               states:
-                trend: mixed
-                momentum: neutral
+                trend: bearish
+                momentum: bearish
                 volatility: medium
                 macd_state: bearish
                 bollinger_position: within_bands
               signal:
-                action: neutral
-                confidence: 0.61
+                action: sell
+                confidence: 0.85
                 rationale:
-                - Price is above 10 EMA.
+                - Price is below 10 EMA.
                 - Price is below 50 SMA.
                 - Price is below 200 SMA.
                 - MACD is below signal.
+                - RSI shows bearish momentum.
     description: Agent-ergonomic technical snapshot for TSLA using a one-item list.
     status: success
-    elapsed_time: 1.4488401412963867
+    elapsed_time: 0.4671940803527832
   technical_snapshot_eth:
     input:
       tool: technical_snapshot
@@ -926,45 +964,45 @@ results:
                 start_date: null
                 end_date: null
               resolved:
-                start: '2025-12-25T17:00:00+00:00'
-                end: '2026-03-25T16:00:00+00:00'
+                start: '2025-12-26T14:00:00'
+                end: '2026-03-26T13:00:00'
                 currency: USD
                 instrument_type: CRYPTOCURRENCY
                 bar_count_used: 2160
-              as_of: '2026-03-25T16:00:00+00:00'
+              as_of: '2026-03-26T13:00:00'
               price:
-                close: 2173.65478515625
-                support: 2140.333251953125
-                resistance: 2197.837890625
+                close: 2077.380615234375
+                support: 2065.343994140625
+                resistance: 2180.81689453125
               indicators:
-                rsi_14: 55.5113188742265
-                macd: 8.95006308026268
-                macd_signal: 9.932361973220578
-                macd_histogram: -0.982298892957898
-                ema_10: 2173.9538741164347
-                sma_50: 2153.891220703125
-                sma_200: 2164.2129846191406
-                bollinger_middle: 2168.1171020507813
-                bollinger_upper: 2193.8067518506423
-                bollinger_lower: 2142.4274522509204
+                rsi_14: 27.032488838924053
+                macd: -22.98657082644604
+                macd_signal: -14.847334923887052
+                macd_histogram: -8.139235902558989
+                ema_10: 2098.1833026317972
+                sma_50: 2146.9635546875
+                sma_200: 2143.886721191406
+                bollinger_middle: 2131.913366699219
+                bollinger_upper: 2207.3317988223416
+                bollinger_lower: 2056.494934576096
               states:
-                trend: mixed
-                momentum: bullish
-                volatility: low
+                trend: bearish
+                momentum: oversold
+                volatility: medium
                 macd_state: bearish
                 bollinger_position: within_bands
               signal:
-                action: neutral
-                confidence: 0.53
+                action: sell
+                confidence: 0.85
                 rationale:
                 - Price is below 10 EMA.
-                - Price is above 50 SMA.
-                - Price is above 200 SMA.
+                - Price is below 50 SMA.
+                - Price is below 200 SMA.
                 - MACD is below signal.
-                - RSI shows bullish momentum.
+                - RSI shows bearish momentum.
     description: Agent-ergonomic technical snapshot for ETH-USD using a one-item list.
     status: success
-    elapsed_time: 1.0123066902160645
+    elapsed_time: 0.3835580348968506
   technical_snapshot_batch_equities:
     input:
       tool: technical_snapshot
@@ -999,27 +1037,73 @@ results:
                 start_date: null
                 end_date: null
               resolved:
-                start: '2025-03-25T00:00:00'
+                start: '2025-03-26T00:00:00'
                 end: '2026-03-25T00:00:00'
                 currency: USD
                 instrument_type: EQUITY
-                bar_count_used: 252
+                bar_count_used: 251
               as_of: '2026-03-25T00:00:00'
               price:
-                close: 389.2099914550781
+                close: 385.95001220703125
                 support: 364.4599914550781
                 resistance: 416.80999755859375
               indicators:
-                rsi_14: 45.152045888805375
-                macd: -8.604183494891231
-                macd_signal: -8.23413322538473
-                macd_histogram: -0.37005026950650155
-                ema_10: 387.66581405336734
-                sma_50: 411.75159912109376
-                sma_200: 395.59114959716794
-                bollinger_middle: 394.7984985351562
-                bollinger_upper: 415.86419858029376
-                bollinger_lower: 373.7327984900187
+                rsi_14: 43.29488966517472
+                macd: -8.864238851619632
+                macd_signal: -8.286144342200137
+                macd_histogram: -0.5780945094194951
+                ema_10: 387.07309055372247
+                sma_50: 411.6863995361328
+                sma_200: 395.57484970092776
+                bollinger_middle: 394.63549957275393
+                bollinger_upper: 415.93245061739975
+                bollinger_lower: 373.3385485281081
+              states:
+                trend: bearish
+                momentum: bearish
+                volatility: medium
+                macd_state: bearish
+                bollinger_position: within_bands
+              signal:
+                action: sell
+                confidence: 0.85
+                rationale:
+                - Price is below 10 EMA.
+                - Price is below 50 SMA.
+                - Price is below 200 SMA.
+                - MACD is below signal.
+                - RSI shows bearish momentum.
+          - symbol: NVDA
+            status: success
+            data:
+              symbol: NVDA
+              interval: 1d
+              requested:
+                period: 1y
+                start_date: null
+                end_date: null
+              resolved:
+                start: '2025-03-26T00:00:00'
+                end: '2026-03-25T00:00:00'
+                currency: USD
+                instrument_type: EQUITY
+                bar_count_used: 251
+              as_of: '2026-03-25T00:00:00'
+              price:
+                close: 178.67999267578125
+                support: 171.72000122070312
+                resistance: 194.27947461393586
+              indicators:
+                rsi_14: 46.389880217187276
+                macd: -2.317239767416396
+                macd_signal: -1.745881327794435
+                macd_histogram: -0.5713584396219611
+                ema_10: 178.56923044505805
+                sma_50: 184.08617462158202
+                sma_200: 178.94736351013182
+                bollinger_middle: 180.59457092285157
+                bollinger_upper: 187.7790907054842
+                bollinger_lower: 173.41005114021894
               states:
                 trend: mixed
                 momentum: neutral
@@ -1034,54 +1118,9 @@ results:
                 - Price is below 50 SMA.
                 - Price is below 200 SMA.
                 - MACD is below signal.
-          - symbol: NVDA
-            status: success
-            data:
-              symbol: NVDA
-              interval: 1d
-              requested:
-                period: 1y
-                start_date: null
-                end_date: null
-              resolved:
-                start: '2025-03-25T00:00:00'
-                end: '2026-03-25T00:00:00'
-                currency: USD
-                instrument_type: EQUITY
-                bar_count_used: 252
-              as_of: '2026-03-25T00:00:00'
-              price:
-                close: 179.39999389648438
-                support: 171.72000122070312
-                resistance: 194.27947461393586
-              indicators:
-                rsi_14: 47.29594745128811
-                macd: -2.25980375393965
-                macd_signal: -1.7343941002445291
-                macd_histogram: -0.5254096536951209
-                ema_10: 178.7001397579131
-                sma_50: 184.1005746459961
-                sma_200: 178.95096351623536
-                bollinger_middle: 180.6305709838867
-                bollinger_upper: 187.78183551289257
-                bollinger_lower: 173.47930645488086
-              states:
-                trend: mixed
-                momentum: neutral
-                volatility: medium
-                macd_state: bearish
-                bollinger_position: within_bands
-              signal:
-                action: neutral
-                confidence: 0.45
-                rationale:
-                - Price is above 10 EMA.
-                - Price is below 50 SMA.
-                - Price is above 200 SMA.
-                - MACD is below signal.
     description: Batch technical snapshots return compact per-symbol signals.
     status: success
-    elapsed_time: 1.4679179191589355
+    elapsed_time: 0.45745396614074707
   technical_snapshot_short_window:
     input:
       tool: technical_snapshot
@@ -1111,7 +1150,603 @@ results:
     description: Short history window returns no-data when there are not enough completed
       bars.
     status: success
-    elapsed_time: 0.9223654270172119
+    elapsed_time: 0.38832902908325195
+  options_expirations_aapl:
+    input:
+      tool: options_expirations
+      tool_arguments:
+        symbol: AAPL
+        limit: 8
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbol: AAPL
+          name: Apple Inc.
+          quote_type: EQUITY
+          currency: USD
+          spot_price: 255.5
+          filters:
+            limit: 8
+          summary:
+            total_expirations: 23
+            nearest_expiration: '2026-03-27'
+            nearest_monthly_expiration: '2026-04-17'
+            furthest_expiration: '2028-12-15'
+            monthly_count: 14
+            weekly_count: 4
+            leap_count: 5
+          expirations:
+          - expiration: '2026-03-27'
+            days_to_expiration: 1
+            weekday: Friday
+            cycle: weekly
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-03-30'
+            days_to_expiration: 4
+            weekday: Monday
+            cycle: other
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-04-01'
+            days_to_expiration: 6
+            weekday: Wednesday
+            cycle: other
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-04-02'
+            days_to_expiration: 7
+            weekday: Thursday
+            cycle: other
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-04-10'
+            days_to_expiration: 15
+            weekday: Friday
+            cycle: weekly
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-04-17'
+            days_to_expiration: 22
+            weekday: Friday
+            cycle: monthly
+            is_monthly: true
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-04-24'
+            days_to_expiration: 29
+            weekday: Friday
+            cycle: weekly
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-05-01'
+            days_to_expiration: 36
+            weekday: Friday
+            cycle: weekly
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+    description: Discover available AAPL option expirations before selecting a chain.
+    status: success
+    elapsed_time: 0.8868379592895508
+  options_expirations_aapl_dte_window:
+    input:
+      tool: options_expirations
+      tool_arguments:
+        symbol: AAPL
+        min_days_to_expiration: 20
+        max_days_to_expiration: 120
+        limit: 6
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbol: AAPL
+          name: Apple Inc.
+          quote_type: EQUITY
+          currency: USD
+          spot_price: 255.5
+          filters:
+            limit: 6
+            min_days_to_expiration: 20
+            max_days_to_expiration: 120
+          summary:
+            total_expirations: 6
+            nearest_expiration: '2026-04-17'
+            nearest_monthly_expiration: '2026-04-17'
+            furthest_expiration: '2026-07-17'
+            monthly_count: 3
+            weekly_count: 2
+            leap_count: 0
+          expirations:
+          - expiration: '2026-04-17'
+            days_to_expiration: 22
+            weekday: Friday
+            cycle: monthly
+            is_monthly: true
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-04-24'
+            days_to_expiration: 29
+            weekday: Friday
+            cycle: weekly
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-05-01'
+            days_to_expiration: 36
+            weekday: Friday
+            cycle: weekly
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-05-15'
+            days_to_expiration: 50
+            weekday: Friday
+            cycle: monthly
+            is_monthly: true
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-06-18'
+            days_to_expiration: 84
+            weekday: Thursday
+            cycle: other
+            is_monthly: false
+            is_leap: false
+            tenor: near_term
+          - expiration: '2026-07-17'
+            days_to_expiration: 113
+            weekday: Friday
+            cycle: monthly
+            is_monthly: true
+            is_leap: false
+            tenor: long_dated
+    description: Discover AAPL expirations within a bounded days-to-expiration window.
+    status: success
+    elapsed_time: 0.0007603168487548828
+  options_expirations_invalid_symbol:
+    input:
+      tool: options_expirations
+      tool_arguments:
+        symbol: NOTAREALSYMBOL123
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        error: 'Yahoo Finance request failed: ''currency'''
+    description: Invalid symbol returns structured no-data for expiration discovery.
+    status: success
+    elapsed_time: 0.5593955516815186
+  options_chain_aapl:
+    input:
+      tool: options_chain
+      tool_arguments:
+        symbol: AAPL
+        side: both
+        moneyness: atm
+        limit_contracts: 6
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        error: expiration is required for options_chain on AAPL. Call options_expirations
+          first.
+    description: options_chain requires an explicit expiration chosen via options_expirations.
+    status: success
+    elapsed_time: 0.0004508495330810547
+  options_chain_aapl_strike_window:
+    input:
+      tool: options_chain
+      tool_arguments:
+        symbol: AAPL
+        side: both
+        expiration: '2026-04-17'
+        min_strike: 240
+        max_strike: 270
+        limit_contracts: 6
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbol: AAPL
+          name: Apple Inc.
+          quote_type: EQUITY
+          currency: USD
+          spot_price: 255.5
+          selected_expiration: '2026-04-17'
+          available_expirations:
+          - '2026-03-27'
+          - '2026-03-30'
+          - '2026-04-01'
+          - '2026-04-02'
+          - '2026-04-10'
+          - '2026-04-17'
+          - '2026-04-24'
+          - '2026-05-01'
+          - '2026-05-15'
+          - '2026-06-18'
+          - '2026-07-17'
+          - '2026-08-21'
+          filters:
+            side: both
+            moneyness: all
+            limit_contracts: 6
+            min_strike: 240
+            max_strike: 270
+          summary:
+            calls:
+              contract_count: 6
+              total_open_interest: 79805
+              total_volume: 750
+              top_open_interest:
+                contract_symbol: AAPL260417C00270000
+                strike: 270.0
+                open_interest: 23180
+              top_volume:
+                contract_symbol: AAPL260417C00270000
+                strike: 270.0
+                volume: 215
+            puts:
+              contract_count: 6
+              total_open_interest: 86821
+              total_volume: 563
+              top_open_interest:
+                contract_symbol: AAPL260417P00260000
+                strike: 260.0
+                open_interest: 19578
+              top_volume:
+                contract_symbol: AAPL260417P00250000
+                strike: 250.0
+                volume: 336
+            put_call_open_interest_ratio: 1.0879
+          calls:
+          - contract_symbol: AAPL260417C00270000
+            side: calls
+            last_trade_at: '2026-03-26T13:43:16+00:00'
+            strike: 270.0
+            last_price: 0.8
+            bid: 0.83
+            ask: 0.86
+            mid: 0.845
+            change_pct: -5.882354
+            volume: 215
+            open_interest: 23180
+            implied_volatility: 0.19617503051757812
+            in_the_money: false
+            currency: USD
+          - contract_symbol: AAPL260417C00260000
+            side: calls
+            last_trade_at: '2026-03-26T13:49:07+00:00'
+            strike: 260.0
+            last_price: 3.35
+            bid: 3.3
+            ask: 3.35
+            mid: 3.325
+            change_pct: -1.4705938
+            volume: 202
+            open_interest: 18399
+            implied_volatility: 0.2043536596679687
+            in_the_money: false
+            currency: USD
+          - contract_symbol: AAPL260417C00265000
+            side: calls
+            last_trade_at: '2026-03-26T13:45:51+00:00'
+            strike: 265.0
+            last_price: 1.68
+            bid: 1.73
+            ask: 1.77
+            mid: 1.75
+            change_pct: -5.084748
+            volume: 137
+            open_interest: 15315
+            implied_volatility: 0.1986164123535156
+            in_the_money: false
+            currency: USD
+          - contract_symbol: AAPL260417C00250000
+            side: calls
+            last_trade_at: '2026-03-26T13:50:54+00:00'
+            strike: 250.0
+            last_price: 8.53
+            bid: 8.5
+            ask: 8.6
+            mid: 8.55
+            change_pct: -2.5142887
+            volume: 84
+            open_interest: 9463
+            implied_volatility: 0.21204401245117185
+            in_the_money: true
+            currency: USD
+          - contract_symbol: AAPL260417C00255000
+            side: calls
+            last_trade_at: '2026-03-26T13:49:04+00:00'
+            strike: 255.0
+            last_price: 5.6
+            bid: 5.6
+            ask: 5.65
+            mid: 5.625
+            change_pct: -0.6980796
+            volume: 101
+            open_interest: 9374
+            implied_volatility: 0.2098467687988281
+            in_the_money: true
+            currency: USD
+          - contract_symbol: AAPL260417C00245000
+            side: calls
+            last_trade_at: '2026-03-26T13:42:09+00:00'
+            strike: 245.0
+            last_price: 11.55
+            bid: 11.95
+            ask: 12.1
+            mid: 12.025
+            change_pct: -4.545456
+            volume: 11
+            open_interest: 4074
+            implied_volatility: 0.20752745605468748
+            in_the_money: true
+            currency: USD
+          puts:
+          - contract_symbol: AAPL260417P00260000
+            side: puts
+            last_trade_at: '2026-03-26T13:49:07+00:00'
+            strike: 260.0
+            last_price: 10.3
+            bid: 10.3
+            ask: 10.5
+            mid: 10.4
+            change_pct: -0.48309362
+            volume: 19
+            open_interest: 19578
+            implied_volatility: 0.3133613586425781
+            in_the_money: true
+            currency: USD
+          - contract_symbol: AAPL260417P00250000
+            side: puts
+            last_trade_at: '2026-03-26T13:51:07+00:00'
+            strike: 250.0
+            last_price: 5.58
+            bid: 5.5
+            ask: 5.6
+            mid: 5.55
+            change_pct: 2.2058802
+            volume: 336
+            open_interest: 16330
+            implied_volatility: 0.319220675048828
+            in_the_money: false
+            currency: USD
+          - contract_symbol: AAPL260417P00245000
+            side: puts
+            last_trade_at: '2026-03-26T13:50:04+00:00'
+            strike: 245.0
+            last_price: 3.98
+            bid: 3.95
+            ask: 4.1
+            mid: 4.025
+            change_pct: -0.74813485
+            volume: 102
+            open_interest: 14323
+            implied_volatility: 0.3328313787841797
+            in_the_money: false
+            currency: USD
+          - contract_symbol: AAPL260417P00270000
+            side: puts
+            last_trade_at: '2026-03-25T19:44:53+00:00'
+            strike: 270.0
+            last_price: 18.25
+            bid: 17.7
+            ask: 18.65
+            mid: 18.175
+            change_pct: 0.0
+            volume: 41
+            open_interest: 13064
+            implied_volatility: 0.3719545227050781
+            in_the_money: true
+            currency: USD
+          - contract_symbol: AAPL260417P00255000
+            side: puts
+            last_trade_at: '2026-03-26T13:30:03+00:00'
+            strike: 255.0
+            last_price: 8.26
+            bid: 7.6
+            ask: 7.7
+            mid: 7.65
+            change_pct: 9.403974
+            volume: 6
+            open_interest: 11939
+            implied_volatility: 0.31214066772460936
+            in_the_money: false
+            currency: USD
+          - contract_symbol: AAPL260417P00240000
+            side: puts
+            last_trade_at: '2026-03-26T13:49:05+00:00'
+            strike: 240.0
+            last_price: 2.87
+            bid: 2.87
+            ask: 2.92
+            mid: 2.895
+            change_pct: -2.0477877
+            volume: 59
+            open_interest: 11587
+            implied_volatility: 0.34430587341308594
+            in_the_money: false
+            currency: USD
+    description: Filter AAPL options chain discovery by strike range.
+    status: success
+    elapsed_time: 0.20730137825012207
+  options_chain_invalid_expiration:
+    input:
+      tool: options_chain
+      tool_arguments:
+        symbol: AAPL
+        expiration: '2099-01-01'
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        error: 'Unsupported expiration ''2099-01-01'' for AAPL. Use one of: [''2026-03-27'',
+          ''2026-03-30'', ''2026-04-01'', ''2026-04-02'', ''2026-04-10'', ''2026-04-17'',
+          ''2026-04-24'', ''2026-05-01'', ''2026-05-15'', ''2026-06-18'', ''2026-07-17'',
+          ''2026-08-21'']'
+    description: Unsupported expiration fails directly for options chains.
+    status: success
+    elapsed_time: 0.00046563148498535156
+  options_chain_invalid_strike_window:
+    input:
+      tool: options_chain
+      tool_arguments:
+        symbol: AAPL
+        min_strike: 300
+        max_strike: 250
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        error: expiration is required for options_chain on AAPL. Call options_expirations
+          first.
+    description: Invalid strike filter range fails directly for options chains.
+    status: success
+    elapsed_time: 0.0003638267517089844
+  futures_snapshot_gold:
+    input:
+      tool: futures_snapshot
+      tool_arguments:
+        symbols:
+        - GC=F
+        include_history: true
+        interval: 1d
+        period: 1mo
+        limit_bars: 5
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          symbols:
+          - GC=F
+          summary:
+            requested: 1
+            succeeded: 1
+            no_data: 0
+            errors: 0
+          results:
+          - symbol: GC=F
+            status: success
+            data:
+              symbol: GC=F
+              name: Gold Apr 26
+              asset_type: future
+              quote_type: FUTURE
+              exchange: CMX
+              currency: USD
+              price:
+                last_price: 4442.2998046875
+                previous_close: 4510.2001953125
+                day_high: 4541.60009765625
+                day_low: 4409.2998046875
+                open: 4508.89990234375
+                volume: 133489
+              stats:
+                fifty_day_average: 4947.9859765625
+                two_hundred_day_average: 4083.74923322668
+                year_high: 5586.2001953125
+                year_low: 2949.699951171875
+              history:
+                interval: 1d
+                period: 1mo
+                latest_completed_bar:
+                  timestamp: '2026-03-25T00:00:00'
+                  open: 4549.0
+                  high: 4551.89990234375
+                  low: 4541.7998046875
+                  close: 4549.7998046875
+                  volume: 378
+                previous_completed_bar:
+                  timestamp: '2026-03-24T00:00:00'
+                  open: 4338.7001953125
+                  high: 4399.2998046875
+                  low: 4325.2001953125
+                  close: 4399.2998046875
+                  volume: 378
+                window_summary:
+                  open_close_change: -626.7001953125
+                  open_close_change_pct: -12.106639530812323
+                  window_high: 5405.0
+                  window_low: 4100.7998046875
+                  volume_total: 16703
+                bars:
+                - timestamp: '2026-03-19T00:00:00'
+                  open: 4830.2998046875
+                  high: 4830.2998046875
+                  low: 4554.0
+                  close: 4600.7001953125
+                  volume: 627
+                - timestamp: '2026-03-20T00:00:00'
+                  open: 4686.89990234375
+                  high: 4686.89990234375
+                  low: 4570.39990234375
+                  close: 4570.39990234375
+                  volume: 235
+                - timestamp: '2026-03-23T00:00:00'
+                  open: 4353.0
+                  high: 4480.39990234375
+                  low: 4100.7998046875
+                  close: 4404.10009765625
+                  volume: 544
+                - timestamp: '2026-03-24T00:00:00'
+                  open: 4338.7001953125
+                  high: 4399.2998046875
+                  low: 4325.2001953125
+                  close: 4399.2998046875
+                  volume: 378
+                - timestamp: '2026-03-25T00:00:00'
+                  open: 4549.0
+                  high: 4551.89990234375
+                  low: 4541.7998046875
+                  close: 4549.7998046875
+                  volume: 378
+    description: Compact futures snapshot for gold with recent history context.
+    status: success
+    elapsed_time: 0.9941718578338623
+  futures_snapshot_invalid_asset:
+    input:
+      tool: futures_snapshot
+      tool_arguments:
+        symbols:
+        - AAPL
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: error
+        data:
+          symbols:
+          - AAPL
+          summary:
+            requested: 1
+            succeeded: 0
+            no_data: 0
+            errors: 1
+          results:
+          - symbol: AAPL
+            status: error
+            error: futures_snapshot supports only future. AAPL resolved to asset_type
+              'stock'.
+    description: Futures snapshot rejects non-futures symbols directly.
+    status: success
+    elapsed_time: 0.17356324195861816
   news_search_nvidia:
     input:
       tool: news_search
@@ -1127,57 +1762,59 @@ results:
           query: Nvidia
           total_items: 5
           items:
-          - id: 689e0d2a-6957-354b-b27b-661b76cbafc7
-            title: Nvidia Stock Is Rising. Why Arm’s New AI Chip Is Not a Threat.
+          - id: 9d338e01-efd9-3c70-a422-5257c719452e
+            title: Nvidia Faces Class Action Over Crypto Mining Revenue Disclosure
+              Gaps
+            publisher: Cryptonews
+            published_at: '2026-03-26T12:52:35+00:00'
+            url: https://finance.yahoo.com/m/9d338e01-efd9-3c70-a422-5257c719452e/nvidia-faces-class-action.html
+            content_type: STORY
+            related_tickers:
+            - NVDA
+            - ETH-USD
+          - id: e76cae15-c1cd-3133-bff7-67141d8b9565
+            title: Nvidia Director Sells $38.5M in NVDA Stock — Analysts Still Eye
+              58% Upside
+            publisher: TipRanks
+            published_at: '2026-03-26T11:40:49+00:00'
+            url: https://finance.yahoo.com/markets/stocks/articles/nvidia-director-sells-38-5m-114049259.html
+            content_type: STORY
+            related_tickers:
+            - NVDA
+            - NVD
+          - id: 3265cbf5-3859-3a48-b9b1-ee28850c7ac0
+            title: Nvidia-Backed AI Start-Up Chases Big Valuation. It’s Taking On
+              China’s DeepSeek.
             publisher: Barrons.com
-            published_at: '2026-03-25T14:02:00+00:00'
-            url: https://finance.yahoo.com/m/689e0d2a-6957-354b-b27b-661b76cbafc7/nvidia-stock-is-rising.-why.html
-            content_type: STORY
-            related_tickers:
-            - ARM
-            - NVDA
-            - META
-          - id: 536755b0-39b0-3152-9a03-4f78afcc32f1
-            title: Nvidia CEO Jensen Huang Drops A Bombshell— 'I Think We've Achieved
-              AGI'
-            publisher: Benzinga
-            published_at: '2026-03-25T12:31:19+00:00'
-            url: https://finance.yahoo.com/m/536755b0-39b0-3152-9a03-4f78afcc32f1/nvidia-ceo-jensen-huang-drops.html
-            content_type: STORY
-            related_tickers: []
-          - id: cd3426e2-1f1f-3164-be63-8081f39397a4
-            title: Nvidia CEO delivers curt 10-word message to investors
-            publisher: TheStreet
-            published_at: '2026-03-25T17:17:00+00:00'
-            url: https://finance.yahoo.com/m/cd3426e2-1f1f-3164-be63-8081f39397a4/nvidia-ceo-delivers-curt.html
+            published_at: '2026-03-26T10:51:00+00:00'
+            url: https://finance.yahoo.com/m/3265cbf5-3859-3a48-b9b1-ee28850c7ac0/nvidia-backed-ai-start-up.html
             content_type: STORY
             related_tickers:
             - NVDA
-          - id: c2ac1c7b-a8ca-3751-ba20-3f7a3ec06597
-            title: Nvidia Projects $1 Trillion in Artificial Intelligence (AI) Chip
-              Sales Through 2027. Here's 1 Stock to Buy Hand Over Fist Before That
-              Happens.
-            publisher: Motley Fool
-            published_at: '2026-03-25T16:05:00+00:00'
-            url: https://finance.yahoo.com/m/c2ac1c7b-a8ca-3751-ba20-3f7a3ec06597/nvidia-projects-%241-trillion.html
+            - AVGO
+            - AMD
+          - id: f24742df-1cec-379b-aca3-3b89603a4bb8
+            title: 'Market Chatter: Nvidia-Backed Reflection Seeks $2.5 Billion Funding
+              at $25 Billion Valuation'
+            publisher: MT Newswires
+            published_at: '2026-03-26T09:03:14+00:00'
+            url: https://finance.yahoo.com/markets/stocks/articles/market-chatter-nvidia-backed-reflection-090314608.html
             content_type: STORY
             related_tickers:
             - NVDA
-            - INTC
-          - id: 4f23dbc3-0712-3430-a10d-dce2a4537843
-            title: 'Prediction: This Artificial Intelligence (AI) Stock Could Be the
-              Biggest Winner of Nvidia''s $1 Trillion Chip Boom'
-            publisher: Motley Fool
-            published_at: '2026-03-25T16:25:00+00:00'
-            url: https://finance.yahoo.com/m/4f23dbc3-0712-3430-a10d-dce2a4537843/prediction%3A-this-artificial.html
+            - JPM
+          - id: 8fe0b94c-febf-3707-b580-5a262157ddce
+            title: NVIDIA Accused of Hiding $1B Crypto Mining Revenue as 'Gaming'
+              — Lawsuit Moves Forward After Supreme Court Snu
+            publisher: CCN
+            published_at: '2026-03-26T12:45:25+00:00'
+            url: https://finance.yahoo.com/m/8fe0b94c-febf-3707-b580-5a262157ddce/nvidia-accused-of-hiding-%241b.html
             content_type: STORY
             related_tickers:
             - NVDA
-            - MU
-            - INTC
     description: Recent news search for Nvidia.
     status: success
-    elapsed_time: 0.3267636299133301
+    elapsed_time: 0.14214849472045898
   news_search_no_results:
     input:
       tool: news_search
@@ -1191,7 +1828,7 @@ results:
         error: No recent news found for 'zxqwvut nonexistent corp 123456789'.
     description: No-results news query returns structured no-data.
     status: success
-    elapsed_time: 0.09635448455810547
+    elapsed_time: 0.12488007545471191
   market_overview_us:
     input:
       tool: market_overview
@@ -1207,9 +1844,9 @@ results:
           status:
             name: U.S. markets
             status: open
-            message: U.S. markets close in 2 hours 16 minutes
-            open: 2026-03-25 13:30:00+00:00
-            close: 2026-03-25 20:00:00+00:00
+            message: U.S. markets close in 5 hours 39 minutes
+            open: 2026-03-26 13:30:00+00:00
+            close: 2026-03-26 20:00:00+00:00
             timezone: America/New_York
           benchmarks:
           - key: SNP
@@ -1217,52 +1854,52 @@ results:
             name: S&P 500
             quote_type: INDEX
             exchange: SNP
-            price: 6614.65
-            previous_close: 6556.37
-            change_pct: 0.8889032
+            price: 6566.0
+            previous_close: 6591.9
+            change_pct: -0.39289126
           - key: DJI
             symbol: ^DJI
             name: Dow 30
             quote_type: INDEX
             exchange: DJI
-            price: 46552.69
-            previous_close: 46124.06
-            change_pct: 0.92931026
+            price: 46470.95
+            previous_close: 46429.49
+            change_pct: 0.089287415
           - key: NIM
             symbol: ^IXIC
             name: Nasdaq
             quote_type: INDEX
             exchange: NIM
-            price: 22016.744
-            previous_close: 21761.895
-            change_pct: 1.1710819
+            price: 21789.752
+            previous_close: 21929.826
+            change_pct: -0.63873565
           - key: WCB
             symbol: ^RUT
             name: Russell 2000
             quote_type: INDEX
             exchange: WCB
-            price: 2537.3975
-            previous_close: 2505.4426
-            change_pct: 1.2753884
+            price: 2526.2017
+            previous_close: 2536.378
+            change_pct: -0.4012348
           - key: CXI
             symbol: ^VIX
             name: VIX
             quote_type: INDEX
             exchange: CXI
-            price: 25.27
-            previous_close: 26.95
-            change_pct: -6.2407146
+            price: 26.4
+            previous_close: 25.33
+            change_pct: 4.2109394
           - key: CMX
             symbol: GC=F
             name: Gold
             quote_type: FUTURE
             exchange: CMX
-            price: 4559.6
-            previous_close: 4402.0
-            change_pct: 3.580193
+            price: 4441.9
+            previous_close: 4552.3
+            change_pct: -2.4251456
     description: US market overview.
     status: success
-    elapsed_time: 0.7547810077667236
+    elapsed_time: 0.12241864204406738
   market_overview_invalid:
     input:
       tool: market_overview
@@ -1276,7 +1913,7 @@ results:
           ''EUROPE'', ''RATES'', ''COMMODITIES'', ''CURRENCIES'', ''CRYPTOCURRENCIES''].'
     description: Honest failure for unsupported market name.
     status: success
-    elapsed_time: 0.0004684925079345703
+    elapsed_time: 0.0003609657287597656
   company_fundamentals_aapl:
     input:
       tool: company_fundamentals
@@ -1311,7 +1948,7 @@ results:
                 industry: Consumer Electronics
                 country: United States
                 website: https://www.apple.com
-                market_cap: 3739372748800.0
+                market_cap: 3753482649600.0
                 business_summary: Apple Inc. designs, manufactures, and markets smartphones,
                   personal computers, tablets, wearables, and accessories worldwide.
                   The company offers iPhone, a line of smartphones; Mac, a line of
@@ -1319,7 +1956,7 @@ results:
                   home, and accessories comprising AirPods, Apple Visi...
               calendar:
                 earnings_date:
-                - '2026-05-01'
+                - '2026-04-30'
                 earnings_estimate:
                   low: 1.85
                   average: 1.95606
@@ -1420,7 +2057,7 @@ results:
                     dividends_paid: -3921000000.0
     description: Compact company fundamentals for AAPL using a one-item list.
     status: success
-    elapsed_time: 1.8779892921447754
+    elapsed_time: 1.6624150276184082
   company_fundamentals_batch_mixed:
     input:
       tool: company_fundamentals
@@ -1459,7 +2096,7 @@ results:
                 industry: Consumer Electronics
                 country: United States
                 website: https://www.apple.com
-                market_cap: 3739372748800.0
+                market_cap: 3753115385856.0
                 business_summary: Apple Inc. designs, manufactures, and markets smartphones,
                   personal computers, tablets, wearables, and accessories worldwide.
                   The company offers iPhone, a line of smartphones; Mac, a line of
@@ -1467,7 +2104,7 @@ results:
                   home, and accessories comprising AirPods, Apple Visi...
               calendar:
                 earnings_date:
-                - '2026-05-01'
+                - '2026-04-30'
                 earnings_estimate:
                   low: 1.85
                   average: 1.95606
@@ -1580,7 +2217,7 @@ results:
                 industry: Software - Infrastructure
                 country: United States
                 website: https://www.microsoft.com
-                market_cap: 2758471319552.0
+                market_cap: 2765364920320.0
                 business_summary: Microsoft Corporation develops and supports software,
                   services, devices, and solutions worldwide. The Productivity and
                   Business Processes segment offers Microsoft 365 commercial, enterprise
@@ -1588,7 +2225,7 @@ results:
                   Microsoft teams, security and compliance, and copilot;...
               calendar:
                 earnings_date:
-                - '2026-04-30'
+                - '2026-04-29'
                 earnings_estimate:
                   low: 3.943
                   average: 4.06401
@@ -1697,7 +2334,7 @@ results:
     description: Batch company fundamentals keeps per-symbol asset mismatch errors
       scoped to the offending symbol.
     status: success
-    elapsed_time: 3.756868600845337
+    elapsed_time: 2.0747225284576416
   company_fundamentals_invalid_asset:
     input:
       tool: company_fundamentals
@@ -1724,7 +2361,7 @@ results:
               'etf'.
     description: Company fundamentals rejects ETF symbols directly.
     status: success
-    elapsed_time: 0.21830129623413086
+    elapsed_time: 0.15965795516967773
   analyst_snapshot_msft:
     input:
       tool: analyst_snapshot
@@ -1759,7 +2396,7 @@ results:
                 industry: Software - Infrastructure
                 country: United States
                 website: https://www.microsoft.com
-                market_cap: 2758378520576.0
+                market_cap: 2765513555968.0
                 business_summary: Microsoft Corporation develops and supports software,
                   services, devices, and solutions worldwide. The Productivity and
                   Business Processes segment offers Microsoft 365 commercial, enterprise
@@ -1795,7 +2432,7 @@ results:
                 sell: 0.0
                 strongSell: 0.0
               price_targets:
-                current: 371.11
+                current: 372.09
                 low: 392.0
                 mean: 591.60284
                 median: 600.0
@@ -1906,7 +2543,7 @@ results:
                 downLast7Days: 0.0
     description: Compact analyst snapshot for MSFT using a one-item list.
     status: success
-    elapsed_time: 1.436413049697876
+    elapsed_time: 0.4121103286743164
   analyst_snapshot_batch_mixed:
     input:
       tool: analyst_snapshot
@@ -1945,7 +2582,7 @@ results:
                 industry: Software - Infrastructure
                 country: United States
                 website: https://www.microsoft.com
-                market_cap: 2758415745024.0
+                market_cap: 2765587742720.0
                 business_summary: Microsoft Corporation develops and supports software,
                   services, devices, and solutions worldwide. The Productivity and
                   Business Processes segment offers Microsoft 365 commercial, enterprise
@@ -1981,7 +2618,7 @@ results:
                 sell: 0.0
                 strongSell: 0.0
               price_targets:
-                current: 371.135
+                current: 372.0601
                 low: 392.0
                 mean: 591.60284
                 median: 600.0
@@ -2104,7 +2741,7 @@ results:
                 industry: Internet Retail
                 country: United States
                 website: https://www.amazon.com
-                market_cap: 2284552192000.0
+                market_cap: 2274085568512.0
                 business_summary: 'Amazon.com, Inc. engages in the retail sale of
                   consumer products, advertising, and subscriptions service through
                   online and physical stores in North America and internationally.
@@ -2140,7 +2777,7 @@ results:
                 sell: 0.0
                 strongSell: 0.0
               price_targets:
-                current: 212.815
+                current: 211.885
                 low: 175.0
                 mean: 280.46774
                 median: 285.0
@@ -2255,7 +2892,7 @@ results:
               'crypto'.
     description: Batch analyst snapshot returns per-symbol equity-only validation.
     status: success
-    elapsed_time: 1.6353814601898193
+    elapsed_time: 0.48280954360961914
   analyst_snapshot_invalid_asset:
     input:
       tool: analyst_snapshot
@@ -2282,7 +2919,7 @@ results:
               'crypto'.
     description: Analyst snapshot rejects non-equity symbols directly.
     status: success
-    elapsed_time: 0.39136695861816406
+    elapsed_time: 0.10244011878967285
   fund_snapshot_spy:
     input:
       tool: fund_snapshot
@@ -2403,7 +3040,7 @@ results:
               - metric: 3 Year Earnings Growth
     description: Compact ETF snapshot for SPY using a one-item list.
     status: success
-    elapsed_time: 0.6024653911590576
+    elapsed_time: 0.2575085163116455
   fund_snapshot_batch_mixed:
     input:
       tool: fund_snapshot
@@ -2627,10 +3264,10 @@ results:
               - metric: 3 Year Earnings Growth
           - symbol: AAPL
             status: error
-            error: 'Yahoo Finance request failed: No Fund data found.'
+            error: 'Yahoo Finance request failed: AAPL: No Fund data found.'
     description: Batch fund snapshots return per-symbol fund-only validation.
     status: success
-    elapsed_time: 0.604663610458374
+    elapsed_time: 0.310854434967041
   fund_snapshot_invalid_asset:
     input:
       tool: fund_snapshot
@@ -2653,10 +3290,10 @@ results:
           results:
           - symbol: AAPL
             status: error
-            error: 'Yahoo Finance request failed: No Fund data found.'
+            error: 'Yahoo Finance request failed: AAPL: No Fund data found.'
     description: Fund snapshot rejects equity symbols directly.
     status: success
-    elapsed_time: 0.2405235767364502
+    elapsed_time: 0.19702720642089844
   equity_screen_day_gainers:
     input:
       tool: equity_screen
@@ -2673,54 +3310,52 @@ results:
           title: Day Gainers
           description: Discover the equities with the greatest gains in the trading
             day.
-          total_candidates: 269
+          total_candidates: 71
           returned_candidates: 5
           candidates:
-          - symbol: SRPT
-            name: Sarepta Therapeutics, Inc.
-            asset_type: stock
-            exchange: NMS
-            price: 22.63
-            change_pct: 28.53893
-            volume: 12081378
-            market_cap: 2375918592.0
-          - symbol: CORT
-            name: Corcept Therapeutics Incorporat
-            asset_type: stock
-            exchange: NCM
-            price: 41.19
-            change_pct: 21.791836
-            volume: 9063754
-            market_cap: 4381545472.0
-            pe_ratio: 50.231705
-          - symbol: BRZE
-            name: Braze, Inc.
-            asset_type: stock
-            exchange: NMS
-            price: 21.665
-            change_pct: 20.227528
-            volume: 7456100
-            market_cap: 2656952320.0
-          - symbol: ARM
-            name: Arm Holdings plc
-            asset_type: stock
-            exchange: NMS
-            price: 160.6375
-            change_pct: 19.026
-            volume: 23766119
-            market_cap: 170596794368.0
-            pe_ratio: 211.36513
-          - symbol: FLY
-            name: Firefly Aerospace Inc.
+          - symbol: KOD
+            name: Kodiak Sciences Inc
             asset_type: stock
             exchange: NGM
-            price: 27.5103
-            change_pct: 15.9304695
-            volume: 7215168
-            market_cap: 4400337920.0
+            price: 34.295
+            change_pct: 50.747242
+            volume: 6032469
+            market_cap: 2093655680.0
+          - symbol: NAVN
+            name: Navan, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 11.44
+            change_pct: 25.027323
+            volume: 5457234
+            market_cap: 2844487936.0
+          - symbol: ELVN
+            name: Enliven Therapeutics, Inc.
+            asset_type: stock
+            exchange: NMS
+            price: 39.25
+            change_pct: 10.470029
+            volume: 360019
+            market_cap: 2347165952.0
+          - symbol: MARA
+            name: MARA Holdings, Inc.
+            asset_type: stock
+            exchange: NCM
+            price: 9.085
+            change_pct: 9.722226
+            volume: 48597271
+            market_cap: 3454431488.0
+          - symbol: UNFI
+            name: United Natural Foods, Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 47.32
+            change_pct: 8.631768
+            volume: 433944
+            market_cap: 2883293440.0
     description: Curated Yahoo day gainers screen.
     status: success
-    elapsed_time: 0.2285776138305664
+    elapsed_time: 0.15490484237670898
   equity_screen_aggressive_small_caps:
     input:
       tool: equity_screen
@@ -2736,52 +3371,52 @@ results:
           screen: aggressive_small_caps
           title: Aggresive small cap stocks
           description: Small cap stocks with high earnings growth rates
-          total_candidates: 397
+          total_candidates: 398
           returned_candidates: 5
           candidates:
+          - symbol: ALIT
+            name: Alight, Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 0.5211
+            change_pct: -3.2132263
+            volume: 4443221
+            market_cap: 283806688.0
           - symbol: AMC
             name: AMC Entertainment Holdings, Inc
             asset_type: stock
             exchange: NYQ
             price: 0.9999
-            change_pct: 0.40164757
-            volume: 14387006
+            change_pct: 0.9999974
+            volume: 2580689
             market_cap: 582738944.0
-          - symbol: ALIT
-            name: Alight, Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 0.5458
-            change_pct: -15.12317
-            volume: 71767849
-            market_cap: 297259040.0
           - symbol: GOSS
             name: Gossamer Bio, Inc.
             asset_type: stock
             exchange: NMS
-            price: 0.362
-            change_pct: 4.957952
-            volume: 8996660
-            market_cap: 84960056.0
-          - symbol: KPTI
-            name: Karyopharm Therapeutics Inc.
-            asset_type: stock
-            exchange: NMS
-            price: 5.2191
-            change_pct: -4.0606627
-            volume: 1099725
-            market_cap: 102388472.0
+            price: 0.3944
+            change_pct: 3.332471
+            volume: 1583825
+            market_cap: 92564216.0
           - symbol: UAMY
             name: United States Antimony Corporat
             asset_type: stock
             exchange: NYQ
-            price: 10.015
-            change_pct: 7.920265
-            volume: 10514456
-            market_cap: 1435869952.0
+            price: 9.1801
+            change_pct: -6.989863
+            volume: 2455803
+            market_cap: 1316168832.0
+          - symbol: GENI
+            name: Genius Sports Limited
+            asset_type: stock
+            exchange: NYQ
+            price: 4.5998
+            change_pct: -0.004347902
+            volume: 781500
+            market_cap: 1183299328.0
     description: Curated Yahoo aggressive small caps screen.
     status: success
-    elapsed_time: 0.23192834854125977
+    elapsed_time: 0.11590147018432617
   equity_screen_most_shorted_stocks:
     input:
       tool: equity_screen
@@ -2798,52 +3433,51 @@ results:
           title: Most Shorted Stocks
           description: Stocks with the highest short interest positions from Nasdaq
             and NYSE reports released every two weeks.
-          total_candidates: 3900
+          total_candidates: 3871
           returned_candidates: 5
           candidates:
-          - symbol: IBG
-            name: Innovation Beverage Group Limit
+          - symbol: HCTI
+            name: Healthcare Triangle, Inc.
             asset_type: stock
             exchange: NCM
-            price: 1.12
-            change_pct: -7.4380193
-            volume: 910951
-            market_cap: 2033786.0
+            price: 3.0775
+            change_pct: 5.3938365
+            volume: 3729063
+            market_cap: 3555654.0
+          - symbol: XWEL
+            name: XWELL, Inc.
+            asset_type: stock
+            exchange: NCM
+            price: 1.28
+            volume: 34434
+            market_cap: 7381379.0
           - symbol: SNSE
             name: Sensei Biotherapeutics, Inc.
             asset_type: stock
             exchange: NCM
-            price: 29.93
-            change_pct: -0.13346349
-            volume: 43013
-            market_cap: 37762232.0
-          - symbol: ATPC
-            name: Agape ATP Corporation
-            asset_type: stock
-            exchange: NCM
-            price: 2.3502
-            change_pct: 4.9196396
-            volume: 186086
-            market_cap: 2351471.0
+            price: 30.0
+            change_pct: 1.7294006
+            volume: 12773
+            market_cap: 37850552.0
           - symbol: KALV
             name: KalVista Pharmaceuticals, Inc.
             asset_type: stock
             exchange: NGM
-            price: 17.05
-            change_pct: 3.5844483
-            volume: 749117
-            market_cap: 861814272.0
-          - symbol: ACXP
-            name: Acurx Pharmaceuticals, Inc.
+            price: 17.4
+            change_pct: 1.5169209
+            volume: 298977
+            market_cap: 879505472.0
+          - symbol: NTLA
+            name: Intellia Therapeutics, Inc.
             asset_type: stock
-            exchange: NCM
-            price: 4.34
-            change_pct: 1.4018677
-            volume: 201004
-            market_cap: 12390809.0
+            exchange: NGM
+            price: 13.84
+            change_pct: 4.374057
+            volume: 1602613
+            market_cap: 1634968320.0
     description: Curated Yahoo most shorted stocks screen.
     status: success
-    elapsed_time: 0.2370893955230713
+    elapsed_time: 0.09312629699707031
   equity_screen_small_cap_gainers:
     input:
       tool: equity_screen
@@ -2859,53 +3493,52 @@ results:
           screen: small_cap_gainers
           title: Small caps with momentum
           description: Small cap stocks with percentchange greater than 5%
-          total_candidates: 106
+          total_candidates: 38
           returned_candidates: 5
           candidates:
-          - symbol: JBLU
-            name: JetBlue Airways Corporation
+          - symbol: KOS
+            name: Kosmos Energy Ltd.
+            asset_type: stock
+            exchange: NYQ
+            price: 2.875
+            change_pct: 8.082704
+            volume: 6962177
+            market_cap: 1705305984.0
+          - symbol: AVXL
+            name: Anavex Life Sciences Corp.
             asset_type: stock
             exchange: NMS
-            price: 4.825
-            change_pct: 15.155126
-            volume: 61112072
-            market_cap: 1785827328.0
-          - symbol: WOLF
-            name: Wolfspeed, Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 18.15
-            change_pct: 8.8782215
-            volume: 735889
-            market_cap: 818358272.0
-          - symbol: GOSS
-            name: Gossamer Bio, Inc.
+            price: 2.8988
+            change_pct: 5.795616
+            volume: 1447668
+            market_cap: 268636896.0
+          - symbol: PGEN
+            name: Precigen, Inc.
             asset_type: stock
             exchange: NMS
-            price: 0.362
-            change_pct: 4.957952
-            volume: 8996661
-            market_cap: 84960056.0
-          - symbol: UAMY
-            name: United States Antimony Corporat
+            price: 3.955
+            change_pct: 27.580647
+            volume: 10788775
+            market_cap: 1399375872.0
+          - symbol: WTI
+            name: W&T Offshore, Inc.
             asset_type: stock
             exchange: NYQ
-            price: 10.01
-            change_pct: 7.8663845
-            volume: 10514803
-            market_cap: 1435153152.0
-          - symbol: BORR
-            name: Borr Drilling Limited
+            price: 3.231
+            change_pct: 7.6999984
+            volume: 2703256
+            market_cap: 480700736.0
+          - symbol: GO
+            name: Grocery Outlet Holding Corp.
             asset_type: stock
-            exchange: NYQ
-            price: 5.55
-            change_pct: 6.5259147
-            volume: 4239883
-            market_cap: 1703144064.0
-            pe_ratio: 32.64706
+            exchange: NMS
+            price: 7.09
+            change_pct: 8.409789
+            volume: 1634895
+            market_cap: 695905408.0
     description: Curated Yahoo small cap gainers screen.
     status: success
-    elapsed_time: 0.22365188598632812
+    elapsed_time: 0.11035275459289551
   equity_screen_undervalued_growth_stocks:
     input:
       tool: equity_screen
@@ -2925,54 +3558,54 @@ results:
           total_candidates: 200
           returned_candidates: 5
           candidates:
-          - symbol: CDE
-            name: Coeur Mining, Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 18.5798
-            change_pct: 1.4735128
-            volume: 24793632
-            market_cap: 19231905792.0
-            pe_ratio: 19.557684
-          - symbol: VG
-            name: Venture Global, Inc.
-            asset_type: stock
-            exchange: NYQ
-            price: 17.0399
-            change_pct: 2.650779
-            volume: 20294512
-            market_cap: 41866526720.0
-            pe_ratio: 18.52163
           - symbol: MU
             name: Micron Technology, Inc.
             asset_type: stock
             exchange: NMS
-            price: 383.56
-            change_pct: -3.0263195
-            volume: 42803515
-            market_cap: 432553656320.0
-            pe_ratio: 18.092453
+            price: 366.895
+            change_pct: -3.9785306
+            volume: 14031612
+            market_cap: 413759963136.0
+            pe_ratio: 17.298208
+          - symbol: CDE
+            name: Coeur Mining, Inc.
+            asset_type: stock
+            exchange: NYQ
+            price: 17.185
+            change_pct: -3.6725576
+            volume: 8136885
+            market_cap: 17788149760.0
+            pe_ratio: 18.089474
+          - symbol: BBD
+            name: Banco Bradesco Sa
+            asset_type: stock
+            exchange: NYQ
+            price: 3.63
+            change_pct: -0.81967133
+            volume: 3932659
+            market_cap: 38371684352.0
+            pe_ratio: 8.853659
           - symbol: T
             name: AT&T Inc.
             asset_type: stock
             exchange: NYQ
-            price: 29.05
-            change_pct: 0.623479
-            volume: 17605977
-            market_cap: 205948502016.0
-            pe_ratio: 9.555921
-          - symbol: PBR
-            name: Petroleo Brasileiro S.A. Petrob
+            price: 29.01
+            change_pct: 0.6943266
+            volume: 4201515
+            market_cap: 205664927744.0
+            pe_ratio: 9.542764
+          - symbol: VG
+            name: Venture Global, Inc.
             asset_type: stock
             exchange: NYQ
-            price: 19.95
-            change_pct: 1.012662
-            volume: 12420621
-            market_cap: 128565116928.0
-            pe_ratio: 6.3942313
+            price: 16.735
+            change_pct: 0.14962015
+            volume: 5975039
+            market_cap: 41117396992.0
+            pe_ratio: 18.190218
     description: Curated Yahoo undervalued growth stocks screen.
     status: success
-    elapsed_time: 0.23212790489196777
+    elapsed_time: 0.12867426872253418
   equity_screen_invalid:
     input:
       tool: equity_screen
@@ -2989,4 +3622,4 @@ results:
           ''undervalued_large_caps''].'
     description: Unsupported equity screen fails directly.
     status: success
-    elapsed_time: 0.0005588531494140625
+    elapsed_time: 0.0003859996795654297

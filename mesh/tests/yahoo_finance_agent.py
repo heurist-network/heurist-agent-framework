@@ -35,6 +35,15 @@ TEST_CASES = {
         "description": "Honest no-data response when symbol search finds nothing.",
         "expected_status": "error",
     },
+    "resolve_future_gold": {
+        "input": {
+            "tool": "resolve_symbol",
+            "tool_arguments": {"query": "gold", "asset_type": "future", "limit": 3},
+            "raw_data_only": True,
+        },
+        "description": "Resolve a commodity intent into compact futures candidates via Lookup.",
+        "expected_status": "success",
+    },
     "quote_snapshot_aapl": {
         "input": {
             "tool": "quote_snapshot",
@@ -165,6 +174,87 @@ TEST_CASES = {
             "raw_data_only": True,
         },
         "description": "Short history window returns no-data when there are not enough completed bars.",
+        "expected_status": "error",
+    },
+    "options_expirations_aapl": {
+        "input": {
+            "tool": "options_expirations",
+            "tool_arguments": {"symbol": "AAPL", "limit": 8},
+            "raw_data_only": True,
+        },
+        "description": "Discover available AAPL option expirations before selecting a chain.",
+        "expected_status": "success",
+    },
+    "options_expirations_aapl_dte_window": {
+        "input": {
+            "tool": "options_expirations",
+            "tool_arguments": {"symbol": "AAPL", "min_days_to_expiration": 20, "max_days_to_expiration": 120, "limit": 6},
+            "raw_data_only": True,
+        },
+        "description": "Discover AAPL expirations within a bounded days-to-expiration window.",
+        "expected_status": "success",
+    },
+    "options_expirations_invalid_symbol": {
+        "input": {
+            "tool": "options_expirations",
+            "tool_arguments": {"symbol": "NOTAREALSYMBOL123"},
+            "raw_data_only": True,
+        },
+        "description": "Invalid symbol returns structured no-data for expiration discovery.",
+        "expected_status": "error",
+    },
+    "options_chain_aapl": {
+        "input": {
+            "tool": "options_chain",
+            "tool_arguments": {"symbol": "AAPL", "side": "both", "moneyness": "atm", "limit_contracts": 6},
+            "raw_data_only": True,
+        },
+        "description": "options_chain requires an explicit expiration chosen via options_expirations.",
+        "expected_status": "error",
+    },
+    "options_chain_aapl_strike_window": {
+        "input": {
+            "tool": "options_chain",
+            "tool_arguments": {"symbol": "AAPL", "side": "both", "expiration": "2026-04-17", "min_strike": 240, "max_strike": 270, "limit_contracts": 6},
+            "raw_data_only": True,
+        },
+        "description": "Filter AAPL options chain discovery by strike range.",
+        "expected_status": "success",
+    },
+    "options_chain_invalid_expiration": {
+        "input": {
+            "tool": "options_chain",
+            "tool_arguments": {"symbol": "AAPL", "expiration": "2099-01-01"},
+            "raw_data_only": True,
+        },
+        "description": "Unsupported expiration fails directly for options chains.",
+        "expected_status": "error",
+    },
+    "options_chain_invalid_strike_window": {
+        "input": {
+            "tool": "options_chain",
+            "tool_arguments": {"symbol": "AAPL", "min_strike": 300, "max_strike": 250},
+            "raw_data_only": True,
+        },
+        "description": "Invalid strike filter range fails directly for options chains.",
+        "expected_status": "error",
+    },
+    "futures_snapshot_gold": {
+        "input": {
+            "tool": "futures_snapshot",
+            "tool_arguments": {"symbols": ["GC=F"], "include_history": True, "interval": "1d", "period": "1mo", "limit_bars": 5},
+            "raw_data_only": True,
+        },
+        "description": "Compact futures snapshot for gold with recent history context.",
+        "expected_status": "success",
+    },
+    "futures_snapshot_invalid_asset": {
+        "input": {
+            "tool": "futures_snapshot",
+            "tool_arguments": {"symbols": ["AAPL"]},
+            "raw_data_only": True,
+        },
+        "description": "Futures snapshot rejects non-futures symbols directly.",
         "expected_status": "error",
     },
     "news_search_nvidia": {
