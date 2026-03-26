@@ -349,12 +349,14 @@ Rules:
 
     def _get_series_spec(self, series_key: str) -> Dict[str, Any]:
         if series_key not in self.series_by_key:
-            raise ValueError(f"Unsupported series_key '{series_key}'.")
+            supported = ", ".join(sorted(self.series_by_key))
+            raise ValueError(f"Unsupported series_key '{series_key}'. Supported series_key values: {supported}.")
         return self.series_by_key[series_key]
 
     def _get_release_spec(self, release_key: str) -> Dict[str, Any]:
         if release_key not in self.release_by_key:
-            raise ValueError(f"Unsupported release_key '{release_key}'.")
+            supported = ", ".join(sorted(self.release_by_key))
+            raise ValueError(f"Unsupported release_key '{release_key}'. Supported release_key values: {supported}.")
         return self.release_by_key[release_key]
 
     def _validate_limit(self, limit: int) -> int:

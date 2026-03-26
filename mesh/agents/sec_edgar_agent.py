@@ -31,6 +31,7 @@ INSIDER_FORMS = {"3", "4", "5"}
 ACTIVIST_FORMS = {"SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A"}
 FACT_FREQUENCIES = {"quarterly", "annual", "all"}
 FORM_DIFF_CANDIDATES = ["10-Q", "10-K", "8-K", "S-1", "S-1/A"]
+MIN_CONFIDENT_COMPANY_MATCH_SCORE = 60.0
 
 TRANSACTION_CODE_LABELS = {
     "P": "open market purchase",
@@ -1066,6 +1067,19 @@ Rules:
             return {"status": "error", "error": f"No SEC issuer matched '{query}'"}
 
         limited = scored[:limit]
+        if limited[0]["score"] < MIN_CONFIDENT_COMPANY_MATCH_SCORE:
+            return {
+                "status": "error",
+                "error": (
+                    f"Low-confidence SEC issuer match for '{query}'. "
+                    f"Best candidate {limited[0]['ticker']} scored {limited[0]['score']}."
+                ),
+                "data": {
+                    "query": query,
+                    "best_candidate": limited[0],
+                    "candidates": limited,
+                },
+            }
         return {
             "status": "success",
             "data": {

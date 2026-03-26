@@ -1,4 +1,5 @@
 import asyncio
+import json
 import logging
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
@@ -100,6 +101,9 @@ OPTIONS_MONEYNESS = ["all", "itm", "otm", "atm"]
 SHARED_HISTORY_TTL_SECONDS = 300
 SHARED_METADATA_TTL_SECONDS = 300
 SHARED_OPTIONS_TTL_SECONDS = 180
+INDEX_FALLBACK_SYMBOLS = {
+    "000985.SS": "000300.SS",
+}
 
 
 class YahooFinanceAgent(MeshAgent):
@@ -543,10 +547,21 @@ Rules:
 
     def _normalize_symbols(self, symbols: Any) -> tuple[Optional[List[str]], Optional[str]]:
         if isinstance(symbols, str):
-            single_symbol = self._normalize_symbol(symbols)
+            stripped = symbols.strip()
+            if stripped.startswith("[") and stripped.endswith("]"):
+                try:
+                    parsed = json.loads(stripped)
+                except json.JSONDecodeError:
+                    parsed = None
+                if parsed is not None:
+                    return self._normalize_symbols(parsed)
+            if "," in stripped:
+                return self._normalize_symbols(stripped.split(","))
+
+            single_symbol = self._normalize_symbol(stripped)
             if single_symbol is None:
                 return None, "symbols must be a non-empty list of exact Yahoo Finance symbols."
-            if any(char.isspace() for char in single_symbol) or "," in single_symbol:
+            if any(char.isspace() for char in single_symbol):
                 return None, "Plain string symbols must contain exactly one exact Yahoo Finance symbol."
             return [single_symbol], None
         if not isinstance(symbols, list) or not symbols:
@@ -568,6 +583,14 @@ Rules:
         if len(normalized) > MAX_BATCH_SYMBOLS:
             return None, f"symbols supports at most {MAX_BATCH_SYMBOLS} tickers per request."
         return normalized, None
+
+    def _coerce_int_arg(self, value: Any, field_name: str) -> tuple[Optional[int], Optional[str]]:
+        if value is None:
+            return None, None
+        try:
+            return int(value), None
+        except (TypeError, ValueError):
+            return None, f"{field_name} must be an integer."
 
     def _get_symbols_arg(self, function_args: Dict[str, Any]) -> Any:
         if "symbols" in function_args:
@@ -1082,6 +1105,27 @@ Rules:
                 "score": self._safe_float(item.get("rank")),
             }
         )
+
+    def _resolve_symbol_fallback_queries(self, query: str) -> List[str]:
+        fallbacks = []
+        seen = set()
+        for raw_token in query.split():
+            token = raw_token.strip("()[]{}<>,;:'\"")
+            if not token or any(char.islower() for char in token):
+                continue
+            if len(token) > 10:
+                continue
+            if not any(char.isalpha() for char in token):
+                continue
+            if not all(char.isalnum() or char in ".-=/^" for char in token):
+                continue
+
+            normalized = token.upper()
+            if normalized in seen:
+                continue
+            fallbacks.append(normalized)
+            seen.add(normalized)
+        return fallbacks
 
     def _normalize_news_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
         return {
@@ -1760,9 +1804,9 @@ Rules:
         if asset_type is not None and asset_type not in ASSET_TYPES:
             return {"status": "error", "error": f"Unsupported asset_type '{asset_type}'."}
 
-        def _do_search() -> List[Dict[str, Any]]:
+        def _do_search(search_query: str) -> List[Dict[str, Any]]:
             if asset_type == "future" and hasattr(yf, "Lookup"):
-                lookup = yf.Lookup(query)
+                lookup = yf.Lookup(search_query)
                 frame = lookup.get_future(count=max(limit * 3, 10))
                 candidates = []
                 if frame is not None and not frame.empty:
@@ -1773,7 +1817,9 @@ Rules:
                 if candidates:
                     return candidates[:limit]
 
-            search = yf.Search(query, max_results=max(limit * 3, 10), news_count=0, lists_count=0, include_cb=False)
+            search = yf.Search(
+                search_query, max_results=max(limit * 3, 10), news_count=0, lists_count=0, include_cb=False
+            )
             candidates = []
             for item in search.quotes or []:
                 normalized = self._normalize_search_result(item)
@@ -1785,10 +1831,27 @@ Rules:
             return candidates[:limit]
 
         try:
-            matches = await asyncio.to_thread(_do_search)
+            matches = await asyncio.to_thread(_do_search, query)
         except Exception as exc:
             return self._yfinance_error(exc, f"No symbol matches found for '{query}'.")
         if not matches:
+            for fallback_query in self._resolve_symbol_fallback_queries(query):
+                if fallback_query == query.strip().upper():
+                    continue
+                try:
+                    matches = await asyncio.to_thread(_do_search, fallback_query)
+                except Exception:
+                    continue
+                if matches:
+                    return {
+                        "status": "success",
+                        "data": {
+                            "query": query,
+                            "asset_type_filter": asset_type,
+                            "fallback_query": fallback_query,
+                            "matches": matches,
+                        },
+                    }
             return {"status": "no_data", "error": f"No symbol matches found for '{query}'."}
 
         return {
@@ -1812,6 +1875,15 @@ Rules:
         normalized_symbol = self._normalize_symbol(symbol)
         if normalized_symbol is None:
             return {"status": "error", "error": "symbol must be a non-empty Yahoo Finance symbol."}
+        limit, error = self._coerce_int_arg(limit, "limit")
+        if error:
+            return {"status": "error", "error": error}
+        min_days_to_expiration, error = self._coerce_int_arg(min_days_to_expiration, "min_days_to_expiration")
+        if error:
+            return {"status": "error", "error": error}
+        max_days_to_expiration, error = self._coerce_int_arg(max_days_to_expiration, "max_days_to_expiration")
+        if error:
+            return {"status": "error", "error": error}
         if min_days_to_expiration is not None and min_days_to_expiration < 0:
             return {"status": "error", "error": "min_days_to_expiration must be >= 0."}
         if max_days_to_expiration is not None and max_days_to_expiration < 0:
@@ -1879,6 +1951,9 @@ Rules:
         normalized_symbol = self._normalize_symbol(symbol)
         if normalized_symbol is None:
             return {"status": "error", "error": "symbol must be a non-empty Yahoo Finance symbol."}
+        limit_contracts, error = self._coerce_int_arg(limit_contracts, "limit_contracts")
+        if error:
+            return {"status": "error", "error": error}
         if side not in OPTIONS_SIDES:
             return {"status": "error", "error": f"Unsupported side '{side}'."}
         if moneyness not in OPTIONS_MONEYNESS:
@@ -2388,10 +2463,17 @@ Rules:
         df = self._drop_incomplete_bar(df, interval)
 
         if df.empty or len(df) < 30:
-            return {
+            result = {
                 "status": "no_data",
                 "error": f"Insufficient historical data for {symbol}. Need at least 30 completed bars.",
             }
+            fallback_symbol = INDEX_FALLBACK_SYMBOLS.get(symbol)
+            if fallback_symbol:
+                result["data"] = {
+                    "symbol": symbol,
+                    "suggested_fallback": fallback_symbol,
+                }
+            return result
 
         ss = self._wrap_stockstats(df)
 
