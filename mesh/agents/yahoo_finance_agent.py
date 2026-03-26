@@ -204,14 +204,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "quote_snapshot",
-                    "description": "Return compact current snapshots for one or more exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
+                    "description": "Return a compact current market snapshot for one or more exact Yahoo Finance symbols. For futures symbols, prefer futures_snapshot which includes recent trend context.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance symbols such as AAPL, SPY, BTC-USD, EURUSD=X, or GC=F. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance symbols (e.g. AAPL, SPY, BTC-USD, EURUSD=X). A plain string is also accepted for single-symbol calls.",
                             }
                         },
                         "required": ["symbols"],
@@ -222,14 +222,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "price_history",
-                    "description": "Return normalized OHLCV history for one or more exact Yahoo Finance symbols with compact metadata, latest completed bar, and a limited number of bars. Use a one-item list for a single symbol.",
+                    "description": "Return normalized OHLCV price history for one or more exact Yahoo Finance symbols with compact metadata and the latest completed bar.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance symbols. A plain string is also accepted for single-symbol calls.",
                             },
                             "interval": {
                                 "type": "string",
@@ -239,7 +239,8 @@ Rules:
                             },
                             "period": {
                                 "type": "string",
-                                "description": "Rolling window like 5d,1mo,3mo,6mo,1y,2y,ytd,max. If start_date or end_date is provided, they take precedence.",
+                                "enum": ["1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max"],
+                                "description": "Rolling lookback window. Ignored when start_date or end_date is provided.",
                             },
                             "start_date": {
                                 "type": "string",
@@ -270,14 +271,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "technical_snapshot",
-                    "description": "Return quick technical analysis snapshots for one or more exact Yahoo Finance symbols with trend, momentum, volatility, key levels, and a compact buy/sell/neutral signal. Use a one-item list for a single symbol.",
+                    "description": "Return a technical analysis snapshot for one or more exact Yahoo Finance symbols with trend, momentum, volatility, key levels, and a compact buy/sell/neutral signal.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance symbols. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance symbols. A plain string is also accepted for single-symbol calls.",
                             },
                             "interval": {
                                 "type": "string",
@@ -287,7 +288,8 @@ Rules:
                             },
                             "period": {
                                 "type": "string",
-                                "description": "History window used to compute indicators. Defaults to 3mo for intraday and 1y for day-plus intervals.",
+                                "enum": ["1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max"],
+                                "description": "History window for indicator computation. Defaults to 3mo for intraday intervals, 1y for daily and above.",
                             },
                             "start_date": {
                                 "type": "string",
@@ -379,14 +381,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "futures_snapshot",
-                    "description": "Return compact current snapshots for one or more exact Yahoo Finance futures symbols like GC=F, CL=F, or NG=F, with optional recent history context.",
+                    "description": "Return a compact snapshot with optional recent price trend for one or more exact Yahoo Finance futures symbols (e.g. GC=F, CL=F, NG=F). Prefer this over quote_snapshot for futures — adds recent history context.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance futures symbols. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance futures symbols (e.g. GC=F, CL=F). A plain string is also accepted for single-symbol calls.",
                             },
                             "include_history": {
                                 "type": "boolean",
@@ -424,7 +426,7 @@ Rules:
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "Short Yahoo-style search input such as a symbol, company name, or compact topic phrase like 'AAPL', 'Nvidia', 'tariffs impact', or 'energy sector'. Must be within 2 words. Avoid sentence-like queries or questions.",
+                                "description": "1-2 word search term: a ticker, company name, or short topic phrase (e.g. 'AAPL', 'Nvidia', 'tariffs impact'). Do not use sentences or questions.",
                             },
                             "limit": {
                                 "type": "integer",
@@ -447,7 +449,7 @@ Rules:
                             "market": {
                                 "type": "string",
                                 "enum": MARKETS,
-                                "description": "Yahoo market region.",
+                                "description": "Market region to summarize. Each region covers its major indices and benchmarks.",
                                 "default": "US",
                             }
                         },
@@ -459,14 +461,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "company_fundamentals",
-                    "description": "Return compact company fundamentals for one or more equity symbols, including profile, earnings calendar, recent SEC filings, and summarized financial statements. Use a one-item list for a single symbol.",
+                    "description": "Return compact equity fundamentals from Yahoo Finance including company profile, valuation ratios, earnings calendar, and summarized financial statements. Equity symbols only.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance equity symbols. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance equity symbols. A plain string is also accepted for single-symbol calls.",
                             }
                         },
                         "required": ["symbols"],
@@ -477,14 +479,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "analyst_snapshot",
-                    "description": "Return compact analyst views for one or more equity symbols, including recommendations, price targets, estimates, EPS trend, and revisions. Use a one-item list for a single symbol.",
+                    "description": "Return compact analyst views for one or more equity symbols, including recommendations, price targets, estimates, EPS trend, and revisions. Equity symbols only.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance equity symbols. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance equity symbols. A plain string is also accepted for single-symbol calls.",
                             }
                         },
                         "required": ["symbols"],
@@ -495,14 +497,14 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "fund_snapshot",
-                    "description": "Return compact ETF or mutual-fund snapshots including description, expense ratio, asset allocation, top holdings, and exposures when available. Use a one-item list for a single symbol.",
+                    "description": "Return compact ETF or mutual-fund snapshots including description, expense ratio, asset allocation, top holdings, and sector exposures. ETF and mutual-fund symbols only.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance ETF or mutual-fund symbols. Use a one-item list for a single symbol.",
+                                "description": "1 to 10 exact Yahoo Finance ETF or mutual-fund symbols. A plain string is also accepted for single-symbol calls.",
                             }
                         },
                         "required": ["symbols"],
@@ -520,7 +522,7 @@ Rules:
                             "screen_name": {
                                 "type": "string",
                                 "enum": SUPPORTED_EQUITY_SCREENS,
-                                "description": "Predefined Yahoo Finance equity screen name.",
+                                "description": "Screen to run. Each returns a ranked candidate list based on Yahoo Finance criteria for that category.",
                             },
                             "limit": {
                                 "type": "integer",
@@ -540,6 +542,13 @@ Rules:
         return symbol.strip().upper()
 
     def _normalize_symbols(self, symbols: Any) -> tuple[Optional[List[str]], Optional[str]]:
+        if isinstance(symbols, str):
+            single_symbol = self._normalize_symbol(symbols)
+            if single_symbol is None:
+                return None, "symbols must be a non-empty list of exact Yahoo Finance symbols."
+            if any(char.isspace() for char in single_symbol) or "," in single_symbol:
+                return None, "Plain string symbols must contain exactly one exact Yahoo Finance symbol."
+            return [single_symbol], None
         if not isinstance(symbols, list) or not symbols:
             return None, "symbols must be a non-empty list of exact Yahoo Finance symbols."
 
@@ -559,6 +568,11 @@ Rules:
         if len(normalized) > MAX_BATCH_SYMBOLS:
             return None, f"symbols supports at most {MAX_BATCH_SYMBOLS} tickers per request."
         return normalized, None
+
+    def _get_symbols_arg(self, function_args: Dict[str, Any]) -> Any:
+        if "symbols" in function_args:
+            return function_args.get("symbols")
+        return function_args.get("symbol")
 
     # Yahoo history and options calls are reused across multiple top-level tools, so this
     # agent keeps a small shared cache layer in addition to the generic method cache.
@@ -2838,10 +2852,10 @@ Rules:
                     limit=function_args.get("limit", 5),
                 )
             elif tool_name == "quote_snapshot":
-                result = await self.quote_snapshot(symbols=function_args.get("symbols"))
+                result = await self.quote_snapshot(symbols=self._get_symbols_arg(function_args))
             elif tool_name in {"price_history", "fetch_price_history"}:
                 result = await self.price_history(
-                    symbols=function_args.get("symbols"),
+                    symbols=self._get_symbols_arg(function_args),
                     interval=function_args.get("interval", "1d"),
                     period=function_args.get("period"),
                     start_date=function_args.get("start_date"),
@@ -2852,7 +2866,7 @@ Rules:
                 )
             elif tool_name in {"technical_snapshot", "indicator_snapshot"}:
                 result = await self.technical_snapshot(
-                    symbols=function_args.get("symbols"),
+                    symbols=self._get_symbols_arg(function_args),
                     interval=function_args.get("interval", "1d"),
                     period=function_args.get("period"),
                     start_date=function_args.get("start_date"),
@@ -2877,7 +2891,7 @@ Rules:
                 )
             elif tool_name == "futures_snapshot":
                 result = await self.futures_snapshot(
-                    symbols=function_args.get("symbols"),
+                    symbols=self._get_symbols_arg(function_args),
                     include_history=function_args.get("include_history", True),
                     interval=function_args.get("interval", "1d"),
                     period=function_args.get("period", "1mo"),
@@ -2891,11 +2905,11 @@ Rules:
             elif tool_name == "market_overview":
                 result = await self.market_overview(market=function_args.get("market", "US"))
             elif tool_name == "company_fundamentals":
-                result = await self.company_fundamentals(symbols=function_args.get("symbols"))
+                result = await self.company_fundamentals(symbols=self._get_symbols_arg(function_args))
             elif tool_name == "analyst_snapshot":
-                result = await self.analyst_snapshot(symbols=function_args.get("symbols"))
+                result = await self.analyst_snapshot(symbols=self._get_symbols_arg(function_args))
             elif tool_name == "fund_snapshot":
-                result = await self.fund_snapshot(symbols=function_args.get("symbols"))
+                result = await self.fund_snapshot(symbols=self._get_symbols_arg(function_args))
             elif tool_name == "equity_screen":
                 result = await self.equity_screen(
                     screen_name=function_args.get("screen_name"),

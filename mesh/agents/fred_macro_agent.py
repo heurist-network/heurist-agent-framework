@@ -101,7 +101,7 @@ class FredMacroAgent(MeshAgent):
                 "version": "1.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Registry-driven FRED and ALFRED macro agent for curated U.S. inflation, rates, labor, credit, growth, release, and vintage context.",
+                "description": "Curated U.S. macro data agent covering inflation, rates, labor, credit, and growth via FRED and ALFRED, with release calendar and vintage history support.",
                 "external_apis": ["FRED", "ALFRED"],
                 "tags": ["Finance", "Macroeconomics"],
                 "verified": True,
@@ -165,7 +165,7 @@ Rules:
                             "series_key": {
                                 "type": "string",
                                 "enum": series_keys,
-                                "description": "Registry-backed macro series key such as headline_cpi, core_pce, fed_funds, unemployment_rate, or real_gdp.",
+                                "description": "Curated macro series key (e.g. headline_cpi, fed_funds, real_gdp). See enum for all supported keys.",
                             }
                         },
                         "required": ["series_key"],
@@ -176,7 +176,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "macro_series_history",
-                    "description": "Return bounded history for one curated macro series. Use this for overlays, trend summaries, or transformed views like YoY or qoq annualized.",
+                    "description": "Return bounded history for one curated macro series. Use this for historical trend analysis or transformed views like YoY or qoq_annualized.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -202,7 +202,7 @@ Rules:
                             "view": {
                                 "type": "string",
                                 "enum": SUPPORTED_VIEWS,
-                                "description": "Transformation view. Use `level` for raw values. The enum lists global candidates, but each `series_key` supports only its own subset. Common examples: `yoy` for inflation series, `qoq_annualized` for GDP, `change` for rates, and `wow_change` for weekly claims. Unsupported series and view combinations fail directly.",
+                                "description": "Transformation applied to the raw series. Each series_key supports a subset of these views; unsupported combinations fail directly. Common pairings: yoy for inflation, qoq_annualized for GDP, change for rates, wow_change for weekly claims.",
                                 "default": "level",
                             },
                             "limit": {
@@ -221,7 +221,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "macro_regime_context",
-                    "description": "Return a curated multi-pillar macro regime summary across inflation, rates, labor, credit conditions, and growth. Use this when the caller wants interpretation instead of one raw series.",
+                    "description": "Return a curated multi-pillar macro regime summary across inflation, rates, labor, credit conditions, and growth. Use this for a cross-pillar macro summary instead of querying individual series.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -232,7 +232,7 @@ Rules:
                             },
                             "as_of_date": {
                                 "type": "string",
-                                "description": "Optional observation cutoff date in YYYY-MM-DD format. This uses revised history filtered through that date, not vintage-safe history.",
+                                "description": "Observation cutoff date in YYYY-MM-DD format. Uses revised data filtered to this date — for true point-in-time data, use macro_vintage_history instead.",
                             },
                         },
                         "required": [],
@@ -243,7 +243,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "macro_release_calendar",
-                    "description": "Return curated upcoming or recent macro release dates for the supported release set only. Use this instead of raw FRED release calendar endpoints.",
+                    "description": "Return upcoming or recent release dates for curated macro releases (CPI, PCE, payrolls, GDP, weekly claims).",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -258,7 +258,7 @@ Rules:
                             "release_keys": {
                                 "type": "array",
                                 "items": {"type": "string", "enum": release_keys},
-                                "description": "Optional release allowlist. Defaults to all supported release keys.",
+                                "description": "Limit results to specific releases. Defaults to all supported releases.",
                             },
                         },
                         "required": [],
@@ -269,7 +269,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "macro_release_context",
-                    "description": "Return compact release-aware context for one supported macro release, including recent release dates and linked curated series history.",
+                    "description": "Return recent release dates and linked series history for one supported macro release. Use this for pre/post-release analysis.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -305,7 +305,7 @@ Rules:
                             },
                             "realtime_date": {
                                 "type": "string",
-                                "description": "Point-in-time realtime date in YYYY-MM-DD format.",
+                                "description": "ALFRED realtime date in YYYY-MM-DD format. Returns data as it was known on this date, before subsequent revisions.",
                             },
                             "start_date": {
                                 "type": "string",
@@ -324,7 +324,7 @@ Rules:
                             "view": {
                                 "type": "string",
                                 "enum": SUPPORTED_VIEWS,
-                                "description": "Transformation view. Use `level` for raw values. The enum lists global candidates, but each `series_key` supports only its own subset. Common examples: `yoy` for inflation series, `qoq_annualized` for GDP, `change` for rates, and `wow_change` for weekly claims. Unsupported series and view combinations fail directly.",
+                                "description": "Transformation applied to the raw series. Each series_key supports a subset of these views; unsupported combinations fail directly. Common pairings: yoy for inflation, qoq_annualized for GDP, change for rates, wow_change for weekly claims.",
                                 "default": "level",
                             },
                             "limit": {

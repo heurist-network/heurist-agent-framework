@@ -53,6 +53,24 @@ TEST_CASES = {
         "description": "Compact quote snapshot for AAPL using a one-item list.",
         "expected_status": "success",
     },
+    "quote_snapshot_aapl_single_string": {
+        "input": {
+            "tool": "quote_snapshot",
+            "tool_arguments": {"symbols": "AAPL"},
+            "raw_data_only": True,
+        },
+        "description": "Compact quote snapshot for AAPL using a plain single-symbol string.",
+        "expected_status": "success",
+    },
+    "quote_snapshot_aapl_legacy_symbol": {
+        "input": {
+            "tool": "quote_snapshot",
+            "tool_arguments": {"symbol": "AAPL"},
+            "raw_data_only": True,
+        },
+        "description": "Compact quote snapshot for AAPL using the legacy singular symbol argument.",
+        "expected_status": "success",
+    },
     "quote_snapshot_btc": {
         "input": {
             "tool": "quote_snapshot",
@@ -87,6 +105,15 @@ TEST_CASES = {
             "raw_data_only": True,
         },
         "description": "Normalized daily price history for AAPL using a one-item list.",
+        "expected_status": "success",
+    },
+    "price_history_aapl_single_string": {
+        "input": {
+            "tool": "price_history",
+            "tool_arguments": {"symbols": "AAPL", "interval": "1d", "period": "6mo", "limit_bars": 10},
+            "raw_data_only": True,
+        },
+        "description": "Normalized daily price history for AAPL using a plain single-symbol string.",
         "expected_status": "success",
     },
     "price_history_btc_intraday": {
@@ -302,6 +329,15 @@ TEST_CASES = {
         "description": "Compact company fundamentals for AAPL using a one-item list.",
         "expected_status": "success",
     },
+    "company_fundamentals_aapl_single_string": {
+        "input": {
+            "tool": "company_fundamentals",
+            "tool_arguments": {"symbols": "AAPL"},
+            "raw_data_only": True,
+        },
+        "description": "Compact company fundamentals for AAPL using a plain single-symbol string.",
+        "expected_status": "success",
+    },
     "company_fundamentals_batch_mixed": {
         "input": {
             "tool": "company_fundamentals",
@@ -327,6 +363,15 @@ TEST_CASES = {
             "raw_data_only": True,
         },
         "description": "Compact analyst snapshot for MSFT using a one-item list.",
+        "expected_status": "success",
+    },
+    "analyst_snapshot_msft_single_string": {
+        "input": {
+            "tool": "analyst_snapshot",
+            "tool_arguments": {"symbols": "MSFT"},
+            "raw_data_only": True,
+        },
+        "description": "Compact analyst snapshot for MSFT using a plain single-symbol string.",
         "expected_status": "success",
     },
     "analyst_snapshot_batch_mixed": {

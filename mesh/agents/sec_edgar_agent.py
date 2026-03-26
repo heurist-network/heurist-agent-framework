@@ -43,6 +43,9 @@ TRANSACTION_CODE_LABELS = {
 
 COMMON_METRIC_ALIASES = {
     "revenue": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"],
+    "revenues": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"],
+    "sales": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"],
+    "sales revenue": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet"],
     "net income": ["NetIncomeLoss", "ProfitLoss"],
     "operating income": ["OperatingIncomeLoss"],
     "gross profit": ["GrossProfit"],
@@ -181,6 +184,70 @@ def _period_label(observation: Dict[str, Any]) -> str:
     return end
 
 
+def _normalize_required_text(value: Any, field_name: str) -> str:
+    if not isinstance(value, str):
+        raise ValueError(f"{field_name} must be a non-empty string")
+    text = value.strip()
+    if not text:
+        raise ValueError(f"{field_name} must be a non-empty string")
+    return text
+
+
+def _normalize_optional_text(value: Any, field_name: str) -> Optional[str]:
+    if value is None:
+        return None
+    return _normalize_required_text(value, field_name)
+
+
+def _normalize_int(
+    value: Any,
+    field_name: str,
+    default: int,
+    *,
+    minimum: int = 1,
+    maximum: Optional[int] = None,
+) -> int:
+    if value is None or value == "":
+        normalized = default
+    elif isinstance(value, bool):
+        raise ValueError(f"{field_name} must be an integer")
+    elif isinstance(value, int):
+        normalized = value
+    elif isinstance(value, float) and value.is_integer():
+        normalized = int(value)
+    elif isinstance(value, str):
+        text = value.strip()
+        if not re.fullmatch(r"-?\d+", text):
+            raise ValueError(f"{field_name} must be an integer")
+        normalized = int(text)
+    else:
+        raise ValueError(f"{field_name} must be an integer")
+
+    normalized = max(normalized, minimum)
+    if maximum is not None:
+        normalized = min(normalized, maximum)
+    return normalized
+
+
+def _normalize_forms(forms: Any) -> Optional[List[str]]:
+    if forms is None:
+        return None
+    if isinstance(forms, str):
+        return [_normalize_required_text(forms, "forms")]
+    if not isinstance(forms, list):
+        raise ValueError("forms must be a list of SEC form strings")
+
+    normalized = []
+    seen = set()
+    for form in forms:
+        current = _normalize_required_text(form, "forms")
+        if current in seen:
+            continue
+        normalized.append(current)
+        seen.add(current)
+    return normalized or None
+
+
 class SecEdgarAgent(MeshAgent):
     _throttle_lock: Optional[asyncio.Lock] = None
     _last_request_at = 0.0
@@ -257,7 +324,7 @@ Rules:
                         "properties": {
                             "query": {
                                 "type": "string",
-                                "description": "Company name, ticker, or CIK to resolve.",
+                                "description": "Company name, ticker, or CIK to resolve (e.g. 'Apple', 'AAPL', or '0000320193').",
                             },
                             "limit": {
                                 "type": "integer",
@@ -283,11 +350,8 @@ Rules:
                             },
                             "forms": {
                                 "type": "array",
-                                "description": "Optional SEC form filter. Use exact form strings such as '8-K', '10-Q', '10-K', 'S-1', 'S-1/A', '6-K', '20-F', or '424B5'. Omit to use the default issuer-event set ['8-K', '10-Q', '10-K', 'S-1', 'S-1/A'].",
-                                "items": {
-                                    "type": "string",
-                                    "description": "Exact SEC form code such as '8-K' or '10-Q'.",
-                                },
+                                "description": "SEC form type filter. Omit to use the default set: 8-K, 10-Q, 10-K, S-1, S-1/A.",
+                                "items": {"type": "string"},
                             },
                             "limit": {
                                 "type": "integer",
@@ -314,7 +378,7 @@ Rules:
                             "form": {
                                 "type": "string",
                                 "enum": FORM_DIFF_CANDIDATES,
-                                "description": "Optional form to compare. If omitted, the latest comparable major form is used.",
+                                "description": "SEC form type to diff. If omitted, the most recent comparable filing pair is selected automatically.",
                             },
                             "paragraph_limit": {
                                 "type": "integer",
@@ -330,7 +394,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "xbrl_fact_trends",
-                    "description": "Return direct SEC XBRL company facts for a metric such as revenue, net income, EPS, cash, assets, liabilities, or shares outstanding. Use this instead of vendor-normalized fundamentals when the user wants SEC-reported values.",
+                    "description": "Return quarterly or annual SEC XBRL fact observations for one metric and one issuer. Accepts plain-English metric names or exact XBRL concept names. See the metric parameter for supported values.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -340,7 +404,7 @@ Rules:
                             },
                             "metric": {
                                 "type": "string",
-                                "description": "Single metric only. Use a plain-English metric like 'revenue', 'net income', 'operating income', 'gross profit', 'cash', 'assets', 'liabilities', 'equity', 'shares outstanding', or 'eps', or pass an exact SEC XBRL concept like 'RevenueFromContractWithCustomerExcludingAssessedTax', 'NetIncomeLoss', 'Assets', or 'EntityCommonStockSharesOutstanding'. Do not combine multiple metrics in one string.",
+                                "description": "Plain-English metric name (e.g. 'revenue', 'net income', 'eps', 'cash', 'assets') or exact XBRL concept name (e.g. 'NetIncomeLoss'). One metric per call.",
                             },
                             "frequency": {
                                 "type": "string",
@@ -381,7 +445,7 @@ Rules:
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": "Maximum number of insider filings to inspect.",
+                                "description": "Maximum number of insider filings to return.",
                                 "default": 5,
                             },
                         },
@@ -403,7 +467,7 @@ Rules:
                             },
                             "limit": {
                                 "type": "integer",
-                                "description": "Maximum number of activist filings to inspect.",
+                                "description": "Maximum number of activist filings to return.",
                                 "default": 5,
                             },
                         },
@@ -415,7 +479,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "institutional_holders",
-                    "description": "Return an issuer-level holder snapshot from the latest SEC Form 13F flattened dataset. Uses the latest quarterly 13F ZIP, matches the issuer by SEC company name normalization, and aggregates long holder rows by filing manager.",
+                    "description": "Return the top institutional holders of an issuer from the latest SEC 13F dataset, ranked by reported position value. Use this for institutional ownership questions.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -439,31 +503,32 @@ Rules:
         self, tool_name: str, function_args: dict, session_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         try:
+            query = function_args.get("query") or function_args.get("cik")
             if tool_name == "resolve_company":
-                return await self.resolve_company(function_args["query"], function_args.get("limit", 5))
+                return await self.resolve_company(query, function_args.get("limit", 5))
             if tool_name == "filing_timeline":
                 return await self.filing_timeline(
-                    function_args["query"], function_args.get("forms"), function_args.get("limit", 10)
+                    query, function_args.get("forms"), function_args.get("limit", 10)
                 )
             if tool_name == "filing_diff":
                 return await self.filing_diff(
-                    function_args["query"], function_args.get("form"), function_args.get("paragraph_limit", 5)
+                    query, function_args.get("form") or function_args.get("form_type"), function_args.get("paragraph_limit", 5)
                 )
             if tool_name == "xbrl_fact_trends":
                 return await self.xbrl_fact_trends(
-                    query=function_args["query"],
-                    metric=function_args["metric"],
+                    query=query,
+                    metric=function_args.get("metric") or function_args.get("concept"),
                     frequency=function_args.get("frequency", "quarterly"),
                     taxonomy=function_args.get("taxonomy"),
                     unit=function_args.get("unit"),
-                    limit=function_args.get("limit", 8),
+                    limit=function_args.get("limit", function_args.get("periods", 8)),
                 )
             if tool_name == "insider_activity":
-                return await self.insider_activity(function_args["query"], function_args.get("limit", 5))
+                return await self.insider_activity(query, function_args.get("limit", 5))
             if tool_name == "activist_watch":
-                return await self.activist_watch(function_args["query"], function_args.get("limit", 5))
+                return await self.activist_watch(query, function_args.get("limit", 5))
             if tool_name == "institutional_holders":
-                return await self.institutional_holders(function_args["query"], function_args.get("limit", 10))
+                return await self.institutional_holders(query, function_args.get("limit", function_args.get("top_n", 10)))
             return {"status": "error", "error": f"Unsupported tool: {tool_name}"}
         except Exception as exc:
             logger.error(f"SEC Edgar tool failure for {tool_name}: {exc}")
@@ -875,6 +940,12 @@ Rules:
                 label = concept_payload.get("label") or concept_name
                 description = concept_payload.get("description") or ""
                 label_norm = _normalize_company_name(label)
+                unit_names = list(concept_payload["units"].keys())
+                primary_unit = max(unit_names, key=lambda name: len(concept_payload["units"][name]))
+                primary_observations = self._dedupe_fact_observations(concept_payload["units"][primary_unit])
+                latest_observation = primary_observations[-1] if primary_observations else {}
+                latest_observation_date = latest_observation.get("end") or latest_observation.get("filed") or ""
+                is_deprecated = "deprecated" in f"{concept_name} {label} {description}".lower()
                 if concept_name in alias_targets:
                     score = 100.0
                 elif metric_norm == concept_norm:
@@ -893,18 +964,31 @@ Rules:
                             "concept": concept_name,
                             "label": label,
                             "description": description,
-                            "units": list(concept_payload["units"].keys()),
+                            "units": unit_names,
                             "score": score,
+                            "_latest_observation_date": latest_observation_date,
+                            "_observation_count": len(primary_observations),
+                            "_deprecated": is_deprecated,
                         }
                     )
 
         if not candidates:
             return {"status": "error", "error": f"No SEC XBRL metric matched '{metric}'"}
 
-        candidates.sort(key=lambda row: row["score"], reverse=True)
+        candidates.sort(
+            key=lambda row: (
+                row["score"],
+                0 if row["_deprecated"] else 1,
+                row["_latest_observation_date"],
+                row["_observation_count"],
+            ),
+            reverse=True,
+        )
         best = candidates[0]
         concept_payload = facts["facts"][best["taxonomy"]][best["concept"]]
-        return {"status": "success", "best": best, "concept_payload": concept_payload, "candidates": candidates[:5]}
+        cleaned_best = {key: value for key, value in best.items() if not key.startswith("_")}
+        cleaned_candidates = [{key: value for key, value in row.items() if not key.startswith("_")} for row in candidates[:5]]
+        return {"status": "success", "best": cleaned_best, "concept_payload": concept_payload, "candidates": cleaned_candidates}
 
     def _select_fact_unit(self, concept_payload: Dict[str, Any], requested_unit: Optional[str]) -> str:
         if requested_unit:
@@ -955,9 +1039,11 @@ Rules:
         return records
 
     async def resolve_company(self, query: str, limit: int = 5) -> Dict[str, Any]:
-        query = query.strip()
-        if not query:
-            return {"status": "error", "error": "query is required"}
+        try:
+            query = _normalize_required_text(query, "query")
+            limit = _normalize_int(limit, "limit", 5, maximum=10)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
 
         records = await self._fetch_company_tickers()
         scored = []
@@ -979,7 +1065,7 @@ Rules:
                 return {"status": "success", "data": {"query": query, "best_match": best, "candidates": [best]}}
             return {"status": "error", "error": f"No SEC issuer matched '{query}'"}
 
-        limited = scored[: max(limit, 1)]
+        limited = scored[:limit]
         return {
             "status": "success",
             "data": {
@@ -990,6 +1076,13 @@ Rules:
         }
 
     async def filing_timeline(self, query: str, forms: Optional[List[str]], limit: int) -> Dict[str, Any]:
+        try:
+            query = _normalize_required_text(query, "query")
+            forms = _normalize_forms(forms)
+            limit = _normalize_int(limit, "limit", 10, maximum=50)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
+
         company = await self._resolve_company_record(query)
         if "status" in company and company["status"] == "error":
             return company
@@ -1014,6 +1107,13 @@ Rules:
         }
 
     async def filing_diff(self, query: str, form: Optional[str], paragraph_limit: int) -> Dict[str, Any]:
+        try:
+            query = _normalize_required_text(query, "query")
+            form = _normalize_optional_text(form, "form")
+            paragraph_limit = _normalize_int(paragraph_limit, "paragraph_limit", 5, maximum=20)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
+
         company = await self._resolve_company_record(query)
         if "status" in company and company["status"] == "error":
             return company
@@ -1082,6 +1182,16 @@ Rules:
         unit: Optional[str] = None,
         limit: int = 8,
     ) -> Dict[str, Any]:
+        try:
+            query = _normalize_required_text(query, "query")
+            metric = _normalize_required_text(metric, "metric")
+            frequency = _normalize_required_text(frequency, "frequency").lower()
+            taxonomy = _normalize_optional_text(taxonomy, "taxonomy")
+            unit = _normalize_optional_text(unit, "unit")
+            limit = _normalize_int(limit, "limit", 8, maximum=24)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
+
         if frequency not in FACT_FREQUENCIES:
             return {"status": "error", "error": f"Unsupported frequency: {frequency}"}
 
@@ -1121,6 +1231,12 @@ Rules:
         }
 
     async def insider_activity(self, query: str, limit: int) -> Dict[str, Any]:
+        try:
+            query = _normalize_required_text(query, "query")
+            limit = _normalize_int(limit, "limit", 5, maximum=50)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
+
         company = await self._resolve_company_record(query)
         if "status" in company and company["status"] == "error":
             return company
@@ -1153,6 +1269,12 @@ Rules:
         }
 
     async def activist_watch(self, query: str, limit: int) -> Dict[str, Any]:
+        try:
+            query = _normalize_required_text(query, "query")
+            limit = _normalize_int(limit, "limit", 5, maximum=50)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
+
         company = await self._resolve_company_record(query)
         if "status" in company and company["status"] == "error":
             return company
@@ -1185,6 +1307,12 @@ Rules:
         }
 
     async def institutional_holders(self, query: str, limit: int) -> Dict[str, Any]:
+        try:
+            query = _normalize_required_text(query, "query")
+            limit = _normalize_int(limit, "limit", 10, maximum=50)
+        except ValueError as exc:
+            return {"status": "error", "error": str(exc)}
+
         company = await self._resolve_company_record(query)
         if "status" in company and company["status"] == "error":
             return company

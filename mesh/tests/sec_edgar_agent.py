@@ -53,6 +53,24 @@ TEST_CASES = {
         "description": "Direct SEC-reported quarterly revenue trend for Apple.",
         "expected_status": "success",
     },
+    "xbrl_fact_trends_plural_revenues_string_limit": {
+        "input": {
+            "tool": "xbrl_fact_trends",
+            "tool_arguments": {"query": "AAPL", "metric": "Revenues", "frequency": "quarterly", "limit": "6"},
+            "raw_data_only": True,
+        },
+        "description": "Plural revenue metric and stringified limit normalize cleanly and still return current SEC revenue facts.",
+        "expected_status": "success",
+    },
+    "xbrl_fact_trends_legacy_concept_periods": {
+        "input": {
+            "tool": "xbrl_fact_trends",
+            "tool_arguments": {"cik": "AAPL", "concept": "EarningsPerShareBasic", "periods": "6"},
+            "raw_data_only": True,
+        },
+        "description": "Legacy concept and periods aliases normalize to the current XBRL fact trend contract.",
+        "expected_status": "success",
+    },
     "xbrl_fact_trends_invalid_metric": {
         "input": {
             "tool": "xbrl_fact_trends",
@@ -71,6 +89,15 @@ TEST_CASES = {
         "description": "Recent Tesla Forms 3/4/5 with parsed transaction rows.",
         "expected_status": "success",
     },
+    "insider_activity_string_limit": {
+        "input": {
+            "tool": "insider_activity",
+            "tool_arguments": {"query": "AAPL", "limit": "3"},
+            "raw_data_only": True,
+        },
+        "description": "Stringified limit should normalize for insider activity.",
+        "expected_status": "success",
+    },
     "activist_watch_apple": {
         "input": {
             "tool": "activist_watch",
@@ -87,6 +114,15 @@ TEST_CASES = {
             "raw_data_only": True,
         },
         "description": "Issuer-level latest-quarter 13F holder snapshot for Apple.",
+        "expected_status": "success",
+    },
+    "institutional_holders_legacy_top_n": {
+        "input": {
+            "tool": "institutional_holders",
+            "tool_arguments": {"cik": "AAPL", "top_n": "5"},
+            "raw_data_only": True,
+        },
+        "description": "Legacy issuer alias and stringified top_n should normalize for institutional holders.",
         "expected_status": "success",
     },
 }
