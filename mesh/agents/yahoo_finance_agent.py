@@ -441,7 +441,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "news_search",
-                    "description": "Return news headlines and source URLs for a symbol, company, asset, or market topic. You should use other tools to read the full article.",
+                    "description": "Return news headlines and source URLs for a symbol, company, asset, or market topic. For 3+ word topical queries, this may redirect to an Exa digest fallback and return a summarized search result instead of Yahoo headline rows.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -608,6 +608,27 @@ Rules:
             return int(value), None
         except (TypeError, ValueError):
             return None, f"{field_name} must be an integer."
+
+    def _should_redirect_news_search_to_exa(self, query: str) -> bool:
+        return len(query.strip().split()) >= 3
+
+    async def _news_search_exa_fallback(self, query: str, limit: int) -> Optional[Dict[str, Any]]:
+        exa_result = await self._call_agent_tool_safe(
+            "mesh.agents.exa_search_digest_agent",
+            "ExaSearchDigestAgent",
+            "exa_web_search",
+            tool_args={
+                "search_term": query,
+                "time_filter": "past_month",
+                "limit": max(6, min(limit, 10)),
+            },
+            raw_data_only=True,
+            log_instance=logger,
+            context="ExaSearchDigestAgent.exa_web_search",
+        )
+        if exa_result.get("status") == "error":
+            return None
+        return exa_result
 
     def _get_symbols_arg(self, function_args: Dict[str, Any]) -> Any:
         if "symbols" in function_args:
@@ -1819,6 +1840,10 @@ Rules:
             return {"status": "error", "error": "Query must be a non-empty string."}
         if asset_type is not None and asset_type not in ASSET_TYPES:
             return {"status": "error", "error": f"Unsupported asset_type '{asset_type}'."}
+        limit, error = self._coerce_int_arg(limit, "limit")
+        if error:
+            return {"status": "error", "error": error}
+        limit = max(1, min(limit or 5, 10))
 
         def _do_search(search_query: str) -> List[Dict[str, Any]]:
             if asset_type == "future" and hasattr(yf, "Lookup"):
@@ -2166,6 +2191,9 @@ Rules:
             return {"status": "error", "error": error}
         if interval not in HISTORY_INTERVALS:
             return {"status": "error", "error": f"Unsupported interval '{interval}'."}
+        limit_bars, error = self._coerce_int_arg(limit_bars, "limit_bars")
+        if error:
+            return {"status": "error", "error": error}
 
         limit_bars = max(1, min(limit_bars or 10, 30))
         history_frames: Dict[str, pd.DataFrame] = {}
@@ -2294,6 +2322,9 @@ Rules:
             return {"status": "error", "error": error}
         if interval not in HISTORY_INTERVALS:
             return {"status": "error", "error": f"Unsupported interval '{interval}'."}
+        limit_bars, error = self._coerce_int_arg(limit_bars, "limit_bars")
+        if error:
+            return {"status": "error", "error": error}
 
         limit_bars = max(1, min(limit_bars or 50, 250))
         try:
@@ -2649,8 +2680,15 @@ Rules:
     async def news_search(self, query: str, limit: int = 5) -> Dict[str, Any]:
         if not query or not isinstance(query, str):
             return {"status": "error", "error": "Query must be a non-empty string."}
+        limit, error = self._coerce_int_arg(limit, "limit")
+        if error:
+            return {"status": "error", "error": error}
 
         limit = max(1, min(limit or 5, 10))
+        if self._should_redirect_news_search_to_exa(query):
+            exa_result = await self._news_search_exa_fallback(query, limit)
+            if exa_result is not None:
+                return exa_result
 
         def _do_search() -> List[Dict[str, Any]]:
             search = yf.Search(query, max_results=5, news_count=limit, include_cb=False)
@@ -2878,6 +2916,9 @@ Rules:
                 "status": "error",
                 "error": f"Unsupported screen_name '{screen_name}'. Supported screens: {SUPPORTED_EQUITY_SCREENS}.",
             }
+        limit, error = self._coerce_int_arg(limit, "limit")
+        if error:
+            return {"status": "error", "error": error}
 
         limit = max(1, min(limit or 10, 25))
 
