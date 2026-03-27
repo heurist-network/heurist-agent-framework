@@ -90,23 +90,26 @@ def get_latest_commit_sha(repo: str) -> str | None:
 # ---- Admin API ----
 
 
-def trigger_update(skill_id: str) -> dict | None:
+def trigger_update(skill_id: str, retries: int = 2) -> dict | None:
     url = f"{API_BASE}/admin/skills/{skill_id}/update"
     headers = {
         "X-API-Key": INTERNAL_API_KEY,
         "Content-Type": "application/json",
     }
-    req = urllib.request.Request(url, data=b"{}", headers=headers, method="POST")
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            return json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        body = e.read().decode() if e.fp else ""
-        logger.error(f"Admin update failed for {skill_id}: {e.code} {body}")
-        return None
-    except Exception as e:
-        logger.error(f"Admin update request failed for {skill_id}: {e}")
-        return None
+    for attempt in range(1, retries + 1):
+        req = urllib.request.Request(url, data=b"{}", headers=headers, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                return json.loads(resp.read())
+        except urllib.error.HTTPError as e:
+            body = e.read().decode() if e.fp else ""
+            logger.error(f"Admin update failed for {skill_id} (attempt {attempt}/{retries}): {e.code} {body}")
+        except Exception as e:
+            logger.error(f"Admin update request failed for {skill_id} (attempt {attempt}/{retries}): {e}")
+        if attempt < retries:
+            import time
+            time.sleep(60)
+    return None
 
 
 # ---- Main ----
