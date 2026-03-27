@@ -129,6 +129,9 @@ class MeshAgent(ABC):
         """Handle execution of specific tools and return the raw data"""
         pass
 
+    def _finalize_tool_result(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        return data
+
     @monitor_execution()
     async def handle_message(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -153,7 +156,8 @@ class MeshAgent(ABC):
             data = await self._execute_tool_with_policy(
                 tool_name=tool_name, function_args=tool_args, session_context=session_context, original_params=params
             )
-            return {"response": "", "data": data}
+            data = self._finalize_tool_result(data)
+            return {"data": data}
 
         # ---------------------
         # 2) NATURAL LANGUAGE QUERY (LLM decides the tool)
@@ -182,6 +186,7 @@ class MeshAgent(ABC):
                 session_context=session_context,
                 original_params=params,
             )
+            data = self._finalize_tool_result(data)
 
             # If the tool returned an error (including timeout-as-error), do not attempt LLM
             if isinstance(data, dict) and ("error" in data or data.get("status") == "error"):

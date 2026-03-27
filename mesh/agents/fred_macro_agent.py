@@ -285,6 +285,11 @@ Rules:
                                 "minimum": 2,
                                 "maximum": 24,
                             },
+                            "include_links": {
+                                "type": "boolean",
+                                "description": "Include FRED release links in the response.",
+                                "default": False,
+                            },
                         },
                         "required": ["release_key"],
                     },
@@ -1073,7 +1078,9 @@ Rules:
         except Exception as exc:
             return self._error(str(exc))
 
-    async def macro_release_context(self, release_key: str, lookback_releases: int = 6) -> Dict[str, Any]:
+    async def macro_release_context(
+        self, release_key: str, lookback_releases: int = 6, include_links: bool = False
+    ) -> Dict[str, Any]:
         try:
             release_spec = self._get_release_spec(release_key)
             lookback_releases = self._validate_release_lookback(lookback_releases)
@@ -1105,20 +1112,22 @@ Rules:
                 )
 
             release_dates = dates_result["data"]
-            return self._success(
+            payload = self._success(
                 {
                     "release": {
                         "release_key": release_key,
                         "release_id": release_spec["release_id"],
                         "release_name": metadata_result.get("name") or release_spec["release_name"],
-                        "press_release": metadata_result.get("press_release"),
-                        "link": metadata_result.get("link"),
                     },
                     "latest_release_date": release_dates[0] if release_dates else None,
                     "prior_release_dates": release_dates[1:],
                     "linked_series": linked_series,
                 }
             )
+            if include_links:
+                payload["data"]["release"]["press_release"] = metadata_result.get("press_release")
+                payload["data"]["release"]["link"] = metadata_result.get("link")
+            return payload
         except Exception as exc:
             return self._error(str(exc))
 
@@ -1204,6 +1213,7 @@ Rules:
                 return await self.macro_release_context(
                     release_key=function_args["release_key"],
                     lookback_releases=function_args.get("lookback_releases", 6),
+                    include_links=function_args.get("include_links", False),
                 )
             if tool_name == "macro_vintage_history":
                 return await self.macro_vintage_history(

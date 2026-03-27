@@ -18,6 +18,7 @@ from yfinance.exceptions import (
 
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
+from mesh.utils.response_compactor import compact_response_payload
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -140,6 +141,22 @@ class YahooFinanceAgent(MeshAgent):
                     "default_price_usd": "0.002",
                 },
             }
+        )
+
+    def _finalize_tool_result(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        return compact_response_payload(
+            data,
+            max_float_decimals=5,
+            date_only_keys={
+                "as_of",
+                "timestamp",
+                "start",
+                "end",
+                "date",
+                "earnings_date",
+                "dividend_date",
+                "ex_dividend_date",
+            },
         )
 
     def get_default_timeout_seconds(self) -> Optional[int]:
@@ -1129,7 +1146,6 @@ Rules:
 
     def _normalize_news_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
         return {
-            "id": item.get("uuid"),
             "title": item.get("title"),
             "publisher": item.get("publisher"),
             "published_at": self._iso(pd.to_datetime(item.get("providerPublishTime"), unit="s", utc=True))

@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 
 from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
+from mesh.utils.response_compactor import compact_response_payload
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -288,6 +289,13 @@ class SecEdgarAgent(MeshAgent):
             }
         )
 
+    def _finalize_tool_result(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        return compact_response_payload(
+            data,
+            drop_keys={"accession_number"},
+            date_only_keys={"acceptance_datetime"},
+        )
+
     def get_default_timeout_seconds(self) -> Optional[int]:
         return 45
 
@@ -359,6 +367,11 @@ Rules:
                                 "description": "Maximum number of filing events to return.",
                                 "default": 10,
                             },
+                            "include_links": {
+                                "type": "boolean",
+                                "description": "Include full SEC filing URLs in the response.",
+                                "default": False,
+                            },
                         },
                         "required": ["query"],
                     },
@@ -385,6 +398,11 @@ Rules:
                                 "type": "integer",
                                 "description": "Maximum number of added and removed paragraphs to surface.",
                                 "default": 5,
+                            },
+                            "include_links": {
+                                "type": "boolean",
+                                "description": "Include full SEC filing URLs in the response.",
+                                "default": False,
                             },
                         },
                         "required": ["query"],
@@ -449,6 +467,11 @@ Rules:
                                 "description": "Maximum number of insider filings to return.",
                                 "default": 5,
                             },
+                            "include_links": {
+                                "type": "boolean",
+                                "description": "Include full SEC filing URLs in the response.",
+                                "default": False,
+                            },
                         },
                         "required": ["query"],
                     },
@@ -470,6 +493,11 @@ Rules:
                                 "type": "integer",
                                 "description": "Maximum number of activist filings to return.",
                                 "default": 5,
+                            },
+                            "include_links": {
+                                "type": "boolean",
+                                "description": "Include full SEC filing URLs in the response.",
+                                "default": False,
                             },
                         },
                         "required": ["query"],
@@ -509,11 +537,17 @@ Rules:
                 return await self.resolve_company(query, function_args.get("limit", 5))
             if tool_name == "filing_timeline":
                 return await self.filing_timeline(
-                    query, function_args.get("forms"), function_args.get("limit", 10)
+                    query,
+                    function_args.get("forms"),
+                    function_args.get("limit", 10),
+                    function_args.get("include_links", False),
                 )
             if tool_name == "filing_diff":
                 return await self.filing_diff(
-                    query, function_args.get("form") or function_args.get("form_type"), function_args.get("paragraph_limit", 5)
+                    query,
+                    function_args.get("form") or function_args.get("form_type"),
+                    function_args.get("paragraph_limit", 5),
+                    function_args.get("include_links", False),
                 )
             if tool_name == "xbrl_fact_trends":
                 return await self.xbrl_fact_trends(
@@ -525,9 +559,9 @@ Rules:
                     limit=function_args.get("limit", function_args.get("periods", 8)),
                 )
             if tool_name == "insider_activity":
-                return await self.insider_activity(query, function_args.get("limit", 5))
+                return await self.insider_activity(query, function_args.get("limit", 5), function_args.get("include_links", False))
             if tool_name == "activist_watch":
-                return await self.activist_watch(query, function_args.get("limit", 5))
+                return await self.activist_watch(query, function_args.get("limit", 5), function_args.get("include_links", False))
             if tool_name == "institutional_holders":
                 return await self.institutional_holders(query, function_args.get("limit", function_args.get("top_n", 10)))
             return {"status": "error", "error": f"Unsupported tool: {tool_name}"}
@@ -661,6 +695,11 @@ Rules:
             "title": record["title"],
             "score": round(score, 2),
         }
+
+    def _filing_output(self, filing: Dict[str, Any], include_links: bool) -> Dict[str, Any]:
+        if include_links:
+            return dict(filing)
+        return {key: value for key, value in filing.items() if key != "filing_url"}
 
     def _recent_block_to_rows(self, cik: str, block: Dict[str, List[str]]) -> List[Dict[str, Any]]:
         rows: List[Dict[str, Any]] = []
@@ -1063,7 +1102,7 @@ Rules:
                     "title": submissions["name"],
                     "score": 100.0,
                 }
-                return {"status": "success", "data": {"query": query, "best_match": best, "candidates": [best]}}
+                return {"status": "success", "data": {"query": query, "best_match": best, "other_candidates": []}}
             return {"status": "error", "error": f"No SEC issuer matched '{query}'"}
 
         limited = scored[:limit]
@@ -1077,7 +1116,7 @@ Rules:
                 "data": {
                     "query": query,
                     "best_candidate": limited[0],
-                    "candidates": limited,
+                    "other_candidates": limited[1:],
                 },
             }
         return {
@@ -1085,11 +1124,13 @@ Rules:
             "data": {
                 "query": query,
                 "best_match": limited[0],
-                "candidates": limited,
+                "other_candidates": limited[1:],
             },
         }
 
-    async def filing_timeline(self, query: str, forms: Optional[List[str]], limit: int) -> Dict[str, Any]:
+    async def filing_timeline(
+        self, query: str, forms: Optional[List[str]], limit: int, include_links: bool = False
+    ) -> Dict[str, Any]:
         try:
             query = _normalize_required_text(query, "query")
             forms = _normalize_forms(forms)
@@ -1116,11 +1157,13 @@ Rules:
                 "company": company,
                 "forms": form_filter,
                 "counts_by_form": counts,
-                "filings": filings[:limit],
+                "filings": [self._filing_output(filing, include_links) for filing in filings[:limit]],
             },
         }
 
-    async def filing_diff(self, query: str, form: Optional[str], paragraph_limit: int) -> Dict[str, Any]:
+    async def filing_diff(
+        self, query: str, form: Optional[str], paragraph_limit: int, include_links: bool = False
+    ) -> Dict[str, Any]:
         try:
             query = _normalize_required_text(query, "query")
             form = _normalize_optional_text(form, "form")
@@ -1174,13 +1217,11 @@ Rules:
                 "company": company,
                 "form": current_filing["form"],
                 "comparison_method": "paragraph-level text comparison of the latest filing body versus the previous same-form filing body",
-                "current_filing": current_filing,
-                "previous_filing": previous_filing,
+                "current_filing": self._filing_output(current_filing, include_links),
+                "previous_filing": self._filing_output(previous_filing, include_links),
                 "similarity_ratio": similarity,
                 "current_paragraph_count": len(current_paragraphs),
                 "previous_paragraph_count": len(previous_paragraphs),
-                "current_items": current_items,
-                "previous_items": previous_items,
                 "new_8k_items": new_items,
                 "notable_additions": added,
                 "notable_removals": removed,
@@ -1244,7 +1285,7 @@ Rules:
             },
         }
 
-    async def insider_activity(self, query: str, limit: int) -> Dict[str, Any]:
+    async def insider_activity(self, query: str, limit: int, include_links: bool = False) -> Dict[str, Any]:
         try:
             query = _normalize_required_text(query, "query")
             limit = _normalize_int(limit, "limit", 5, maximum=50)
@@ -1270,9 +1311,10 @@ Rules:
                     "reporting_person": parsed["reporting_person"],
                     "relationship": parsed["relationship"],
                     "transactions": parsed["transactions"][:5],
-                    "filing_url": filing["filing_url"],
                 }
             )
+            if include_links:
+                activities[-1]["filing_url"] = filing["filing_url"]
 
         return {
             "status": "success",
@@ -1282,7 +1324,7 @@ Rules:
             },
         }
 
-    async def activist_watch(self, query: str, limit: int) -> Dict[str, Any]:
+    async def activist_watch(self, query: str, limit: int, include_links: bool = False) -> Dict[str, Any]:
         try:
             query = _normalize_required_text(query, "query")
             limit = _normalize_int(limit, "limit", 5, maximum=50)
@@ -1308,9 +1350,10 @@ Rules:
                     "beneficial_ownership": parsed["beneficial_ownership"],
                     "percent_of_class": parsed["percent_of_class"],
                     "item_summary": parsed["item_summary"],
-                    "filing_url": filing["filing_url"],
                 }
             )
+            if include_links:
+                watch_items[-1]["filing_url"] = filing["filing_url"]
 
         return {
             "status": "success",
