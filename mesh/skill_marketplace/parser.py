@@ -5,8 +5,10 @@ Stores the full raw frontmatter for skill_md_frontmatter_json column.
 Provides shared GitHub folder detection used by admin_routes and ingest_skill.
 """
 
+import io
 import logging
 import os
+import tarfile
 from pathlib import PurePosixPath
 from urllib.parse import urlparse
 
@@ -154,19 +156,33 @@ async def fetch_github_folder_files(
 
         logger.info(f"detected folder skill: {len(file_paths)} files in {owner}/{repo}/{folder_prefix or '(root)'}")
 
-        folder_files = {}
-        raw_headers = {"Accept": "application/vnd.github.v3.raw"}
-        if github_token:
-            raw_headers["Authorization"] = f"token {github_token}"
+        # Download repo as tarball (1 request) instead of per-file fetching to avoid rate limits
+        tarball_url = f"https://api.github.com/repos/{owner}/{repo}/tarball"
+        async with session.get(tarball_url, headers=gh_headers) as tar_resp:
+            if tar_resp.status != 200:
+                logger.warning(f"tarball download failed for {owner}/{repo}: HTTP {tar_resp.status}")
+                return None
+            tarball_bytes = await tar_resp.read()
 
-        for fp in file_paths:
-            async with session.get(
-                f"https://api.github.com/repos/{owner}/{repo}/contents/{fp}",
-                headers=raw_headers,
-            ) as file_resp:
-                if file_resp.status == 200:
-                    rel_path = fp[len(folder_prefix):] if folder_prefix else fp
-                    folder_files[rel_path] = await file_resp.read()
+        folder_files = {}
+        file_paths_set = set(file_paths)
+        with tarfile.open(fileobj=io.BytesIO(tarball_bytes), mode="r:gz") as tar:
+            for member in tar.getmembers():
+                if not member.isfile():
+                    continue
+                # Tarball paths are prefixed with "{owner}-{repo}-{sha}/"
+                parts = member.name.split("/", 1)
+                if len(parts) < 2:
+                    continue
+                repo_path = parts[1]
+                if repo_path not in file_paths_set:
+                    continue
+                f = tar.extractfile(member)
+                if f:
+                    rel_path = repo_path[len(folder_prefix):] if folder_prefix else repo_path
+                    folder_files[rel_path] = f.read()
+
+        logger.info(f"extracted {len(folder_files)} files from tarball for {owner}/{repo}")
 
     return folder_files if len(folder_files) > 1 else None
 
