@@ -49,6 +49,30 @@
       "groupByEntity": false
     }
   },
+  "BaseUSDCForensicsAgent": {
+    "usdc_basic_profile": {
+      "address": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d"
+    },
+    "usdc_top_funders": {
+      "address": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d",
+      "limit": 10
+    },
+    "usdc_top_sinks": {
+      "address": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d",
+      "limit": 10
+    },
+    "usdc_net_counterparties": {
+      "address": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d",
+      "limit": 20
+    },
+    "usdc_daily_activity": {
+      "address": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d"
+    },
+    "usdc_hourly_pair_activity": {
+      "address_a": "0x7d9d1821d15b9e0b8ab98a058361233e255e405d",
+      "address_b": "0xb2f1c3beb9c4c4bb7fe8e55a9751603c2a3c0e54"
+    }
+  },
   "BitquerySolanaTokenInfoAgent": {
     "get_top_trending_tokens": {},
     "query_holder_status": {
