@@ -29,7 +29,6 @@ MARKETS = ["US", "GB", "ASIA", "EUROPE", "RATES", "COMMODITIES", "CURRENCIES", "
 ASSET_TYPES = ["stock", "etf", "crypto", "currency", "index", "future", "fund"]
 EQUITY_ONLY_ASSET_TYPES = {"stock"}
 FUND_ONLY_ASSET_TYPES = {"etf", "fund"}
-FUTURE_ONLY_ASSET_TYPES = {"future"}
 SUPPORTED_EQUITY_SCREENS = [
     "aggressive_small_caps",
     "day_gainers",
@@ -99,6 +98,7 @@ CASH_FLOW_FIELDS = {
 MAX_BATCH_SYMBOLS = 10
 OPTIONS_SIDES = ["calls", "puts", "both"]
 OPTIONS_MONEYNESS = ["all", "itm", "otm", "atm"]
+EQUITY_OVERVIEW_SECTIONS = ["fundamentals", "analyst"]
 SHARED_HISTORY_TTL_SECONDS = 300
 SHARED_METADATA_TTL_SECONDS = 300
 SHARED_OPTIONS_TTL_SECONDS = 180
@@ -113,10 +113,10 @@ class YahooFinanceAgent(MeshAgent):
         self.metadata.update(
             {
                 "name": "Yahoo Finance Agent",
-                "version": "2.1.0",
+                "version": "3.0.0",
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
-                "description": "Agent-friendly Yahoo Finance tools for symbol resolution, quote snapshots, normalized price history, technical analysis, news, market overview, company fundamentals, analyst views, fund snapshots, and curated equity screens.",
+                "description": "Agent-friendly Yahoo Finance tools for symbol resolution, quote snapshots, normalized price history, technical analysis, options chains, news, market overview, equity overviews (fundamentals + analyst), fund snapshots, and curated equity screens.",
                 "external_apis": ["Yahoo Finance"],
                 "tags": ["Market Analysis"],
                 "verified": True,
@@ -128,12 +128,11 @@ class YahooFinanceAgent(MeshAgent):
                     "Show me a technical snapshot for TSLA",
                     "Find recent Nvidia news",
                     "What is the market overview for US equities?",
-                    "Show company fundamentals for Microsoft",
-                    "Give me an analyst snapshot for Amazon",
+                    "Give me an equity overview for Microsoft",
                     "Summarize the ETF SPY",
                     "Show me today's Yahoo day gainers",
-                    "Show me the nearest AAPL options chain",
-                    "Give me a futures snapshot for GC=F",
+                    "List AAPL option expirations and then the nearest chain",
+                    "Give me a quote snapshot for GC=F with recent history",
                 ],
                 "credits": {"default": 0.2},
                 "x402_config": {
@@ -167,16 +166,13 @@ class YahooFinanceAgent(MeshAgent):
 
 Use the tools with clear scope:
 - `resolve_symbol` when the user gives a company name, ambiguous ticker, or asks what symbol to use
-- `quote_snapshot` for the latest compact market snapshot of one symbol
+- `quote_snapshot` for the latest compact market snapshot of one or more symbols. Set `include_history=true` to also get recent bars and a trend summary (works for stocks, crypto, futures, indices, etc.)
 - `price_history` for normalized OHLCV history
 - `technical_snapshot` for technical analysis and signal summary
-- `options_expirations` to discover which expirations exist before picking one options chain
-- `options_chain` for compact options chain snapshots on one underlying symbol
-- `futures_snapshot` for compact futures snapshots and optional recent trend context
+- `options_chain` for options data: call without `expiration` to discover available expirations for an underlying, then call again with a chosen `expiration` to return the chain snapshot
 - `news_search` for recent news about a symbol, company, or market topic
 - `market_overview` for high-level market status and benchmark summary
-- `company_fundamentals` for compact equity fundamentals
-- `analyst_snapshot` for compact equity analyst data
+- `equity_overview` for compact equity fundamentals and/or analyst data (sections defaults to both)
 - `fund_snapshot` for normalized ETF or mutual fund data
 - `equity_screen` for curated predefined equity screens
 
@@ -186,9 +182,8 @@ Rules:
 - Prefer compact, structured outputs over raw dumps
 - Be honest about unsupported asset/tool combinations
 - Use the latest completed candle for technical analysis and price-history summaries
-- MUST use `options_expirations` before `options_chain`
-- Use `options_chain` only for exact underlyings with an exact expiration returned by `options_expirations`, not raw chain dumps
-- Use `futures_snapshot` for exact futures symbols like `GC=F`, `CL=F`, or `NG=F`
+- For futures symbols like `GC=F`, `CL=F`, or `NG=F`, call `quote_snapshot` with `include_history=true`
+- For options, call `options_chain` once without `expiration` to see available expirations, then call again with an exact expiration value returned
 - Mention the exact symbols, interval, and resolved date window in your response
 """
 
@@ -225,15 +220,36 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "quote_snapshot",
-                    "description": "Return a compact current market snapshot for one or more exact Yahoo Finance symbols. For futures symbols, prefer futures_snapshot which includes recent trend context.",
+                    "description": "Return a compact current market snapshot for one or more exact Yahoo Finance symbols. Set include_history=true to also return recent bars and a window summary — use this for futures (GC=F, CL=F, NG=F) or whenever recent trend context is useful.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "symbols": {
                                 "type": "array",
                                 "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance symbols (e.g. AAPL, SPY, BTC-USD, EURUSD=X). A plain string is also accepted for single-symbol calls.",
-                            }
+                                "description": "1 to 10 exact Yahoo Finance symbols (e.g. AAPL, SPY, BTC-USD, EURUSD=X, GC=F). A plain string is also accepted for single-symbol calls.",
+                            },
+                            "include_history": {
+                                "type": "boolean",
+                                "description": "Include a compact recent history window, the latest and previous completed bars, and a window summary alongside the quote.",
+                                "default": False,
+                            },
+                            "interval": {
+                                "type": "string",
+                                "enum": HISTORY_INTERVALS,
+                                "description": "History interval used when include_history is true.",
+                                "default": "1d",
+                            },
+                            "period": {
+                                "type": "string",
+                                "description": "History window used when include_history is true.",
+                                "default": "1mo",
+                            },
+                            "limit_bars": {
+                                "type": "integer",
+                                "description": "Maximum number of recent bars to return when include_history is true.",
+                                "default": 10,
+                            },
                         },
                         "required": ["symbols"],
                     },
@@ -325,38 +341,8 @@ Rules:
             {
                 "type": "function",
                 "function": {
-                    "name": "options_expirations",
-                    "description": "Return a compact expiration discovery view for one exact Yahoo Finance underlying symbol, including nearest expirations, monthly or weekly hints, and days-to-expiration. Agents MUST call this before `options_chain` to choose an exact expiration.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "symbol": {
-                                "type": "string",
-                                "description": "One exact Yahoo Finance underlying symbol such as AAPL, MSFT, or SPY.",
-                            },
-                            "limit": {
-                                "type": "integer",
-                                "description": "Maximum number of expirations to return in the expirations list.",
-                                "default": 12,
-                            },
-                            "min_days_to_expiration": {
-                                "type": "integer",
-                                "description": "Optional minimum days-to-expiration filter.",
-                            },
-                            "max_days_to_expiration": {
-                                "type": "integer",
-                                "description": "Optional maximum days-to-expiration filter.",
-                            },
-                        },
-                        "required": ["symbol"],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
                     "name": "options_chain",
-                    "description": "Return a compact options chain snapshot for one exact Yahoo Finance underlying symbol and one exact expiration returned by `options_expirations`, with bounded contract rows and high-signal open-interest and volume summaries.",
+                    "description": "Two-mode options tool for one Yahoo Finance underlying. Call WITHOUT `expiration` to discover available expirations (days-to-expiration, monthly/weekly hints). Call WITH an exact `expiration` from that list to return a compact chain snapshot with bounded contract rows and open-interest / volume summaries.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -366,74 +352,48 @@ Rules:
                             },
                             "expiration": {
                                 "type": "string",
-                                "description": "Required expiration date in YYYY-MM-DD format. Call `options_expirations` first and pass one exact returned value.",
+                                "description": "Optional expiration date in YYYY-MM-DD format. Omit on the first call to discover expirations. Pass an exact returned value on the second call to return that chain.",
                             },
                             "side": {
                                 "type": "string",
                                 "enum": OPTIONS_SIDES,
-                                "description": "Which side of the chain to return.",
+                                "description": "Which side of the chain to return. Ignored when expiration is omitted.",
                                 "default": "both",
                             },
                             "moneyness": {
                                 "type": "string",
                                 "enum": OPTIONS_MONEYNESS,
-                                "description": "Filter contracts by moneyness relative to the underlying spot price.",
+                                "description": "Filter contracts by moneyness relative to the underlying spot price. Ignored when expiration is omitted.",
                                 "default": "all",
                             },
                             "limit_contracts": {
                                 "type": "integer",
-                                "description": "Maximum number of contracts to return per side after filtering.",
+                                "description": "Maximum number of contracts to return per side after filtering. Ignored when expiration is omitted.",
                                 "default": 12,
                             },
                             "min_strike": {
                                 "type": "number",
-                                "description": "Optional minimum strike filter.",
+                                "description": "Optional minimum strike filter. Ignored when expiration is omitted.",
                             },
                             "max_strike": {
                                 "type": "number",
-                                "description": "Optional maximum strike filter.",
+                                "description": "Optional maximum strike filter. Ignored when expiration is omitted.",
                             },
-                        },
-                        "required": ["symbol", "expiration"],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "futures_snapshot",
-                    "description": "Return a compact snapshot with optional recent price trend for one or more exact Yahoo Finance futures symbols (e.g. GC=F, CL=F, NG=F). Prefer this over quote_snapshot for futures — adds recent history context.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "symbols": {
-                                "type": "array",
-                                "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance futures symbols (e.g. GC=F, CL=F). A plain string is also accepted for single-symbol calls.",
-                            },
-                            "include_history": {
-                                "type": "boolean",
-                                "description": "Include a compact recent history window and summary.",
-                                "default": True,
-                            },
-                            "interval": {
-                                "type": "string",
-                                "enum": HISTORY_INTERVALS,
-                                "description": "History interval used when include_history is true.",
-                                "default": "1d",
-                            },
-                            "period": {
-                                "type": "string",
-                                "description": "History window used when include_history is true.",
-                                "default": "1mo",
-                            },
-                            "limit_bars": {
+                            "limit": {
                                 "type": "integer",
-                                "description": "Maximum number of recent bars to return when include_history is true.",
-                                "default": 10,
+                                "description": "Maximum number of expirations to return in discovery mode.",
+                                "default": 12,
+                            },
+                            "min_days_to_expiration": {
+                                "type": "integer",
+                                "description": "Optional minimum days-to-expiration filter in discovery mode.",
+                            },
+                            "max_days_to_expiration": {
+                                "type": "integer",
+                                "description": "Optional maximum days-to-expiration filter in discovery mode.",
                             },
                         },
-                        "required": ["symbols"],
+                        "required": ["symbol"],
                     },
                 },
             },
@@ -481,8 +441,8 @@ Rules:
             {
                 "type": "function",
                 "function": {
-                    "name": "company_fundamentals",
-                    "description": "Return compact equity fundamentals from Yahoo Finance including company profile, valuation ratios, earnings calendar, and summarized financial statements. Equity symbols only.",
+                    "name": "equity_overview",
+                    "description": "Return a compact equity overview combining fundamentals (profile, valuation ratios, earnings calendar, financial statements) and analyst views (recommendations, price targets, estimates, EPS trend, revisions). Use `sections` to request a subset. Equity symbols only.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -490,25 +450,13 @@ Rules:
                                 "type": "array",
                                 "items": {"type": "string"},
                                 "description": "1 to 10 exact Yahoo Finance equity symbols. A plain string is also accepted for single-symbol calls.",
-                            }
-                        },
-                        "required": ["symbols"],
-                    },
-                },
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "analyst_snapshot",
-                    "description": "Return compact analyst views for one or more equity symbols, including recommendations, price targets, estimates, EPS trend, and revisions. Equity symbols only.",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "symbols": {
+                            },
+                            "sections": {
                                 "type": "array",
-                                "items": {"type": "string"},
-                                "description": "1 to 10 exact Yahoo Finance equity symbols. A plain string is also accepted for single-symbol calls.",
-                            }
+                                "items": {"type": "string", "enum": ["fundamentals", "analyst"]},
+                                "description": "Which sections to include. Defaults to both.",
+                                "default": ["fundamentals", "analyst"],
+                            },
                         },
                         "required": ["symbols"],
                     },
@@ -1906,79 +1854,6 @@ Rules:
 
     @with_cache(ttl_seconds=180)
     @with_retry(max_retries=1)
-    async def options_expirations(
-        self,
-        symbol: str,
-        limit: int = 12,
-        min_days_to_expiration: Optional[int] = None,
-        max_days_to_expiration: Optional[int] = None,
-    ) -> Dict[str, Any]:
-        normalized_symbol = self._normalize_symbol(symbol)
-        if normalized_symbol is None:
-            return {"status": "error", "error": "symbol must be a non-empty Yahoo Finance symbol."}
-        limit, error = self._coerce_int_arg(limit, "limit")
-        if error:
-            return {"status": "error", "error": error}
-        min_days_to_expiration, error = self._coerce_int_arg(min_days_to_expiration, "min_days_to_expiration")
-        if error:
-            return {"status": "error", "error": error}
-        max_days_to_expiration, error = self._coerce_int_arg(max_days_to_expiration, "max_days_to_expiration")
-        if error:
-            return {"status": "error", "error": error}
-        if min_days_to_expiration is not None and min_days_to_expiration < 0:
-            return {"status": "error", "error": "min_days_to_expiration must be >= 0."}
-        if max_days_to_expiration is not None and max_days_to_expiration < 0:
-            return {"status": "error", "error": "max_days_to_expiration must be >= 0."}
-        if (
-            min_days_to_expiration is not None
-            and max_days_to_expiration is not None
-            and min_days_to_expiration > max_days_to_expiration
-        ):
-            return {"status": "error", "error": "min_days_to_expiration cannot be greater than max_days_to_expiration."}
-
-        limit = max(1, min(limit or 12, 24))
-
-        try:
-            context = await self._fetch_option_symbol_context(normalized_symbol)
-        except Exception as exc:
-            return self._yfinance_error(exc, f"No option expirations returned for {normalized_symbol}.")
-        expirations = [self._option_expiration_item(item) for item in context.get("expirations") or []]
-        if not expirations:
-            return {"status": "no_data", "error": f"No option expirations returned for {normalized_symbol}."}
-        filtered_expirations = self._filter_option_expiration_items(
-            expirations,
-            min_days_to_expiration=min_days_to_expiration,
-            max_days_to_expiration=max_days_to_expiration,
-        )
-        if not filtered_expirations:
-            return {"status": "no_data", "error": f"No option expirations matched the requested time range for {normalized_symbol}."}
-
-        info = context.get("info") or {}
-        fast_info = context.get("fast_info") or {}
-        return {
-            "status": "success",
-            "data": self._prune_empty(
-                {
-                    "symbol": normalized_symbol,
-                    "name": info.get("shortName") or info.get("longName") or normalized_symbol,
-                    "quote_type": info.get("quoteType"),
-                    "currency": fast_info.get("currency") or info.get("currency"),
-                    "spot_price": self._safe_float(
-                        fast_info.get("lastPrice") or info.get("regularMarketPrice") or info.get("previousClose")
-                    ),
-                    "filters": {
-                        "limit": limit,
-                        "min_days_to_expiration": min_days_to_expiration,
-                        "max_days_to_expiration": max_days_to_expiration,
-                    },
-                    "summary": self._options_expiration_summary(filtered_expirations),
-                    "expirations": filtered_expirations[:limit],
-                }
-            ),
-        }
-
-    @with_cache(ttl_seconds=180)
-    @with_retry(max_retries=1)
     async def options_chain(
         self,
         symbol: str,
@@ -1988,10 +1863,22 @@ Rules:
         limit_contracts: int = 12,
         min_strike: Optional[float] = None,
         max_strike: Optional[float] = None,
+        limit: int = 12,
+        min_days_to_expiration: Optional[int] = None,
+        max_days_to_expiration: Optional[int] = None,
     ) -> Dict[str, Any]:
         normalized_symbol = self._normalize_symbol(symbol)
         if normalized_symbol is None:
             return {"status": "error", "error": "symbol must be a non-empty Yahoo Finance symbol."}
+
+        if not expiration:
+            return await self._options_discover_expirations(
+                normalized_symbol,
+                limit=limit,
+                min_days_to_expiration=min_days_to_expiration,
+                max_days_to_expiration=max_days_to_expiration,
+            )
+
         limit_contracts, error = self._coerce_int_arg(limit_contracts, "limit_contracts")
         if error:
             return {"status": "error", "error": error}
@@ -1999,11 +1886,6 @@ Rules:
             return {"status": "error", "error": f"Unsupported side '{side}'."}
         if moneyness not in OPTIONS_MONEYNESS:
             return {"status": "error", "error": f"Unsupported moneyness '{moneyness}'."}
-        if not expiration:
-            return {
-                "status": "error",
-                "error": f"expiration is required for options_chain on {normalized_symbol}. Call options_expirations first.",
-            }
         if min_strike is not None and max_strike is not None and min_strike > max_strike:
             return {"status": "error", "error": "min_strike cannot be greater than max_strike."}
 
@@ -2104,84 +1986,83 @@ Rules:
             ),
         }
 
-    @with_cache(ttl_seconds=120)
-    @with_retry(max_retries=1)
-    async def quote_snapshot(self, symbols: List[str]) -> Dict[str, Any]:
-        normalized_symbols, error = self._normalize_symbols(symbols)
+    async def _options_discover_expirations(
+        self,
+        normalized_symbol: str,
+        limit: int = 12,
+        min_days_to_expiration: Optional[int] = None,
+        max_days_to_expiration: Optional[int] = None,
+    ) -> Dict[str, Any]:
+        limit, error = self._coerce_int_arg(limit, "limit")
         if error:
             return {"status": "error", "error": error}
+        min_days_to_expiration, error = self._coerce_int_arg(min_days_to_expiration, "min_days_to_expiration")
+        if error:
+            return {"status": "error", "error": error}
+        max_days_to_expiration, error = self._coerce_int_arg(max_days_to_expiration, "max_days_to_expiration")
+        if error:
+            return {"status": "error", "error": error}
+        if min_days_to_expiration is not None and min_days_to_expiration < 0:
+            return {"status": "error", "error": "min_days_to_expiration must be >= 0."}
+        if max_days_to_expiration is not None and max_days_to_expiration < 0:
+            return {"status": "error", "error": "max_days_to_expiration must be >= 0."}
+        if (
+            min_days_to_expiration is not None
+            and max_days_to_expiration is not None
+            and min_days_to_expiration > max_days_to_expiration
+        ):
+            return {"status": "error", "error": "min_days_to_expiration cannot be greater than max_days_to_expiration."}
+
+        limit = max(1, min(limit or 12, 24))
 
         try:
-            recent_frames = await self._fetch_history_batch(normalized_symbols, interval="1d", period="5d")
-        except Exception:
-            recent_frames = {}
-
-        return await self._run_symbol_tool_batch(
-            normalized_symbols,
-            lambda symbol: self._quote_snapshot_one(symbol, recent_frames.get(symbol)),
+            context = await self._fetch_option_symbol_context(normalized_symbol)
+        except Exception as exc:
+            return self._yfinance_error(exc, f"No option expirations returned for {normalized_symbol}.")
+        expirations = [self._option_expiration_item(item) for item in context.get("expirations") or []]
+        if not expirations:
+            return {"status": "no_data", "error": f"No option expirations returned for {normalized_symbol}."}
+        filtered_expirations = self._filter_option_expiration_items(
+            expirations,
+            min_days_to_expiration=min_days_to_expiration,
+            max_days_to_expiration=max_days_to_expiration,
         )
-
-    async def _quote_snapshot_one(self, symbol: str, recent: Optional[pd.DataFrame] = None) -> Dict[str, Any]:
-        def _do_quote() -> Dict[str, Any]:
-            ticker = yf.Ticker(symbol)
-            recent_df = recent.copy() if isinstance(recent, pd.DataFrame) else pd.DataFrame()
-            if recent_df.empty:
-                recent_df = ticker.history(
-                    period="5d", interval="1d", auto_adjust=True, actions=False, raise_errors=True
-                )
-            if recent_df is None or recent_df.empty:
-                return {}
-            fast_info = dict(ticker.fast_info)
-            info = ticker.info or {}
-            last_row = recent_df.iloc[-1]
-            quote_type = info.get("quoteType") or fast_info.get("quoteType")
-            asset_type = self._normalize_asset_type(quote_type, info.get("typeDisp"))
-            name = info.get("shortName") or info.get("longName") or info.get("name") or symbol
+        if not filtered_expirations:
             return {
-                "symbol": symbol,
-                "name": name,
-                "asset_type": asset_type,
-                "quote_type": quote_type,
-                "currency": fast_info.get("currency") or info.get("currency"),
-                "exchange": fast_info.get("exchange") or info.get("exchange"),
-                "price": {
-                    "last_price": self._safe_float(fast_info.get("lastPrice") or last_row.get("Close")),
-                    "open": self._safe_float(fast_info.get("open") or last_row.get("Open")),
-                    "previous_close": self._safe_float(
-                        fast_info.get("previousClose") or info.get("regularMarketPreviousClose")
-                    ),
-                    "day_high": self._safe_float(fast_info.get("dayHigh") or last_row.get("High")),
-                    "day_low": self._safe_float(fast_info.get("dayLow") or last_row.get("Low")),
-                    "volume": self._safe_int(fast_info.get("lastVolume") or last_row.get("Volume")),
-                },
-                "stats": {
-                    "market_cap": self._safe_float(fast_info.get("marketCap") or info.get("marketCap")),
-                    "fifty_day_average": self._safe_float(fast_info.get("fiftyDayAverage")),
-                    "two_hundred_day_average": self._safe_float(fast_info.get("twoHundredDayAverage")),
-                    "year_high": self._safe_float(fast_info.get("yearHigh")),
-                    "year_low": self._safe_float(fast_info.get("yearLow")),
-                    "year_change_pct": self._safe_float(fast_info.get("yearChange") * 100)
-                    if fast_info.get("yearChange") is not None
-                    else None,
-                },
-                "profile": self._compact_profile(info, asset_type),
-                "as_of": self._iso(recent_df.index[-1]),
+                "status": "no_data",
+                "error": f"No option expirations matched the requested time range for {normalized_symbol}.",
             }
 
-        try:
-            snapshot = await asyncio.to_thread(_do_quote)
-        except Exception as exc:
-            return self._yfinance_error(exc, f"No quote data returned for {symbol}.")
-        if not snapshot:
-            return {"status": "no_data", "error": f"No quote data returned for {symbol}."}
-        return {"status": "success", "data": snapshot}
+        info = context.get("info") or {}
+        fast_info = context.get("fast_info") or {}
+        return {
+            "status": "success",
+            "data": self._prune_empty(
+                {
+                    "symbol": normalized_symbol,
+                    "name": info.get("shortName") or info.get("longName") or normalized_symbol,
+                    "quote_type": info.get("quoteType"),
+                    "currency": fast_info.get("currency") or info.get("currency"),
+                    "spot_price": self._safe_float(
+                        fast_info.get("lastPrice") or info.get("regularMarketPrice") or info.get("previousClose")
+                    ),
+                    "filters": {
+                        "limit": limit,
+                        "min_days_to_expiration": min_days_to_expiration,
+                        "max_days_to_expiration": max_days_to_expiration,
+                    },
+                    "summary": self._options_expiration_summary(filtered_expirations),
+                    "expirations": filtered_expirations[:limit],
+                }
+            ),
+        }
 
     @with_cache(ttl_seconds=120)
     @with_retry(max_retries=1)
-    async def futures_snapshot(
+    async def quote_snapshot(
         self,
         symbols: List[str],
-        include_history: bool = True,
+        include_history: bool = False,
         interval: str = "1d",
         period: Optional[str] = "1mo",
         limit_bars: int = 10,
@@ -2196,112 +2077,109 @@ Rules:
             return {"status": "error", "error": error}
 
         limit_bars = max(1, min(limit_bars or 10, 30))
-        history_frames: Dict[str, pd.DataFrame] = {}
-        if include_history:
-            try:
-                history_frames = await self._fetch_history_batch(
-                    normalized_symbols,
-                    interval=interval,
-                    period=period,
-                    include_prepost=False,
-                    repair=False,
-                )
-            except Exception:
-                history_frames = {}
+        fetch_interval = interval if include_history else "1d"
+        fetch_period = period if include_history else "5d"
+        try:
+            recent_frames = await self._fetch_history_batch(
+                normalized_symbols, interval=fetch_interval, period=fetch_period
+            )
+        except Exception:
+            recent_frames = {}
 
         return await self._run_symbol_tool_batch(
             normalized_symbols,
-            lambda symbol: self._futures_snapshot_one(
+            lambda symbol: self._quote_snapshot_one(
                 symbol=symbol,
+                recent=recent_frames.get(symbol),
                 include_history=include_history,
-                interval=interval,
-                period=period,
+                interval=fetch_interval,
+                period=fetch_period,
                 limit_bars=limit_bars,
-                prefetched_df=history_frames.get(symbol),
             ),
         )
 
-    async def _futures_snapshot_one(
+    async def _quote_snapshot_one(
         self,
         symbol: str,
-        include_history: bool,
-        interval: str,
-        period: Optional[str],
-        limit_bars: int,
-        prefetched_df: Optional[pd.DataFrame] = None,
+        recent: Optional[pd.DataFrame] = None,
+        include_history: bool = False,
+        interval: str = "1d",
+        period: Optional[str] = "5d",
+        limit_bars: int = 10,
     ) -> Dict[str, Any]:
-        def _do_snapshot() -> Dict[str, Any]:
+        def _do_quote() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
-            info = ticker.info or {}
-            quote_type = info.get("quoteType")
-            asset_type = self._normalize_asset_type(quote_type, info.get("typeDisp"))
-            if not info and asset_type is None:
+            recent_df = recent.copy() if isinstance(recent, pd.DataFrame) else pd.DataFrame()
+            if recent_df.empty:
+                recent_df = ticker.history(
+                    period=period or "5d", interval=interval, auto_adjust=True, actions=False, raise_errors=True
+                )
+            if recent_df is None or recent_df.empty:
                 return {}
-            if asset_type not in FUTURE_ONLY_ASSET_TYPES:
-                return {"unsupported_asset_type": asset_type}
-
             fast_info = dict(ticker.fast_info)
-            frame = prefetched_df.copy() if isinstance(prefetched_df, pd.DataFrame) else pd.DataFrame()
-            if include_history and frame.empty:
-                frame = ticker.history(period=period or "1mo", interval=interval, auto_adjust=True, actions=False)
-            frame = self._drop_incomplete_bar(frame, interval) if include_history and not frame.empty else frame
-            latest_bar = None
-            previous_bar = None
-            history_summary = None
-            bars = []
-            if include_history and not frame.empty:
-                bars = self._serialize_bars(frame.tail(limit_bars))
+            info = ticker.info or {}
+            last_row = recent_df.iloc[-1]
+            quote_type = info.get("quoteType") or fast_info.get("quoteType")
+            asset_type = self._normalize_asset_type(quote_type, info.get("typeDisp"))
+            name = info.get("shortName") or info.get("longName") or info.get("name") or symbol
+
+            history_block = None
+            if include_history:
+                completed = self._drop_incomplete_bar(recent_df, interval)
+                if completed.empty:
+                    completed = recent_df
+                bars = self._serialize_bars(completed.tail(limit_bars))
                 latest_bar = bars[-1] if bars else None
                 previous_bar = bars[-2] if len(bars) > 1 else None
-                history_summary = self._window_summary(frame)
+                history_block = {
+                    "interval": interval,
+                    "period": period or self._default_period(interval),
+                    "latest_completed_bar": latest_bar,
+                    "previous_completed_bar": previous_bar,
+                    "window_summary": self._window_summary(completed),
+                    "bars": bars,
+                }
 
             return self._prune_empty(
                 {
                     "symbol": symbol,
-                    "name": info.get("shortName") or info.get("longName") or symbol,
+                    "name": name,
                     "asset_type": asset_type,
                     "quote_type": quote_type,
-                    "exchange": fast_info.get("exchange") or info.get("exchange"),
                     "currency": fast_info.get("currency") or info.get("currency"),
+                    "exchange": fast_info.get("exchange") or info.get("exchange"),
                     "price": {
-                        "last_price": self._safe_float(fast_info.get("lastPrice") or info.get("regularMarketPrice")),
+                        "last_price": self._safe_float(fast_info.get("lastPrice") or last_row.get("Close")),
+                        "open": self._safe_float(fast_info.get("open") or last_row.get("Open")),
                         "previous_close": self._safe_float(
                             fast_info.get("previousClose") or info.get("regularMarketPreviousClose")
                         ),
-                        "day_high": self._safe_float(fast_info.get("dayHigh") or info.get("dayHigh")),
-                        "day_low": self._safe_float(fast_info.get("dayLow") or info.get("dayLow")),
-                        "open": self._safe_float(fast_info.get("open") or info.get("open")),
-                        "volume": self._safe_int(fast_info.get("lastVolume") or info.get("volume")),
+                        "day_high": self._safe_float(fast_info.get("dayHigh") or last_row.get("High")),
+                        "day_low": self._safe_float(fast_info.get("dayLow") or last_row.get("Low")),
+                        "volume": self._safe_int(fast_info.get("lastVolume") or last_row.get("Volume")),
                     },
                     "stats": {
+                        "market_cap": self._safe_float(fast_info.get("marketCap") or info.get("marketCap")),
                         "fifty_day_average": self._safe_float(fast_info.get("fiftyDayAverage")),
                         "two_hundred_day_average": self._safe_float(fast_info.get("twoHundredDayAverage")),
                         "year_high": self._safe_float(fast_info.get("yearHigh")),
                         "year_low": self._safe_float(fast_info.get("yearLow")),
+                        "year_change_pct": self._safe_float(fast_info.get("yearChange") * 100)
+                        if fast_info.get("yearChange") is not None
+                        else None,
                     },
-                    "history": {
-                        "interval": interval,
-                        "period": period or self._default_period(interval),
-                        "latest_completed_bar": latest_bar,
-                        "previous_completed_bar": previous_bar,
-                        "window_summary": history_summary,
-                        "bars": bars,
-                    }
-                    if include_history
-                    else None,
+                    "profile": self._compact_profile(info, asset_type),
+                    "as_of": self._iso(recent_df.index[-1]),
+                    "history": history_block,
                 }
             )
 
         try:
-            snapshot = await asyncio.to_thread(_do_snapshot)
+            snapshot = await asyncio.to_thread(_do_quote)
         except Exception as exc:
-            return self._yfinance_error(exc, f"No futures data returned for {symbol}.")
+            return self._yfinance_error(exc, f"No quote data returned for {symbol}.")
         if not snapshot:
-            return {"status": "no_data", "error": f"No futures data returned for {symbol}."}
-        if "unsupported_asset_type" in snapshot:
-            return self._asset_support_error(
-                symbol, snapshot.get("unsupported_asset_type"), FUTURE_ONLY_ASSET_TYPES, "futures_snapshot"
-            )
+            return {"status": "no_data", "error": f"No quote data returned for {symbol}."}
         return {"status": "success", "data": snapshot}
 
     @with_cache(ttl_seconds=300)
@@ -2747,14 +2625,40 @@ Rules:
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=1)
-    async def company_fundamentals(self, symbols: List[str]) -> Dict[str, Any]:
+    async def equity_overview(
+        self,
+        symbols: List[str],
+        sections: Optional[List[str]] = None,
+    ) -> Dict[str, Any]:
         normalized_symbols, error = self._normalize_symbols(symbols)
         if error:
             return {"status": "error", "error": error}
-        return await self._run_symbol_tool_batch(normalized_symbols, self._company_fundamentals_one)
+        requested_sections, error = self._normalize_equity_sections(sections)
+        if error:
+            return {"status": "error", "error": error}
+        return await self._run_symbol_tool_batch(
+            normalized_symbols,
+            lambda symbol: self._equity_overview_one(symbol, requested_sections),
+        )
 
-    async def _company_fundamentals_one(self, symbol: str) -> Dict[str, Any]:
-        def _do_company() -> Dict[str, Any]:
+    def _normalize_equity_sections(self, sections: Optional[List[str]]) -> tuple[Optional[List[str]], Optional[str]]:
+        if sections is None:
+            return list(EQUITY_OVERVIEW_SECTIONS), None
+        if not isinstance(sections, list) or not sections:
+            return None, "sections must be a non-empty list."
+        normalized = []
+        for entry in sections:
+            if not isinstance(entry, str):
+                return None, "Each entry in sections must be a string."
+            value = entry.strip().lower()
+            if value not in EQUITY_OVERVIEW_SECTIONS:
+                return None, f"Unsupported section '{entry}'. Supported: {EQUITY_OVERVIEW_SECTIONS}."
+            if value not in normalized:
+                normalized.append(value)
+        return normalized, None
+
+    async def _equity_overview_one(self, symbol: str, sections: List[str]) -> Dict[str, Any]:
+        def _do_overview() -> Dict[str, Any]:
             ticker = yf.Ticker(symbol)
             info = ticker.info or {}
             asset_type = self._normalize_asset_type(info.get("quoteType"), info.get("typeDisp"))
@@ -2763,87 +2667,61 @@ Rules:
             if asset_type not in EQUITY_ONLY_ASSET_TYPES:
                 return {"asset_type": asset_type}
 
-            return {
+            payload: Dict[str, Any] = {
                 "company": self._company_card(symbol, info),
-                "calendar": self._compact_calendar(ticker.calendar or {}),
-                "recent_filings": self._compact_filings(ticker.sec_filings or []),
-                "financial_summary": self._prune_empty(
-                    {
-                        "currency": info.get("currency"),
-                        "income_statement": self._statement_summary(
-                            ticker.income_stmt, ticker.quarterly_income_stmt, INCOME_STATEMENT_FIELDS
-                        ),
-                        "balance_sheet": self._statement_summary(
-                            ticker.balance_sheet, ticker.quarterly_balance_sheet, BALANCE_SHEET_FIELDS
-                        ),
-                        "cash_flow": self._statement_summary(
-                            ticker.cashflow, ticker.quarterly_cashflow, CASH_FLOW_FIELDS
-                        ),
-                    }
-                ),
+                "sections": list(sections),
             }
+            if "fundamentals" in sections:
+                payload["fundamentals"] = {
+                    "calendar": self._compact_calendar(ticker.calendar or {}),
+                    "recent_filings": self._compact_filings(ticker.sec_filings or []),
+                    "financial_summary": self._prune_empty(
+                        {
+                            "currency": info.get("currency"),
+                            "income_statement": self._statement_summary(
+                                ticker.income_stmt, ticker.quarterly_income_stmt, INCOME_STATEMENT_FIELDS
+                            ),
+                            "balance_sheet": self._statement_summary(
+                                ticker.balance_sheet, ticker.quarterly_balance_sheet, BALANCE_SHEET_FIELDS
+                            ),
+                            "cash_flow": self._statement_summary(
+                                ticker.cashflow, ticker.quarterly_cashflow, CASH_FLOW_FIELDS
+                            ),
+                        }
+                    ),
+                }
+            if "analyst" in sections:
+                price_targets = ticker.analyst_price_targets or {}
+                payload["analyst"] = {
+                    "recommendations_summary": self._records_from_frame(ticker.recommendations_summary, limit=4),
+                    "price_targets": self._prune_empty(
+                        {
+                            "current": self._safe_float(price_targets.get("current")),
+                            "low": self._safe_float(price_targets.get("low")),
+                            "mean": self._safe_float(price_targets.get("mean")),
+                            "median": self._safe_float(price_targets.get("median")),
+                            "high": self._safe_float(price_targets.get("high")),
+                        }
+                    ),
+                    "earnings_estimate": self._records_from_frame(ticker.earnings_estimate, limit=4),
+                    "revenue_estimate": self._records_from_frame(ticker.revenue_estimate, limit=4),
+                    "eps_trend": self._records_from_frame(ticker.eps_trend, limit=4),
+                    "eps_revisions": self._records_from_frame(ticker.eps_revisions, limit=4),
+                }
+            return payload
 
         try:
-            fundamentals = await asyncio.to_thread(_do_company)
+            overview = await asyncio.to_thread(_do_overview)
         except Exception as exc:
-            return self._yfinance_error(exc, f"No company fundamentals returned for {symbol}.")
+            return self._yfinance_error(exc, f"No equity overview returned for {symbol}.")
 
-        if not fundamentals:
-            return {"status": "no_data", "error": f"No company fundamentals returned for {symbol}."}
-        if "asset_type" in fundamentals:
+        if not overview:
+            return {"status": "no_data", "error": f"No equity overview returned for {symbol}."}
+        if "asset_type" in overview and "company" not in overview:
             return self._asset_support_error(
-                symbol, fundamentals.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "company_fundamentals"
+                symbol, overview.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "equity_overview"
             )
-        return {"status": "success", "data": self._prune_empty(fundamentals)}
-
-    @with_cache(ttl_seconds=300)
-    @with_retry(max_retries=1)
-    async def analyst_snapshot(self, symbols: List[str]) -> Dict[str, Any]:
-        normalized_symbols, error = self._normalize_symbols(symbols)
-        if error:
-            return {"status": "error", "error": error}
-        return await self._run_symbol_tool_batch(normalized_symbols, self._analyst_snapshot_one)
-
-    async def _analyst_snapshot_one(self, symbol: str) -> Dict[str, Any]:
-        def _do_analyst() -> Dict[str, Any]:
-            ticker = yf.Ticker(symbol)
-            info = ticker.info or {}
-            asset_type = self._normalize_asset_type(info.get("quoteType"), info.get("typeDisp"))
-            if not info and asset_type is None:
-                return {}
-            if asset_type not in EQUITY_ONLY_ASSET_TYPES:
-                return {"asset_type": asset_type}
-
-            return {
-                "company": self._company_card(symbol, info),
-                "recommendations_summary": self._records_from_frame(ticker.recommendations_summary, limit=4),
-                "price_targets": self._prune_empty(
-                    {
-                        "current": self._safe_float((ticker.analyst_price_targets or {}).get("current")),
-                        "low": self._safe_float((ticker.analyst_price_targets or {}).get("low")),
-                        "mean": self._safe_float((ticker.analyst_price_targets or {}).get("mean")),
-                        "median": self._safe_float((ticker.analyst_price_targets or {}).get("median")),
-                        "high": self._safe_float((ticker.analyst_price_targets or {}).get("high")),
-                    }
-                ),
-                "earnings_estimate": self._records_from_frame(ticker.earnings_estimate, limit=4),
-                "revenue_estimate": self._records_from_frame(ticker.revenue_estimate, limit=4),
-                "eps_trend": self._records_from_frame(ticker.eps_trend, limit=4),
-                "eps_revisions": self._records_from_frame(ticker.eps_revisions, limit=4),
-            }
-
-        try:
-            snapshot = await asyncio.to_thread(_do_analyst)
-        except Exception as exc:
-            return self._yfinance_error(exc, f"No analyst data returned for {symbol}.")
-
-        if not snapshot:
-            return {"status": "no_data", "error": f"No analyst data returned for {symbol}."}
-        if "asset_type" in snapshot:
-            return self._asset_support_error(
-                symbol, snapshot.get("asset_type"), EQUITY_ONLY_ASSET_TYPES, "analyst_snapshot"
-            )
-        return {"status": "success", "data": self._prune_empty(snapshot)}
+        return {"status": "success", "data": self._prune_empty(overview)}
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=1)
@@ -2991,7 +2869,13 @@ Rules:
                     limit=function_args.get("limit", 5),
                 )
             elif tool_name == "quote_snapshot":
-                result = await self.quote_snapshot(symbols=self._get_symbols_arg(function_args))
+                result = await self.quote_snapshot(
+                    symbols=self._get_symbols_arg(function_args),
+                    include_history=function_args.get("include_history", False),
+                    interval=function_args.get("interval", "1d"),
+                    period=function_args.get("period", "1mo"),
+                    limit_bars=function_args.get("limit_bars", 10),
+                )
             elif tool_name in {"price_history", "fetch_price_history"}:
                 result = await self.price_history(
                     symbols=self._get_symbols_arg(function_args),
@@ -3011,13 +2895,6 @@ Rules:
                     start_date=function_args.get("start_date"),
                     end_date=function_args.get("end_date"),
                 )
-            elif tool_name == "options_expirations":
-                result = await self.options_expirations(
-                    symbol=function_args.get("symbol"),
-                    limit=function_args.get("limit", 12),
-                    min_days_to_expiration=function_args.get("min_days_to_expiration"),
-                    max_days_to_expiration=function_args.get("max_days_to_expiration"),
-                )
             elif tool_name == "options_chain":
                 result = await self.options_chain(
                     symbol=function_args.get("symbol"),
@@ -3027,14 +2904,9 @@ Rules:
                     limit_contracts=function_args.get("limit_contracts", 12),
                     min_strike=function_args.get("min_strike"),
                     max_strike=function_args.get("max_strike"),
-                )
-            elif tool_name == "futures_snapshot":
-                result = await self.futures_snapshot(
-                    symbols=self._get_symbols_arg(function_args),
-                    include_history=function_args.get("include_history", True),
-                    interval=function_args.get("interval", "1d"),
-                    period=function_args.get("period", "1mo"),
-                    limit_bars=function_args.get("limit_bars", 10),
+                    limit=function_args.get("limit", 12),
+                    min_days_to_expiration=function_args.get("min_days_to_expiration"),
+                    max_days_to_expiration=function_args.get("max_days_to_expiration"),
                 )
             elif tool_name == "news_search":
                 result = await self.news_search(
@@ -3043,10 +2915,11 @@ Rules:
                 )
             elif tool_name == "market_overview":
                 result = await self.market_overview(market=function_args.get("market", "US"))
-            elif tool_name == "company_fundamentals":
-                result = await self.company_fundamentals(symbols=self._get_symbols_arg(function_args))
-            elif tool_name == "analyst_snapshot":
-                result = await self.analyst_snapshot(symbols=self._get_symbols_arg(function_args))
+            elif tool_name == "equity_overview":
+                result = await self.equity_overview(
+                    symbols=self._get_symbols_arg(function_args),
+                    sections=function_args.get("sections"),
+                )
             elif tool_name == "fund_snapshot":
                 result = await self.fund_snapshot(symbols=self._get_symbols_arg(function_args))
             elif tool_name == "equity_screen":

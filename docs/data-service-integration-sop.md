@@ -116,7 +116,7 @@ Good:
 
 - `resolve_symbol`
 - `quote_snapshot`
-- `company_fundamentals`
+- `equity_overview`
 - `equity_screen`
 
 Bad:

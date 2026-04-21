@@ -203,40 +203,31 @@ TEST_CASES = {
         "description": "Short history window returns no-data when there are not enough completed bars.",
         "expected_status": "error",
     },
-    "options_expirations_aapl": {
+    "options_chain_discover_aapl": {
         "input": {
-            "tool": "options_expirations",
+            "tool": "options_chain",
             "tool_arguments": {"symbol": "AAPL", "limit": 8},
             "raw_data_only": True,
         },
-        "description": "Discover available AAPL option expirations before selecting a chain.",
+        "description": "Discovery mode: omitting expiration returns available AAPL option expirations.",
         "expected_status": "success",
     },
-    "options_expirations_aapl_dte_window": {
+    "options_chain_discover_aapl_dte_window": {
         "input": {
-            "tool": "options_expirations",
+            "tool": "options_chain",
             "tool_arguments": {"symbol": "AAPL", "min_days_to_expiration": 20, "max_days_to_expiration": 120, "limit": 6},
             "raw_data_only": True,
         },
-        "description": "Discover AAPL expirations within a bounded days-to-expiration window.",
+        "description": "Discovery mode filters AAPL expirations by a bounded days-to-expiration window.",
         "expected_status": "success",
     },
-    "options_expirations_invalid_symbol": {
+    "options_chain_discover_invalid_symbol": {
         "input": {
-            "tool": "options_expirations",
+            "tool": "options_chain",
             "tool_arguments": {"symbol": "NOTAREALSYMBOL123"},
             "raw_data_only": True,
         },
         "description": "Invalid symbol returns structured no-data for expiration discovery.",
-        "expected_status": "error",
-    },
-    "options_chain_aapl": {
-        "input": {
-            "tool": "options_chain",
-            "tool_arguments": {"symbol": "AAPL", "side": "both", "moneyness": "atm", "limit_contracts": 6},
-            "raw_data_only": True,
-        },
-        "description": "options_chain requires an explicit expiration chosen via options_expirations.",
         "expected_status": "error",
     },
     "options_chain_aapl_strike_window": {
@@ -245,7 +236,7 @@ TEST_CASES = {
             "tool_arguments": {"symbol": "AAPL", "side": "both", "expiration": "2026-04-17", "min_strike": 240, "max_strike": 270, "limit_contracts": 6},
             "raw_data_only": True,
         },
-        "description": "Filter AAPL options chain discovery by strike range.",
+        "description": "Filter AAPL options chain by strike range for an explicit expiration.",
         "expected_status": "success",
     },
     "options_chain_invalid_expiration": {
@@ -260,29 +251,20 @@ TEST_CASES = {
     "options_chain_invalid_strike_window": {
         "input": {
             "tool": "options_chain",
-            "tool_arguments": {"symbol": "AAPL", "min_strike": 300, "max_strike": 250},
+            "tool_arguments": {"symbol": "AAPL", "expiration": "2026-04-17", "min_strike": 300, "max_strike": 250},
             "raw_data_only": True,
         },
         "description": "Invalid strike filter range fails directly for options chains.",
         "expected_status": "error",
     },
-    "futures_snapshot_gold": {
+    "quote_snapshot_gold_with_history": {
         "input": {
-            "tool": "futures_snapshot",
+            "tool": "quote_snapshot",
             "tool_arguments": {"symbols": ["GC=F"], "include_history": True, "interval": "1d", "period": "1mo", "limit_bars": 5},
             "raw_data_only": True,
         },
-        "description": "Compact futures snapshot for gold with recent history context.",
+        "description": "Compact quote snapshot for gold futures with recent history context.",
         "expected_status": "success",
-    },
-    "futures_snapshot_invalid_asset": {
-        "input": {
-            "tool": "futures_snapshot",
-            "tool_arguments": {"symbols": ["AAPL"]},
-            "raw_data_only": True,
-        },
-        "description": "Futures snapshot rejects non-futures symbols directly.",
-        "expected_status": "error",
     },
     "news_search_nvidia": {
         "input": {
@@ -320,76 +302,67 @@ TEST_CASES = {
         "description": "Honest failure for unsupported market name.",
         "expected_status": "error",
     },
-    "company_fundamentals_aapl": {
+    "equity_overview_aapl_default": {
         "input": {
-            "tool": "company_fundamentals",
+            "tool": "equity_overview",
             "tool_arguments": {"symbols": ["AAPL"]},
             "raw_data_only": True,
         },
-        "description": "Compact company fundamentals for AAPL using a one-item list.",
+        "description": "Default equity overview returns both fundamentals and analyst sections for AAPL.",
         "expected_status": "success",
     },
-    "company_fundamentals_aapl_single_string": {
+    "equity_overview_aapl_single_string": {
         "input": {
-            "tool": "company_fundamentals",
+            "tool": "equity_overview",
             "tool_arguments": {"symbols": "AAPL"},
             "raw_data_only": True,
         },
-        "description": "Compact company fundamentals for AAPL using a plain single-symbol string.",
+        "description": "Equity overview accepts a plain single-symbol string.",
         "expected_status": "success",
     },
-    "company_fundamentals_batch_mixed": {
+    "equity_overview_aapl_fundamentals_only": {
         "input": {
-            "tool": "company_fundamentals",
+            "tool": "equity_overview",
+            "tool_arguments": {"symbols": ["AAPL"], "sections": ["fundamentals"]},
+            "raw_data_only": True,
+        },
+        "description": "Equity overview with sections=['fundamentals'] returns only the fundamentals block.",
+        "expected_status": "success",
+    },
+    "equity_overview_msft_analyst_only": {
+        "input": {
+            "tool": "equity_overview",
+            "tool_arguments": {"symbols": ["MSFT"], "sections": ["analyst"]},
+            "raw_data_only": True,
+        },
+        "description": "Equity overview with sections=['analyst'] returns only the analyst block.",
+        "expected_status": "success",
+    },
+    "equity_overview_batch_mixed": {
+        "input": {
+            "tool": "equity_overview",
             "tool_arguments": {"symbols": ["AAPL", "MSFT", "SPY"]},
             "raw_data_only": True,
         },
-        "description": "Batch company fundamentals keeps per-symbol asset mismatch errors scoped to the offending symbol.",
+        "description": "Batch equity overview keeps per-symbol asset mismatch errors scoped to the offending symbol.",
         "expected_status": "success",
     },
-    "company_fundamentals_invalid_asset": {
+    "equity_overview_invalid_asset": {
         "input": {
-            "tool": "company_fundamentals",
+            "tool": "equity_overview",
             "tool_arguments": {"symbols": ["SPY"]},
             "raw_data_only": True,
         },
-        "description": "Company fundamentals rejects ETF symbols directly.",
+        "description": "Equity overview rejects ETF symbols directly.",
         "expected_status": "error",
     },
-    "analyst_snapshot_msft": {
+    "equity_overview_invalid_section": {
         "input": {
-            "tool": "analyst_snapshot",
-            "tool_arguments": {"symbols": ["MSFT"]},
+            "tool": "equity_overview",
+            "tool_arguments": {"symbols": ["AAPL"], "sections": ["not_a_section"]},
             "raw_data_only": True,
         },
-        "description": "Compact analyst snapshot for MSFT using a one-item list.",
-        "expected_status": "success",
-    },
-    "analyst_snapshot_msft_single_string": {
-        "input": {
-            "tool": "analyst_snapshot",
-            "tool_arguments": {"symbols": "MSFT"},
-            "raw_data_only": True,
-        },
-        "description": "Compact analyst snapshot for MSFT using a plain single-symbol string.",
-        "expected_status": "success",
-    },
-    "analyst_snapshot_batch_mixed": {
-        "input": {
-            "tool": "analyst_snapshot",
-            "tool_arguments": {"symbols": ["MSFT", "AMZN", "BTC-USD"]},
-            "raw_data_only": True,
-        },
-        "description": "Batch analyst snapshot returns per-symbol equity-only validation.",
-        "expected_status": "success",
-    },
-    "analyst_snapshot_invalid_asset": {
-        "input": {
-            "tool": "analyst_snapshot",
-            "tool_arguments": {"symbols": ["BTC-USD"]},
-            "raw_data_only": True,
-        },
-        "description": "Analyst snapshot rejects non-equity symbols directly.",
+        "description": "Equity overview rejects unsupported section names directly.",
         "expected_status": "error",
     },
     "fund_snapshot_spy": {
