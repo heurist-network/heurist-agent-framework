@@ -15,7 +15,7 @@ class PondWalletAnalysisAgent(MeshAgent):
         if not self.api_key:
             raise ValueError("POND_API_KEY environment variable is required")
 
-        self.base_url = "https://broker-service.private.cryptopond.xyz"
+        self.base_url = "https://broker-service.private.joinpond.ai"
         self.headers = {"Content-Type": "application/json"}
         self.model_ids = {
             "ethereum": 20,
