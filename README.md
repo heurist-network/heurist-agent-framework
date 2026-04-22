@@ -180,6 +180,81 @@ Workflows provide higher-level reasoning patterns:
 
 Read the [Agent Usage and Development Guide](./agents/README.md)
 
+## ❓ FAQ & Troubleshooting
+
+### Common Questions
+
+**Q: Which platforms does Heurist Agent Framework support?**
+
+A: The framework supports multiple interfaces including Telegram, Discord, Twitter, Farcaster, REST API, and MCP. You can enable/disable platforms based on your needs.
+
+**Q: How do I get a Heurist API key?**
+
+A: Get instant free access by using the code 'agent' while submitting the form on [heurist.ai/dev-access](https://heurist.ai/dev-access)
+
+**Q: What is Heurist Mesh and how do I use it?**
+
+A: [Heurist Mesh](https://mesh.heurist.ai) is a marketplace of 30+ specialized Web3 AI agents. You can access Mesh agents via REST API, MCP, or x402-enabled pay-per-use with USDC on Base. See the [Mesh README](./mesh/README.md) for the full agent list.
+
+**Q: Can I use the framework without Heurist Mesh?**
+
+A: Yes! The core framework works independently. Mesh is optional for Web3-specific capabilities.
+
+**Q: Which Python version is required?**
+
+A: The framework uses `uv` for dependency management. Check the [Development Setup](#development-setup) section for installation instructions.
+
+**Q: Does the framework support voice messages?**
+
+A: Yes, the core agent can process both text and voice messages with audio transcription capabilities.
+
+**Q: How do I add custom tools to my agent?**
+
+A: The framework has an extensible tool system. Refer to the [Tool Management](#tool-management) section and [Agent Usage Guide](./agents/README.md) for details.
+
+### Troubleshooting
+
+**Issue: Bot not responding on Telegram/Discord**
+
+- Verify your bot token is correctly set in environment variables
+- Check the bot is invited/added to your channel or group
+- Review logs for authentication errors
+- Ensure the required platform interface is enabled in config
+
+**Issue: Mesh agents returning errors**
+
+- Verify your Heurist API key is valid and has available quota
+- Check the agent endpoint URL is correct
+- Review the [Mesh API documentation](https://docs.heurist.ai/dev-guide/heurist-mesh/) for proper request format
+- Some agents may require specific input formats - check individual agent docs
+
+**Issue: MCP server not connecting**
+
+- Ensure the MCP server is running and accessible
+- Verify the MCP endpoint URL in configuration
+- Check network connectivity and firewall rules
+- Review [MCP support documentation](#mcp-support) for setup details
+
+**Issue: Vector storage not working**
+
+- Verify PostgreSQL/SQLite connection string is correct
+- Check the database is running and accessible
+- Ensure vector extension is enabled (for PostgreSQL with pgvector)
+- Review storage configuration in your agent setup
+
+**Issue: Image/video generation failing**
+
+- Verify your Heurist API key has media generation permissions
+- Check the model configuration supports image/video output
+- Review payload size limits for large media files
+
+**Getting More Help**
+
+- 📚 Read the [Agent Usage and Development Guide](./agents/README.md)
+- 🛜 Browse [Heurist Mesh documentation](https://docs.heurist.ai/dev-guide/heurist-mesh/)
+- 🐛 Report bugs via [GitHub Issues](https://github.com/heurist-network/heurist-agent-framework/issues)
+- 💬 Join the [Heurist Ecosystem Builder Telegram](https://t.me/heuristsupport)
+
 ## Development Setup
 
 To set up your development environment:
