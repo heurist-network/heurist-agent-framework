@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
 
-from decorators import monitor_execution, with_cache, with_retry
+from decorators import with_cache, with_retry
 from mesh.context_agent import ContextAgent
 
 logger = logging.getLogger(__name__)
@@ -252,10 +252,14 @@ class ZerionWalletAnalysisAgent(ContextAgent):
             wallet_address = function_args.get("wallet_address")
 
             if wallet_address == "SELF":
-                user_id = self._extract_user_id(session_context.get("api_key"))
-                if self._is_valid_wallet_address(user_id):
-                    wallet_address = user_id
-                    await self.update_user_context({"wallet_address": wallet_address}, user_id)
+                session_context = session_context or {}
+                context_wallet = session_context.get("wallet_address") or session_context.get(
+                    "primary_evm_wallet"
+                )
+                user_id = context_wallet or self._extract_user_id(session_context.get("api_key"))
+                if isinstance(user_id, str) and self._is_valid_wallet_address(user_id):
+                    wallet_address = user_id.lower()
+                    await self.update_user_context({"wallet_address": wallet_address}, wallet_address)
                 else:
                     return {"error": "Invalid wallet address for SELF"}
 

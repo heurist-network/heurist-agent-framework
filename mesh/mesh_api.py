@@ -11,9 +11,9 @@ from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
 import boto3
-from boto3.dynamodb.conditions import Key
 import botocore.exceptions
 import uvicorn
+from boto3.dynamodb.conditions import Key
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,13 +24,6 @@ load_dotenv()
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
-from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
-from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
-from mesh.tweet_claim import ClaimStoreUnavailableError, ensure_claim_store_ready_sync, initiate_claim, verify_claim  # noqa: E402
-from mesh.usage_tracker import record_usage  # noqa: E402
-from mesh.skill_marketplace.routes import router as skill_marketplace_router  # noqa: E402
-from mesh.skill_marketplace.admin_routes import admin_router as skill_marketplace_admin_router  # noqa: E402
-from mesh.skill_marketplace.db import init_db as init_skill_marketplace_db, close_pool as close_skill_marketplace_pool  # noqa: E402
 from mesh.inflow_payment import (  # noqa: E402
     InflowPayment,
     InflowSignupAttachRequest,
@@ -42,6 +35,19 @@ from mesh.inflow_payment import (  # noqa: E402
     process_inflow_mesh_request,
     signup_inflow_agentic_user,
 )
+from mesh.mesh_manager import AgentLoader, Config  # noqa: E402
+from mesh.mesh_task_store import MeshTaskStore  # noqa: E402
+from mesh.skill_marketplace.admin_routes import admin_router as skill_marketplace_admin_router  # noqa: E402
+from mesh.skill_marketplace.db import close_pool as close_skill_marketplace_pool  # noqa: E402
+from mesh.skill_marketplace.db import init_db as init_skill_marketplace_db  # noqa: E402
+from mesh.skill_marketplace.routes import router as skill_marketplace_router  # noqa: E402
+from mesh.tweet_claim import (  # noqa: E402
+    ClaimStoreUnavailableError,
+    ensure_claim_store_ready_sync,
+    initiate_claim,
+    verify_claim,
+)
+from mesh.usage_tracker import record_usage  # noqa: E402
 
 
 # exclude `mesh_health` logs as it's used for health checks
@@ -246,6 +252,47 @@ def _resolve_wallet_account_id(user_id: str) -> str | None:
     return items[0].get("account_id")
 
 
+def _get_account_primary_evm_wallet(account_id: str) -> str | None:
+    accounts_table = _get_heurist_accounts_table()
+    if accounts_table is None or not account_id.startswith("heu_"):
+        return None
+
+    try:
+        response = accounts_table.query(
+            KeyConditionExpression=Key("pk").eq(f"ACCOUNT#{account_id}")
+            & Key("sk").eq("PROFILE#"),
+            Limit=1,
+        )
+    except Exception as exc:
+        logger.warning(f"Failed to load primary EVM wallet for {account_id}: {exc}")
+        return None
+
+    items = response.get("Items", [])
+    item = items[0] if items else None
+    if not item:
+        return None
+
+    primary_wallet = item.get("primary_evm_wallet")
+    if isinstance(primary_wallet, str) and EVM_WALLET_PATTERN.fullmatch(primary_wallet):
+        return primary_wallet.lower()
+    return None
+
+
+def _resolve_billing_identity(user_id: str) -> tuple[str, str | None]:
+    if EVM_WALLET_PATTERN.fullmatch(user_id):
+        wallet_address = user_id.lower()
+        return _resolve_wallet_account_id(wallet_address) or user_id, wallet_address
+    return user_id, _get_account_primary_evm_wallet(user_id)
+
+
+def build_session_context(origin_api_key: str, wallet_address: str | None = None) -> dict[str, str]:
+    session_context = {"api_key": origin_api_key}
+    if wallet_address:
+        session_context["wallet_address"] = wallet_address
+        session_context["primary_evm_wallet"] = wallet_address
+    return session_context
+
+
 def parse_api_key(origin_api_key: str) -> tuple[str, str]:
     if "#" in origin_api_key:
         user_id, api_key_part = origin_api_key.split("#", 1)
@@ -261,10 +308,10 @@ def parse_api_key(origin_api_key: str) -> tuple[str, str]:
 
 def _sync_validate_and_check_credits(
     user_id: str, api_key_part: str, required_credits: float
-) -> str:
+) -> tuple[str, str | None]:
     """Synchronous DynamoDB validation - called via asyncio.to_thread()"""
     table = _get_dynamodb_table()
-    billing_user_id = _resolve_wallet_account_id(user_id) or user_id
+    billing_user_id, wallet_address = _resolve_billing_identity(user_id)
 
     api_key_response = table.get_item(Key={"user_id": billing_user_id, "api_key": api_key_part})
     if "Item" not in api_key_response and billing_user_id != user_id:
@@ -283,14 +330,14 @@ def _sync_validate_and_check_credits(
     if remaining_credits < Decimal(str(required_credits)):
         raise HTTPException(status_code=402, detail="Insufficient credits")
 
-    return billing_user_id
+    return billing_user_id, wallet_address
 
 
 async def validate_and_check_credits(
     user_id: str, api_key_part: str, required_credits: float = 1.0
-) -> str:
+) -> tuple[str, str | None]:
     if not AUTH_ENABLED:
-        return user_id
+        return user_id, None
 
     try:
         return await asyncio.to_thread(
@@ -329,22 +376,22 @@ async def deduct_credits_dynamodb(user_id: str, agent_id: str, credits_to_deduct
             logger.warning(f"Insufficient credits for user {user_id} (race condition)")
             return False
         logger.error(f"Credit deduction error: {exc}", exc_info=True)
-        return False
+        raise HTTPException(status_code=500, detail="Credit deduction error")
     except Exception as exc:
         logger.error(f"Credit deduction error: {exc}", exc_info=True)
-        return False
+        raise HTTPException(status_code=500, detail="Credit deduction error")
 
 
-async def pre_validate_credits(origin_api_key: str, agent_credits: float = 1.0) -> tuple[str, str]:
+async def pre_validate_credits(origin_api_key: str, agent_credits: float = 1.0) -> tuple[str, str, str | None]:
     if not AUTH_ENABLED:
-        return "anonymous", ""
+        return "anonymous", "", None
     try:
         user_id, api_key_part = parse_api_key(origin_api_key)
     except ValueError:
         raise HTTPException(status_code=401, detail="Invalid API key format")
 
-    billing_user_id = await validate_and_check_credits(user_id, api_key_part, agent_credits)
-    return billing_user_id, api_key_part
+    billing_user_id, wallet_address = await validate_and_check_credits(user_id, api_key_part, agent_credits)
+    return billing_user_id, api_key_part, wallet_address
 
 
 def resolve_agent_credits(agent_metadata: dict, tool_name: str | None = None) -> float:
@@ -364,9 +411,10 @@ async def deduct_credits(
         return True
 
     success = await deduct_credits_dynamodb(user_id, agent_id, agent_credits)
+    if not success:
+        raise HTTPException(status_code=402, detail="Insufficient credits")
 
-    if success:
-        asyncio.create_task(record_usage(user_id, agent_id, agent_credits))
+    asyncio.create_task(record_usage(user_id, agent_id, agent_credits))
 
     return success
 
@@ -380,6 +428,7 @@ async def run_async_agent_task(
     agent_credits: float = 1.0,
     user_id: str = "",
     api_key_part: str = "",
+    wallet_address: str | None = None,
 ) -> None:
     """Run agent task asynchronously. Credits are deducted only on success."""
     task_store.mark_running(task_id)
@@ -392,7 +441,7 @@ async def run_async_agent_task(
 
         call_args = dict(payload)
         call_args.setdefault("raw_data_only", False)
-        call_args["session_context"] = {"api_key": origin_api_key}
+        call_args["session_context"] = build_session_context(origin_api_key, wallet_address)
         call_args.setdefault("task_id", task_id)
 
         result = await agent.call_agent(call_args)
@@ -462,14 +511,14 @@ async def process_mesh_request(
     origin_api_key = await get_api_key(credentials, request)
 
     agent_credits = resolve_agent_credits(agent.metadata, input_payload.get("tool"))
-    billing_user_id, api_key_part = await pre_validate_credits(origin_api_key, agent_credits)
+    billing_user_id, api_key_part, wallet_address = await pre_validate_credits(origin_api_key, agent_credits)
 
     try:
         if request.heurist_api_key:
             agent.set_heurist_api_key(request.heurist_api_key)
 
         call_args = dict(input_payload)
-        call_args["session_context"] = {"api_key": origin_api_key}
+        call_args["session_context"] = build_session_context(origin_api_key, wallet_address)
         result = await agent.call_agent(call_args)
 
         # DEDUCT: Only after successful execution
@@ -512,7 +561,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
 
     agent = await agent_pool.get_agent(request.agent_id)
     agent_credits = resolve_agent_credits(agent.metadata, task_payload.get("tool"))
-    billing_user_id, api_key_part = await pre_validate_credits(api_key, agent_credits)
+    billing_user_id, api_key_part, wallet_address = await pre_validate_credits(api_key, agent_credits)
 
     task_id = task_store.create_task(request.agent_id, task_payload, api_key)
 
@@ -526,6 +575,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
             agent_credits,
             billing_user_id,
             api_key_part,
+            wallet_address,
         )
     )
 
