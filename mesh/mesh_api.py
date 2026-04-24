@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import re
 import sys
 import time
 from contextlib import asynccontextmanager
@@ -10,6 +11,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
 import boto3
+from boto3.dynamodb.conditions import Key
 import botocore.exceptions
 import uvicorn
 from dotenv import load_dotenv
@@ -191,49 +193,87 @@ class TweetClaimVerifyRequest(BaseModel):
 
 
 DYNAMODB_TABLE_NAME = os.getenv("DYNAMODB_TABLE_NAME")
+HEURIST_ACCOUNTS_TABLE = os.getenv("HEURIST_ACCOUNTS_TABLE")
 AUTH_ENABLED = os.getenv("AUTH_ENABLED")
 AWS_REGION = os.getenv("AWS_REGION")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+EVM_WALLET_PATTERN = re.compile(r"^0x[a-fA-F0-9]{40}$")
+_dynamodb_resource = None
 _dynamodb_table = None
+_heurist_accounts_table = None
 
 
-def _get_dynamodb_table():
-    global _dynamodb_table
-    if _dynamodb_table is None and DYNAMODB_TABLE_NAME:
-        # Build kwargs for boto3
+def _get_dynamodb_resource():
+    global _dynamodb_resource
+    if _dynamodb_resource is None:
         kwargs = {}
         if AWS_REGION:
             kwargs["region_name"] = AWS_REGION
         if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
             kwargs["aws_access_key_id"] = AWS_ACCESS_KEY_ID
             kwargs["aws_secret_access_key"] = AWS_SECRET_ACCESS_KEY
-        dynamodb = boto3.resource("dynamodb", **kwargs)
-        _dynamodb_table = dynamodb.Table(DYNAMODB_TABLE_NAME)
+        _dynamodb_resource = boto3.resource("dynamodb", **kwargs)
+    return _dynamodb_resource
+
+
+def _get_dynamodb_table():
+    global _dynamodb_table
+    if _dynamodb_table is None and DYNAMODB_TABLE_NAME:
+        _dynamodb_table = _get_dynamodb_resource().Table(DYNAMODB_TABLE_NAME)
     return _dynamodb_table
+
+
+def _get_heurist_accounts_table():
+    global _heurist_accounts_table
+    if _heurist_accounts_table is None and HEURIST_ACCOUNTS_TABLE:
+        _heurist_accounts_table = _get_dynamodb_resource().Table(HEURIST_ACCOUNTS_TABLE)
+    return _heurist_accounts_table
+
+
+def _resolve_wallet_account_id(user_id: str) -> str | None:
+    accounts_table = _get_heurist_accounts_table()
+    if accounts_table is None or not EVM_WALLET_PATTERN.fullmatch(user_id):
+        return None
+
+    response = accounts_table.query(
+        KeyConditionExpression=Key("pk").eq(f"LOOKUP#wallet_evm#{user_id.lower()}"),
+        Limit=1,
+    )
+    items = response.get("Items", [])
+    if not items:
+        return None
+    return items[0].get("account_id")
 
 
 def parse_api_key(origin_api_key: str) -> tuple[str, str]:
     if "#" in origin_api_key:
         user_id, api_key_part = origin_api_key.split("#", 1)
     elif "-" in origin_api_key:
-        user_id, api_key_part = origin_api_key.split("-", 1)
+        user_id, _, api_key_part = origin_api_key.rpartition("-")
     else:
+        raise ValueError("Invalid API key format")
+
+    if not user_id or not api_key_part:
         raise ValueError("Invalid API key format")
     return user_id, api_key_part
 
 
-def _sync_validate_and_check_credits(user_id: str, api_key_part: str, required_credits: float) -> Decimal:
+def _sync_validate_and_check_credits(
+    user_id: str, api_key_part: str, required_credits: float
+) -> str:
     """Synchronous DynamoDB validation - called via asyncio.to_thread()"""
     table = _get_dynamodb_table()
+    billing_user_id = _resolve_wallet_account_id(user_id) or user_id
 
-    # 1. Validate API key exists
-    api_key_response = table.get_item(Key={"user_id": user_id, "api_key": api_key_part})
+    api_key_response = table.get_item(Key={"user_id": billing_user_id, "api_key": api_key_part})
+    if "Item" not in api_key_response and billing_user_id != user_id:
+        billing_user_id = user_id
+        api_key_response = table.get_item(Key={"user_id": billing_user_id, "api_key": api_key_part})
     if "Item" not in api_key_response:
         raise HTTPException(status_code=401, detail="Invalid API key")
 
-    # 2. Get user data and check credits
-    user_data_response = table.get_item(Key={"user_id": user_id, "api_key": "USER_DATA"})
+    user_data_response = table.get_item(Key={"user_id": billing_user_id, "api_key": "USER_DATA"})
     if "Item" not in user_data_response:
         raise HTTPException(status_code=401, detail="User data not found")
 
@@ -243,15 +283,19 @@ def _sync_validate_and_check_credits(user_id: str, api_key_part: str, required_c
     if remaining_credits < Decimal(str(required_credits)):
         raise HTTPException(status_code=402, detail="Insufficient credits")
 
-    return remaining_credits
+    return billing_user_id
 
 
-async def validate_and_check_credits(user_id: str, api_key_part: str, required_credits: float = 1.0) -> Decimal:
+async def validate_and_check_credits(
+    user_id: str, api_key_part: str, required_credits: float = 1.0
+) -> str:
     if not AUTH_ENABLED:
-        return Decimal("999999")
+        return user_id
 
     try:
-        return await asyncio.to_thread(_sync_validate_and_check_credits, user_id, api_key_part, required_credits)
+        return await asyncio.to_thread(
+            _sync_validate_and_check_credits, user_id, api_key_part, required_credits
+        )
     except HTTPException:
         raise
     except Exception as exc:
@@ -291,16 +335,16 @@ async def deduct_credits_dynamodb(user_id: str, agent_id: str, credits_to_deduct
         return False
 
 
-async def pre_validate_credits(origin_api_key: str, agent_credits: float = 1.0) -> str:
+async def pre_validate_credits(origin_api_key: str, agent_credits: float = 1.0) -> tuple[str, str]:
     if not AUTH_ENABLED:
-        return "anonymous"
+        return "anonymous", ""
     try:
         user_id, api_key_part = parse_api_key(origin_api_key)
     except ValueError:
         raise HTTPException(status_code=401, detail="Invalid API key format")
 
-    await validate_and_check_credits(user_id, api_key_part, agent_credits)
-    return user_id
+    billing_user_id = await validate_and_check_credits(user_id, api_key_part, agent_credits)
+    return billing_user_id, api_key_part
 
 
 def resolve_agent_credits(agent_metadata: dict, tool_name: str | None = None) -> float:
@@ -418,11 +462,7 @@ async def process_mesh_request(
     origin_api_key = await get_api_key(credentials, request)
 
     agent_credits = resolve_agent_credits(agent.metadata, input_payload.get("tool"))
-    try:
-        user_id, api_key_part = parse_api_key(origin_api_key)
-    except ValueError:
-        raise HTTPException(status_code=401, detail="Invalid API key format")
-    await pre_validate_credits(origin_api_key, agent_credits)
+    billing_user_id, api_key_part = await pre_validate_credits(origin_api_key, agent_credits)
 
     try:
         if request.heurist_api_key:
@@ -433,7 +473,7 @@ async def process_mesh_request(
         result = await agent.call_agent(call_args)
 
         # DEDUCT: Only after successful execution
-        await deduct_credits(user_id, api_key_part, request.agent_id, agent_credits)
+        await deduct_credits(billing_user_id, api_key_part, request.agent_id, agent_credits)
 
         return result
     except HTTPException:
@@ -472,11 +512,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
 
     agent = await agent_pool.get_agent(request.agent_id)
     agent_credits = resolve_agent_credits(agent.metadata, task_payload.get("tool"))
-    try:
-        user_id, api_key_part = parse_api_key(api_key)
-    except ValueError:
-        raise HTTPException(status_code=401, detail="Invalid API key format")
-    await pre_validate_credits(api_key, agent_credits)
+    billing_user_id, api_key_part = await pre_validate_credits(api_key, agent_credits)
 
     task_id = task_store.create_task(request.agent_id, task_payload, api_key)
 
@@ -488,7 +524,7 @@ async def create_mesh_task(request: MeshTaskCreateRequest, api_key: str = Depend
             api_key,
             request.heurist_api_key,
             agent_credits,
-            user_id,
+            billing_user_id,
             api_key_part,
         )
     )
