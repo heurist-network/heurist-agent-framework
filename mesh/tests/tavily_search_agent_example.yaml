@@ -1,0 +1,53 @@
+metadata:
+  agent: TavilySearchAgent
+  test_file: tavily_search_agent.py
+  timestamp: '2026-04-01T00:00:00.000000'
+  total_tests: 2
+  passed: 2
+  failed: 0
+results:
+  web_search:
+    input:
+      query: What are the latest developments in quantum computing?
+      tool: tavily_web_search
+      tool_arguments:
+        search_term: What are the latest developments in quantum computing?
+        limit: 5
+      raw_data_only: false
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          search_results:
+          - title: 'Quantum Computing in 2026: Latest Breakthroughs'
+            url: https://example.com/quantum-2026
+            score: 0.95
+            text: Recent breakthroughs in quantum computing have pushed the boundaries
+              of what is possible with quantum hardware and error correction.
+          - title: Advances in Quantum Error Correction
+            url: https://example.com/quantum-error-correction
+            score: 0.88
+            text: New approaches to quantum error correction are making fault-tolerant
+              quantum computing more practical.
+    description: Direct tool call to search web for quantum computing with 5 max results
+    status: success
+  extract_url:
+    input:
+      query: Extract content from a URL
+      tool: tavily_extract_url
+      tool_arguments:
+        urls:
+        - https://example.com/quantum-2026
+      raw_data_only: true
+    output:
+      response: ''
+      data:
+        status: success
+        data:
+          extracted_results:
+          - url: https://example.com/quantum-2026
+            raw_content: This is the full extracted content from the quantum computing
+              article published in 2026.
+    description: Extract content from a specific URL
+    status: success
