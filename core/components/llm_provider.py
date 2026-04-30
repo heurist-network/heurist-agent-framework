@@ -5,9 +5,23 @@ import os
 from typing import Dict, List, Optional, Tuple
 
 # Import your LLM functions
-from ..llm import LLMError, call_llm, call_llm_with_tools
+from ..llm import (
+    LLMError,
+    call_llm,
+    call_llm_litellm,
+    call_llm_with_tools,
+    call_llm_with_tools_litellm,
+)
 
 logger = logging.getLogger(__name__)
+
+# Provider backends. "heurist" routes through the OpenAI client + Heurist
+# gateway base_url (default, original behavior). "litellm" routes through the
+# embedded LiteLLM SDK so a single provider can talk to 100+ hosted backends
+# (OpenAI, Anthropic, Vertex AI, Bedrock, Azure, Groq, Mistral, ...) without a
+# separate proxy server. Pick the backend with `provider=` on __init__.
+HEURIST_BACKEND = "heurist"
+LITELLM_BACKEND = "litellm"
 
 
 class LLMProvider:
@@ -20,12 +34,27 @@ class LLMProvider:
         large_model_id: str = None,
         small_model_id: str = None,
         tool_manager=None,
+        provider: str = HEURIST_BACKEND,
+        litellm_kwargs: Dict = None,
     ):
-        self.base_url = base_url or os.getenv("HEURIST_BASE_URL")
-        self.api_key = api_key or os.getenv("HEURIST_API_KEY")
+        self.provider = provider
         self.large_model_id = large_model_id or os.getenv("LARGE_MODEL_ID")
         self.small_model_id = small_model_id or os.getenv("SMALL_MODEL_ID")
         self.tool_manager = tool_manager
+        self.litellm_kwargs = litellm_kwargs
+
+        if provider == LITELLM_BACKEND:
+            # LiteLLM resolves provider keys from per-provider env vars
+            # (ANTHROPIC_API_KEY, OPENAI_API_KEY, AWS_*, ...) when api_key is
+            # unset. base_url is used only for OpenAI-compatible custom
+            # endpoints (e.g., a private LiteLLM proxy or Foundry deployment).
+            self.base_url = base_url
+            self.api_key = api_key
+        elif provider == HEURIST_BACKEND:
+            self.base_url = base_url or os.getenv("HEURIST_BASE_URL")
+            self.api_key = api_key or os.getenv("HEURIST_API_KEY")
+        else:
+            raise ValueError(f"Unknown LLM provider backend: {provider}")
 
     async def call(
         self,
@@ -43,9 +72,11 @@ class LLMProvider:
         try:
             # Determine which model to use
             use_model = model_id or self.large_model_id
-            if not skip_tools and tools:
+            with_tools = (not skip_tools) and tools
+            tools_fn, no_tools_fn, extra = self._dispatch()
+            if with_tools:
                 response = await asyncio.to_thread(
-                    call_llm_with_tools,
+                    tools_fn,
                     base_url=self.base_url,
                     api_key=self.api_key,
                     model_id=use_model,
@@ -55,10 +86,11 @@ class LLMProvider:
                     max_tokens=max_tokens,
                     tools=tools,
                     tool_choice=tool_choice,
+                    **extra,
                 )
             else:
                 response = await asyncio.to_thread(
-                    call_llm,
+                    no_tools_fn,
                     base_url=self.base_url,
                     api_key=self.api_key,
                     model_id=use_model,
@@ -66,6 +98,7 @@ class LLMProvider:
                     user_prompt=user_prompt,
                     temperature=temperature,
                     max_tokens=max_tokens,
+                    **extra,
                 )
             # Process response
             text_response = ""
@@ -118,6 +151,13 @@ class LLMProvider:
         except Exception as e:
             logger.error(f"Unexpected error in LLM call: {str(e)}")
             return "Sorry, something went wrong.", None, None
+
+    def _dispatch(self):
+        """Pick the (tools_fn, no_tools_fn, extra_kwargs) trio for the active backend."""
+        if self.provider == LITELLM_BACKEND:
+            extra = {"litellm_kwargs": self.litellm_kwargs} if self.litellm_kwargs else {}
+            return call_llm_with_tools_litellm, call_llm_litellm, extra
+        return call_llm_with_tools, call_llm, {}
 
     def call_with_tools(
         self,
