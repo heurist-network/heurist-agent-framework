@@ -32,7 +32,7 @@ class DefiLlamaAgent(MeshAgent):
                 ],
                 "verified": True,
                 "recommended": True,
-                "credits": {"default": 0.3},
+                "credits": {"default": 0.3, "get_protocol_metrics": 1},
                 "x402_config": {
                     "enabled": True,
                     "default_price_usd": "0.003",
@@ -64,13 +64,6 @@ Present data clearly with appropriate context. Explain trends (WoW = week-over-w
                             }
                         },
                         "required": ["protocol"],
-                    },
-                    "verified": True,
-                    "recommended": True,
-                    "credits": {"default": 1},
-                    "x402_config": {
-                        "enabled": True,
-                        "default_price_usd": "0.01",
                     },
                 },
             },

@@ -1,0 +1,615 @@
+metadata:
+  agent: DefiLlamaAgent
+  test_file: defillama_agent.py
+  timestamp: '2026-05-10T15:47:45.858650'
+  total_tests: 8
+  passed: 8
+  failed: 0
+results:
+  protocol_metrics_query:
+    input:
+      query: What is the TVL of Aave?
+    output:
+      response: Which version of Aave are you interested in (e.g., Aave V2, Aave V3)?
+      data: {}
+    description: Natural language query for Aave protocol TVL
+    status: success
+    elapsed_time: 2.30503249168396
+  get_protocol_metrics_tool:
+    input:
+      tool: get_protocol_metrics
+      tool_arguments:
+        protocol: uniswap-v3
+      raw_data_only: true
+    output:
+      data:
+        description: A fully decentralized protocol for automated liquidity provision
+          on Ethereum. V2
+        chain: Ethereum
+        gecko_id: null
+        category: Dexs
+        chains:
+        - Saga
+        - 0G
+        - Moonbeam
+        - Lisk
+        - Scroll
+        - Tempo
+        - Taiko
+        - Nibiru
+        - Etherlink
+        - Sonic
+        - Hemi
+        - Boba
+        - Corn
+        - BOB
+        - Goat
+        - Polygon zkEVM
+        - XDC
+        - Linea
+        - Manta
+        - Telos
+        - X Layer
+        - xDai
+        - RSK
+        - Optimism
+        - Lens
+        - Mantle
+        - Filecoin
+        - Sei
+        - Celo
+        - zkSync Era
+        - Plasma
+        - Polygon
+        - Binance
+        - World Chain
+        - Redbelly
+        - Arbitrum
+        - Monad
+        - Blast
+        - Ethereum
+        - Unichain
+        - Avalanche
+        - Base
+        - LightLink
+        revenue_methodology:
+          UserFees: User pays fees on each swap.
+          Fees: Swap fees from paid by users.
+          Revenue: From 28 Dec 2025, a portion of fees a collected to buy back and
+            burn UNI on Ethereum, From 8 Mar 2026, a portion of fees a collected to
+            buy back and burn UNI on Optimism, Arbitrum, Base, Celo, WC, Zora, XLayer.
+          ProtocolRevenue: Protocol make no revenue.
+          HoldersRevenue: From 28 Dec 2025, a portion of fees a collected to buy back
+            and burn UNI on Ethereum, From 8 Mar 2026, a portion of fees a collected
+            to buy back and burn UNI on Optimism, Arbitrum, Base, Celo, WC, Zora,
+            XLayer.
+          SupplySideRevenue: Fees distributed to LPs post protocol fee collection
+        fees:
+          past24h: 249.18K USD
+          past7d: 4.02M USD
+          past30d: 16.56M USD
+          trend: Up 35.5% WoW, down 20.2% MoM
+        tvl:
+          current: 1.77B USD
+          trend: Up 2.3% WoW, up 4.8% MoM
+        top_chains:
+        - chain: Ethereum
+          tvl: 1.06B USD
+          trend: Up 2.7% WoW, up 4.1% MoM
+        - chain: Base
+          tvl: 279.31M USD
+          trend: Up 1.2% WoW, up 21.9% MoM
+        - chain: Arbitrum
+          tvl: 223.25M USD
+          trend: Stable (+0.3%) WoW, up 3.2% MoM
+        tvl_methodology: Counts the tokens locked on AMM pools, pulling the data from
+          the 'ianlapham/uniswapv2' subgraph
+        fees_top_chains:
+        - chain: Base
+          24h_fees: 94.08K USD
+          trend: Up 24.1% WoW, down 22.7% MoM
+        - chain: Ethereum
+          24h_fees: 57.54K USD
+          trend: Up 69.4% WoW, down 26.9% MoM
+        - chain: Arbitrum
+          24h_fees: 36.45K USD
+          trend: Up 14.0% WoW, down 22.4% MoM
+        volume:
+          past24h: 213.29M USD
+          past7d: 3.29B USD
+          past30d: 15.36B USD
+          trend: Up 13.7% WoW, down 19.4% MoM
+        volume_top_chains:
+        - chain: Ethereum
+          24h_volume: 90.89M USD
+          trend: Up 20.4% WoW, down 9.3% MoM
+        - chain: Arbitrum
+          24h_volume: 49.96M USD
+          trend: Up 12.4% WoW, down 30.4% MoM
+        - chain: Base
+          24h_volume: 22.71M USD
+          trend: Up 13.6% WoW, down 20.9% MoM
+    description: Direct tool call for Uniswap V3 protocol metrics with raw data
+    status: success
+    elapsed_time: 4.260253667831421
+  chain_metrics_query:
+    input:
+      query: Get chain metrics for Base
+    output:
+      response: "Here are the metrics for the Base chain:\n\n*   **TVL**: $4.58B USD\
+        \ (Up 1.1% WoW, up 5.5% MoM)\n*   **Fees**:\n    *   Past 24h: $1.12M USD\n\
+        \    *   Past 7d: $10.39M USD\n    *   Past 30d: $45.74M USD\n    *   All\
+        \ Time: $1.89B USD\n    *   Trend: Up 8.8% WoW, up 1.0% MoM\n*   **Top Protocols\
+        \ by 24h Fees**:\n    1.  Aerodrome Slipstream (Dexs): $223.86K USD\n    2.\
+        \  Morpho Blue (Lending): $162.08K USD\n    3.  Uniswap V4 (Dexs): $103.97K\
+        \ USD\n    4.  Steakhouse Financial (Risk Curators): $96.78K USD\n    5. \
+        \ Uniswap V3 (Dexs): $94.08K USD\n*   **Total Protocols**: 357"
+      data:
+        chain: Base
+        tvl:
+          current: 4.58B USD
+          trend: Up 1.1% WoW, up 5.5% MoM
+        fees:
+          past24h: 1.12M USD
+          past7d: 10.39M USD
+          past30d: 45.74M USD
+          all_time: 1.89B USD
+          trend: Up 8.8% WoW, up 1.0% MoM
+        top_protocols_by_fees:
+        - name: Aerodrome Slipstream
+          category: Dexs
+          24h_fees: 223.86K USD
+        - name: Morpho Blue
+          category: Lending
+          24h_fees: 162.08K USD
+        - name: Uniswap V4
+          category: Dexs
+          24h_fees: 103.97K USD
+        - name: Steakhouse Financial
+          category: Risk Curators
+          24h_fees: 96.78K USD
+        - name: Uniswap V3
+          category: Dexs
+          24h_fees: 94.08K USD
+        protocol_count: 357
+    description: Natural language query for Base chain metrics
+    status: success
+    elapsed_time: 8.714341402053833
+  get_chain_metrics_tool:
+    input:
+      tool: get_chain_metrics
+      tool_arguments:
+        chain: Solana
+      raw_data_only: true
+    output:
+      data: &id001
+        chain: Solana
+        tvl:
+          current: 5.79B USD
+          trend: Up 5.4% WoW, stable (+0.1%) MoM
+        fees:
+          past24h: 7.55M USD
+          past7d: 50.84M USD
+          past30d: 196.74M USD
+          all_time: 13.57B USD
+          trend: Up 9.3% WoW, up 2.2% MoM
+        top_protocols_by_fees:
+        - name: PumpSwap
+          category: Dexs
+          24h_fees: 1.54M USD
+        - name: pump.fun
+          category: Launchpad
+          24h_fees: 1.36M USD
+        - name: Solana
+          category: Chain
+          24h_fees: 472.06K USD
+        - name: Sanctum Validator LSTs
+          category: Liquid Staking
+          24h_fees: 452.51K USD
+        - name: Binance Staked SOL
+          category: Liquid Staking
+          24h_fees: 362.66K USD
+        protocol_count: 238
+    description: Direct tool call for Solana chain metrics with raw data
+    status: success
+    elapsed_time: 0.1182854175567627
+  top_protocols_by_fees_query:
+    input:
+      query: What are the top protocols on Solana by fees?
+    output:
+      response: 'Here are the top protocols on Solana by fees over the past 24 hours:
+
+
+        1.  **PumpSwap**: $1.54M USD (Category: Dexs)
+
+        2.  **pump.fun**: $1.36M USD (Category: Launchpad)
+
+        3.  **Solana**: $472.06K USD (Category: Chain)
+
+        4.  **Sanctum Validator LSTs**: $452.51K USD (Category: Liquid Staking)
+
+        5.  **Binance Staked SOL**: $362.66K USD (Category: Liquid Staking)'
+      data: *id001
+    description: Natural language query for top fee-generating protocols on Solana
+    status: success
+    elapsed_time: 3.582824945449829
+  search_yield_pools_stablecoin_tool:
+    input:
+      tool: search_yield_pools
+      tool_arguments:
+        chains: &id002
+        - Ethereum
+        stablecoin: true
+        sort_by: apy
+        limit: 5
+      raw_data_only: true
+    output:
+      data:
+        sort_by: apy
+        limit: 5
+        matched: 647
+        returned: 5
+        filters:
+          min_tvl_usd: 500000
+          chains: *id002
+          stablecoin: true
+        skipped:
+          tvl_lt_min: 16650
+          null_fields_removed: 9
+        note: Pools with tvlUsd < 500000 are skipped.
+        results:
+        - project: morpho-blue
+          chain: Ethereum
+          symbol: EVST
+          stablecoin: true
+          tvl_usd: 721103
+          apy: 297995.7987
+          apy_base: 297995.7987
+          apy_reward: 0
+          history:
+            apy_latest: 297995.7987
+            apy_avg_7d: 297995.7975
+            apy_change_7d_pct: 0.0
+            tvl_trend_7d_pct: 16.33
+        - project: morpho-blue
+          chain: Ethereum
+          symbol: 1337USDC
+          stablecoin: true
+          tvl_usd: 9590658
+          apy: 297994.8049
+          apy_base: 297994.8049
+          apy_reward: 0
+          history:
+            apy_latest: 297994.8049
+            apy_avg_7d: 297994.7504
+            apy_change_7d_pct: 0.0
+            tvl_trend_7d_pct: 16.31
+        - project: morpho-blue
+          chain: Ethereum
+          symbol: CSYUSDC
+          stablecoin: true
+          tvl_usd: 1864631
+          apy: 133843.0764
+          apy_base: 133843.0764
+          apy_reward: 0
+          history:
+            apy_latest: 133843.0764
+            apy_avg_7d: 133843.0759
+            apy_avg_30d: 135792.7145
+            apy_change_7d_pct: 0.0
+            apy_change_30d_pct: -1.44
+            tvl_trend_7d_pct: 16.33
+            tvl_trend_30d_pct: -43.68
+        - project: morpho-blue
+          chain: Ethereum
+          symbol: ADPUSDC
+          stablecoin: true
+          tvl_usd: 17990036
+          apy: 5359.8148
+          apy_base: 5359.8148
+          apy_reward: 0
+          history:
+            apy_latest: 5359.8148
+            apy_avg_7d: 5359.8148
+            apy_change_7d_pct: 0.0
+            tvl_trend_7d_pct: 16.31
+        - project: curve-dex
+          chain: Ethereum
+          symbol: IDAI-IUSDC-IUSDT
+          stablecoin: true
+          tvl_usd: 1559193
+          apy: 122.71
+          apy_base: 122.71
+          apy_reward: 0
+          history:
+            apy_latest: 122.71
+            apy_avg_7d: 128.5014
+            apy_avg_30d: 121.492
+            apy_change_7d_pct: -4.51
+            apy_change_30d_pct: 1.0
+            tvl_trend_7d_pct: 1.59
+            tvl_trend_30d_pct: 0.96
+    description: Direct tool call for top stablecoin yield pools on Ethereum sorted
+      by APY
+    status: success
+    elapsed_time: 1.2106318473815918
+  search_yield_pools_by_project_tool:
+    input:
+      tool: search_yield_pools
+      tool_arguments:
+        projects: &id003
+        - aave-v3
+        - curve-dex
+        sort_by: tvl
+        limit: 10
+      raw_data_only: false
+    output:
+      data:
+        sort_by: tvl
+        limit: 10
+        matched: 328
+        returned: 10
+        filters:
+          min_tvl_usd: 500000
+          projects: *id003
+        skipped:
+          tvl_lt_min: 16650
+          null_fields_removed: 14
+        note: Pools with tvlUsd < 500000 are skipped.
+        results:
+        - project: aave-v3
+          chain: Ethereum
+          symbol: WEETH
+          stablecoin: false
+          tvl_usd: 2860565149
+          apy: 0.0
+          apy_base: 0.0
+          history:
+            apy_latest: 0.0
+            apy_avg_7d: 0.0
+            apy_avg_30d: 0.0
+            apy_change_7d_pct: 0.0
+            apy_change_30d_pct: -51.22
+            tvl_trend_7d_pct: -5.83
+            tvl_trend_30d_pct: -19.08
+        - project: aave-v3
+          chain: Ethereum
+          symbol: WBTC
+          stablecoin: false
+          tvl_usd: 2327708238
+          apy: 0.006
+          apy_base: 0.006
+          history:
+            apy_latest: 0.006
+            apy_avg_7d: 0.006
+            apy_avg_30d: 0.0074
+            apy_change_7d_pct: -0.41
+            apy_change_30d_pct: -18.99
+            tvl_trend_7d_pct: 6.44
+            tvl_trend_30d_pct: -13.17
+        - project: aave-v3
+          chain: Ethereum
+          symbol: WSTETH
+          stablecoin: false
+          tvl_usd: 1923969818
+          apy: 0.0008
+          apy_base: 0.0008
+          history:
+            apy_latest: 0.0008
+            apy_avg_7d: 0.0009
+            apy_avg_30d: 0.0008
+            apy_change_7d_pct: -8.12
+            apy_change_30d_pct: 11.31
+            tvl_trend_7d_pct: -3.45
+            tvl_trend_30d_pct: -24.32
+        - project: aave-v3
+          chain: Ethereum
+          symbol: CBBTC
+          stablecoin: false
+          tvl_usd: 1294820428
+          apy: 0.0016
+          apy_base: 0.0016
+          history:
+            apy_latest: 0.0016
+            apy_avg_7d: 0.0021
+            apy_avg_30d: 0.0048
+            apy_change_7d_pct: -20.17
+            apy_change_30d_pct: -66.14
+            tvl_trend_7d_pct: 17.32
+            tvl_trend_30d_pct: -32.7
+        - project: aave-v3
+          chain: MegaETH
+          symbol: USDE
+          stablecoin: true
+          tvl_usd: 392669406
+          apy: 0.0021
+          apy_base: 0.0021
+          history:
+            apy_latest: 0.0021
+            apy_avg_7d: 0.001
+            apy_change_7d_pct: 104.29
+        - project: aave-v3
+          chain: Plasma
+          symbol: SUSDE
+          stablecoin: true
+          tvl_usd: 309396547
+          apy: 3.43
+          apy_base: 0
+          apy_reward: 3.43
+          history:
+            apy_latest: 3.43
+            apy_avg_7d: 3.1932
+            apy_avg_30d: 2.0701
+            apy_change_7d_pct: 7.42
+            apy_change_30d_pct: 65.7
+            tvl_trend_7d_pct: -1.43
+            tvl_trend_30d_pct: 11.72
+        - project: aave-v3
+          chain: MegaETH
+          symbol: USDM
+          stablecoin: true
+          tvl_usd: 301568515
+          apy: 1.1865
+          apy_base: 1.1865
+          history:
+            apy_latest: 1.1865
+            apy_avg_7d: 0.8121
+            apy_avg_30d: 0.2117
+            apy_change_7d_pct: 46.11
+            apy_change_30d_pct: 460.4
+            tvl_trend_7d_pct: 30.12
+        - project: aave-v3
+          chain: Ethereum
+          symbol: WETH
+          stablecoin: false
+          tvl_usd: 276809673
+          apy: 1.5507
+          apy_base: 1.5507
+          history:
+            apy_latest: 1.5507
+            apy_avg_7d: 2.3315
+            apy_avg_30d: 2.9641
+            apy_change_7d_pct: -33.49
+            apy_change_30d_pct: -47.69
+            tvl_trend_7d_pct: 334.18
+            tvl_trend_30d_pct: -61.24
+        - project: aave-v3
+          chain: Ethereum
+          symbol: SGHO
+          stablecoin: true
+          tvl_usd: 265264341
+          apy: 5.5334
+          history:
+            apy_latest: 5.5334
+            apy_avg_7d: 5.668
+            apy_avg_30d: 5.7235
+            apy_change_7d_pct: -2.37
+            apy_change_30d_pct: -3.32
+            tvl_trend_7d_pct: 8.87
+            tvl_trend_30d_pct: -15.39
+        - project: aave-v3
+          chain: Ethereum
+          symbol: SUSDE
+          stablecoin: true
+          tvl_usd: 243581257
+          apy: 2.7203
+          apy_base: 0
+          apy_reward: 2.7203
+          history:
+            apy_latest: 2.7203
+            apy_avg_7d: 2.3494
+            apy_avg_30d: 1.8282
+            apy_change_7d_pct: 15.79
+            apy_change_30d_pct: 48.8
+            tvl_trend_7d_pct: 7.7
+            tvl_trend_30d_pct: -48.83
+    description: Direct tool call for Aave V3 and Curve yield pools sorted by TVL
+      with formatted response
+    status: success
+    elapsed_time: 0.08569693565368652
+  search_yield_pools_by_symbol_tool:
+    input:
+      tool: search_yield_pools
+      tool_arguments:
+        symbols: &id005
+        - USDC
+        - USDT
+        chains: &id004
+        - Arbitrum
+        limit: 5
+      raw_data_only: true
+    output:
+      data:
+        sort_by: apy
+        limit: 5
+        matched: 15
+        returned: 5
+        filters:
+          min_tvl_usd: 500000
+          chains: *id004
+          symbols: *id005
+        skipped:
+          tvl_lt_min: 16650
+          null_fields_removed: 3
+        note: Pools with tvlUsd < 500000 are skipped.
+        results:
+        - project: yo-protocol
+          chain: Arbitrum
+          symbol: USDC
+          stablecoin: true
+          tvl_usd: 611263
+          apy: 11.639
+          apy_base: 3.839
+          apy_reward: 7.8
+          history:
+            apy_latest: 11.639
+            apy_avg_7d: 11.562
+            apy_avg_30d: 14.813
+            apy_change_7d_pct: 0.67
+            apy_change_30d_pct: -21.43
+            tvl_trend_7d_pct: 3.68
+        - project: zerobase-cedefi
+          chain: Arbitrum
+          symbol: USDT
+          stablecoin: true
+          tvl_usd: 7927961
+          apy: 9
+          apy_base: 7
+          apy_reward: 2
+          history:
+            apy_latest: 9
+            apy_avg_7d: 9.0
+            apy_avg_30d: 9.0
+            apy_change_7d_pct: 0.0
+            apy_change_30d_pct: 0.0
+            tvl_trend_7d_pct: -0.02
+            tvl_trend_30d_pct: -0.6
+        - project: zerobase-cedefi
+          chain: Arbitrum
+          symbol: USDC
+          stablecoin: true
+          tvl_usd: 783387
+          apy: 9
+          apy_base: 7
+          apy_reward: 2
+          history:
+            apy_latest: 9
+            apy_avg_7d: 9.0
+            apy_avg_30d: 9.0
+            apy_change_7d_pct: 0.0
+            apy_change_30d_pct: 0.0
+            tvl_trend_7d_pct: -0.01
+            tvl_trend_30d_pct: -2.98
+        - project: deltaprime
+          chain: Arbitrum
+          symbol: USDC
+          stablecoin: true
+          tvl_usd: 663782
+          apy: 7.8637
+          apy_base: 7.8637
+          history:
+            apy_latest: 7.8637
+            apy_avg_7d: 7.6623
+            apy_avg_30d: 6.6181
+            apy_change_7d_pct: 2.63
+            apy_change_30d_pct: 18.82
+            tvl_trend_7d_pct: -2.51
+            tvl_trend_30d_pct: -7.54
+        - project: gains-network
+          chain: Arbitrum
+          symbol: USDC
+          stablecoin: true
+          tvl_usd: 5165987
+          apy: 6.9066
+          apy_base: 6.9066
+          history:
+            apy_latest: 6.9066
+            apy_avg_7d: 6.5153
+            apy_avg_30d: 6.4563
+            apy_change_7d_pct: 6.01
+            apy_change_30d_pct: 6.97
+            tvl_trend_7d_pct: -3.34
+            tvl_trend_30d_pct: -38.78
+    description: Direct tool call for USDC/USDT yield pools on Arbitrum
+    status: success
+    elapsed_time: 0.0581355094909668
