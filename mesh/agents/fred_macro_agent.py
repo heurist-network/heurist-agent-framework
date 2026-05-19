@@ -432,6 +432,46 @@ Rules:
             return 52
         return None
 
+    def _prior_period_date(self, current: date, kind: str) -> Optional[date]:
+        """Calendar anchor for YoY comparisons (not a fixed row offset)."""
+        if kind == "monthly":
+            try:
+                return current.replace(year=current.year - 1)
+            except ValueError:
+                return current.replace(year=current.year - 1, day=28)
+        if kind == "quarterly":
+            try:
+                return current.replace(year=current.year - 1)
+            except ValueError:
+                return current.replace(year=current.year - 1, day=28)
+        if kind == "weekly":
+            return current - timedelta(weeks=52)
+        return None
+
+    def _observations_by_date(self, observations: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+        return {obs["date"]: obs for obs in observations if obs.get("date")}
+
+    def _year_ago_observation(
+        self,
+        spec: Dict[str, Any],
+        observations: List[Dict[str, Any]],
+        idx: int,
+        by_date: Optional[Dict[str, Dict[str, Any]]] = None,
+    ) -> Optional[Dict[str, Any]]:
+        """Observation for the same calendar period one year earlier."""
+        kind = self._frequency_kind(spec["frequency"])
+        if kind not in {"monthly", "quarterly", "weekly"}:
+            return None
+        current = observations[idx]
+        current_date = _parse_date(current.get("date"))
+        if current_date is None:
+            return None
+        target_date = self._prior_period_date(current_date, kind)
+        if target_date is None:
+            return None
+        lookup = by_date if by_date is not None else self._observations_by_date(observations)
+        return lookup.get(_iso_date(target_date))
+
     def _snapshot_history_limit(self, spec: Dict[str, Any]) -> int:
         kind = self._frequency_kind(spec["frequency"])
         if kind == "weekly":
@@ -492,7 +532,13 @@ Rules:
         return card
 
     def _metric_point(
-        self, spec: Dict[str, Any], observations: List[Dict[str, Any]], idx: int, view: str
+        self,
+        spec: Dict[str, Any],
+        observations: List[Dict[str, Any]],
+        idx: int,
+        view: str,
+        *,
+        by_date: Optional[Dict[str, Dict[str, Any]]] = None,
     ) -> Optional[Dict[str, Any]]:
         current = observations[idx]
         unit = self._view_unit(spec, view)
@@ -548,30 +594,28 @@ Rules:
                 "comparison_date": observations[idx - 1]["date"],
             }
 
-        offset = self._year_offset(spec)
-        if offset is None:
-            return None
-
         if view == "yoy":
-            if idx < offset or observations[idx - offset]["value"] == 0:
+            prior = self._year_ago_observation(spec, observations, idx, by_date)
+            if prior is None or prior["value"] == 0:
                 return None
-            value = ((current["value"] / observations[idx - offset]["value"]) - 1) * 100
+            value = ((current["value"] / prior["value"]) - 1) * 100
             return {
                 "date": current["date"],
                 "value": _round_value(value),
                 "unit": unit,
-                "comparison_date": observations[idx - offset]["date"],
+                "comparison_date": prior["date"],
             }
 
         if view == "yoy_change":
-            if idx < offset:
+            prior = self._year_ago_observation(spec, observations, idx, by_date)
+            if prior is None:
                 return None
-            value = current["value"] - observations[idx - offset]["value"]
+            value = current["value"] - prior["value"]
             point = {
                 "date": current["date"],
                 "value": _round_value(value),
                 "unit": unit,
-                "comparison_date": observations[idx - offset]["date"],
+                "comparison_date": prior["date"],
             }
             if "Percent" in spec["units"]:
                 point["basis_points"] = _round_value(value * 100, 2)
@@ -582,9 +626,10 @@ Rules:
     def _transform_observations(
         self, spec: Dict[str, Any], observations: List[Dict[str, Any]], view: str
     ) -> List[Dict[str, Any]]:
+        by_date = self._observations_by_date(observations) if view in {"yoy", "yoy_change"} else None
         transformed = []
         for idx in range(len(observations)):
-            point = self._metric_point(spec, observations, idx, view)
+            point = self._metric_point(spec, observations, idx, view, by_date=by_date)
             if point is None:
                 continue
             if "realtime_start" in observations[idx]:

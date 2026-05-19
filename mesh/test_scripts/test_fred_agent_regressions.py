@@ -8,6 +8,23 @@ sys.path.insert(0, str(project_root))
 from mesh.agents.fred_macro_agent import FredMacroAgent
 
 
+def test_headline_cpi_yoy_calendar_alignment() -> None:
+    """April CPI YoY must compare to April of the prior year, not March."""
+    agent = FredMacroAgent()
+    spec = agent.series_by_key["headline_cpi"]
+    observations = [
+        {"date": "2025-03-01", "value": 319.785},
+        {"date": "2025-04-01", "value": 320.302},
+        {"date": "2025-09-01", "value": 324.245},
+        {"date": "2025-11-01", "value": 325.063},
+        {"date": "2026-04-01", "value": 332.407},
+    ]
+    point = agent._metric_point(spec, observations, len(observations) - 1, "yoy")
+    assert point is not None
+    assert point["comparison_date"] == "2025-04-01"
+    assert abs(point["value"] - 3.78) < 0.05
+
+
 async def main():
     agent = FredMacroAgent()
     try:
