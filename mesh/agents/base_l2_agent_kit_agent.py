@@ -398,26 +398,51 @@ class BaseL2AgentKitAgent(MeshAgent):
 
     @monitor_execution
     async def swap_tokens(self, from_token: str, to_token: str, amount: str, slippage: float = 0.5, **kwargs) -> Dict[str, Any]:
-        """Execute or simulate a token swap."""
+        """Execute or simulate a token swap using live price data."""
         if not self.w3 or not self.w3.is_connected():
             return {"error": "Not connected to Base RPC"}
         try:
             from_addr = self._resolve_token(from_token)
             to_addr = self._resolve_token(to_token)
             amount_float = float(amount)
-            # Simulation mode if no private key
+            
+            # Get real prices for both tokens
+            from_price_result = await self.get_price(from_token)
+            to_price_result = await self.get_price(to_token)
+            from_price = from_price_result.get("price_usd", 0) if "error" not in from_price_result else 0
+            to_price = to_price_result.get("price_usd", 0) if "error" not in to_price_result else 0
+            
+            # Calculate expected output using price ratio
+            expected_output = 0
+            if to_price > 0:
+                input_value_usd = amount_float * from_price
+                expected_output = input_value_usd / to_price
+            
+            # Apply fee estimate (0.3% for V3)
+            fee = 0.003
+            min_output = expected_output * (1 - fee - slippage / 100)
+            
+            quote_data = {
+                "mode": "quoted",
+                "from_token": from_token,
+                "to_token": to_token,
+                "amount_in": amount_float,
+                "expected_output": round(expected_output, 6),
+                "min_output": round(min_output, 6),
+                "slippage": slippage,
+                "fee": fee,
+                "from_price_usd": from_price,
+                "to_price_usd": to_price,
+                "route": f"{from_token} -> {to_token} (V3, 0.3%)",
+                "source": "coingecko_price_ratio",
+                "note": "Quote based on live CoinGecko prices. Real execution requires wallet + DEX router."
+            }
+            
             if not self.private_key or not self.wallet_address:
-                return {
-                    "mode": "simulated",
-                    "from_token": from_token,
-                    "to_token": to_token,
-                    "amount": amount_float,
-                    "slippage": slippage,
-                    "note": "No private key configured. This is a simulation.",
-                    "estimated_output": amount_float * 0.995,  # Mock 0.5% fee
-                }
-            # Real execution would go here -- needs DEX router integration
-            return {"mode": "real", "note": "Real swap execution requires DEX router integration", "tx_hash": None}
+                quote_data["mode"] = "simulated"
+                return quote_data
+            
+            return {**quote_data, "note": "Real execution requires private key + Universal Router integration"}
         except Exception as e:
             return {"error": str(e)}
 
