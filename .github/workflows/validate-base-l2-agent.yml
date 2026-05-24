@@ -1,0 +1,141 @@
+name: Validate Base L2 Agent Kit
+
+on:
+  pull_request:
+    paths:
+      - 'mesh/agents/base_l2_agent_kit_agent.py'
+      - 'mesh/metadata.json'
+      - '.github/workflows/validate-base-l2-agent.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'mesh/agents/base_l2_agent_kit_agent.py'
+      - 'mesh/metadata.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install web3 python-dotenv
+
+      - name: Run agent validation
+        run: |
+          python3 -c "
+          import sys
+          sys.path.insert(0, '.')
+          from mesh.agents.base_l2_agent_kit_agent import BaseL2AgentKitAgent
+          agent = BaseL2AgentKitAgent()
+          
+          # Metadata checks
+          meta = agent.metadata
+          assert meta.get('name'), 'missing name'
+          assert meta.get('version'), 'missing version'
+          assert meta.get('author'), 'missing author'
+          assert meta.get('author_address'), 'missing author_address'
+          assert meta.get('description'), 'missing description'
+          assert meta.get('tags'), 'missing tags'
+          assert meta.get('credits'), 'missing credits'
+          assert meta.get('x402_config', {}).get('enabled'), 'x402 not enabled'
+          assert meta.get('examples'), 'missing examples'
+          
+          # Method checks
+          assert callable(agent.get_system_prompt), 'missing get_system_prompt'
+          assert callable(agent.get_tool_schemas), 'missing get_tool_schemas'
+          assert callable(agent._handle_tool_logic), 'missing _handle_tool_logic'
+          assert callable(agent.cleanup), 'missing cleanup'
+          
+          # Tool schemas
+          schemas = agent.get_tool_schemas()
+          assert schemas and len(schemas) > 0, 'no tool schemas'
+          for schema in schemas:
+              fn = schema.get('function', {})
+              assert fn.get('name'), 'schema missing name'
+              assert fn.get('description'), 'schema missing description'
+              assert fn.get('parameters', {}).get('properties'), 'schema missing params'
+          
+          # Credits coverage
+          credits = meta.get('credits', {})
+          tool_names = [s.get('function', {}).get('name', '') for s in schemas if s.get('function')]
+          for tn in tool_names:
+              assert tn in credits, f'tool {tn} missing from credits'
+          assert 'default' in credits, 'missing default credit'
+          
+          print('All checks passed!')
+          "
+
+      - name: Test tool execution (async)
+        run: |
+          python3 -c "
+          import asyncio
+          import sys
+          sys.path.insert(0, '.')
+          from mesh.agents.base_l2_agent_kit_agent import BaseL2AgentKitAgent
+          agent = BaseL2AgentKitAgent()
+          
+          async def test():
+              # Test get_price
+              result = await agent.get_price('ETH')
+              assert 'error' not in result, f'get_price error: {result}'
+              assert result.get('token') == 'ETH', 'get_price wrong token'
+              
+              # Test get_wallet_balance (simulated mode)
+              result = await agent.get_wallet_balance('ETH')
+              assert 'error' not in result, f'get_wallet_balance error: {result}'
+              assert result.get('mode') == 'simulated', 'expected simulated mode'
+              
+              # Test estimate_gas
+              result = await agent.estimate_gas('swap')
+              assert 'error' not in result, f'estimate_gas error: {result}'
+              
+              # Test swap_tokens
+              result = await agent.swap_tokens('ETH', 'USDC', '0.1')
+              assert result.get('mode') == 'simulated', 'expected simulated swap'
+              
+              # Test _handle_tool_logic dispatch
+              result = await agent._handle_tool_logic('get_price', {'token': 'ETH'})
+              assert 'error' not in result, f'_handle_tool_logic error: {result}'
+              
+              print('All async tests passed!')
+          
+          asyncio.run(test())
+          "
+
+      - name: Check for non-ASCII characters
+        run: |
+          python3 -c "
+          with open('mesh/agents/base_l2_agent_kit_agent.py', 'rb') as f:
+              content = f.read()
+          non_ascii = [b for b in content if b > 127]
+          if non_ascii:
+              print(f'ERROR: {len(non_ascii)} non-ASCII bytes found:')
+              for b in non_ascii[:20]:
+                  print(f'  {hex(b)}')
+              exit(1)
+          print('No non-ASCII characters found.')
+          "
+
+      - name: Verify metadata.json references agent
+        if: hashFiles('mesh/metadata.json') != ''
+        run: |
+          python3 -c "
+          import json
+          with open('mesh/metadata.json') as f:
+              meta = json.load(f)
+          agents = meta.get('agents', {})
+          found = False
+          for key, agent_meta in agents.items():
+              if 'base' in key.lower() or 'l2' in key.lower():
+                  found = True
+                  print(f'Found agent in metadata: {key}')
+          if not found:
+              print('WARNING: Base L2 agent not found in metadata.json')
+          "
