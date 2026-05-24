@@ -31,6 +31,7 @@ class PondWalletAnalysisAgent(MeshAgent):
                 "description": "This agent analyzes cryptocurrency wallet activities across Ethereum and Base networks using the Cryptopond API.",
                 "external_apis": ["Cryptopond"],
                 "tags": ["Wallet Analysis"],
+                "hidden": True,
                 "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/CryptoPond.png",
                 "examples": [
