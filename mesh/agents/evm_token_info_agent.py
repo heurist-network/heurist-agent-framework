@@ -30,6 +30,7 @@ class EvmTokenInfoAgent(MeshAgent):
                 "external_apis": ["Bitquery"],
                 "verified": True,
                 "tags": ["EVM"],
+                "hidden": True,
                 "supported_chains": ["ethereum", "eth", "bsc", "binance", "base", "arbitrum", "arb"],
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/EVM.png",
                 "examples": [

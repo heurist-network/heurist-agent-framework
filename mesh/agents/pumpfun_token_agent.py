@@ -30,6 +30,7 @@ class PumpFunTokenAgent(MeshAgent):
                 "description": "This agent analyzes Pump.fun token on Solana using Bitquery API. It tracks token creation and graduation events on Pump.fun.",
                 "external_apis": ["Bitquery"],
                 "tags": ["Solana"],
+                "hidden": True,
                 "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Pumpfun.png",
                 "examples": [
