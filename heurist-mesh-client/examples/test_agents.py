@@ -17,7 +17,16 @@ MESH_METADATA_URL = "https://mesh.heurist.ai/metadata.json"
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_INPUTS_FILE = os.path.join(SCRIPT_DIR, "test_inputs.json")
 
-DISABLED_AGENTS = {"DeepResearchAgent", "MemoryAgent", "BaseUSDCForensicsAgent"}
+DISABLED_AGENTS = {
+    "DeepResearchAgent",
+    "MemoryAgent",
+    "BaseUSDCForensicsAgent",
+    "PondWalletAnalysisAgent",
+    "BitquerySolanaTokenInfoAgent",
+    "LetsBonkTokenInfoAgent",
+    "PumpfunTokenAgent",
+    "EvmTokenInfoAgent",
+}
 
 
 def is_agent_hidden(agent_data: Dict) -> bool:
