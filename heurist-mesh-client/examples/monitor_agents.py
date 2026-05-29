@@ -61,7 +61,18 @@ NUM_WORKERS = 4
 TEST_PER_WORKER = 4
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_INPUTS_FILE = os.path.join(SCRIPT_DIR, "test_inputs.json")
-DISABLED_AGENTS = {"DeepResearchAgent", "MemoryAgent", "ArbusAgent", "MindAiKolAgent"}
+DISABLED_AGENTS = {
+    "DeepResearchAgent",
+    "MemoryAgent",
+    "ArbusAgent",
+    "MindAiKolAgent",
+    "LetsBonkTokenInfoAgent",
+    "BaseUSDCForensicsAgent",
+    "PondWalletAnalysisAgent",
+    "BitquerySolanaTokenInfoAgent",
+    "PumpFunTokenAgent",
+    "EvmTokenInfoAgent",
+}
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
 
 
@@ -303,6 +314,12 @@ async def run_all_tests(continuous: bool = False):
         logger.info(f"Starting test batch at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         stats = {}
         for agent_id in test_inputs.keys():
+            if agent_id in DISABLED_AGENTS:
+                logger.info(f"Skipping disabled agent: {agent_id}")
+                continue
+            if agent_id in agents_metadata.get("agents", {}) and is_agent_hidden(agents_metadata["agents"][agent_id]):
+                logger.info(f"Skipping hidden agent: {agent_id}")
+                continue
             agent_stats = run_tests_for_agent(agent_id, client, test_inputs, agents_metadata)
             stats.update(agent_stats)
         await push_to_prometheus(stats)
@@ -317,9 +334,15 @@ async def run_specific_agent(agent_id: str):
     if not os.getenv("HEURIST_API_KEY"):
         logger.error("HEURIST_API_KEY environment variable not set")
         return
+    if agent_id in DISABLED_AGENTS:
+        logger.error(f"Agent {agent_id} is disabled")
+        return
     agents_metadata = fetch_agents_metadata()
     if agent_id not in agents_metadata["agents"]:
         logger.error(f"Agent {agent_id} not found")
+        return
+    if is_agent_hidden(agents_metadata["agents"][agent_id]):
+        logger.error(f"Agent {agent_id} is hidden")
         return
     test_inputs = load_test_inputs()
     if agent_id not in test_inputs:
