@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import threading
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
@@ -24,6 +25,10 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 HISTORY_INTERVALS = ["1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h", "1d", "5d", "1wk", "1mo", "3mo"]
+# yf.download stages per-ticker results in module-global yfinance.shared state,
+# so concurrent downloads clobber each other and can return another request's
+# date window as their own. Serialize all yf.download calls.
+YF_DOWNLOAD_LOCK = threading.Lock()
 INTRADAY_INTERVALS = {"1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h"}
 MARKETS = ["US", "GB", "ASIA", "EUROPE", "RATES", "COMMODITIES", "CURRENCIES", "CRYPTOCURRENCIES"]
 ASSET_TYPES = ["stock", "etf", "crypto", "currency", "index", "future", "fund"]
@@ -630,8 +635,63 @@ Rules:
             f"|period={period or ''}|start={start_date or ''}|end={end_date or ''}"
         )
 
-    def _history_range_bounds(self, start_date: Optional[str], end_date: Optional[str]) -> tuple[Optional[str], Optional[str]]:
-        return (start_date or None, end_date or None)
+    def _history_coverage_tolerance(self, interval: str) -> pd.Timedelta:
+        # Widest expected calendar gap between consecutive bars (weekends/holidays,
+        # or the bar span itself for coarse intervals), with a little slack.
+        if interval == "3mo":
+            return pd.Timedelta(days=100)
+        if interval == "1mo":
+            return pd.Timedelta(days=35)
+        if interval in ("1wk", "5d"):
+            return pd.Timedelta(days=9)
+        return pd.Timedelta(days=5)
+
+    def _history_covered_range(
+        self, df: pd.DataFrame, interval: str, start_date: Optional[str], end_date: Optional[str]
+    ) -> tuple[Optional[str], Optional[str]]:
+        """Date range this frame actually covers, based on the data itself.
+
+        Yahoo sometimes silently returns a partial frame (e.g. under rate
+        limiting), so cached coverage must be derived from the bars, not from
+        what was requested. A requested bound is only claimed when bars reach
+        within a weekend/holiday tolerance of it, and an internal gap wider
+        than the tolerance limits the claim to the contiguous run of bars
+        after the gap. This prevents a partial fetch from being cached and
+        later served as if it covered the whole requested range.
+        """
+        if df is None or df.empty:
+            return None, None
+        tolerance = self._history_coverage_tolerance(interval)
+        index = df.index.sort_values()
+
+        run_start = index[0]
+        deltas = pd.Series(index).diff()
+        wide_gaps = deltas[deltas > tolerance]
+        if not wide_gaps.empty:
+            run_start = index[int(wide_gaps.index[-1])]
+
+        covered_start = run_start.strftime("%Y-%m-%d")
+        if start_date and start_date < covered_start and run_start <= pd.Timestamp(start_date) + tolerance:
+            covered_start = start_date
+
+        covered_end = (index[-1].normalize() + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        if end_date and end_date > covered_end and index[-1] >= pd.Timestamp(end_date) - tolerance:
+            covered_end = end_date
+
+        return covered_start, covered_end
+
+    def _history_range_covered(
+        self,
+        covered_start: Optional[str],
+        covered_end: Optional[str],
+        start_date: Optional[str],
+        end_date: Optional[str],
+    ) -> bool:
+        if start_date and (covered_start is None or start_date < covered_start):
+            return False
+        if end_date and (covered_end is None or end_date > covered_end):
+            return False
+        return True
 
     def _is_cache_valid(self, ttl_map: Dict[str, datetime], key: str) -> bool:
         return key in ttl_map and datetime.now() < ttl_map[key]
@@ -692,13 +752,9 @@ Rules:
             range_key = self._shared_history_key(symbol, interval, include_prepost, repair)
             if self._is_cache_valid(cache_ttl, range_key):
                 entry = cache.get(range_key) or {}
-                cached_start = entry.get("requested_start")
-                cached_end = entry.get("requested_end")
-                covered = True
-                if start_date and cached_start and start_date < cached_start:
-                    covered = False
-                if end_date and cached_end and end_date > cached_end:
-                    covered = False
+                covered = self._history_range_covered(
+                    entry.get("covered_start"), entry.get("covered_end"), start_date, end_date
+                )
                 if covered and isinstance(entry.get("df"), pd.DataFrame):
                     return self._filter_history_frame(entry["df"], start_date=start_date, end_date=end_date)
         return None
@@ -714,8 +770,8 @@ Rules:
         if isinstance(entry, dict) and isinstance(entry.get("df"), pd.DataFrame):
             return {
                 "df": entry["df"].copy(),
-                "requested_start": entry.get("requested_start"),
-                "requested_end": entry.get("requested_end"),
+                "covered_start": entry.get("covered_start"),
+                "covered_end": entry.get("covered_end"),
             }
         return None
 
@@ -753,31 +809,31 @@ Rules:
         cache, cache_ttl = self._shared_history_store()
         expires_at = datetime.now() + timedelta(seconds=SHARED_HISTORY_TTL_SECONDS)
         request_key = self._history_request_key(symbol, interval, period, start_date, end_date, include_prepost, repair)
-        cache[request_key] = df.copy()
-        cache_ttl[request_key] = expires_at
 
-        if start_date or end_date:
-            range_key = self._shared_history_key(symbol, interval, include_prepost, repair)
-            existing_entry = cache.get(range_key) if self._is_cache_valid(cache_ttl, range_key) else None
-            merged_df = df.copy()
-            requested_start, requested_end = self._history_range_bounds(start_date, end_date)
-            if isinstance(existing_entry, dict) and isinstance(existing_entry.get("df"), pd.DataFrame):
-                merged_df = self._merge_history_frames(existing_entry["df"], df)
-                existing_start = existing_entry.get("requested_start")
-                existing_end = existing_entry.get("requested_end")
-                requested_start = min(v for v in [existing_start, requested_start] if v is not None) if (
-                    existing_start or requested_start
-                ) else None
-                requested_end = max(v for v in [existing_end, requested_end] if v is not None) if (
-                    existing_end or requested_end
-                ) else None
+        if not (start_date or end_date):
+            cache[request_key] = df.copy()
+            cache_ttl[request_key] = expires_at
+            return
 
-            cache[range_key] = {
-                "df": merged_df,
-                "requested_start": requested_start,
-                "requested_end": requested_end,
-            }
-            cache_ttl[range_key] = expires_at
+        range_key = self._shared_history_key(symbol, interval, include_prepost, repair)
+        existing_entry = cache.get(range_key) if self._is_cache_valid(cache_ttl, range_key) else None
+        merged_df = df.copy()
+        if isinstance(existing_entry, dict) and isinstance(existing_entry.get("df"), pd.DataFrame):
+            merged_df = self._merge_history_frames(existing_entry["df"], df)
+        covered_start, covered_end = self._history_covered_range(merged_df, interval, start_date, end_date)
+
+        # A frame that does not actually cover the requested range (partial Yahoo
+        # response) must not answer the identical request from cache either.
+        if self._history_range_covered(covered_start, covered_end, start_date, end_date):
+            cache[request_key] = df.copy()
+            cache_ttl[request_key] = expires_at
+
+        cache[range_key] = {
+            "df": merged_df,
+            "covered_start": covered_start,
+            "covered_end": covered_end,
+        }
+        cache_ttl[range_key] = expires_at
 
     def _get_cached_history_metadata(self, symbol: str) -> Optional[Dict[str, Any]]:
         cache, cache_ttl = self._shared_metadata_store()
@@ -1393,8 +1449,8 @@ Rules:
             elif start_date and end_date:
                 range_entry = self._get_cached_history_range_entry(symbol, interval, include_prepost, repair)
                 segments = self._history_missing_segments(
-                    range_entry.get("requested_start") if range_entry else None,
-                    range_entry.get("requested_end") if range_entry else None,
+                    range_entry.get("covered_start") if range_entry else None,
+                    range_entry.get("covered_end") if range_entry else None,
                     start_date,
                     end_date,
                 )
@@ -1424,7 +1480,6 @@ Rules:
                     missing_symbols.append(symbol)
                     continue
                 merged = self._merge_history_frames(cached_df, fetched)
-                filtered = self._filter_history_frame(merged, start_date=start_date, end_date=end_date)
                 if not merged.empty:
                     self._store_cached_history(
                         symbol=symbol,
@@ -1434,18 +1489,25 @@ Rules:
                         end_date=end_date,
                         include_prepost=include_prepost,
                         repair=repair,
-                        df=filtered if not filtered.empty else merged,
+                        df=merged,
                     )
-                results[symbol] = filtered
+                covered_start, covered_end = self._history_covered_range(merged, interval, start_date, end_date)
+                if self._history_range_covered(covered_start, covered_end, start_date, end_date):
+                    results[symbol] = self._filter_history_frame(merged, start_date=start_date, end_date=end_date)
+                else:
+                    # Segment refetch still left holes in the requested range;
+                    # fall back to a full-range download.
+                    missing_symbols.append(symbol)
 
         if not missing_symbols:
             return {symbol: results.get(symbol, pd.DataFrame()) for symbol in symbols}
 
         def _do_download() -> Dict[str, pd.DataFrame]:
-            downloaded = yf.download(
-                missing_symbols,
-                **self._download_kwargs(interval, period, start_date, end_date, include_prepost, repair),
-            )
+            with YF_DOWNLOAD_LOCK:
+                downloaded = yf.download(
+                    missing_symbols,
+                    **self._download_kwargs(interval, period, start_date, end_date, include_prepost, repair),
+                )
             return {symbol: self._extract_download_frame(downloaded, symbol) for symbol in missing_symbols}
 
         fetched = await asyncio.to_thread(_do_download)
