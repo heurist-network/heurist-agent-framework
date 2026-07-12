@@ -65,7 +65,7 @@ TEST_CASES = {
             "tool_arguments": {},
             "raw_data_only": True,
         },
-        "description": "Curated multi-pillar regime summary across the default macro set.",
+        "description": "Curated multi-pillar regime evidence across the default macro set.",
         "expected_status": "success",
     },
     "macro_regime_context_invalid_pillar": {

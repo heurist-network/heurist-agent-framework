@@ -1,7 +1,7 @@
 metadata:
   agent: FredMacroAgent
   test_file: fred_macro_agent.py
-  timestamp: '2026-03-19T18:23:28.919476'
+  timestamp: '2026-07-12T00:26:07.381110'
   total_tests: 14
   passed: 14
   failed: 0
@@ -13,7 +13,6 @@ results:
         series_key: headline_cpi
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -34,36 +33,36 @@ results:
               release_id: 10
               release_name: Consumer Price Index
             observation_start: '1947-01-01'
-            observation_end: '2026-02-01'
-            last_updated: '2026-03-11 08:05:55-05'
+            observation_end: '2026-05-01'
+            last_updated: '2026-06-10 08:20:52-05'
           latest_observation:
-            date: '2026-02-01'
-            value: 327.46
+            date: '2026-05-01'
+            value: 333.979
             unit: Index 1982-1984=100
           previous_observation:
-            date: '2026-01-01'
-            value: 326.588
+            date: '2026-04-01'
+            value: 332.407
             unit: Index 1982-1984=100
           derived:
             yoy:
-              date: '2026-02-01'
-              value: 2.6646
+              date: '2026-05-01'
+              value: 4.1666
               unit: pct
-              comparison_date: '2025-01-01'
-              direction: falling
-            mom_annualized:
-              date: '2026-02-01'
-              value: 3.2515
-              unit: pct
-              comparison_date: '2026-01-01'
+              comparison_date: '2025-05-01'
               direction: rising
+            mom_annualized:
+              date: '2026-05-01'
+              value: 5.8249
+              unit: pct
+              comparison_date: '2026-04-01'
+              direction: falling
           release_context:
             release_key: cpi
             release_id: 10
             release_name: Consumer Price Index
     description: Compact latest snapshot for headline CPI.
     status: success
-    elapsed_time: 0.4543647766113281
+    elapsed_time: 0.44144320487976074
   macro_series_snapshot_invalid_series:
     input:
       tool: macro_series_snapshot
@@ -71,14 +70,16 @@ results:
         series_key: totally_fake_series
       raw_data_only: true
     output:
-      response: ''
       data:
         status: error
-        error: Unsupported series_key 'totally_fake_series'.
+        error: 'Unsupported series_key ''totally_fake_series''. Supported series_key
+          values: baa_treasury_spread, core_cpi, core_pce, curve_10y_minus_2y, fed_funds,
+          headline_cpi, headline_pce, initial_claims, nfci, nonfarm_payrolls, real_gdp,
+          unemployment_rate, ust_10y, ust_2y.'
     description: Unsupported series keys fail directly instead of falling back to
       search.
     status: success
-    elapsed_time: 0.0001590251922607422
+    elapsed_time: 9.560585021972656e-05
   macro_series_history_core_pce_yoy:
     input:
       tool: macro_series_history
@@ -89,7 +90,6 @@ results:
         limit: 12
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -110,35 +110,19 @@ results:
               release_id: 54
               release_name: Personal Income and Outlays
             observation_start: '1959-01-01'
-            observation_end: '2026-01-01'
-            last_updated: '2026-03-13 07:43:38-05'
+            observation_end: '2026-05-01'
+            last_updated: '2026-06-25 07:43:26-05'
           resolved_window:
-            end_date: '2026-03-19'
+            end_date: '2026-07-12'
             window_source: period
             period: 5y
-            start_date: '2021-03-18'
+            start_date: '2021-07-11'
           view: yoy
           available_views:
           - level
           - yoy
           - mom_annualized
           observations:
-          - date: '2025-02-01'
-            value: 2.9686
-            unit: pct
-            comparison_date: '2024-02-01'
-          - date: '2025-03-01'
-            value: 2.6703
-            unit: pct
-            comparison_date: '2024-03-01'
-          - date: '2025-04-01'
-            value: 2.6148
-            unit: pct
-            comparison_date: '2024-04-01'
-          - date: '2025-05-01'
-            value: 2.7839
-            unit: pct
-            comparison_date: '2024-05-01'
           - date: '2025-06-01'
             value: 2.8074
             unit: pct
@@ -156,31 +140,47 @@ results:
             unit: pct
             comparison_date: '2024-09-01'
           - date: '2025-10-01'
-            value: 2.7562
+            value: 2.7545
             unit: pct
             comparison_date: '2024-10-01'
           - date: '2025-11-01'
-            value: 2.8323
+            value: 2.8291
             unit: pct
             comparison_date: '2024-11-01'
           - date: '2025-12-01'
-            value: 3.0057
+            value: 2.9711
             unit: pct
             comparison_date: '2024-12-01'
           - date: '2026-01-01'
-            value: 3.0557
+            value: 3.1047
             unit: pct
             comparison_date: '2025-01-01'
+          - date: '2026-02-01'
+            value: 3.0493
+            unit: pct
+            comparison_date: '2025-02-01'
+          - date: '2026-03-01'
+            value: 3.2538
+            unit: pct
+            comparison_date: '2025-03-01'
+          - date: '2026-04-01'
+            value: 3.3187
+            unit: pct
+            comparison_date: '2025-04-01'
+          - date: '2026-05-01'
+            value: 3.412
+            unit: pct
+            comparison_date: '2025-05-01'
           latest_summary:
-            date: '2026-01-01'
-            value: 3.0557
+            date: '2026-05-01'
+            value: 3.412
             unit: pct
-            comparison_date: '2025-01-01'
+            comparison_date: '2025-05-01'
             direction: rising
           point_in_time_safe: false
     description: Bounded YoY history for core PCE.
     status: success
-    elapsed_time: 0.2852935791015625
+    elapsed_time: 0.3828105926513672
   macro_series_history_invalid_view:
     input:
       tool: macro_series_history
@@ -190,14 +190,13 @@ results:
         view: yoy
       raw_data_only: true
     output:
-      response: ''
       data:
         status: error
         error: 'View ''yoy'' is unsupported for ust_10y. Supported views: level, change.'
     description: Unsupported transforms fail directly for series that do not advertise
       them.
     status: success
-    elapsed_time: 0.0001838207244873047
+    elapsed_time: 9.083747863769531e-05
   macro_series_history_explicit_start_date:
     input:
       tool: macro_series_history
@@ -209,7 +208,6 @@ results:
         limit: 6
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -227,8 +225,8 @@ results:
               release_id: 10
               release_name: Consumer Price Index
             observation_start: '1947-01-01'
-            observation_end: '2026-02-01'
-            last_updated: '2026-03-11 08:05:55-05'
+            observation_end: '2026-05-01'
+            last_updated: '2026-06-10 08:20:52-05'
           resolved_window:
             end_date: '2025-01-31'
             window_source: explicit_dates
@@ -266,127 +264,119 @@ results:
     description: Explicit date windows should work without pretending a rolling period
       was used.
     status: success
-    elapsed_time: 0.13415813446044922
+    elapsed_time: 0.469738245010376
   macro_regime_context_all_pillars:
     input:
       tool: macro_regime_context
       tool_arguments: {}
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
-          as_of_date: null
+          as_of_date: '2026-07-12'
           point_in_time_safe: false
-          overall_summary: 'inflation: sticky; rates: normalizing; labor: mixed; credit_conditions:
-            stable; growth: slowing'
           pillars:
           - pillar: inflation
-            state: sticky
-            summary: Inflation is off the peak but still sticky versus a clean target-consistent
-              path.
             evidence:
             - series_key: headline_cpi
               series_id: CPIAUCSL
               title: 'Consumer Price Index for All Urban Consumers: All Items in U.S.
                 City Average'
               latest_observation:
-                date: '2026-02-01'
-                value: 327.46
+                date: '2026-05-01'
+                value: 333.979
                 unit: Index 1982-1984=100
               derived:
                 yoy:
-                  date: '2026-02-01'
-                  value: 2.6646
+                  date: '2026-05-01'
+                  value: 4.1666
                   unit: pct
-                  comparison_date: '2025-01-01'
-                  direction: falling
-                mom_annualized:
-                  date: '2026-02-01'
-                  value: 3.2515
-                  unit: pct
-                  comparison_date: '2026-01-01'
+                  comparison_date: '2025-05-01'
                   direction: rising
+                mom_annualized:
+                  date: '2026-05-01'
+                  value: 5.8249
+                  unit: pct
+                  comparison_date: '2026-04-01'
+                  direction: falling
             - series_key: core_cpi
               series_id: CPILFESL
               title: 'Consumer Price Index for All Urban Consumers: All Items Less
                 Food and Energy in U.S. City Average'
               latest_observation:
-                date: '2026-02-01'
-                value: 333.512
+                date: '2026-05-01'
+                value: 336.121
                 unit: Index 1982-1984=100
               derived:
                 yoy:
-                  date: '2026-02-01'
-                  value: 2.7335
+                  date: '2026-05-01'
+                  value: 2.8229
                   unit: pct
-                  comparison_date: '2025-01-01'
-                  direction: falling
+                  comparison_date: '2025-05-01'
+                  direction: rising
                 mom_annualized:
-                  date: '2026-02-01'
-                  value: 2.6236
+                  date: '2026-05-01'
+                  value: 2.5259
                   unit: pct
-                  comparison_date: '2026-01-01'
+                  comparison_date: '2026-04-01'
                   direction: falling
             - series_key: headline_pce
               series_id: PCEPI
               title: 'Personal Consumption Expenditures: Chain-type Price Index'
               latest_observation:
-                date: '2026-01-01'
-                value: 128.969
+                date: '2026-05-01'
+                value: 131.527
                 unit: Index 2017=100
               derived:
                 yoy:
-                  date: '2026-01-01'
-                  value: 2.8322
+                  date: '2026-05-01'
+                  value: 4.0726
                   unit: pct
-                  comparison_date: '2025-01-01'
-                  direction: falling
+                  comparison_date: '2025-05-01'
+                  direction: rising
                 mom_annualized:
-                  date: '2026-01-01'
-                  value: 3.3533
+                  date: '2026-05-01'
+                  value: 5.5335
                   unit: pct
-                  comparison_date: '2025-12-01'
-                  direction: falling
+                  comparison_date: '2026-04-01'
+                  direction: rising
             - series_key: core_pce
               series_id: PCEPILFE
               title: Personal Consumption Expenditures Excluding Food and Energy (Chain-Type
                 Price Index)
               latest_observation:
-                date: '2026-01-01'
-                value: 128.394
+                date: '2026-05-01'
+                value: 130.082
                 unit: Index 2017=100
               derived:
                 yoy:
-                  date: '2026-01-01'
-                  value: 3.0557
+                  date: '2026-05-01'
+                  value: 3.412
                   unit: pct
-                  comparison_date: '2025-01-01'
+                  comparison_date: '2025-05-01'
                   direction: rising
                 mom_annualized:
-                  date: '2026-01-01'
-                  value: 4.4501
+                  date: '2026-05-01'
+                  value: 3.9089
                   unit: pct
-                  comparison_date: '2025-12-01'
+                  comparison_date: '2026-04-01'
                   direction: rising
           - pillar: rates
-            state: normalizing
-            summary: Rates look closer to normalization than outright tightening.
             evidence:
             - series_key: fed_funds
               series_id: FEDFUNDS
               title: Federal Funds Effective Rate
               latest_observation:
-                date: '2026-02-01'
-                value: 3.64
+                date: '2026-06-01'
+                value: 3.63
                 unit: Percent
               derived:
                 change:
-                  date: '2026-02-01'
+                  date: '2026-06-01'
                   value: 0.0
                   unit: percentage_points
-                  comparison_date: '2026-01-01'
+                  comparison_date: '2026-05-01'
                   basis_points: 0.0
                   direction: rising
             - series_key: ust_2y
@@ -394,169 +384,164 @@ results:
               title: Market Yield on U.S. Treasury Securities at 2-Year Constant Maturity,
                 Quoted on an Investment Basis
               latest_observation:
-                date: '2026-03-17'
-                value: 3.68
+                date: '2026-07-09'
+                value: 4.16
                 unit: Percent
               derived:
                 change:
-                  date: '2026-03-17'
-                  value: 0.0
+                  date: '2026-07-09'
+                  value: -0.05
                   unit: percentage_points
-                  comparison_date: '2026-03-16'
-                  basis_points: 0.0
-                  direction: rising
+                  comparison_date: '2026-07-08'
+                  basis_points: -5.0
+                  direction: falling
             - series_key: ust_10y
               series_id: DGS10
               title: Market Yield on U.S. Treasury Securities at 10-Year Constant
                 Maturity, Quoted on an Investment Basis
               latest_observation:
-                date: '2026-03-17'
-                value: 4.2
+                date: '2026-07-09'
+                value: 4.54
                 unit: Percent
               derived:
                 change:
-                  date: '2026-03-17'
-                  value: -0.03
+                  date: '2026-07-09'
+                  value: -0.02
                   unit: percentage_points
-                  comparison_date: '2026-03-16'
-                  basis_points: -3.0
-                  direction: rising
+                  comparison_date: '2026-07-08'
+                  basis_points: -2.0
+                  direction: falling
             - series_key: curve_10y_minus_2y
               series_id: T10Y2Y
               title: 10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant
                 Maturity
               latest_observation:
-                date: '2026-03-18'
-                value: 0.5
+                date: '2026-07-10'
+                value: 0.35
                 unit: Percent
               derived:
                 sign:
-                  date: '2026-03-18'
+                  date: '2026-07-10'
                   value: positive
-                  raw_value: 0.5
+                  raw_value: 0.35
                   unit: state
                 change:
-                  date: '2026-03-18'
-                  value: -0.02
+                  date: '2026-07-10'
+                  value: -0.03
                   unit: percentage_points
-                  comparison_date: '2026-03-17'
-                  basis_points: -2.0
-                  direction: rising
+                  comparison_date: '2026-07-09'
+                  basis_points: -3.0
+                  direction: falling
           - pillar: labor
-            state: mixed
-            summary: Labor evidence is mixed.
             evidence:
             - series_key: unemployment_rate
               series_id: UNRATE
               title: Unemployment Rate
               latest_observation:
-                date: '2026-02-01'
-                value: 4.4
+                date: '2026-06-01'
+                value: 4.2
                 unit: Percent
               derived:
                 change:
-                  date: '2026-02-01'
-                  value: 0.1
+                  date: '2026-06-01'
+                  value: -0.1
                   unit: percentage_points
-                  comparison_date: '2026-01-01'
-                  basis_points: 10.0
-                  direction: rising
+                  comparison_date: '2026-05-01'
+                  basis_points: -10.0
+                  direction: falling
             - series_key: nonfarm_payrolls
               series_id: PAYEMS
               title: All Employees, Total Nonfarm
               latest_observation:
-                date: '2026-02-01'
-                value: 158466.0
+                date: '2026-06-01'
+                value: 158984.0
                 unit: Thousands of Persons
               derived:
                 mom_change:
-                  date: '2026-02-01'
-                  value: -92.0
+                  date: '2026-06-01'
+                  value: 57.0
                   unit: Thousands of Persons
-                  comparison_date: '2026-01-01'
+                  comparison_date: '2026-05-01'
                   direction: falling
                 yoy_change:
-                  date: '2026-02-01'
-                  value: 156.0
+                  date: '2026-06-01'
+                  value: 506.0
                   unit: Thousands of Persons
-                  comparison_date: '2025-02-01'
-                  direction: falling
+                  comparison_date: '2025-06-01'
+                  direction: rising
             - series_key: initial_claims
               series_id: ICSA
               title: Initial Claims
               latest_observation:
-                date: '2026-03-14'
-                value: 205000.0
+                date: '2026-07-04'
+                value: 215000.0
                 unit: Number
               derived:
                 wow_change:
-                  date: '2026-03-14'
-                  value: -8000.0
+                  date: '2026-07-04'
+                  value: -2000.0
                   unit: Number
-                  comparison_date: '2026-03-07'
+                  comparison_date: '2026-06-27'
                   direction: falling
           - pillar: credit_conditions
-            state: stable
-            summary: Credit conditions are stable but not especially loose.
             evidence:
             - series_key: nfci
               series_id: NFCI
               title: Chicago Fed National Financial Conditions Index
               latest_observation:
-                date: '2026-03-13'
-                value: -0.4857
+                date: '2026-07-03'
+                value: -0.515
                 unit: Index
               derived:
                 change:
-                  date: '2026-03-13'
-                  value: 0.0158
+                  date: '2026-07-03'
+                  value: -0.01
                   unit: Index
-                  comparison_date: '2026-03-06'
-                  direction: rising
+                  comparison_date: '2026-06-26'
+                  direction: falling
             - series_key: baa_treasury_spread
               series_id: BAA10YM
               title: Moody's Seasoned Baa Corporate Bond Yield Relative to Yield on
                 10-Year Treasury Constant Maturity
               latest_observation:
-                date: '2026-02-01'
-                value: 1.68
+                date: '2026-06-01'
+                value: 1.53
                 unit: Percent
               derived:
                 change:
-                  date: '2026-02-01'
-                  value: 0.01
+                  date: '2026-06-01'
+                  value: -0.09
                   unit: percentage_points
-                  comparison_date: '2026-01-01'
-                  basis_points: 1.0
-                  direction: rising
+                  comparison_date: '2026-05-01'
+                  basis_points: -9.0
+                  direction: flat
           - pillar: growth
-            state: slowing
-            summary: Real GDP is still positive but running at a slower pace.
             evidence:
             - series_key: real_gdp
               series_id: GDPC1
               title: Real Gross Domestic Product
               latest_observation:
-                date: '2025-10-01'
-                value: 24065.956
+                date: '2026-01-01'
+                value: 24180.419
                 unit: Billions of Chained 2017 Dollars
               derived:
                 qoq_annualized:
-                  date: '2025-10-01'
-                  value: 0.6529
+                  date: '2026-01-01'
+                  value: 2.0892
                   unit: pct
-                  comparison_date: '2025-07-01'
-                  direction: falling
+                  comparison_date: '2025-10-01'
+                  direction: rising
                 yoy:
-                  date: '2025-10-01'
-                  value: 2.0326
+                  date: '2026-01-01'
+                  value: 2.6847
                   unit: pct
-                  comparison_date: '2024-10-01'
-                  direction: falling
-          note: This regime view uses revised series history.
-    description: Curated multi-pillar regime summary across the default macro set.
+                  comparison_date: '2025-01-01'
+                  direction: rising
+          note: This regime view returns evidence only, from revised series history;
+            regime classification is the consumer's job — read the derived series.
+    description: Curated multi-pillar regime evidence across the default macro set.
     status: success
-    elapsed_time: 3.5147314071655273
+    elapsed_time: 6.470559120178223
   macro_regime_context_invalid_pillar:
     input:
       tool: macro_regime_context
@@ -566,13 +551,12 @@ results:
         - housing
       raw_data_only: true
     output:
-      response: ''
       data:
         status: error
         error: Unsupported pillar 'housing'.
     description: Invalid pillar filters fail directly.
     status: success
-    elapsed_time: 0.00015354156494140625
+    elapsed_time: 8.630752563476562e-05
   macro_release_calendar_curated_window:
     input:
       tool: macro_release_calendar
@@ -584,7 +568,6 @@ results:
         - gdp
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -600,6 +583,7 @@ results:
             - core_cpi
             release_dates:
             - '2026-03-11'
+            - '2026-04-10'
           - release_key: gdp
             release_id: 53
             release_name: Gross Domestic Product
@@ -607,10 +591,12 @@ results:
             - real_gdp
             release_dates:
             - '2026-03-13'
+            - '2026-04-09'
+            - '2026-04-30'
     description: Curated release calendar restricted to selected release keys and
       date window.
     status: success
-    elapsed_time: 0.33628320693969727
+    elapsed_time: 0.42432546615600586
   macro_release_calendar_invalid_release_key:
     input:
       tool: macro_release_calendar
@@ -622,13 +608,13 @@ results:
         - rates
       raw_data_only: true
     output:
-      response: ''
       data:
         status: error
-        error: Unsupported release_key 'rates'.
+        error: 'Unsupported release_key ''rates''. Supported release_key values: cpi,
+          employment_situation, gdp, pce, weekly_claims.'
     description: Unsupported release allowlist entries fail directly.
     status: success
-    elapsed_time: 0.0002307891845703125
+    elapsed_time: 0.00012421607971191406
   macro_release_calendar_weekly_claims_wide_window:
     input:
       tool: macro_release_calendar
@@ -639,7 +625,6 @@ results:
         - weekly_claims
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -710,10 +695,11 @@ results:
             - '2026-03-05'
             - '2026-03-12'
             - '2026-03-19'
+            - '2026-03-26'
     description: Wide release windows should not truncate weekly releases to a small
       fixed fetch size.
     status: success
-    elapsed_time: 0.16002202033996582
+    elapsed_time: 0.20814251899719238
   macro_release_context_cpi:
     input:
       tool: macro_release_context
@@ -722,7 +708,6 @@ results:
         lookback_releases: 4
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -730,13 +715,11 @@ results:
             release_key: cpi
             release_id: 10
             release_name: Consumer Price Index
-            press_release: true
-            link: http://www.bls.gov/cpi/
-          latest_release_date: '2026-03-11'
+          latest_release_date: '2026-06-10'
           prior_release_dates:
-          - '2026-02-13'
-          - '2026-01-13'
-          - '2025-12-18'
+          - '2026-05-12'
+          - '2026-04-10'
+          - '2026-03-11'
           linked_series:
           - series:
               key: headline_cpi
@@ -752,37 +735,37 @@ results:
                 release_id: 10
                 release_name: Consumer Price Index
               observation_start: '1947-01-01'
-              observation_end: '2026-02-01'
-              last_updated: '2026-03-11 08:05:55-05'
+              observation_end: '2026-05-01'
+              last_updated: '2026-06-10 08:20:52-05'
             latest_observation:
-              date: '2026-02-01'
-              value: 327.46
+              date: '2026-05-01'
+              value: 333.979
               unit: Index 1982-1984=100
             derived:
               yoy:
-                date: '2026-02-01'
-                value: 2.6646
+                date: '2026-05-01'
+                value: 4.1666
                 unit: pct
-                comparison_date: '2025-01-01'
-                direction: falling
-              mom_annualized:
-                date: '2026-02-01'
-                value: 3.2515
-                unit: pct
-                comparison_date: '2026-01-01'
+                comparison_date: '2025-05-01'
                 direction: rising
+              mom_annualized:
+                date: '2026-05-01'
+                value: 5.8249
+                unit: pct
+                comparison_date: '2026-04-01'
+                direction: falling
             recent_history:
-            - date: '2025-11-01'
-              value: 325.063
-              unit: Index 1982-1984=100
-            - date: '2025-12-01'
-              value: 326.031
-              unit: Index 1982-1984=100
-            - date: '2026-01-01'
-              value: 326.588
-              unit: Index 1982-1984=100
             - date: '2026-02-01'
               value: 327.46
+              unit: Index 1982-1984=100
+            - date: '2026-03-01'
+              value: 330.293
+              unit: Index 1982-1984=100
+            - date: '2026-04-01'
+              value: 332.407
+              unit: Index 1982-1984=100
+            - date: '2026-05-01'
+              value: 333.979
               unit: Index 1982-1984=100
           - series:
               key: core_cpi
@@ -801,41 +784,41 @@ results:
                 release_id: 10
                 release_name: Consumer Price Index
               observation_start: '1957-01-01'
-              observation_end: '2026-02-01'
-              last_updated: '2026-03-11 08:05:49-05'
+              observation_end: '2026-05-01'
+              last_updated: '2026-06-10 08:20:44-05'
             latest_observation:
-              date: '2026-02-01'
-              value: 333.512
+              date: '2026-05-01'
+              value: 336.121
               unit: Index 1982-1984=100
             derived:
               yoy:
-                date: '2026-02-01'
-                value: 2.7335
+                date: '2026-05-01'
+                value: 2.8229
                 unit: pct
-                comparison_date: '2025-01-01'
-                direction: falling
+                comparison_date: '2025-05-01'
+                direction: rising
               mom_annualized:
-                date: '2026-02-01'
-                value: 2.6236
+                date: '2026-05-01'
+                value: 2.5259
                 unit: pct
-                comparison_date: '2026-01-01'
+                comparison_date: '2026-04-01'
                 direction: falling
             recent_history:
-            - date: '2025-11-01'
-              value: 331.043
-              unit: Index 1982-1984=100
-            - date: '2025-12-01'
-              value: 331.814
-              unit: Index 1982-1984=100
-            - date: '2026-01-01'
-              value: 332.793
-              unit: Index 1982-1984=100
             - date: '2026-02-01'
               value: 333.512
               unit: Index 1982-1984=100
+            - date: '2026-03-01'
+              value: 334.165
+              unit: Index 1982-1984=100
+            - date: '2026-04-01'
+              value: 335.423
+              unit: Index 1982-1984=100
+            - date: '2026-05-01'
+              value: 336.121
+              unit: Index 1982-1984=100
     description: CPI release context with recent release dates and linked series.
     status: success
-    elapsed_time: 0.9349498748779297
+    elapsed_time: 1.0675756931304932
   macro_release_context_invalid_release_key:
     input:
       tool: macro_release_context
@@ -843,13 +826,13 @@ results:
         release_key: h15
       raw_data_only: true
     output:
-      response: ''
       data:
         status: error
-        error: Unsupported release_key 'h15'.
+        error: 'Unsupported release_key ''h15''. Supported release_key values: cpi,
+          employment_situation, gdp, pce, weekly_claims.'
     description: Unsupported release keys fail directly for release context requests.
     status: success
-    elapsed_time: 0.00016069412231445312
+    elapsed_time: 7.104873657226562e-05
   macro_vintage_history_real_gdp:
     input:
       tool: macro_vintage_history
@@ -860,7 +843,6 @@ results:
         limit: 8
       raw_data_only: true
     output:
-      response: ''
       data:
         status: success
         data:
@@ -943,7 +925,7 @@ results:
             context.
     description: Point-in-time-safe GDP history using ALFRED realtime filters.
     status: success
-    elapsed_time: 0.1415388584136963
+    elapsed_time: 0.20089244842529297
   macro_vintage_history_bad_date:
     input:
       tool: macro_vintage_history
@@ -952,10 +934,9 @@ results:
         realtime_date: 2020/07/01
       raw_data_only: true
     output:
-      response: ''
       data:
         status: error
         error: time data '2020/07/01' does not match format '%Y-%m-%d'
     description: Invalid realtime dates fail directly.
     status: success
-    elapsed_time: 0.0003192424774169922
+    elapsed_time: 9.989738464355469e-05

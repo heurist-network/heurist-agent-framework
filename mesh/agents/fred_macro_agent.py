@@ -141,7 +141,7 @@ Use tools by job:
 - `macro_vintage_history` for point-in-time-safe history using ALFRED realtime dates
 - `macro_release_calendar` for curated CPI, PCE, payroll, GDP, and weekly claims release dates
 - `macro_release_context` for one supported release and its linked series
-- `macro_regime_context` for multi-pillar regime summaries
+- `macro_regime_context` for multi-pillar regime evidence (latest reads and derived changes; no classification)
 
 Rules:
 - Only use supported `series_key` and `release_key` values from the tool schema
@@ -221,7 +221,7 @@ Rules:
                 "type": "function",
                 "function": {
                     "name": "macro_regime_context",
-                    "description": "Return a curated multi-pillar macro regime summary across inflation, rates, labor, credit conditions, and growth. Use this for a cross-pillar macro summary instead of querying individual series.",
+                    "description": "Return curated multi-pillar macro regime evidence across inflation, rates, labor, credit conditions, and growth: latest observations and derived change metrics per series, grouped by pillar. Returns evidence only — regime classification is the consumer's job. Use this for a cross-pillar macro read instead of querying individual series.",
                     "parameters": {
                         "type": "object",
                         "properties": {
@@ -653,16 +653,10 @@ Rules:
             latest["direction"] = _direction(latest["value"], previous["value"])
         return latest
 
-    def _numeric_evidence(self, snapshot: Dict[str, Any], metric_key: str) -> Optional[float]:
-        metric = snapshot["derived"].get(metric_key)
-        if metric is None:
-            return None
-        return metric.get("value")
-
     def _pillar_release_key(self, spec: Dict[str, Any]) -> Optional[str]:
         return self.release_key_by_id.get(spec["release_id"]) or None
 
-    def _summary_from_snapshots(self, snapshots: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def _evidence_from_snapshots(self, snapshots: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         return [
             {
                 "series_key": snapshot["series"]["key"],
@@ -673,143 +667,6 @@ Rules:
             }
             for snapshot in snapshots
         ]
-
-    def _summarize_inflation(self, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        yoy_values = [
-            value for value in [self._numeric_evidence(snapshot, "yoy") for snapshot in snapshots] if value is not None
-        ]
-        momentum_values = [
-            value
-            for value in [self._numeric_evidence(snapshot, "mom_annualized") for snapshot in snapshots]
-            if value is not None
-        ]
-        avg_yoy = sum(yoy_values) / len(yoy_values) if yoy_values else None
-        avg_momentum = sum(momentum_values) / len(momentum_values) if momentum_values else None
-
-        state = "mixed"
-        summary = "Inflation evidence is mixed across the curated registry."
-        if avg_yoy is not None and avg_momentum is not None:
-            if avg_yoy >= 3.0 and avg_momentum >= avg_yoy:
-                state = "rising"
-                summary = "Inflation remains elevated and recent momentum is re-accelerating."
-            elif avg_yoy >= 3.0 and avg_momentum < avg_yoy:
-                state = "easing"
-                summary = "Inflation is still elevated, but near-term momentum is easing."
-            elif avg_yoy <= 2.5 and avg_momentum <= 2.5:
-                state = "contained"
-                summary = "Inflation looks comparatively contained across headline and core gauges."
-            else:
-                state = "sticky"
-                summary = "Inflation is off the peak but still sticky versus a clean target-consistent path."
-
-        return {"state": state, "summary": summary}
-
-    def _summarize_rates(self, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        by_key = {snapshot["series"]["key"]: snapshot for snapshot in snapshots}
-        fed_funds = by_key.get("fed_funds", {}).get("latest_observation", {}).get("value")
-        curve = by_key.get("curve_10y_minus_2y", {}).get("latest_observation", {}).get("value")
-        two_year_change = self._numeric_evidence(by_key.get("ust_2y", {"derived": {}}), "change")
-
-        state = "mixed"
-        summary = "Rates are mixed."
-        if fed_funds is not None and curve is not None:
-            if fed_funds >= 4.0 and curve < 0:
-                state = "tight"
-                summary = "Policy and front-end rates still point to a restrictive rates backdrop."
-            elif fed_funds >= 4.0:
-                state = "restrictive"
-                summary = "Rates remain high enough to read as restrictive even without inversion."
-            elif two_year_change is not None and two_year_change < 0:
-                state = "easing"
-                summary = "Front-end rates are moving lower, consistent with an easing impulse."
-            else:
-                state = "normalizing"
-                summary = "Rates look closer to normalization than outright tightening."
-
-        return {"state": state, "summary": summary}
-
-    def _summarize_labor(self, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        by_key = {snapshot["series"]["key"]: snapshot for snapshot in snapshots}
-        unemployment = by_key.get("unemployment_rate", {}).get("latest_observation", {}).get("value")
-        unemployment_change = self._numeric_evidence(by_key.get("unemployment_rate", {"derived": {}}), "change")
-        payrolls_mom = self._numeric_evidence(by_key.get("nonfarm_payrolls", {"derived": {}}), "mom_change")
-        claims_wow = self._numeric_evidence(by_key.get("initial_claims", {"derived": {}}), "wow_change")
-
-        state = "mixed"
-        summary = "Labor evidence is mixed."
-        if unemployment is not None:
-            if unemployment <= 4.2 and (claims_wow is None or claims_wow <= 0):
-                state = "tight"
-                summary = "Labor conditions still look tight with low unemployment and no obvious claims deterioration."
-            elif (unemployment_change is not None and unemployment_change > 0.1) or (
-                claims_wow is not None and claims_wow > 0
-            ):
-                state = "softening"
-                summary = "Labor data is softening through unemployment or claims deterioration."
-            elif payrolls_mom is not None and payrolls_mom > 0:
-                state = "steady"
-                summary = "Payroll growth remains positive and labor conditions look broadly steady."
-
-        return {"state": state, "summary": summary}
-
-    def _summarize_credit(self, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        by_key = {snapshot["series"]["key"]: snapshot for snapshot in snapshots}
-        nfci = by_key.get("nfci", {}).get("latest_observation", {}).get("value")
-        baa_spread = by_key.get("baa_treasury_spread", {}).get("latest_observation", {}).get("value")
-        nfci_change = self._numeric_evidence(by_key.get("nfci", {"derived": {}}), "change")
-
-        state = "mixed"
-        summary = "Credit conditions are mixed."
-        if nfci is not None and baa_spread is not None:
-            if nfci > 0 or baa_spread >= 2.5:
-                state = "tight"
-                summary = "Credit conditions read as tight through NFCI or corporate spread stress."
-            elif nfci < -0.5 and baa_spread < 2.0 and (nfci_change is None or nfci_change <= 0):
-                state = "easy"
-                summary = "Credit conditions look relatively easy by both NFCI and spread measures."
-            else:
-                state = "stable"
-                summary = "Credit conditions are stable but not especially loose."
-
-        return {"state": state, "summary": summary}
-
-    def _summarize_growth(self, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        growth = snapshots[0]
-        qoq = self._numeric_evidence(growth, "qoq_annualized")
-        yoy = self._numeric_evidence(growth, "yoy")
-
-        state = "mixed"
-        summary = "Growth evidence is mixed."
-        if qoq is not None:
-            if qoq < 0:
-                state = "contracting"
-                summary = "Real GDP momentum is contracting on a qoq annualized basis."
-            elif qoq < 1.5:
-                state = "slowing"
-                summary = "Real GDP is still positive but running at a slower pace."
-            else:
-                state = "expanding"
-                summary = "Real GDP still points to an expanding growth backdrop."
-        elif yoy is not None and yoy > 0:
-            state = "expanding"
-            summary = "Real GDP is still above year-ago levels."
-
-        return {"state": state, "summary": summary}
-
-    def _pillar_summary(self, pillar: str, snapshots: List[Dict[str, Any]]) -> Dict[str, Any]:
-        if pillar == "inflation":
-            summary = self._summarize_inflation(snapshots)
-        elif pillar == "rates":
-            summary = self._summarize_rates(snapshots)
-        elif pillar == "labor":
-            summary = self._summarize_labor(snapshots)
-        elif pillar == "credit_conditions":
-            summary = self._summarize_credit(snapshots)
-        else:
-            summary = self._summarize_growth(snapshots)
-
-        summary["evidence"] = self._summary_from_snapshots(snapshots)
-        return summary
 
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=2, delay=1.0)
@@ -1188,7 +1045,6 @@ Rules:
                     raise ValueError(f"Unsupported pillar '{pillar}'.")
 
             pillar_sections = []
-            regime_states = []
             for pillar in selected_pillars:
                 snapshots = []
                 for series in self.registry["pillars"][pillar]:
@@ -1198,29 +1054,28 @@ Rules:
                         return snapshot
                     snapshots.append(snapshot)
 
-                pillar_summary = self._pillar_summary(pillar, snapshots)
                 pillar_sections.append(
                     {
                         "pillar": pillar,
-                        "state": pillar_summary["state"],
-                        "summary": pillar_summary["summary"],
-                        "evidence": pillar_summary["evidence"],
+                        "evidence": self._evidence_from_snapshots(snapshots),
                     }
                 )
-                regime_states.append(f"{pillar}: {pillar_summary['state']}")
 
-            note = "This regime view uses revised series history."
+            note = (
+                "This regime view returns evidence only, from revised series history; "
+                "regime classification is the consumer's job — read the derived series."
+            )
             if as_of_date:
                 note = (
-                    f"This regime view uses revised history filtered through {as_of_date}. "
+                    "This regime view returns evidence only, from revised history filtered through "
+                    f"{as_of_date}; regime classification is the consumer's job — read the derived series. "
                     "Use macro_vintage_history for point-in-time-safe context."
                 )
 
             return self._success(
                 {
-                    "as_of_date": as_of_date,
+                    "as_of_date": as_of_date or _iso_date(date.today()),
                     "point_in_time_safe": False,
-                    "overall_summary": "; ".join(regime_states),
                     "pillars": pillar_sections,
                     "note": note,
                 }
