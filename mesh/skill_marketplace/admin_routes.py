@@ -22,6 +22,7 @@ from mesh.skill_marketplace.db import get_pool, insert_skill_draft
 from mesh.skill_marketplace.parser import derive_source_type, fetch_github_folder_files, parse_github_owner_repo, parse_skill_md
 from mesh.skill_marketplace.storage import prepare_skill_artifact
 from mesh.skill_marketplace.taxonomy import normalize_category, normalize_labels
+from mesh.skill_marketplace.url_validation import validate_url_not_private
 
 logger = logging.getLogger("SkillMarketplace")
 
@@ -188,6 +189,8 @@ async def _fetch_skill_raw(session: aiohttp.ClientSession, source_type: str, sou
                 raise HTTPException(status_code=400, detail=f"failed to fetch GitHub source: {resp.status}")
             return await resp.read()
 
+    validate_url_not_private(source_url)
+
     async with session.get(source_url) as resp:
         if resp.status != 200:
             raise HTTPException(status_code=400, detail=f"failed to fetch source URL: {resp.status}")
@@ -209,6 +212,8 @@ async def import_skill(body: ImportSkillRequest):
         existing = await conn.fetchval("SELECT id FROM skills WHERE slug = $1", body.slug)
         if existing:
             raise HTTPException(status_code=409, detail=f"slug '{body.slug}' already exists")
+
+    validate_url_not_private(body.url)
 
     async with aiohttp.ClientSession() as session:
         async with session.get(body.url) as resp:
