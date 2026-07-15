@@ -554,22 +554,25 @@ class ProjectKnowledgeClient:
         items = self._parse_json_field(team)
         return [f"{m.get('role', 'Member')}: {m.get('name', '')}" for m in items if m.get("name")]
 
-    def _format_investors(self, investors: Any, max_count: int = 10) -> List[str]:
-        """Format investors list to names with lead indicator. Max 10 shown."""
+    def _format_investors(self, investors: Any, max_count: int = 10) -> List[Dict[str, Any]]:
+        """Format investors list with name, logo_url, and lead indicator. Max 10 shown."""
         items = self._parse_json_field(investors)
         result = []
         for inv in items:
             name = inv.get("name", "")
             if not name:
                 continue
+            entry: Dict[str, Any] = {"name": name}
+            logo_url = inv.get("logo_url")
+            if logo_url:
+                entry["logo_url"] = logo_url
             if inv.get("is_lead"):
-                result.append(f"{name} (Lead)")
-            else:
-                result.append(name)
+                entry["is_lead"] = True
+            result.append(entry)
         total = len(result)
         if total > max_count:
             result = result[:max_count]
-            result.append(f"{total - max_count} more")
+            result.append({"name": f"{total - max_count} more"})
         return result
 
     def _format_fundraising(self, fundraising: Any) -> List[str]:
