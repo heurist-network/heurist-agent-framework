@@ -254,3 +254,55 @@ For support, please open an issue in the GitHub repository or contact the mainta
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=heurist-network/heurist-agent-framework&type=Date)](https://star-history.com/#heurist-network/heurist-agent-framework&Date)
+
+
+## ❓ Frequently Asked Questions (FAQ)
+
+### What is Heurist Agent Framework?
+
+Heurist Agent Framework is a flexible multi-interface AI agent framework that can interact through various platforms including Telegram, Discord, Twitter, Farcaster, REST API, and MCP. It's built on a modular architecture with plug-and-play components for flexible agent design.
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| Core Agent | Modular framework with advanced LLM integration |
+| Component Architecture | Plug-and-play components |
+| Workflow System | RAG, Chain of Thought, and Research workflows |
+| Media Generation | Image creation and video processing |
+| Voice Processing | Audio transcription and text-to-speech |
+| Vector Storage | PostgreSQL/SQLite knowledge retrieval |
+| Tool Integration | MCP support |
+| Mesh Agent Access | 30+ specialized Web3 agents |
+| Multi-platform Support | Telegram, Discord, Twitter, Farcaster, REST API, MCP |
+
+### What is Heurist Mesh?
+
+Heurist Mesh is the skills marketplace for AI agents providing specialized Web3 intelligence. Features: 70% fewer tool calls, 30-50% less token usage, composable architecture, REST API + x402 pay-per-use + MCP access.
+
+### How to get started?
+
+1. Get free API Key at https://heurist.ai/dev-access (use code 'agent')
+2. Install: `uv sync`
+3. Activate: `source .venv/bin/activate`
+4. Explore Mesh Portal: https://mesh.heurist.ai
+
+### Supported Platforms
+
+Telegram, Discord, Twitter/X, Farcaster, REST API, MCP (Claude, ChatGPT, Cursor, LangChain)
+
+### Core Components
+
+PersonalityProvider, KnowledgeProvider, ConversationManager, ValidationManager, MediaHandler, LLMProvider, MessageStore
+
+### Available Workflows
+
+AugmentedLLMCall (RAG + tools), ChainOfThoughtReasoning (multi-step), ResearchWorkflow (deep search)
+
+### License
+
+Apache 2.0
+
+### Help Resources
+
+[Docs](./docs/) | [Mesh Docs](./mesh/README.md) | [Core Docs](./core/README.md) | [Issues](https://github.com/heurist-network/heurist-agent-framework/issues)
