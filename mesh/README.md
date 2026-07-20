@@ -7,7 +7,7 @@
 ## Using Mesh Agents
 
 > [!NOTE]
-> For detailed API documentation including examples of both synchronous and asynchronous usage, please refer to the [official Heurist Mesh documentation](https://docs.heurist.ai/dev-guide/heurist-mesh/).
+> For detailed API documentation including examples of both synchronous and asynchronous usage, please refer to the [official Heurist Mesh documentation](https://docs.heurist.ai/heurist-mesh/overview).
 
 Mesh agents hosted by Heurist can be accessed via two interfaces:
 
@@ -329,7 +329,7 @@ Test inputs are stored in [test_inputs.json](../heurist-mesh-client/examples/tes
 | TokenResolverAgent | Find tokens by address/symbol/name/CoinGecko ID, return normalized profiles and top DEX pools. Pulls extra context (sites/socials/funding/indicators) where available. | • token_search<br>• token_profile | [Source](./agents/token_resolver_agent.py) | CoinGecko, DexScreener, Bitquery (Solana), GMGN/Unifai, Yahoo Finance (optional), Coinsider (optional) |
 | TrendingTokenAgent | Aggregates trending tokens from GMGN, CoinGecko, Pump.fun, Dexscreener, and Twitter discussions. | • get_trending_tokens<br>• get_market_summary | [Source](./agents/trending_token_agent.py) | GMGN, CoinGecko, Dexscreener, Elfa, AIXBT, Telegram |
 | TruthSocialAgent | This agent can retrieve and analyze posts from Donald Trump on Truth Social. | • get_trump_posts | [Source](./agents/truth_social_agent.py) | Apify |
-| TwitterInfoAgent | This agent fetches a Twitter user's profile information and recent tweets. It's useful for getting project updates or tracking key opinion leaders (KOLs) in the space. | • get_user_tweets<br>• get_twitter_detail<br>• get_general_search | [Source](./agents/twitter_info_agent.py) | Twitter API |
+| TwitterInfoAgent | This agent fetches a Twitter user's profile information and recent tweets. It's useful for getting project updates or tracking key opinion leaders (KOLs) in the space. | • get_user_tweets<br>• get_twitter_detail<br>• get_general_search | [Source](./agents/twitter_info_agent.py) | Twitter API, Xquik, Apify |
 | TwitterIntelligenceAgent | Twitter/X tools (timeline, tweet detail, search) | • user_timeline<br>• tweet_detail<br>• twitter_search | [Source](./agents/twitter_intelligence_agent.py) | Twitter/X, Influential mentions |
 | UnifaiMeteoraInfoAgent | This agent provides Meteora pool information using UnifAI's API, including trending DLMM pools, dynamic AMM pools, and DLMM pool search functionality | • get_trending_dlmm_pools<br>• search_dynamic_amm_pools<br>• search_dlmm_pools | [Source](./agents/unifai_meteora_info_agent.py) | UnifAI |
 | UnifaiTokenAnalysisAgent | This agent provides token analysis using UnifAI's API, including GMGN trend analysis (GMGN is a memecoin trading platform) and comprehensive token analysis for various cryptocurrencies | • get_gmgn_trend<br>• get_gmgn_token_info<br>• analyze_token | [Source](./agents/unifai_token_analysis_agent.py) | UnifAI |
