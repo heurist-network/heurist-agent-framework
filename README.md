@@ -92,7 +92,7 @@ The Heurist Agent Framework is built on a modular architecture that allows an AI
 ### Get Started with Mesh
 
 - **Mesh Portal**: [mesh.heurist.ai](https://mesh.heurist.ai) - Browse agents and deploy dedicated MCP servers
-- **REST API**: [API Documentation](https://docs.heurist.ai/dev-guide/heurist-mesh/)
+- **REST API**: [API Documentation](https://docs.heurist.ai/heurist-mesh/overview)
 - **X402 API**: [mesh.heurist.xyz/x402/agents](https://mesh.heurist.xyz/x402/agents) - Pay-per-use with USDC on Base
 - **Full Agent List**: [View all agents](./mesh/README.md#appendix-all-available-mesh-agents)
 
