@@ -10,13 +10,15 @@ from apify_client import ApifyClient
 from dotenv import load_dotenv
 from loguru import logger
 
-from decorators import with_cache
+from decorators import with_cache, with_retry
 from mesh.mesh_agent import MeshAgent
 
 load_dotenv()
 
 DEFAULT_TIMELINE_LIMIT = 20
 FXTWITTER_API_BASE = "https://api.fxtwitter.com"
+XQUIK_API_BASE = "https://xquik.com/api/v1"
+XQUIK_API_CONTRACT = "2026-04-29"
 
 
 def _clean_tweet_text(text: str) -> str:
@@ -57,17 +59,20 @@ def _format_date_only(timestamp: str) -> str:
 class TwitterInfoAgent(MeshAgent):
     def __init__(self):
         super().__init__()
-        self.api_key = os.getenv("APIDANCE_API_KEY")
-        if not self.api_key:
-            raise ValueError("APIDANCE_API_KEY environment variable is required")
+        self.api_key = (os.getenv("APIDANCE_API_KEY") or "").strip()
+        self.xquik_api_key = (os.getenv("XQUIK_API_KEY") or "").strip()
+        if not self.api_key and not self.xquik_api_key:
+            raise ValueError("APIDANCE_API_KEY or XQUIK_API_KEY environment variable is required")
 
         self.base_url = "https://api.apidance.pro"
-        self.headers = {"apikey": self.api_key}
+        self.headers = {"apikey": self.api_key} if self.api_key else {}
+        self.xquik_base_url = os.getenv("XQUIK_API_BASE_URL", XQUIK_API_BASE).rstrip("/")
+        self.xquik_headers = (
+            {"x-api-key": self.xquik_api_key, "xquik-api-contract": XQUIK_API_CONTRACT} if self.xquik_api_key else {}
+        )
 
-        self.apify_api_key = os.getenv("APIFY_API_KEY")
-        if not self.apify_api_key:
-            raise ValueError("APIFY_API_KEY environment variable is required")
-        self.apify_client = ApifyClient(self.apify_api_key)
+        self.apify_api_key = (os.getenv("APIFY_API_KEY") or "").strip()
+        self.apify_client = ApifyClient(self.apify_api_key) if self.apify_api_key else None
         self.apify_actor_id = "practicaltools/cheap-simple-twitter-api"
         self.apify_search_actor_id = "gdN28kzr6QsU4nVh8"
 
@@ -78,7 +83,7 @@ class TwitterInfoAgent(MeshAgent):
                 "author": "Heurist team",
                 "author_address": "0x7d9d1821d15B9e0b8Ab98A058361233E255E405D",
                 "description": "This agent fetches a Twitter user's profile information and recent tweets. It's useful for getting project updates or tracking key opinion leaders (KOLs) in the space.",
-                "external_apis": ["Twitter API"],
+                "external_apis": ["Twitter API", "Xquik", "Apify"],
                 "tags": ["Twitter"],
                 "verified": True,
                 "image_url": "https://raw.githubusercontent.com/heurist-network/heurist-agent-framework/refs/heads/main/mesh/images/Twitter.png",
@@ -231,6 +236,7 @@ class TwitterInfoAgent(MeshAgent):
             "source": f"x.com/{username}/status/{tid}" if username and tid else "",
             "author": {
                 "id": user.get("id_str") or "",
+                "username": username,
                 "name": user.get("name", ""),
                 "verified": bool(user.get("verified", False)),
                 "followers": _to_int(user.get("followers_count")),
@@ -265,6 +271,174 @@ class TwitterInfoAgent(MeshAgent):
             result["quoted_tweet_id"] = str(tweet["related_tweet_id"])
 
         return result
+
+    def _simplify_xquik_profile(self, profile: Dict) -> Dict:
+        return {
+            "id_str": str(profile.get("id") or ""),
+            "name": profile.get("name", ""),
+            "screen_name": profile.get("username", ""),
+            "description": profile.get("description", ""),
+            "followers_count": _to_int(profile.get("followers")),
+            "friends_count": _to_int(profile.get("following")),
+            "statuses_count": _to_int(profile.get("statusesCount")),
+            "verified": bool(profile.get("verified", False)),
+            "created_at": profile.get("createdAt", ""),
+        }
+
+    def _simplify_xquik_tweet(self, tweet: Dict, fallback_author: Optional[Dict] = None) -> Dict:
+        author = tweet.get("author") or fallback_author or {}
+        username = author.get("username") or author.get("screen_name") or ""
+        tid = str(tweet.get("id") or tweet.get("tweet_id") or "")
+        text = tweet.get("text") or ""
+        source = tweet.get("url") or (f"x.com/{username}/status/{tid}" if username and tid else "")
+
+        def _type(t: Dict) -> str:
+            if t.get("retweeted_tweet"):
+                return "retweet"
+            if t.get("isReply"):
+                return "reply"
+            if t.get("isQuoteStatus") or t.get("quoted_tweet"):
+                return "quote"
+            return t.get("type") or "tweet"
+
+        result = {
+            "id": tid,
+            "text": _clean_tweet_text(text),
+            "created_at": _format_date_only(tweet.get("createdAt", "")),
+            "source": source,
+            "author": {
+                "id": str(author.get("id") or ""),
+                "username": username,
+                "name": author.get("name", ""),
+                "verified": bool(author.get("verified", False)),
+                "followers": _to_int(author.get("followers")),
+            },
+            "engagement": {
+                "likes": _to_int(tweet.get("likeCount")),
+                "replies": _to_int(tweet.get("replyCount")),
+                "retweets": _to_int(tweet.get("retweetCount")),
+                "quotes": _to_int(tweet.get("quoteCount")),
+                "views": _to_int(tweet.get("viewCount")),
+            },
+            "type": _type(tweet),
+        }
+
+        if tweet.get("entities"):
+            result["entities"] = tweet.get("entities")
+        if tweet.get("media"):
+            result["media"] = tweet.get("media")
+        if tweet.get("inReplyToId"):
+            result["in_reply_to_tweet_id"] = tweet.get("inReplyToId")
+        if tweet.get("inReplyToUsername"):
+            result["in_reply_to_user"] = tweet.get("inReplyToUsername")
+
+        quoted_tweet = tweet.get("quoted_tweet")
+        if quoted_tweet:
+            result["quoted_tweet"] = self._simplify_xquik_tweet(quoted_tweet)
+
+        return result
+
+    @with_cache(ttl_seconds=300)
+    @with_retry(max_retries=3, delay=1.0)
+    async def _xquik_request(self, path: str, params: Optional[Dict] = None) -> Dict:
+        if not self.xquik_api_key:
+            return {"error": "XQUIK_API_KEY environment variable is required"}
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                f"{self.xquik_base_url}{path}",
+                headers=self.xquik_headers,
+                params=params,
+                timeout=aiohttp.ClientTimeout(total=30),
+            ) as response:
+                data = await response.json()
+                if response.status >= 400:
+                    message = data.get("message") or data.get("error") or f"Xquik API returned status {response.status}"
+                    return {"error": message}
+                return data
+
+    @with_cache(ttl_seconds=300)
+    async def get_xquik_user_id(self, identifier: str) -> Dict:
+        clean_identifier = self._clean_username(identifier)
+        profile = await self._xquik_request(f"/x/users/{clean_identifier}")
+        if "error" in profile:
+            return profile
+        return {"profile": self._simplify_xquik_profile(profile)}
+
+    @with_cache(ttl_seconds=300)
+    async def get_xquik_tweets(
+        self, identifier: str, limit: int = DEFAULT_TIMELINE_LIMIT, cursor: Optional[str] = None
+    ) -> Dict:
+        clean_identifier = self._clean_username(identifier)
+        params = {"includeReplies": "false", "limit": min(limit, 200)}
+        if cursor:
+            params["cursor"] = cursor
+        tweets_data = await self._xquik_request(f"/x/users/{clean_identifier}/tweets", params=params)
+        if "error" in tweets_data:
+            return tweets_data
+
+        tweets = tweets_data.get("tweets") or []
+        return {
+            "tweets": [self._simplify_xquik_tweet(tweet) for tweet in tweets[:limit]],
+            "next_cursor": tweets_data.get("next_cursor"),
+        }
+
+    @with_cache(ttl_seconds=300)
+    async def get_xquik_tweet_detail(self, tweet_id: str, cursor: Optional[str] = None) -> Dict:
+        params = {"cursor": cursor} if cursor else None
+        tweet_data = await self._xquik_request(f"/x/tweets/{tweet_id}")
+        if "error" in tweet_data:
+            return tweet_data
+
+        tweet = tweet_data.get("tweet") or tweet_data
+        result = {"main_tweet": self._simplify_xquik_tweet(tweet, tweet_data.get("author") or {})}
+
+        thread_data = await self._xquik_request(f"/x/tweets/{tweet_id}/thread", params=params)
+        if "error" not in thread_data:
+            thread_tweets = [
+                self._simplify_xquik_tweet(item)
+                for item in (thread_data.get("tweets") or [])
+                if str(item.get("id") or "") != tweet_id
+            ]
+            if thread_tweets:
+                result["thread_tweets"] = thread_tweets
+
+        replies_data = await self._xquik_request(f"/x/tweets/{tweet_id}/replies", params=params)
+        if "error" not in replies_data:
+            replies = [self._simplify_xquik_tweet(item) for item in (replies_data.get("tweets") or [])]
+            if replies:
+                result["replies"] = replies
+
+        next_cursor = (thread_data.get("next_cursor") if "error" not in thread_data else None) or (
+            replies_data.get("next_cursor") if "error" not in replies_data else None
+        )
+        if next_cursor:
+            result["next_cursor"] = next_cursor
+
+        return result
+
+    @with_cache(ttl_seconds=300)
+    async def xquik_general_search(
+        self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None
+    ) -> Dict:
+        params = {"q": query, "queryType": "Top" if sort_by == "Top" else "Latest"}
+        if cursor:
+            params["cursor"] = cursor
+        if limit:
+            params["limit"] = min(limit, 50)
+
+        search_data = await self._xquik_request("/x/tweets/search", params=params)
+        if "error" in search_data:
+            return search_data
+
+        tweets = search_data.get("tweets") or []
+        simplified = [self._simplify_xquik_tweet(tweet) for tweet in tweets]
+        return {
+            "query": query,
+            "tweets": simplified,
+            "result_count": len(simplified),
+            "next_cursor": search_data.get("next_cursor"),
+        }
 
     # ------------------------------------------------------------------------
     #                      ARTICLE READING METHODS (FXTwitter)
@@ -375,6 +549,7 @@ class TwitterInfoAgent(MeshAgent):
             "source": f"x.com/{username}/status/{tid}" if username and tid else "",
             "author": {
                 "id": str(author.get("id") or ""),
+                "username": username,
                 "name": author.get("name") or "",
                 "verified": bool(author.get("isVerified") or author.get("isBlueVerified") or False),
                 "followers": _to_int(author.get("followers")),
@@ -399,6 +574,9 @@ class TwitterInfoAgent(MeshAgent):
 
     async def _apify_get_user_timeline(self, username: str, limit: int = 20) -> Dict:
         """Fallback: Get user timeline using Apify practicaltools actor."""
+        if not self.apify_client:
+            return {"error": "APIFY_API_KEY environment variable is required"}
+
         clean_username = self._clean_username(username)
         logger.info(f"Apify fallback: fetching timeline for @{clean_username}")
 
@@ -430,6 +608,9 @@ class TwitterInfoAgent(MeshAgent):
 
     async def _apify_general_search(self, query: str, limit: int = 20) -> Dict:
         """Fallback: Search tweets using Apify advanced search actor."""
+        if not self.apify_client:
+            return {"error": "APIFY_API_KEY environment variable is required"}
+
         logger.info(f"Apify fallback: searching for '{query}'")
 
         run_input = {
@@ -455,6 +636,9 @@ class TwitterInfoAgent(MeshAgent):
 
     async def _apify_get_tweet_detail(self, tweet_id: str) -> Dict:
         """Fallback: Get single tweet detail using Apify practicaltools tweet/by_ids endpoint."""
+        if not self.apify_client:
+            return {"error": "APIFY_API_KEY environment variable is required"}
+
         logger.info(f"Apify fallback: fetching tweet detail for {tweet_id}")
 
         run_input = {"endpoint": "tweet/by_ids", "parameters": {"tweet_ids": tweet_id}}
@@ -478,6 +662,9 @@ class TwitterInfoAgent(MeshAgent):
     async def get_user_id(self, identifier: str) -> Dict:
         """Fetch Twitter user ID and profile information using GraphQL endpoint"""
         try:
+            if not self.api_key:
+                return {"error": "APIDANCE_API_KEY environment variable is required"}
+
             if self._is_numeric_id(identifier):
                 logger.warning(
                     f"Numeric user ID {identifier} not supported by GraphQL endpoint, will try Apify fallback"
@@ -527,6 +714,9 @@ class TwitterInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     async def get_tweets(self, user_id: str, limit: int = DEFAULT_TIMELINE_LIMIT, cursor: Optional[str] = None) -> Dict:
+        if not self.api_key:
+            return {"error": "APIDANCE_API_KEY environment variable is required"}
+
         params = {"user_id": user_id, "count": min(limit, 50)}
         if cursor:
             params["cursor"] = cursor
@@ -546,6 +736,9 @@ class TwitterInfoAgent(MeshAgent):
 
     @with_cache(ttl_seconds=300)
     async def get_tweet_detail(self, tweet_id: str, cursor: Optional[str] = None) -> Dict:
+        if not self.api_key:
+            return {"error": "APIDANCE_API_KEY environment variable is required"}
+
         params = {"tweet_id": tweet_id}
         if cursor:
             params["cursor"] = cursor
@@ -638,6 +831,9 @@ class TwitterInfoAgent(MeshAgent):
     async def general_search(
         self, query: str, sort_by: str = "Latest", cursor: Optional[str] = None, limit: Optional[int] = None
     ) -> Dict:
+        if not self.api_key:
+            return {"error": "APIDANCE_API_KEY environment variable is required"}
+
         if " " in query and not (query.startswith('"') and query.endswith('"')):
             logger.warning(f"Multi-word search query detected: '{query}' (likely sparse results).")
         params = {"q": query, "sort_by": sort_by}
@@ -696,6 +892,21 @@ class TwitterInfoAgent(MeshAgent):
                     apidance_failed = True
 
             if apidance_failed:
+                if self.xquik_api_key:
+                    logger.warning(
+                        f"Primary API unavailable for @{self._clean_username(identifier)}, using Xquik fallback"
+                    )
+                    profile_result = await self.get_xquik_user_id(identifier)
+                    tweets_result = await self.get_xquik_tweets(identifier, limit, cursor)
+                    if "error" not in profile_result and "error" not in tweets_result:
+                        return {
+                            "twitter_data": {
+                                "profile": profile_result.get("profile", {}),
+                                "tweets": tweets_result.get("tweets", []),
+                            },
+                            "next_cursor": tweets_result.get("next_cursor"),
+                        }
+
                 logger.warning(f"Primary API unavailable for @{self._clean_username(identifier)}, using Apify fallback")
                 fallback_result = await self._apify_get_user_timeline(identifier, limit)
                 if "error" in fallback_result:
@@ -721,7 +932,11 @@ class TwitterInfoAgent(MeshAgent):
 
             tweet_detail_result = await self.get_tweet_detail(tweet_id, cursor)
 
-            # Fallback to Apify if APIDance fails
+            if "error" in tweet_detail_result and self.xquik_api_key:
+                logger.warning(f"Primary API unavailable for tweet {tweet_id}, using Xquik fallback")
+                tweet_detail_result = await self.get_xquik_tweet_detail(tweet_id, cursor)
+
+            # Fallback to Apify if configured providers fail
             if "error" in tweet_detail_result:
                 logger.warning(f"Primary API unavailable for tweet {tweet_id}, using Apify fallback")
                 tweet_detail_result = await self._apify_get_tweet_detail(tweet_id)
@@ -790,6 +1005,12 @@ class TwitterInfoAgent(MeshAgent):
 
             if not apidance_failed:
                 return {"search_data": search_result}
+
+            if self.xquik_api_key:
+                logger.warning(f"Primary search API unavailable for query '{query}', using Xquik fallback")
+                fallback_result = await self.xquik_general_search(query, sort_by=sort_by, cursor=cursor, limit=limit)
+                if "error" not in fallback_result:
+                    return {"search_data": fallback_result}
 
             logger.warning(f"Primary search API unavailable for query '{query}', using Apify fallback")
             fallback_result = await self._apify_general_search(query, limit=limit)
