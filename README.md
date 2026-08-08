@@ -251,6 +251,75 @@ For Heurist Mesh agents or to learn about contributing specialized community age
 
 For support, please open an issue in the GitHub repository or contact the maintainers. Join the Heurist Ecosystem Builder telegram https://t.me/heuristsupport
 
+## FAQ
+
+### What is the Heurist Agent Framework?
+
+A flexible multi-interface AI agent framework that lets your agents interact through:
+- **Telegram** - Bot integration
+- **Discord** - Bot integration
+- **Twitter** - Social automation
+- **Farcaster** - Web3 social
+- **REST API** - HTTP endpoints
+- **MCP** - Model Context Protocol
+
+### What makes this framework different?
+
+- **Multi-platform by default** - One agent, many interfaces
+- **Heurist Mesh access** - Connect to 30+ specialized Web3 agents
+- **Media generation** - Image and video creation built-in
+- **Voice processing** - Audio transcription and TTS
+- **Knowledge retrieval** - RAG with PostgreSQL/SQLite
+- **MCP support** - Connect to external tools via MCP
+
+### How do I get started?
+
+1. Get a Heurist API Key from https://heurist.ai/dev-access (use code **agent** for free access)
+2. Clone the repository
+3. Configure your `.env` file
+4. Run an example agent from the `examples/` folder
+
+### What LLM providers are supported?
+
+- **Heurist API** (recommended for Web3 tasks)
+- OpenAI
+- Anthropic Claude
+- Google Gemini
+- Local models via compatible endpoints
+
+### What is Heurist Mesh?
+
+[Heurist Mesh](https://mesh.heurist.ai) is a marketplace of specialized AI agents for Web3:
+- 30+ curated Web3 intelligence agents
+- Optimized for AI agent consumption (70% fewer tool calls)
+- Access via REST API, MCP, or x402 pay-per-use
+- ERC-8004 trusted agent standard on Ethereum
+
+### How do agents use tools?
+
+- **Built-in tools** - File, shell, web, JSON, notebook tools
+- **MCP tools** - Connect stdio, HTTP, or SSE MCP servers
+- **Mesh agents** - Call specialized Web3 agents via API
+
+### Can I create my own Mesh agent?
+
+Yes! See the [Mesh README](./mesh/README.md) for:
+- Agent development guide
+- Registration process
+- Bounty opportunities
+
+### How do I deploy agents?
+
+- **Local** - Run directly with Python
+- **Docker** - Containerized deployment
+- **Cloud** - Deploy to any cloud platform
+
+### Where can I get help?
+
+- Open an issue in this repository
+- Join Telegram: https://t.me/heuristsupport
+- Check the documentation links in this README
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=heurist-network/heurist-agent-framework&type=Date)](https://star-history.com/#heurist-network/heurist-agent-framework&Date)
