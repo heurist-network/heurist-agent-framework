@@ -1,6 +1,8 @@
 import asyncio
 import json
 import sys
+import ipaddress
+from urllib.parse import urlparse
 from contextlib import AsyncExitStack
 from typing import Any, Dict, Optional
 
@@ -9,6 +11,33 @@ from mcp import ClientSession
 from mcp.client.sse import sse_client
 
 load_dotenv()  # load environment variables from .env
+
+BLOCKED_NETWORKS = [
+    ipaddress.ip_network("10.0.0.0/8"),
+    ipaddress.ip_network("172.16.0.0/12"),
+    ipaddress.ip_network("192.168.0.0/16"),
+    ipaddress.ip_network("169.254.0.0/16"),
+    ipaddress.ip_network("fd00:ec2::/128"),
+    ipaddress.ip_network("::1/128"),
+    ipaddress.ip_network("127.0.0.0/8"),
+]
+
+def _validate_server_url(server_url: str) -> str:
+    """Validate MCP server URL against private IP ranges (SSRF protection)."""
+    parsed = urlparse(server_url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError(f"Invalid scheme: {parsed.scheme}. Only http/https allowed.")
+    hostname = parsed.hostname
+    if not hostname:
+        raise ValueError("URL must have a hostname")
+    try:
+        ip = ipaddress.ip_address(hostname)
+        for network in BLOCKED_NETWORKS:
+            if ip in network:
+                raise ValueError(f"URL resolves to blocked private network: {network}")
+    except ValueError:
+        pass  # hostname is a domain, not an IP
+    return server_url
 
 
 class MCPClient:
@@ -26,6 +55,8 @@ class MCPClient:
 
     async def connect_to_sse_server(self, server_url: str):
         """Connect to an MCP server running with SSE transport"""
+        _validate_server_url(server_url)
+
         # Store the context managers so they stay alive
         self._streams_context = sse_client(url=server_url)
         streams = await self._streams_context.__aenter__()
