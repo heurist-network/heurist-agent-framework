@@ -253,4 +253,4 @@ For support, please open an issue in the GitHub repository or contact the mainta
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=heurist-network/heurist-agent-framework&type=Date)](https://star-history.com/#heurist-network/heurist-agent-framework&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=heurist-network/heurist-agent-framework&type=Date)](https://star-history.dera.page/#heurist-network/heurist-agent-framework&Date)
