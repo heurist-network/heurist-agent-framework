@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://defaultverifier.local/schemas/profiles/sar-402/sar-402-settlement-v0.1.schema.json",
+  "title": "SAR-402 Settlement Attestation Receipt v0.1",
+  "description": "x402-specific profile of the SAR primitive. Attests what an x402 payment authorized, whether delivery matched, what evidence remains, which trust seam was verified, how the verifier result was used, who could act on it, and whether the five Continuity predicates held. Subordinate to verification-timeline-seams-v0.2. The verifier never holds execution authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "profile",
+    "sar_type",
+    "sar_verdict",
+    "verification_point",
+    "verification_mode",
+    "authority_binding",
+    "payment_state",
+    "delivery_state",
+    "settlement_state",
+    "continuity",
+    "payment",
+    "identity",
+    "timestamps",
+    "issuer",
+    "integrity"
+  ],
+  "properties": {
+    "schema_id": { "const": "sar_402_settlement_v0.1" },
+    "profile": { "const": "sar-402" },
+    "sar_type": { "const": "Settlement Attestation Receipt" },
+
+    "sar_verdict": { "$ref": "#/$defs/verdict" },
+
+    "verification_point": {
+      "type": "string",
+      "enum": [
+        "pre_authorization",
+        "payment_verified_pre_delivery",
+        "post_delivery",
+        "post_settlement_audit"
+      ]
+    },
+    "verification_mode": {
+      "type": "string",
+      "enum": ["observe", "gate", "record", "audit"]
+    },
+
+    "authority_binding": { "$ref": "#/$defs/authority_binding" },
+
+    "payment_state": {
+      "type": "string",
+      "enum": ["verified", "unverified", "failed", "indeterminate"]
+    },
+    "delivery_state": {
+      "type": "string",
+      "enum": ["confirmed", "claimed", "failed", "not_applicable", "indeterminate"]
+    },
+    "settlement_state": {
+      "type": "string",
+      "enum": ["delivered", "not_delivered", "pending", "unverified", "indeterminate"]
+    },
+
+    "continuity": { "$ref": "#/$defs/continuity" },
+
+    "payment": { "$ref": "#/$defs/payment" },
+    "delivery": { "$ref": "#/$defs/delivery" },
+
+    "identity": { "$ref": "#/$defs/identity" },
+
+    "timestamps": { "$ref": "#/$defs/timestamps" },
+    "issuer": { "$ref": "#/$defs/issuer" },
+    "integrity": { "$ref": "#/$defs/integrity" },
+
+    "quote_raw": { "type": "object" },
+    "challenge_raw": { "type": "object" },
+    "escalation": { "type": "object" },
+    "links": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "prior_sar_digest": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+
+  "allOf": [
+    {
+      "$comment": "Gate mode requires explicit gate controller and release policy.",
+      "if": {
+        "properties": { "verification_mode": { "const": "gate" } }
+      },
+      "then": {
+        "properties": {
+          "authority_binding": {
+            "required": ["gate_controller", "release_policy", "verifier_has_execution_authority"]
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Delivery evidence required once something has been (or should have been) delivered.",
+      "if": {
+        "properties": {
+          "verification_point": {
+            "enum": ["post_delivery", "post_settlement_audit"]
+          }
+        }
+      },
+      "then": { "required": ["delivery"] }
+    }
+  ],
+
+  "$defs": {
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INDETERMINATE"]
+    },
+
+    "authority_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verifier_has_execution_authority"],
+      "description": "Who or what, if anyone, was allowed to act on the verifier result. verifier_has_execution_authority must always be false. Gate mode requires gate_controller and release_policy.",
+      "properties": {
+        "acting_party": {
+          "type": "string",
+          "description": "Non-gate: the party that controlled the action (verifier had no authority)."
+        },
+        "gate_controller": {
+          "type": "string",
+          "description": "Gate: the consuming system that controlled release. Never default_verifier.",
+          "not": { "const": "default_verifier" }
+        },
+        "release_policy": {
+          "type": "string",
+          "description": "Gate: explicit policy mapping verdicts to release/withhold/escalate."
+        },
+        "verifier_has_execution_authority": {
+          "const": false
+        }
+      }
+    },
+
+    "continuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_continuity",
+        "constraint_continuity",
+        "temporal_continuity",
+        "authority_continuity",
+        "executor_continuity"
+      ],
+      "properties": {
+        "object_continuity": { "$ref": "#/$defs/verdict" },
+        "constraint_continuity": { "$ref": "#/$defs/verdict" },
+        "temporal_continuity": { "$ref": "#/$defs/verdict" },
+        "authority_continuity": { "$ref": "#/$defs/verdict" },
+        "executor_continuity": { "$ref": "#/$defs/verdict" }
+      }
+    },
+
+    "amount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "asset", "decimals"],
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "Integer amount as a string to avoid float drift.",
+          "pattern": "^[0-9]+$"
+        },
+        "asset": { "type": "string" },
+        "decimals": { "type": "integer", "minimum": 0 }
+      }
+    },
+
+    "payment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resource", "quote_id", "price", "asset", "chain", "recipient", "payer", "payment_ref"],
+      "properties": {
+        "resource": {
+          "type": "string",
+          "description": "Resource/action paid for. object_continuity anchor."
+        },
+        "quote_id": { "type": "string", "description": "402 quote/challenge id." },
+        "price": { "$ref": "#/$defs/amount" },
+        "amount_paid": { "$ref": "#/$defs/amount" },
+        "asset": { "type": "string" },
+        "chain": {
+          "type": "string",
+          "description": "Chain-agnostic identifier (CAIP-2 style, e.g. eip155:8453). Not Base-only.",
+          "pattern": "^[-a-z0-9]+:[-a-zA-Z0-9]+$"
+        },
+        "recipient": { "type": "string" },
+        "payer": { "type": "string" },
+        "payment_ref": {
+          "type": "string",
+          "description": "Settlement/transaction reference (tx hash, settlement id)."
+        },
+        "facilitator": { "type": "string" }
+      }
+    },
+
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delivered_resource", "evidence_type"],
+      "properties": {
+        "delivered_resource": {
+          "type": "string",
+          "description": "What was actually delivered. Compared to payment.resource for object_continuity."
+        },
+        "evidence_type": {
+          "type": "string",
+          "description": "e.g. http_response, signed_artifact, content_hash, tool_result."
+        },
+        "evidence_digest": {
+          "type": "string",
+          "description": "Digest of the delivered artifact for replay."
+        },
+        "status_code": { "type": "integer" },
+        "delivered_at": { "type": "string", "format": "date-time" }
+      }
+    },
+
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["payer"],
+      "properties": {
+        "payer": {
+          "type": "string",
+          "description": "Wallet/account that paid."
+        },
+        "agent": {
+          "type": "string",
+          "description": "Delegated agent identifier, if distinct from the wallet."
+        },
+        "wallet": { "type": "string" },
+        "derived_identity": { "$ref": "#/$defs/derived_identity" }
+      }
+    },
+
+    "derived_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registration_mode", "derived_agent_id", "identity_status"],
+      "properties": {
+        "registration_mode": { "const": "derived_from_settlement" },
+        "derived_agent_id": {
+          "type": "string",
+          "description": "Deterministic from settlement, e.g. agent:x402:<chain>:<payer>.",
+          "pattern": "^agent:x402:[-a-z0-9]+:[-a-zA-Z0-9]+:.+$"
+        },
+        "identity_status": {
+          "type": "string",
+          "enum": ["derived", "claimed", "verified", "linked"]
+        }
+      }
+    },
+
+    "timestamps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quoted_at", "verified_at", "issued_at"],
+      "properties": {
+        "quoted_at": { "type": "string", "format": "date-time" },
+        "paid_at": { "type": "string", "format": "date-time" },
+        "verified_at": { "type": "string", "format": "date-time" },
+        "delivered_at": { "type": "string", "format": "date-time" },
+        "issued_at": { "type": "string", "format": "date-time" },
+        "quote_expires_at": { "type": "string", "format": "date-time" }
+      }
+    },
+
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verifier", "verifier_version"],
+      "properties": {
+        "verifier": {
+          "type": "string",
+          "description": "Verification engine identity, e.g. DefaultVerifier."
+        },
+        "verifier_version": { "type": "string" },
+        "environment": {
+          "type": "string",
+          "enum": ["production", "staging", "test", "local"]
+        }
+      }
+    },
+
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digest_alg", "digest"],
+      "description": "Digest over the canonical receipt excluding the integrity block. Signature optional in v0.1.",
+      "properties": {
+        "digest_alg": { "type": "string", "enum": ["sha256", "sha512"] },
+        "digest": { "type": "string" },
+        "canonicalization": {
+          "type": "string",
+          "description": "e.g. jcs (RFC 8785)."
+        },
+        "signature": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "alg": { "type": "string" },
+            "key_id": { "type": "string" },
+            "value": { "type": "string" }
+          },
+          "required": ["alg", "value"]
+        }
+      }
+    }
+  }
+}
