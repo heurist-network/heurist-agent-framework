@@ -4,9 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python -m mesh.mesh_api
-    ports:
-      - "8800:8000"
+    # Host network so mesh reaches tew-postgres on 127.0.0.1:5432. Listen on
+    # 8800 so nginx (sites-available/mesh → 127.0.0.1:8800) keeps working;
+    # host :8000 is already taken by ask-heurist-api.
+    command: ["uvicorn", "mesh.mesh_api:app", "--host", "0.0.0.0", "--port", "8800"]
+    # swarm-compatible host networking (docker stack deploy ignores network_mode)
+    networks:
+      - hostnet
     restart: unless-stopped
     env_file:
       - .env
@@ -15,7 +19,7 @@ services:
     volumes:
       - /data/mesh:/data/mesh
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/mesh_health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8800/mesh_health" ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -26,3 +30,8 @@ services:
         order: start-first
         failure_action: rollback
         delay: 5s
+
+networks:
+  hostnet:
+    external: true
+    name: host
