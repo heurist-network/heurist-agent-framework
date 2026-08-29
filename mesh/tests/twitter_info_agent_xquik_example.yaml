@@ -1,0 +1,130 @@
+xquik_user_tweets:
+  input:
+    tool: get_user_tweets
+    tool_arguments:
+      username: xquikcom
+      limit: 5
+  output:
+    data:
+      twitter_data:
+        profile:
+          id_str: '42'
+          name: Xquik
+          screen_name: xquikcom
+          description: X automation API
+          followers_count: 1200
+          friends_count: 100
+          statuses_count: 0
+          verified: true
+          created_at: '2026-05-01T00:00:00Z'
+        tweets:
+        - id: '1234567890'
+          text: Xquik timeline item
+          created_at: '2026-05-16'
+          source: https://x.com/xquikcom/status/1234567890
+          author:
+            id: '42'
+            username: xquikcom
+            name: Xquik
+            verified: true
+            followers: 1200
+          engagement:
+            likes: 4
+            replies: 1
+            retweets: 2
+            quotes: 0
+            views: 100
+          type: tweet
+      next_cursor: ''
+xquik_search:
+  input:
+    tool: get_general_search
+    tool_arguments:
+      q: xquik
+      limit: 5
+  output:
+    data:
+      search_data:
+        query: xquik
+        tweets:
+        - id: '1234567890'
+          text: Xquik timeline item
+          created_at: '2026-05-16'
+          source: https://x.com/xquikcom/status/1234567890
+          author:
+            id: '42'
+            username: xquikcom
+            name: Xquik
+            verified: true
+            followers: 1200
+          engagement:
+            likes: 4
+            replies: 1
+            retweets: 2
+            quotes: 0
+            views: 100
+          type: tweet
+        result_count: 1
+        next_cursor: ''
+xquik_tweet_detail:
+  input:
+    tool: get_twitter_detail
+    tool_arguments:
+      tweet_id: '1234567890'
+  output:
+    data:
+      tweet_data:
+        main_tweet:
+          id: '1234567890'
+          text: Xquik timeline item
+          created_at: '2026-05-16'
+          source: https://x.com/xquikcom/status/1234567890
+          author:
+            id: '42'
+            username: xquikcom
+            name: Xquik
+            verified: true
+            followers: 1200
+          engagement:
+            likes: 4
+            replies: 1
+            retweets: 2
+            quotes: 0
+            views: 100
+          type: tweet
+        thread_tweets:
+        - id: '1234567891'
+          text: Thread follow-up
+          created_at: '2026-05-16'
+          source: https://x.com/xquikcom/status/1234567891
+          author:
+            id: '42'
+            username: xquikcom
+            name: Xquik
+            verified: true
+            followers: 1200
+          engagement:
+            likes: 4
+            replies: 1
+            retweets: 2
+            quotes: 0
+            views: 100
+          type: tweet
+        replies:
+        - id: '1234567892'
+          text: Reply item
+          created_at: '2026-05-16'
+          source: https://x.com/xquikcom/status/1234567892
+          author:
+            id: '42'
+            username: xquikcom
+            name: Xquik
+            verified: true
+            followers: 1200
+          engagement:
+            likes: 4
+            replies: 1
+            retweets: 2
+            quotes: 0
+            views: 100
+          type: reply
