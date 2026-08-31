@@ -45,6 +45,7 @@ dependencies = [
     "curl-cffi<0.14",
     "google-genai>=1.56.0",
     "asyncpg",
+    "litellm>=1.60,<1.85", # LiteLLM AI gateway backend for LLMProvider (one provider, 100+ upstream backends)
 ]
 
 # required for spaceandtime agent as it uses old deps
