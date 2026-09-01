@@ -1,0 +1,43 @@
+{
+  "mode": "record",
+  "payment": {
+    "resource": "https://mesh.example/agents/weather-forecast?region=eu-west",
+    "quote_id": "q_heu_001",
+    "price": { "amount": "5000", "asset": "USDC", "decimals": 6 },
+    "amount_paid": { "amount": "5000", "asset": "USDC", "decimals": 6 },
+    "asset": "USDC",
+    "chain": "eip155:8453",
+    "recipient": "0x9aE2b7c1F0d4E5a6B8c3D2e1F09A8b7C6d5E4F30",
+    "payer": "0x1f4C8d2A9b3E6c7D0a5B4e3F2c1D0a9B8e7C6d5F",
+    "payment_ref": "0xae31c0f9b2d847e6a1c5f3902b7d4e8c19f6a0b3c2d4e5f60718293a4b5c6d7e",
+    "facilitator": "facilitator.heurist.xyz"
+  },
+  "identity": {
+    "agent": "mesh.heurist.ai/weather-forecast-agent",
+    "wallet": "0x1f4C8d2A9b3E6c7D0a5B4e3F2c1D0a9B8e7C6d5F",
+    "authorized_payers": ["0x1f4C8d2A9b3E6c7D0a5B4e3F2c1D0a9B8e7C6d5F"]
+  },
+  "timestamps": {
+    "quoted_at": "2026-07-31T14:00:00Z",
+    "paid_at": "2026-07-31T14:00:20Z",
+    "verified_at": "2026-07-31T14:00:25Z",
+    "delivered_at": "2026-07-31T14:00:30Z",
+    "issued_at": "2026-07-31T14:00:31Z",
+    "quote_expires_at": "2026-07-31T14:05:00Z"
+  },
+  "delivery": {
+    "delivered_resource": "https://mesh.example/agents/weather-forecast?region=eu-west",
+    "evidence_type": "http_response",
+    "evidence_digest": "sha256:1a2b3c4d5e6f708192a3b4c5d6e7f80911223344556677889900aabbccddee",
+    "status_code": 200,
+    "delivered_at": "2026-07-31T14:00:30Z"
+  },
+  "authority": {
+    "acting_party": "resource_server",
+    "verifier_has_execution_authority": false
+  },
+  "x402_context": {
+    "facilitator": "facilitator.heurist.xyz",
+    "settlement_ref": "0xae31c0f9b2d847e6a1c5f3902b7d4e8c19f6a0b3c2d4e5f60718293a4b5c6d7e"
+  }
+}
