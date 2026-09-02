@@ -4,6 +4,7 @@ from .search.base_search_client import BaseSearchClient, SearchResponse
 from .search.duckduckgo_client import DuckDuckGoClient
 from .search.exa_client import ExaClient
 from .search.firecrawl_client import FirecrawlClient
+from .search.youcom_client import YouComClient
 
 
 class SearchClient(BaseSearchClient):
@@ -17,8 +18,8 @@ class SearchClient(BaseSearchClient):
         Initialize a search client of the specified type.
 
         Args:
-            client_type: Type of search client to use ('firecrawl', 'exa', 'duckduckgo', etc.)
-            api_key: API key for the search service
+            client_type: Type of search client to use ('firecrawl', 'exa', 'duckduckgo', 'youcom', etc.)
+            api_key: API key for the search service (optional for youcom - uses YDC_API_KEY env var)
             api_url: Optional custom API URL
             rate_limit: Rate limit in seconds between requests
         """
@@ -32,6 +33,8 @@ class SearchClient(BaseSearchClient):
         elif client_type.lower() == "duckduckgo":
             # DuckDuckGo doesn't require API key or custom URL
             self._implementation = DuckDuckGoClient(rate_limit=rate_limit)
+        elif client_type.lower() == "youcom":
+            self._implementation = YouComClient(api_key=api_key, api_url=api_url, rate_limit=rate_limit)
         else:
             raise ValueError(f"Unsupported search client type: {client_type}")
 
