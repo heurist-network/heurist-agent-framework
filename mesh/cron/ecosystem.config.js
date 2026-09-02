@@ -2,14 +2,14 @@ module.exports = {
   apps: [
     {
       name: 'trending-tokens-scraper',
-      script: '/home/appuser/heurist-agent-framework/mesh/cron/trending_tokens_scraper.py',
-      interpreter: '/home/appuser/heurist-agent-framework/.venv/bin/python',
-      cwd: '/home/appuser/heurist-agent-framework',
+      script: '/home/appuser/archive/heurist-agent-framework/mesh/cron/trending_tokens_scraper.py',
+      interpreter: '/home/appuser/archive/heurist-agent-framework/.venv/bin/python',
+      cwd: '/home/appuser/archive/heurist-agent-framework',
       cron_restart: '0 */6 * * *',  // Run every 6 hours
       autorestart: false,  // cron_restart handles scheduling
       max_memory_restart: '1G',
-      error_file: '/home/appuser/heurist-agent-framework/mesh/cron/logs/trending-tokens-error.log',
-      out_file: '/home/appuser/heurist-agent-framework/mesh/cron/logs/trending-tokens-out.log',
+      error_file: '/home/appuser/archive/heurist-agent-framework/mesh/cron/logs/trending-tokens-error.log',
+      out_file: '/home/appuser/archive/heurist-agent-framework/mesh/cron/logs/trending-tokens-out.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       env: {
         NODE_ENV: 'production',

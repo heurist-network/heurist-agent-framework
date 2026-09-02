@@ -85,7 +85,7 @@ class TrendingTokensScraper:
 
         for attempt in range(1, MAX_RETRIES + 1):
             try:
-                response = cffi_requests.get(url, impersonate="chrome", timeout=30)
+                response = cffi_requests.get(url, impersonate="safari", timeout=30)
 
                 if response.status_code != 200:
                     logger.warning(f"HTTP {response.status_code} for {url} (attempt {attempt}/{MAX_RETRIES})")
