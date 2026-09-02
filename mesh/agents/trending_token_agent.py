@@ -38,6 +38,7 @@ class TrendingTokenAgent(MeshAgent):
                     "Show me trending tokens",
                     "Get trending tokens including memecoins",
                     "What are the hottest tokens right now across all platforms?",
+                    "Show me trending tokens on Robinhood Chain",
                     "Show me trending tokens from CoinGecko and Twitter only",
                     "What tokens have recently graduated from pump.fun?",
                 ],
@@ -73,7 +74,7 @@ class TrendingTokenAgent(MeshAgent):
                             "chain": {
                                 "type": "string",
                                 "description": "Chain to get trending tokens for. Your default action is to keep it empty to get trending tokens across CEXs and chains. Include this field if specific chain is requested in the context.",
-                                "enum": ["base", "ethereum", "solana", "bsc"],
+                                "enum": ["base", "ethereum", "solana", "bsc", "robinhood"],
                             },
                             "include_memes": {
                                 "type": "boolean",

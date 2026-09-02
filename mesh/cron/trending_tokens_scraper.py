@@ -28,6 +28,7 @@ CHAINS = {
     "bsc": "https://dexscreener.com/bsc",
     "ethereum": "https://dexscreener.com/ethereum",
     "base": "https://dexscreener.com/base",
+    "robinhood": "https://dexscreener.com/robinhood",
 }
 
 TOP_N_TOKENS = 20
@@ -40,7 +41,7 @@ R2_ENDPOINT = os.getenv("R2_ENDPOINT")
 R2_ACCESS_KEY = os.getenv("R2_ACCESS_KEY")
 R2_SECRET_KEY = os.getenv("R2_SECRET_KEY")
 
-STABLECOINS = frozenset(["USDT", "USDC", "DAI", "BUSD", "TUSD", "USDD", "FRAX", "USDP", "GUSD", "PYUSD"])
+STABLECOINS = frozenset(["USDT", "USDC", "DAI", "BUSD", "TUSD", "USDD", "FRAX", "USDP", "GUSD", "PYUSD", "USDG"])
 NATIVE_TOKENS = frozenset(["SOL", "WSOL", "ETH", "WETH", "BNB", "WBNB", "MATIC", "WMATIC", "AVAX", "WAVAX"])
 KNOWN_BASE_ADDRESSES = frozenset(
     [
@@ -50,6 +51,8 @@ KNOWN_BASE_ADDRESSES = frozenset(
         "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",  # USDC on Base
         "0x4200000000000000000000000000000000000006",  # WETH on Base
         "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b",  # Virtual on Base
+        "0x5fc5360d0400a0fd4f2af552add042d716f1d168",  # USDG on Robinhood
+        "0x0bd7d308f8e1639fab988df18a8011f41eacad73",  # WETH on Robinhood
     ]
 )
 

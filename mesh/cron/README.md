@@ -4,11 +4,12 @@ Automated cron job that scrapes top 20 trending tokens from DexScreener for mult
 
 ## Overview
 
-This PM2-managed scraper fetches trending token information from DexScreener's UI across 4 major blockchains:
+This PM2-managed scraper fetches trending token information from DexScreener's UI across 5 major blockchains:
 - **Solana**: https://dexscreener.com/solana
 - **BSC**: https://dexscreener.com/bsc
 - **Ethereum**: https://dexscreener.com/ethereum
 - **Base**: https://dexscreener.com/base
+- **Robinhood**: https://dexscreener.com/robinhood
 
 Data is stored in R2 bucket `mesh` with one JSON file per chain, containing simplified token information and social links.
 
@@ -22,9 +23,9 @@ The scraper intelligently selects volatile tokens from trading pairs:
 - **Deduplicates** by token address — multiple pairs resolving to the same token only appear once
 
 **Filtered tokens** (excluded from results):
-- Stablecoins: USDT, USDC, DAI, BUSD, TUSD, USDD, FRAX, USDP, GUSD, PYUSD
+- Stablecoins: USDT, USDC, DAI, BUSD, TUSD, USDD, FRAX, USDP, GUSD, PYUSD, USDG
 - Native tokens: SOL, WSOL, ETH, WETH, BNB, WBNB, MATIC, WMATIC, AVAX, WAVAX
-- Common addresses: Wrapped SOL, WETH, WBNB, USDC on Base, WETH on Base, Virtual on Base
+- Common addresses: Wrapped SOL, WETH, WBNB, USDC on Base, WETH on Base, Virtual on Base, USDG on Robinhood, WETH on Robinhood
 
 ### Simplified Data Structure
 Only stores essential token information:
@@ -133,6 +134,7 @@ pm2 reload ecosystem.config.js
 - `trending_tokens_bsc.json`
 - `trending_tokens_ethereum.json`
 - `trending_tokens_base.json`
+- `trending_tokens_robinhood.json`
 
 **Example output structure:**
 ```json
@@ -207,7 +209,7 @@ tail -f /home/appuser/heurist-agent-framework/mesh/cron/logs/trending-tokens-out
 
 ## Performance
 
-**Total runtime** (all 4 chains): ~7-10 seconds
+**Total runtime** (all 5 chains): ~7-10 seconds
 
 Chains are scraped in parallel and API calls are concurrent (5 at a time), so the total runtime is dominated by network latency rather than sequential processing.
 
@@ -216,7 +218,7 @@ Chains are scraped in parallel and API calls are concurrent (5 at a time), so th
 DexScreener API limits:
 - **Rate limit**: 300 requests per minute
 - **Script behavior**: 5 concurrent requests with semaphore, exponential backoff on 429s
-- **Total requests**: ~80 per run (20 pairs × 4 chains)
+- **Total requests**: ~100 per run (20 pairs × 5 chains)
 
 ## Troubleshooting
 

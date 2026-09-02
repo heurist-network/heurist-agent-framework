@@ -33,6 +33,7 @@ ALLOWED_CHAINS = {
     "celo",
     "moonriver",
     "moonbeam",
+    "robinhood",
 }
 
 
@@ -83,16 +84,18 @@ def _is_solana_address(s: str) -> bool:
     return bool(SOLANA_B58_RE.match(s or ""))
 
 
-def _normalize_chain(chain: Optional[str]) -> Optional[str]:
+def _normalize_chain(chain: Optional[str | int]) -> Optional[str]:
     if not chain:
         return None
-    c = chain.strip().lower()
+    c = str(chain).strip().lower()
     if c in ALLOWED_CHAINS:
         return c
     if c in {"eth", "mainnet"}:
         return "ethereum"
     if c in {"bsc", "binance-smart-chain", "bnb-chain"}:
         return "bsc"
+    if c in {"4663", "robinhood-chain", "robinhood_chain", "robinhood chain"}:
+        return "robinhood"
     return c
 
 
@@ -341,7 +344,9 @@ class TokenResolverAgent(MeshAgent):
                 "examples": [
                     "token_search query=ETH",
                     "token_search query=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b chain=base",
+                    "token_search query=AAPL chain=robinhood",
                     "token_profile chain=base address=0xEF22cb48B8483dF6152e1423b19dF5553BbD818b include=['pairs']",
+                    "token_profile chain=robinhood address=0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9 include=['pairs']",
                     "token_profile symbol=BTC include=['funding_rates','technical_indicators']",
                 ],
                 "credits": {"default": 0.2},
@@ -387,7 +392,7 @@ class TokenResolverAgent(MeshAgent):
                             },
                             "chain": {
                                 "type": "string",
-                                "description": "Optional chain hint (e.g., base, ethereum, solana). ONLY use this field if you have direct context mentioning the chain. Leave this field blank otherwise.",
+                                "description": "Optional chain hint (e.g., base, ethereum, solana, robinhood). ONLY use this field if you have direct context mentioning the chain. Leave this field blank otherwise.",
                             },
                             "type_hint": {
                                 "type": "string",
@@ -409,7 +414,7 @@ class TokenResolverAgent(MeshAgent):
                         "properties": {
                             "chain": {
                                 "type": "string",
-                                "description": "Blockchain such as ethereum, base, bsc, solana",
+                                "description": "Blockchain such as ethereum, base, bsc, solana, robinhood",
                             },
                             "address": {
                                 "type": "string",

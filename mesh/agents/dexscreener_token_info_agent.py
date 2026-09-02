@@ -18,6 +18,7 @@ NAME_NORMALIZE_RE = re.compile(r"[^a-z0-9]+")
 WSOL_ADDRESS = "so11111111111111111111111111111111111111112"
 WETH_ADDRESS_ETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 WETH_ADDRESS_BASE = "0x4200000000000000000000000000000000000006"
+WETH_ADDRESS_ROBINHOOD = "0x0bd7d308f8e1639fab988df18a8011f41eacad73"
 WBNB_ADDRESS = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"
 
 WRAPPED_NATIVE_ADDRESSES = frozenset(
@@ -25,6 +26,7 @@ WRAPPED_NATIVE_ADDRESSES = frozenset(
         WSOL_ADDRESS,
         WETH_ADDRESS_ETH,
         WETH_ADDRESS_BASE,
+        WETH_ADDRESS_ROBINHOOD,
         WBNB_ADDRESS,
     }
 )
@@ -201,7 +203,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                         "properties": {
                             "chain": {
                                 "type": "string",
-                                "description": "Chain identifier (e.g., solana, bsc, ethereum, base)",
+                                "description": "Chain identifier (e.g., solana, bsc, ethereum, base, robinhood)",
                             },
                             "pair_address": {"type": "string", "description": "The pair contract address to look up"},
                         },
@@ -219,7 +221,7 @@ class DexScreenerTokenInfoAgent(MeshAgent):
                         "properties": {
                             "chain": {
                                 "type": "string",
-                                "description": "Chain identifier (e.g., solana, bsc, ethereum, base)",
+                                "description": "Chain identifier (e.g., solana, bsc, ethereum, base, robinhood)",
                             },
                             "token_address": {
                                 "type": "string",

@@ -233,7 +233,7 @@ Format your response in clean text. Be objective and informative."""
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "network": {"type": "string", "description": "Network ID (e.g., base, bsc, solana, eth)"},
+                            "network": {"type": "string", "description": "Network ID (e.g., base, bsc, solana, eth, robinhood)"},
                             "address": {"type": "string", "description": "Token contract address"},
                             "holders": {
                                 "type": "integer",
@@ -255,7 +255,7 @@ Format your response in clean text. Be objective and informative."""
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, polygon)"},
+                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, polygon, robinhood)"},
                             "address": {"type": "string", "description": "Token contract address"},
                             "days": {
                                 "type": "string",
@@ -276,7 +276,7 @@ Format your response in clean text. Be objective and informative."""
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, bsc)"},
+                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, bsc, robinhood)"},
                             "address": {"type": "string", "description": "Token contract address"},
                             "min_amount": {
                                 "type": "number",
@@ -296,7 +296,7 @@ Format your response in clean text. Be objective and informative."""
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, bsc, polygon)"},
+                            "network": {"type": "string", "description": "Network ID (e.g., eth, base, solana, bsc, polygon, robinhood)"},
                             "address": {"type": "string", "description": "Token contract address"},
                             "days": {
                                 "type": "string",

@@ -24,6 +24,10 @@ TEST_CASES = {
         "input": {"tool": "get_trending_tokens", "tool_arguments": {}},
         "description": "",
     },
+    "direct_tool_robinhood": {
+        "input": {"tool": "get_trending_tokens", "tool_arguments": {"chain": "robinhood"}},
+        "description": "Direct tool call for Robinhood Chain trending tokens",
+    },
     "direct_tool_with_memes": {
         "input": {"tool": "get_trending_tokens", "tool_arguments": {"include_memes": True}},
         "description": "Direct tool call including memecoins and pump.fun data",

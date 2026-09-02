@@ -112,6 +112,14 @@ TEST_CASES = {
         },
         "description": "Search for BNB on BSC chain",
     },
+    "search_aapl_on_robinhood": {
+        "input": {
+            "tool": "search",
+            "tool_arguments": {"query": "AAPL", "chain": "robinhood"},
+            "raw_data_only": True,
+        },
+        "description": "Search for Apple tokenized stock on Robinhood Chain",
+    },
     # ==================== PROFILE TESTS ====================
     # Large caps with different includes
     "profile_btc_fundamentals": {
@@ -332,6 +340,18 @@ TEST_CASES = {
             "raw_data_only": True,
         },
         "description": "USDC on Base chain",
+    },
+    "profile_aapl_robinhood": {
+        "input": {
+            "tool": "profile",
+            "tool_arguments": {
+                "chain": "robinhood",
+                "address": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+                "include": ["pairs"],
+            },
+            "raw_data_only": True,
+        },
+        "description": "Apple Robinhood Token profile with pairs",
     },
     "profile_usdc_ethereum": {
         "input": {
