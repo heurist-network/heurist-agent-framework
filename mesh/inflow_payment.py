@@ -314,9 +314,10 @@ async def create_inflow_payment_request(
     if payment.currency != "USDC":
         raise HTTPException(status_code=400, detail="Only USDC is supported for Inflow payments")
 
+    amount = round(max(amount_usd, 0.01), 2)
     payload = {
         "userId": payment.user_id,
-        "amount": round(max(amount_usd, 0.01), 2),
+        "amount": amount,
         "currency": payment.currency,
         "display": "HEADLESS",
         "userDetails": [],
@@ -344,6 +345,8 @@ async def create_inflow_payment_request(
             "agent_id": agent_id,
             "tool_name": input_payload.get("tool"),
             "tool_args_hash": _hash_request_payload(agent_id, input_payload, payment.user_id),
+            "expected_amount": amount,
+            "expected_currency": payment.currency,
             "status": inflow_body.get("status", INFLOW_STATUS_PENDING),
             "approved": False,
             "consumed": False,
@@ -514,6 +517,38 @@ def _is_valid_status_reuse(
     return False
 
 
+def _normalize_amount(value: Any) -> float | None:
+    try:
+        return round(float(value), 2)
+    except (TypeError, ValueError):
+        return None
+
+
+async def _verify_approved_payment(inflow_request: dict[str, Any], context: dict[str, Any]) -> None:
+    transaction = inflow_request.get("transaction")
+    if not isinstance(transaction, dict):
+        transaction_id = inflow_request.get("transactionId") or context.get("transaction_id")
+        if isinstance(transaction_id, str) and transaction_id:
+            transaction = await _get_inflow_transaction(transaction_id)
+
+    if not isinstance(transaction, dict):
+        return
+
+    expected_amount = _normalize_amount(context.get("expected_amount"))
+    actual_amount = _normalize_amount(transaction.get("amount"))
+    if expected_amount is not None and actual_amount is not None and actual_amount != expected_amount:
+        raise HTTPException(status_code=400, detail="payment.request_id amount mismatch")
+
+    expected_currency = context.get("expected_currency")
+    actual_currency = transaction.get("currency")
+    if (
+        expected_currency
+        and actual_currency is not None
+        and str(actual_currency).upper() != str(expected_currency).upper()
+    ):
+        raise HTTPException(status_code=400, detail="payment.request_id currency mismatch")
+
+
 async def verify_inflow_request(
     payment: InflowPayment, agent_id: str, input_payload: Dict[str, Any]
 ) -> InflowVerificationResult:
@@ -558,6 +593,7 @@ async def verify_inflow_request(
         context["transaction_id"] = transaction_id
     context["last_checked_at"] = time.time()
     if inflow_status == INFLOW_STATUS_APPROVED:
+        await _verify_approved_payment(inflow_request, context)
         context["approved"] = True
     _context_store.update(request_id, context)
 
