@@ -200,7 +200,7 @@ class TweetClaimVerifyRequest(BaseModel):
 
 DYNAMODB_TABLE_NAME = os.getenv("DYNAMODB_TABLE_NAME")
 HEURIST_ACCOUNTS_TABLE = os.getenv("HEURIST_ACCOUNTS_TABLE")
-AUTH_ENABLED = os.getenv("AUTH_ENABLED")
+AUTH_ENABLED = os.getenv("AUTH_ENABLED", "true").lower() in ("true", "1", "yes")
 AWS_REGION = os.getenv("AWS_REGION")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
