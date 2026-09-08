@@ -1,0 +1,29 @@
+{
+  "mode": "record",
+  "payment": {
+    "resource": "https://mesh.example/agents/weather-forecast?region=eu-west",
+    "quote_id": "q_heu_005",
+    "price": { "amount": "5000", "asset": "USDC", "decimals": 6 },
+    "asset": "USDC",
+    "chain": "eip155:8453",
+    "recipient": "0x9aE2b7c1F0d4E5a6B8c3D2e1F09A8b7C6d5E4F30",
+    "payer": "0x1f4C8d2A9b3E6c7D0a5B4e3F2c1D0a9B8e7C6d5F",
+    "payment_ref": "0xe275041320f6c8a1e5f9173461a8e2c5d0e4f306071829a3b4c5d6e7f809192"
+  },
+  "identity": {
+    "agent": "mesh.heurist.ai/weather-forecast-agent"
+  },
+  "timestamps": {
+    "quoted_at": "2026-07-31T14:40:00Z",
+    "issued_at": "2026-07-31T14:40:31Z"
+  },
+  "delivery": {
+    "delivered_resource": "https://mesh.example/agents/weather-forecast?region=eu-west",
+    "evidence_type": "http_response",
+    "status_code": 200
+  },
+  "authority": {
+    "acting_party": "resource_server"
+  },
+  "_fixture_note": "timestamps.verified_at is missing (required) -> normalize_manual raises EvidenceValidationError -> adapter fails closed with status='rejected', no verdict guessed."
+}
