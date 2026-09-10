@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 from typing import Any, Dict, List, Optional
 
 from dotenv import load_dotenv
@@ -15,6 +16,13 @@ load_dotenv()
 class DuckDuckGoSearchAgent(MeshAgent):
     def __init__(self):
         super().__init__()
+        self.tavily_client = None
+        tavily_api_key = os.getenv("TAVILY_API_KEY")
+        if tavily_api_key:
+            from tavily import TavilyClient
+
+            self.tavily_client = TavilyClient(api_key=tavily_api_key)
+            logger.info("Tavily client initialized as fallback for DuckDuckGo")
         self.metadata.update(
             {
                 "name": "DuckDuckGo Agent",
@@ -77,7 +85,7 @@ class DuckDuckGoSearchAgent(MeshAgent):
     @with_cache(ttl_seconds=300)
     @with_retry(max_retries=3)
     async def search_web(self, search_term: str, max_results: int = 5) -> Dict:
-        """Search the web using DuckDuckGo"""
+        """Search the web using DuckDuckGo, with Tavily fallback on failure"""
         logger.info(f"Searching web for: {search_term}, max_results: {max_results}")
         try:
 
@@ -94,8 +102,25 @@ class DuckDuckGoSearchAgent(MeshAgent):
             return {"status": "success", "data": {"search_term": search_term, "results": results}}
 
         except Exception as e:
-            logger.error(f"Search error: {str(e)}")
+            logger.warning(f"DuckDuckGo search failed: {str(e)}, attempting Tavily fallback")
+            if self.tavily_client:
+                return await self._tavily_fallback_search(search_term, max_results)
+            logger.error(f"Search error (no Tavily fallback available): {str(e)}")
             return {"status": "error", "error": f"Failed to fetch search results: {str(e)}", "data": None}
+
+    async def _tavily_fallback_search(self, search_term: str, max_results: int = 5) -> Dict:
+        """Fallback search using Tavily when DuckDuckGo fails"""
+
+        def _do_tavily_search():
+            response = self.tavily_client.search(query=search_term, max_results=max_results)
+            results = []
+            for r in response.get("results", []):
+                results.append({"title": r.get("title", ""), "link": r.get("url", ""), "snippet": r.get("content", "")})
+            return results
+
+        results = await asyncio.get_event_loop().run_in_executor(None, _do_tavily_search)
+        logger.info(f"Tavily fallback returned {len(results)} results for: {search_term}")
+        return {"status": "success", "data": {"search_term": search_term, "results": results}}
 
     # ------------------------------------------------------------------------
     #                      TOOL HANDLING LOGIC
