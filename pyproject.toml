@@ -12,6 +12,7 @@ dependencies = [
     "duckduckgo-search==7.4.3", # ddg agent
     "fastapi==0.115.12", # for mesh api server
     "firecrawl-py==2.8.0", # firecrawl agent
+    "tavily-python>=0.5.0", # tavily search client
     "flask==3.1.0",
     "flask[async]==3.1.0",
     "loguru==0.7.3",
