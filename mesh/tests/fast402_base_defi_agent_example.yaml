@@ -1,0 +1,243 @@
+agent: Fast402BaseDeFiAgent
+timestamp: '2026-05-07T17:54:59.903104'
+summary:
+  total: 16
+  passed: 14
+  failed: 2
+results:
+- id: check_assets_basic
+  description: 'Direct: check ETH + USDC balance'
+  input:
+    tool: check_assets
+    tool_arguments:
+      walletAddress: '0x4200000000000000000000000000000000000006'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:02.649099'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 4014.82
+- id: check_assets_with_pool
+  description: 'Direct: check assets + LP reserves'
+  input:
+    tool: check_assets
+    tool_arguments:
+      walletAddress: '0x4200000000000000000000000000000000000006'
+      poolAddress: '0x6cdcb1c4a4d1c3c6d054b27ac5b77e89eafb971d'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:06.664008'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3957.84
+- id: wallet_portfolio_default
+  description: 'Direct: portfolio snapshot (default tokens)'
+  input:
+    tool: wallet_portfolio
+    tool_arguments:
+      walletAddress: '0x4200000000000000000000000000000000000006'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:10.621939'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3878.57
+- id: wallet_portfolio_custom_tokens
+  description: 'Direct: portfolio snapshot with custom token list'
+  input:
+    tool: wallet_portfolio
+    tool_arguments:
+      walletAddress: '0x4200000000000000000000000000000000000006'
+      tokens:
+      - '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+      - '0x940181a94A35A4569E4529A3CDfB74e38FD98631'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:14.500583'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3914.4
+- id: token_price_v3
+  description: 'Direct: token price from Aerodrome pool'
+  input:
+    tool: token_price
+    tool_arguments:
+      poolAddress: '0x6cdcb1c4a4d1c3c6d054b27ac5b77e89eafb971d'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:18.415076'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3836.12
+- id: aerodrome_apy_basic
+  description: 'Direct: Aerodrome APY without reward price'
+  input:
+    tool: aerodrome_apy
+    tool_arguments:
+      gaugeAddress: '0x519BBD1Dd8C6A94C46080E24f316c14Ee758C025'
+      lpTokenAddress: '0xcdac0d6c6c59727a65f871236188350531885c43'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:22.251316'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3844.51
+- id: aerodrome_apy_with_price
+  description: 'Direct: Aerodrome APY with reward token price'
+  input:
+    tool: aerodrome_apy
+    tool_arguments:
+      gaugeAddress: '0x519BBD1Dd8C6A94C46080E24f316c14Ee758C025'
+      lpTokenAddress: '0xcdac0d6c6c59727a65f871236188350531885c43'
+      rewardTokenPriceUSD: 1.2
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:26.095920'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3987.19
+- id: tx_history_default
+  description: 'Direct: tx history default (10 latest transactions)'
+  input:
+    tool: tx_history
+    tool_arguments:
+      walletAddress: '0x4200000000000000000000000000000000000006'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:30.083212'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3917.34
+- id: tx_history_custom_limit
+  description: 'Direct: tx history with limit custom'
+  input:
+    tool: tx_history
+    tool_arguments:
+      walletAddress: '0x4200000000000000000000000000000000000006'
+      limit: 5
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:34.000656'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3823.34
+- id: agent_check_balance_query
+  description: 'Agent mode: natural language balance check'
+  input:
+    query: What is the ETH and USDC balance for wallet 0x4200000000000000000000000000000000000006?
+  timestamp: '2026-05-07T17:54:37.824063'
+  passed: true
+  output:
+    response: ''
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 5464.07
+- id: agent_portfolio_query
+  description: 'Agent mode: natural language portfolio request'
+  input:
+    query: Give me a full portfolio snapshot for 0x4200000000000000000000000000000000000006
+      including WETH and AERO
+  timestamp: '2026-05-07T17:54:43.288213'
+  passed: false
+  output: null
+  error: '503 UNAVAILABLE. {''error'': {''code'': 503, ''message'': ''This model is
+    currently experiencing high demand. Spikes in demand are usually temporary. Please
+    try again later.'', ''status'': ''UNAVAILABLE''}}'
+  duration_ms: 2015.0
+- id: agent_price_query
+  description: 'Agent mode: natural language token price'
+  input:
+    query: What is the current token price for pool 0x6cdcb1c4a4d1c3c6d054b27ac5b77e89eafb971d
+      on Base?
+  timestamp: '2026-05-07T17:54:45.305370'
+  passed: false
+  output: null
+  error: '503 UNAVAILABLE. {''error'': {''code'': 503, ''message'': ''This model is
+    currently experiencing high demand. Spikes in demand are usually temporary. Please
+    try again later.'', ''status'': ''UNAVAILABLE''}}'
+  duration_ms: 2253.19
+- id: agent_apy_query
+  description: 'Agent mode: natural language APY request'
+  input:
+    query: Estimate the APY for Aerodrome gauge 0x519BBD1Dd8C6A94C46080E24f316c14Ee758C025
+      with LP token 0xcdac0d6c6c59727a65f871236188350531885c43
+  timestamp: '2026-05-07T17:54:47.558655'
+  passed: true
+  output:
+    response: ''
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 5778.61
+- id: agent_tx_history_query
+  description: 'Agent mode: natural language tx history'
+  input:
+    query: Show me the last 5 USDC transactions for 0x4200000000000000000000000000000000000006
+  timestamp: '2026-05-07T17:54:53.337354'
+  passed: true
+  output:
+    response: ''
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 2265.83
+- id: edge_missing_wallet
+  description: 'Edge: walletAddress empty — should return error 400'
+  input:
+    tool: check_assets
+    tool_arguments: {}
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:55.603257'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 382.21
+- id: edge_invalid_pool
+  description: 'Edge: poolAddress invalid — should return error from provider'
+  input:
+    tool: token_price
+    tool_arguments:
+      poolAddress: '0x0000000000000000000000000000000000000000'
+    raw_data_only: true
+  timestamp: '2026-05-07T17:54:55.985542'
+  passed: true
+  output:
+    data:
+      error: Payment required
+      details: This endpoint requires x402 payment. Configure payment middleware.
+  error: null
+  duration_ms: 3917.01
