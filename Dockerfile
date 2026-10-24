@@ -14,7 +14,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     git \
     libpq-dev \
     gcc \
-    libc6-dev && \
+    libc6-dev \
+    libbrotli1 && \
     rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
