@@ -183,6 +183,17 @@ Each agent's `metadata` dictionary should at least contain:
 
 ### X402 Payment Integration (Optional)
 
+`XrplTokenSafetyAgent.check_token_safety` accepts an exact XRPL issuer and currency
+(for example, `rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De` and `RLUSD`). It reads
+[Launch Lab's public snapshot catalog](https://cocoeatsai.com/area4/token/catalog.json)
+and returns its published 0–100 score, up to three flags, snapshot timestamp,
+staleness indicator and links to the public page and optional 5 XRP report.
+Only cataloged tokens are covered; an absent token returns an error. Higher scores
+mean fewer detected flags, not guaranteed safety. This agent never purchases the
+report or signs a transaction. Use `raw_data_only=True` for the deterministic
+tool response without an LLM call. Its Mesh x402 price is $0.003 per call;
+the source catalog itself is free.
+
 Mesh agents can be exposed via the [Coinbase X402 Bazaar](https://docs.cdp.coinbase.com/x402) to enable pay-per-use access with USDC payments. To enable your agent for X402:
 
 Add `x402_config` to your agent's metadata:

@@ -1,0 +1,36 @@
+metadata:
+  agent: XrplTokenSafetyAgent
+  test_file: xrpl_token_safety_agent.py
+  timestamp: '2026-10-17T19:51:25.119554'
+  total_tests: 1
+  passed: 1
+  failed: 0
+results:
+  rlusd_snapshot:
+    input:
+      tool: check_token_safety
+      tool_arguments:
+        issuer: rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De
+        currency: RLUSD
+      raw_data_only: true
+    output:
+      data:
+        issuer: rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De
+        currency: 524C555344000000000000000000000000000000
+        score: 55
+        score_scale: 0–100; higher means fewer detected flags, not guaranteed safety
+        flags:
+        - Clawback permission flag is set
+        - NoFreeze is not set; interpret alongside signing controls
+        - A signing route may remain; issuer controls are not proven inaccessible
+        as_of: 1792222208
+        stale: false
+        stale_after_seconds: 86400
+        token_page_url: https://cocoeatsai.com/area4/token/rlusd-rMxCKbED-a364197ffb/
+        report_url: https://cocoeatsai.com/area4/report/?issuer=rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De&currency=524C555344000000000000000000000000000000
+        report_price_xrp: '5'
+        note: Dated automated checks, not an audit, endorsement or guarantee. No purchase
+          performed.
+    description: Public snapshot only; no wallet, LLM, signature or paid API.
+    status: success
+    elapsed_time: 1.116121530532837
