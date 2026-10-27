@@ -185,6 +185,165 @@ async def call_llm_with_tools_async(
         raise LLMError(f"LLM API call failed: {str(e)}")
 
 
+# ---------------------------------------------------------------------------
+# LiteLLM gateway path
+#
+# Same call-site contract as call_llm / call_llm_with_tools but routes through
+# the LiteLLM SDK (`litellm.completion` / `litellm.acompletion`) so a single
+# LLMProvider can talk to OpenAI, Anthropic, Vertex AI, Bedrock, Azure, Groq,
+# Mistral, Ollama, and 90+ other backends. The model is selected via the
+# standard LiteLLM provider-prefixed name ("anthropic/claude-...", "azure/...",
+# "vertex_ai/...", etc.) and credentials are resolved either from the api_key
+# / base_url passed here or from provider-specific env vars (ANTHROPIC_API_KEY,
+# OPENAI_API_KEY, AWS_*, AZURE_*, ...).
+#
+# `drop_params=True` is enabled by default so kwargs that some providers reject
+# (frequency_penalty / presence_penalty on Anthropic, Gemini, Bedrock; etc.)
+# are silently dropped instead of raising UnsupportedParamsError.
+# ---------------------------------------------------------------------------
+
+
+def _litellm_kwargs(api_key, base_url, max_retries, extra):
+    kwargs = {"drop_params": True}
+    if max_retries is not None:
+        kwargs["num_retries"] = max_retries
+    if api_key:
+        kwargs["api_key"] = api_key
+    if base_url:
+        kwargs["api_base"] = base_url
+    if extra:
+        kwargs.update(extra)
+    return kwargs
+
+
+def call_llm_litellm(
+    base_url: str,
+    api_key: str,
+    model_id: str,
+    system_prompt: str = None,
+    user_prompt: str = None,
+    messages: List[Dict] = None,
+    temperature: float = 0.7,
+    max_tokens: int = 500,
+    max_retries: int = 3,
+    litellm_kwargs: Dict = None,
+):
+    import litellm
+
+    formatted_messages = _format_messages(system_prompt, user_prompt, messages)
+    kwargs = _litellm_kwargs(api_key, base_url, max_retries, litellm_kwargs)
+
+    try:
+        result = litellm.completion(
+            model=model_id,
+            messages=formatted_messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            **kwargs,
+        )
+        return _handle_tool_response(result.choices[0].message)
+    except Exception as e:
+        raise LLMError(f"LiteLLM API call failed: {str(e)}")
+
+
+def call_llm_with_tools_litellm(
+    base_url: str,
+    api_key: str,
+    model_id: str,
+    system_prompt: str = None,
+    user_prompt: str = None,
+    messages: List[Dict] = None,
+    temperature: float = 0.7,
+    max_tokens: int = None,
+    max_retries: int = 3,
+    tools: List[Dict] = None,
+    tool_choice: str = "auto",
+    litellm_kwargs: Dict = None,
+) -> Union[str, Dict]:
+    import litellm
+
+    formatted_messages = _format_messages(system_prompt, user_prompt, messages)
+    kwargs = _litellm_kwargs(api_key, base_url, max_retries, litellm_kwargs)
+
+    try:
+        response = litellm.completion(
+            model=model_id,
+            messages=formatted_messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            tools=tools,
+            tool_choice=tool_choice if tools else None,
+            **kwargs,
+        )
+        return _handle_tool_response(response.choices[0].message)
+    except Exception as e:
+        raise LLMError(f"LiteLLM API call failed: {str(e)}")
+
+
+async def call_llm_litellm_async(
+    base_url: str,
+    api_key: str,
+    model_id: str,
+    system_prompt: str = None,
+    user_prompt: str = None,
+    messages: List[Dict] = None,
+    temperature: float = 0.7,
+    max_tokens: int = 25000,
+    max_retries: int = 3,
+    litellm_kwargs: Dict = None,
+) -> str:
+    import litellm
+
+    formatted_messages = _format_messages(system_prompt, user_prompt, messages)
+    kwargs = _litellm_kwargs(api_key, base_url, max_retries, litellm_kwargs)
+
+    try:
+        result = await litellm.acompletion(
+            model=model_id,
+            messages=formatted_messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            **kwargs,
+        )
+        return result.choices[0].message.content
+    except Exception as e:
+        raise LLMError(f"LiteLLM API call failed: {str(e)}")
+
+
+async def call_llm_with_tools_litellm_async(
+    base_url: str,
+    api_key: str,
+    model_id: str,
+    system_prompt: str = None,
+    user_prompt: str = None,
+    messages: List[Dict] = None,
+    temperature: float = 0.7,
+    max_tokens: int = 500,
+    max_retries: int = 3,
+    tools: List[Dict] = None,
+    tool_choice: str = "auto",
+    litellm_kwargs: Dict = None,
+) -> Union[str, Dict]:
+    import litellm
+
+    formatted_messages = _format_messages(system_prompt, user_prompt, messages)
+    kwargs = _litellm_kwargs(api_key, base_url, max_retries, litellm_kwargs)
+
+    try:
+        response = await litellm.acompletion(
+            model=model_id,
+            messages=formatted_messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            tools=tools,
+            tool_choice=tool_choice if tools else None,
+            **kwargs,
+        )
+        return _handle_tool_response(response.choices[0].message)
+    except Exception as e:
+        raise LLMError(f"LiteLLM API call failed: {str(e)}")
+
+
 def extract_function_calls_to_tool_calls(llm_text: str) -> SimpleNamespace:
     """
     Scan the LLM's text output for a <function=NAME>{...}</function> pattern,
