@@ -3,6 +3,8 @@ from decimal import Decimal, InvalidOperation
 from typing import Any, Dict, List, Optional
 from urllib.parse import urlencode
 
+import aiohttp
+
 from decorators import with_cache
 from mesh.mesh_agent import MeshAgent
 
@@ -122,12 +124,36 @@ class LayerHopSwapQuoteAgent(MeshAgent):
             },
         ]
 
+    async def _get(self, path: str, params: Optional[Dict[str, str]] = None, timeout: int = 20) -> Dict[str, Any]:
+        """GET a LayerHop endpoint. Keeps the API's JSON error body ({"error": {"code", "message"}}) on 4xx/5xx."""
+        if not self.session:
+            self.session = aiohttp.ClientSession()
+        try:
+            async with self.session.get(
+                f"{API}{path}", params=params, timeout=aiohttp.ClientTimeout(total=timeout)
+            ) as response:
+                try:
+                    data = await response.json(content_type=None)
+                except Exception:
+                    data = None
+                if response.status >= 400:
+                    err = data.get("error") if isinstance(data, dict) else None
+                    if isinstance(err, dict):
+                        msg = err.get("message") or err.get("code") or str(err)
+                        hints = (err.get("details") or {}).get("suggestions")
+                        return {"error": f"{msg} Suggestions: {hints}" if hints else msg}
+                    return {"error": str(err) if err else f"LayerHop API returned HTTP {response.status}"}
+                return data if isinstance(data, dict) else {"data": data}
+        except Exception as e:
+            logger.error(f"LayerHop request failed: {e}")
+            return {"error": f"LayerHop API request failed: {e}"}
+
     @with_cache(ttl_seconds=3600)
     async def _chains(self) -> Dict[str, Any]:
-        data = await self._api_request(f"{API}/chains")
+        data = await self._get("/chains")
         if "error" in data:
             return data
-        chains = data.get("chains", data) if isinstance(data, dict) else data
+        chains = data.get("chains", data.get("data", []))
         return {"chains": [{"slug": c.get("slug"), "name": c.get("name"), "vm": c.get("vm")} for c in chains]}
 
     async def _vm(self, slug: str) -> Optional[str]:
@@ -138,14 +164,30 @@ class LayerHopSwapQuoteAgent(MeshAgent):
         return None
 
     @with_cache(ttl_seconds=3600)
-    async def _token(self, chain: str, token: str) -> Optional[Dict[str, Any]]:
-        data = await self._api_request(f"{API}/tokens", params={"chain": chain, "q": token})
-        tokens = data.get("tokens", []) if isinstance(data, dict) else []
+    async def _token(self, chain: str, token: str) -> Dict[str, Any]:
+        """Resolve a symbol or contract address to one token: {"token": {...}} or {"error": ...} (errors are not cached)."""
+        data = await self._get("/tokens", params={"chain": chain, "q": token})
+        if "error" in data:
+            return data
+        tokens = data.get("tokens", [])
         want = token.lower()
-        for t in tokens:
-            if t.get("address", "").lower() == want or t.get("symbol", "").lower() == want:
-                return t
-        return None
+        by_address = [t for t in tokens if t.get("address", "").lower() == want]
+        if by_address:
+            return {"token": by_address[0]}
+        same_symbol = [t for t in tokens if t.get("symbol", "").lower() == want]
+        # Never pick among look-alikes: take the one verified, popular token, else ask for the address.
+        for pool in (
+            [t for t in same_symbol if t.get("verified") and t.get("popular")],
+            [t for t in same_symbol if t.get("verified")],
+        ):
+            if len(pool) == 1:
+                return {"token": pool[0]}
+            if len(pool) > 1:
+                break
+        if not same_symbol:
+            return {"error": f"Token '{token}' not found on {chain}. Try its contract address."}
+        options = ", ".join(f"{t.get('name')} ({t.get('address')})" for t in same_symbol[:5])
+        return {"error": f"More than one '{token}' on {chain}: {options}. Ask the user which contract address to use."}
 
     async def get_swap_quote(
         self,
@@ -163,13 +205,13 @@ class LayerHopSwapQuoteAgent(MeshAgent):
             return {
                 "error": f"Unknown chain '{from_chain if not src_vm else to_chain}'. Call list_supported_chains for valid slugs."
             }
-        src = await self._token(from_chain, from_token.strip())
-        dst = await self._token(to_chain, to_token.strip())
-        if not src or not dst:
-            missing = from_token if not src else to_token
-            return {
-                "error": f"Token '{missing}' not found on {from_chain if not src else to_chain}. Try its contract address."
-            }
+        src_res = await self._token(from_chain, from_token.strip())
+        if "error" in src_res:
+            return src_res
+        dst_res = await self._token(to_chain, to_token.strip())
+        if "error" in dst_res:
+            return dst_res
+        src, dst = src_res["token"], dst_res["token"]
         try:
             base_units = int(Decimal(amount) * (Decimal(10) ** int(src["decimals"])))
         except (InvalidOperation, ValueError):
@@ -194,11 +236,10 @@ class LayerHopSwapQuoteAgent(MeshAgent):
             "sender": sender,
             "recipient": recipient,
         }
-        data = await self._api_request(f"{API}/quote", params=params, timeout=20)
-        if isinstance(data, dict) and data.get("error"):
-            err = data["error"]
-            return {"error": err.get("message", str(err)) if isinstance(err, dict) else str(err)}
-        best = (data or {}).get("best")
+        data = await self._get("/quote", params=params, timeout=20)
+        if "error" in data:
+            return data
+        best = data.get("best")
         if not best:
             return {"error": "No route found for this swap."}
 
@@ -211,9 +252,9 @@ class LayerHopSwapQuoteAgent(MeshAgent):
             + urlencode(
                 {
                     "srcChain": from_chain,
-                    "srcToken": src["symbol"],
+                    "srcToken": src["address"],
                     "dstChain": to_chain,
-                    "dstToken": dst["symbol"],
+                    "dstToken": dst["address"],
                     "amount": amount,
                 }
             )
@@ -240,10 +281,9 @@ class LayerHopSwapQuoteAgent(MeshAgent):
         }
 
     async def get_order_status(self, provider: str, tx_hash: str) -> Dict[str, Any]:
-        data = await self._api_request(f"{API}/orders/{provider.strip()}/{tx_hash.strip()}")
-        if isinstance(data, dict) and data.get("error"):
-            err = data["error"]
-            return {"error": err.get("message", str(err)) if isinstance(err, dict) else str(err)}
+        data = await self._get(f"/orders/{provider.strip()}/{tx_hash.strip()}")
+        if "error" in data:
+            return data
         return {
             "provider": data.get("provider"),
             "state": data.get("state"),
