@@ -1,7 +1,34 @@
 import logging
 import os
+import re
 import time
 from typing import Any, Dict, List, Optional
+
+# Dangerous SQL keywords that should never appear in LLM-generated queries
+_DANGEROUS_SQL_KEYWORDS = re.compile(
+    r'\b(DROP|DELETE|ALTER|CREATE|INSERT|UPDATE|TRUNCATE|GRANT|REVOKE)\b',
+    re.IGNORECASE,
+)
+
+
+def _validate_generated_sql_safety(sql: str) -> str:
+    """Validate that LLM-generated SQL does not contain destructive keywords.
+
+    Only SELECT statements are permitted for LLM-generated queries.
+    Raises ValueError if dangerous keywords are found.
+
+    Opt-in: only enforced when SQL_SAFETY_CHECK_ENABLED is set to 'true'.
+    """
+    if os.getenv("SQL_SAFETY_CHECK_ENABLED", "false").lower() not in ("true", "1", "yes"):
+        return sql
+
+    match = _DANGEROUS_SQL_KEYWORDS.search(sql)
+    if match:
+        raise ValueError(
+            f"LLM-generated SQL contains dangerous keyword '{match.group()}'. "
+            f"Only SELECT queries are permitted. Generated SQL: {sql[:200]}"
+        )
+    return sql
 
 import aiohttp
 from dotenv import load_dotenv
@@ -180,6 +207,9 @@ class SpaceTimeAgent(MeshAgent):
     @with_retry(max_retries=3)
     async def execute_sql(self, sql_query: str) -> Dict:
         """Execute SQL query using Space and Time API"""
+        # Validate LLM-generated SQL before execution
+        _validate_generated_sql_safety(sql_query)
+
         await self._authenticate()
 
         try:
