@@ -10,6 +10,7 @@ dependencies = [
     "boto3==1.37.18", # utils/crypto/crypto_nft.py
     "botocore==1.37.18", # utils/crypto/crypto_nft.py
     "duckduckgo-search==7.4.3", # ddg agent
+    "tavily-python>=0.5.0", # tavily fallback for ddg agent
     "fastapi==0.115.12", # for mesh api server
     "firecrawl-py==2.8.0", # firecrawl agent
     "flask==3.1.0",
