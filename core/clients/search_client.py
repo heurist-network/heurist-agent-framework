@@ -1,6 +1,7 @@
 from typing import Optional
 
 from .search.base_search_client import BaseSearchClient, SearchResponse
+from .search.crw_client import CrwClient
 from .search.duckduckgo_client import DuckDuckGoClient
 from .search.exa_client import ExaClient
 from .search.firecrawl_client import FirecrawlClient
@@ -17,7 +18,7 @@ class SearchClient(BaseSearchClient):
         Initialize a search client of the specified type.
 
         Args:
-            client_type: Type of search client to use ('firecrawl', 'exa', 'duckduckgo', etc.)
+            client_type: Type of search client to use ('firecrawl', 'crw', 'exa', 'duckduckgo', etc.)
             api_key: API key for the search service
             api_url: Optional custom API URL
             rate_limit: Rate limit in seconds between requests
@@ -27,6 +28,8 @@ class SearchClient(BaseSearchClient):
         # Create the appropriate client implementation
         if client_type.lower() == "firecrawl":
             self._implementation = FirecrawlClient(api_key=api_key, api_url=api_url, rate_limit=rate_limit)
+        elif client_type.lower() == "crw":
+            self._implementation = CrwClient(api_key=api_key, api_url=api_url, rate_limit=rate_limit)
         elif client_type.lower() == "exa":
             self._implementation = ExaClient(api_key=api_key, api_url=api_url, rate_limit=rate_limit)
         elif client_type.lower() == "duckduckgo":
